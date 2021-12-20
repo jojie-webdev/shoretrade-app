@@ -170,6 +170,7 @@ const SoldView = (props: SoldGeneratedProps) => {
     if (searchValue.length > 2) {
       handleSearchValue(searchValue);
     }
+    // eslint-disable-next-line
   }, [currentTab]);
 
   let content;

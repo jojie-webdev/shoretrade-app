@@ -23,24 +23,32 @@ const ResizerComponent = (props: ResizerComponentProps) => {
       const dragableEl = resizerRef?.current?.resizableElement
         .current as HTMLDivElement;
       const resizerEl = dragableEl.children?.[1] as HTMLDivElement;
-      const leftRightEl = resizerEl?.children?.[0] as HTMLDivElement;
+      const resizerLeftEl = resizerEl?.children?.[0] as HTMLDivElement;
       const resizerRightEl = resizerEl?.children?.[1] as HTMLDivElement;
-      leftRightEl.style.zIndex = '99999';
-      leftRightEl.style.pointerEvents = 'inherit';
+      resizerLeftEl.style.zIndex = '99999';
+      resizerLeftEl.style.pointerEvents = 'inherit';
 
       resizerRightEl.style.zIndex = '99999';
       resizerRightEl.style.pointerEvents = 'inherit';
 
-      leftRightEl.ondblclick = (e) => {
+      resizerLeftEl.ondblclick = (e) => {
         e.stopImmediatePropagation();
         const col = columns?.[Number(column?.index) - 1];
         if (col) handleMaximizeColum?.(col.selector);
+      };
+
+      resizerLeftEl.onclick = (e) => {
+        e.stopImmediatePropagation();
       };
 
       resizerRightEl.ondblclick = (e) => {
         e.stopImmediatePropagation();
         const col = columns?.[column?.index];
         if (col) handleMaximizeColum?.(col.selector);
+      };
+
+      resizerRightEl.onclick = (e) => {
+        e.stopImmediatePropagation();
       };
     }
     // eslint-disable-next-line
@@ -90,7 +98,6 @@ export default function TableDataContent(props: TableDataContentProps) {
     onClick,
     sticky,
     column,
-    isClickable,
   } = props;
 
   const TableDataContainerRef = useRef<HTMLDivElement>(null);
@@ -108,7 +115,6 @@ export default function TableDataContent(props: TableDataContentProps) {
     ['data-column-type']: columnType, // eslint-disable-line
     ['data-row-type']: rowType, // eslint-disable-line
     ['data-row-sticky']: sticky, // eslint-disable-line
-    isClickable,
   };
 
   useEffect(() => {

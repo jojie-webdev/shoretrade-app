@@ -120,8 +120,8 @@ export const editableListingToListingProps = (
       minOrder: editableListing?.minOrder?.toFixed(2) || '',
       remaining: totalWeight.toFixed(2),
       unit: measurementUnit,
-      validUntil: editableListing?.ends
-        ? moment(editableListing?.ends).toDate()
+      validUntil: editableListing.ends
+        ? moment(editableListing?.ends).toNow(true)
         : undefined,
       catchDate: editableListing?.catchDate
         ? moment(editableListing?.catchDate).toDate()

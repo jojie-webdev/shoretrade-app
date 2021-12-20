@@ -65,6 +65,8 @@ export interface ListingViewProps {
   onChangeTab: (tab: string) => void;
   page: number;
   onChangePage: (page: number) => void;
+  pageLimit: number;
+  onChangePageLimit: (limit: number) => void;
   sorting: {
     field: string;
     order: string;

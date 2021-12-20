@@ -1,3 +1,4 @@
+import { SALES_CHANNELS_BUYER } from 'consts/salesChannels';
 import { lensPath, pathOr, set, view } from 'ramda';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { getAllBuyerListings } from 'services/listing';
@@ -37,18 +38,28 @@ function* getAllBuyerListingsCSV(action: any) {
   const state: Store = yield select();
   if (state.auth.token) {
     try {
+      const salesChannel = action.payload?.salesChannel;
       const { data } = yield call(getAllBuyerListings, state.auth.token, {
+        salesChannel,
         sortBy: action.payload?.sortField,
         term: action.payload?.searchTerm,
         csv: action.payload?.csv,
-        page: action.payload?.page,
-        limit: action.payload?.limit,
         sortOrder: action.payload?.sortOrder,
         ids: action.payload?.ids,
         all: action.payload?.all,
         exceptId: action?.payload?.exceptId,
       });
-      downloadCsv(data, `All listings.csv`);
+
+      const salesChannelLabel = SALES_CHANNELS_BUYER.find(
+        (channel) => channel.constant === salesChannel
+      )?.label;
+
+      downloadCsv(
+        data,
+        `All listings${
+          salesChannel && salesChannel !== 'ALL' && ` - ${salesChannelLabel}`
+        }.csv`
+      );
       yield put(getAllBuyerListingsActions.requestCsvSuccess());
     } catch (e) {
       yield put(getAllBuyerListingsActions.failed(e.message));

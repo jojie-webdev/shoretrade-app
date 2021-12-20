@@ -10,9 +10,9 @@ import Modal from 'components/layout/Modal';
 import ListingCard from 'components/module/ListingCard';
 import TableComponent from 'components/module/ListingTable';
 import Loading from 'components/module/Loading';
+// import PaginationBar from 'components/module/PaginationBar';
 import Pagination from 'components/module/Pagination';
 import SearchComponent from 'components/module/Search';
-import { BREAKPOINTS } from 'consts/breakpoints';
 import { SALES_CHANNELS_BUYER } from 'consts/salesChannels';
 import debounce from 'lodash.debounce';
 import { useMediaQuery } from 'react-responsive';
@@ -111,6 +111,8 @@ export default function ListingView(props: ListingViewProps) {
     onChangeTab,
     page,
     onChangePage,
+    // pageLimit,
+    // onChangePageLimit,
     sorting,
     onChangeSortField,
     onChangeSortOrder,
@@ -124,10 +126,12 @@ export default function ListingView(props: ListingViewProps) {
   const columns = DIRECT_SALE_COLUMNS;
 
   const downloadListingCount = isAllSelected
-    ? totalCount - unselectedIds.length
+    ? counter[activeTab as keyof CounterProps] - unselectedIds.length
     : selectedIds.length;
 
-  const isSmallDesktop = useMediaQuery({ query: BREAKPOINTS['xl'] });
+  const isSmallDesktop = useMediaQuery({
+    query: '(min-width: 769px) and (max-width: 1439px)',
+  });
 
   // sync tableSettingProps
   useComponentShouldUpdate(() => {
@@ -169,7 +173,7 @@ export default function ListingView(props: ListingViewProps) {
   const TabComponent = (
     <TabContainer>
       <Tabs
-        tabStyle={{ padding: '9px 12px' }}
+        tabStyle={{ padding: '9px' }}
         textColor={theme.grey.shade6}
         activeTextColor={theme.grey.shade9}
         underlineColor={theme.grey.shade3}
@@ -201,7 +205,7 @@ export default function ListingView(props: ListingViewProps) {
       {TabComponent}
       <FlexContainer
         style={{
-          width: isSmallDesktop || isTablet ? '100%' : '35%',
+          width: isSmallDesktop || isTablet ? '100%' : '32%',
           marginTop: isSmallDesktop || isTablet ? '16px' : '0',
         }}
       >
@@ -435,6 +439,14 @@ export default function ListingView(props: ListingViewProps) {
             color="shade10"
             iconColor={theme.grey.shade10}
           />
+          {/* <PaginationBar
+            page={page}
+            limit={pageLimit}
+            totalCount={totalCount}
+            setLimit={onChangePageLimit}
+            setPage={(page: any) => console.log(page)}
+            maxPage={totalPage}
+          /> */}
         </PaginationContainer>
       )}
     </div>

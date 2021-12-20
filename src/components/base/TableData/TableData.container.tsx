@@ -1,9 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 
 import Checkbox from 'components/base/Checkbox';
-import { SortIcon, Minus } from 'components/base/SVG';
+import { SortIcon, Minus, ArrowLeft } from 'components/base/SVG';
 import theme from 'utils/Theme';
 
+import Typography from '../Typography';
 import { TableDataProps } from './TableData.props';
 import { WidthComputer } from './TableData.styles';
 import TableDataContent from './TableData.view';
@@ -11,7 +12,6 @@ import TableDataContent from './TableData.view';
 function findAndSaveLongestWidth(columnName: string, width: number) {
   if (!columnName || columnName === 'undefined') return;
   const longestWidth = localStorage.getItem(`col:${columnName}`);
-
   // initialize value;
   if (!longestWidth) localStorage.setItem(`col:${columnName}`, `${width}`);
   if (Number(longestWidth) < width)
@@ -34,6 +34,9 @@ export default function TableData(props: TableDataProps) {
     handleMaximizeColum,
     columns,
     isClickable,
+    onRowItemClick,
+    onRowHover,
+    setOnRowHover,
   } = props;
   const [showSortIcon, setShowSortIcon] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
@@ -61,7 +64,11 @@ export default function TableData(props: TableDataProps) {
   const checked = overwriteSelectedProp ? isChecked : selected;
 
   const Children = (() => {
-    if (rowType === 'header' || columnType === 'column-first')
+    if (
+      rowType === 'header' ||
+      columnType === 'column-first' ||
+      columnType === 'column-last'
+    )
       return (
         <>
           <div className="table-value-container">
@@ -88,6 +95,19 @@ export default function TableData(props: TableDataProps) {
               />
             )}
             {children}
+            {columnType === 'column-last' && isClickable && onRowHover && (
+              <div
+                className="btn-view-product"
+                onClick={() => onRowItemClick && onRowItemClick()}
+              >
+                <Typography variant="caption" color="primary">
+                  View Product
+                </Typography>
+                <div style={{ marginLeft: '4px', transform: 'rotate(135deg)' }}>
+                  <ArrowLeft fill={theme.brand.primary} />
+                </div>
+              </div>
+            )}
           </div>
           {(() => {
             if (rowType === 'header') {
@@ -106,8 +126,14 @@ export default function TableData(props: TableDataProps) {
   return (
     <TableDataContent
       columns={columns}
-      onMouseEnter={() => setShowSortIcon(true)}
-      onMouseLeave={() => setShowSortIcon(false)}
+      onMouseEnter={() => {
+        setShowSortIcon(true);
+        setOnRowHover && setOnRowHover(true);
+      }}
+      onMouseLeave={() => {
+        setShowSortIcon(false);
+        setOnRowHover && setOnRowHover(false);
+      }}
       onClick={(event) => onClick?.(event)}
       columnType={columnType}
       rowType={rowType}
@@ -116,7 +142,6 @@ export default function TableData(props: TableDataProps) {
       onResize={onResize}
       column={column}
       handleMaximizeColum={handleMaximizeColum}
-      isClickable={isClickable}
     >
       {Children}
       {!isWidthComptued && (

@@ -1,6 +1,4 @@
-import { collectAddressShort } from 'consts';
 import moment from 'moment';
-import groupBy from 'ramda/es/groupBy';
 import omit from 'ramda/es/omit';
 import { GetAllSellerOrder } from 'types/store/GetAllSellerOrdersState';
 import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';

@@ -1,22 +1,13 @@
 import styled from 'utils/styled';
 import theme from 'utils/Theme';
 
-export const TableDataContainer = styled.div<{
-  isClickable?: boolean;
-}>`
+export const TableDataContainer = styled.div`
   padding-top: 12px;
   padding-bottom: 12px;
   position: relative;
   background: ${theme.grey.noshade};
   border-bottom: 1px solid ${theme.grey.shade4};
   font-weight: 500;
-
-  .react-draggable {
-    :hover {
-      cursor: ${({ isClickable }) =>
-        isClickable ? 'pointer' : 'auto'} !important;
-    }
-  }
 
   &[data-row-sticky='true'] {
     left: 0;
@@ -60,6 +51,23 @@ export const TableDataContainer = styled.div<{
 
     &[data-column-type='column-last'] {
       border-bottom-right-radius: 8px;
+    }
+  }
+
+  .btn-view-product {
+    display: flex;
+    background: #ffffff;
+    border: 1px solid ${theme.brand.primary};
+    border-radius: 8px;
+    padding: 6px 8px 4px 8px;
+    position: absolute;
+    right: 16px;
+    p {
+      margin-top: 1px;
+      align-self: center;
+    }
+    :hover {
+      cursor: pointer;
     }
   }
 `;

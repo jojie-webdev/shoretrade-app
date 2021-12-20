@@ -37,11 +37,11 @@ const ListingTimeLeft = (props: ListingTimeLeftProps): JSX.Element => {
   if (timeLeft.diff(now, 'minutes') <= 60) {
     return (
       <Container>
-        <Countdown date={'2021-07-16T01:02:03'} renderer={renderer} />
+        <Countdown date={timeLeft.format()} renderer={renderer} />
       </Container>
     );
   }
-  return <Container>{moment().to(timeLeft)}</Container>;
+  return <Container>{moment(timeLeft).toNow(true)}</Container>;
 };
 
 export default React.memo(ListingTimeLeft);

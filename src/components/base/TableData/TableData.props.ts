@@ -24,7 +24,6 @@ export interface TableDataContentProps {
   column?: any;
   handleMaximizeColum?: (name: string) => any;
   columns: TableColumn[];
-  isClickable?: boolean;
 }
 
 export interface TableDataProps {
@@ -42,6 +41,9 @@ export interface TableDataProps {
   handleMaximizeColum?: (selector: any) => any;
   columns: TableColumn[];
   isClickable?: boolean;
+  onRowItemClick?: () => void;
+  setOnRowHover?: (value: boolean) => void;
+  onRowHover?: boolean;
 }
 export interface ResizerComponentProps extends Partial<TableDataContentProps> {
   defaultSize: any;

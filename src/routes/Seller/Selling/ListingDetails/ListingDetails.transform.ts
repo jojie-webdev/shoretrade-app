@@ -71,7 +71,9 @@ export const listingToListingProps = (
       minOrder: data?.minimum_order || '',
       remaining: (data?.remaining_weight || 0).toFixed(2),
       unit: formatMeasurementUnit(data?.measurement_unit),
-      validUntil: data?.end_date ? moment(data.end_date).toDate() : undefined,
+      validUntil: data?.end_date
+        ? moment(data.end_date).toNow(true)
+        : undefined,
       catchDate: data?.catch_date
         ? moment(data.catch_date).toDate()
         : undefined,

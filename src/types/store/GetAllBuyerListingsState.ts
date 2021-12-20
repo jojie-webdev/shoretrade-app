@@ -32,7 +32,7 @@ export type GetAllBuyerListingResponseItem = {
 };
 
 export interface GetAllBuyerListingRequestOption {
-  salesChannel: string;
+  salesChannel?: string;
   sortBy: string;
   sortOrder: SortOrder;
   term: string;

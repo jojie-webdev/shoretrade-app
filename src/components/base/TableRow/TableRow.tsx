@@ -7,7 +7,6 @@ import { useMediaQuery } from 'react-responsive';
 import ReactTooltip from 'react-tooltip';
 
 import { TableRowProps, TableDataListProps } from './TableRow.props';
-import { CellValueContainer } from './TableRow.style';
 
 const TableDataList = (props: TableDataListProps) => {
   const {
@@ -23,6 +22,8 @@ const TableDataList = (props: TableDataListProps) => {
     handleMaximizeColum,
     columns,
     onRowItemClick,
+    onRowHover,
+    setOnRowHover,
   } = props;
 
   const [showTooltip, setShowTooltip] = useState(false);
@@ -64,21 +65,21 @@ const TableDataList = (props: TableDataListProps) => {
       column={{ ...column, index }}
       handleMaximizeColum={handleMaximizeColum}
       columns={columns}
-      onClick={onRowItemClick}
+      onRowItemClick={onRowItemClick}
       isClickable={data.clickable}
+      onRowHover={onRowHover}
+      setOnRowHover={setOnRowHover}
     >
-      <CellValueContainer
+      <span
         id={`text-${identifier}`}
         data-tip={
           showTooltip
             ? column?.tooltip?.(data) || data?.[column.selector]
             : null
         }
-        isClickable={data.clickable}
-        className="table-value"
       >
         {column?.component ? column?.component(data) : data?.[column.selector]}
-      </CellValueContainer>
+      </span>
       {!!showTooltip && <ReactTooltip />}
     </TableData>
   );
@@ -86,6 +87,7 @@ const TableDataList = (props: TableDataListProps) => {
 
 export default function TableRow(props: TableRowProps) {
   const { data, columns } = props;
+  const [onRowHover, setOnRowHover] = useState(false);
 
   return (
     <>
@@ -100,6 +102,8 @@ export default function TableRow(props: TableRowProps) {
             index={index}
             length={columns.length}
             identifier={identifier}
+            onRowHover={onRowHover}
+            setOnRowHover={setOnRowHover}
           />
         );
       })}

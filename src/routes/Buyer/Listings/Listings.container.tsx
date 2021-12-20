@@ -52,6 +52,7 @@ export default function ListingContainer() {
   const [tableSettings, setTableSettings] = useState<string[]>(
     DEFAULT_TABLE_SETTINGS
   );
+  const [pageLimit, setPageLimit] = useState(10);
   const [isPending, setIsPending] = useState(true);
   const [activeTab, setActiveTab] = useState('allListing');
   const [tabCounts, setTabCounts] = useState<CounterProps>({
@@ -178,6 +179,13 @@ export default function ListingContainer() {
   }, [activeTab, searchFilters, page, tabSortOrder]);
 
   useEffect(() => {
+    setIsAllSelected(false);
+    setSelectedIds([]);
+    setUnselectedIds([]);
+    // eslint-disable-next-line
+  }, [activeTab]);
+
+  useEffect(() => {
     if (showModal && !isDownloadingCsv && isCsvPending) {
       setShowModal(false);
       setIsCsvPending(false);
@@ -296,6 +304,8 @@ export default function ListingContainer() {
       updateTabPageFilters({ [activeTab]: page });
       setIsPending(true);
     },
+    pageLimit,
+    onChangePageLimit: (limit) => setPageLimit(limit),
     sorting: {
       field: tabSortField[activeTab as keyof TabSortProps],
       order: tabSortOrder[activeTab as keyof TabSortProps],

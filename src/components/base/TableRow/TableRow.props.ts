@@ -32,4 +32,6 @@ export interface TableDataListProps extends TableRowProps {
   index: number;
   length: number;
   identifier: string;
+  setOnRowHover?: (value: boolean) => void;
+  onRowHover?: boolean;
 }

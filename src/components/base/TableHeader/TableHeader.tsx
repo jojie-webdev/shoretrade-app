@@ -27,16 +27,20 @@ export default function TableHeader(props: TableHeaderProps) {
         if (!index) columnType = 'column-first';
         if (index === columns.length - 1) columnType = 'column-last';
 
-        const handleOnClick = debounce((e) => {
+        const handleOnClick = debounce((e: React.MouseEvent) => {
           if (e?.detail >= 2) {
-            handleMaximizeColum?.(columns?.[index - 1]?.selector);
+            handleMaximizeColum?.(columns?.[index]?.selector);
           } else {
             if (sortField !== column.selector) {
               setSortField?.(column.selector);
             }
 
-            setSortOrder?.(sortField !== column.selector ? 'ASC'
-              : sortOrder === 'ASC' ? 'DESC' : 'ASC'
+            setSortOrder?.(
+              sortField !== column.selector
+                ? 'ASC'
+                : sortOrder === 'ASC'
+                ? 'DESC'
+                : 'ASC'
             );
           }
         }, 200);
@@ -46,6 +50,7 @@ export default function TableHeader(props: TableHeaderProps) {
             key={`${column.selector}-${index}`}
             rowType="header"
             columns={columns}
+            column={{ ...column, index }}
             columnType={columnType!}
             sticky={column?.sticky}
             selected={selectAll}
@@ -58,6 +63,7 @@ export default function TableHeader(props: TableHeaderProps) {
             }}
             onResize={onResize}
             sorted={sortField === column.selector}
+            handleMaximizeColum={handleMaximizeColum}
           >
             <span>{column.name}</span>
           </TableData>

@@ -46,7 +46,7 @@ export interface ListingProps {
     minOrder: string;
     remaining: string;
     unit: string;
-    validUntil?: Date;
+    validUntil?: string;
     catchDate?: Date;
     catchRecurrence?: string;
   };

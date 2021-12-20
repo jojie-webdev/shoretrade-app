@@ -583,7 +583,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                           weight="bold"
                           className="product-desc"
                         >
-                          {moment().to(orderDetails.validUntil)}
+                          {orderDetails.validUntil}
                         </Typography>
                       </div>
                     </ProductLabelContainer>
