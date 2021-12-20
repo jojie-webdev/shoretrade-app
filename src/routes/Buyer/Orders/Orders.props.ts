@@ -35,7 +35,7 @@ export interface OrderItem {
     shippingPrice: string;
     shippingTo: string;
     shippingFrom: string;
-    shippingAddress: string;
+    shippingAddress?: string;
     shippingChargeGst: number;
     shippingChargeNet: number;
     total: string;

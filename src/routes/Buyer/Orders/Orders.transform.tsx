@@ -27,6 +27,7 @@ export const getShipmentOptionString = (
     deliveryMethod,
     deliveryOption
   )} ${deliveryOptionToServiceNameString(
+    deliveryMethod,
     deliveryOption,
     locationName,
     sellerCompanyName
@@ -132,7 +133,11 @@ export const transformOrder = (
         orderItem?.deliveryInstruction?.locationName,
         orderItem?.sellerCompanyName
       ),
-      shippingAddress: orderItem?.deliveryInstruction?.marketAddress,
+      shippingAddress: orderItem.deliveryOption.includes('COLLECT')
+        ? orderItem.deliveryMethod.includes('ROAD')
+          ? orderItem?.deliveryInstruction?.marketAddress
+          : `${orderItem.fromAddress.streetNumber} ${orderItem.fromAddress.streetName}, ${orderItem.fromAddress.suburb}, ${orderItem.fromAddress.state} ${orderItem.fromAddress.postcode}`
+        : undefined,
       shippingFrom: `${orderItem.fromAddress.suburb}, ${orderItem.fromAddress.state}`,
       shippingTo: `${orderItem.toAddress.streetNumber} ${orderItem.toAddress.streetName}, ${orderItem.toAddress.suburb}, ${orderItem.toAddress.state}, ${orderItem.toAddress.postcode}`,
       shippingPrice: toPrice(orderItem.shippingCost),

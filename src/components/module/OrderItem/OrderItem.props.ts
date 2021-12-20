@@ -40,7 +40,7 @@ export interface OrderItem {
       pricePerUnit: string;
     }[];
     shippingOption: string;
-    shippingAddress: string;
+    shippingAddress?: string;
     shippingPrice: string;
     shippingTo: string;
     shippingFrom: string;
