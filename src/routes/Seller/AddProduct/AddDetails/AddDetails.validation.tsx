@@ -100,6 +100,9 @@ const constraintsAuction = {
       allowEmpty: false,
     },
   },
+  isAuctionDateValid: {
+    isTrue: '^Please set a valid auction date',
+  },
 };
 
 export const isValid = createValidator(constraints);
@@ -114,4 +117,9 @@ export const isDateRangeValid = (endListing: Date, catchDate: Date) => {
   return (
     endListing && catchDate && endListing > catchDate && endListing > new Date()
   );
+};
+
+export const isAuctionDateValid = (auctionDate: Date | null) => {
+  if (!auctionDate) return false;
+  return auctionDate > new Date();
 };

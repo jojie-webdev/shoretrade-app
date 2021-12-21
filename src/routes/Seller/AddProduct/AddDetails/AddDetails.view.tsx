@@ -44,6 +44,7 @@ import {
   isValidAlt,
   isValidAuction,
   isValidPreAuction,
+  isAuctionDateValid,
 } from './AddDetails.validation';
 
 // Note: even this is AEST, keep calculations on local time
@@ -216,9 +217,13 @@ const AddDetails = ({
     //     })
     //   );
     // }
-
-    if (auctionDate && !isAuctionSale) {
-      setErrors(isValid({ auctionDate }));
+    if (auctionDate && isAuctionSale) {
+      setErrors(
+        isValidAuction({
+          auctionDate,
+          isAuctionDateValid: isAuctionDateValid(auctionDate),
+        })
+      );
     }
 
     if (origin) {
@@ -299,6 +304,7 @@ const AddDetails = ({
           catchDate,
           auctionDate,
           origin,
+          isAuctionDateValid: isAuctionDateValid(auctionDate),
         });
         break;
       case isAuctionSale:
@@ -306,6 +312,7 @@ const AddDetails = ({
           catchDate,
           auctionDate,
           origin,
+          isAuctionDateValid: isAuctionDateValid(auctionDate),
         });
         break;
       case alwaysAvailable:
@@ -623,9 +630,13 @@ const AddDetails = ({
               label="Auction date (date arriving at sfm)"
               date={auctionDate ? moment(auctionDate) : null}
               onDateChange={(d) => setAuctionDate(d?.toDate() || null)}
-              error={pathOr('', ['auctionDate', '0'], errors)}
+              error={
+                pathOr('', ['auctionDate', '0'], errors) ||
+                pathOr('', ['isAuctionDateValid', '0'], errors)
+              }
               showCalendarIcon={true}
               showArrowDownIcon={true}
+              isOutsideRange={(date) => date < new Date().setHours(0, 0, 0, 0)}
             />
           </Col>
         </Row>
