@@ -19,13 +19,7 @@ import { useMediaQuery } from 'react-responsive';
 import { useComponentShouldUpdate } from 'utils/Hooks/useComponentShouldUpdate';
 import theme from 'utils/Theme';
 
-import {
-  // AUCTION_PRODUCT,
-  // AUCTION_PRODUCT_COLUMNS,
-  DIRECT_SALE_COLUMNS,
-  columnTemplate,
-  COLUMN_GROUPS,
-} from './Listings.constants';
+import { COLUMNS, columnTemplate, COLUMN_GROUPS } from './Listings.constants';
 import { ListingViewProps, CounterProps } from './Listings.props';
 import {
   ActionContainer,
@@ -123,7 +117,7 @@ export default function ListingView(props: ListingViewProps) {
 
   const isEmpty = !isPending && !listings.length;
 
-  const columns = DIRECT_SALE_COLUMNS;
+  const columns = COLUMNS[activeTab as keyof CounterProps];
 
   const downloadListingCount = isAllSelected
     ? counter[activeTab as keyof CounterProps] - unselectedIds.length

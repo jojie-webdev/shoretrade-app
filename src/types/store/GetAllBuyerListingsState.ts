@@ -29,6 +29,7 @@ export type GetAllBuyerListingResponseItem = {
   sales_channel?: string;
   is_ike_jime: boolean;
   is_ice_slurry: boolean;
+  auction_date: string;
 };
 
 export interface GetAllBuyerListingRequestOption {

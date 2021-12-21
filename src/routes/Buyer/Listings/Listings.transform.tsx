@@ -44,6 +44,7 @@ export const listingsToTableListings = (
       isIkeJime: listing.is_ike_jime,
       isIceSlurry: listing.is_ice_slurry,
       clickable: listing.sales_channel !== 'AUCTION',
+      auctionDate: listing.auction_date,
     };
   });
 };

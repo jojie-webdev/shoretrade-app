@@ -33,6 +33,7 @@ export interface AllListingTableItem {
   isIkeJime: boolean;
   isIceSlurry: boolean;
   clickable?: boolean;
+  auctionDate?: string;
 }
 
 export interface ListingViewProps {

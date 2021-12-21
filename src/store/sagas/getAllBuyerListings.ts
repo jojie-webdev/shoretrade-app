@@ -57,7 +57,9 @@ function* getAllBuyerListingsCSV(action: any) {
       downloadCsv(
         data,
         `All listings${
-          salesChannel && salesChannel !== 'ALL' && ` - ${salesChannelLabel}`
+          salesChannel && salesChannel !== 'ALL'
+            ? ` - ${salesChannelLabel}`
+            : ''
         }.csv`
       );
       yield put(getAllBuyerListingsActions.requestCsvSuccess());

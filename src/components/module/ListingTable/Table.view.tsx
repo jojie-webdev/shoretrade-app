@@ -110,7 +110,7 @@ export const TableComponent = (props: TableComponentProps) => {
       window.removeEventListener('resize', handleEvaluateLayout);
     };
     // eslint-disable-next-line
-  }, [tableRef]);
+  }, [tableRef, columns]);
 
   const conditionalStyles: any = {};
   if (overwriteLayout)

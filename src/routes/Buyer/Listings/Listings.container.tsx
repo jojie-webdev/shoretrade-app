@@ -49,12 +49,12 @@ export default function ListingContainer() {
   const [isReadypaginateViaScroll, setIsReadypaginateViaScroll] = useState(
     true
   );
+  const [activeTab, setActiveTab] = useState('allListing');
   const [tableSettings, setTableSettings] = useState<string[]>(
-    DEFAULT_TABLE_SETTINGS
+    DEFAULT_TABLE_SETTINGS[activeTab as keyof CounterProps]
   );
   const [pageLimit, setPageLimit] = useState(10);
   const [isPending, setIsPending] = useState(true);
-  const [activeTab, setActiveTab] = useState('allListing');
   const [tabCounts, setTabCounts] = useState<CounterProps>({
     allListing: 0,
     directSale: 0,
