@@ -80,6 +80,7 @@ const ShippingDateModal = (props: ShippingDateModalProps): JSX.Element => {
             error={showError ? 'Please enter a shipping date' : undefined}
             showCalendarIcon={true}
             showArrowDownIcon={true}
+            isOutsideRange={(date) => date < new Date().setHours(0, 0, 0, 0)}
           />
         </div>
         <div className="actions-container">
