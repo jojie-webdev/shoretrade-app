@@ -41,6 +41,7 @@ const SoldItem = (props: {
       isOpen: boolean;
       orderId: string;
       lineItemId: string;
+      status: 'PENDING' | 'PLACED' | 'TRANSIT' | 'DELIVERED';
     }>
   >;
   messageModal?: {
@@ -534,6 +535,7 @@ const SoldItem = (props: {
                                       isOpen: true,
                                       lineItemId: order.id,
                                       orderId: id,
+                                      status: 'PLACED',
                                     });
                                   }
                                   e.stopPropagation();

@@ -88,6 +88,7 @@ export const PendingItem = (props: {
       isOpen: boolean;
       orderId: string;
       lineItemId: string;
+      status: 'PENDING' | 'PLACED' | 'TRANSIT' | 'DELIVERED';
     }>
   >;
   updateShippingDateModal: React.Dispatch<
@@ -357,6 +358,7 @@ export const PendingItem = (props: {
                             isOpen: true,
                             lineItemId: lineItem.id,
                             orderId: order.orderId,
+                            status: 'PENDING',
                           });
                         }
                         e.stopPropagation();
@@ -400,11 +402,13 @@ const ToShip = (props: SoldGeneratedProps) => {
       isOpen: boolean;
       orderId: string;
       lineItemId: string;
+      status: 'PENDING' | 'PLACED' | 'TRANSIT' | 'DELIVERED';
     }>(),
     {
       isOpen: false,
       orderId: '',
       lineItemId: '',
+      status: 'PENDING',
     }
   );
 

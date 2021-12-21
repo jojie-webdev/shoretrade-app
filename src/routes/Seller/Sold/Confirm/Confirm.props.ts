@@ -27,6 +27,7 @@ export interface ConfirmPublicProps {
   isOpen: boolean;
   orderId: string;
   lineItemId: string;
+  status: 'PENDING' | 'PLACED' | 'TRANSIT' | 'DELIVERED';
   onClickClose: () => void;
   onClickConfirm: () => void;
 }

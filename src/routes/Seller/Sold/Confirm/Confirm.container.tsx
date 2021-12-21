@@ -41,9 +41,8 @@ const Confirm = (props: ConfirmPublicProps): JSX.Element => {
   //   );
   // };
 
-  const { orderId, lineItemId, isOpen, onClickClose } = props;
-
-  const order = GetSellerOrder(orderId, 'PENDING');
+  const { orderId, lineItemId, isOpen, onClickClose, status } = props;
+  const order = GetSellerOrder(orderId, status ?? 'PENDING');
   const selectedLineItem = order?.orderLineItem
     ? order.orderLineItem.find((lineItem: any) => lineItem.id === lineItemId)
     : undefined;

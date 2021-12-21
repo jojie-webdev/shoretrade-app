@@ -12,6 +12,7 @@ import { Store } from 'types/store/Store';
 import {
   confirmWeightActions,
   getSellerOrdersPendingActions,
+  getSellerOrdersPlacedActions,
 } from '../actions';
 
 function* confirmWeightRequest(
@@ -46,8 +47,15 @@ function* confirmWeightSuccess(
     try {
       const { data } = yield call(getAllSellerOrders, meta, state.auth.token);
       yield put(getSellerOrdersPendingActions.patch(data));
+      const { data: placedData } = yield call(
+        getAllSellerOrders,
+        { ...meta, status: 'PLACED' },
+        state.auth.token
+      );
+      yield put(getSellerOrdersPlacedActions.patch(placedData));
     } catch (e) {
       yield put(getSellerOrdersPendingActions.failed(e.message));
+      yield put(getSellerOrdersPlacedActions.failed(e.message));
     }
   } else {
     yield put(getSellerOrdersPendingActions.failed('Token not found'));
