@@ -13,21 +13,29 @@ export const listingsToTableListings = (
       } else return '';
     }).filter((info) => info !== '');
 
+    const specifications = additionalInfos
+      .map((info) => ({
+        value: info,
+        type: 'blue',
+      }))
+      .concat([
+        {
+          value: listing.quality || '',
+          type: 'blue',
+        },
+      ])
+      .concat(
+        listing.specifications.split(',').map((spec) => ({
+          value: spec,
+          type: 'plain',
+        }))
+      );
+
     return {
       id: listing.id,
       name: listing.name,
       category: listing.category,
-      specifications: additionalInfos
-        .map((info) => ({
-          value: info,
-          type: 'blue',
-        }))
-        .concat(
-          listing.specifications.split(',').map((spec) => ({
-            value: spec,
-            type: 'plain',
-          }))
-        ),
+      specifications: specifications.filter((spec) => spec.value !== ''),
       metric: listing.metric,
       sizeFrom: listing.size_from,
       sizeTo: listing.size_to,
@@ -45,6 +53,7 @@ export const listingsToTableListings = (
       isIceSlurry: listing.is_ice_slurry,
       clickable: listing.sales_channel !== 'AUCTION',
       auctionDate: listing.auction_date,
+      quality: listing.quality,
     };
   });
 };

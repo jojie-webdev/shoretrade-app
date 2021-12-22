@@ -164,6 +164,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                         catchRecurrence={product.catchRecurrence}
                         isIkeJime={product.isIkeJime}
                         isIceSlurry={product.isIceSlurry}
+                        quality={product.quality}
                       />
                     </StyledInteraction>
                   ) : (
@@ -190,6 +191,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                       catchRecurrence={product.catchRecurrence}
                       isIkeJime={product.isIkeJime}
                       isIceSlurry={product.isIceSlurry}
+                      quality={product.quality}
                     />
                   )}
                 </Link>

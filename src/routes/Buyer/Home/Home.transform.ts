@@ -68,6 +68,7 @@ export function recentlyAddedToPreviewProps(
     catchRecurrence: data.catchRecurrence,
     isIkeJime: data.isIkeJime,
     isIceSlurry: data.isIceSlurry,
+    quality: data.quality,
   };
 }
 
@@ -100,6 +101,7 @@ export function favouritesToPreviewProps(
     catchRecurrence: data.catchRecurrence,
     isIkeJime: data.isIkeJime,
     isIceSlurry: data.isIceSlurry,
+    quality: data.quality,
   };
 }
 

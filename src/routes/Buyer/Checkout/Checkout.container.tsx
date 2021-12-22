@@ -124,11 +124,18 @@ const Checkout = (): JSX.Element => {
             label: info,
             type: 'blue',
           }))
+          .concat([
+            {
+              label: cartItem.listing.quality || '',
+              type: 'blue',
+            },
+          ])
           .concat(
             cartItem.listing.specifications
               .split(',')
               .map((label) => ({ label, type: 'plain' }))
-          ),
+          )
+          .filter((tag) => tag.label !== ''),
         weight: cartItem.weight.toFixed(2),
         unit: cartItem.listing.measurementUnit,
         size: sizeToString(

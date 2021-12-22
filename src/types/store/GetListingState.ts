@@ -58,6 +58,7 @@ export type GetListingResponseItem = {
   } | null;
   isIkeJime: boolean;
   isIceSlurry: boolean;
+  quality?: string;
 };
 
 export type GetListingPayload = GenericResponse<{

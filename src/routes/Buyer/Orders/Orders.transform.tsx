@@ -98,12 +98,19 @@ export const transformOrder = (
               label: info,
               type: 'blue',
             }))
+            .concat([
+              {
+                label: lineItem.listing.quality || '',
+                type: 'blue',
+              },
+            ])
             .concat(
               lineItem.listing.specifications.map((label) => ({
                 label,
                 type: 'plain',
               }))
-            ),
+            )
+            .filter((tag) => tag.label !== ''),
           weight:
             lineItem.listingBoxes
               .reduce((accum, current) => {

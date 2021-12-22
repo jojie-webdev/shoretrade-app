@@ -34,6 +34,7 @@ export interface AllListingTableItem {
   isIceSlurry: boolean;
   clickable?: boolean;
   auctionDate?: string;
+  quality?: string;
 }
 
 export interface ListingViewProps {

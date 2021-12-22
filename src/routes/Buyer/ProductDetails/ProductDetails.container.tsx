@@ -313,12 +313,19 @@ const ProductDetails = (): JSX.Element => {
         label: info,
         type: 'blue',
       }))
+      .concat([
+        {
+          label: currentListing?.quality || '',
+          type: 'blue',
+        },
+      ])
       .concat(
         (currentListing?.state || []).map((s) => ({
           label: s,
           type: 'plain',
         }))
-      ),
+      )
+      .filter((tag) => tag.label !== ''),
     size: sizeToString(
       currentListing?.size.unit || '',
       currentListing?.size.from,

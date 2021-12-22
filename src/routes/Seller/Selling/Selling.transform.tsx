@@ -19,6 +19,8 @@ export const listingToItem = (
   if (data.is_ice_slurry)
     additionalInfos[additionalInfos.length] = 'Ice Slurry';
 
+  if (data.quality) additionalInfos[additionalInfos.length] = data.quality;
+
   return {
     id: data.listing_id,
     uri:

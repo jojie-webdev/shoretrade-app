@@ -39,6 +39,7 @@ export type ListingResponseItem = {
   weightConfirmed: boolean;
   isIkeJime: boolean;
   isIceSlurry: boolean;
+  quality?: string;
 };
 
 export type GetBuyerOrdersResponseItem = {

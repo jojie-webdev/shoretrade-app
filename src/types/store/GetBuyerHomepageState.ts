@@ -47,6 +47,7 @@ export type GetBuyerHomepageResponseListingItem = {
   measurementUnit: string;
   isIkeJime: boolean;
   isIceSlurry: boolean;
+  quality?: string;
 };
 
 export type GetBuyerHomepagePayload = GenericResponse<{

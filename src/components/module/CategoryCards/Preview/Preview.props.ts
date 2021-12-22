@@ -32,4 +32,5 @@ export interface PreviewProps {
   alternate?: boolean;
   isIkeJime: boolean;
   isIceSlurry: boolean;
+  quality?: string;
 }

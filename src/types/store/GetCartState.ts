@@ -37,6 +37,7 @@ export type GetCartListingDataItem = {
   packagingId: string | null;
   isIkeJime?: boolean;
   isIceSlurry?: boolean;
+  quality?: string;
 };
 
 export type GetCartDataItem = {

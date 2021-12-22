@@ -108,6 +108,27 @@ export const PreviewDetailAlt = (props: PreviewProps) => {
                 )
               );
             })}
+            {props.quality && (
+              <Col xs="content" style={{ marginTop: '5px' }}>
+                <Badge
+                  fontColor={theme.grey.noshade}
+                  badgeColor={theme.brand.info}
+                >
+                  <BadgeText
+                    variant="caption"
+                    weight="bold"
+                    color="noshade"
+                    style={{
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    {props.quality}
+                  </BadgeText>
+                </Badge>
+              </Col>
+            )}
             {props.state?.map((item) => {
               return (
                 <Col xs="content" style={{ marginTop: '5px' }}>
@@ -309,6 +330,27 @@ const Preview = (props: PreviewProps): JSX.Element => {
                     )
                   );
                 })}
+                {props.quality && (
+                  <Col xs="content" style={{ marginTop: '5px' }}>
+                    <Badge
+                      fontColor={theme.grey.noshade}
+                      badgeColor={theme.brand.info}
+                    >
+                      <BadgeText
+                        variant="caption"
+                        weight="bold"
+                        color="noshade"
+                        style={{
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                        }}
+                      >
+                        {props.quality}
+                      </BadgeText>
+                    </Badge>
+                  </Col>
+                )}
                 {props.state?.map((item) => {
                   return (
                     <Col xs="content" style={{ marginTop: '5px' }}>

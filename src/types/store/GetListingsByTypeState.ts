@@ -40,6 +40,7 @@ export type GetListingsByTypeResponseListingItem = {
   type: string;
   isIkeJime: boolean;
   isIceSlurry: boolean;
+  quality?: string;
 };
 
 export type GetListingsByTypePayload = GenericResponse<{
