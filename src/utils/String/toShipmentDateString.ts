@@ -34,7 +34,7 @@ export const serviceNameToString = (
     serviceName.indexOf('TO DOOR') !== -1 ||
     serviceName.indexOf('METRO TO METRO') !== -1 ||
     serviceName.indexOf('MANAGED') !== -1
-    ? 'delivery to door'
+    ? 'Delivery to Door'
     : `Pickup at ${locationName || 'airport'}`;
 };
 
