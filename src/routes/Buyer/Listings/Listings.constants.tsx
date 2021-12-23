@@ -43,9 +43,9 @@ const AQUAFUTURE_DEFAULT_TABLE_SETTINGS = [
   'size',
   'remainingWeight',
   'price',
+  'catchDate',
   'endDate',
   'origin',
-  'catchDate',
 ];
 
 const PRE_AUCTION_DEFAULT_TABLE_SETTINGS = [
@@ -301,6 +301,15 @@ const AQUAFUTURE_COLUMNS = [
     },
   },
   {
+    name: 'Estimated Catch Date',
+    selector: 'catchDate',
+    sortable: true,
+    tooltip: (data: any) => moment(data?.catchDate).format('ll'),
+    component: function EstimatedCatchDate(data: any, _state: any) {
+      return <>{moment(data?.catchDate).format('ll')}</>;
+    },
+  },
+  {
     name: 'Valid Until',
     selector: 'endDate',
     sortable: true,
@@ -330,15 +339,6 @@ const AQUAFUTURE_COLUMNS = [
           {data?.origin?.countryCode}
         </>
       );
-    },
-  },
-  {
-    name: 'Estimated Catch Date',
-    selector: 'catchDate',
-    sortable: true,
-    tooltip: (data: any) => moment(data?.catchDate).format('ll'),
-    component: function EstimatedCatchDate(data: any, _state: any) {
-      return <>{moment(data?.catchDate).format('ll')}</>;
     },
   },
 ];

@@ -10,12 +10,12 @@ export const shipmentModeToString = (
     return '';
   }
   if (shipmentMode.indexOf('ROAD') !== -1) {
-    return 'Road freight';
+    return 'Road Freight';
   }
   if (shipmentMode.indexOf('AIR') !== -1 || shipmentMode.indexOf('VA') !== -1) {
-    return 'Air freight';
+    return 'Air Freight';
   }
-  return 'Road freight';
+  return 'Road Freight';
 };
 
 export const serviceNameToString = (
@@ -23,7 +23,7 @@ export const serviceNameToString = (
   locationName?: string,
   sellerCompany?: string
 ) => {
-  if (serviceName === CLICK_AND_COLLECT_SERVICE) return 'Pick Up at';
+  if (serviceName === CLICK_AND_COLLECT_SERVICE) return 'Pickup at';
 
   // serviceName value from shorefreight returns complete sentence on this option
   if (!locationName) {
