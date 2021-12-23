@@ -93,6 +93,9 @@ const Review = ({
   if (editableListing.isIceSlurry)
     additionalInfos[additionalInfos.length] = 'Ice Slurry';
 
+  if (editableListing.quality)
+    additionalInfos[additionalInfos.length] = editableListing.quality;
+
   const size = sizeToString(
     (isCustomType
       ? editableListing?.customTypeData?.metric.name

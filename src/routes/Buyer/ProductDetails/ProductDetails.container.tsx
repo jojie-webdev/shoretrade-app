@@ -331,9 +331,11 @@ const ProductDetails = (): JSX.Element => {
       currentListing?.size.from,
       currentListing?.size.to
     ),
-    location: `${currentListing?.origin.suburb || ''}, ${
-      currentListing?.origin.state || ''
-    }, ${currentListing?.origin.countryCode || ''}`,
+    location: `${currentListing?.address.suburb || ''}, ${
+      currentListing?.address.state || ''
+    }, ${currentListing?.address.countryCode || ''}, ${
+      currentListing?.address.postcode || ''
+    }`,
   };
   const productDetailsCard6Props: ProductDetailsCard6Props = {
     price: price.toFixed(2),

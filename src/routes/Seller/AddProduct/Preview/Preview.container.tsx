@@ -8,6 +8,7 @@ import {
   getListingFormDataActions,
   updateListingActions,
 } from 'store/actions';
+import { GetCompanyAddresses } from 'store/selectors/seller/addresses';
 import { GetCategoryData } from 'store/selectors/seller/categories';
 import { GetListingFormDataSelector } from 'store/selectors/seller/listings';
 import { Store } from 'types/store/Store';
@@ -43,6 +44,10 @@ const PreviewContainer = (): JSX.Element => {
   const categoryData = GetCategoryData(
     editableListing?.customTypeData?.categoryId || ''
   );
+  const companyAddresses = GetCompanyAddresses(editableListing?.company || '');
+  const productShippingAddress = companyAddresses.find(
+    (addr) => addr.id === editableListing.addressId
+  );
   const isCustomType = editableListing?.isCustomType || false;
 
   const currentUser = useSelector(
@@ -51,11 +56,19 @@ const PreviewContainer = (): JSX.Element => {
 
   const sellerImage = currentUser?.profileImage;
 
+  const companyAddress = {
+    suburb: productShippingAddress?.suburb,
+    state: productShippingAddress?.state,
+    postcode: productShippingAddress?.postcode,
+    countryCode: productShippingAddress?.countryCode,
+  };
+
   const listing = editableListingToListingProps(
     editableListing,
     listingFormData,
     categoryData,
-    sellerImage
+    sellerImage,
+    companyAddress
   );
 
   const isPendingCreateListing =

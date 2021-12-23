@@ -60,7 +60,7 @@ export const listingToListingProps = (
         data?.size_from,
         data?.size_to
       ),
-      location: `${data?.origin.suburb}, ${data?.origin.state}, ${data?.origin.countryCode}`,
+      location: `${data?.address_suburb}, ${data?.address_state}, ${data?.address_country_code}, ${data?.address_postcode}`,
       vendor: {
         uri: data?.coop_image,
         name: data?.coop_name,

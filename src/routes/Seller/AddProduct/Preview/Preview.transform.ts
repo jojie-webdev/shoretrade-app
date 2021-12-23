@@ -13,7 +13,13 @@ export const editableListingToListingProps = (
   editableListing: Partial<EditableListingState>,
   listingFormData: GetListingFormDataResponse | null,
   categoryData?: CategoryData,
-  sellerImage?: string
+  sellerImage?: string,
+  companyAddress?: Partial<{
+    suburb: string;
+    state: string;
+    postcode: string;
+    countryCode: string;
+  }>
 ): ListingProps => {
   const isCustomType = editableListing?.isCustomType || false;
   const totalWeight = (editableListing?.boxes || []).reduce(
@@ -44,6 +50,9 @@ export const editableListingToListingProps = (
 
   if (editableListing.isIceSlurry)
     additionalInfos[additionalInfos.length] = 'Ice Slurry';
+
+  if (editableListing.quality)
+    additionalInfos[additionalInfos.length] = editableListing.quality;
 
   const defaultImageUri =
     (isCustomType
@@ -105,9 +114,9 @@ export const editableListingToListingProps = (
         editableListing?.sizeFrom || '',
         editableListing?.sizeTo || ''
       ),
-      location: `${editableListing?.origin?.suburb || ''}, ${
-        editableListing?.origin?.state || ''
-      }, ${editableListing?.origin?.countryCode}`,
+      location: `${companyAddress?.suburb || ''}, ${
+        companyAddress?.state || ''
+      }, ${companyAddress?.countryCode}, ${companyAddress?.postcode}`,
       vendor: {
         uri: sellerImage,
         name: editableListing.company,
