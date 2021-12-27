@@ -55,6 +55,7 @@ export default function ListingContainer() {
   );
   const [pageLimit, setPageLimit] = useState(10);
   const [isPending, setIsPending] = useState(true);
+  const [totalCount, setTotalCount] = useState(0);
   const [tabCounts, setTabCounts] = useState<CounterProps>({
     allListing: 0,
     directSale: 0,
@@ -171,12 +172,12 @@ export default function ListingContainer() {
         sortField: tabSortField[activeTab as keyof TabSortProps],
         searchTerm: search,
         page,
-        limit: isMobile ? 100 : 10,
+        limit: isMobile ? 100 : pageLimit,
         sortOrder: tabSortOrder[activeTab as keyof TabSortProps],
       })
     );
     // eslint-disable-next-line
-  }, [activeTab, searchFilters, page, tabSortOrder]);
+  }, [activeTab, searchFilters, page, tabSortOrder, pageLimit]);
 
   useEffect(() => {
     setIsAllSelected(false);
@@ -207,6 +208,7 @@ export default function ListingContainer() {
         auction: Number(listingRequestData.counter.auction || 0),
       });
       setIsPending(false);
+      setTotalCount(Number(listingRequestData.count || 0));
     }
   }, [listingRequestData]);
 
@@ -287,7 +289,7 @@ export default function ListingContainer() {
     handleSelectRow,
     isPending,
     counter: tabCounts,
-    totalCount: Number(listingRequestData?.count),
+    totalCount,
     totalPage,
     search,
     onChangeSearch: (value) => {

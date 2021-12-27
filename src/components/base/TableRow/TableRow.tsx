@@ -96,7 +96,7 @@ export default function TableRow(props: TableRowProps) {
 
         return (
           <TableDataList
-            key={`key-identifier`}
+            key={`key-identifier-${identifier}`}
             {...props}
             column={column}
             index={index}

@@ -75,8 +75,6 @@ export const TabContainer = styled.div`
 `;
 
 export const PaginationContainer = styled.div`
-  justify-content: center;
-  display: flex;
   margin-top: 16px;
 `;
 

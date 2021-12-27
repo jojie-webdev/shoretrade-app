@@ -10,8 +10,7 @@ import Modal from 'components/layout/Modal';
 import ListingCard from 'components/module/ListingCard';
 import TableComponent from 'components/module/ListingTable';
 import Loading from 'components/module/Loading';
-// import PaginationBar from 'components/module/PaginationBar';
-import Pagination from 'components/module/Pagination';
+import PaginationBar from 'components/module/PaginationBar';
 import SearchComponent from 'components/module/Search';
 import { SALES_CHANNELS_BUYER } from 'consts/salesChannels';
 import debounce from 'lodash.debounce';
@@ -38,7 +37,6 @@ import {
   MobileTable,
   Preloader,
   EmptyScreen,
-  // TabletHeaderSortContainer,
   MobileResults,
   TabItem,
   Tag,
@@ -105,8 +103,8 @@ export default function ListingView(props: ListingViewProps) {
     onChangeTab,
     page,
     onChangePage,
-    // pageLimit,
-    // onChangePageLimit,
+    pageLimit,
+    onChangePageLimit,
     sorting,
     onChangeSortField,
     onChangeSortOrder,
@@ -146,8 +144,6 @@ export default function ListingView(props: ListingViewProps) {
     });
     // eslint-disable-next-line
   }, []);
-
-  // if (activeTab === AUCTION_PRODUCT) columns = AUCTION_PRODUCT_COLUMNS;
 
   const debouncedSearch = debounce(function (value: string) {
     onChangeSearch(value);
@@ -425,22 +421,14 @@ export default function ListingView(props: ListingViewProps) {
       />
       {totalPage > 1 && (
         <PaginationContainer>
-          <Pagination
-            numPages={totalPage}
-            currentValue={page}
-            onClickButton={(value) => onChangePage(value)}
-            variant="number"
-            color="shade10"
-            iconColor={theme.grey.shade10}
-          />
-          {/* <PaginationBar
+          <PaginationBar
             page={page}
             limit={pageLimit}
             totalCount={totalCount}
             setLimit={onChangePageLimit}
-            setPage={(page: any) => console.log(page)}
+            setPage={(getPage: any) => onChangePage(getPage(page))}
             maxPage={totalPage}
-          /> */}
+          />
         </PaginationContainer>
       )}
     </div>
