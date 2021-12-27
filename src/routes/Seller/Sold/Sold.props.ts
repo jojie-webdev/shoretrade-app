@@ -43,7 +43,7 @@ export type SoldItemData = {
     price: string;
     weight: string;
     name: string;
-    tags: { label: string }[];
+    tags: { label: string; type: 'plain' | 'blue' | string }[];
     size: string;
     fisherman: string;
     totalPrice: string;

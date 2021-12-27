@@ -108,6 +108,9 @@ export type GetSellerOrdersResponseItem = {
         unitKgConversion: number;
         weightConfirmed: boolean;
         priceDelta: number | null;
+        isIkeJime: boolean;
+        isIceSlurry: boolean;
+        quality?: string;
       };
     }
   ];

@@ -331,9 +331,19 @@ const SoldItem = (props: {
                             </Typography>
 
                             <div className="tags-container">
-                              {order.tags.map(({ label }) => (
-                                <Tag key={label}>
-                                  <Typography variant="caption" color="noshade">
+                              {order.tags.map(({ label, type }) => (
+                                <Tag
+                                  key={label}
+                                  background={
+                                    type === 'blue'
+                                      ? theme.brand.info
+                                      : undefined
+                                  }
+                                >
+                                  <Typography
+                                    variant="overlineSmall"
+                                    color="noshade"
+                                  >
                                     {label}
                                   </Typography>
                                 </Tag>

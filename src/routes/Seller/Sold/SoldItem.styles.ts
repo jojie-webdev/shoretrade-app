@@ -409,11 +409,13 @@ export const ItemDetail = styled(Typography)<{ row?: boolean }>`
   }
 `;
 
-export const Tag = styled.div`
-  /* background: ${(props) => props.theme.grey.shade8}; */
-  padding: 4px 8px;
+export const Tag = styled.div<{
+  background?: string;
+}>`
+  background: ${({ background }) => background || 'none'};
+  padding: 5px 8px 2px 8px;
   margin-right: 8px;
-  border-radius: 4px;
+  border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;

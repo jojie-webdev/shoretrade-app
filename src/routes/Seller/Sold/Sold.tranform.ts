@@ -182,29 +182,52 @@ export const orderItemToSoldItemData = ({
           totalWeight: `${order.orderLineItem
             .reduce((t, lineItem) => t + lineItem.weight, 0)
             .toFixed(2)} ${formatMeasurementUnit(groupMeasurementUnit)}`,
-          orders: order.orderLineItem.map((lineItem) => ({
-            id: lineItem.id,
-            weightConfirmed: lineItem.weightConfirmed,
-            unit: lineItem.listing.measurementUnit,
-            orderNumber: formatOrderReferenceNumber(order.orderRefNumber),
-            buyer: order.buyerCompanyName,
-            fisherman: lineItem.listing.fishermanFirstName
-              ? `${lineItem.listing.fishermanFirstName} ${lineItem.listing.fishermanLastName}`
-              : 'N/A',
-            uri: lineItem.listing.images[0],
-            price: `${toPrice(lineItem.listing.pricePerKilo)}`,
-            weight: `${lineItem.weight.toFixed(2)} ${formatMeasurementUnit(
-              lineItem.listing.measurementUnit
-            )}`,
-            totalPrice: `${toPrice(lineItem.price)}`,
-            name: lineItem.listing.typeName,
-            tags: lineItem.listing.specifications.map((s) => ({ label: s })),
-            size: sizeToString(
-              lineItem.listing.metricLabel,
-              lineItem.listing.sizeFrom || '',
-              lineItem.listing.sizeTo || ''
-            ),
-          })),
+          orders: order.orderLineItem.map((lineItem) => {
+            const additionalInfos = [];
+            if (lineItem.listing.isIkeJime)
+              additionalInfos[additionalInfos.length] = 'Ike Jime';
+
+            if (lineItem.listing.isIceSlurry)
+              additionalInfos[additionalInfos.length] = 'Ice Slurry';
+
+            if (lineItem.listing.quality)
+              additionalInfos[additionalInfos.length] =
+                lineItem.listing.quality;
+
+            return {
+              id: lineItem.id,
+              weightConfirmed: lineItem.weightConfirmed,
+              unit: lineItem.listing.measurementUnit,
+              orderNumber: formatOrderReferenceNumber(order.orderRefNumber),
+              buyer: order.buyerCompanyName,
+              fisherman: lineItem.listing.fishermanFirstName
+                ? `${lineItem.listing.fishermanFirstName} ${lineItem.listing.fishermanLastName}`
+                : 'N/A',
+              uri: lineItem.listing.images[0],
+              price: `${toPrice(lineItem.listing.pricePerKilo)}`,
+              weight: `${lineItem.weight.toFixed(2)} ${formatMeasurementUnit(
+                lineItem.listing.measurementUnit
+              )}`,
+              totalPrice: `${toPrice(lineItem.price)}`,
+              name: lineItem.listing.typeName,
+              tags: additionalInfos
+                .map((info) => ({
+                  label: info,
+                  type: 'blue',
+                }))
+                .concat(
+                  lineItem.listing.specifications.map((s) => ({
+                    label: s,
+                    type: 'plain',
+                  }))
+                ),
+              size: sizeToString(
+                lineItem.listing.metricLabel,
+                lineItem.listing.sizeFrom || '',
+                lineItem.listing.sizeTo || ''
+              ),
+            };
+          }),
           toAddressState: order.toAddress.state,
           allowPartialShipment: order.orderLineItem.some(
             (i) => i.weightConfirmed
