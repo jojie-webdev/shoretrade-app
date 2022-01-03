@@ -100,7 +100,6 @@ export const StyledInteraction = styled(Interaction)<{
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        white-space: nowrap;
         margin-right: 8px;
 
         svg {
