@@ -52,7 +52,6 @@ export const StyledInteraction = styled(Interaction)<{
       .label {
         display: flex;
         align-items: center;
-        white-space: nowrap;
         margin-right: 8px;
 
         svg {
