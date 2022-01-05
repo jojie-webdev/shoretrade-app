@@ -290,6 +290,9 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                         value={weight}
                         onChangeText={setWeight}
                         inputType="decimal"
+                        placeholder={`Minimum Order: ${
+                          productDetailsCard6Props.minOrder
+                        } ${productDetailsCard6Props.unit ?? 'kg'}`}
                       />
                     </TextFieldWrapper>
                     <RemainingWrapper>
