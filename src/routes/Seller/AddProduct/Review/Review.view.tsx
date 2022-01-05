@@ -93,16 +93,14 @@ const Review = ({
   if (editableListing.isIceSlurry)
     additionalInfos[additionalInfos.length] = 'Ice Slurry';
 
-  if (editableListing.quality)
-    additionalInfos[additionalInfos.length] = editableListing.quality;
 
-  const size = sizeToString(
+  const size = `${sizeToString(
     (isCustomType
       ? editableListing?.customTypeData?.metric.name
       : listingFormData?.metric.name) || '',
     editableListing?.sizeFrom || '',
     editableListing?.sizeTo || ''
-  );
+  )}${editableListing.quality && `, ${editableListing.quality}`}`;
 
   const boxes = editableListing?.boxes
     ? (editableListing?.boxes || []).length.toString()
