@@ -73,17 +73,17 @@ const SALES_CHANNELS = [
   {
     value: 'direct',
     name: 'Direct Sale',
-    description: 'Supplier currently has – going to sell immediately',
+    description: 'Sell your products directly to Buyers',
   },
   {
     value: 'aquafuture',
     name: 'Aquafuture',
-    description: 'If this product will be caught by a future date',
+    description: 'Lock in sales for products you will catch in the future',
   },
   {
     value: 'auction',
     name: 'Auction',
-    description: 'Goes into all listings under Auction',
+    description: 'Put your products to Auction at the Sydney Fish Markets',
   },
 ];
 
@@ -579,7 +579,7 @@ const AddDetails = ({
             <Checkbox
               onClick={() => setIsPreAuctionSale((prevState) => !prevState)}
               checked={isPreAuctionSale}
-              label="Pre-Auction – Allow for this product to be sold while on it’s way to Auction"
+              label="Pre-Auction: Allow your products to be sold on the way to Auction for a set price"
               error={pathOr('', ['isPreAuctionSale', '0'], errors)}
               typographyProps={{ variant: 'label', weight: 'normal' }}
             />
