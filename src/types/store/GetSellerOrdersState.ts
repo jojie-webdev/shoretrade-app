@@ -55,7 +55,10 @@ export type GetSellerOrdersResponseItem = {
   deliveryDate: string | null;
   deliveryOption: string;
   deliveryMethod: string;
-  deliveryInstruction: null;
+  deliveryInstruction: {
+    locationName: string;
+    marketAddress: string;
+  };
   sellerDropOffCutOffTime: null;
   status: string;
   totalPrice: string;

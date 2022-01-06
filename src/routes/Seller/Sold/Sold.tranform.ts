@@ -128,6 +128,8 @@ export const orderItemToPendingToShipItem = (
           deliveryMethodLabel,
           deliveryAddress: deliveryMethodLabel.includes('Collecting from')
             ? sellerAddress
+            : deliveryMethodLabel.includes('Drop')
+            ? orders[0].deliveryInstruction?.marketAddress
             : marketAddress,
           buyerId: orders[0].buyerId, // this is employee id
           orderCount: orders.length,
@@ -168,6 +170,8 @@ export const orderItemToSoldItemData = ({
           key: groupKey,
           deliveryAddress: groupKey.includes('Collecting from')
             ? sellerAddress
+            : groupKey.includes('Drop')
+            ? order.deliveryInstruction?.marketAddress
             : marketAddress,
           id: order.orderId,
           date: moment(order.orderDate).toDate(),
