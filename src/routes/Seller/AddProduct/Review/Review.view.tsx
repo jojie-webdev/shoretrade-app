@@ -93,14 +93,13 @@ const Review = ({
   if (editableListing.isIceSlurry)
     additionalInfos[additionalInfos.length] = 'Ice Slurry';
 
-
   const size = `${sizeToString(
     (isCustomType
       ? editableListing?.customTypeData?.metric.name
       : listingFormData?.metric.name) || '',
     editableListing?.sizeFrom || '',
     editableListing?.sizeTo || ''
-  )}${editableListing.quality && `, ${editableListing.quality}`}`;
+  )}${editableListing.quality ? `, ${editableListing.quality}` : ''}`;
 
   const boxes = editableListing?.boxes
     ? (editableListing?.boxes || []).length.toString()
