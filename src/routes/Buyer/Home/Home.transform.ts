@@ -69,6 +69,7 @@ export function recentlyAddedToPreviewProps(
     isIkeJime: data.isIkeJime,
     isIceSlurry: data.isIceSlurry,
     quality: data.quality,
+    templateDeliveryDate: data.templateDeliveryDate,
   };
 }
 
@@ -102,6 +103,7 @@ export function favouritesToPreviewProps(
     isIkeJime: data.isIkeJime,
     isIceSlurry: data.isIceSlurry,
     quality: data.quality,
+    templateDeliveryDate: data.templateDeliveryDate,
   };
 }
 

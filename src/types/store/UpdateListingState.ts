@@ -41,6 +41,7 @@ export type UpdateListingRequestData = {
   quality: string | null;
   isIkeJime: boolean;
   isIceSlurry: boolean;
+  templateDeliveryDate: string | null;
 };
 
 export type UpdateListingPayload = GenericResponse;

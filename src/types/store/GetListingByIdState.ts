@@ -82,6 +82,7 @@ export type GetListingByIdData = {
   quality: string | null;
   is_ike_jime: boolean;
   is_ice_slurry: boolean;
+  template_delivery_date: string | null;
 };
 
 export type GetListingByIdPayload = GenericResponse<GetListingByIdData>;

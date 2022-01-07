@@ -209,6 +209,21 @@ export const PreviewDetailAlt = (props: PreviewProps) => {
               {minOrder}
             </ResultTextValueAlt>
           </Row>
+          <Row nogutter>
+            <ResultTextAlt
+              variant="small"
+              color="shade6"
+              style={{
+                paddingRight: 8,
+                visibility: props.templateDeliveryDate ? 'visible' : 'hidden',
+              }}
+            >
+              Est Shipping:
+            </ResultTextAlt>
+            <ResultTextValueAlt variant="small" weight="bold">
+              {props.templateDeliveryDate}
+            </ResultTextValueAlt>
+          </Row>
         </BodyColumnContainer>
       </BodyContainerAlt>
     </DetailsContainer>
@@ -426,6 +441,22 @@ const Preview = (props: PreviewProps): JSX.Element => {
               </ResultText>
               <ResultTextValue variant="small" weight="bold">
                 {props.minimumOrder} {props.unit}
+              </ResultTextValue>
+            </Row>
+
+            <Row justify="between" nogutter>
+              <ResultText
+                variant="small"
+                color="shade6"
+                style={{
+                  paddingRight: 8,
+                  visibility: props.templateDeliveryDate ? 'visible' : 'hidden',
+                }}
+              >
+                Est Shipping:
+              </ResultText>
+              <ResultTextValue variant="small" weight="bold">
+                {props.templateDeliveryDate}
               </ResultTextValue>
             </Row>
           </BodyContainer>

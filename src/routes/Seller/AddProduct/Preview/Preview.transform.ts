@@ -136,6 +136,7 @@ export const editableListingToListingProps = (
         ? moment(editableListing?.catchDate).toDate()
         : undefined,
       catchRecurrence: editableListing?.catchRecurrence || undefined,
+      templateDeliveryDate: editableListing?.templateDeliveryDate || null,
     },
     boxDetails: {
       boxes: editableListing?.boxes || [],

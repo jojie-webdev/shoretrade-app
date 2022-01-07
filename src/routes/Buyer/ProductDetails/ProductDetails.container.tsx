@@ -350,6 +350,7 @@ const ProductDetails = (): JSX.Element => {
     catchRecurrence: currentListing?.catchRecurrence || undefined,
     unit: currentListing?.measurementUnit || undefined,
     hiddenPrice: isPendingAccount,
+    templateDeliveryDate: currentListing?.templateDeliveryDate,
   };
   const sellerRatingProps: ProductSellerRatingProps = {
     name: currentListing?.coop.name || '',

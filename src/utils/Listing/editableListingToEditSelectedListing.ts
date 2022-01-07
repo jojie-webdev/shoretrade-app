@@ -71,5 +71,6 @@ export const editableListingToEditSelectedListing = (
     quality: data?.quality || null,
     isIkeJime: data?.is_ike_jime || false,
     isIceSlurry: data?.is_ice_slurry || false,
+    templateDeliveryDate: data?.template_delivery_date || null,
   };
 };

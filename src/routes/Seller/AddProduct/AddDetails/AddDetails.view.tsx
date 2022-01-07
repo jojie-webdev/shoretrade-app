@@ -60,6 +60,15 @@ const timeOptions = [...Array(48)].map((v, i) => {
   };
 });
 
+const estimatedShippingOptions = [
+  'Next day',
+  'Within 2 days',
+  'Between 3 to 5 days',
+  'Between 1 to 2 weeks',
+  'Between 2 to 4 weeks',
+  'Next month',
+].map((v) => ({ value: v, label: v }));
+
 const catchRecurrenceOptions = [
   {
     label: 'Daily',
@@ -169,6 +178,10 @@ const AddDetails = ({
     editableListing?.ends
       ? moment(editableListing?.ends).tz('Australia/Brisbane').format('HH:mm')
       : ''
+  );
+
+  const [templateDeliveryDate, setTemplateDeliveryDate] = useState(
+    editableListing?.templateDeliveryDate || null
   );
 
   const [shippingAddress, setShippingAddress] = useState(
@@ -371,6 +384,7 @@ const AddDetails = ({
           description,
           addressId: shippingAddress,
           alwaysAvailable: false,
+          templateDeliveryDate,
         });
       } else if (
         isEmptyError &&
@@ -392,6 +406,7 @@ const AddDetails = ({
           description,
           alwaysAvailable: false,
           addressId: defaultShippingAddress?.value || '',
+          templateDeliveryDate,
         });
       }
     } else {
@@ -409,6 +424,7 @@ const AddDetails = ({
           description,
           addressId: shippingAddress,
           alwaysAvailable: true,
+          templateDeliveryDate,
         });
       }
     }
@@ -757,6 +773,19 @@ const AddDetails = ({
               />
             </Col>
           </Row>
+          {!isAquafuture && (
+            <Row className="textfield-row">
+              <Col md={6} className="textfield-col">
+                <Select
+                  value={templateDeliveryDate ?? undefined}
+                  onChange={(option) => setTemplateDeliveryDate(option.value)}
+                  options={estimatedShippingOptions}
+                  label="WHEN WILL YOU SHIP THE PRODUCT?"
+                  error={pathOr('', ['templateDeliveryDate', '0'], errors)}
+                />
+              </Col>
+            </Row>
+          )}
         </>
       )}
 

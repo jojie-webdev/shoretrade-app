@@ -49,6 +49,7 @@ export interface ListingProps {
     validUntil?: string;
     catchDate?: Date;
     catchRecurrence?: string;
+    templateDeliveryDate: string | null;
   };
   boxDetails: {
     boxes?: {

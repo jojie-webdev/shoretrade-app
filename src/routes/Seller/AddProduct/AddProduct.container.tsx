@@ -439,6 +439,7 @@ const AddProduct = (): JSX.Element => {
     isAquafuture,
     isAuctionSale,
     isPreAuctionSale,
+    templateDeliveryDate,
   }: {
     pricePerKilo: number;
     auctionDate: Date | null;
@@ -456,6 +457,7 @@ const AddProduct = (): JSX.Element => {
     isAquafuture: boolean;
     isAuctionSale: boolean;
     isPreAuctionSale: boolean;
+    templateDeliveryDate: string | null;
   }) => {
     if (isBulkUpload) {
       dispatch(
@@ -481,6 +483,7 @@ const AddProduct = (): JSX.Element => {
                 origin,
                 description,
                 addressId,
+                templateDeliveryDate,
               }
             : {
                 isAquafuture,
@@ -494,6 +497,7 @@ const AddProduct = (): JSX.Element => {
                 origin,
                 description,
                 addressId,
+                templateDeliveryDate,
               }
         )
       );

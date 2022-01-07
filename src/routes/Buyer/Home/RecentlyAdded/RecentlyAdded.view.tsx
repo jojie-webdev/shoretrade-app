@@ -82,6 +82,7 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
                           isIkeJime={rec.isIkeJime}
                           isIceSlurry={rec.isIceSlurry}
                           quality={rec.quality}
+                          templateDeliveryDate={rec.templateDeliveryDate}
                         />
                       </StyledInteraction>
                     ) : (
@@ -109,6 +110,7 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
                         isIkeJime={rec.isIkeJime}
                         isIceSlurry={rec.isIceSlurry}
                         quality={rec.quality}
+                        templateDeliveryDate={rec.templateDeliveryDate}
                       />
                     )}
                   </Link>

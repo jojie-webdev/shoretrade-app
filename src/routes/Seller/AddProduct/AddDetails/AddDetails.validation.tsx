@@ -32,6 +32,12 @@ const constraints = {
       allowEmpty: false,
     },
   },
+  templateDeliveryDate: {
+    presence: {
+      message: '^Please set estimated shipping time',
+      allowEmpty: false,
+    },
+  },
   shippingAddress: {
     presence: {
       message: '^Please select shipping address',
@@ -57,6 +63,12 @@ const constraintsAlt = {
   catchDate: {
     presence: {
       message: '^Please set catch date',
+      allowEmpty: false,
+    },
+  },
+  templateDeliveryDate: {
+    presence: {
+      message: '^Please set estimated shipping time',
       allowEmpty: false,
     },
   },
@@ -91,6 +103,12 @@ const constraintsAuction = {
   catchDate: {
     presence: {
       message: '^Please set auction date',
+      allowEmpty: false,
+    },
+  },
+  templateDeliveryDate: {
+    presence: {
+      message: '^Please set estimated shipping time',
       allowEmpty: false,
     },
   },

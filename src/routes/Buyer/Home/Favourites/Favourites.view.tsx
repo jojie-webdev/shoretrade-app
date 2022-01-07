@@ -82,6 +82,7 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
                           isIkeJime={fav.isIkeJime}
                           isIceSlurry={fav.isIceSlurry}
                           quality={fav.quality}
+                          templateDeliveryDate={fav.templateDeliveryDate}
                         />
                       </StyledInteraction>
                     ) : (
@@ -108,6 +109,7 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
                         isIkeJime={fav.isIkeJime}
                         isIceSlurry={fav.isIceSlurry}
                         quality={fav.quality}
+                        templateDeliveryDate={fav.templateDeliveryDate}
                       />
                     )}
                   </Link>

@@ -48,6 +48,7 @@ export type GetBuyerHomepageResponseListingItem = {
   isIkeJime: boolean;
   isIceSlurry: boolean;
   quality?: string;
+  templateDeliveryDate: string | null;
 };
 
 export type GetBuyerHomepagePayload = GenericResponse<{

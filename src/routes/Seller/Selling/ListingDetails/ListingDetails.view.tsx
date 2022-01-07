@@ -266,6 +266,26 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                       </Typography>
                     </div>
                   </ProductLabelMobileContainer>
+                  {orderDetails.templateDeliveryDate && (
+                    <ProductLabelMobileContainer>
+                      <Typography
+                        variant="label"
+                        color="shade6"
+                        weight="regular"
+                      >
+                        Est Shipping:
+                      </Typography>
+                      <div className="product-value">
+                        <Typography
+                          variant="label"
+                          color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                          weight="bold"
+                        >
+                          {orderDetails.templateDeliveryDate}
+                        </Typography>
+                      </div>
+                    </ProductLabelMobileContainer>
+                  )}
                   <ProductLabelMobileContainer>
                     <Typography variant="label" color="shade6" weight="regular">
                       Average Box Size:
@@ -642,6 +662,30 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                     </Typography>
                   </div>
                 </ProductLabelContainer>
+                {orderDetails.templateDeliveryDate && (
+                  <>
+                    <div className="separator" />
+                    <ProductLabelContainer>
+                      <Typography
+                        variant="overline"
+                        color="shade6"
+                        weight="bold"
+                      >
+                        Estimated Shipping:
+                      </Typography>
+                      <div className="product-value">
+                        <Typography
+                          variant="label"
+                          color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                          weight="bold"
+                          className="product-desc"
+                        >
+                          {orderDetails.templateDeliveryDate}
+                        </Typography>
+                      </div>
+                    </ProductLabelContainer>
+                  </>
+                )}
               </ProductDetailsContainer>
             </SalesDetailsCard>
 

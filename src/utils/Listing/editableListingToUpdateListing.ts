@@ -55,4 +55,5 @@ export const editableListingToUpdateListing = (
   quality: data?.quality || null,
   isIkeJime: data?.isIkeJime || false,
   isIceSlurry: data?.isIceSlurry || false,
+  templateDeliveryDate: data?.templateDeliveryDate || null,
 });

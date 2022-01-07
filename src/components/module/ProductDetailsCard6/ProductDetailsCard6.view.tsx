@@ -16,6 +16,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
     catchDate,
     catchRecurrence,
     minOrder,
+    templateDeliveryDate,
     unit = 'kg',
     hiddenPrice,
     SellerCard,
@@ -77,6 +78,18 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
           {minOrder} {unit}
         </Label>
       </Row>
+
+      {templateDeliveryDate && (
+        <Row>
+          <Label variant="label" color="shade6" style={{ marginRight: 4 }}>
+            Estimated Shipping:
+          </Label>
+          <Label variant="label" weight="bold">
+            {' '}
+            {templateDeliveryDate}
+          </Label>
+        </Row>
+      )}
     </Container>
   );
 };

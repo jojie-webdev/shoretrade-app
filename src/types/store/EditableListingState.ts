@@ -68,6 +68,7 @@ export type EditableListingState = Partial<{
   quality: null | string;
   isIkeJime: boolean;
   isIceSlurry: boolean;
+  templateDeliveryDate: string | null;
 }>;
 
 export type EditableListingPayload = EditableListingState;

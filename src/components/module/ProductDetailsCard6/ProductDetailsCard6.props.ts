@@ -11,4 +11,5 @@ export interface ProductDetailsCard6Props {
   hiddenPrice?: boolean;
   SellerCard?: React.ReactNode;
   withBackground?: boolean;
+  templateDeliveryDate: string | null;
 }

@@ -80,6 +80,7 @@ export const listingToListingProps = (
         ? moment(data.catch_date).toDate()
         : undefined,
       catchRecurrence: data?.catch_recurrence || undefined,
+      templateDeliveryDate: data?.template_delivery_date || null,
     },
     boxDetails: {
       boxes: data?.boxes,

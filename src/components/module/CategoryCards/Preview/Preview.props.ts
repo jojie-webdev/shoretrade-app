@@ -33,4 +33,5 @@ export interface PreviewProps {
   isIkeJime: boolean;
   isIceSlurry: boolean;
   quality?: string;
+  templateDeliveryDate: string | null;
 }
