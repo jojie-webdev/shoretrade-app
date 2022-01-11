@@ -144,7 +144,7 @@ export const transformOrder = (
         ? orderItem.deliveryMethod.includes('ROAD')
           ? orderItem?.deliveryInstruction?.marketAddress
           : `${orderItem.fromAddress.streetNumber} ${orderItem.fromAddress.streetName}, ${orderItem.fromAddress.suburb}, ${orderItem.fromAddress.state} ${orderItem.fromAddress.postcode}`
-        : undefined,
+        : orderItem?.deliveryInstruction?.marketAddress,
       shippingFrom: `${orderItem.fromAddress.suburb}, ${orderItem.fromAddress.state}`,
       shippingTo: `${orderItem.toAddress.streetNumber} ${orderItem.toAddress.streetName}, ${orderItem.toAddress.suburb}, ${orderItem.toAddress.state}, ${orderItem.toAddress.postcode}`,
       shippingPrice: toPrice(orderItem.shippingCost),
