@@ -106,6 +106,12 @@ const constraintsAuction = {
       allowEmpty: false,
     },
   },
+  shippingAddress: {
+    presence: {
+      message: '^Please select shipping address',
+      allowEmpty: false,
+    },
+  },
   templateDeliveryDate: {
     presence: {
       message: '^Please set estimated shipping time',

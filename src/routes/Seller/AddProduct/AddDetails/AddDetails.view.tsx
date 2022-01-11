@@ -405,7 +405,7 @@ const AddDetails = ({
           origin: placeDataToOrigin(origin),
           description,
           alwaysAvailable: false,
-          addressId: defaultShippingAddress?.value || '',
+          addressId: shippingAddress || defaultShippingAddress?.value || '',
           templateDeliveryDate,
         });
       }
@@ -720,21 +720,19 @@ const AddDetails = ({
           />
         </Col>
       </Row>
-      {!isAuctionSale && (
-        <Row className="textfield-row">
-          <Col md={6} className="textfield-col">
-            <Select
-              value={shippingAddress}
-              onChange={(option) => {
-                setShippingAddress(option.value);
-              }}
-              options={shippingAddressOptions}
-              label="Shipping Address"
-              error={pathOr('', ['shippingAddress', '0'], errors)}
-            />
-          </Col>
-        </Row>
-      )}
+      <Row className="textfield-row">
+        <Col md={6} className="textfield-col">
+          <Select
+            value={shippingAddress}
+            onChange={(option) => {
+              setShippingAddress(option.value);
+            }}
+            options={shippingAddressOptions}
+            label="Shipping Address"
+            error={pathOr('', ['shippingAddress', '0'], errors)}
+          />
+        </Col>
+      </Row>
       {!alwaysAvailable && !isAuctionSale && (
         <>
           <Row className="textfield-row">
