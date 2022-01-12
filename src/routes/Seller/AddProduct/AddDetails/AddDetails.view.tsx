@@ -12,9 +12,11 @@ import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
 import DatePickerDropdown from 'components/module/DatePickerDropdown';
+import DateRangePicker from 'components/module/DateRangePicker';
 // import IconTooltip from 'components/module/IconTooltip';
 import LocationSearch from 'components/module/LocationSearch';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import _moment, { Moment } from 'moment';
 import moment from 'moment-timezone';
 import pathOr from 'ramda/es/pathOr';
 import { Row, Col } from 'react-grid-system';
@@ -67,6 +69,7 @@ const estimatedShippingOptions = [
   'Between 1 to 2 weeks',
   'Between 2 to 4 weeks',
   'Next month',
+  'Custom date',
 ].map((v) => ({ value: v, label: v }));
 
 const catchRecurrenceOptions = [
@@ -183,6 +186,13 @@ const AddDetails = ({
   const [templateDeliveryDate, setTemplateDeliveryDate] = useState(
     editableListing?.templateDeliveryDate || null
   );
+  const [customDeliveryDate, setCustomDeliveryDate] = useState<{
+    from: Moment | null;
+    to: Moment | null;
+  }>({
+    from: null,
+    to: null,
+  });
 
   const [shippingAddress, setShippingAddress] = useState(
     editableListing?.addressId || ''
@@ -356,6 +366,13 @@ const AddDetails = ({
         break;
     }
 
+    const formattedDeliveryDate =
+      templateDeliveryDate === 'Custom date'
+        ? `${customDeliveryDate.from?.format(
+            'MMM D'
+          )} to ${customDeliveryDate.from?.format('MMM D')}`
+        : templateDeliveryDate;
+
     const isEmptyError = Object.keys(detailsError).every(
       (k) => detailsError[k].length === 0
     );
@@ -384,7 +401,7 @@ const AddDetails = ({
           description,
           addressId: shippingAddress,
           alwaysAvailable: false,
-          templateDeliveryDate,
+          templateDeliveryDate: formattedDeliveryDate,
         });
       } else if (
         isEmptyError &&
@@ -406,7 +423,7 @@ const AddDetails = ({
           description,
           alwaysAvailable: false,
           addressId: shippingAddress || defaultShippingAddress?.value || '',
-          templateDeliveryDate,
+          templateDeliveryDate: formattedDeliveryDate,
         });
       }
     } else {
@@ -424,7 +441,7 @@ const AddDetails = ({
           description,
           addressId: shippingAddress,
           alwaysAvailable: true,
-          templateDeliveryDate,
+          templateDeliveryDate: formattedDeliveryDate,
         });
       }
     }
@@ -774,13 +791,34 @@ const AddDetails = ({
           {!isAquafuture && (
             <Row className="textfield-row">
               <Col md={6} className="textfield-col">
-                <Select
-                  value={templateDeliveryDate ?? undefined}
-                  onChange={(option) => setTemplateDeliveryDate(option.value)}
-                  options={estimatedShippingOptions}
-                  label="WHEN WILL YOU SHIP THE PRODUCT?"
-                  error={pathOr('', ['templateDeliveryDate', '0'], errors)}
-                />
+                {templateDeliveryDate === 'Custom date' ? (
+                  <DateRangePicker
+                    label="WHEN WILL YOU SHIP THE PRODUCT?"
+                    border="none"
+                    startDate={customDeliveryDate.from}
+                    endDate={customDeliveryDate.to}
+                    onDatesChange={(val) => {
+                      setCustomDeliveryDate({
+                        from: val.startDate,
+                        to: val.endDate,
+                      });
+                    }}
+                    format="MMM D"
+                    onClear={() => {
+                      setTemplateDeliveryDate(null);
+                      setCustomDeliveryDate({ from: null, to: null });
+                    }}
+                    isOpen
+                  />
+                ) : (
+                  <Select
+                    value={templateDeliveryDate ?? undefined}
+                    onChange={(option) => setTemplateDeliveryDate(option.value)}
+                    options={estimatedShippingOptions}
+                    label="WHEN WILL YOU SHIP THE PRODUCT?"
+                    error={pathOr('', ['templateDeliveryDate', '0'], errors)}
+                  />
+                )}
               </Col>
             </Row>
           )}

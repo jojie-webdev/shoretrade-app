@@ -1,7 +1,7 @@
 import { Variants as LabelVariant } from 'components/base/Typography/Typography.props';
 import moment from 'moment';
 
-type Format = 'dddd D MMMM YYYY' | 'D MMM YYYY' | 'DD / MM / YYYY';
+type Format = 'dddd D MMMM YYYY' | 'D MMM YYYY' | 'DD / MM / YYYY' | 'MMM D';
 
 export interface DateRangePickerProps {
   startDate: moment.Moment | null;
@@ -18,4 +18,5 @@ export interface DateRangePickerProps {
   onClear: () => void;
   background?: string;
   border?: string;
+  isOpen?: boolean;
 }
