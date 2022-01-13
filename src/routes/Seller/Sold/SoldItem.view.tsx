@@ -383,126 +383,130 @@ const SoldItem = (props: {
 
                     {(isPreAuction || index === v.orders.length - 1) && (
                       <div className="buttons">
-                        <div className="downloads-menu">
-                          <Button
-                            text="Packing Lists"
-                            textColor="noshade"
-                            textVariant="caption"
-                            variant="outline"
-                            iconPosition="before"
-                            icon={
-                              <FileCheck
-                                fill={theme.brand.primary}
-                                width={12}
-                                height={12}
-                              />
-                            }
-                            onClick={(e) => {
-                              const orderRefNumbers = entry.map((v) => {
-                                return v.orderRefNumber;
-                              });
-                              window.open(
-                                `${API.URL}/${
-                                  API.VERSION
-                                }/order/packing-list/${orderRefNumbers.join()}?token=${
-                                  props.token
-                                }&state=${toAddressState}&status=${
-                                  props.status
-                                }`,
-                                '_blank'
-                              );
-                              e.stopPropagation();
-                            }}
-                          />
-                          <Button
-                            text="Invoices"
-                            textColor="noshade"
-                            textVariant="caption"
-                            variant="outline"
-                            iconPosition="before"
-                            icon={
-                              <FileCheck
-                                fill={theme.brand.primary}
-                                width={12}
-                                height={12}
-                              />
-                            }
-                            onClick={(e) => {
-                              const orderRefNumbers = entry.map((v) => {
-                                return v.orderRefNumber;
-                              });
-                              window.open(
-                                `${API.URL}/${
-                                  API.VERSION
-                                }/order/invoice/${orderRefNumbers.join()}?token=${
-                                  props.token
-                                }`,
-                                '_blank'
-                              );
-                              e.stopPropagation();
-                            }}
-                          />
-                          <Button
-                            text="Order Summary"
-                            textColor="noshade"
-                            textVariant="caption"
-                            variant="outline"
-                            iconPosition="before"
-                            icon={
-                              <FileCheck
-                                fill={theme.brand.primary}
-                                width={12}
-                                height={12}
-                              />
-                            }
-                            onClick={(e) => {
-                              const orderRefNumbers = entry.map((v) => {
-                                return v.orderRefNumber;
-                              });
-                              window.open(
-                                `${API.URL}/${
-                                  API.VERSION
-                                }/order/order-summary/${orderRefNumbers.join()}?token=${
-                                  props.token
-                                }&state=${toAddressState}&status=${
-                                  props.status
-                                }`,
-                                '_blank'
-                              );
-                              e.stopPropagation();
-                            }}
-                          />
-                          <Button
-                            text="Shipping Label"
-                            textColor="noshade"
-                            textVariant="caption"
-                            variant="outline"
-                            iconPosition="before"
-                            icon={
-                              <FileCheck
-                                fill={theme.brand.primary}
-                                width={12}
-                                height={12}
-                              />
-                            }
-                            onClick={(e) => {
-                              const orderRefNumbers = entry.map((v) => {
-                                return v.orderRefNumber;
-                              });
-                              window.open(
-                                `${API.URL}/${
-                                  API.VERSION
-                                }/order/pdf-label/${orderRefNumbers.join()}?token=${
-                                  props.token
-                                }&state=${toAddressState}&status=${
-                                  props.status
-                                }`,
-                                '_blank'
-                              );
-                              e.stopPropagation();
-                            }}
-                          />
-                        </div>
+                        {index === v.orders.length - 1 ? (
+                          <div className="downloads-menu">
+                            <Button
+                              text="Packing Lists"
+                              textColor="noshade"
+                              textVariant="caption"
+                              variant="outline"
+                              iconPosition="before"
+                              icon={
+                                <FileCheck
+                                  fill={theme.brand.primary}
+                                  width={12}
+                                  height={12}
+                                />
+                              }
+                              onClick={(e) => {
+                                const orderRefNumbers = entry.map((v) => {
+                                  return v.orderRefNumber;
+                                });
+                                window.open(
+                                  `${API.URL}/${
+                                    API.VERSION
+                                  }/order/packing-list/${orderRefNumbers.join()}?token=${
+                                    props.token
+                                  }&state=${toAddressState}&status=${
+                                    props.status
+                                  }`,
+                                  '_blank'
+                                );
+                                e.stopPropagation();
+                              }}
+                            />
+                            <Button
+                              text="Invoices"
+                              textColor="noshade"
+                              textVariant="caption"
+                              variant="outline"
+                              iconPosition="before"
+                              icon={
+                                <FileCheck
+                                  fill={theme.brand.primary}
+                                  width={12}
+                                  height={12}
+                                />
+                              }
+                              onClick={(e) => {
+                                const orderRefNumbers = entry.map((v) => {
+                                  return v.orderRefNumber;
+                                });
+                                window.open(
+                                  `${API.URL}/${
+                                    API.VERSION
+                                  }/order/invoice/${orderRefNumbers.join()}?token=${
+                                    props.token
+                                  }`,
+                                  '_blank'
+                                );
+                                e.stopPropagation();
+                              }}
+                            />
+                            <Button
+                              text="Order Summary"
+                              textColor="noshade"
+                              textVariant="caption"
+                              variant="outline"
+                              iconPosition="before"
+                              icon={
+                                <FileCheck
+                                  fill={theme.brand.primary}
+                                  width={12}
+                                  height={12}
+                                />
+                              }
+                              onClick={(e) => {
+                                const orderRefNumbers = entry.map((v) => {
+                                  return v.orderRefNumber;
+                                });
+                                window.open(
+                                  `${API.URL}/${
+                                    API.VERSION
+                                  }/order/order-summary/${orderRefNumbers.join()}?token=${
+                                    props.token
+                                  }&state=${toAddressState}&status=${
+                                    props.status
+                                  }`,
+                                  '_blank'
+                                );
+                                e.stopPropagation();
+                              }}
+                            />
+                            <Button
+                              text="Shipping Label"
+                              textColor="noshade"
+                              textVariant="caption"
+                              variant="outline"
+                              iconPosition="before"
+                              icon={
+                                <FileCheck
+                                  fill={theme.brand.primary}
+                                  width={12}
+                                  height={12}
+                                />
+                              }
+                              onClick={(e) => {
+                                const orderRefNumbers = entry.map((v) => {
+                                  return v.orderRefNumber;
+                                });
+                                window.open(
+                                  `${API.URL}/${
+                                    API.VERSION
+                                  }/order/pdf-label/${orderRefNumbers.join()}?token=${
+                                    props.token
+                                  }&state=${toAddressState}&status=${
+                                    props.status
+                                  }`,
+                                  '_blank'
+                                );
+                                e.stopPropagation();
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          <div className="downloads-menu" />
+                        )}
                         {isPreAuction && (
                           <>
                             {order.weightConfirmed ? (
