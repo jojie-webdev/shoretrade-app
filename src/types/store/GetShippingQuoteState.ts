@@ -63,6 +63,7 @@ export type GetShippingQuoteResponseItem = {
     subAddress?: string;
     sellerAddress?: string;
     marketAddress?: string;
+    estimatedDateISO: string;
   }[];
 };
 

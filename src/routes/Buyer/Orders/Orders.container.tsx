@@ -264,7 +264,7 @@ const OrdersContainer = (): JSX.Element => {
   };
 
   const generatedProps: OrdersGeneratedProps = {
-    pendingOrders: groupByDate('estDeliveryDate')(pendingOrders),
+    pendingOrders: groupByDate('estCatchmentDate')(pendingOrders),
     toShipOrders: groupByDate('estDeliveryDate')(toShipOrders),
     inTransitOrders: groupByDate('estDeliveryDate')(inTransitOrders),
     completedOrders: groupByDate('deliveredDate')(completedOrders),
