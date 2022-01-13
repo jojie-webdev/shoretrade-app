@@ -226,6 +226,7 @@ const Checkout = (): JSX.Element => {
           serviceName: selectedPriceData?.serviceName || '',
           locationName: selectedPriceData?.locationName || '',
           marketAddress: selectedPriceData?.marketAddress || '',
+          expDelDate: selectedPriceData?.estimatedDateISO || '',
         },
       };
     },

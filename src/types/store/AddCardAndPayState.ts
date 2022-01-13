@@ -16,6 +16,7 @@ export type OrderShipping = {
   priceId: string;
   quoteId: number;
   serviceName: string;
+  expDelDate: string;
 };
 
 export type OrderCartItem = (CartItem | GetCartDataItem) & {
