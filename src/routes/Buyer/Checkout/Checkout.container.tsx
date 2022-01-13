@@ -179,7 +179,10 @@ const Checkout = (): JSX.Element => {
                 est: estimatedDeliveryToString(
                   data.minTransitTime,
                   data.maxTransitTime,
-                  data.estimatedDate
+                  data.estimatedDate,
+                  cartItem.listing.isPreAuctionSale
+                    ? cartItem.listing.auctionDate
+                    : undefined
                 ),
                 imageUrl: data.imageUrl,
                 subAddress:
@@ -267,7 +270,12 @@ const Checkout = (): JSX.Element => {
           const companySpecificOrder = groupedCartItems[companyId].map(
             (item) => ({
               ...item,
-              shipping: selectedShipping[item.companyId],
+              shipping: {
+                ...selectedShipping[item.companyId],
+                expDelDate: item.listing.isPreAuctionSale
+                  ? item.listing.auctionDate
+                  : selectedShipping.expDelDate,
+              },
             })
           );
           return [...orderData, companySpecificOrder];

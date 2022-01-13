@@ -23,6 +23,8 @@ export type GetCartListingDataItem = {
   remaining: number;
   average: number;
   isAquafuture: boolean;
+  isPreAuctionSale: boolean;
+  auctionDate: string;
   allowedWeightAdjustment: number;
   address: {
     id: string;
