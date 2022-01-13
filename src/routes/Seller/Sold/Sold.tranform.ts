@@ -193,12 +193,27 @@ export const orderItemToSoldItemData = ({
               ? 'pickup'
               : order.deliveryMethod.toLowerCase(),
           orderRefNumber: order.orderRefNumber,
-          totalPrice: `${toPrice(
-            order.orderLineItem.reduce((t, lineItem) => t + lineItem.price, 0)
-          )}`,
-          totalWeight: `${order.orderLineItem
-            .reduce((t, lineItem) => t + lineItem.weight, 0)
-            .toFixed(2)} ${formatMeasurementUnit(groupMeasurementUnit)}`,
+          totalPrice: orders.reduce((accumA: number, currentA) => {
+            return (
+              accumA +
+              currentA.orderLineItem.reduce((accumB: number, currentB) => {
+                return accumB + currentB.price;
+              }, 0)
+            );
+          }, 0),
+          totalWeight: orders.reduce((accumA: number, currentA) => {
+            return (
+              accumA +
+              currentA.orderLineItem.reduce((accumB: number, currentB) => {
+                return (
+                  accumB +
+                  currentB.listingBoxes.reduce((accumB: number, currentB) => {
+                    return accumB + currentB.quantity * currentB.weight;
+                  }, 0)
+                );
+              }, 0)
+            );
+          }, 0),
           orders: order.orderLineItem.map((lineItem) => {
             const additionalInfos = [];
             if (lineItem.listing.isIkeJime)
@@ -256,6 +271,7 @@ export const orderItemToSoldItemData = ({
           buyerCompanyName: order.buyerCompanyName,
           buyerCompanyId: order.buyerCompanyId,
           salesChannel: getSalesChannel(order),
+          groupMeasurementUnit,
         };
       });
 
@@ -266,8 +282,22 @@ export const orderItemToSoldItemData = ({
       }
     }
   }
-
-  return newObj;
+  return Object.keys(newObj).reduce((map, key) => {
+    return {
+      ...map,
+      [key]: newObj[key].map((order) => {
+        return {
+          ...order,
+          totalPrice: `${toPrice(
+            newObj[key].reduce((accum, o) => accum + o.totalPrice, 0)
+          )}`,
+          totalWeight: `${newObj[key]
+            .reduce((accum, o) => accum + o.totalWeight, 0)
+            .toFixed(2)} ${formatMeasurementUnit(order.groupMeasurementUnit)}`,
+        };
+      }),
+    };
+  }, {});
 };
 
 export const sortByDate = function (a: SoldItem, b: SoldItem) {

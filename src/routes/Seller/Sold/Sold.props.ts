@@ -55,6 +55,7 @@ export type SoldItemData = {
   buyerCompanyName: string;
   buyerCompanyId: string;
   salesChannel: string;
+  groupMeasurementUnit: string;
 };
 
 export type SoldItem = {
