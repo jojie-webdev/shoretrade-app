@@ -156,8 +156,18 @@ export const orderItemToSoldItemData = ({
   const newObj: { [p: string]: ToShipItemData[] } = {};
   for (const [key, value] of Object.entries(data)) {
     for (const data of value) {
-      const { orders, locationName, sellerAddress, marketAddress } = data;
-      const groupKey = getShipmentMethodLabel(key, locationName, '');
+      const {
+        orders,
+        locationName,
+        sellerAddress,
+        marketAddress,
+        sellerDropOffAirport,
+      } = data;
+      const groupKey = getShipmentMethodLabel(
+        key,
+        locationName,
+        sellerDropOffAirport
+      );
       const soldOrders = orders.map((order: GetSellerOrdersResponseItem) => {
         const referenceMeasurementUnit =
           order.orderLineItem.length > 0
