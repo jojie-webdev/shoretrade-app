@@ -15,7 +15,7 @@ import {
   CHOICES,
   PACKAGING,
 } from 'routes/Seller/AddProduct/AddPackaging/AddPackaging.constants';
-import { Polystyrene } from 'types/store/GetAvailableCrates';
+import { Polystyrene, Sfm } from 'types/store/GetAvailableCrates';
 import { Store } from 'types/store/Store';
 
 import Button from '../../../../components/base/Button';
@@ -38,7 +38,7 @@ const AddPackaging = ({
   const availableCrates = useSelector(
     (state: Store) => state.getAvailableCrates.data?.data
   );
-  const sfm = availableCrates?.sfm || [{ id: '' }];
+  const sfm = availableCrates?.sfm.filter((s) => !!s.short_code) || [];
   const polystyrene = availableCrates?.polystyrene || [];
 
   const [choice, setChoice] = useState('');
@@ -61,6 +61,12 @@ const AddPackaging = ({
   const transformPolystyrene = (
     data: Polystyrene[]
   ): { label: string; value: string }[] => {
+    return data.map((d) => {
+      return { label: d.label, value: d.id };
+    });
+  };
+
+  const transformSfm = (data: Sfm[]): { label: string; value: string }[] => {
     return data.map((d) => {
       return { label: d.label, value: d.id };
     });
@@ -93,7 +99,7 @@ const AddPackaging = ({
         return;
       }
 
-      const isSfm = sfm[0].id === editableListing.packaging?.id;
+      const isSfm = sfm.find((s) => s.id === editableListing.packaging?.id);
       if (isSfm) {
         setChoice(PACKAGING.sfm);
         return;
@@ -135,9 +141,7 @@ const AddPackaging = ({
                 if (p.value === PACKAGING.custom) {
                   setIsAirlineApproved(false);
                 }
-
-                if (p.value !== PACKAGING.sfm) setSelectedId('');
-                if (p.value === PACKAGING.sfm) setSelectedId(sfm[0].id);
+                setSelectedId('');
                 setChoice(p.value);
               }}
             >
@@ -171,6 +175,21 @@ const AddPackaging = ({
                     }}
                   />
                 )}
+              </div>
+            )}
+
+            {p.value === choice && choice === PACKAGING.sfm && (
+              <div
+                style={{
+                  marginBottom: '12px',
+                }}
+              >
+                <Select
+                  value={selectedId}
+                  options={transformSfm(sfm)}
+                  onChange={({ value }) => setSelectedId(value)}
+                  placeholder="Select type (pre-approved box sizes)"
+                />
               </div>
             )}
 

@@ -26,6 +26,8 @@ export interface Sfm {
   height: string;
   unit: string;
   company_id?: any;
+  price: string;
+  short_code?: string;
 }
 
 export interface Custom {
