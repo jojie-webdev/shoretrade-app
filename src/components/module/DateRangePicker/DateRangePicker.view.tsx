@@ -36,10 +36,11 @@ const DateRangePicker = (props: DateRangePickerProps): JSX.Element => {
     onClear,
     background,
     border,
+    isOpen,
   } = props;
 
   const theme = useTheme();
-  const [show, setShow] = useState<boolean>(false);
+  const [show, setShow] = useState<boolean>(isOpen || false);
   const [focusedInput, setFocusedInput] = useState<FocusedInputShape>(
     'startDate'
   );
