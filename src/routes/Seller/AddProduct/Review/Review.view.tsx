@@ -143,7 +143,7 @@ const Review = ({
         return;
       }
 
-      const isSfm = sfm[0].id === editableListing.packaging?.id;
+      const isSfm = sfm.find((s) => s.id === editableListing.packaging?.id);
       if (isSfm) {
         setPackaging('SFM Crates');
         return;
