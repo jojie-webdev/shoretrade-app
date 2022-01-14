@@ -46,17 +46,23 @@ const getSalesChannel = (data: GetSellerOrdersResponseItem) => {
 const filterDuplicateGroupings = (items: PendingToShipItemData[]) => {
   const groupings: { [key: string]: PendingToShipItemData } = {};
   for (const group of items) {
-    const existingGroup = groupings[group.deliveryMethodLabel];
-    if (!existingGroup) {
-      groupings[group.deliveryMethodLabel] = group;
+    if (group.groupName === 'selfPickupOrders') {
+      groupings[
+        `${group.deliveryMethodLabel}-${group.deliveryAddress}`
+      ] = group;
     } else {
-      groupings[group.deliveryMethodLabel] = {
-        ...existingGroup,
-        totalPrice: existingGroup.totalPrice + group.totalPrice,
-        totalWeight: existingGroup.totalWeight + group.totalWeight,
-        orderCount: existingGroup.orderCount + group.orderCount,
-        orders: [...existingGroup.orders, ...group.orders],
-      };
+      const existingGroup = groupings[group.deliveryMethodLabel];
+      if (!existingGroup) {
+        groupings[group.deliveryMethodLabel] = group;
+      } else {
+        groupings[group.deliveryMethodLabel] = {
+          ...existingGroup,
+          totalPrice: existingGroup.totalPrice + group.totalPrice,
+          totalWeight: existingGroup.totalWeight + group.totalWeight,
+          orderCount: existingGroup.orderCount + group.orderCount,
+          orders: [...existingGroup.orders, ...group.orders],
+        };
+      }
     }
   }
   return Object.values(groupings);
