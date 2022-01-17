@@ -112,6 +112,7 @@ export type GetBuyerOrdersResponseItem = {
     suburb: string;
     unitNumber: string | null;
   };
+  totalCrateFee?: number;
   totalPrice: string;
   weightConfirmed: boolean;
 };

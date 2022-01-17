@@ -46,6 +46,7 @@ export type GetCartDataItem = {
   cartItemId?: string;
   companyName: string; // Seller
   companyId: string; // Seller
+  crateFee?: number;
   listing: GetCartListingDataItem;
   orderBoxes: {
     id: string;

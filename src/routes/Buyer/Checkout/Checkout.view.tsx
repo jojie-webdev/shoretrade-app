@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Accordion from 'components/base/Accordion/Accordion.view';
 import Button from 'components/base/Button';
-import { Cart, Crab } from 'components/base/SVG';
+import { Cart, Crab, LuggageCart } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import CheckoutCard from 'components/module/CheckoutCard/CheckoutCard.view';
 import Loading from 'components/module/Loading';
@@ -17,7 +17,7 @@ import { useHistory } from 'react-router-dom';
 import PaymentMethod from 'routes/Buyer/Checkout/PaymentMethod';
 import { BottomRow } from 'routes/Buyer/Checkout/PaymentMethod/PaymentMethod.style';
 import { toPrice } from 'utils/String/toPrice';
-import { useTheme } from 'utils/Theme';
+import theme from 'utils/Theme';
 
 import { CheckoutGeneratedProps, OrderItem } from './Checkout.props';
 import {
@@ -27,6 +27,7 @@ import {
   ShippingRow,
   SVGContainer,
   Footer,
+  CrateFee,
 } from './Checkout.style';
 
 const Orders = (props: CheckoutGeneratedProps) => {
@@ -37,10 +38,21 @@ const Orders = (props: CheckoutGeneratedProps) => {
     removeItem,
   } = props;
 
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const orders = Object.keys(groupedOrders).reduce(
-    (data: { id: string; listings: OrderItem[] }[], vendorId) => [
+    (
+      data: { id: string; listings: OrderItem[]; totalCrateFee: number }[],
+      vendorId
+    ) => [
       ...data,
-      { id: vendorId, listings: groupedOrders[vendorId] },
+      {
+        id: vendorId,
+        listings: groupedOrders[vendorId],
+        totalCrateFee: groupedOrders[vendorId].reduce(
+          (totalFee, listing) => totalFee + Number(listing.crateFee || 0),
+          0
+        ),
+      },
     ],
     []
   );
@@ -64,6 +76,32 @@ const Orders = (props: CheckoutGeneratedProps) => {
               ))}
             </Col>
           </CheckoutCardRow>
+
+          {!!item.totalCrateFee && item.totalCrateFee > 0 && (
+            <CrateFee>
+              <div className="crate-fee-label">
+                <LuggageCart fill={theme.grey.shade6} />
+                {isMobile ? (
+                  <Typography variant="label" weight="700">
+                    Crate Fee and Levies
+                  </Typography>
+                ) : (
+                  <Typography weight="700">Crate Fee and Levies</Typography>
+                )}
+              </div>
+              <div className="crate-fee-value">
+                {isMobile ? (
+                  <Typography variant="caption" weight="700">
+                    {toPrice(item.totalCrateFee)}
+                  </Typography>
+                ) : (
+                  <Typography color="shade8">
+                    {toPrice(item.totalCrateFee)}
+                  </Typography>
+                )}
+              </div>
+            </CrateFee>
+          )}
 
           <ShippingRow nogutter>
             <Col>
@@ -97,7 +135,6 @@ const Orders = (props: CheckoutGeneratedProps) => {
 };
 
 const CheckoutView = (props: CheckoutGeneratedProps) => {
-  const theme = useTheme();
   const history = useHistory();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const {

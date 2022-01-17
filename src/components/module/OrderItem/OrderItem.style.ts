@@ -120,8 +120,8 @@ export const OrderTotalContainer = styled.div`
       text-align: left;
     }
 
-    .detail-container {
-      margin-bottom: 8px;
+    .total-container {
+      margin-top: 8px;
     }
   }
 `;

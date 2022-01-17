@@ -4,7 +4,9 @@ import Button from 'components/base/Button';
 import { DownloadFile, Message, Star } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { API } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { parseImageUrl } from 'utils/parseImageURL';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
@@ -32,6 +34,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
   const showDispute = props.completedOrder && diffDays < 1;
   const rating = props.data.rating;
   const showCatchment = !props.data.isMarketRequest;
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
     <OrderItemContainer>
@@ -259,7 +262,18 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
             </Typography>
           </Col>
 
-          <Col sm={6}>
+          {!!isMobile && props.data.totalCrateFee > 0 && (
+            <Col sm={6}>
+              <Typography color="shade6" variant="label">
+                Crate Fee and Levies
+              </Typography>
+              <Typography color="shade9" variant="body" weight="bold">
+                {toPrice(props.data.totalCrateFee)}
+              </Typography>
+            </Col>
+          )}
+
+          <Col sm={6} className="total-container">
             <Typography color="shade6" variant="label" className="end-text">
               Total
             </Typography>
@@ -272,6 +286,17 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
               {props.data.total}
             </Typography>
           </Col>
+
+          {!isMobile && props.data.totalCrateFee > 0 && (
+            <Col sm={6}>
+              <Typography color="shade6" variant="label">
+                Crate Fee and Levies
+              </Typography>
+              <Typography color="shade9" variant="body" weight="bold">
+                {toPrice(props.data.totalCrateFee)}
+              </Typography>
+            </Col>
+          )}
         </Row>
       </OrderTotalContainer>
 

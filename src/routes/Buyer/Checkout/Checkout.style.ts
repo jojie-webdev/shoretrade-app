@@ -1,6 +1,7 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
+import theme from 'utils/Theme';
 
 export const Container = styled.div`
   @media ${BREAKPOINTS['sm']} {
@@ -49,10 +50,43 @@ export const EmptyContainer = styled.div`
 export const CheckoutCardRow = styled(Row)`
   @media ${BREAKPOINTS['sm']} {
     background-color: #ffffff;
-    border: 2px solid ${({ theme }) => theme.grey.shade2};
+    border: 2px solid ${theme.grey.shade2};
     border-bottom: 0;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
+  }
+`;
+
+export const CrateFee = styled.div`
+  display: flex;
+  padding: 16px 24px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(41, 43, 50, 0.04);
+
+  .crate-fee-label {
+    display: flex;
+    margin: auto auto auto 0;
+
+    svg {
+      margin: auto 16px auto 0;
+    }
+  }
+
+  .crate-fee-value {
+    margin: auto 50px auto auto;
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    padding: 16px;
+    border-radius: 0;
+    border: 2px solid ${({ theme }) => theme.grey.shade2};
+    border-top: none;
+    box-shadow: none;
+
+    .crate-fee-value {
+      margin: auto 0 auto auto;
+    }
   }
 `;
 

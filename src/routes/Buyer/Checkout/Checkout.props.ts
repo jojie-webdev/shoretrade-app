@@ -22,6 +22,7 @@ export type OrderItem = {
     imageUrl: string;
     subAddress?: string;
   }[];
+  crateFee?: number;
 };
 
 export interface CheckoutGeneratedProps {

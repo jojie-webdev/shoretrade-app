@@ -151,6 +151,7 @@ export const transformOrder = (
       shippingChargeGst: orderItem.shippingChargeGst,
       shippingChargeNet: orderItem.shippingChargeNet,
       total: totalPrice,
+      totalCrateFee: orderItem.totalCrateFee || 0,
     },
 
     estCatchmentDate: moment(

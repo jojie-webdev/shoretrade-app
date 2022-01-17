@@ -16,7 +16,7 @@ import DateRangePicker from 'components/module/DateRangePicker';
 // import IconTooltip from 'components/module/IconTooltip';
 import LocationSearch from 'components/module/LocationSearch';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import _moment, { Moment } from 'moment';
+import { Moment } from 'moment';
 import moment from 'moment-timezone';
 import pathOr from 'ramda/es/pathOr';
 import { Row, Col } from 'react-grid-system';

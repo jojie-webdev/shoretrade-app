@@ -39,6 +39,7 @@ export interface OrderItem {
     shippingChargeGst: number;
     shippingChargeNet: number;
     total: string;
+    totalCrateFee: number;
   };
 
   estDeliveryDate: Date;

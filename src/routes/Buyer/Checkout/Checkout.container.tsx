@@ -146,6 +146,7 @@ const Checkout = (): JSX.Element => {
         location: cartItem.listing.origin.state,
         vendor: cartItem.companyName,
         vendorId: cartItem.companyId,
+        crateFee: cartItem.crateFee,
         shippingOptions: shippingQuotes
           ? (
               shippingQuotes[cartItem.companyId] || { priceResult: [] }
@@ -241,7 +242,9 @@ const Checkout = (): JSX.Element => {
   const totalValue =
     orders.reduce(
       (totalItemsPrice, currentItem) =>
-        totalItemsPrice + Number(currentItem.price),
+        totalItemsPrice +
+        Number(currentItem.price) +
+        Number(currentItem.crateFee || 0),
       0
     ) +
     Object.keys(selectedShipping).reduce(

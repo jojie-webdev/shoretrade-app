@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+export { default as LuggageCart } from './LuggageCart';
 export { default as OrderPlaced } from './OrderPlaced';
 export { default as AddListing } from './AddListing';
 export { default as WhatsApp } from './WhatsApp';
