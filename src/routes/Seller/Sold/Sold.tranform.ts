@@ -199,27 +199,20 @@ export const orderItemToSoldItemData = ({
               ? 'pickup'
               : order.deliveryMethod.toLowerCase(),
           orderRefNumber: order.orderRefNumber,
-          totalPrice: orders.reduce((accumA: number, currentA) => {
-            return (
-              accumA +
-              currentA.orderLineItem.reduce((accumB: number, currentB) => {
-                return accumB + currentB.price;
-              }, 0)
-            );
+          totalPrice: order.orderLineItem.reduce((accumB: number, currentB) => {
+            return accumB + currentB.price;
           }, 0),
-          totalWeight: orders.reduce((accumA: number, currentA) => {
-            return (
-              accumA +
-              currentA.orderLineItem.reduce((accumB: number, currentB) => {
-                return (
-                  accumB +
-                  currentB.listingBoxes.reduce((accumB: number, currentB) => {
-                    return accumB + currentB.quantity * currentB.weight;
-                  }, 0)
-                );
-              }, 0)
-            );
-          }, 0),
+          totalWeight: order.orderLineItem.reduce(
+            (accumB: number, currentB) => {
+              return (
+                accumB +
+                currentB.listingBoxes.reduce((accumB: number, currentB) => {
+                  return accumB + currentB.quantity * currentB.weight;
+                }, 0)
+              );
+            },
+            0
+          ),
           orders: order.orderLineItem.map((lineItem) => {
             const additionalInfos = [];
             if (lineItem.listing.isIkeJime)
