@@ -230,6 +230,8 @@ const Checkout = (): JSX.Element => {
           locationName: selectedPriceData?.locationName || '',
           marketAddress: selectedPriceData?.marketAddress || '',
           expDelDate: selectedPriceData?.estimatedDateISO || '',
+          sellerDropOffAddress: selectedPriceData?.sellerDropOffAddress,
+          sellerDropOffAirport: selectedPriceData?.sellerDropOffAirport,
         },
       };
     },
