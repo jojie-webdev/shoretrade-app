@@ -276,6 +276,8 @@ export const orderItemToSoldItemData = ({
 
       if (!newObj[groupKey]) {
         newObj[groupKey] = soldOrders;
+      } else if (groupKey === 'Collecting from Yourself') {
+        newObj[`${groupKey}-${sellerAddress}`] = soldOrders;
       } else {
         newObj[groupKey] = [...newObj[groupKey], ...soldOrders];
       }
