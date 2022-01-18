@@ -48,7 +48,7 @@ export const Spacer = styled.div`
 
 export const StyledInteraction = styled(Interaction)<{
   pressed?: boolean;
-  columnedRightContent?: boolean;
+  accordionButtonStyle?: boolean;
 }>`
   margin-bottom: ${({ pressed }) => (pressed ? '0' : '8px')};
   padding: 16px 24px;
@@ -58,6 +58,27 @@ export const StyledInteraction = styled(Interaction)<{
       return `
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
+      `;
+    }
+  }}
+
+  ${({ accordionButtonStyle, theme }) => {
+    if (accordionButtonStyle) {
+      return `
+        > .right-content {
+          .interactions-right {
+            width: 40px;
+            height: 40px;
+            border: 2px solid ${theme.grey.shade8};
+            border-radius: 8px;
+            margin-left: 24px;
+            background: ${theme.grey.shade10};
+
+            p {
+              display: none;
+            }
+          }
+        }
       `;
     }
   }}
@@ -74,21 +95,24 @@ export const StyledInteraction = styled(Interaction)<{
     }
   }
 
+  > .left-content {
+    width: 100%;
+  }
+
   .content {
     display: flex;
     flex: 1;
     align-items: center;
     flex-wrap: wrap;
+    justify-content: space-between;
 
     .left-content {
       display: flex;
       align-items: center;
-      width: 292px;
       justify-content: space-between;
-      padding-right: 32px;
 
-      @media (max-width: 1440px) {
-        width: 200px;
+      @media ${BREAKPOINTS.genericTablet} {
+        max-width: 370px;
       }
 
       @media ${BREAKPOINTS.sm} {
@@ -106,49 +130,17 @@ export const StyledInteraction = styled(Interaction)<{
           margin-right: 4px;
         }
       }
-
-      .order-count {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 4px 8px;
-        background-color: ${({ theme }) => theme.grey.shade8};
-        border-radius: 8px;
-
-        @media ${BREAKPOINTS.sm} {
-          margin-top: 8px;
-          margin-bottom: 8px;
-        }
-      }
-    }
-
-    .left-content-extended {
-      min-width: 425px;
-
-      @media ${BREAKPOINTS.lg} {
-        width: 250px;
-      }
-
-      @media ${BREAKPOINTS.sm} {
-        width: 100%;
-      }
     }
 
     .right-content {
       display: flex;
       align-items: center;
-      justify-content: space-evenly;
-      width: 210px;
-      flex-direction: ${({ columnedRightContent }) =>
-        columnedRightContent ? 'column' : 'row'};
+      justify-content: space-between;
+      flex-direction: 'row'
 
       @media (max-width: 1237px) {
         justify-content: flex-start;
         margin-left: 8px;
-      }
-
-      @media ${BREAKPOINTS.genericTablet} {
-        width: 195px;
       }
 
       @media ${BREAKPOINTS['sm']} {
@@ -157,13 +149,32 @@ export const StyledInteraction = styled(Interaction)<{
         justify-content: space-between;
         flex: 1;
       }
+
+      .order-count {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 4px 8px;
+        background-color: ${({ theme }) => theme.grey.shade8};
+        border-radius: 8px;
+        min-width: 85px;
+
+        @media ${BREAKPOINTS.sm} {
+          margin-top: 8px;
+          margin-bottom: 8px;
+        }
+      }
+
+      .buyer-type {
+        display: flex;
+        flex-direction: column;
+      }
     }
 
     .buttons {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      flex: 1;
 
       button {
         border-radius: 8px;
@@ -249,7 +260,7 @@ export const CarouselContainer = styled.div`
 export const ItemCard = styled.div`
   min-height: 110px;
   background: ${(props) => props.theme.grey.shade9};
-  padding: 20px;
+  padding: 12px;
   margin-top: 8px;
   margin-bottom: 8px;
   border: 1px solid ${(props) => props.theme.grey.shade8};
@@ -312,9 +323,8 @@ export const ItemCard = styled.div`
   .right-content {
     display: flex;
     align-items: center;
-    width: 210px;
     padding: 16px 0px;
-    justify-content: space-evenly;
+    justify-content: space-between;
 
     @media ${BREAKPOINTS['sm']} {
       width: 240px;
@@ -390,14 +400,14 @@ export const ItemDetail = styled(Typography)<{ row?: boolean }>`
   white-space: nowrap;
   line-height: 16px;
 
-  margin-right: 56px;
+  margin-left: 24px;
 
   @media (max-width: 662px) {
-    margin-right: 16px;
+    margin-left: 16px;
   }
 
   @media ${BREAKPOINTS.sm} {
-    margin-right: 0;
+    margin-left: 0;
   }
 
   span {

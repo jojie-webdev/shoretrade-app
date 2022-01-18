@@ -6,7 +6,7 @@ import { pxToRem } from 'utils/Theme';
 
 export const StyledInteraction = styled(Interaction)<{
   pressed?: boolean;
-  columnedRightContent?: boolean;
+  accordionButtonStyle?: boolean;
 }>`
   margin-bottom: ${({ pressed }) => (pressed ? '0' : '8px')};
   padding: 16px 24px;
@@ -32,8 +32,30 @@ export const StyledInteraction = styled(Interaction)<{
     }
   }}
 
+  ${({ accordionButtonStyle, theme }) => {
+    if (accordionButtonStyle) {
+      return `
+        > .right-content {
+          .interactions-right {
+            width: 40px;
+            height: 40px;
+            border: 2px solid ${theme.grey.shade8};
+            border-radius: 8px;
+            margin-left: 24px;
+            background: ${theme.grey.shade10};
+
+            p {
+              display: none;
+            }
+          }
+        }
+      `;
+    }
+  }}
+
   > .left-content {
     flex: 1;
+    width: 100%;
   }
 
   .content {
@@ -41,13 +63,12 @@ export const StyledInteraction = styled(Interaction)<{
     flex: 1;
     align-items: center;
     flex-wrap: wrap;
+    justify-content: space-between;
 
     .left-content {
       display: flex;
       align-items: center;
-      width: 292px;
       justify-content: space-between;
-      padding-right: 32px;
 
       .label {
         display: flex;
@@ -59,49 +80,20 @@ export const StyledInteraction = styled(Interaction)<{
         }
       }
 
-      @media (max-width: 1440px) {
-        width: 200px;
+      @media ${BREAKPOINTS.genericTablet} {
+        max-width: 370px;
       }
 
       @media ${BREAKPOINTS.sm} {
         flex-direction: column;
         align-items: flex-start;
       }
-
-      .order-count {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 4px 8px;
-        background-color: ${({ theme }) => theme.grey.shade8};
-        border-radius: 8px;
-
-        @media ${BREAKPOINTS['sm']} {
-          margin-top: 8px;
-          margin-bottom: 8px;
-        }
-      }
-    }
-
-    .left-content-extended {
-      min-width: 425px;
-
-      @media ${BREAKPOINTS['sm']} {
-        width: 240px;
-      }
     }
 
     .right-content {
       display: flex;
       align-items: center;
-      justify-content: space-evenly;
-      width: 210px;
-      flex-direction: ${({ columnedRightContent }) =>
-        columnedRightContent ? 'column' : 'row'};
-
-      @media ${BREAKPOINTS.genericTablet} {
-        width: 195px;
-      }
+      justify-content: space-between;
 
       @media (max-width: 1237px) {
         justify-content: flex-start;
@@ -111,13 +103,27 @@ export const StyledInteraction = styled(Interaction)<{
       @media ${BREAKPOINTS.sm} {
         margin-left: 0;
       }
+
+      .order-count {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 4px 8px;
+        background-color: ${({ theme }) => theme.grey.shade8};
+        border-radius: 8px;
+        min-width: 85px;
+
+        @media ${BREAKPOINTS['sm']} {
+          margin-top: 8px;
+          margin-bottom: 8px;
+        }
+      }
     }
 
     .buttons {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      flex: 1;
 
       button {
         border-radius: 8px;
@@ -213,7 +219,7 @@ export const CarouselContainer = styled.div`
 
 export const ItemCard = styled.div`
   background: ${(props) => props.theme.grey.shade9};
-  padding: 16px;
+  padding: 12px;
   margin-top: 8px;
   margin-bottom: 8px;
   border-radius: 4px;
@@ -391,14 +397,14 @@ export const ItemDetail = styled(Typography)<{ row?: boolean }>`
   white-space: nowrap;
   line-height: 16px;
 
-  margin-right: 56px;
+  margin-left: 24px;
 
   @media (max-width: 662px) {
-    margin-right: 16px;
+    margin-left: 16px;
   }
 
   @media ${BREAKPOINTS.sm} {
-    margin-right: 0;
+    margin-left: 0;
   }
 
   span {

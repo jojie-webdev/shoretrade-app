@@ -150,7 +150,6 @@ export const PendingItem = (props: {
           type="accordion"
           iconColor={theme.brand.primary}
           fullWidth
-          columnedRightContent
         >
           <div className="content">
             <div className="left-content">
@@ -161,31 +160,39 @@ export const PendingItem = (props: {
               >
                 <span>Order</span>&nbsp;#{order.orderRefNumber}
               </Typography>
-
+            </div>
+            <Spacer />
+            <div className="right-content">
               <div className="order-count">
                 <Typography variant="overlineSmall" color="noshade">
                   {order.itemCount}&nbsp;
                   {order.itemCount === 1 ? 'ITEM' : 'ITEMS'}
                 </Typography>
               </div>
+              <ItemDetail variant="caption" color="shade6">
+                Price (AUD)
+                <span style={{ fontSize: '14px' }}>
+                  {toPrice(order.totalPrice)}
+                </span>
+              </ItemDetail>
+              <div className="buyer-type">
+                <ItemDetail variant="caption" color="shade6" row>
+                  Buyer <span>{order.buyerCompanyName}</span>
+                </ItemDetail>
+
+                <ItemDetail variant="caption" color="shade6" row>
+                  Type <span>{order.salesChannel}</span>
+                </ItemDetail>
+              </div>
             </div>
             <Spacer />
-            <div className="right-content">
-              <ItemDetail variant="caption" color="shade6" row>
-                Buyer <span>{order.buyerCompanyName}</span>
-              </ItemDetail>
-
-              <ItemDetail variant="caption" color="shade6" row>
-                Type <span>{order.salesChannel}</span>
-              </ItemDetail>
-            </div>
             <div className="buttons">
               <Button
                 text={nonDesktop ? 'Message' : 'Message Buyer'}
                 textColor={'primary'}
-                textVariant="overline"
                 iconPosition="before"
                 variant="outline"
+                textVariant="caption"
                 size="sm"
                 onClick={(e) => {
                   updateMessageModal({
@@ -203,8 +210,8 @@ export const PendingItem = (props: {
               {allowPartialShipment && !allowFullShipment ? (
                 <Button
                   text={'Ship Partial'}
-                  textVariant="overline"
-                  style={{ width: nonDesktop ? undefined : 169, height: 32 }}
+                  textVariant="caption"
+                  style={{ height: 32 }}
                   size="sm"
                   onClick={(e) => {
                     setPlaceOrderId(order.orderId);
@@ -224,8 +231,8 @@ export const PendingItem = (props: {
                 <Button
                   className="ship-order"
                   text={'Ship Order'}
-                  textVariant="overline"
-                  style={{ width: nonDesktop ? undefined : 169, height: 32 }}
+                  textVariant="caption"
+                  style={{ height: 32 }}
                   disabled={!allowFullShipment}
                   size="sm"
                   onClick={(e) => {
@@ -292,7 +299,6 @@ export const PendingItem = (props: {
                       </ItemDetail>
                     </div>
                   </div>
-                  <Spacer />
                   <div
                     className="right-content"
                     style={{ flex: 1, width: 'auto' }}
@@ -317,41 +323,42 @@ export const PendingItem = (props: {
 
                     <ItemDetail variant="caption" color="shade6">
                       Price (AUD)
-                      <span>{toPrice(lineItem.price)}</span>
+                      <span style={{ fontSize: '14px' }}>
+                        {toPrice(lineItem.price)}
+                      </span>
                     </ItemDetail>
                   </div>
                 </div>
 
-                {!isMobile && <Divider backgroundColor={theme.grey.shade8} />}
+                {!isMobile && (
+                  <Divider backgroundColor={theme.grey.shade8} spacing={12} />
+                )}
 
                 <div className="buttons" style={{ marginRight: 0 }}>
                   {lineItem.weightConfirmed ? (
                     <Button
                       text={'Weight Confirmed'}
-                      textVariant="overline"
                       iconPosition="before"
-                      textColor="success"
+                      textColor="noshade"
+                      color="success"
                       style={{
-                        width: 169,
                         height: 32,
-                        borderRadius: '8px',
-                        border: `2px solid ${theme.brand.success}`,
                       }}
                       size="sm"
                       onClick={(e) => {
                         //DO NOTHING
                         e.stopPropagation();
                       }}
-                      variant="outline"
+                      textVariant="caption"
                     />
                   ) : (
                     <Button
                       text={'Confirm Weight'}
-                      textVariant="overline"
                       iconPosition="before"
                       style={{ width: 169, height: 32, borderRadius: '8px' }}
                       size="sm"
                       variant="outline"
+                      textVariant="caption"
                       onClick={(e) => {
                         if (!lineItem.weightConfirmed) {
                           updateConfirmModal({
@@ -494,7 +501,7 @@ const ToShip = (props: SoldGeneratedProps) => {
   }, 0);
 
   const getDeliveryIcon = (deliveryMethod: string) => {
-    const iconProps = { width: 14, height: 14, fill: theme.grey.shade6 };
+    const iconProps = { width: 14, height: 14, fill: theme.grey.noshade };
     switch (deliveryMethod) {
       case 'ROAD':
         return <Truck {...iconProps} />;
@@ -573,15 +580,24 @@ const ToShip = (props: SoldGeneratedProps) => {
                   type="accordion"
                   iconColor={theme.brand.primary}
                   fullWidth
+                  accordionButtonStyle
                 >
                   <div className="content">
-                    <div className="left-content left-content-extended">
+                    <div className="left-content">
                       <div className="label">
-                        {getDeliveryIcon(group.deliveryMethod)}
+                        <span
+                          style={{
+                            background: theme.grey.shade10,
+                            borderRadius: '8px',
+                            marginRight: '8px',
+                          }}
+                        >
+                          {getDeliveryIcon(group.deliveryMethod)}
+                        </span>
                         <div>
                           <Typography
                             variant="label"
-                            color="shade6"
+                            color="noshade"
                             className="center-text"
                           >
                             {group.deliveryMethodLabel}
@@ -592,35 +608,38 @@ const ToShip = (props: SoldGeneratedProps) => {
                               color="shade6"
                               fontStyle="italic"
                               className="center-text"
+                              style={{ marginTop: '2px' }}
                             >
                               {group.deliveryAddress}
                             </Typography>
                           )}
                         </div>
                       </div>
-
+                    </div>
+                    <div className="right-content">
                       <div className="order-count">
                         <Typography variant="overlineSmall" color="noshade">
                           {group.orderCount}&nbsp;
                           {group.orderCount === 1 ? 'ORDER' : 'ORDERS'}
                         </Typography>
                       </div>
-                    </div>
-                    <Spacer />
-                    <Spacer />
-                    <Spacer />
-                    <div className="right-content">
                       <ItemDetail variant="caption" color="shade6">
                         Sold Weight{' '}
-                        <span style={{ color: theme.brand.alert }}>
-                          <Exclamation width={16} height={16} />
-                          &nbsp; To be confirmed
+                        <span
+                          style={{
+                            background: theme.brand.alert,
+                            borderRadius: '8px',
+                            padding: '3px 8px',
+                          }}
+                        >
+                          <Typography
+                            color="shade9"
+                            variant="caption"
+                            style={{ lineHeight: '15px' }}
+                          >
+                            To be confirmed
+                          </Typography>
                         </span>
-                      </ItemDetail>
-
-                      <ItemDetail variant="caption" color="shade6">
-                        Total Price (AUD){' '}
-                        <span>{toPrice(group.totalPrice)}</span>
                       </ItemDetail>
                     </div>
                   </div>

@@ -102,12 +102,12 @@ const SoldItem = (props: {
 
     const Icon = () => {
       if (key.toUpperCase() === 'PRE-AUCTION') {
-        return <Box fill={theme.grey.shade6} />;
+        return <Box fill={theme.grey.noshade} />;
       }
       return type.toLowerCase().includes('air') ? (
-        <Plane fill={theme.grey.shade6} />
+        <Plane fill={theme.grey.noshade} />
       ) : (
-        <Truck fill={theme.grey.shade6} />
+        <Truck fill={theme.grey.noshade} />
       );
     };
 
@@ -121,15 +121,24 @@ const SoldItem = (props: {
           type="accordion"
           iconColor={theme.brand.primary}
           fullWidth
+          accordionButtonStyle
         >
           <div className="content">
-            <div className="left-content left-content-extended">
+            <div className="left-content">
               <div className="label">
-                <Icon />
+                <span
+                  style={{
+                    background: theme.grey.shade10,
+                    borderRadius: '8px',
+                    marginRight: '8px',
+                  }}
+                >
+                  <Icon />
+                </span>
                 <div>
                   <Typography
                     variant="label"
-                    color="shade6"
+                    color="noshade"
                     className="center-text"
                   >
                     {key}
@@ -147,24 +156,16 @@ const SoldItem = (props: {
                   )}
                 </div>
               </div>
-
+            </div>
+            <div className="right-content">
               <div className="order-count">
                 <Typography variant="overlineSmall" color="noshade">
                   {entry.length}&nbsp;
                   {entry.length > 1 ? 'ORDERS' : 'ORDER'}
                 </Typography>
               </div>
-            </div>
-            <Spacer />
-            <Spacer />
-            <Spacer />
-            <div className="right-content">
               <ItemDetail variant="caption" color="shade6">
                 Sold Weight <span>{totalWeight}</span>
-              </ItemDetail>
-
-              <ItemDetail variant="caption" color="shade6">
-                Total Price (AUD) <span>{totalPrice}</span>
               </ItemDetail>
             </div>
           </div>
@@ -190,7 +191,6 @@ const SoldItem = (props: {
                 type="accordion"
                 iconColor={theme.brand.primary}
                 fullWidth
-                columnedRightContent
               >
                 <div className="content">
                   <div className="left-content">
@@ -201,32 +201,36 @@ const SoldItem = (props: {
                     >
                       <span>Order</span>&nbsp;#{v.orderRefNumber}
                     </Typography>
-
+                  </div>
+                  <Spacer />
+                  <div className="right-content">
                     <div className="order-count">
                       <Typography variant="overlineSmall" color="noshade">
                         {v.orders.length}&nbsp;
                         {v.orders.length > 1 ? 'ITEMS' : 'ITEM'}
                       </Typography>
                     </div>
-                  </div>
-                  <Spacer />
-                  <Spacer />
-                  <Spacer />
-                  <div className="right-content">
-                    <ItemDetail variant="caption" color="shade6" row>
-                      Buyer <span>{v.buyerCompanyName}</span>
+                    <ItemDetail variant="caption" color="shade6">
+                      Price (AUD)
+                      <span style={{ fontSize: '14px' }}>{v.totalPrice}</span>
                     </ItemDetail>
+                    <div className="buyer-type">
+                      <ItemDetail variant="caption" color="shade6" row>
+                        Buyer <span>{v.buyerCompanyName}</span>
+                      </ItemDetail>
 
-                    <ItemDetail variant="caption" color="shade6" row>
-                      Type <span>{v.salesChannel}</span>
-                    </ItemDetail>
+                      <ItemDetail variant="caption" color="shade6" row>
+                        Type <span>{v.salesChannel}</span>
+                      </ItemDetail>
+                    </div>
                   </div>
+                  <Spacer />
                   {props.status === 'PLACED' && (
                     <div className="buttons">
                       <Button
                         text={nonDesktop ? 'Message' : 'Message Buyer'}
                         textColor={'primary'}
-                        textVariant="overline"
+                        textVariant="caption"
                         iconPosition="before"
                         variant="outline"
                         size="sm"
@@ -350,7 +354,12 @@ const SoldItem = (props: {
                               ))}
                             </div>
 
-                            <ItemDetail variant="caption" color="shade5" row>
+                            <ItemDetail
+                              variant="caption"
+                              color="shade5"
+                              row
+                              style={{ marginLeft: 0 }}
+                            >
                               Size: {order.size}
                             </ItemDetail>
                           </div>
@@ -378,7 +387,10 @@ const SoldItem = (props: {
 
                     {!isMobile &&
                       (isPreAuction || index === v.orders.length - 1) && (
-                        <Divider backgroundColor={theme.grey.shade8} />
+                        <Divider
+                          backgroundColor={theme.grey.shade8}
+                          spacing={12}
+                        />
                       )}
 
                     {(isPreAuction || index === v.orders.length - 1) && (
@@ -512,26 +524,23 @@ const SoldItem = (props: {
                             {order.weightConfirmed ? (
                               <Button
                                 text={'Weight Confirmed'}
-                                textVariant="overline"
+                                textVariant="caption"
                                 iconPosition="before"
-                                textColor="success"
+                                textColor="noshade"
+                                color="success"
                                 style={{
-                                  width: 169,
                                   height: 32,
-                                  borderRadius: '8px',
-                                  border: `2px solid ${theme.brand.success}`,
                                 }}
                                 size="sm"
                                 onClick={(e) => {
                                   //DO NOTHING
                                   e.stopPropagation();
                                 }}
-                                variant="outline"
                               />
                             ) : (
                               <Button
                                 text={'Confirm Weight'}
-                                textVariant="overline"
+                                textVariant="caption"
                                 iconPosition="before"
                                 style={{
                                   width: 169,
