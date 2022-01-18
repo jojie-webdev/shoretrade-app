@@ -132,7 +132,9 @@ const SoldItem = (props: {
                     color="shade6"
                     className="center-text"
                   >
-                    {key}
+                    {key.includes('Collecting')
+                      ? 'Collecting from Yourself'
+                      : key}
                   </Typography>
 
                   {deliveryAddress && (
