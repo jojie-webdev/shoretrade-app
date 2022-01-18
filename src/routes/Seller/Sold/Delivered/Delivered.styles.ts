@@ -21,12 +21,13 @@ export const StyledInteraction = styled(Interaction)`
       align-items: center;
       width: 292px;
       justify-content: space-between;
-      padding-right: 32px;
 
       @media ${BREAKPOINTS['sm']} {
         width: 240px;
       }
+    }
 
+    .right-content {
       .order-count {
         display: flex;
         justify-content: center;
@@ -38,14 +39,6 @@ export const StyledInteraction = styled(Interaction)`
         p {
           font-size: 11px;
         }
-      }
-    }
-
-    .left-content-extended {
-      min-width: 425px;
-
-      @media ${BREAKPOINTS['sm']} {
-        width: 240px;
       }
     }
 
