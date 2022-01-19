@@ -345,7 +345,13 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                       onClick={onAddToCart}
                       iconPosition="before"
                       icon={
-                        <Cart fill={pressedBoxRadio ? '' : theme.grey.shade5} />
+                        <Cart
+                          fill={
+                            pressedBoxRadio
+                              ? theme.grey.noshade
+                              : theme.grey.shade5
+                          }
+                        />
                       }
                       variant={pressedBoxRadio ? undefined : 'disabled'}
                     />
