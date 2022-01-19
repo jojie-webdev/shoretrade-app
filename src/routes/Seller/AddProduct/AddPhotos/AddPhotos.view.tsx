@@ -12,13 +12,16 @@ import { base64ToFile } from 'utils/File';
 import { createUpdateReducer } from 'utils/Hooks';
 
 import { AddPhotosProps } from './AddPhotos.props';
-import { Container } from './AddPhotos.style';
+import { Container, PhotoTypeWrapper } from './AddPhotos.style';
+import Radio from 'components/base/Radio';
 
 const AddPhotos = ({
   isCustomType,
   listingFormData,
   editableListing,
   onUpdateImage,
+  onSetProductPhotoType,
+  photoTypeData,
   navBack,
 }: AddPhotosProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -113,6 +116,20 @@ const AddPhotos = ({
             />
           </Col>
         ))}
+        <Col md={12} className="add-col">
+          <PhotoTypeWrapper>
+            {photoTypeData.map((_type) => (
+              <Radio
+                key={_type.id}
+                label={_type.label}
+                checked={_type.isChecked}
+                onClick={() => {
+                  onSetProductPhotoType(_type.id);
+                }}
+              />
+            ))}
+          </PhotoTypeWrapper>
+        </Col>
       </Row>
 
       {!isMobile && (

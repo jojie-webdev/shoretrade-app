@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useEffect, useState, useReducer, useMemo } from 'react';
 
 import { ADD_PRODUCT_ROUTES } from 'consts';
 import pick from 'ramda/src/pick';
@@ -29,6 +29,22 @@ import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 
 import { AddProductGeneratedProps } from './AddProduct.props';
 import AddProductView from './AddProduct.view';
+
+// will be remove once will implement actual API
+const productPhotoType = [
+  {
+    id: 1,
+    value: 'sample',
+    label: 'This is an actual photo of the product',
+    isChecked: false,
+  },
+  {
+    id: 2,
+    value: 'sample',
+    label: 'This is a representation of the product for sale',
+    isChecked: false,
+  },
+];
 
 export const toEmployeeOptions = (user: GetCoopUsersResponseItem) =>
   user.employees
@@ -176,6 +192,7 @@ const AddProduct = (): JSX.Element => {
   };
 
   const [showCustomTypeSettings, setShowCustomTypeSettings] = useState(false);
+  const [photoTypeData, setProductType] = useState(productPhotoType);
 
   const getCustomFormData = () => {
     dispatch(getCustomFormDataActions.request());
@@ -295,6 +312,15 @@ const AddProduct = (): JSX.Element => {
   };
 
   const isExisting = (editableListing?.currentListingId || '').length > 0;
+
+  const onSetProductPhotoType = (id: number) => {
+    setProductType(
+      photoTypeData.map((_data) => {
+        _data.isChecked = _data.id === id;
+        return _data;
+      })
+    );
+  };
 
   const onUpdateImage = async (
     images: Record<string, File | null>,
@@ -660,9 +686,11 @@ const AddProduct = (): JSX.Element => {
     editableListing,
     typeName,
     isCustomType,
+    photoTypeData,
     onSelectSpecifications,
     onSelectSizes,
     onUpdateImage,
+    onSetProductPhotoType,
     onAddPackaging,
     onAddBoxes,
     onUpdateDetails,
