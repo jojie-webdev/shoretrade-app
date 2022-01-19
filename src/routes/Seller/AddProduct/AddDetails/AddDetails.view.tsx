@@ -114,6 +114,10 @@ const AddDetails = ({
     {}
   );
 
+  const [catchmentDateErrorMessage, setCatchmentDateErrorMessage] = useState(
+    ''
+  );
+
   const [alwaysAvailable, setAlwaysAvailable] = useState(
     editableListing?.catchRecurrence
       ? editableListing?.catchRecurrence.length > 0
@@ -256,12 +260,16 @@ const AddDetails = ({
         })
       );
     }
+    if (catchDate && !listingEndDate) {
+      onRevalidateCatchment();
+    }
     if (listingEndDate) {
       setErrors(
         isValid({
           listingEndDate,
         })
       );
+      onRevalidateCatchment();
     }
     if (listingEndTime) {
       setErrors(
@@ -474,6 +482,17 @@ const AddDetails = ({
     if (editableListing.isAlreadyCreated) return;
     setIsAquafuture(false);
     setIsAuctionSale(false);
+  };
+
+  const onRevalidateCatchment = () => {
+    const isNotNullAndIsAqua = !!catchDate && !!listingEndDate && isAquafuture;
+    const validateRange = moment(listingEndDate).isBefore(catchDate);
+    setCatchmentDateErrorMessage('');
+    if (isNotNullAndIsAqua && validateRange) {
+      setCatchmentDateErrorMessage(
+        'Expiry date must either be beyond or equal to the catch date'
+      );
+    }
   };
 
   return (
@@ -762,7 +781,8 @@ const AddDetails = ({
                 onDateChange={(d) => setListingEndDate(d ? d?.toDate() : null)}
                 error={
                   pathOr('', ['listingEndDate', '0'], errors) ||
-                  pathOr('', ['isDateRangeValid', '0'], errors)
+                  pathOr('', ['isDateRangeValid', '0'], errors) ||
+                  catchmentDateErrorMessage
                 }
                 isOutsideRange={(date) =>
                   date < new Date().setHours(0, 0, 0, 0)
