@@ -51,6 +51,9 @@ const constraints = {
     isTrue:
       '^You cannot have an Aquafuture listing that is Always Available. If you would like this listing to be Always Available, deselect the Aquafuture tick box on Step 5',
   },
+  endAndCatchmentDate: {
+    isTrue: '^Expiry date must either be beyond or equal to the catch date',
+  },
 };
 
 const constraintsAlt = {
@@ -136,6 +139,9 @@ export const isValidPreAuction = createValidator({
   ...constraintsAuction,
   price: constraintsAlt.price,
 });
+export const isValidExpiryDate = createValidator({
+  isListingExpiryDateValid: constraints.endAndCatchmentDate,
+});
 
 export const isDateRangeValid = (endListing: Date, catchDate: Date) => {
   return (
@@ -147,3 +153,4 @@ export const isAuctionDateValid = (auctionDate: Date | null) => {
   if (!auctionDate) return false;
   return auctionDate > new Date();
 };
+export const isListingExpiryDateValid = (isBefore: boolean) => isBefore;

@@ -47,6 +47,8 @@ import {
   isValidAuction,
   isValidPreAuction,
   isAuctionDateValid,
+  isValidExpiryDate,
+  isListingExpiryDateValid,
 } from './AddDetails.validation';
 
 // Note: even this is AEST, keep calculations on local time
@@ -260,16 +262,14 @@ const AddDetails = ({
         })
       );
     }
-    if (catchDate && !listingEndDate) {
-      onRevalidateCatchment();
-    }
-    if (listingEndDate) {
+    if (catchDate && listingEndDate) {
       setErrors(
-        isValid({
-          listingEndDate,
+        isValidExpiryDate({
+          isListingExpiryDateValid: isListingExpiryDateValid(
+            onRevalidateCatchment()
+          ),
         })
       );
-      onRevalidateCatchment();
     }
     if (listingEndTime) {
       setErrors(
@@ -484,15 +484,14 @@ const AddDetails = ({
     setIsAuctionSale(false);
   };
 
-  const onRevalidateCatchment = () => {
-    const isNotNullAndIsAqua = !!catchDate && !!listingEndDate && isAquafuture;
+  const onRevalidateCatchment = (): boolean => {
     const validateRange = moment(listingEndDate).isBefore(catchDate);
-    setCatchmentDateErrorMessage('');
-    if (isNotNullAndIsAqua && validateRange) {
-      setCatchmentDateErrorMessage(
-        'Expiry date must either be beyond or equal to the catch date'
-      );
-    }
+    return !(isAquafuture && validateRange);
+  };
+
+  const handleAquafutureDate = () => {
+    const isToday = isAquafuture && moment(catchDate).toDate();
+    return !isToday ? new Date().setHours(0, 0, 0, 0) : isToday;
   };
 
   return (
@@ -710,6 +709,9 @@ const AddDetails = ({
             }
             showCalendarIcon={true}
             showArrowDownIcon={true}
+            isOutsideRange={(date) =>
+              date < (isAquafuture && new Date().setHours(0, 0, 0, 0))
+            }
             topComponent={
               !isAquafuture &&
               !isAuctionSale && (
@@ -782,11 +784,9 @@ const AddDetails = ({
                 error={
                   pathOr('', ['listingEndDate', '0'], errors) ||
                   pathOr('', ['isDateRangeValid', '0'], errors) ||
-                  catchmentDateErrorMessage
+                  pathOr('', ['isListingExpiryDateValid', '0'], errors)
                 }
-                isOutsideRange={(date) =>
-                  date < new Date().setHours(0, 0, 0, 0)
-                }
+                isOutsideRange={(date) => date < handleAquafutureDate()}
                 showCalendarIcon={true}
                 showArrowDownIcon={true}
               />
