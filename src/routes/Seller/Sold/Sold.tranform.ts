@@ -128,14 +128,15 @@ export const orderItemToPendingToShipItem = (
             }, 0),
           };
         });
-
         newOrders.push({
           groupName: current,
           buyerCompanyId: orders[0].buyerCompanyId,
           buyerCompanyName: orders[0].buyerCompanyName,
           deliveryMethod: orders[0].deliveryMethod,
           deliveryMethodLabel,
-          deliveryAddress: deliveryMethodLabel.includes('Collecting from')
+          deliveryAddress: ['selfPickupOrders', 'airPickupOrders'].includes(
+            current
+          )
             ? sellerAddress
             : deliveryMethodLabel.includes('Drop')
             ? orders[0].deliveryInstruction?.marketAddress
@@ -187,7 +188,7 @@ export const orderItemToSoldItemData = ({
         return {
           groupName: key,
           key: groupKey,
-          deliveryAddress: groupKey.includes('Collecting from')
+          deliveryAddress: ['selfPickupOrders', 'airPickupOrders'].includes(key)
             ? sellerAddress
             : groupKey.includes('Drop')
             ? order.deliveryInstruction?.marketAddress
