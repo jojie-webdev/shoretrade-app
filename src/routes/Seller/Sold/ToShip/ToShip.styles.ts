@@ -113,7 +113,6 @@ export const StyledInteraction = styled(Interaction)<{
     display: flex;
     flex: 1;
     align-items: center;
-    flex-wrap: wrap;
     justify-content: space-between;
 
     .left-content {
