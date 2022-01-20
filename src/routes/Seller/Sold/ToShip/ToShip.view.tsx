@@ -617,17 +617,14 @@ const ToShip = (props: SoldGeneratedProps) => {
         </TitleRow>
 
         {pendingToShip.map((group) => {
+          const key = `${group.deliveryMethodLabel}-${group.deliveryAddress}`;
           return (
-            <ItemRow
-              key={group.deliveryMethodLabel}
-              id={group.deliveryMethodLabel}
-            >
+            <ItemRow key={key} id={key}>
               <Col>
                 <StyledInteraction
-                  pressed={isOpen.includes(group.deliveryMethodLabel || '')}
+                  pressed={isOpen.includes(key || '')}
                   onClick={() =>
-                    group.orderCount > 0 &&
-                    toggleAccordion(group.deliveryMethodLabel || '')
+                    group.orderCount > 0 && toggleAccordion(key || '')
                   }
                   type="accordion"
                   iconColor={theme.brand.primary}
@@ -682,21 +679,17 @@ const ToShip = (props: SoldGeneratedProps) => {
                 </StyledInteraction>
 
                 <CollapsibleContent
-                  isOpen={isOpen.includes(group.deliveryMethodLabel || '')}
+                  isOpen={isOpen.includes(key || '')}
                   style={{
                     ...(addHorizontalRowMargin
                       ? { paddingLeft: 24, paddingRight: 24 }
                       : { paddingLeft: 8, paddingRight: 8 }),
-                    marginBottom: isOpen.includes(
-                      group.deliveryMethodLabel || ''
-                    )
+                    marginBottom: isOpen.includes(key || '')
                       ? '8px'
                       : undefined,
                     borderBottomLeftRadius: '8px',
                     borderBottomRightRadius: '8px',
-                    paddingBottom: isOpen.includes(
-                      group.deliveryMethodLabel || ''
-                    )
+                    paddingBottom: isOpen.includes(key || '')
                       ? '8px'
                       : undefined,
                   }}
