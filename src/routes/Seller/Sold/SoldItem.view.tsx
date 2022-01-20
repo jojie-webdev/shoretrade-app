@@ -111,6 +111,44 @@ const SoldItem = (props: {
       );
     };
 
+    const renderDeliveryLabelAndAddress = (hideLabel: boolean) => (
+      <div>
+        {(hideLabel ? !key.includes('Pre-Auction') : true) && (
+          <Typography variant="label" color="noshade" className="center-text">
+            {key.includes('Collecting') ? 'Collecting from Yourself' : key}
+          </Typography>
+        )}
+
+        {deliveryAddress && (
+          <Typography
+            variant="caption"
+            color="shade6"
+            fontStyle="italic"
+            className="center-text"
+          >
+            {deliveryAddress}
+          </Typography>
+        )}
+      </div>
+    );
+
+    const getDeliveryMobileLabel = () => {
+      if (key.toUpperCase() === 'PRE-AUCTION') {
+        return 'Pre-Auction';
+      }
+      return type.toLowerCase().includes('air')
+        ? 'Air Freight'
+        : type.toLowerCase().includes('road')
+        ? 'Road Freight'
+        : 'Seller Delivery';
+    };
+
+    const renderSoldWeight = () => (
+      <ItemDetail variant="caption" color="shade6">
+        Sold Weight <span>{totalWeight}</span>
+      </ItemDetail>
+    );
+
     const accordionId = `${key}-${toAddressState}`;
 
     return (
@@ -121,7 +159,15 @@ const SoldItem = (props: {
           type="accordion"
           iconColor={theme.brand.primary}
           fullWidth
-          accordionButtonStyle
+          accordionButtonStyle={!isMobile}
+          bottomComponent={
+            isMobile && (
+              <div>
+                {renderDeliveryLabelAndAddress(true)}
+                {renderSoldWeight()}
+              </div>
+            )
+          }
         >
           <div className="content">
             <div className="left-content">
@@ -130,33 +176,22 @@ const SoldItem = (props: {
                   style={{
                     background: theme.grey.shade10,
                     borderRadius: '8px',
-                    marginRight: '8px',
+                    marginRight: isMobile ? '4px' : '8px',
                   }}
                 >
                   <Icon />
                 </span>
-                <div>
+                {isMobile ? (
                   <Typography
                     variant="label"
                     color="noshade"
                     className="center-text"
                   >
-                    {key.includes('Collecting')
-                      ? 'Collecting from Yourself'
-                      : key}
+                    {getDeliveryMobileLabel()}
                   </Typography>
-
-                  {deliveryAddress && (
-                    <Typography
-                      variant="caption"
-                      color="shade6"
-                      fontStyle="italic"
-                      className="center-text"
-                    >
-                      {deliveryAddress}
-                    </Typography>
-                  )}
-                </div>
+                ) : (
+                  renderDeliveryLabelAndAddress(false)
+                )}
               </div>
             </div>
             <div className="right-content">
@@ -166,9 +201,7 @@ const SoldItem = (props: {
                   {entry.length > 1 ? 'ORDERS' : 'ORDER'}
                 </Typography>
               </div>
-              <ItemDetail variant="caption" color="shade6">
-                Sold Weight <span>{totalWeight}</span>
-              </ItemDetail>
+              {!isMobile && renderSoldWeight()}
             </div>
           </div>
         </StyledInteraction>
