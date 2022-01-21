@@ -745,7 +745,7 @@ const AddDetails = ({
               setShippingAddress(option.value);
             }}
             options={shippingAddressOptions}
-            label="Shipping Address"
+            label="Shipping From"
             error={pathOr('', ['shippingAddress', '0'], errors)}
           />
         </Col>
