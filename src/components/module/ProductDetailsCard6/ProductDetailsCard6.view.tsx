@@ -82,7 +82,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
       {templateDeliveryDate && (
         <Row>
           <Label variant="label" color="shade6" style={{ marginRight: 4 }}>
-            Estimated Shipping:
+            Est. Collection:
           </Label>
           <Label variant="label" weight="bold">
             {' '}
