@@ -38,6 +38,7 @@ import {
   // CheckboxContainer,
   CustomCol,
   DatePickerTop,
+  SfmContainer,
 } from './AddDetails.style';
 import { combineDateTime } from './AddDetails.transform';
 import {
@@ -200,6 +201,12 @@ const AddDetails = ({
   const [description, setDescription] = useState(
     editableListing?.description || ''
   );
+
+  const [mandatorySFM, setMandatorySFM] = useState({
+    isChecked: false,
+    gotSkipped: false,
+  });
+
   const selectedCompany = editableListing?.company || '';
 
   const shippingAddressOptions = GetCompanyAddresses(selectedCompany).map(
@@ -320,6 +327,14 @@ const AddDetails = ({
 
   const onNext = () => {
     let detailsError: any;
+
+    if (!mandatorySFM.isChecked) {
+      setMandatorySFM((prevState) => ({
+        ...prevState,
+        gotSkipped: true,
+      }));
+      return;
+    }
     switch (true) {
       case isPreAuctionSale:
         detailsError = isValidPreAuction({
@@ -836,6 +851,38 @@ const AddDetails = ({
             style={{ height: '100px' }}
           />
         </Col>
+      </Row>
+
+      <Row className="textfield-row">
+        <SfmContainer
+          md={12}
+          className={`textfield-col ${
+            mandatorySFM.gotSkipped ? 'errors' : null
+          }`}
+        >
+          <Interactions
+            padding="16px 20px"
+            type="none"
+            leftComponent={
+              <Checkbox
+                onClick={() => {
+                  setMandatorySFM((prevState) => ({
+                    ...prevState,
+                    isChecked: !prevState.isChecked,
+                    gotSkipped: false,
+                  }));
+                }}
+                checked={mandatorySFM.isChecked}
+                label="This product coincides with the SFM Quality Assurance documents."
+              />
+            }
+          />
+          {mandatorySFM.gotSkipped && (
+            <Typography variant="caption" color="error" className="sfm-error">
+              Please confirm to proceed
+            </Typography>
+          )}
+        </SfmContainer>
       </Row>
 
       {!isMobile && (
