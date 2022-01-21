@@ -30,10 +30,6 @@ export const Container = styled.div`
   .tabs {
     width: 340px;
 
-    .main-tab {
-      padding: 4px 8px;
-    }
-
     @media ${BREAKPOINTS['sm']} {
       width: 100%;
       margin-bottom: 16px;

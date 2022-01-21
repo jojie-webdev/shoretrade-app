@@ -9,7 +9,22 @@ export const Container = styled.div`
   }
 
   .controls-row {
-    margin-bottom: 48px;
+    width: 100%;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  .tabs {
+    width: 340px;
+
+    @media ${BREAKPOINTS['sm']} {
+      width: 100%;
+      margin-bottom: 16px;
+    }
   }
 `;
 
@@ -24,6 +39,16 @@ export const TitleRow = styled.div`
 
     .svg-container {
       margin-right: 8px;
+    }
+
+    .notification {
+      border-radius: 8px;
+      padding: 4px 8px;
+      background: ${({ theme }) => theme.brand.alert};
+      font-size: 11px;
+      font-weight: 900;
+      margin-left: 8px;
+      color: ${({ theme }) => theme.grey.shade9};
     }
   }
 `;

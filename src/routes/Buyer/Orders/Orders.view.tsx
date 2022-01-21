@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer, useState } from 'react';
 
 import SegmentedControls from 'components/base/SegmentedControls';
+import Tabs from 'components/base/Tabs';
 import DateRangePicker from 'components/module/DateRangePicker';
 import Loading from 'components/module/Loading';
 import Search from 'components/module/Search';
@@ -127,15 +128,18 @@ const OrdersView = (props: OrdersGeneratedProps) => {
 
   return (
     <Container>
-      <Row className="controls-row">
-        <Col>
-          <SegmentedControls
-            options={['Pending', 'In Transit', 'Complete']}
-            selectedOption={currentTab}
-            onClickControl={(value) => onChangeCurrentTab(value as TabOptions)}
+      <div className="controls-row">
+        <div className="tabs">
+          <Tabs
+            tabs={[PENDING, IN_TRANSIT, COMPLETE]}
+            selectedTab={currentTab}
+            onClickTab={(value) => onChangeCurrentTab(value as TabOptions)}
+            activeTextColor={theme.grey.shade9}
+            textColor={theme.grey.shade6}
+            underlineColor={theme.grey.shade3}
           />
-        </Col>
-      </Row>
+        </div>
+      </div>
       <SearchFilterRow>
         <SearchContainer>
           <Search

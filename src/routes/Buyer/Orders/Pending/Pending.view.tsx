@@ -53,12 +53,15 @@ const Pending = (props: OrdersGeneratedProps) => {
         <>
           <TitleRow>
             <Col md={12} className="title-col">
-              <div className="svg-container">
-                <InfoFilled fill={theme.brand.alert} height={18} width={18} />
-              </div>
-              <Typography color="alert">
-                Pending Confirmation - {Object.keys(pendingOrders).length}
+              <Typography
+                color="shade9"
+                style={{ fontFamily: 'Media Sans', fontSize: '20px' }}
+              >
+                Pending
               </Typography>
+              <span className="notification">
+                {Object.keys(pendingOrders).length}
+              </span>
             </Col>
           </TitleRow>
 
