@@ -47,6 +47,8 @@ import {
   isValidAuction,
   isValidPreAuction,
   isAuctionDateValid,
+  isValidExpiryDate,
+  isListingExpiryDateValid,
 } from './AddDetails.validation';
 
 // Note: even this is AEST, keep calculations on local time
@@ -256,10 +258,12 @@ const AddDetails = ({
         })
       );
     }
-    if (listingEndDate) {
+    if (catchDate && listingEndDate) {
       setErrors(
-        isValid({
-          listingEndDate,
+        isValidExpiryDate({
+          isListingExpiryDateValid: isListingExpiryDateValid(
+            onRevalidateCatchment()
+          ),
         })
       );
     }
@@ -474,6 +478,16 @@ const AddDetails = ({
     if (editableListing.isAlreadyCreated) return;
     setIsAquafuture(false);
     setIsAuctionSale(false);
+  };
+
+  const onRevalidateCatchment = (): boolean => {
+    const validateRange = moment(listingEndDate).isBefore(catchDate);
+    return !(isAquafuture && validateRange);
+  };
+
+  const handleAquafutureDate = () => {
+    const isToday = isAquafuture && moment(catchDate).toDate();
+    return !isToday ? new Date().setHours(0, 0, 0, 0) : isToday;
   };
 
   return (
@@ -691,6 +705,9 @@ const AddDetails = ({
             }
             showCalendarIcon={true}
             showArrowDownIcon={true}
+            isOutsideRange={(date) =>
+              date < (isAquafuture && new Date().setHours(0, 0, 0, 0))
+            }
             topComponent={
               !isAquafuture &&
               !isAuctionSale && (
@@ -762,11 +779,10 @@ const AddDetails = ({
                 onDateChange={(d) => setListingEndDate(d ? d?.toDate() : null)}
                 error={
                   pathOr('', ['listingEndDate', '0'], errors) ||
-                  pathOr('', ['isDateRangeValid', '0'], errors)
+                  pathOr('', ['isDateRangeValid', '0'], errors) ||
+                  pathOr('', ['isListingExpiryDateValid', '0'], errors)
                 }
-                isOutsideRange={(date) =>
-                  date < new Date().setHours(0, 0, 0, 0)
-                }
+                isOutsideRange={(date) => date < handleAquafutureDate()}
                 showCalendarIcon={true}
                 showArrowDownIcon={true}
               />
