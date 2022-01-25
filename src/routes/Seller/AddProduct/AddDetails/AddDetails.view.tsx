@@ -116,10 +116,6 @@ const AddDetails = ({
     {}
   );
 
-  const [catchmentDateErrorMessage, setCatchmentDateErrorMessage] = useState(
-    ''
-  );
-
   const [alwaysAvailable, setAlwaysAvailable] = useState(
     editableListing?.catchRecurrence
       ? editableListing?.catchRecurrence.length > 0
