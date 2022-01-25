@@ -231,7 +231,11 @@ const TermsAndCondition = (props: TermsAndConditionProps): JSX.Element => {
 
         <Visible xs sm>
           <Col md={6} lg={6} xl={4} style={{ marginBottom: '16px' }}>
-            <StyledSwiper spaceBetween={30} pagination={{ clickable: true }}>
+            <StyledSwiper
+              appType={appType}
+              spaceBetween={30}
+              pagination={{ clickable: true }}
+            >
               <SwiperSlide>
                 {renderCard(
                   '01',
