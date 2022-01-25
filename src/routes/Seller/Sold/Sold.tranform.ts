@@ -34,6 +34,16 @@ const getShipmentMethodLabel = (
   }
 };
 
+const formatAddressString = (toAddress: {
+  postcode: string;
+  state: string;
+  streetName: string;
+  streetNumber: string;
+  suburb: string;
+}) => {
+  return `${toAddress.streetNumber} ${toAddress.streetName}, ${toAddress.suburb}, ${toAddress.state}, ${toAddress.postcode}`;
+};
+
 const getSalesChannel = (data: GetSellerOrdersResponseItem) => {
   if (data.isMarketRequest) return 'Market Request';
   return data.orderLineItem.some((l) => l.listing.isAquafuture)
@@ -128,15 +138,18 @@ export const orderItemToPendingToShipItem = (
             }, 0),
           };
         });
-
         newOrders.push({
           groupName: current,
           buyerCompanyId: orders[0].buyerCompanyId,
           buyerCompanyName: orders[0].buyerCompanyName,
           deliveryMethod: orders[0].deliveryMethod,
           deliveryMethodLabel,
-          deliveryAddress: deliveryMethodLabel.includes('Collecting from')
+          deliveryAddress: ['selfPickupOrders', 'airPickupOrders'].includes(
+            current
+          )
             ? sellerAddress
+            : current === 'selfDeliveryOrder'
+            ? formatAddressString(orders[0].toAddress)
             : deliveryMethodLabel.includes('Drop')
             ? orders[0].deliveryInstruction?.marketAddress
             : marketAddress,
@@ -187,8 +200,10 @@ export const orderItemToSoldItemData = ({
         return {
           groupName: key,
           key: groupKey,
-          deliveryAddress: groupKey.includes('Collecting from')
+          deliveryAddress: ['selfPickupOrders', 'airPickupOrders'].includes(key)
             ? sellerAddress
+            : key === 'selfDeliveryOrder'
+            ? formatAddressString(order.toAddress)
             : groupKey.includes('Drop')
             ? order.deliveryInstruction?.marketAddress
             : marketAddress,

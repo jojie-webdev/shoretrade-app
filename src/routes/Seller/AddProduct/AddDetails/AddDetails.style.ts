@@ -91,3 +91,14 @@ export const DatePickerTop = styled.div`
     margin: auto;
   }
 `;
+
+export const SfmContainer = styled(Col)(({ theme }) => ({
+  '&.errors': {
+    '.interactions': {
+      outline: `.999px solid ${theme.brand.error}`,
+    },
+  },
+  '.sfm-error': {
+    marginTop: 8,
+  },
+}));

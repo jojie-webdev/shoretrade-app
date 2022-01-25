@@ -66,7 +66,9 @@ export const transformOrder = (
   orderItem: GetBuyerOrdersResponseItem
 ): OrderItem => {
   const totalPrice = toPrice(
-    Number(orderItem.totalPrice) + orderItem.shippingCost
+    Number(orderItem.totalPrice) +
+      orderItem.shippingCost +
+      Number(orderItem?.totalCrateFee || 0)
   );
 
   return {
