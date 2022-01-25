@@ -399,6 +399,7 @@ const ToShip = (props: SoldGeneratedProps) => {
   } = props;
 
   const [didPressConfirmWeight, setDidPressConfirmWeight] = useState(false);
+  const isMobile = useMediaQuery({ query: BREAKPOINTS.sm });
 
   const confirmWeightPending = useSelector(
     (state: Store) => state.confirmWeight.pending
@@ -512,6 +513,57 @@ const ToShip = (props: SoldGeneratedProps) => {
     }
   };
 
+  const getDeliveryMobileLabel = (deliveryMethod: string) => {
+    switch (deliveryMethod) {
+      case 'ROAD':
+        return 'Road Freight';
+      case 'SELLER':
+        return 'Seller Delivery';
+      default:
+        return 'Air Freight';
+    }
+  };
+
+  const renderDeliveryLabelAndAddress = (group: PendingToShipItemData) => (
+    <div>
+      <Typography variant="label" color="noshade" className="center-text">
+        {group.deliveryMethodLabel}
+      </Typography>
+      {group.deliveryAddress && (
+        <Typography
+          variant="caption"
+          color="shade6"
+          fontStyle="italic"
+          className="center-text"
+          style={{ marginTop: '2px' }}
+        >
+          {group.deliveryAddress}
+        </Typography>
+      )}
+    </div>
+  );
+
+  const renderSoldWeight = () => (
+    <ItemDetail variant="caption" color="shade6">
+      Sold Weight{' '}
+      <span
+        style={{
+          background: theme.brand.alert,
+          borderRadius: '8px',
+          padding: '3px 8px',
+        }}
+      >
+        <Typography
+          color="shade9"
+          variant="caption"
+          style={{ lineHeight: '15px' }}
+        >
+          To be confirmed
+        </Typography>
+      </span>
+    </ItemDetail>
+  );
+
   return (
     <>
       <ConfirmModal
@@ -565,22 +617,27 @@ const ToShip = (props: SoldGeneratedProps) => {
         </TitleRow>
 
         {pendingToShip.map((group) => {
+          const key = `${group.deliveryMethodLabel}-${group.deliveryAddress}`;
           return (
-            <ItemRow
-              key={group.deliveryMethodLabel}
-              id={group.deliveryMethodLabel}
-            >
+            <ItemRow key={key} id={key}>
               <Col>
                 <StyledInteraction
-                  pressed={isOpen.includes(group.deliveryMethodLabel || '')}
+                  pressed={isOpen.includes(key || '')}
                   onClick={() =>
-                    group.orderCount > 0 &&
-                    toggleAccordion(group.deliveryMethodLabel || '')
+                    group.orderCount > 0 && toggleAccordion(key || '')
                   }
                   type="accordion"
                   iconColor={theme.brand.primary}
                   fullWidth
-                  accordionButtonStyle
+                  accordionButtonStyle={!isMobile}
+                  bottomComponent={
+                    isMobile && (
+                      <div>
+                        {renderDeliveryLabelAndAddress(group)}
+                        {renderSoldWeight()}
+                      </div>
+                    )
+                  }
                 >
                   <div className="content">
                     <div className="left-content">
@@ -589,29 +646,22 @@ const ToShip = (props: SoldGeneratedProps) => {
                           style={{
                             background: theme.grey.shade10,
                             borderRadius: '8px',
-                            marginRight: '8px',
+                            marginRight: isMobile ? '4px' : '8px',
                           }}
                         >
                           {getDeliveryIcon(group.deliveryMethod)}
                         </span>
                         <div>
-                          <Typography
-                            variant="label"
-                            color="noshade"
-                            className="center-text"
-                          >
-                            {group.deliveryMethodLabel}
-                          </Typography>
-                          {group.deliveryAddress && (
+                          {isMobile ? (
                             <Typography
-                              variant="caption"
-                              color="shade6"
-                              fontStyle="italic"
+                              variant="label"
+                              color="noshade"
                               className="center-text"
-                              style={{ marginTop: '2px' }}
                             >
-                              {group.deliveryAddress}
+                              {getDeliveryMobileLabel(group.deliveryMethod)}
                             </Typography>
+                          ) : (
+                            renderDeliveryLabelAndAddress(group)
                           )}
                         </div>
                       </div>
@@ -623,44 +673,23 @@ const ToShip = (props: SoldGeneratedProps) => {
                           {group.orderCount === 1 ? 'ORDER' : 'ORDERS'}
                         </Typography>
                       </div>
-                      <ItemDetail variant="caption" color="shade6">
-                        Sold Weight{' '}
-                        <span
-                          style={{
-                            background: theme.brand.alert,
-                            borderRadius: '8px',
-                            padding: '3px 8px',
-                          }}
-                        >
-                          <Typography
-                            color="shade9"
-                            variant="caption"
-                            style={{ lineHeight: '15px' }}
-                          >
-                            To be confirmed
-                          </Typography>
-                        </span>
-                      </ItemDetail>
+                      {!isMobile && renderSoldWeight()}
                     </div>
                   </div>
                 </StyledInteraction>
 
                 <CollapsibleContent
-                  isOpen={isOpen.includes(group.deliveryMethodLabel || '')}
+                  isOpen={isOpen.includes(key || '')}
                   style={{
                     ...(addHorizontalRowMargin
                       ? { paddingLeft: 24, paddingRight: 24 }
                       : { paddingLeft: 8, paddingRight: 8 }),
-                    marginBottom: isOpen.includes(
-                      group.deliveryMethodLabel || ''
-                    )
+                    marginBottom: isOpen.includes(key || '')
                       ? '8px'
                       : undefined,
                     borderBottomLeftRadius: '8px',
                     borderBottomRightRadius: '8px',
-                    paddingBottom: isOpen.includes(
-                      group.deliveryMethodLabel || ''
-                    )
+                    paddingBottom: isOpen.includes(key || '')
                       ? '8px'
                       : undefined,
                   }}

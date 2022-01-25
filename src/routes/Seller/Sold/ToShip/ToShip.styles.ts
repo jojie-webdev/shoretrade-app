@@ -86,16 +86,26 @@ export const StyledInteraction = styled(Interaction)<{
   @media ${BREAKPOINTS.sm} {
     padding: 16px;
 
-    > .left-content {
+    > .left-content,
+    .top-content > .left-content {
       padding-right: 0 !important;
     }
 
     > .right-content {
       align-items: flex-start;
     }
+
+    .bottom-content {
+      margin-top: 10px;
+
+      > div > p {
+        margin-top: 8px;
+      }
+    }
   }
 
-  > .left-content {
+  > .left-content,
+  .top-content > .left-content {
     width: 100%;
   }
 
@@ -103,7 +113,6 @@ export const StyledInteraction = styled(Interaction)<{
     display: flex;
     flex: 1;
     align-items: center;
-    flex-wrap: wrap;
     justify-content: space-between;
 
     .left-content {
@@ -146,7 +155,7 @@ export const StyledInteraction = styled(Interaction)<{
       @media ${BREAKPOINTS['sm']} {
         width: 240px;
         margin-left: 0;
-        justify-content: space-between;
+        justify-content: flex-end;
         flex: 1;
       }
 
@@ -158,11 +167,6 @@ export const StyledInteraction = styled(Interaction)<{
         background-color: ${({ theme }) => theme.grey.shade8};
         border-radius: 8px;
         min-width: 85px;
-
-        @media ${BREAKPOINTS.sm} {
-          margin-top: 8px;
-          margin-bottom: 8px;
-        }
       }
 
       .buyer-type {
@@ -239,6 +243,31 @@ export const InnerStyledInteraction = styled(StyledInteraction)`
       `;
     }
   }}
+
+  @media ${BREAKPOINTS.sm} {
+    .content {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .right-content {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .order-count {
+          margin-top: 8px;
+          margin-bottom: 8px;
+        }
+
+        > p {
+          display: none;
+        }
+      }
+
+      .buttons {
+        width: 100%;
+      }
+    }
+  }
 `;
 
 export const CollapsibleContent = styled.div<{ isOpen?: boolean }>`
