@@ -34,6 +34,16 @@ const getShipmentMethodLabel = (
   }
 };
 
+const formatAddressString = (toAddress: {
+  postcode: string;
+  state: string;
+  streetName: string;
+  streetNumber: string;
+  suburb: string;
+}) => {
+  return `${toAddress.streetNumber} ${toAddress.streetName}, ${toAddress.suburb}, ${toAddress.state}, ${toAddress.postcode}`;
+};
+
 const getSalesChannel = (data: GetSellerOrdersResponseItem) => {
   if (data.isMarketRequest) return 'Market Request';
   return data.orderLineItem.some((l) => l.listing.isAquafuture)
@@ -138,6 +148,8 @@ export const orderItemToPendingToShipItem = (
             current
           )
             ? sellerAddress
+            : current === 'selfDeliveryOrder'
+            ? formatAddressString(orders[0].toAddress)
             : deliveryMethodLabel.includes('Drop')
             ? orders[0].deliveryInstruction?.marketAddress
             : marketAddress,
@@ -190,6 +202,8 @@ export const orderItemToSoldItemData = ({
           key: groupKey,
           deliveryAddress: ['selfPickupOrders', 'airPickupOrders'].includes(key)
             ? sellerAddress
+            : key === 'selfDeliveryOrder'
+            ? formatAddressString(order.toAddress)
             : groupKey.includes('Drop')
             ? order.deliveryInstruction?.marketAddress
             : marketAddress,
