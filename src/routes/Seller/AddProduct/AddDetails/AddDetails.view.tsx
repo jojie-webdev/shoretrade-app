@@ -385,7 +385,7 @@ const AddDetails = ({
       templateDeliveryDate === 'Custom date'
         ? `${customDeliveryDate.from?.format(
             'MMM D'
-          )} to ${customDeliveryDate.from?.format('MMM D')}`
+          )} to ${customDeliveryDate.to?.format('MMM D')}`
         : templateDeliveryDate;
 
     const isEmptyError = Object.keys(detailsError).every(
