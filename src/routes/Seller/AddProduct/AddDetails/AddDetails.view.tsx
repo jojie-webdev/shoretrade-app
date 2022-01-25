@@ -869,7 +869,6 @@ const AddDetails = ({
                   setMandatorySFM((prevState) => ({
                     ...prevState,
                     isChecked: !prevState.isChecked,
-                    gotSkipped: false,
                   }));
                 }}
                 checked={mandatorySFM.isChecked}
