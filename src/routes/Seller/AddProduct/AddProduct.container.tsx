@@ -30,22 +30,6 @@ import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { AddProductGeneratedProps } from './AddProduct.props';
 import AddProductView from './AddProduct.view';
 
-// will be remove once will implement actual API
-const productPhotoType = [
-  {
-    id: 1,
-    value: 'sample',
-    label: 'This is an actual photo of the product',
-    isChecked: false,
-  },
-  {
-    id: 2,
-    value: 'sample',
-    label: 'This is a representation of the product for sale',
-    isChecked: false,
-  },
-];
-
 export const toEmployeeOptions = (user: GetCoopUsersResponseItem) =>
   user.employees
     ? user.employees.map((employee) => ({
@@ -192,7 +176,6 @@ const AddProduct = (): JSX.Element => {
   };
 
   const [showCustomTypeSettings, setShowCustomTypeSettings] = useState(false);
-  const [photoTypeData, setProductType] = useState(productPhotoType);
 
   const getCustomFormData = () => {
     dispatch(getCustomFormDataActions.request());
@@ -313,11 +296,13 @@ const AddProduct = (): JSX.Element => {
 
   const isExisting = (editableListing?.currentListingId || '').length > 0;
 
-  const onSetProductPhotoType = (id: number) => {
-    setProductType(
-      photoTypeData.map((_data) => {
-        _data.isChecked = _data.id === id;
-        return _data;
+  const onSetProductPhotoType = (photoTypes: {
+    isActualPhoto: boolean;
+    isForSaleRepPhoto: boolean;
+  }) => {
+    dispatch(
+      editableListingActions.update({
+        ...photoTypes,
       })
     );
   };
@@ -686,7 +671,6 @@ const AddProduct = (): JSX.Element => {
     editableListing,
     typeName,
     isCustomType,
-    photoTypeData,
     onSelectSpecifications,
     onSelectSizes,
     onUpdateImage,

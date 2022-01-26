@@ -54,4 +54,6 @@ export const editableListingToCreateListing = (
   isIkeJime: data?.isIkeJime || false,
   isIceSlurry: data?.isIceSlurry || false,
   templateDeliveryDate: data?.templateDeliveryDate || null,
+  isActualPhoto: data?.isActualPhoto || false,
+  isForSaleRepPhoto: data?.isForSaleRepPhoto || false,
 });

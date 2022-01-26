@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 
 import Button from 'components/base/Button';
 import Typography from 'components/base/Typography';
@@ -13,7 +13,7 @@ import { createUpdateReducer } from 'utils/Hooks';
 
 import { AddPhotosProps } from './AddPhotos.props';
 import { Container, PhotoTypeWrapper } from './AddPhotos.style';
-import Radio from 'components/base/Radio';
+import Checkbox from 'components/base/Checkbox';
 
 const AddPhotos = ({
   isCustomType,
@@ -21,7 +21,6 @@ const AddPhotos = ({
   editableListing,
   onUpdateImage,
   onSetProductPhotoType,
-  photoTypeData,
   navBack,
 }: AddPhotosProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -65,6 +64,14 @@ const AddPhotos = ({
     {}
   );
 
+  const [photoTypes, setPhotoTypes] = useReducer(
+    createUpdateReducer<boolean | any>(),
+    {
+      isForSaleRepPhoto: !!editableListing?.isForSaleRepPhoto,
+      isActualPhoto: !!editableListing?.isActualPhoto,
+      hasNoSelectedType: false,
+    }
+  );
   const isExisting = (editableListing?.currentListingId || '').length > 0;
 
   useEffect(() => {
@@ -116,20 +123,42 @@ const AddPhotos = ({
             />
           </Col>
         ))}
-        <Col md={12} className="add-col">
-          <PhotoTypeWrapper>
-            {photoTypeData.map((_type) => (
-              <Radio
-                key={_type.id}
-                label={_type.label}
-                checked={_type.isChecked}
+        <pre style={{ color: 'red' }}>
+          {JSON.stringify(editableListing, null, 2)}
+        </pre>
+        {!!Object.keys(images).length && (
+          <Col md={12} className="add-col">
+            <PhotoTypeWrapper>
+              <Checkbox
+                label={'This is an actual photo of the product'}
+                checked={photoTypes.isActualPhoto}
                 onClick={() => {
-                  onSetProductPhotoType(_type.id);
+                  setPhotoTypes({
+                    isActualPhoto: !photoTypes.isActualPhoto,
+                  });
                 }}
               />
-            ))}
-          </PhotoTypeWrapper>
-        </Col>
+              <Checkbox
+                label={'This is a representation of the product for sale'}
+                checked={photoTypes.isForSaleRepPhoto}
+                onClick={() => {
+                  setPhotoTypes({
+                    isForSaleRepPhoto: !photoTypes.isForSaleRepPhoto,
+                  });
+                }}
+              />
+              {photoTypes.hasNoSelectedType && (
+                <Typography
+                  variant="caption"
+                  color="error"
+                  className="photo-type-error"
+                >
+                  Please select from the options
+                </Typography>
+              )}
+            </PhotoTypeWrapper>
+          </Col>
+        )}
       </Row>
 
       {!isMobile && (
@@ -145,7 +174,16 @@ const AddPhotos = ({
           <Button
             className="next-btn"
             text={isExisting ? 'Review' : 'Next'}
-            onClick={() => onUpdateImage(images, existingImages)}
+            onClick={() => {
+              if (Object.values(photoTypes).some((hasChecked) => hasChecked)) {
+                onUpdateImage(images, existingImages);
+                onSetProductPhotoType(photoTypes);
+                return;
+              }
+              setPhotoTypes({
+                hasNoSelectedType: true,
+              });
+            }}
           />
         </Row>
       )}
@@ -163,7 +201,16 @@ const AddPhotos = ({
         <Button
           takeFullWidth
           text={isExisting ? 'Review' : 'Next'}
-          onClick={() => onUpdateImage(images, existingImages)}
+          onClick={() => {
+            if (Object.values(photoTypes).some((hasChecked) => hasChecked)) {
+              onUpdateImage(images, existingImages);
+              onSetProductPhotoType(photoTypes);
+              return;
+            }
+            setPhotoTypes({
+              hasNoSelectedType: true,
+            });
+          }}
         />
       </MobileFooter>
     </Container>

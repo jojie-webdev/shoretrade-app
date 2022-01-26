@@ -7,8 +7,13 @@ export type AddPhotosPublicProps = {
     existingImages: Record<string, string>
   ) => void;
   navBack: () => void;
-  onSetProductPhotoType: (id: number) => void;
-  photoTypeData: any[];
+  onSetProductPhotoType: ({
+    isActualPhoto,
+    isForSaleRepPhoto,
+  }: {
+    isActualPhoto: boolean;
+    isForSaleRepPhoto: boolean;
+  }) => void;
 };
 
 export type AddPhotosProps = AddPhotosPublicProps & {
