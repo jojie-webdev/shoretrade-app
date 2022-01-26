@@ -33,6 +33,10 @@ export const Container = styled.div`
     }
   }
 
+  .interaction-container:not(:last-child) {
+    margin-bottom: 8px;
+  }
+
   .select-col {
     @media ${BREAKPOINTS['sm']} {
       margin-bottom: 24px;

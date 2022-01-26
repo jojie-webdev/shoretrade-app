@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
+import Interaction from 'components/base/Interactions';
 import Select from 'components/base/Select';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
@@ -182,28 +183,50 @@ const ChooseSize = ({
     (isUngraded || fromSize) &&
     (!hasQualityOption || (hasQualityOption && quality));
 
+  const sizeOptions = !listingFormData?.type.activeSizeUnit
+    ? []
+    : listingFormData?.type.activeSizeUnit === 'GM'
+    ? listingFormData?.type.gmSizingOptions
+    : listingFormData?.type.cmSizingOptions;
+
   return (
     <Container>
-      <div className="size-container">
-        <div className="metric-row">
-          <Typography color="shade6" weight="regular">
-            {`Metric:`}&nbsp;
-          </Typography>
-          <Typography color="shade1" weight="regular">
-            {metric}
-          </Typography>
+      {sizeOptions.length > 0 ? (
+        sizeOptions.map((size) => (
+          <div key={size.short_code} className="interaction-container">
+            <Interaction
+              type="radio"
+              value={size.label}
+              pressed={fromSize === size.label}
+              onClick={() => {
+                setFromSize(size.label);
+                setToSize(size.label);
+              }}
+            />
+          </div>
+        ))
+      ) : (
+        <div className="size-container">
+          <div className="metric-row">
+            <Typography color="shade6" weight="regular">
+              {`Metric:`}&nbsp;
+            </Typography>
+            <Typography color="shade1" weight="regular">
+              {metric}
+            </Typography>
+          </div>
+          {metric.toUpperCase() !== 'N/A' && (
+            <SizeInput
+              metric={metric}
+              fromSize={fromSize}
+              setFromSize={setFromSize}
+              toSize={toSize}
+              setToSize={setToSize}
+              disabled={isUngraded}
+            />
+          )}
         </div>
-        {metric.toUpperCase() !== 'N/A' && (
-          <SizeInput
-            metric={metric}
-            fromSize={fromSize}
-            setFromSize={setFromSize}
-            toSize={toSize}
-            setToSize={setToSize}
-            disabled={isUngraded}
-          />
-        )}
-      </div>
+      )}
 
       {metric.toUpperCase() !== 'N/A' && (
         <Row className="or-row">

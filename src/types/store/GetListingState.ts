@@ -60,6 +60,16 @@ export type GetListingResponseItem = {
   isIceSlurry: boolean;
   quality?: string;
   templateDeliveryDate: string | null;
+  activeSizeUnit: string;
+  cmSizingOptions: SizingOption[];
+  gmSizingOptions: SizingOption[];
+};
+
+export type SizingOption = {
+  to: number;
+  from: number;
+  label: string;
+  short_code: string;
 };
 
 export type GetListingPayload = GenericResponse<{

@@ -16,7 +16,13 @@ import { Container, StyledContent } from './IconTooltip.style';
 
 const IconTooltip = (props: IconTooltipProps): JSX.Element => {
   const theme = useTheme();
-  const { variant, content, iconSize = 18 } = props;
+  const {
+    variant,
+    content,
+    iconSize = 18,
+    placement = 'bottom',
+    iconFill,
+  } = props;
   let Icon: React.FC<SVGProps> = InfoFilled;
   let IconFill = '';
 
@@ -24,19 +30,19 @@ const IconTooltip = (props: IconTooltipProps): JSX.Element => {
 
   if (variant === 'info') {
     Icon = InfoFilled;
-    IconFill = theme.brand.info;
+    IconFill = iconFill || theme.brand.info;
   } else if (variant === 'alert') {
     Icon = QuestionFilled;
-    IconFill = theme.brand.alert;
+    IconFill = iconFill || theme.brand.alert;
   } else if (variant === 'warning') {
     Icon = ExclamationFilled;
-    IconFill = theme.brand.warning;
+    IconFill = iconFill || theme.brand.warning;
   } else if (variant === 'error') {
     Icon = ExclamationFilled;
-    IconFill = theme.brand.error;
+    IconFill = iconFill || theme.brand.error;
   } else if (variant === 'success') {
     Icon = CheckFilled;
-    IconFill = theme.brand.success;
+    IconFill = iconFill || theme.brand.success;
   }
 
   return (
@@ -46,14 +52,18 @@ const IconTooltip = (props: IconTooltipProps): JSX.Element => {
         data-for={tooltipId}
         data-background-color={theme.grey.shade10}
         data-effect="solid"
-        data-place="bottom"
+        data-place={placement}
       >
         <Icon width={iconSize} height={iconSize} fill={IconFill} />
       </div>
       <ReactTooltip aria-haspopup="true" id={tooltipId}>
-        <StyledContent align="center" color="noshade">
-          {content}
-        </StyledContent>
+        {typeof content === 'string' ? (
+          <StyledContent align="center" color="noshade">
+            {content}
+          </StyledContent>
+        ) : (
+          <div className="tooltip-content-container">{content}</div>
+        )}
       </ReactTooltip>
     </Container>
   );
