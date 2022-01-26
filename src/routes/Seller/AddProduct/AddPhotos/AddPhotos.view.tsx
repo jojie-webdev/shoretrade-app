@@ -123,9 +123,7 @@ const AddPhotos = ({
             />
           </Col>
         ))}
-        <pre style={{ color: 'red' }}>
-          {JSON.stringify(editableListing, null, 2)}
-        </pre>
+
         {!!Object.keys(images).length && (
           <Col md={12} className="add-col">
             <PhotoTypeWrapper>
