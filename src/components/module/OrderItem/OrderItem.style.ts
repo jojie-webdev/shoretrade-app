@@ -247,10 +247,19 @@ export const FlexiContainer = styled.div<{ justifyReversed?: boolean }>`
 export const StyledTouchable = styled(TouchableView)`
   display: flex;
   align-items: center;
-  padding: 0 2px;
+  padding: 0 6px;
+  background: ${({ theme }) => theme.grey.shade2};
 
   .svg-container {
     margin-right: 6px;
     margin-bottom: 2px;
+  }
+`;
+
+export const DetailsContainer = styled.div`
+  display: flex;
+
+  button {
+    margin-left: 8px;
   }
 `;

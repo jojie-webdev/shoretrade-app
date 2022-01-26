@@ -23,6 +23,7 @@ import {
   ItemDetailValue,
   Tag,
   StyledTouchable,
+  DetailsContainer,
 } from './OrderItem.style';
 
 const OrderItem = (props: OrderItemProps): JSX.Element => {
@@ -40,15 +41,63 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
     <OrderItemContainer>
       <OrderInfoContainer theme={theme}>
         <Row nogutter={true}>
-          <Col sm={6} className="detail-container">
+          <Col sm={10} className="detail-container">
             <Row nogutter={true}>
-              <Col xs="content">
+              <Col xs={4}>
+                <Typography variant="label" color="shade6">
+                  Order n.
+                </Typography>
+                <DetailsContainer>
+                  <Typography color="shade9">
+                    {props.data.orderNumber}
+                  </Typography>
+                  <StyledTouchable
+                    onPress={() => {
+                      window.open(
+                        `${API.URL}/${API.VERSION}/order/invoice/${props.data.orderRefNumber}?token=${props.token}`,
+                        '_blank'
+                      );
+                    }}
+                  >
+                    <div className="svg-container">
+                      <DownloadFile />
+                    </div>
+                    <Typography variant="label" color="shade9">
+                      Invoice
+                    </Typography>
+                  </StyledTouchable>
+                </DetailsContainer>
+              </Col>
+              <Col xs={4}>
                 <Typography variant="label" color="shade6">
                   Seller
                 </Typography>
-                <Typography color="shade9">{props.data.seller}</Typography>
+                <DetailsContainer>
+                  <Typography color="shade9">{props.data.seller}</Typography>
+                  {props.completedOrder && (
+                    <StyledTouchable
+                      onClick={props.onRateClick}
+                      style={{
+                        background: rating ? theme.brand.primary : undefined,
+                      }}
+                    >
+                      <div className="svg-container">
+                        <Star
+                          width={13}
+                          height={13}
+                          fill={
+                            rating ? theme.grey.noshade : theme.brand.primary
+                          }
+                        />
+                      </div>
+                      <Typography variant="label" color="shade9">
+                        {rating ? `${rating}` : 'Rate'}
+                      </Typography>
+                    </StyledTouchable>
+                  )}
+                </DetailsContainer>
               </Col>
-              <Col xs="content" className="btn-rate-seller">
+              {/* <Col xs="content" className="btn-rate-seller">
                 <FlexiContainer>
                   {props.completedOrder && (
                     <Button
@@ -73,35 +122,23 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                     />
                   )}
                 </FlexiContainer>
+              </Col> */}
+
+              <Col xs={4}>
+                <Typography color="shade6" variant="label">
+                  Ordered By:
+                </Typography>
+                <Typography color="shade9">{props.data.orderedBy}</Typography>
               </Col>
             </Row>
           </Col>
 
-          <Col sm={3} className="detail-container">
-            <Typography color="shade6" variant="label">
-              Download
-            </Typography>
-            <StyledTouchable
-              onPress={() => {
-                window.open(
-                  `${API.URL}/${API.VERSION}/order/invoice/${props.data.orderRefNumber}?token=${props.token}`,
-                  '_blank'
-                );
-              }}
-            >
-              <div className="svg-container">
-                <DownloadFile />
-              </div>
-              <Typography color="shade9">Invoice</Typography>
-            </StyledTouchable>
-          </Col>
-
-          <Col sm={3}>
+          <Col sm={2}>
             <Typography color="shade6" variant="label" className="end-text">
-              Ordered By:
+              Total
             </Typography>
             <Typography color="shade9" align="right" className="end-text">
-              {props.data.orderedBy}
+              {props.data.total}
             </Typography>
           </Col>
         </Row>
@@ -240,10 +277,57 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
               </Row>
             </Col>
           ))}
+          <Col xs={12} className="item">
+            <Row nogutter={true}>
+              <Col sm={9} style={{ alignSelf: 'center', paddingLeft: '56px' }}>
+                <Typography color="shade9" style={{ margin: '12px 0' }}>
+                  Shipping Fee
+                </Typography>
+              </Col>
+              <Col sm={3} style={{ alignSelf: 'center' }}>
+                <ItemDetailLabel
+                  className="end-text"
+                  color="shade6"
+                  variant="caption"
+                >
+                  Subtotal
+                </ItemDetailLabel>
+                <ItemDetailValue
+                  className="end-text value"
+                  variant="label"
+                  weight="bold"
+                  color="shade9"
+                >
+                  {toPrice(
+                    props.data.shippingChargeNet + props.data.shippingChargeGst
+                  )}
+                </ItemDetailValue>
+              </Col>
+            </Row>
+          </Col>
+          {!!isMobile && props.data.totalCrateFee > 0 && (
+            <Col xs={12} className="item">
+              <Row nogutter={true}>
+                <Col
+                  sm={9}
+                  style={{ alignSelf: 'center', paddingLeft: '56px' }}
+                >
+                  <Typography color="shade6" variant="label">
+                    Crate Fee and Levies
+                  </Typography>
+                </Col>
+                <Col sm={3} style={{ alignSelf: 'center' }}>
+                  <Typography color="shade9" variant="body" weight="bold">
+                    {toPrice(props.data.totalCrateFee)}
+                  </Typography>
+                </Col>
+              </Row>
+            </Col>
+          )}
         </Row>
       </OrderItemsContainer>
 
-      <OrderTotalContainer>
+      {/* <OrderTotalContainer>
         <Row nogutter={true}>
           <Col sm={6} className="detail-container">
             <Typography color="shade6" variant="label">
@@ -298,9 +382,9 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
             </Col>
           )}
         </Row>
-      </OrderTotalContainer>
+      </OrderTotalContainer> */}
 
-      <OrderShippingContainer>
+      {/* <OrderShippingContainer>
         <Row nogutter={true}>
           <Col sm={9}>
             <Row nogutter={true}>
@@ -367,7 +451,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
             </Row>
           </Col>
         </Row>
-      </OrderShippingContainer>
+      </OrderShippingContainer> */}
     </OrderItemContainer>
   );
 };

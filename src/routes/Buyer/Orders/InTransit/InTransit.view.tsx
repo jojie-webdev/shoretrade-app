@@ -70,7 +70,7 @@ const InTransit = (props: OrdersGeneratedProps) => {
             }
             rightComponent={
               <OrderBadge>
-                <Typography color="shade9" variant="overline">
+                <Typography color="shade9" variant="overlineSmall">
                   {inTransitOrders[key].length}{' '}
                   {inTransitOrders[key].length > 1 ? 'Orders' : 'Order'}
                 </Typography>

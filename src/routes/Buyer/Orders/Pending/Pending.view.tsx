@@ -76,6 +76,7 @@ const Pending = (props: OrdersGeneratedProps) => {
               marginBottom="16px"
               keepIcon
               iconColor={theme.brand.primary}
+              type="plus"
               leftComponent={
                 <AccordionTitleContainer>
                   <Typography color="shade6" className="label" weight="400">
@@ -92,7 +93,7 @@ const Pending = (props: OrdersGeneratedProps) => {
               }
               rightComponent={
                 <OrderBadge>
-                  <Typography color="shade9" variant="overline">
+                  <Typography color="shade9" variant="overlineSmall">
                     {pendingOrders[key].length}{' '}
                     {pendingOrders[key].length > 1 ? 'Orders' : 'Order'}
                   </Typography>
@@ -124,6 +125,7 @@ const Pending = (props: OrdersGeneratedProps) => {
               marginBottom="16px"
               keepIcon
               iconColor={theme.brand.primary}
+              type="plus"
               leftComponent={
                 <AccordionTitleContainer>
                   <Typography color="shade6" className="label" weight="400">
@@ -136,7 +138,7 @@ const Pending = (props: OrdersGeneratedProps) => {
               }
               rightComponent={
                 <OrderBadge>
-                  <Typography color="shade9" variant="overline">
+                  <Typography color="shade9" variant="overlineSmall">
                     {toShipOrders[key].length}{' '}
                     {toShipOrders[key].length > 1 ? 'Orders' : 'Order'}
                   </Typography>

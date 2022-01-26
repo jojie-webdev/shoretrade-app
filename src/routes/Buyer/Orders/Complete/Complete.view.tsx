@@ -152,7 +152,7 @@ const Complete = (props: OrdersGeneratedProps) => {
             }
             rightComponent={
               <OrderBadge>
-                <Typography color="shade9" variant="overline">
+                <Typography color="shade9" variant="overlineSmall">
                   {completedOrders[key].length}{' '}
                   {completedOrders[key].length > 1 ? 'Orders' : 'Order'}
                 </Typography>
