@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useState } from 'react';
+import React, { useReducer, useEffect } from 'react';
 
 import Button from 'components/base/Button';
 import Typography from 'components/base/Typography';
