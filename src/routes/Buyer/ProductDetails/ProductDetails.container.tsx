@@ -351,6 +351,17 @@ const ProductDetails = (): JSX.Element => {
     unit: currentListing?.measurementUnit || undefined,
     hiddenPrice: isPendingAccount,
     templateDeliveryDate: currentListing?.templateDeliveryDate,
+    size: sizeToString(
+      currentListing?.size.unit || '',
+      currentListing?.size.from,
+      currentListing?.size.to
+    ),
+    sizingOptions: !currentListing?.activeSizeUnit
+      ? []
+      : currentListing?.activeSizeUnit === 'GM'
+      ? currentListing?.gmSizingOptions
+      : currentListing?.cmSizingOptions,
+    activeSizeUnit: currentListing?.activeSizeUnit === 'GM' ? 'g' : 'cm',
   };
   const sellerRatingProps: ProductSellerRatingProps = {
     name: currentListing?.coop.name || '',
