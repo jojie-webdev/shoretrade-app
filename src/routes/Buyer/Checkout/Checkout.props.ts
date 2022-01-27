@@ -23,6 +23,9 @@ export type OrderItem = {
     subAddress?: string;
   }[];
   crateFee?: number;
+  listing: {
+    isPreAuctionSale?: boolean;
+  };
 };
 
 export interface CheckoutGeneratedProps {
