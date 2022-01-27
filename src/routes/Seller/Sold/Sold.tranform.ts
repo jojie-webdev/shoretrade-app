@@ -128,6 +128,10 @@ export const orderItemToPendingToShipItem = (
             ...d,
             salesChannel: getSalesChannel(d),
             itemCount: d.orderLineItem.length,
+            formattedAddress:
+              current === 'selfDeliveryOrder'
+                ? formatAddressString(d.toAddress)
+                : undefined,
             totalWeight: d.orderLineItem.reduce((accumA: number, currentA) => {
               return (
                 accumA +
@@ -148,8 +152,6 @@ export const orderItemToPendingToShipItem = (
             current
           )
             ? sellerAddress
-            : current === 'selfDeliveryOrder'
-            ? formatAddressString(orders[0].toAddress)
             : deliveryMethodLabel.includes('Drop')
             ? orders[0].deliveryInstruction?.marketAddress
             : marketAddress,
@@ -202,8 +204,6 @@ export const orderItemToSoldItemData = ({
           key: groupKey,
           deliveryAddress: ['selfPickupOrders', 'airPickupOrders'].includes(key)
             ? sellerAddress
-            : key === 'selfDeliveryOrder'
-            ? formatAddressString(order.toAddress)
             : groupKey.includes('Drop')
             ? order.deliveryInstruction?.marketAddress
             : marketAddress,
@@ -272,6 +272,10 @@ export const orderItemToSoldItemData = ({
                 lineItem.listing.sizeFrom || '',
                 lineItem.listing.sizeTo || ''
               ),
+              formattedAddress:
+                key === 'selfDeliveryOrder'
+                  ? formatAddressString(order.toAddress)
+                  : undefined,
             };
           }),
           toAddressState: order.toAddress.state,

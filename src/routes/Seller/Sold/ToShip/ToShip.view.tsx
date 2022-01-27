@@ -352,6 +352,24 @@ export const PendingItem = (props: {
                 )}
 
                 <div className="buttons" style={{ marginRight: 0 }}>
+                  <div>
+                    {order.formattedAddress && (
+                      <>
+                        <Typography color="noshade" variant="label">
+                          Delivery Address
+                        </Typography>
+                        <Typography
+                          variant="caption"
+                          color="shade6"
+                          fontStyle="italic"
+                          className="center-text"
+                          style={{ marginTop: '2px' }}
+                        >
+                          {order.formattedAddress}
+                        </Typography>
+                      </>
+                    )}
+                  </div>
                   {lineItem.weightConfirmed ? (
                     <Button
                       text={'Weight Confirmed'}
