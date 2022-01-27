@@ -100,6 +100,17 @@ const AddPhotos = ({
     // eslint-disable-next-line
   }, [editableListing.images]);
 
+  const onSubmitPhotos = () => {
+    if (Object.values(photoTypes).some((hasChecked) => hasChecked)) {
+      onUpdateImage(images, existingImages);
+      onSetProductPhotoType(photoTypes);
+      return;
+    }
+    setPhotoTypes({
+      hasNoSelectedType: true,
+    });
+  };
+
   return (
     <Container>
       <Row className="preview-row">
@@ -172,16 +183,7 @@ const AddPhotos = ({
           <Button
             className="next-btn"
             text={isExisting ? 'Review' : 'Next'}
-            onClick={() => {
-              if (Object.values(photoTypes).some((hasChecked) => hasChecked)) {
-                onUpdateImage(images, existingImages);
-                onSetProductPhotoType(photoTypes);
-                return;
-              }
-              setPhotoTypes({
-                hasNoSelectedType: true,
-              });
-            }}
+            onClick={onSubmitPhotos}
           />
         </Row>
       )}
@@ -199,16 +201,7 @@ const AddPhotos = ({
         <Button
           takeFullWidth
           text={isExisting ? 'Review' : 'Next'}
-          onClick={() => {
-            if (Object.values(photoTypes).some((hasChecked) => hasChecked)) {
-              onUpdateImage(images, existingImages);
-              onSetProductPhotoType(photoTypes);
-              return;
-            }
-            setPhotoTypes({
-              hasNoSelectedType: true,
-            });
-          }}
+          onClick={onSubmitPhotos}
         />
       </MobileFooter>
     </Container>
