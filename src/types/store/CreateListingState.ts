@@ -47,6 +47,8 @@ export type CreateListingRequestData = {
   isIkeJime: boolean;
   isIceSlurry: boolean;
   templateDeliveryDate: string | null;
+  isActualPhoto: boolean;
+  isForSaleRepPhoto: boolean;
 };
 
 export type CreateListingPayload = GenericResponse;

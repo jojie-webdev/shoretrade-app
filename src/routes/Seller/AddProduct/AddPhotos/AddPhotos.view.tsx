@@ -12,13 +12,15 @@ import { base64ToFile } from 'utils/File';
 import { createUpdateReducer } from 'utils/Hooks';
 
 import { AddPhotosProps } from './AddPhotos.props';
-import { Container } from './AddPhotos.style';
+import { Container, PhotoTypeWrapper } from './AddPhotos.style';
+import Checkbox from 'components/base/Checkbox';
 
 const AddPhotos = ({
   isCustomType,
   listingFormData,
   editableListing,
   onUpdateImage,
+  onSetProductPhotoType,
   navBack,
 }: AddPhotosProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -62,6 +64,14 @@ const AddPhotos = ({
     {}
   );
 
+  const [photoTypes, setPhotoTypes] = useReducer(
+    createUpdateReducer<boolean | any>(),
+    {
+      isForSaleRepPhoto: !!editableListing?.isForSaleRepPhoto,
+      isActualPhoto: !!editableListing?.isActualPhoto,
+      hasNoSelectedType: false,
+    }
+  );
   const isExisting = (editableListing?.currentListingId || '').length > 0;
 
   useEffect(() => {
@@ -90,6 +100,17 @@ const AddPhotos = ({
     // eslint-disable-next-line
   }, [editableListing.images]);
 
+  const onSubmitPhotos = () => {
+    if (Object.values(photoTypes).some((hasChecked) => hasChecked)) {
+      onUpdateImage(images, existingImages);
+      onSetProductPhotoType(photoTypes);
+      return;
+    }
+    setPhotoTypes({
+      hasNoSelectedType: true,
+    });
+  };
+
   return (
     <Container>
       <Row className="preview-row">
@@ -113,6 +134,42 @@ const AddPhotos = ({
             />
           </Col>
         ))}
+
+        {!!Object.keys(images).length && (
+          <Col md={12} className="add-col">
+            <PhotoTypeWrapper>
+              <Checkbox
+                label={'This is an actual photo of the product'}
+                checked={photoTypes.isActualPhoto}
+                onClick={() => {
+                  setPhotoTypes({
+                    isActualPhoto: !photoTypes.isActualPhoto,
+                    isForSaleRepPhoto: false,
+                  });
+                }}
+              />
+              <Checkbox
+                label={'This is a representation of the product for sale'}
+                checked={photoTypes.isForSaleRepPhoto}
+                onClick={() => {
+                  setPhotoTypes({
+                    isForSaleRepPhoto: !photoTypes.isForSaleRepPhoto,
+                    isActualPhoto: false,
+                  });
+                }}
+              />
+              {photoTypes.hasNoSelectedType && (
+                <Typography
+                  variant="caption"
+                  color="error"
+                  className="photo-type-error"
+                >
+                  Please select from the options
+                </Typography>
+              )}
+            </PhotoTypeWrapper>
+          </Col>
+        )}
       </Row>
 
       {!isMobile && (
@@ -128,7 +185,7 @@ const AddPhotos = ({
           <Button
             className="next-btn"
             text={isExisting ? 'Review' : 'Next'}
-            onClick={() => onUpdateImage(images, existingImages)}
+            onClick={onSubmitPhotos}
           />
         </Row>
       )}
@@ -146,7 +203,7 @@ const AddPhotos = ({
         <Button
           takeFullWidth
           text={isExisting ? 'Review' : 'Next'}
-          onClick={() => onUpdateImage(images, existingImages)}
+          onClick={onSubmitPhotos}
         />
       </MobileFooter>
     </Container>
