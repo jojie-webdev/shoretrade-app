@@ -46,7 +46,7 @@ export const ListingCard = (props: Partial<ListingCardProps>) => {
     onSelect,
     last,
     groups = [],
-    handleOnClick
+    handleOnClick,
   } = props;
 
   const groupedColumn = groupColumns(columns, groups);
@@ -65,13 +65,13 @@ export const ListingCard = (props: Partial<ListingCardProps>) => {
                       <Typography variant="caption" color="shade6">
                         {column.name}
                       </Typography>
-                      { column?.component ? 
-                          <div>{column?.component(data)}</div>
-                          :
-                          <Typography variant="caption" color="shade9">
-                            {data?.[column.selector]}
-                          </Typography>
-                      }
+                      {column?.component ? (
+                        <div>{column?.component(data)}</div>
+                      ) : (
+                        <Typography variant="caption" color="shade9">
+                          {data?.[column.selector]}
+                        </Typography>
+                      )}
                     </Column>
                   );
                 })}
@@ -81,7 +81,10 @@ export const ListingCard = (props: Partial<ListingCardProps>) => {
       </DetailsContainer>
       <div>
         <Checkbox
-          onClick={() => onSelect?.(!!isSelected)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onSelect?.(!!isSelected);
+          }}
           borderColor={theme.grey.shade7}
           size={20}
           checked={isSelected}

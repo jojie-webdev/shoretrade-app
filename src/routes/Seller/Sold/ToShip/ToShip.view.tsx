@@ -8,7 +8,7 @@ import React, {
 
 import Button from 'components/base/Button';
 import Divider from 'components/base/Divider';
-import { Truck, Box, PaperPlane, Exclamation } from 'components/base/SVG';
+import { Truck, Box, PaperPlane } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import MessageModal from 'components/module/MessageModal';
 import Pagination from 'components/module/Pagination';
@@ -254,6 +254,16 @@ export const PendingItem = (props: {
           </div>
         </InnerStyledInteraction>
         {order.orderLineItem.map((lineItem) => {
+          const additionalInfos = [];
+          if (lineItem.listing.isIkeJime)
+            additionalInfos[additionalInfos.length] = 'Ike Jime';
+
+          if (lineItem.listing.isIceSlurry)
+            additionalInfos[additionalInfos.length] = 'Ice Slurry';
+
+          if (lineItem.listing.quality)
+            additionalInfos[additionalInfos.length] = lineItem.listing.quality;
+
           return (
             <CollapsibleContent
               key={lineItem.id}
@@ -278,13 +288,20 @@ export const PendingItem = (props: {
                       </Typography>
 
                       <div className="tags-container">
-                        {lineItem.listing.specifications.map((tag) => (
-                          <Tag key={tag}>
-                            <Typography variant="caption" color="noshade">
-                              {tag}
-                            </Typography>
-                          </Tag>
-                        ))}
+                        {additionalInfos.map((info) => (
+                        <Tag key={info} background={theme.brand.info}>
+                          <Typography variant="overlineSmall" color="noshade">
+                            {info}
+                          </Typography>
+                        </Tag>
+                      ))}
+                      {lineItem.listing.specifications.map((info) => (
+                        <Tag key={info}>
+                          <Typography variant="overlineSmall" color="noshade">
+                            {info}
+                          </Typography>
+                        </Tag>
+                      ))}
                       </div>
 
                       <ItemDetail variant="caption" color="shade5" row>

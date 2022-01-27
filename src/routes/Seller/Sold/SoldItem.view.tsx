@@ -92,7 +92,6 @@ const SoldItem = (props: {
       type = 'air',
       toAddressState,
       totalWeight,
-      totalPrice,
       key,
       salesChannel,
       id,

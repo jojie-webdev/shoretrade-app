@@ -19,7 +19,6 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
     avgBoxSize,
     catchDate,
     catchRecurrence,
-    minOrder,
     templateDeliveryDate,
     unit = 'kg',
     hiddenPrice,

@@ -361,23 +361,27 @@ export default function ListingView(props: ListingViewProps) {
         </MobileResults>
         {!isEmpty && (
           <MobileTable>
-            {mobileListing.map((listing: any, index) => (
-              <ListingCard
-                last={index === mobileListing.length - 1}
-                key={`listing-card-${listing?.id}`}
-                data={listing}
-                columns={columns}
-                groups={COLUMN_GROUPS}
-                tableSettings={tableSettings}
-                isSelected={
-                  unselectedIds.includes(listing?.id)
-                    ? false
-                    : isAllSelected || selectedIds.includes(listing?.id)
-                }
-                onSelect={(selected) => handleSelectRow(listing?.id, !selected)}
-                handleOnClick={() => goToProductDetails(listing.id)}
-              />
-            ))}
+            {listingsToTableListings(mobileListing).map(
+              (listing: any, index) => (
+                <ListingCard
+                  last={index === mobileListing.length - 1}
+                  key={`listing-card-${listing?.id}`}
+                  data={listing}
+                  columns={columns}
+                  groups={COLUMN_GROUPS}
+                  tableSettings={tableSettings}
+                  isSelected={
+                    unselectedIds.includes(listing?.id)
+                      ? false
+                      : isAllSelected || selectedIds.includes(listing?.id)
+                  }
+                  onSelect={(selected) =>
+                    handleSelectRow(listing?.id, !selected)
+                  }
+                  handleOnClick={() => goToProductDetails(listing.id)}
+                />
+              )
+            )}
             {isPending && (
               <Preloader>
                 <Loading />
