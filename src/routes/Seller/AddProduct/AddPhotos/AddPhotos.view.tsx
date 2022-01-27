@@ -144,6 +144,7 @@ const AddPhotos = ({
                 onClick={() => {
                   setPhotoTypes({
                     isActualPhoto: !photoTypes.isActualPhoto,
+                    isForSaleRepPhoto: false,
                   });
                 }}
               />
@@ -153,6 +154,7 @@ const AddPhotos = ({
                 onClick={() => {
                   setPhotoTypes({
                     isForSaleRepPhoto: !photoTypes.isForSaleRepPhoto,
+                    isActualPhoto: false,
                   });
                 }}
               />
