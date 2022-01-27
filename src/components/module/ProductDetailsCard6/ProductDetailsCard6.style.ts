@@ -19,7 +19,10 @@ export const Container = styled.div<ProductDetailsCard6Props>`
 
   .label-container {
     display: flex;
-    align-items: baseline;
+    align-items: center;
+    > p {
+      margin: 0;
+    }
   }
 
   .tooltip-container {
@@ -43,7 +46,7 @@ export const Container = styled.div<ProductDetailsCard6Props>`
       background: ${({ theme }) => theme.grey.shade9};
     }
 
-    .table-header-col,
+    .table-header-col:not(:last-of-type),
     .table-col:not(:last-of-type) {
       border-right: 1px solid ${({ theme }) => theme.grey.shade8};
     }

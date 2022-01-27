@@ -7,6 +7,7 @@ import Select from 'components/base/Select';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
+import IconTooltip from 'components/module/IconTooltip';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { SIZE_METRICS } from 'consts/sizeMetrics';
 import pathOr from 'ramda/es/pathOr';
@@ -183,6 +184,8 @@ const ChooseSize = ({
     (isUngraded || fromSize) &&
     (!hasQualityOption || (hasQualityOption && quality));
 
+  const activeSizeUnit = listingFormData?.type.activeSizeUnit?.toLowerCase();
+
   const sizeOptions = !listingFormData?.type.activeSizeUnit
     ? []
     : listingFormData?.type.activeSizeUnit === 'GM'
@@ -190,100 +193,184 @@ const ChooseSize = ({
     : listingFormData?.type.cmSizingOptions;
 
   return (
-    <Container>
-      {sizeOptions.length > 0 ? (
-        sizeOptions.map((size) => (
-          <div key={size.short_code} className="interaction-container">
-            <Interaction
-              type="radio"
-              value={size.label}
-              pressed={fromSize === size.label}
-              onClick={() => {
-                setFromSize(size.label);
-                setToSize(size.label);
-              }}
-            />
-          </div>
-        ))
-      ) : (
-        <div className="size-container">
-          <div className="metric-row">
-            <Typography color="shade6" weight="regular">
-              {`Metric:`}&nbsp;
-            </Typography>
-            <Typography color="shade1" weight="regular">
-              {metric}
-            </Typography>
-          </div>
-          {metric.toUpperCase() !== 'N/A' && (
-            <SizeInput
-              metric={metric}
-              fromSize={fromSize}
-              setFromSize={setFromSize}
-              toSize={toSize}
-              setToSize={setToSize}
-              disabled={isUngraded}
-            />
-          )}
+    <>
+      {sizeOptions.length > 0 && (
+        <div className="size-chart-container">
+          <IconTooltip
+            variant="info"
+            placementOffset={isMobile ? "{'right': 72}" : "{'left': 53}"}
+            label="View Size Chart"
+            content={
+              <>
+                <Row nogutter className="table-header-row">
+                  <Col className="table-header-col" xs={6}></Col>
+                  <Col className="table-header-col" xs={3}>
+                    <Typography variant="label" color="shade4">
+                      From
+                    </Typography>
+                  </Col>
+                  <Col className="table-header-col" xs={3}>
+                    <Typography variant="label" color="shade4">
+                      To
+                    </Typography>
+                  </Col>
+                </Row>
+                {sizeOptions.map((sizeOption) => (
+                  <Row
+                    nogutter
+                    className="table-row"
+                    key={sizeOption.short_code}
+                  >
+                    <Col className="table-col" xs={6}>
+                      <Typography variant="label" color="shade4">
+                        {sizeOption.label}
+                      </Typography>
+                    </Col>
+                    <Col className="table-col" xs={3}>
+                      <Typography variant="label" color="shade4">
+                        {sizeOption.from}
+                      </Typography>
+                      <Typography variant="label" color="shade6">
+                        &nbsp;{activeSizeUnit}
+                      </Typography>
+                    </Col>
+                    <Col className="table-col" xs={3}>
+                      <Typography variant="label" color="shade4">
+                        {sizeOption.to}
+                      </Typography>
+                      <Typography variant="label" color="shade6">
+                        &nbsp;{activeSizeUnit}
+                      </Typography>
+                    </Col>
+                  </Row>
+                ))}
+              </>
+            }
+          />
         </div>
       )}
+      <Container>
+        {sizeOptions.length > 0 ? (
+          sizeOptions.map((size) => (
+            <div key={size.short_code} className="interaction-container">
+              <Interaction
+                type="radio"
+                value={size.label}
+                pressed={fromSize === size.label}
+                onClick={() => {
+                  setFromSize(size.label);
+                  setToSize(size.label);
+                }}
+              />
+            </div>
+          ))
+        ) : (
+          <div className="size-container">
+            <div className="metric-row">
+              <Typography color="shade6" weight="regular">
+                {`Metric:`}&nbsp;
+              </Typography>
+              <Typography color="shade1" weight="regular">
+                {metric}
+              </Typography>
+            </div>
+            {metric.toUpperCase() !== 'N/A' && (
+              <SizeInput
+                metric={metric}
+                fromSize={fromSize}
+                setFromSize={setFromSize}
+                toSize={toSize}
+                setToSize={setToSize}
+                disabled={isUngraded}
+              />
+            )}
+          </div>
+        )}
 
-      {metric.toUpperCase() !== 'N/A' && (
-        <Row className="or-row">
-          <Col className="or-col">
-            <div className="line left" />
-            <Typography variant="overline" color="shade6">
-              {' '}
-              OR
-            </Typography>
-            <div className="line right" />
-          </Col>
-        </Row>
-      )}
+        {metric.toUpperCase() !== 'N/A' && (
+          <Row className="or-row">
+            <Col className="or-col">
+              <div className="line left" />
+              <Typography variant="overline" color="shade6">
+                {' '}
+                OR
+              </Typography>
+              <div className="line right" />
+            </Col>
+          </Row>
+        )}
 
-      <Row className="checkbox-row">
-        <Col>
-          <Checkbox
-            checked={isUngraded}
-            onClick={() => setIsUngraded((v) => !v)}
-            label="Ungraded"
-          />
-        </Col>
-      </Row>
-
-      {hasQualityOption && (
-        <Row className="quality-row">
+        <Row className="checkbox-row">
           <Col>
-            <Typography variant="title6" color="noshade">
-              Product Quality
-            </Typography>
-            <ProductQualityDropdown
-              placeholder="Select Grade"
-              options={actualQualityOptions}
-              value={quality || undefined}
-              onChange={(o) => {
-                setQuality(o.value);
-              }}
-              label=""
+            <Checkbox
+              checked={isUngraded}
+              onClick={() => setIsUngraded((v) => !v)}
+              label="Ungraded"
             />
           </Col>
         </Row>
-      )}
 
-      {!isMobile && (
-        <Row justify="start" nogutter>
+        {hasQualityOption && (
+          <Row className="quality-row">
+            <Col>
+              <Typography variant="title6" color="noshade">
+                Product Quality
+              </Typography>
+              <ProductQualityDropdown
+                placeholder="Select Grade"
+                options={actualQualityOptions}
+                value={quality || undefined}
+                onChange={(o) => {
+                  setQuality(o.value);
+                }}
+                label=""
+              />
+            </Col>
+          </Row>
+        )}
+
+        {!isMobile && (
+          <Row justify="start" nogutter>
+            <Button
+              variant={'outline'}
+              text="Back"
+              onClick={() => {
+                navBack();
+              }}
+              className="back-btn"
+            />
+            <Button
+              variant={isComplete ? 'primary' : 'disabled'}
+              text="Next"
+              className="next-btn"
+              onClick={() => {
+                if (isComplete) {
+                  onSelectSizes({
+                    sizeFrom: isUngraded ? undefined : fromSize,
+                    sizeTo: isUngraded ? undefined : toSize,
+                    isUngraded,
+                    quality: quality === 'Ungraded' ? null : quality,
+                  });
+                }
+              }}
+            />
+          </Row>
+        )}
+
+        <MobileFooter>
           <Button
+            takeFullWidth
             variant={'outline'}
             text="Back"
             onClick={() => {
               navBack();
             }}
-            className="back-btn"
+            style={{ marginRight: 8 }}
           />
           <Button
+            takeFullWidth
             variant={isComplete ? 'primary' : 'disabled'}
             text="Next"
-            className="next-btn"
             onClick={() => {
               if (isComplete) {
                 onSelectSizes({
@@ -295,36 +382,9 @@ const ChooseSize = ({
               }
             }}
           />
-        </Row>
-      )}
-
-      <MobileFooter>
-        <Button
-          takeFullWidth
-          variant={'outline'}
-          text="Back"
-          onClick={() => {
-            navBack();
-          }}
-          style={{ marginRight: 8 }}
-        />
-        <Button
-          takeFullWidth
-          variant={isComplete ? 'primary' : 'disabled'}
-          text="Next"
-          onClick={() => {
-            if (isComplete) {
-              onSelectSizes({
-                sizeFrom: isUngraded ? undefined : fromSize,
-                sizeTo: isUngraded ? undefined : toSize,
-                isUngraded,
-                quality: quality === 'Ungraded' ? null : quality,
-              });
-            }
-          }}
-        />
-      </MobileFooter>
-    </Container>
+        </MobileFooter>
+      </Container>
+    </>
   );
 };
 

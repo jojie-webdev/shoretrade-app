@@ -7,6 +7,7 @@ import {
   QuestionFilled,
 } from 'components/base/SVG';
 import { SVGProps } from 'components/base/SVG/SVG.props';
+import Typography from 'components/base/Typography';
 import ReactTooltip from 'react-tooltip';
 import { useTheme } from 'utils/Theme';
 import { v1 } from 'uuid';
@@ -21,7 +22,10 @@ const IconTooltip = (props: IconTooltipProps): JSX.Element => {
     content,
     iconSize = 18,
     placement = 'bottom',
+    placementOffset,
     iconFill,
+    label,
+    labelColor,
   } = props;
   let Icon: React.FC<SVGProps> = InfoFilled;
   let IconFill = '';
@@ -48,13 +52,20 @@ const IconTooltip = (props: IconTooltipProps): JSX.Element => {
   return (
     <Container className="tooltip-container">
       <div
+        className="icon-label-wrapper"
         data-tip
         data-for={tooltipId}
         data-background-color={theme.grey.shade10}
         data-effect="solid"
         data-place={placement}
+        data-offset={placementOffset}
       >
         <Icon width={iconSize} height={iconSize} fill={IconFill} />
+        {label && (
+          <Typography variant="label" color={labelColor || 'noshade'}>
+            {label}
+          </Typography>
+        )}
       </div>
       <ReactTooltip aria-haspopup="true" id={tooltipId}>
         {typeof content === 'string' ? (
