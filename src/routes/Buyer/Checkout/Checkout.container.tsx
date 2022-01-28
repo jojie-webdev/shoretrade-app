@@ -346,6 +346,7 @@ const Checkout = (): JSX.Element => {
           id: cartItem.listing.id,
           companyId: cartItem.companyId,
           boxes: cartItem.orderBoxes,
+          isPreAuctionSale: cartItem.listing.isPreAuctionSale,
         }));
 
         const currentListingIds = listings.map((listing) => listing.id);
