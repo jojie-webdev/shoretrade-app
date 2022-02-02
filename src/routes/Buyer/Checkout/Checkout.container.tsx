@@ -148,6 +148,7 @@ const Checkout = (): JSX.Element => {
         vendor: cartItem.companyName,
         vendorId: cartItem.companyId,
         crateFee: cartItem.crateFee,
+        isFreeShipping: cartItem.isFreeShipping,
         listing: {
           isPreAuctionSale: cartItem.listing.isPreAuctionSale,
         },

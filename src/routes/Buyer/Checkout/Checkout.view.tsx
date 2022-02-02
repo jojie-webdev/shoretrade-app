@@ -42,12 +42,18 @@ const Orders = (props: CheckoutGeneratedProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const orders = Object.keys(groupedOrders).reduce(
     (
-      data: { id: string; listings: OrderItem[]; totalCrateFee: number }[],
+      data: {
+        id: string;
+        isFreeShipping: boolean;
+        listings: OrderItem[];
+        totalCrateFee: number;
+      }[],
       vendorId
     ) => [
       ...data,
       {
         id: vendorId,
+        isFreeShipping: groupedOrders[vendorId][0].isFreeShipping,
         listings: groupedOrders[vendorId],
         totalCrateFee: groupedOrders[vendorId].reduce(
           (totalFee, listing) => totalFee + Number(listing.crateFee || 0),
@@ -115,6 +121,7 @@ const Orders = (props: CheckoutGeneratedProps) => {
               </Typography>
 
               <ShippingCard
+                isFreeShipping={item.isFreeShipping}
                 selectedPriceId={
                   selectedShippingId[getOrderListingKey(item.listings[0])]
                 }

@@ -23,6 +23,7 @@ export type OrderItem = {
     subAddress?: string;
   }[];
   crateFee?: number;
+  isFreeShipping: boolean;
   listing: {
     isPreAuctionSale?: boolean;
   };

@@ -10,6 +10,7 @@ export type Option = {
 
 export interface ShippingCardProps {
   options: Option[];
+  isFreeShipping?: boolean;
   selectedPriceId: string;
   onPress: (priceId: string) => void;
 }
