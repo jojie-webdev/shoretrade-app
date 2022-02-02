@@ -256,11 +256,13 @@ const Checkout = (): JSX.Element => {
         Number(currentItem.crateFee || 0),
       0
     ) +
-    Object.keys(selectedShipping).reduce(
-      (totalItemsPrice, companyId) =>
-        totalItemsPrice + selectedShipping[companyId].price,
-      0
-    );
+    (orders[0]?.isFreeShipping
+      ? 0
+      : Object.keys(selectedShipping).reduce(
+          (totalItemsPrice, companyId) =>
+            totalItemsPrice + selectedShipping[companyId].price,
+          0
+        ));
 
   const processingOrder =
     useSelector((store: Store) => store.order.pending) || false;
