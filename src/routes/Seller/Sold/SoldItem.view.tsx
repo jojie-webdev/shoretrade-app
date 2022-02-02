@@ -469,17 +469,8 @@ const SoldItem = (props: {
                                   />
                                 }
                                 onClick={(e) => {
-                                  const orderRefNumbers = entry.map((v) => {
-                                    return v.orderRefNumber;
-                                  });
                                   window.open(
-                                    `${API.URL}/${
-                                      API.VERSION
-                                    }/order/packing-list/${orderRefNumbers.join()}?token=${
-                                      props.token
-                                    }&state=${toAddressState}&status=${
-                                      props.status
-                                    }`,
+                                    `${API.URL}/${API.VERSION}/order/packing-list/${v.orderRefNumber}?token=${props.token}&state=${toAddressState}&status=${props.status}`,
                                     '_blank'
                                   );
                                   e.stopPropagation();
@@ -499,15 +490,8 @@ const SoldItem = (props: {
                                   />
                                 }
                                 onClick={(e) => {
-                                  const orderRefNumbers = entry.map((v) => {
-                                    return v.orderRefNumber;
-                                  });
                                   window.open(
-                                    `${API.URL}/${
-                                      API.VERSION
-                                    }/order/invoice/${orderRefNumbers.join()}?token=${
-                                      props.token
-                                    }`,
+                                    `${API.URL}/${API.VERSION}/order/invoice/${v.orderRefNumber}?token=${props.token}`,
                                     '_blank'
                                   );
                                   e.stopPropagation();
@@ -527,17 +511,8 @@ const SoldItem = (props: {
                                   />
                                 }
                                 onClick={(e) => {
-                                  const orderRefNumbers = entry.map((v) => {
-                                    return v.orderRefNumber;
-                                  });
                                   window.open(
-                                    `${API.URL}/${
-                                      API.VERSION
-                                    }/order/order-summary/${orderRefNumbers.join()}?token=${
-                                      props.token
-                                    }&state=${toAddressState}&status=${
-                                      props.status
-                                    }`,
+                                    `${API.URL}/${API.VERSION}/order/order-summary/${v.orderRefNumber}?token=${props.token}&state=${toAddressState}&status=${props.status}`,
                                     '_blank'
                                   );
                                   e.stopPropagation();
@@ -557,17 +532,8 @@ const SoldItem = (props: {
                                   />
                                 }
                                 onClick={(e) => {
-                                  const orderRefNumbers = entry.map((v) => {
-                                    return v.orderRefNumber;
-                                  });
                                   window.open(
-                                    `${API.URL}/${
-                                      API.VERSION
-                                    }/order/pdf-label/${orderRefNumbers.join()}?token=${
-                                      props.token
-                                    }&state=${toAddressState}&status=${
-                                      props.status
-                                    }`,
+                                    `${API.URL}/${API.VERSION}/order/pdf-label/${v.orderRefNumber}?token=${props.token}&state=${toAddressState}&status=${props.status}`,
                                     '_blank'
                                   );
                                   e.stopPropagation();
