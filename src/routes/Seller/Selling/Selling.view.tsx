@@ -387,6 +387,16 @@ const SellingView = (props: SellingGeneratedProps) => {
                 activeTab={activeTab}
               />
             </Col>
+            {isMobile && !pending && (
+              <Col sm={3}>
+                <div style={{ width: '100%', marginTop: '8px' }}>
+                  <Typography variant="label" color="shade6">
+                    <span style={{ color: '#fff' }}>{counter.allListing}</span>{' '}
+                    Results
+                  </Typography>
+                </div>
+              </Col>
+            )}
           </Row>
         )}
 
