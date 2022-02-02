@@ -4,7 +4,10 @@ import { SELLING_ROUTES } from 'consts';
 import { SALES_CHANNELS } from 'consts/salesChannels';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { getListingsBySalesChannelActions } from 'store/actions';
+import {
+  getListingByIdActions,
+  getListingsBySalesChannelActions,
+} from 'store/actions';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
 
@@ -15,6 +18,7 @@ import {
   CounterProps,
 } from './Selling.props';
 import SellingView from './Selling.view';
+import { listingToListingProps } from './ListingDetails/ListingDetails.transform';
 
 const Selling = (): JSX.Element => {
   // MARK:- Hooks / Selectors
@@ -26,8 +30,21 @@ const Selling = (): JSX.Element => {
   );
   const userData = useSelector((state: Store) => state.getUser.data?.data.user);
 
+  const listingId = useSelector(
+    (state: Store) => state.createListing.data?.data.id
+  );
+
+  const listingDetailPreview = useSelector(
+    (state: Store) => state.getListingById.data?.data
+  ) as any;
+
+  const isSuccessListing = useSelector(
+    (state: Store) => (state.createListing.data?.status || 0) === 200
+  );
+
   // MARK:- State
   // eslint-disable-next-line
+  const [showAlert, setShowAlert] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState('allListing');
   const [isPending, setIsPending] = useState(true);
@@ -96,6 +113,7 @@ const Selling = (): JSX.Element => {
           page: tabPageFilters[activeTab as keyof TabPageFilterProps],
         })
       );
+      dispatch(getListingByIdActions.request({ listingId }));
     }
     // eslint-disable-next-line
   }, [activeTab, searchFilters, tabPageFilters]);
@@ -113,15 +131,25 @@ const Selling = (): JSX.Element => {
     // eslint-disable-next-line
   }, [listingsData]);
 
+  useEffect(() => {
+    setShowAlert(true);
+    const timerSet = setTimeout(() => {
+      setShowAlert(false);
+      clearTimeout(timerSet);
+    }, 6000);
+  }, [isSuccessListing]);
+
   const generatedProps: SellingGeneratedProps = {
     // generated props here
     listings: listingsData?.listings || [],
+    listingDetailPreview,
     counter: tabCounts,
     pending: isPending,
     showModal,
     search: searchFilters[activeTab as keyof TabPageFilterProps],
     page: tabPageFilters[activeTab as keyof TabPageFilterProps],
     activeTab,
+    showAlertSuccess: showAlert && isSuccessListing,
     goToListingDetails,
     onChangeSearch: (value) => {
       updateSearchFilters({ [activeTab]: value });

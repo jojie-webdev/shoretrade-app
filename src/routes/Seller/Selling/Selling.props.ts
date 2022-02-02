@@ -12,6 +12,8 @@ export interface SellingGeneratedProps {
   onChangeTab: (tab: string) => void;
   page: number;
   onChangePage: (page: number) => void;
+  showAlertSuccess: boolean;
+  listingDetailPreview: GetListingsBySalesChannelResponseItem;
 }
 
 export type TagTypes = 'plain' | 'blue';

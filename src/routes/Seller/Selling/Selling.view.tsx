@@ -37,8 +37,10 @@ import {
   NoSellingContainer,
   SVGContainer,
   TabItem,
+  ProductPreviewContainer,
 } from './Selling.style';
 import { listingToItem } from './Selling.transform';
+import Alert from 'components/base/Alert';
 
 const flatMap = (array: [], fn: any) => {
   let result: any[] = [];
@@ -280,7 +282,7 @@ const SearchComponent = (props: {
   useEffect(() => {
     setSearchValue(props.defaultValue);
     // eslint-disable-next-line
-  }, [props.activeTab])
+  }, [props.activeTab]);
 
   return (
     <Search
@@ -318,6 +320,8 @@ const SellingView = (props: SellingGeneratedProps) => {
     onChangePage,
     activeTab,
     onChangeTab,
+    showAlertSuccess,
+    listingDetailPreview,
   } = props;
 
   const totalPages = Math.ceil(counter[activeTab as keyof CounterProps] / 10);
@@ -399,7 +403,27 @@ const SellingView = (props: SellingGeneratedProps) => {
             )}
           </Row>
         )}
-
+        {showAlertSuccess && (
+          <ProductPreviewContainer>
+            <Alert
+              header={'Product Listed'}
+              content={'You have successfully added your listing.'}
+              variant="success"
+              fullWidth
+              style={{
+                marginTop: 16,
+                marginBottom: 16,
+              }}
+            />
+            {!!(listingDetailPreview || {}).type_id && (
+              <Item
+                {...listingToItem(listingDetailPreview)}
+                key={listingDetailPreview.listing_id}
+                goToListingDetails={goToListingDetails}
+              />
+            )}
+          </ProductPreviewContainer>
+        )}
         <Row className="row" justify="center">
           <Col>
             {pending ? (
