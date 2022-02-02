@@ -10,6 +10,7 @@ import {
   Bolt,
   // Crates,
   Cog,
+  Barcode as BarcodeSVG,
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
 import { SELLER_ROUTES } from 'consts';
@@ -33,6 +34,7 @@ import SellerAccountRoutes from './Account/account.routes';
 import NotificationsSettings from './Account/NotificationsSettings';
 import AddProduct from './AddProduct/addProduct.routes';
 // import CratesManagement from './CratesManagement';
+import BarcodeScanner from './BarcodeScanner';
 import DashboardRoutes from './Dashboard/dashboard.routes';
 import MarketBoardRoutes from './MarketBoard/market-board.routes';
 import MarketPriceDetail from './MarketPriceDetail';
@@ -98,6 +100,13 @@ const ROUTES: Routes = {
     children: <NotificationsSettings />,
     title: 'Notifications Settings',
     icon: Cog,
+  },
+  BARCODE_SCANNER: {
+    path: SELLER_ROUTES.BARCODE_SCANNER,
+    title: 'Barcode Scanner',
+    children: <BarcodeScanner />,
+    icon: BarcodeSVG,
+    nested: true,
   },
   ACCOUNT: {
     path: SELLER_ROUTES.ACCOUNT,
