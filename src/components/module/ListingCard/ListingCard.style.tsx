@@ -1,5 +1,4 @@
 import styled from 'utils/styled';
-import theme from 'utils/Theme';
 
 export const Container = styled.div<{ last?: boolean }>`
   display: flex;
@@ -14,7 +13,6 @@ export const Container = styled.div<{ last?: boolean }>`
     div {
       font-size: 12px;
       font-weight: 500;
-      color: ${theme.grey.shade9};
     }
   }
 `;

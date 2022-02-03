@@ -273,7 +273,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                         color="shade6"
                         weight="regular"
                       >
-                        Est Shipping:
+                        Est. Collection:
                       </Typography>
                       <div className="product-value">
                         <Typography

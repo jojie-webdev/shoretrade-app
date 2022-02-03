@@ -103,7 +103,7 @@ const DIRECT_SALE_COLUMNS = [
     component: function Specification(data: any, _state?: any) {
       return (
         <ChipsWrapper>
-          {data?.specifications.map(
+          {data?.specifications?.map(
             (specs: { value: string; type: string }) => {
               return (
                 <Chips

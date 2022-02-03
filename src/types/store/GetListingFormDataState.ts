@@ -34,8 +34,18 @@ export type GetListingFormDataResponse = {
   type: {
     id: string;
     name: string;
+    activeSizeUnit: string;
+    cmSizingOptions: SizingOption[];
+    gmSizingOptions: SizingOption[];
   };
   qualityOptions: string[];
+};
+
+export type SizingOption = {
+  to: number;
+  from: number;
+  label: string;
+  short_code: string;
 };
 
 export type GetListingFormDataPayload = GenericResponse<

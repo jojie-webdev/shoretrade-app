@@ -1,3 +1,5 @@
+import { SizingOption } from 'types/store/GetListingState';
+
 export interface ProductDetailsCard6Props {
   cBorderWidth?: string;
   cBorderRadius?: string;
@@ -12,4 +14,7 @@ export interface ProductDetailsCard6Props {
   SellerCard?: React.ReactNode;
   withBackground?: boolean;
   templateDeliveryDate: string | null;
+  size?: string;
+  sizingOptions: SizingOption[];
+  activeSizeUnit?: string;
 }

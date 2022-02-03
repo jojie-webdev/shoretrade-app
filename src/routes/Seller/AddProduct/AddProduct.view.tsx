@@ -57,6 +57,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     isCustomType,
     onSelectSizes,
     onUpdateImage,
+    onSetProductPhotoType,
     onAddPackaging,
     onAddBoxes,
     onUpdateDetails,
@@ -179,6 +180,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             listingFormData={listingFormData}
             navBack={navBack}
             onUpdateImage={onUpdateImage}
+            onSetProductPhotoType={onSetProductPhotoType}
           />
         );
       case 6:

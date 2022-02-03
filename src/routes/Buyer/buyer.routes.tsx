@@ -9,6 +9,7 @@ import {
   Bolt as BoltIcon,
   Listing as ListingIcon,
   Cog as CogIcon,
+  Barcode as BarcodeSVG,
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
 import { BUYER_ROUTES } from 'consts';
@@ -20,6 +21,7 @@ import {
   useHistory,
   useLocation,
 } from 'react-router-dom';
+import BarcodeScanner from 'routes/Seller/BarcodeScanner';
 import { Routes, Route as TRoute } from 'types/Routes';
 import { Store } from 'types/store/Store';
 import { Theme } from 'types/Theme';
@@ -110,6 +112,13 @@ const ROUTES: Routes = {
     children: <NotificationsSettings />,
     title: 'Notifications Settings',
     icon: CogIcon,
+  },
+  BARCODE_SCANNER: {
+    path: BUYER_ROUTES.BARCODE_SCANNER,
+    title: 'Barcode Scanner',
+    children: <BarcodeScanner />,
+    icon: BarcodeSVG,
+    nested: true,
   },
   ACCOUNT: {
     path: BUYER_ROUTES.ACCOUNT,

@@ -16,6 +16,7 @@ import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import PaymentMethod from 'routes/Buyer/Checkout/PaymentMethod';
 import { BottomRow } from 'routes/Buyer/Checkout/PaymentMethod/PaymentMethod.style';
+import { getOrderListingKey } from 'utils/getOrderListingKey';
 import { toPrice } from 'utils/String/toPrice';
 import theme from 'utils/Theme';
 
@@ -41,12 +42,18 @@ const Orders = (props: CheckoutGeneratedProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const orders = Object.keys(groupedOrders).reduce(
     (
-      data: { id: string; listings: OrderItem[]; totalCrateFee: number }[],
+      data: {
+        id: string;
+        isFreeShipping: boolean;
+        listings: OrderItem[];
+        totalCrateFee: number;
+      }[],
       vendorId
     ) => [
       ...data,
       {
         id: vendorId,
+        isFreeShipping: groupedOrders[vendorId][0].isFreeShipping,
         listings: groupedOrders[vendorId],
         totalCrateFee: groupedOrders[vendorId].reduce(
           (totalFee, listing) => totalFee + Number(listing.crateFee || 0),
@@ -114,7 +121,10 @@ const Orders = (props: CheckoutGeneratedProps) => {
               </Typography>
 
               <ShippingCard
-                selectedPriceId={selectedShippingId[item.listings[0].vendorId]}
+                isFreeShipping={item.isFreeShipping}
+                selectedPriceId={
+                  selectedShippingId[getOrderListingKey(item.listings[0])]
+                }
                 options={item.listings[0].shippingOptions.sort((a, b) => {
                   if (a.est < b.est) return -1;
                   if (a.est > b.est) return 1;
@@ -122,7 +132,7 @@ const Orders = (props: CheckoutGeneratedProps) => {
                 })}
                 onPress={(id) =>
                   setSelectedShippingId({
-                    [item.listings[0].vendorId]: id,
+                    [getOrderListingKey(item.listings[0])]: id,
                   })
                 }
               />

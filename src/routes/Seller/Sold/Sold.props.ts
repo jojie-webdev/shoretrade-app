@@ -7,6 +7,7 @@ export interface PendingOrders extends GetSellerOrdersResponseItem {
   itemCount: number;
   totalWeight: number;
   salesChannel: string;
+  formattedAddress?: string;
 }
 
 export type PendingToShipItemData = {
@@ -47,6 +48,7 @@ export type SoldItemData = {
     size: string;
     fisherman: string;
     totalPrice: string;
+    formattedAddress?: string;
   }[];
   toAddressState: string;
   allowPartialShipment: boolean;

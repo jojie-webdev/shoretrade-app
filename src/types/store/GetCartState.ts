@@ -47,6 +47,7 @@ export type GetCartDataItem = {
   companyName: string; // Seller
   companyId: string; // Seller
   crateFee?: number;
+  isFreeShipping: boolean;
   listing: GetCartListingDataItem;
   orderBoxes: {
     id: string;

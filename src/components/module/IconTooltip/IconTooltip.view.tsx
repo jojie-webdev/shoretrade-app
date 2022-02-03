@@ -7,6 +7,7 @@ import {
   QuestionFilled,
 } from 'components/base/SVG';
 import { SVGProps } from 'components/base/SVG/SVG.props';
+import Typography from 'components/base/Typography';
 import ReactTooltip from 'react-tooltip';
 import { useTheme } from 'utils/Theme';
 import { v1 } from 'uuid';
@@ -16,7 +17,16 @@ import { Container, StyledContent } from './IconTooltip.style';
 
 const IconTooltip = (props: IconTooltipProps): JSX.Element => {
   const theme = useTheme();
-  const { variant, content, iconSize = 18 } = props;
+  const {
+    variant,
+    content,
+    iconSize = 18,
+    placement = 'bottom',
+    placementOffset,
+    iconFill,
+    label,
+    labelColor,
+  } = props;
   let Icon: React.FC<SVGProps> = InfoFilled;
   let IconFill = '';
 
@@ -24,36 +34,47 @@ const IconTooltip = (props: IconTooltipProps): JSX.Element => {
 
   if (variant === 'info') {
     Icon = InfoFilled;
-    IconFill = theme.brand.info;
+    IconFill = iconFill || theme.brand.info;
   } else if (variant === 'alert') {
     Icon = QuestionFilled;
-    IconFill = theme.brand.alert;
+    IconFill = iconFill || theme.brand.alert;
   } else if (variant === 'warning') {
     Icon = ExclamationFilled;
-    IconFill = theme.brand.warning;
+    IconFill = iconFill || theme.brand.warning;
   } else if (variant === 'error') {
     Icon = ExclamationFilled;
-    IconFill = theme.brand.error;
+    IconFill = iconFill || theme.brand.error;
   } else if (variant === 'success') {
     Icon = CheckFilled;
-    IconFill = theme.brand.success;
+    IconFill = iconFill || theme.brand.success;
   }
 
   return (
     <Container className="tooltip-container">
       <div
+        className="icon-label-wrapper"
         data-tip
         data-for={tooltipId}
         data-background-color={theme.grey.shade10}
         data-effect="solid"
-        data-place="bottom"
+        data-place={placement}
+        data-offset={placementOffset}
       >
         <Icon width={iconSize} height={iconSize} fill={IconFill} />
+        {label && (
+          <Typography variant="label" color={labelColor || 'noshade'}>
+            {label}
+          </Typography>
+        )}
       </div>
       <ReactTooltip aria-haspopup="true" id={tooltipId}>
-        <StyledContent align="center" color="noshade">
-          {content}
-        </StyledContent>
+        {typeof content === 'string' ? (
+          <StyledContent align="center" color="noshade">
+            {content}
+          </StyledContent>
+        ) : (
+          <div className="tooltip-content-container">{content}</div>
+        )}
       </ReactTooltip>
     </Container>
   );

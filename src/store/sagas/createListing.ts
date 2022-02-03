@@ -74,7 +74,7 @@ function* createListingSuccess(
   yield put(searchProductTypeActions.clear());
   yield put(getMarketInterestsActions.clear());
   yield put(getHistoricalListingsActions.clear());
-  yield put(push(SELLER_ROUTES.ADD_PRODUCT));
+  yield put(push(SELLER_ROUTES.SELLING));
 }
 
 function* createListingWatcher() {

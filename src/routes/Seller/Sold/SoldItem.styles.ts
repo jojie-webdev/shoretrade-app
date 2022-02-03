@@ -362,7 +362,6 @@ export const ItemCard = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex: 1;
 
     @media ${BREAKPOINTS.sm} {
       flex-direction: column-reverse;

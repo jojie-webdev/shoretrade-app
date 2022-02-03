@@ -13,7 +13,7 @@ import { Container, Rectangle, Spacer } from './ShippingCard.style';
 
 const ShippingCard = (props: ShippingCardProps): JSX.Element => {
   const theme = useTheme();
-  const { options, onPress, selectedPriceId } = props;
+  const { options, onPress, selectedPriceId, isFreeShipping = false } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
@@ -75,7 +75,7 @@ const ShippingCard = (props: ShippingCardProps): JSX.Element => {
                   variant={isMobile ? 'caption' : 'body'}
                   align="right"
                 >
-                  ${o.price}
+                  {isFreeShipping ? 'FREE SHIPPING' : `${o.price}`}
                 </Typography>
                 {selectedPriceId === o.id ? (
                   <CheckFilled

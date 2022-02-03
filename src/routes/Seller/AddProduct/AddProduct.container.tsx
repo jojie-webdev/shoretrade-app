@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useEffect, useState, useReducer, useMemo } from 'react';
 
 import { ADD_PRODUCT_ROUTES } from 'consts';
 import pick from 'ramda/src/pick';
@@ -295,6 +295,17 @@ const AddProduct = (): JSX.Element => {
   };
 
   const isExisting = (editableListing?.currentListingId || '').length > 0;
+
+  const onSetProductPhotoType = (photoTypes: {
+    isActualPhoto: boolean;
+    isForSaleRepPhoto: boolean;
+  }) => {
+    dispatch(
+      editableListingActions.update({
+        ...photoTypes,
+      })
+    );
+  };
 
   const onUpdateImage = async (
     images: Record<string, File | null>,
@@ -663,6 +674,7 @@ const AddProduct = (): JSX.Element => {
     onSelectSpecifications,
     onSelectSizes,
     onUpdateImage,
+    onSetProductPhotoType,
     onAddPackaging,
     onAddBoxes,
     onUpdateDetails,

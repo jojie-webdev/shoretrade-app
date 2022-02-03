@@ -64,3 +64,10 @@ export const DeleteBadge = styled.button`
     margin-left: 4px;
   }
 `;
+
+export const PhotoTypeWrapper = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'start',
+  gap: 15,
+});

@@ -1,9 +1,13 @@
 import React from 'react';
 
+import Typography from 'components/base/Typography';
 import moment from 'moment';
+import { Row as TableRow, Col as TableCol } from 'react-grid-system';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { toPrice, capitalize } from 'utils/String';
+import theme from 'utils/Theme';
 
+import IconTooltip from '../IconTooltip';
 import ListingTimeLeftView from '../ListingTimeLeft';
 import { ProductDetailsCard6Props } from './ProductDetailsCard6.props';
 import { Container, Row, Price, Label } from './ProductDetailsCard6.style';
@@ -15,11 +19,13 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
     avgBoxSize,
     catchDate,
     catchRecurrence,
-    minOrder,
     templateDeliveryDate,
     unit = 'kg',
     hiddenPrice,
     SellerCard,
+    size,
+    sizingOptions,
+    activeSizeUnit,
   } = props;
 
   const formattedCatchDate = () => moment(catchDate).format('DD MMMM YYYY');
@@ -70,19 +76,74 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
       </Row>
 
       <Row>
-        <Label variant="label" color="shade6" style={{ marginRight: 4 }}>
-          Minimum Order:
-        </Label>
+        <div className="label-container">
+          <Label variant="label" color="shade6" style={{ marginRight: 4 }}>
+            Size:
+          </Label>
+          {sizingOptions.length > 0 && (
+            <IconTooltip
+              variant="alert"
+              placement="top"
+              iconFill={theme.grey.shade7}
+              content={
+                <>
+                  <TableRow nogutter className="table-header-row">
+                    <TableCol className="table-header-col" xs={6}></TableCol>
+                    <TableCol className="table-header-col" xs={3}>
+                      <Typography variant="label" color="shade4">
+                        From
+                      </Typography>
+                    </TableCol>
+                    <TableCol className="table-header-col" xs={3}>
+                      <Typography variant="label" color="shade4">
+                        To
+                      </Typography>
+                    </TableCol>
+                  </TableRow>
+                  {sizingOptions.map((sizeOption) => (
+                    <TableRow
+                      nogutter
+                      className="table-row"
+                      key={sizeOption.short_code}
+                    >
+                      <TableCol className="table-col" xs={6}>
+                        <Typography variant="label" color="shade4">
+                          {sizeOption.label}
+                        </Typography>
+                      </TableCol>
+                      <TableCol className="table-col" xs={3}>
+                        <Typography variant="label" color="shade4">
+                          {sizeOption.from}
+                        </Typography>
+                        <Typography variant="label" color="shade6">
+                          &nbsp;{activeSizeUnit}
+                        </Typography>
+                      </TableCol>
+                      <TableCol className="table-col" xs={3}>
+                        <Typography variant="label" color="shade4">
+                          {sizeOption.to}
+                        </Typography>
+                        <Typography variant="label" color="shade6">
+                          &nbsp;{activeSizeUnit}
+                        </Typography>
+                      </TableCol>
+                    </TableRow>
+                  ))}
+                </>
+              }
+            />
+          )}
+        </div>
         <Label variant="label" weight="bold">
           {' '}
-          {minOrder} {unit}
+          {size}
         </Label>
       </Row>
 
       {templateDeliveryDate && (
         <Row>
           <Label variant="label" color="shade6" style={{ marginRight: 4 }}>
-            Estimated Shipping:
+            Est. Collection:
           </Label>
           <Label variant="label" weight="bold">
             {' '}

@@ -155,3 +155,6 @@ export { default as SortIcon } from './SortIcon';
 export { default as Listing } from './Listing';
 export { default as Cog } from './Cog';
 export { default as Prawn } from './Prawn';
+export { default as Barcode } from './Barcode';
+export { default as Apple } from './Apple';
+export { default as GooglePlay } from './GooglePlay';

@@ -135,6 +135,9 @@ import {
   CarouselChevronLeft,
   Wetshop,
   Prawn,
+  Barcode,
+  Apple,
+  GooglePlay,
 } from '../../../src/components/base/SVG';
 import Container from '../../components/Container';
 
@@ -592,6 +595,15 @@ storiesOf('base/SVG', module).add('Summary', () => {
         </Wrapper>
         <Wrapper label="Prawn">
           <Prawn width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Barcode">
+          <Barcode width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Apple">
+          <Apple width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="GooglePlay">
+          <GooglePlay width={30} height={30} />
         </Wrapper>
       </Content>
     </Container>

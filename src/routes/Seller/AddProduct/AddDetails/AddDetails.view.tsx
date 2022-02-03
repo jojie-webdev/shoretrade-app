@@ -38,6 +38,7 @@ import {
   // CheckboxContainer,
   CustomCol,
   DatePickerTop,
+  SfmContainer,
 } from './AddDetails.style';
 import { combineDateTime } from './AddDetails.transform';
 import {
@@ -47,6 +48,8 @@ import {
   isValidAuction,
   isValidPreAuction,
   isAuctionDateValid,
+  isValidExpiryDate,
+  isListingExpiryDateValid,
 } from './AddDetails.validation';
 
 // Note: even this is AEST, keep calculations on local time
@@ -200,6 +203,12 @@ const AddDetails = ({
   const [description, setDescription] = useState(
     editableListing?.description || ''
   );
+
+  const [mandatorySFM, setMandatorySFM] = useState({
+    isChecked: false,
+    gotSkipped: false,
+  });
+
   const selectedCompany = editableListing?.company || '';
 
   const shippingAddressOptions = GetCompanyAddresses(selectedCompany).map(
@@ -256,10 +265,12 @@ const AddDetails = ({
         })
       );
     }
-    if (listingEndDate) {
+    if (catchDate && listingEndDate) {
       setErrors(
-        isValid({
-          listingEndDate,
+        isValidExpiryDate({
+          isListingExpiryDateValid: isListingExpiryDateValid(
+            onRevalidateCatchment()
+          ),
         })
       );
     }
@@ -320,6 +331,14 @@ const AddDetails = ({
 
   const onNext = () => {
     let detailsError: any;
+
+    if (!mandatorySFM.isChecked) {
+      setMandatorySFM((prevState) => ({
+        ...prevState,
+        gotSkipped: true,
+      }));
+      return;
+    }
     switch (true) {
       case isPreAuctionSale:
         detailsError = isValidPreAuction({
@@ -370,7 +389,7 @@ const AddDetails = ({
       templateDeliveryDate === 'Custom date'
         ? `${customDeliveryDate.from?.format(
             'MMM D'
-          )} to ${customDeliveryDate.from?.format('MMM D')}`
+          )} to ${customDeliveryDate.to?.format('MMM D')}`
         : templateDeliveryDate;
 
     const isEmptyError = Object.keys(detailsError).every(
@@ -474,6 +493,16 @@ const AddDetails = ({
     if (editableListing.isAlreadyCreated) return;
     setIsAquafuture(false);
     setIsAuctionSale(false);
+  };
+
+  const onRevalidateCatchment = (): boolean => {
+    const validateRange = moment(listingEndDate).isBefore(catchDate);
+    return !(isAquafuture && validateRange);
+  };
+
+  const handleAquafutureDate = () => {
+    const isToday = isAquafuture && moment(catchDate).toDate();
+    return !isToday ? new Date().setHours(0, 0, 0, 0) : isToday;
   };
 
   return (
@@ -691,6 +720,9 @@ const AddDetails = ({
             }
             showCalendarIcon={true}
             showArrowDownIcon={true}
+            isOutsideRange={(date) =>
+              date < (isAquafuture && new Date().setHours(0, 0, 0, 0))
+            }
             topComponent={
               !isAquafuture &&
               !isAuctionSale && (
@@ -745,7 +777,7 @@ const AddDetails = ({
               setShippingAddress(option.value);
             }}
             options={shippingAddressOptions}
-            label="Shipping Address"
+            label="Shipping From"
             error={pathOr('', ['shippingAddress', '0'], errors)}
           />
         </Col>
@@ -762,11 +794,10 @@ const AddDetails = ({
                 onDateChange={(d) => setListingEndDate(d ? d?.toDate() : null)}
                 error={
                   pathOr('', ['listingEndDate', '0'], errors) ||
-                  pathOr('', ['isDateRangeValid', '0'], errors)
+                  pathOr('', ['isDateRangeValid', '0'], errors) ||
+                  pathOr('', ['isListingExpiryDateValid', '0'], errors)
                 }
-                isOutsideRange={(date) =>
-                  date < new Date().setHours(0, 0, 0, 0)
-                }
+                isOutsideRange={(date) => date < handleAquafutureDate()}
                 showCalendarIcon={true}
                 showArrowDownIcon={true}
               />
@@ -836,6 +867,37 @@ const AddDetails = ({
             style={{ height: '100px' }}
           />
         </Col>
+      </Row>
+
+      <Row className="textfield-row">
+        <SfmContainer
+          md={12}
+          className={`textfield-col ${
+            mandatorySFM.gotSkipped ? 'errors' : null
+          }`}
+        >
+          <Interactions
+            padding="16px 20px"
+            type="none"
+            leftComponent={
+              <Checkbox
+                onClick={() => {
+                  setMandatorySFM((prevState) => ({
+                    ...prevState,
+                    isChecked: !prevState.isChecked,
+                  }));
+                }}
+                checked={mandatorySFM.isChecked}
+                label="This product coincides with the SFM Quality Assurance documents."
+              />
+            }
+          />
+          {mandatorySFM.gotSkipped && (
+            <Typography variant="caption" color="error" className="sfm-error">
+              Please confirm to proceed
+            </Typography>
+          )}
+        </SfmContainer>
       </Row>
 
       {!isMobile && (

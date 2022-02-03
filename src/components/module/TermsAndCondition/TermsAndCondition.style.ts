@@ -43,6 +43,9 @@ export const Card = styled.div<{ appType: string }>`
   @media (max-width: 1426px) {
     padding: 24px;
   }
+  @media ${BREAKPOINTS['sm']} {
+    max-width: 100%;
+  }
 `;
 
 export const CircleBackground = styled.div<{ appType: string }>`
@@ -58,14 +61,15 @@ export const StyledAcceptTermsAndConditionText = styled(TypographyView)`
   font-family: 'Basis Grotesque Pro';
 `;
 
-export const StyledSwiper = styled(Swiper)`
+export const StyledSwiper = styled(Swiper)<{ appType: string }>`
   width: 100%;
   height: 100%;
 
   .swiper-pagination-bullet {
     margin: 0 2px;
     @media ${BREAKPOINTS['sm']} {
-      background: ${({ theme }) => theme.grey.noshade};
+      background: ${({ theme, appType }) =>
+        appType === 'buyer' ? theme.grey.shade10 : theme.grey.noshade};
     }
   }
 

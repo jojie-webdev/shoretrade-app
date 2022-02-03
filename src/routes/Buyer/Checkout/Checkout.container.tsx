@@ -20,6 +20,7 @@ import {
 } from 'types/store/GetCartState';
 import { OrderCartItem, OrderShipping } from 'types/store/OrderState';
 import { Store } from 'types/store/Store';
+import { getOrderListingKey } from 'utils/getOrderListingKey';
 import { createUpdateReducer } from 'utils/Hooks/createUpdateReducer';
 import { isPaymentMethodAvailable } from 'utils/isPaymentMethodAvailable';
 import { sizeToString } from 'utils/Listing';
@@ -147,9 +148,15 @@ const Checkout = (): JSX.Element => {
         vendor: cartItem.companyName,
         vendorId: cartItem.companyId,
         crateFee: cartItem.crateFee,
+        isFreeShipping: cartItem.isFreeShipping,
+        listing: {
+          isPreAuctionSale: cartItem.listing.isPreAuctionSale,
+        },
         shippingOptions: shippingQuotes
           ? (
-              shippingQuotes[cartItem.companyId] || { priceResult: [] }
+              shippingQuotes[getOrderListingKey(cartItem)] || {
+                priceResult: [],
+              }
             ).priceResult.map((data) => {
               const shipmentMode = shipmentModeToString(
                 data.shipmentMode,
@@ -200,7 +207,9 @@ const Checkout = (): JSX.Element => {
     }
   );
 
-  const groupOrdersByVendor = groupBy((order: OrderItem) => order.vendorId);
+  const groupOrdersByVendor = groupBy((order: OrderItem) => {
+    return getOrderListingKey(order);
+  });
   const groupedOrders = groupOrdersByVendor(orders);
 
   const selectedShipping = Object.keys(shippingQuotes).reduce(
@@ -247,11 +256,13 @@ const Checkout = (): JSX.Element => {
         Number(currentItem.crateFee || 0),
       0
     ) +
-    Object.keys(selectedShipping).reduce(
-      (totalItemsPrice, companyId) =>
-        totalItemsPrice + selectedShipping[companyId].price,
-      0
-    );
+    (orders[0]?.isFreeShipping
+      ? 0
+      : Object.keys(selectedShipping).reduce(
+          (totalItemsPrice, companyId) =>
+            totalItemsPrice + selectedShipping[companyId].price,
+          0
+        ));
 
   const processingOrder =
     useSelector((store: Store) => store.order.pending) || false;
@@ -266,8 +277,8 @@ const Checkout = (): JSX.Element => {
       !processingOrder &&
       isPaymentMethodAvailable(paymentModes, 'ACCT_CRED')
     ) {
-      const groupCartItemByCompany = groupBy(
-        (item: GetCartDataItem) => item.companyId
+      const groupCartItemByCompany = groupBy((item: GetCartDataItem) =>
+        getOrderListingKey(item)
       );
       const groupedCartItems = groupCartItemByCompany(cartItems);
       const payload = Object.keys(groupedCartItems).reduce(
@@ -276,7 +287,7 @@ const Checkout = (): JSX.Element => {
             (item) => ({
               ...item,
               shipping: {
-                ...selectedShipping[item.companyId],
+                ...selectedShipping[getOrderListingKey(item)],
                 expDelDate: item.listing.isPreAuctionSale
                   ? item.listing.auctionDate
                   : selectedShipping.expDelDate,
@@ -327,7 +338,8 @@ const Checkout = (): JSX.Element => {
       id: string;
       companyId: string;
       boxes: { id: string; weight: number; quantity: number; count: number }[];
-    }) => listing.companyId
+      isPreAuctionSale?: boolean;
+    }) => getOrderListingKey(listing)
   );
 
   useEffect(() => {
@@ -337,6 +349,7 @@ const Checkout = (): JSX.Element => {
           id: cartItem.listing.id,
           companyId: cartItem.companyId,
           boxes: cartItem.orderBoxes,
+          isPreAuctionSale: cartItem.listing.isPreAuctionSale,
         }));
 
         const currentListingIds = listings.map((listing) => listing.id);

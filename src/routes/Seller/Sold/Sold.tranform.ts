@@ -34,6 +34,16 @@ const getShipmentMethodLabel = (
   }
 };
 
+const formatAddressString = (toAddress: {
+  postcode: string;
+  state: string;
+  streetName: string;
+  streetNumber: string;
+  suburb: string;
+}) => {
+  return `${toAddress.streetNumber} ${toAddress.streetName}, ${toAddress.suburb}, ${toAddress.state}, ${toAddress.postcode}`;
+};
+
 const getSalesChannel = (data: GetSellerOrdersResponseItem) => {
   if (data.isMarketRequest) return 'Market Request';
   return data.orderLineItem.some((l) => l.listing.isAquafuture)
@@ -118,6 +128,10 @@ export const orderItemToPendingToShipItem = (
             ...d,
             salesChannel: getSalesChannel(d),
             itemCount: d.orderLineItem.length,
+            formattedAddress:
+              current === 'selfDeliveryOrder'
+                ? formatAddressString(d.toAddress)
+                : undefined,
             totalWeight: d.orderLineItem.reduce((accumA: number, currentA) => {
               return (
                 accumA +
@@ -258,6 +272,10 @@ export const orderItemToSoldItemData = ({
                 lineItem.listing.sizeFrom || '',
                 lineItem.listing.sizeTo || ''
               ),
+              formattedAddress:
+                key === 'selfDeliveryOrder'
+                  ? formatAddressString(order.toAddress)
+                  : undefined,
             };
           }),
           toAddressState: order.toAddress.state,

@@ -164,3 +164,11 @@ export const TabItem = styled.div`
     margin-right: 6px;
   }
 `;
+
+export const ProductPreviewContainer = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 2,
+  marginTop: 16,
+  marginBottom: 20,
+});
