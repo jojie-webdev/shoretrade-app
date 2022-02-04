@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { createValidator } from 'utils/Validation';
 
 const constraints = {
@@ -52,7 +53,7 @@ const constraints = {
       '^You cannot have an Aquafuture listing that is Always Available. If you would like this listing to be Always Available, deselect the Aquafuture tick box on Step 5',
   },
   endAndCatchmentDate: {
-    isTrue: '^Expiry date must either be beyond or equal to the catch date',
+    isTrue: '^Expiry date must not be beyond the catch date.',
   },
 };
 
@@ -143,10 +144,8 @@ export const isValidExpiryDate = createValidator({
   isListingExpiryDateValid: constraints.endAndCatchmentDate,
 });
 
-export const isDateRangeValid = (endListing: Date, catchDate: Date) => {
-  return (
-    endListing && catchDate && endListing > catchDate && endListing > new Date()
-  );
+export const isDateRangeValid = (endListing: Date) => {
+  return endListing && endListing > new Date();
 };
 
 export const isAuctionDateValid = (auctionDate: Date | null) => {

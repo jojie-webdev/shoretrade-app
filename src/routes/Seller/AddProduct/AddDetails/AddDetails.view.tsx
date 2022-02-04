@@ -302,8 +302,7 @@ const AddDetails = ({
           listingEndDate,
           listingEndTime,
           isDateRangeValid: isDateRangeValid(
-            combineDateTime(listingEndDate, listingEndTime),
-            catchDate
+            combineDateTime(listingEndDate, listingEndTime)
           ),
         })
       );
@@ -316,6 +315,7 @@ const AddDetails = ({
     listingEndDate,
     listingEndTime,
     shippingAddress,
+    selectedChannel,
   ]);
 
   const toggleAlwaysAvailable = () => {
@@ -375,12 +375,14 @@ const AddDetails = ({
           listingEndTime,
           shippingAddress,
           isDateRangeValid:
-            catchDate && listingEndDate && listingEndTime
+            listingEndDate && listingEndTime
               ? isDateRangeValid(
-                  combineDateTime(listingEndDate, listingEndTime),
-                  catchDate
+                  combineDateTime(listingEndDate, listingEndTime)
                 )
               : false,
+          endAndCatchmentDate: isListingExpiryDateValid(
+            onRevalidateCatchment()
+          ),
         });
         break;
     }
@@ -496,13 +498,21 @@ const AddDetails = ({
   };
 
   const onRevalidateCatchment = (): boolean => {
-    const validateRange = moment(listingEndDate).isBefore(catchDate);
-    return !(isAquafuture && validateRange);
+    const isSameOrAfterToday = moment(listingEndDate).isSameOrAfter();
+
+    if (isAquafuture)
+      return (
+        isSameOrAfterToday &&
+        moment(listingEndDate).isSameOrBefore(moment(catchDate).endOf('day'))
+      );
+    else return isSameOrAfterToday;
   };
 
-  const handleAquafutureDate = () => {
-    const isToday = isAquafuture && moment(catchDate).toDate();
-    return !isToday ? new Date().setHours(0, 0, 0, 0) : isToday;
+  const isValidUntilOutsideRange = (date: Moment) => {
+    const isBeforeToday = date.isBefore();
+
+    if (isAquafuture) return isBeforeToday || date.isAfter(catchDate);
+    else return isBeforeToday;
   };
 
   return (
@@ -797,7 +807,7 @@ const AddDetails = ({
                   pathOr('', ['isDateRangeValid', '0'], errors) ||
                   pathOr('', ['isListingExpiryDateValid', '0'], errors)
                 }
-                isOutsideRange={(date) => date < handleAquafutureDate()}
+                isOutsideRange={(date) => isValidUntilOutsideRange(date)}
                 showCalendarIcon={true}
                 showArrowDownIcon={true}
               />
