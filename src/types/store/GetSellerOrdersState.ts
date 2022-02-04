@@ -115,6 +115,7 @@ export type GetSellerOrdersResponseItem = {
         isIceSlurry: boolean;
         quality?: string;
       };
+      scanHistory: ScanHistoryItem[];
     }
   ];
   dropOffDate: string;
@@ -127,3 +128,38 @@ export type GetSellerOrdersPayload = GenericResponse<{
   orders: GetSellerOrdersResponseItem[];
   pendingOrders?: GetSellerOrdersResponseItem[];
 }>;
+
+export type SocketOrderScanPayload = {
+  items: {
+    id: string;
+    status: OrderStatus;
+    manifest_status: string;
+    order_ref: string;
+    name: string;
+  }[];
+  scan?: {
+    updated_at: string;
+    scan_option: string;
+    scan_option_alias: string;
+    user_role: string;
+    user_role_alias: string;
+  };
+};
+
+export enum OrderStatus {
+  DELIVERED = 'DELIVERED',
+  IN_TRANSIT = 'TRANSIT',
+  FOR_COLLECTION = 'FOR_COLLECTION',
+  PLACED = 'PLACED',
+}
+
+export type ScanHistoryItem = {
+  id: string;
+  user_role: string;
+  updated_at: string;
+  scan_option: string;
+  user_last_name: string;
+  user_first_name: string;
+  user_role_alias: string;
+  scan_option_alias: string;
+};

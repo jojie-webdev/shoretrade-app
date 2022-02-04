@@ -1,6 +1,9 @@
 import { Dispatch } from 'react';
 
-import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
+import {
+  GetSellerOrdersResponseItem,
+  ScanHistoryItem,
+} from 'types/store/GetSellerOrdersState';
 import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
 
 export interface PendingOrder extends GetSellerOrdersResponseItem {
@@ -39,6 +42,7 @@ export type SoldItemData = {
     unit: string;
     weightConfirmed: boolean;
     orderNumber: string;
+    scanHistory: ScanHistoryItem[];
     buyer: string;
     uri: string;
     price: string;

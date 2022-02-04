@@ -1,25 +1,50 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 
 import Typography from 'components/base/Typography';
+import DialogModal from 'components/module/DialogModal';
 import Pagination from 'components/module/Pagination';
 import { DEFAULT_PAGE_LIMIT } from 'consts';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
+import { ScanHistoryItem } from 'types/store/GetSellerOrdersState';
+import { createUpdateReducer } from 'utils/Hooks';
+import { useTheme } from 'utils/Theme';
 
 import { SoldGeneratedProps } from '../Sold.props';
 import SoldItem from '../SoldItem.view';
 import { TitleRow } from '../ToShip/ToShip.styles';
 import { ItemRow } from './InTransit.styles';
+import ScanHistoryModal from 'components/module/ScanHistoryModal';
 
 const InTransit = (props: SoldGeneratedProps) => {
   const { inTransit, token, inTransitCount, filters, updateFilters } = props;
-
+  const theme = useTheme();
   const inTransitPagesTotal = Math.ceil(
     Number(inTransitCount) / DEFAULT_PAGE_LIMIT
   );
 
+  const [scanHistoryModal, updateScanHistoryModal] = useReducer(
+    createUpdateReducer<{
+      scanHistoryItems: ScanHistoryItem[];
+      isOpen: boolean;
+    }>(),
+    {
+      scanHistoryItems: [],
+      isOpen: false,
+    }
+  );
+
   return (
     <>
+      <ScanHistoryModal
+        onClickClose={() => {
+          updateScanHistoryModal({
+            isOpen: false,
+          });
+        }}
+        title="Scan History"
+        {...scanHistoryModal}
+      />
       {inTransit.map((group, idx) => {
         const getDisplayDate = () => {
           const targetDate = moment(group.title);
@@ -64,12 +89,16 @@ const InTransit = (props: SoldGeneratedProps) => {
                   </span>
                 </Col>
               </TitleRow>
-              <SoldItem data={group.data} token={token} status="TRANSIT" />
+              <SoldItem
+                updateScanHistoryModal={updateScanHistoryModal}
+                data={group.data}
+                token={token}
+                status="TRANSIT"
+              />
             </Col>
           </ItemRow>
         );
       })}
-
       {inTransitPagesTotal > 1 && (
         <Row justify="center">
           <Pagination

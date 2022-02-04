@@ -10,6 +10,7 @@ export type SOCKET_EVENT =
   | 'CART_EXPIRY_WARNING'
   | 'CART_EXPIRY_EXTENDED'
   | 'CART_CLOSED'
+  | 'BARCODE_SCANNED'
   | 'UPDATE_LISTING';
 
 export type SocketState = {

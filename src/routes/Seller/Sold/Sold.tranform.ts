@@ -252,6 +252,7 @@ export const orderItemToSoldItemData = ({
 
             return {
               id: lineItem.id,
+              scanHistory: lineItem.scanHistory,
               weightConfirmed: lineItem.weightConfirmed,
               unit: lineItem.listing.measurementUnit,
               orderNumber: formatOrderReferenceNumber(order.orderRefNumber),
