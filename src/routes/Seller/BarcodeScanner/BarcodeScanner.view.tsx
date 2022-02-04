@@ -2,9 +2,7 @@ import React from 'react';
 
 import { Apple, GooglePlay } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import BarcodeImage1 from 'res/images/barcode-1.png';
-import BarcodeImage2 from 'res/images/barcode-2.png';
-import BarcodeImage3 from 'res/images/barcode-3.png';
+import BarcodeImage from 'res/images/barcode.png';
 import { useTheme } from 'utils/Theme';
 
 // import { useTheme } from 'utils/Theme';
@@ -35,7 +33,16 @@ const BarcodeScannerView = (props: BarcodeScannerGeneratedProps) => {
           scan and manage your Barcodes.
         </Typography>
         <LinkContainer>
-          <LinkButton>
+          <LinkButton
+            onClick={() =>
+              window.open(
+                isSeller
+                  ? 'https://testflight.apple.com/join/2zIfrfEY'
+                  : 'https://testflight.apple.com/join/yp5Uz4ik',
+                '_blank'
+              )
+            }
+          >
             <Apple />
             <span>
               <Typography variant="overlineSmall" color="shade6">
@@ -46,7 +53,16 @@ const BarcodeScannerView = (props: BarcodeScannerGeneratedProps) => {
               </Typography>
             </span>
           </LinkButton>
-          <LinkButton>
+          <LinkButton
+            onClick={() =>
+              window.open(
+                isSeller
+                  ? 'https://play.google.com/store/apps/details?id=com.shoretradeapp.seller&hl=en&gl=US'
+                  : 'https://play.google.com/store/apps/details?id=com.shoretradeapp.buyer&hl=en&gl=US',
+                '_blank'
+              )
+            }
+          >
             <GooglePlay />
             <span>
               <Typography variant="overlineSmall" color="shade6">
@@ -60,9 +76,7 @@ const BarcodeScannerView = (props: BarcodeScannerGeneratedProps) => {
         </LinkContainer>
       </TextContainer>
       <ImgContainer>
-        <img src={BarcodeImage1} />
-        <img src={BarcodeImage2} />
-        <img src={BarcodeImage3} />
+        <img src={BarcodeImage} />
       </ImgContainer>
     </Container>
   );

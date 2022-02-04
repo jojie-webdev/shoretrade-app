@@ -15,18 +15,11 @@ export const TextContainer = styled.div`
 `;
 
 export const ImgContainer = styled.div`
-  position: relative;
-  min-width: 468px;
   margin-top: 32px;
   margin-left: 12px;
-  display: flex;
-  justify-content: space-between;
 
-  img:nth-of-type(2) {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  img {
+    width: 468px;
   }
 
   @media (max-width: 568px) {
