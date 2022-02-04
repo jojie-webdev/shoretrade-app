@@ -66,6 +66,7 @@ export type GetShippingQuoteResponseItem = {
     estimatedDateISO: string;
     sellerDropOffAddress?: string;
     sellerDropOffAirport?: string;
+    sellerDropOff?: string;
   }[];
 };
 

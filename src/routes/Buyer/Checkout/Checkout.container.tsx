@@ -241,7 +241,7 @@ const Checkout = (): JSX.Element => {
           marketAddress: selectedPriceData?.marketAddress || '',
           expDelDate: selectedPriceData?.estimatedDateISO || '',
           sellerDropOffAddress: selectedPriceData?.sellerDropOffAddress,
-          sellerDropOffAirport: selectedPriceData?.sellerDropOffAirport,
+          sellerDropOff: selectedPriceData?.sellerDropOff,
         },
       };
     },
