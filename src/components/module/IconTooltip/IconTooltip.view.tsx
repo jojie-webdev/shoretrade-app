@@ -60,7 +60,9 @@ const IconTooltip = (props: IconTooltipProps): JSX.Element => {
         data-place={placement}
         data-offset={placementOffset}
       >
-        <Icon width={iconSize} height={iconSize} fill={IconFill} />
+        {IconFill && (
+          <Icon width={iconSize} height={iconSize} fill={IconFill} />
+        )}
         {label && (
           <Typography variant="label" color={labelColor || 'noshade'}>
             {label}

@@ -184,7 +184,8 @@ const ChooseSize = ({
     (isUngraded || fromSize) &&
     (!hasQualityOption || (hasQualityOption && quality));
 
-  const activeSizeUnit = listingFormData?.type.activeSizeUnit?.toLowerCase();
+  const activeSizeUnit =
+    listingFormData?.type.activeSizeUnit === 'GM' ? 'g' : 'cm';
 
   const sizeOptions = !listingFormData?.type.activeSizeUnit
     ? []

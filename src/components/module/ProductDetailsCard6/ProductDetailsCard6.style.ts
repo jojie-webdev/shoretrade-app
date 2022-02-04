@@ -32,6 +32,12 @@ export const Container = styled.div<ProductDetailsCard6Props>`
       width: 250px;
     }
 
+    .icon-label-wrapper {
+      :hover {
+        cursor: default;
+      }
+    }
+
     .__react_component_tooltip.show {
       opacity: 100%;
     }

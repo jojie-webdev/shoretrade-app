@@ -82,9 +82,13 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
           </Label>
           {sizingOptions.length > 0 && (
             <IconTooltip
-              variant="alert"
               placement="top"
-              iconFill={theme.grey.shade7}
+              label={
+                <u>
+                  <i>size chart</i>
+                </u>
+              }
+              labelColor="primary"
               content={
                 <>
                   <TableRow nogutter className="table-header-row">

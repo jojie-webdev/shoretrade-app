@@ -3,7 +3,7 @@ import React from 'react';
 import { Theme } from 'types/Theme';
 
 export interface IconTooltipProps {
-  variant: Variants;
+  variant?: Variants;
   content: string | React.ReactNode;
   iconSize?: number;
   placement?: 'bottom' | 'top' | 'right' | 'left';
