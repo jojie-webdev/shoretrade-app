@@ -289,19 +289,19 @@ export const PendingItem = (props: {
 
                       <div className="tags-container">
                         {additionalInfos.map((info) => (
-                        <Tag key={info} background={theme.brand.info}>
-                          <Typography variant="overlineSmall" color="noshade">
-                            {info}
-                          </Typography>
-                        </Tag>
-                      ))}
-                      {lineItem.listing.specifications.map((info) => (
-                        <Tag key={info}>
-                          <Typography variant="overlineSmall" color="noshade">
-                            {info}
-                          </Typography>
-                        </Tag>
-                      ))}
+                          <Tag key={info} background={theme.brand.info}>
+                            <Typography variant="overlineSmall" color="noshade">
+                              {info}
+                            </Typography>
+                          </Tag>
+                        ))}
+                        {lineItem.listing.specifications.map((info) => (
+                          <Tag key={info}>
+                            <Typography variant="overlineSmall" color="noshade">
+                              {info}
+                            </Typography>
+                          </Tag>
+                        ))}
                       </div>
 
                       <ItemDetail variant="caption" color="shade5" row>

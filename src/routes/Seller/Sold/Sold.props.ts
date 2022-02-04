@@ -3,7 +3,7 @@ import { Dispatch } from 'react';
 import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
 import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
 
-export interface PendingOrders extends GetSellerOrdersResponseItem {
+export interface PendingOrder extends GetSellerOrdersResponseItem {
   itemCount: number;
   totalWeight: number;
   salesChannel: string;
@@ -18,7 +18,7 @@ export type PendingToShipItemData = {
   deliveryAddress: string | null;
   buyerId: string;
   orderCount: number;
-  orders: PendingOrders[];
+  orders: PendingOrder[];
   totalPrice: number;
   totalWeight: number;
   groupName?: string;

@@ -46,6 +46,9 @@ const OrdersView = (props: OrdersGeneratedProps) => {
     onChangeCurrentTab,
     filters,
     updateFilters,
+    toShipOrdersCount,
+    completedOrdersCount,
+    inTransitOrdersCount,
   } = props;
 
   const currentFilter = {
@@ -137,6 +140,13 @@ const OrdersView = (props: OrdersGeneratedProps) => {
             activeTextColor={theme.grey.shade9}
             textColor={theme.grey.shade6}
             underlineColor={theme.grey.shade3}
+            customTabContent={[
+              toShipOrdersCount,
+              inTransitOrdersCount,
+              completedOrdersCount,
+            ]}
+            light
+            tabStyle={{ padding: '4px 8px' }}
           />
         </div>
       </div>

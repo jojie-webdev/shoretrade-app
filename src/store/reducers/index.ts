@@ -33,6 +33,7 @@ import forgotPassword from './forgotPassword';
 import getActiveOffers from './getActiveOffers';
 import getAddresses from './getAddresses';
 import getAllBuyerListings from './getAllBuyerListings';
+import getAllBuyerOrders from './getAllBuyerOrders';
 import getAllListings from './getAllListings';
 import getAllMarketRequest from './getAllMarketRequest';
 import getAllMarketRequestFilters from './getAllMarketRequestFilters';
@@ -41,6 +42,7 @@ import getAvailableCrates from './getAvailableCrates';
 import getBankDetails from './getBankDetails';
 import getBuyerHomepage from './getBuyerHomepage';
 import getBuyerOrdersDelivered from './getBuyerOrdersDelivered';
+import getBuyerOrdersPending from './getBuyerOrdersPending';
 import getBuyerOrdersPlaced from './getBuyerOrdersPlaced';
 import getBuyerOrdersTransit from './getBuyerOrdersTransit';
 import getBuyerSearchFilterData from './getBuyerSearchFilterData';
@@ -122,6 +124,7 @@ export default (routeHistory: History) =>
     Object.fromEntries(
       Object.entries({
         /* PLOP_INJECT_INSTANCE */
+        getAllBuyerOrders,
         getSellerOrdersPending,
         getAllSellerOrders,
         getListingById,
@@ -168,6 +171,7 @@ export default (routeHistory: History) =>
         getAllMarketRequestFilters,
         getBankDetails,
         getBuyerHomepage,
+        getBuyerOrdersPending,
         getBuyerOrdersDelivered,
         getBuyerOrdersPlaced,
         getBuyerOrdersTransit,

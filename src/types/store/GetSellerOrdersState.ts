@@ -118,6 +118,7 @@ export type GetSellerOrdersResponseItem = {
     }
   ];
   dropOffDate: string;
+  totalCrateFee?: number;
 };
 
 export type GetSellerOrdersPayload = GenericResponse<{

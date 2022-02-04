@@ -50,6 +50,11 @@ export const TitleRow = styled.div`
       margin-left: 8px;
       color: ${({ theme }) => theme.grey.shade9};
     }
+
+    .notif-reg {
+      background: ${({ theme }) => theme.grey.shade9};
+      color: ${({ theme }) => theme.grey.noshade};
+    }
   }
 `;
 
@@ -121,6 +126,14 @@ export const AccordionTitleContainer = styled.div<{
 
   .label {
     margin-right: 10px;
+  }
+
+  span {
+    width: 28px;
+    height: 28px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
   }
 `;
 

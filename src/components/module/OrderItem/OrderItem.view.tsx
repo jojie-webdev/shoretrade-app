@@ -76,7 +76,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                   <Typography color="shade9">{props.data.seller}</Typography>
                   {props.completedOrder && (
                     <StyledTouchable
-                      onClick={props.onRateClick}
+                      onPress={() => props.onRateClick && props.onRateClick()}
                       style={{
                         background: rating ? theme.brand.primary : undefined,
                       }}
@@ -85,9 +85,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                         <Star
                           width={13}
                           height={13}
-                          fill={
-                            rating ? theme.grey.noshade : theme.brand.primary
-                          }
+                          fill={theme.brand.primary}
                         />
                       </div>
                       <Typography variant="label" color="shade9">
@@ -97,32 +95,6 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                   )}
                 </DetailsContainer>
               </Col>
-              {/* <Col xs="content" className="btn-rate-seller">
-                <FlexiContainer>
-                  {props.completedOrder && (
-                    <Button
-                      icon={
-                        <Star
-                          width={13}
-                          height={13}
-                          fill={
-                            rating ? theme.grey.noshade : theme.brand.primary
-                          }
-                        />
-                      }
-                      iconPosition="before"
-                      variant={rating ? 'primary' : 'outline'}
-                      textVariant="overline"
-                      text={rating ? `${rating}` : 'Rate Seller'}
-                      size="sm"
-                      textWeight="900"
-                      style={{ borderRadius: '8px', marginLeft: '24px' }}
-                      shortenedText={rating ? `${rating}` : 'Rate'}
-                      onClick={props.onRateClick}
-                    />
-                  )}
-                </FlexiContainer>
-              </Col> */}
 
               <Col xs={4}>
                 <Typography color="shade6" variant="label">

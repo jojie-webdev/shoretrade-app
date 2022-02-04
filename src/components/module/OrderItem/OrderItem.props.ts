@@ -5,10 +5,10 @@ import { Moment } from 'moment';
 
 export interface OrderItemProps extends OrderItem {
   isLoading?: boolean;
-  onClick?: MouseEventHandler<any>;
+  onClick?: () => void;
   completedOrder?: boolean;
   validity?: string;
-  onRateClick?: MouseEventHandler<any>;
+  onRateClick?: () => void;
 }
 
 export interface OrderItem {

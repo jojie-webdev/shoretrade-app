@@ -3,6 +3,7 @@ import { API } from 'consts';
 import moment from 'moment';
 import omit from 'ramda/es/omit';
 import { ConfirmWeightMeta } from 'types/store/ConfirmWeightState';
+import { GetAllBuyerOrdersMeta } from 'types/store/GetAllBuyerOrdersState';
 import { GetAllSellerOrdersMeta } from 'types/store/GetAllSellerOrdersState';
 import { GetSellerOrdersMeta } from 'types/store/GetSellerOrdersState';
 import { OrderMeta } from 'types/store/OrderState';
@@ -82,6 +83,27 @@ export const getBuyerOrders = (
   return axios({
     method: 'get',
     url: `${ORDER_URL}/get-buyer-orders-new?status=${data.status || ''}&limit=${
+      data.limit || ''
+    }&page=${data.page || ''}&term=${data.term || ''}&dateFrom=${
+      data.dateFrom || ''
+    }&dateTo=${modifiedEndDate || ''}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const getAllBuyerOrders = (
+  data: GetAllBuyerOrdersMeta,
+  token: string
+) => {
+  //ADD 1 day to the end Date
+  const modifiedEndDate = moment(data.dateTo)
+    .add(1, 'days')
+    .format('M/DD/yyyy');
+  return axios({
+    method: 'get',
+    url: `${ORDER_URL_V2}/all/buyer?status=${data.status || ''}&limit=${
       data.limit || ''
     }&page=${data.page || ''}&term=${data.term || ''}&dateFrom=${
       data.dateFrom || ''

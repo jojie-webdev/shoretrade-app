@@ -1,11 +1,18 @@
 import { ADDITIONAL_INFOS } from 'consts/listingAdditionalInfos';
 import moment from 'moment';
 import { groupBy } from 'ramda';
+import omit from 'ramda/es/omit';
 import pathOr from 'ramda/es/pathOr';
+import {
+  filterDuplicateGroupings,
+  getShipmentMethodLabel,
+} from 'routes/Seller/Sold/Sold.tranform';
+import { GetAllSellerOrder } from 'types/store/GetAllSellerOrdersState';
 import {
   GetBuyerOrdersResponseItem,
   ListingResponseItem,
 } from 'types/store/GetBuyerOrdersState';
+import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { formatOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
@@ -15,7 +22,12 @@ import {
   deliveryOptionToServiceNameString,
 } from 'utils/String/toShipmentDateString';
 
-import { DateType, OrderItem } from './Orders.props';
+import {
+  DateType,
+  OrderItem,
+  OrderItemData,
+  PendingOrder,
+} from './Orders.props';
 
 export const getShipmentOptionString = (
   deliveryMethod: string,
@@ -62,8 +74,111 @@ const getLocation = (
   );
 };
 
+export const orderItemToPendingOrderItem = (
+  data: GetAllSellerOrder[]
+): PendingOrder[] => {
+  if (data.length === 0) return [];
+  const groupedData = omit(['date'], data[0]);
+  const pendingItems = Object.keys(groupedData).reduce(
+    (accum: PendingOrder[], current: string) => {
+      const currentData = groupedData[current];
+      if (currentData.length === 0) return accum;
+
+      const newOrders: PendingOrder[] = [];
+      for (const currentDatum of currentData) {
+        const {
+          orders,
+          locationName,
+          sellerAddress,
+          marketAddress,
+          sellerDropOffAirport,
+        } = currentDatum;
+        const deliveryMethodLabel = getShipmentMethodLabel(
+          current,
+          locationName,
+          sellerDropOffAirport
+        );
+        const deliveryAddress = [
+          'selfPickupOrders',
+          'airPickupOrders',
+        ].includes(current)
+          ? sellerAddress
+          : deliveryMethodLabel.includes('Drop')
+          ? orders[0].deliveryInstruction?.marketAddress
+          : marketAddress;
+        newOrders.push({
+          groupKey: `${deliveryMethodLabel}-${deliveryAddress}`,
+          groupName: current,
+          deliveryMethodLabel,
+          deliveryMethod: orders[0].deliveryMethod,
+          deliveryAddress,
+          buyerId: orders[0].buyerId, // this is employee id
+          orderCount: orders.length,
+          orders: orders.map(transformOrder),
+        });
+      }
+      return [...accum, ...newOrders];
+    },
+    []
+  );
+  // @ts-ignore
+  return filterDuplicateGroupings(pendingItems);
+};
+
+export const orderItemToOrderItemData = ({
+  date,
+  ...data
+}: GetAllSellerOrder): { [p: string]: OrderItemData[] } => {
+  const newObj: { [p: string]: any } = {};
+  for (const [key, value] of Object.entries(data)) {
+    for (const data of value) {
+      const {
+        orders,
+        locationName,
+        sellerAddress,
+        marketAddress,
+        sellerDropOffAirport,
+      } = data;
+      const deliveryMethodLabel = getShipmentMethodLabel(
+        key,
+        locationName,
+        sellerDropOffAirport
+      );
+      const soldOrders = orders.map((order) => {
+        const deliveryAddress = [
+          'selfPickupOrders',
+          'airPickupOrders',
+        ].includes(key)
+          ? sellerAddress
+          : deliveryMethodLabel.includes('Drop')
+          ? order.deliveryInstruction?.marketAddress
+          : marketAddress;
+        return {
+          ...transformOrder(order),
+          groupKey: `${deliveryMethodLabel}-${deliveryAddress}`,
+          groupName: key,
+          deliveryMethod: key,
+          deliveryMethodLabel,
+          deliveryAddress,
+        };
+      });
+      if (!newObj[deliveryMethodLabel]) {
+        newObj[deliveryMethodLabel] = soldOrders;
+      } else if (deliveryMethodLabel === 'Collecting from Yourself') {
+        newObj[`${deliveryMethodLabel}-${sellerAddress}`] = soldOrders;
+      } else {
+        newObj[deliveryMethodLabel] = [
+          ...newObj[deliveryMethodLabel],
+          ...soldOrders,
+        ];
+      }
+    }
+  }
+  return newObj;
+};
+
 export const transformOrder = (
-  orderItem: GetBuyerOrdersResponseItem
+  orderItem: GetSellerOrdersResponseItem
 ): OrderItem => {
   const totalPrice = toPrice(
     Number(orderItem.totalPrice) +

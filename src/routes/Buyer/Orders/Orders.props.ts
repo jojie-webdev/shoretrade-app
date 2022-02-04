@@ -60,26 +60,18 @@ export type RequestFilters = {
 export type TabOptions = 'Pending' | 'In Transit' | 'Complete';
 
 export interface OrdersGeneratedProps {
-  pendingOrders: {
-    [index: string]: OrderItem[];
-  };
-  toShipOrders: {
-    [index: string]: OrderItem[];
-  };
-  inTransitOrders: {
-    [index: string]: OrderItem[];
-  };
-  completedOrders: {
-    [index: string]: OrderItem[];
-  };
+  pendingOrders: PendingOrder[];
+  toShipOrders: GroupedOrderItemData[];
+  inTransitOrders: GroupedOrderItemData[];
+  completedOrders: GroupedOrderItemData[];
   currentTab: TabOptions;
   onChangeCurrentTab: (newTab: TabOptions) => void;
   loadingCurrentTab: boolean;
   getAllOrders: () => void;
   getCompletedOrders: () => void;
-  toShipOrdersCount: string;
-  completedOrdersCount: string;
-  inTransitOrdersCount: string;
+  toShipOrdersCount: number;
+  completedOrdersCount: number;
+  inTransitOrdersCount: number;
   filters: {
     toShipOrdersFilter: RequestFilters;
     completedOrdersFilter: RequestFilters;
@@ -104,3 +96,31 @@ export interface OrdersGeneratedProps {
 }
 
 export type DateType = 'estCatchmentDate' | 'estDeliveryDate' | 'deliveredDate';
+
+export type OrderGroupDetails = {
+  groupName: string;
+  groupKey: string;
+  deliveryMethod: string;
+  deliveryMethodLabel: string;
+  deliveryAddress: string | null;
+};
+
+export type PendingOrder = OrderGroupDetails & {
+  buyerId: string;
+  orderCount: number;
+  orders: OrderItem[];
+};
+
+export type OrderItemData = OrderGroupDetails &
+  OrderItem & {
+    id: string;
+    date: Date;
+    type?: string;
+    orderRefNumber: number;
+  };
+
+export type GroupedOrderItemData = {
+  title: string;
+  data: { [p: string]: OrderItemData[] };
+  orderTotal: number;
+};

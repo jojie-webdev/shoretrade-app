@@ -1,25 +1,34 @@
+import _ from 'lodash';
 import { useSelector } from 'react-redux';
+import { GetAllSellerOrder } from 'types/store/GetAllSellerOrdersState';
+import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
 import { Store } from 'types/store/Store';
 
-const getBuyerOrdersPending = (state: Store) =>
-  state.getBuyerOrdersPlaced.data?.data.pendingOrders || [];
+export const GetAllBuyerOrdersCount = (state: Store) =>
+  state.getBuyerOrdersPlaced.data?.data?.categories.count.headerCount || {};
 
-const getBuyerOrdersPlaced = (state: Store) =>
-  state.getBuyerOrdersPlaced.data?.data.orders || [];
+export const GetAllBuyerOrdersSelectionCount = (state: Store) =>
+  state.getBuyerOrdersPlaced.data?.data?.categories.count.selectionCount || 0;
 
-const getBuyerOrdersTransit = (state: Store) =>
-  state.getBuyerOrdersTransit.data?.data.orders || [];
+const getAllBuyerOrdersPending = (state: Store) =>
+  state.getBuyerOrdersPending.data?.data?.categories.orders || [];
 
-const getBuyerOrdersDelivered = (state: Store) =>
-  state.getBuyerOrdersDelivered.data?.data.orders || [];
+const getAllBuyerOrdersPlaced = (state: Store) =>
+  state.getBuyerOrdersPlaced.data?.data?.categories.orders || [];
 
-const GetBuyerOrders = (
+const getAllBuyerOrdersTransit = (state: Store) =>
+  state.getBuyerOrdersTransit.data?.data?.categories.orders || [];
+
+const getAllBuyerOrdersDelivered = (state: Store) =>
+  state.getBuyerOrdersDelivered.data?.data?.categories.orders || [];
+
+const GetAllBuyerOrders = (
   status: 'PENDING' | 'PLACED' | 'TRANSIT' | 'DELIVERED'
 ) => {
-  const buyerOrdersPending = useSelector(getBuyerOrdersPending) || [];
-  const buyerOrdersPlaced = useSelector(getBuyerOrdersPlaced) || [];
-  const buyerOrdersTransit = useSelector(getBuyerOrdersTransit) || [];
-  const buyerOrdersDelivered = useSelector(getBuyerOrdersDelivered) || [];
+  const buyerOrdersPending = useSelector(getAllBuyerOrdersPending) || [];
+  const buyerOrdersPlaced = useSelector(getAllBuyerOrdersPlaced) || [];
+  const buyerOrdersTransit = useSelector(getAllBuyerOrdersTransit) || [];
+  const buyerOrdersDelivered = useSelector(getAllBuyerOrdersDelivered) || [];
   return {
     PENDING: buyerOrdersPending,
     PLACED: buyerOrdersPlaced,
@@ -31,22 +40,33 @@ const GetBuyerOrders = (
 export const GetBuyerOrder = (
   id: string,
   status: 'PENDING' | 'PLACED' | 'TRANSIT' | 'DELIVERED'
-) => {
-  return GetBuyerOrders(status).find((o) => o.orderId === id);
+): GetSellerOrdersResponseItem | any => {
+  const buyerOrders = GetAllBuyerOrders(status);
+  // @ts-ignore
+  const allOrders = buyerOrders.reduce((accum, order) => {
+    const { date, ...obj }: GetAllSellerOrder = order;
+    const objects = _.flattenDeep([Object.values(obj)]);
+    // @ts-ignore
+    return [...accum, ..._.flattenDeep(objects.map((o) => o.orders))];
+  }, []);
+  return (
+    // @ts-ignore
+    allOrders.find((o: GetSellerOrdersResponseItem) => o.orderId === id) || {}
+  );
 };
 
 export const GetBuyerOrdersToShipPending = () => {
-  return GetBuyerOrders('PENDING');
+  return GetAllBuyerOrders('PENDING');
 };
 
 export const GetBuyerOrdersToShip = () => {
-  return GetBuyerOrders('PLACED');
+  return GetAllBuyerOrders('PLACED');
 };
 
 export const GetBuyerOrdersInTransit = () => {
-  return GetBuyerOrders('TRANSIT');
+  return GetAllBuyerOrders('TRANSIT');
 };
 
 export const GetBuyerOrdersDelivered = () => {
-  return GetBuyerOrders('DELIVERED');
+  return GetAllBuyerOrders('DELIVERED');
 };

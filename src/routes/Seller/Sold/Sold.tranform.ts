@@ -1,5 +1,6 @@
 import moment from 'moment';
 import omit from 'ramda/es/omit';
+import { PendingOrder } from 'routes/Buyer/Orders/Orders.props';
 import { GetAllSellerOrder } from 'types/store/GetAllSellerOrdersState';
 import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
 import { sizeToString } from 'utils/Listing';
@@ -9,7 +10,7 @@ import { toPrice } from 'utils/String/toPrice';
 
 import { SoldItemData, PendingToShipItemData, SoldItem } from './Sold.props';
 
-const getShipmentMethodLabel = (
+export const getShipmentMethodLabel = (
   deliveryMethod: string,
   locationName: string | null,
   sellerDropOffAirport: string | null
@@ -53,23 +54,32 @@ const getSalesChannel = (data: GetSellerOrdersResponseItem) => {
     : 'Direct Sale';
 };
 
-const filterDuplicateGroupings = (items: PendingToShipItemData[]) => {
-  const groupings: { [key: string]: PendingToShipItemData } = {};
+export const filterDuplicateGroupings = (
+  items: PendingToShipItemData[] | PendingOrder[]
+) => {
+  const groupings: {
+    [key: string]: PendingToShipItemData | PendingOrder;
+  } = {};
   for (const group of items) {
     if (group.groupName === 'selfPickupOrders') {
+      // @ts-ignore
       groupings[
         `${group.deliveryMethodLabel}-${group.deliveryAddress}`
       ] = group;
     } else {
       const existingGroup = groupings[group.deliveryMethodLabel];
       if (!existingGroup) {
+        // @ts-ignore
         groupings[group.deliveryMethodLabel] = group;
       } else {
         groupings[group.deliveryMethodLabel] = {
           ...existingGroup,
+          // @ts-ignore
           totalPrice: existingGroup.totalPrice + group.totalPrice,
+          // @ts-ignore
           totalWeight: existingGroup.totalWeight + group.totalWeight,
           orderCount: existingGroup.orderCount + group.orderCount,
+          // @ts-ignore
           orders: [...existingGroup.orders, ...group.orders],
         };
       }
@@ -166,6 +176,7 @@ export const orderItemToPendingToShipItem = (
     },
     []
   );
+  // @ts-ignore
   return filterDuplicateGroupings(pendingItems);
 };
 
@@ -173,8 +184,7 @@ export const orderItemToSoldItemData = ({
   date,
   ...data
 }: GetAllSellerOrder): { [p: string]: SoldItemData[] } => {
-  //@ts-ignore
-  const newObj: { [p: string]: ToShipItemData[] } = {};
+  const newObj: { [p: string]: any } = {};
   for (const [key, value] of Object.entries(data)) {
     for (const data of value) {
       const {
@@ -302,23 +312,36 @@ export const orderItemToSoldItemData = ({
       }
     }
   }
-  return Object.keys(newObj).reduce((map, key) => {
+  return computeTotalWeightAndPrice(newObj);
+};
+
+export const computeTotalWeightAndPrice = (newObj: { [p: string]: any }) =>
+  Object.keys(newObj).reduce((map, key) => {
     return {
       ...map,
-      [key]: newObj[key].map((order) => {
-        return {
-          ...order,
-          totalPrice: `${toPrice(
-            newObj[key].reduce((accum, o) => accum + o.totalPrice, 0)
-          )}`,
-          totalWeight: `${newObj[key]
-            .reduce((accum, o) => accum + o.totalWeight, 0)
-            .toFixed(2)} ${formatMeasurementUnit(order.groupMeasurementUnit)}`,
-        };
-      }),
+      [key]: newObj[key].map(
+        (order: { groupMeasurementUnit: string | undefined }) => {
+          return {
+            ...order,
+            totalPrice: `${toPrice(
+              newObj[key].reduce(
+                (accum: any, o: { totalPrice: any }) => accum + o.totalPrice,
+                0
+              )
+            )}`,
+            totalWeight: `${newObj[key]
+              .reduce(
+                (accum: any, o: { totalWeight: any }) => accum + o.totalWeight,
+                0
+              )
+              .toFixed(2)} ${formatMeasurementUnit(
+              order.groupMeasurementUnit
+            )}`,
+          };
+        }
+      ),
     };
   }, {});
-};
 
 export const sortByDate = function (a: SoldItem, b: SoldItem) {
   const getTime = (z: string) => {
