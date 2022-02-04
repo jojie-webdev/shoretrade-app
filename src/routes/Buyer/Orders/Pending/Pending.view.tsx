@@ -18,7 +18,7 @@ const Pending = (props: OrdersGeneratedProps) => {
   const {
     pendingOrders,
     toShipOrders,
-    toShipOrdersCount,
+    selectionCount,
     filters,
     updateFilters,
   } = props;
@@ -28,7 +28,7 @@ const Pending = (props: OrdersGeneratedProps) => {
 
   return (
     <>
-      {pendingOrdersTotal === 0 && toShipOrdersCount === 0 ? (
+      {pendingOrdersTotal === 0 && selectionCount === 0 ? (
         <Row className="emptystate-row" align="center" justify="center">
           <Col>
             <EmptyState
@@ -63,7 +63,7 @@ const Pending = (props: OrdersGeneratedProps) => {
 
           <GroupedOrderItems
             groupedData={toShipOrders}
-            groupedCount={toShipOrdersCount}
+            groupedCount={selectionCount}
             token={props.token}
             filter={filters.toShipOrdersFilter}
             updateFilter={updateFilters.updateToShipOrdersFilter}

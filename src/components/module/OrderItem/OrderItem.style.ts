@@ -244,11 +244,17 @@ export const FlexiContainer = styled.div<{ justifyReversed?: boolean }>`
   }
 `;
 
-export const StyledTouchable = styled(TouchableView)`
+export const StyledTouchable = styled(TouchableView)<{
+  bgColor?: string;
+}>`
   display: flex;
   align-items: center;
   padding: 0 6px;
-  background: ${({ theme }) => theme.grey.shade2};
+  background: ${({ theme, bgColor }) => bgColor ?? theme.grey.shade2};
+
+  &:hover {
+    background: ${({ theme, bgColor }) => bgColor ?? theme.grey.shade2};
+  }
 
   .svg-container {
     margin-right: 6px;

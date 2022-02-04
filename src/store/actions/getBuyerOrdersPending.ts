@@ -29,7 +29,7 @@ const getBuyerOrdersPendingActions = {
       dateTo: filter?.dateTo?.format('M/DD/yyyy'),
       term: filter?.term,
       limit: DEFAULT_PAGE_LIMIT,
-      page: filter?.page || '1',
+      page: '1',
     },
   }),
 };

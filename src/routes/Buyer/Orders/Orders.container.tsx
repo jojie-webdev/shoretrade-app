@@ -21,7 +21,10 @@ import {
   GetBuyerOrdersInTransit,
   GetBuyerOrdersDelivered,
 } from 'store/selectors/buyer/';
-import { GetAllBuyerOrdersCount } from 'store/selectors/buyer/orders';
+import {
+  GetAllBuyerOrdersCount,
+  GetAllBuyerOrdersSelectionCount,
+} from 'store/selectors/buyer/orders';
 import { GetAllSellerOrder } from 'types/store/GetAllSellerOrdersState';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
@@ -63,7 +66,7 @@ const OrdersContainer = (): JSX.Element => {
     dateFrom: moment.Moment | null;
     dateTo: moment.Moment | null;
   }) => {
-    dispatch(getBuyerOrdersPendingActions.request());
+    dispatch(getBuyerOrdersPendingActions.request(filter));
     dispatch(getBuyerOrdersPlacedActions.request(filter));
   };
 
@@ -146,6 +149,9 @@ const OrdersContainer = (): JSX.Element => {
     transit: inTransitOrdersCount,
     delivered: completedOrdersCount,
   } = useSelector(GetAllBuyerOrdersCount);
+  const selectionCount = useSelector(
+    GetAllBuyerOrdersSelectionCount(currentTab)
+  );
 
   const [toShipOrdersFilter, updateToShipOrdersFilter] = useReducer(
     createUpdateReducer<RequestFilters>(),
@@ -300,6 +306,7 @@ const OrdersContainer = (): JSX.Element => {
     toShipOrdersCount,
     completedOrdersCount,
     inTransitOrdersCount,
+    selectionCount,
     filters,
     updateFilters,
     currentTab,

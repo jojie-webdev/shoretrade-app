@@ -72,6 +72,7 @@ export interface OrdersGeneratedProps {
   toShipOrdersCount: number;
   completedOrdersCount: number;
   inTransitOrdersCount: number;
+  selectionCount: number;
   filters: {
     toShipOrdersFilter: RequestFilters;
     completedOrdersFilter: RequestFilters;

@@ -31,6 +31,7 @@ export const Container = styled.div`
 // Shared Styles
 
 export const TitleRow = styled.div`
+  margin-top: 24px;
   margin-bottom: 12px;
 
   .title-col {
@@ -99,7 +100,7 @@ export const AccordionContainer = styled.div`
 `;
 
 export const StyledAccordion = styled(AccordionView)`
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 `;
 
 export const OrderBadge = styled.div`

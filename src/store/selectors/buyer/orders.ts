@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
+import { TabOptions } from 'routes/Buyer/Orders/Orders.props';
 import { GetAllSellerOrder } from 'types/store/GetAllSellerOrdersState';
 import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
 import { Store } from 'types/store/Store';
@@ -7,8 +8,22 @@ import { Store } from 'types/store/Store';
 export const GetAllBuyerOrdersCount = (state: Store) =>
   state.getBuyerOrdersPlaced.data?.data?.categories.count.headerCount || {};
 
-export const GetAllBuyerOrdersSelectionCount = (state: Store) =>
-  state.getBuyerOrdersPlaced.data?.data?.categories.count.selectionCount || 0;
+export const GetAllBuyerOrdersSelectionCount = (tab: TabOptions) => (
+  state: Store
+) => {
+  let countState;
+  switch (tab) {
+    case 'Pending':
+      countState = state.getBuyerOrdersPlaced;
+      break;
+    case 'In Transit':
+      countState = state.getBuyerOrdersTransit;
+      break;
+    default:
+      countState = state.getBuyerOrdersDelivered;
+  }
+  return countState.data?.data?.categories.count.selectionCount || 0;
+};
 
 const getAllBuyerOrdersPending = (state: Store) =>
   state.getBuyerOrdersPending.data?.data?.categories.orders || [];

@@ -18,7 +18,6 @@ import { AlertContainer } from '../Orders.style';
 const Complete = (props: OrdersGeneratedProps) => {
   const {
     completedOrders,
-    completedOrdersCount,
     updateFilters,
     filters,
     isSendingDispute,
@@ -27,6 +26,7 @@ const Complete = (props: OrdersGeneratedProps) => {
     sendOrderRating,
     isSendingOrderRating,
     isSendOrderRatingSuccess,
+    selectionCount,
   } = props;
   const theme = useTheme();
   const history = useHistory();
@@ -119,7 +119,7 @@ const Complete = (props: OrdersGeneratedProps) => {
       ) : (
         <GroupedOrderItems
           groupedData={completedOrders}
-          groupedCount={completedOrdersCount}
+          groupedCount={selectionCount}
           token={props.token}
           filter={filters.completedOrdersFilter}
           updateFilter={updateFilters.updateCompletedOrdersFilter}

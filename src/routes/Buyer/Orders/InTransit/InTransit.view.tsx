@@ -11,12 +11,7 @@ import { OrdersGeneratedProps } from '../Orders.props';
 
 const InTransit = (props: OrdersGeneratedProps) => {
   const history = useHistory();
-  const {
-    inTransitOrders,
-    inTransitOrdersCount,
-    filters,
-    updateFilters,
-  } = props;
+  const { inTransitOrders, filters, updateFilters, selectionCount } = props;
 
   return (
     <>
@@ -34,7 +29,7 @@ const InTransit = (props: OrdersGeneratedProps) => {
       ) : (
         <GroupedOrderItems
           groupedData={inTransitOrders}
-          groupedCount={inTransitOrdersCount}
+          groupedCount={selectionCount}
           token={props.token}
           filter={filters.inTransitOrdersFilter}
           updateFilter={updateFilters.updateInTransitOrdersFilter}

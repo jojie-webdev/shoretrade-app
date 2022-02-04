@@ -61,7 +61,7 @@ export const OrderItemAccordion = (
       contentBorder={`1px solid ${theme.grey.shade3}`}
       padding="20px 24px"
       innerContentPadding="8px 24px"
-      marginBottom="16px"
+      marginBottom="8px"
       keepIcon
       iconColor={theme.brand.primary}
       type="plus"
@@ -127,13 +127,12 @@ const GroupedOrderItems = (props: GroupedOrderItemsProps) => {
     onOrderClick,
     onRateClick,
   } = props;
-
   const totalPages = Math.ceil(Number(groupedCount) / DEFAULT_PAGE_LIMIT);
 
   return (
     <>
-      {groupedData.map((group) => (
-        <>
+      {groupedData.map((group, key) => (
+        <React.Fragment key={key}>
           <TitleRow>
             <Col md={12} className="title-col">
               <Typography
@@ -164,11 +163,11 @@ const GroupedOrderItems = (props: GroupedOrderItemsProps) => {
               />
             );
           })}
-        </>
+        </React.Fragment>
       ))}
 
       {totalPages > 1 && (
-        <Row justify="center">
+        <Row justify="center" style={{ marginTop: '24px' }}>
           <Pagination
             numPages={totalPages}
             currentValue={Number(filter.page)}

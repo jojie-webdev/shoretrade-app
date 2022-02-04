@@ -77,18 +77,21 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                   {props.completedOrder && (
                     <StyledTouchable
                       onPress={() => props.onRateClick && props.onRateClick()}
-                      style={{
-                        background: rating ? theme.brand.primary : undefined,
-                      }}
+                      bgColor={rating ? theme.brand.primary : undefined}
                     >
                       <div className="svg-container">
                         <Star
                           width={13}
                           height={13}
-                          fill={theme.brand.primary}
+                          fill={
+                            rating ? theme.grey.noshade : theme.brand.primary
+                          }
                         />
                       </div>
-                      <Typography variant="label" color="shade9">
+                      <Typography
+                        variant="label"
+                        color={rating ? 'noshade' : 'shade9'}
+                      >
                         {rating ? `${rating}` : 'Rate'}
                       </Typography>
                     </StyledTouchable>
@@ -105,6 +108,23 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
             </Row>
           </Col>
 
+          {showDispute && (
+            <Col sm={2}>
+              <FlexiContainer justifyReversed={true}>
+                <Button
+                  text="Raise Dispute"
+                  icon={<Message fill="#FFF" height={16} width={16} />}
+                  iconPosition="before"
+                  variant="primary"
+                  size="sm"
+                  onClick={props.onClick}
+                  className="btn-raise-dispute"
+                  style={{ borderRadius: '8px' }}
+                />
+              </FlexiContainer>
+            </Col>
+          )}
+
           <Col sm={2}>
             <Typography color="shade6" variant="label" className="end-text">
               Total
@@ -119,7 +139,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
       <OrderItemsContainer>
         <Row nogutter={true}>
           {props.data.detailsProps.map((d, ndx) => (
-            <Col key={d.name} xs={12} className="item">
+            <Col key={`${d.name}-${ndx}`} xs={12} className="item">
               <Row nogutter={true}>
                 <Col xs={12} sm={showCatchment ? 4 : 5}>
                   <Row nogutter={true}>
