@@ -251,6 +251,7 @@ export const StyledTouchable = styled(TouchableView)<{
   align-items: center;
   padding: 0 6px;
   background: ${({ theme, bgColor }) => bgColor ?? theme.grey.shade2};
+  height: fit-content;
 
   &:hover {
     background: ${({ theme, bgColor }) => bgColor ?? theme.grey.shade2};

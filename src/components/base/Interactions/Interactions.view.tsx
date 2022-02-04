@@ -60,7 +60,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
     if (type === 'plus') {
       return (
         <PlusContainer>
-          <p>+</p>
+          <p>{pressed ? '-' : '+'}</p>
         </PlusContainer>
       );
     }

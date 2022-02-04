@@ -295,21 +295,33 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
               </Col>
             </Row>
           </Col>
-          {!!isMobile && props.data.totalCrateFee > 0 && (
+          {props.data.totalCrateFee > 0 && (
             <Col xs={12} className="item">
               <Row nogutter={true}>
                 <Col
                   sm={9}
                   style={{ alignSelf: 'center', paddingLeft: '56px' }}
                 >
-                  <Typography color="shade6" variant="label">
+                  <Typography color="shade9" style={{ margin: '12px 0' }}>
                     Crate Fee and Levies
                   </Typography>
                 </Col>
                 <Col sm={3} style={{ alignSelf: 'center' }}>
-                  <Typography color="shade9" variant="body" weight="bold">
+                  <ItemDetailLabel
+                    className="end-text"
+                    color="shade6"
+                    variant="caption"
+                  >
+                    Subtotal
+                  </ItemDetailLabel>
+                  <ItemDetailValue
+                    className="end-text value"
+                    variant="label"
+                    weight="bold"
+                    color="shade9"
+                  >
                     {toPrice(props.data.totalCrateFee)}
-                  </Typography>
+                  </ItemDetailValue>
                 </Col>
               </Row>
             </Col>

@@ -109,7 +109,7 @@ export const OrderItemAccordion = (
           key={d.id}
           onClick={() => onOrderClick && onOrderClick(d.id)}
           deliveredDate={d.deliveredDate}
-          completedOrder={!!d.deliveredDate}
+          completedOrder={!!(onOrderClick && onRateClick)}
           onRateClick={() => !d.data.rating && onRateClick && onRateClick(d.id)}
         />
       ))}
