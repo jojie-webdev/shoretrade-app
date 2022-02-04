@@ -32,7 +32,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
   const dateToday = new Date();
   const diff = dateToday.getTime() - deliveredDate.getTime();
   const diffDays = diff / (1000 * 3600 * 24);
-  const showDispute = !(props.completedOrder && diffDays < 1);
+  const showDispute = props.completedOrder && diffDays < 1;
   const rating = props.data.rating;
   const showCatchment = !props.data.isMarketRequest;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
