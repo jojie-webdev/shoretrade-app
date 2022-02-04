@@ -32,7 +32,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
   const dateToday = new Date();
   const diff = dateToday.getTime() - deliveredDate.getTime();
   const diffDays = diff / (1000 * 3600 * 24);
-  const showDispute = props.completedOrder && diffDays < 1;
+  const showDispute = !(props.completedOrder && diffDays < 1);
   const rating = props.data.rating;
   const showCatchment = !props.data.isMarketRequest;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -41,7 +41,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
     <OrderItemContainer>
       <OrderInfoContainer theme={theme}>
         <Row nogutter={true}>
-          <Col sm={10} className="detail-container">
+          <Col sm={showDispute ? 9 : 10} className="detail-container">
             <Row nogutter={true}>
               <Col xs={4}>
                 <Typography variant="label" color="shade6">
@@ -109,19 +109,17 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
           </Col>
 
           {showDispute && (
-            <Col sm={2}>
-              <FlexiContainer justifyReversed={true}>
-                <Button
-                  text="Raise Dispute"
-                  icon={<Message fill="#FFF" height={16} width={16} />}
-                  iconPosition="before"
-                  variant="primary"
-                  size="sm"
-                  onClick={props.onClick}
-                  className="btn-raise-dispute"
-                  style={{ borderRadius: '8px' }}
-                />
-              </FlexiContainer>
+            <Col sm={1}>
+              <Button
+                text="Raise Dispute"
+                icon={<Message fill="#FFF" height={16} width={16} />}
+                iconPosition="before"
+                variant="primary"
+                size="sm"
+                onClick={props.onClick}
+                className="btn-raise-dispute"
+                style={{ borderRadius: '8px' }}
+              />
             </Col>
           )}
 
