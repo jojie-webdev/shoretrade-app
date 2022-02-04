@@ -29,9 +29,9 @@ export type ListingResponseItem = {
   };
   priceDelta: number | null;
   pricePerKilo: number;
-  sizeFrom: string;
+  sizeFrom: string | null;
   sizeId: string;
-  sizeTo: string;
+  sizeTo: string | null;
   specifications: string[];
   typeId: string;
   typeName: string;

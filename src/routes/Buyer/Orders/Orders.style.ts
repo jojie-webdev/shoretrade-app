@@ -9,13 +9,29 @@ export const Container = styled.div`
   }
 
   .controls-row {
-    margin-bottom: 48px;
+    width: 100%;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  .tabs {
+    width: 340px;
+
+    @media ${BREAKPOINTS['sm']} {
+      width: 100%;
+      margin-bottom: 16px;
+    }
   }
 `;
 
 // Shared Styles
 
 export const TitleRow = styled.div`
+  margin-top: 24px;
   margin-bottom: 12px;
 
   .title-col {
@@ -24,6 +40,21 @@ export const TitleRow = styled.div`
 
     .svg-container {
       margin-right: 8px;
+    }
+
+    .notification {
+      border-radius: 8px;
+      padding: 4px 8px;
+      background: ${({ theme }) => theme.brand.alert};
+      font-size: 11px;
+      font-weight: 900;
+      margin-left: 8px;
+      color: ${({ theme }) => theme.grey.shade9};
+    }
+
+    .notif-reg {
+      background: ${({ theme }) => theme.grey.shade9};
+      color: ${({ theme }) => theme.grey.noshade};
     }
   }
 `;
@@ -69,7 +100,7 @@ export const AccordionContainer = styled.div`
 `;
 
 export const StyledAccordion = styled(AccordionView)`
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 `;
 
 export const OrderBadge = styled.div`
@@ -96,6 +127,14 @@ export const AccordionTitleContainer = styled.div<{
 
   .label {
     margin-right: 10px;
+  }
+
+  span {
+    width: 28px;
+    height: 28px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
   }
 `;
 

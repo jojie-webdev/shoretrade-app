@@ -23,6 +23,7 @@ import {
   ItemDetailValue,
   Tag,
   StyledTouchable,
+  DetailsContainer,
 } from './OrderItem.style';
 
 const OrderItem = (props: OrderItemProps): JSX.Element => {
@@ -40,19 +41,45 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
     <OrderItemContainer>
       <OrderInfoContainer theme={theme}>
         <Row nogutter={true}>
-          <Col sm={6} className="detail-container">
+          <Col sm={showDispute ? 9 : 10} className="detail-container">
             <Row nogutter={true}>
-              <Col xs="content">
+              <Col xs={4}>
+                <Typography variant="label" color="shade6">
+                  Order n.
+                </Typography>
+                <DetailsContainer>
+                  <Typography color="shade9">
+                    {props.data.orderNumber}
+                  </Typography>
+                  <StyledTouchable
+                    onPress={() => {
+                      window.open(
+                        `${API.URL}/${API.VERSION}/order/invoice/${props.data.orderRefNumber}?token=${props.token}`,
+                        '_blank'
+                      );
+                    }}
+                  >
+                    <div className="svg-container">
+                      <DownloadFile />
+                    </div>
+                    <Typography variant="label" color="shade9">
+                      Invoice
+                    </Typography>
+                  </StyledTouchable>
+                </DetailsContainer>
+              </Col>
+              <Col xs={4}>
                 <Typography variant="label" color="shade6">
                   Seller
                 </Typography>
-                <Typography color="shade9">{props.data.seller}</Typography>
-              </Col>
-              <Col xs="content" className="btn-rate-seller">
-                <FlexiContainer>
+                <DetailsContainer>
+                  <Typography color="shade9">{props.data.seller}</Typography>
                   {props.completedOrder && (
-                    <Button
-                      icon={
+                    <StyledTouchable
+                      onPress={() => props.onRateClick && props.onRateClick()}
+                      bgColor={rating ? theme.brand.primary : undefined}
+                    >
+                      <div className="svg-container">
                         <Star
                           width={13}
                           height={13}
@@ -60,48 +87,48 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                             rating ? theme.grey.noshade : theme.brand.primary
                           }
                         />
-                      }
-                      iconPosition="before"
-                      variant={rating ? 'primary' : 'outline'}
-                      textVariant="overline"
-                      text={rating ? `${rating}` : 'Rate Seller'}
-                      size="sm"
-                      textWeight="900"
-                      style={{ borderRadius: '8px', marginLeft: '24px' }}
-                      shortenedText={rating ? `${rating}` : 'Rate'}
-                      onClick={props.onRateClick}
-                    />
+                      </div>
+                      <Typography
+                        variant="label"
+                        color={rating ? 'noshade' : 'shade9'}
+                      >
+                        {rating ? `${rating}` : 'Rate'}
+                      </Typography>
+                    </StyledTouchable>
                   )}
-                </FlexiContainer>
+                </DetailsContainer>
+              </Col>
+
+              <Col xs={4}>
+                <Typography color="shade6" variant="label">
+                  Ordered By:
+                </Typography>
+                <Typography color="shade9">{props.data.orderedBy}</Typography>
               </Col>
             </Row>
           </Col>
 
-          <Col sm={3} className="detail-container">
-            <Typography color="shade6" variant="label">
-              Download
-            </Typography>
-            <StyledTouchable
-              onPress={() => {
-                window.open(
-                  `${API.URL}/${API.VERSION}/order/invoice/${props.data.orderRefNumber}?token=${props.token}`,
-                  '_blank'
-                );
-              }}
-            >
-              <div className="svg-container">
-                <DownloadFile />
-              </div>
-              <Typography color="shade9">Invoice</Typography>
-            </StyledTouchable>
-          </Col>
+          {showDispute && (
+            <Col sm={1}>
+              <Button
+                text="Raise Dispute"
+                icon={<Message fill="#FFF" height={16} width={16} />}
+                iconPosition="before"
+                variant="primary"
+                size="sm"
+                onClick={props.onClick}
+                className="btn-raise-dispute"
+                style={{ borderRadius: '8px' }}
+              />
+            </Col>
+          )}
 
-          <Col sm={3}>
+          <Col sm={2}>
             <Typography color="shade6" variant="label" className="end-text">
-              Ordered By:
+              Total
             </Typography>
             <Typography color="shade9" align="right" className="end-text">
-              {props.data.orderedBy}
+              {props.data.total}
             </Typography>
           </Col>
         </Row>
@@ -110,7 +137,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
       <OrderItemsContainer>
         <Row nogutter={true}>
           {props.data.detailsProps.map((d, ndx) => (
-            <Col key={d.name} xs={12} className="item">
+            <Col key={`${d.name}-${ndx}`} xs={12} className="item">
               <Row nogutter={true}>
                 <Col xs={12} sm={showCatchment ? 4 : 5}>
                   <Row nogutter={true}>
@@ -240,10 +267,69 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
               </Row>
             </Col>
           ))}
+          <Col xs={12} className="item">
+            <Row nogutter={true}>
+              <Col sm={9} style={{ alignSelf: 'center', paddingLeft: '56px' }}>
+                <Typography color="shade9" style={{ margin: '12px 0' }}>
+                  Shipping Fee
+                </Typography>
+              </Col>
+              <Col sm={3} style={{ alignSelf: 'center' }}>
+                <ItemDetailLabel
+                  className="end-text"
+                  color="shade6"
+                  variant="caption"
+                >
+                  Subtotal
+                </ItemDetailLabel>
+                <ItemDetailValue
+                  className="end-text value"
+                  variant="label"
+                  weight="bold"
+                  color="shade9"
+                >
+                  {toPrice(
+                    props.data.shippingChargeNet + props.data.shippingChargeGst
+                  )}
+                </ItemDetailValue>
+              </Col>
+            </Row>
+          </Col>
+          {props.data.totalCrateFee > 0 && (
+            <Col xs={12} className="item">
+              <Row nogutter={true}>
+                <Col
+                  sm={9}
+                  style={{ alignSelf: 'center', paddingLeft: '56px' }}
+                >
+                  <Typography color="shade9" style={{ margin: '12px 0' }}>
+                    Crate Fee and Levies
+                  </Typography>
+                </Col>
+                <Col sm={3} style={{ alignSelf: 'center' }}>
+                  <ItemDetailLabel
+                    className="end-text"
+                    color="shade6"
+                    variant="caption"
+                  >
+                    Subtotal
+                  </ItemDetailLabel>
+                  <ItemDetailValue
+                    className="end-text value"
+                    variant="label"
+                    weight="bold"
+                    color="shade9"
+                  >
+                    {toPrice(props.data.totalCrateFee)}
+                  </ItemDetailValue>
+                </Col>
+              </Row>
+            </Col>
+          )}
         </Row>
       </OrderItemsContainer>
 
-      <OrderTotalContainer>
+      {/* <OrderTotalContainer>
         <Row nogutter={true}>
           <Col sm={6} className="detail-container">
             <Typography color="shade6" variant="label">
@@ -298,9 +384,9 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
             </Col>
           )}
         </Row>
-      </OrderTotalContainer>
+      </OrderTotalContainer> */}
 
-      <OrderShippingContainer>
+      {/* <OrderShippingContainer>
         <Row nogutter={true}>
           <Col sm={9}>
             <Row nogutter={true}>
@@ -367,7 +453,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
             </Row>
           </Col>
         </Row>
-      </OrderShippingContainer>
+      </OrderShippingContainer> */}
     </OrderItemContainer>
   );
 };

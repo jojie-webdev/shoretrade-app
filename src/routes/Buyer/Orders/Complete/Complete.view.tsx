@@ -2,32 +2,22 @@ import React, { useReducer, useState, useEffect } from 'react';
 
 import Alert from 'components/base/Alert';
 import { Oysters } from 'components/base/SVG';
-import Typography from 'components/base/Typography';
 import EmptyState from 'components/module/EmptyState';
 import MessageModal from 'components/module/MessageModal';
-import OrderItemView from 'components/module/OrderItem';
-import Pagination from 'components/module/Pagination';
 import RateSellerModal from 'components/module/RateSellerModal';
-import { BUYER_ROUTES, DEFAULT_PAGE_LIMIT } from 'consts';
-import sort from 'ramda/src/sort';
+import { BUYER_ROUTES } from 'consts';
 import { Row, Col } from 'react-grid-system';
 import { useHistory } from 'react-router';
 import { createUpdateReducer } from 'utils/Hooks';
 import { useTheme } from 'utils/Theme';
 
+import GroupedOrderItems from '../GroupedOrderItems/GroupedOrderItems.view';
 import { OrdersGeneratedProps } from '../Orders.props';
-import {
-  AccordionTitleContainer,
-  StyledAccordion,
-  OrderBadge,
-  AlertContainer,
-} from '../Orders.style';
-import { sortByDate } from '../Orders.transform';
+import { AlertContainer } from '../Orders.style';
 
 const Complete = (props: OrdersGeneratedProps) => {
   const {
     completedOrders,
-    completedOrdersCount,
     updateFilters,
     filters,
     isSendingDispute,
@@ -36,13 +26,11 @@ const Complete = (props: OrdersGeneratedProps) => {
     sendOrderRating,
     isSendingOrderRating,
     isSendOrderRatingSuccess,
+    selectionCount,
   } = props;
   const theme = useTheme();
   const history = useHistory();
 
-  const completePagesTotal = Math.ceil(
-    Number(completedOrdersCount) / DEFAULT_PAGE_LIMIT
-  );
   const [disputeModal, updateDisputeModal] = useReducer(
     createUpdateReducer<{
       orderId: string;
@@ -129,69 +117,19 @@ const Complete = (props: OrdersGeneratedProps) => {
           </Col>
         </Row>
       ) : (
-        sort(sortByDate, Object.keys(completedOrders)).map((key) => (
-          <StyledAccordion
-            key={key}
-            title={''}
-            headerBorder={`1px solid ${theme.grey.shade3}`}
-            contentBorder={`1px solid ${theme.grey.shade3}`}
-            padding="20px 24px"
-            innerContentPadding="8px 24px"
-            marginBottom="16px"
-            keepIcon
-            iconColor={theme.brand.primary}
-            leftComponent={
-              <AccordionTitleContainer>
-                <Typography color="shade6" className="label" weight="400">
-                  Date Delivered:
-                </Typography>
-                <Typography color="shade9" className="labelBold">
-                  {key}
-                </Typography>
-              </AccordionTitleContainer>
-            }
-            rightComponent={
-              <OrderBadge>
-                <Typography color="shade9" variant="overline">
-                  {completedOrders[key].length}{' '}
-                  {completedOrders[key].length > 1 ? 'Orders' : 'Order'}
-                </Typography>
-              </OrderBadge>
-            }
-          >
-            {completedOrders[key].map((d) => (
-              <OrderItemView
-                {...d}
-                token={props.token}
-                key={d.id}
-                onClick={(e) => {
-                  updateDisputeModal({ isOpen: true, orderId: d.id });
-                  e.stopPropagation();
-                }}
-                deliveredDate={d.deliveredDate}
-                completedOrder
-                onRateClick={() =>
-                  !d.data.rating &&
-                  updateRateSellerModal({ isOpen: true, orderId: d.id })
-                }
-              />
-            ))}
-          </StyledAccordion>
-        ))
-      )}
-      {completePagesTotal > 1 && (
-        <Row justify="center">
-          <Pagination
-            numPages={completePagesTotal}
-            currentValue={Number(filters.completedOrdersFilter.page)}
-            onClickButton={(value) =>
-              updateFilters.updateCompletedOrdersFilter({
-                page: value.toFixed(0),
-              })
-            }
-            variant="number"
-          />
-        </Row>
+        <GroupedOrderItems
+          groupedData={completedOrders}
+          groupedCount={selectionCount}
+          token={props.token}
+          filter={filters.completedOrdersFilter}
+          updateFilter={updateFilters.updateCompletedOrdersFilter}
+          onOrderClick={(orderId: string) => {
+            updateDisputeModal({ isOpen: true, orderId });
+          }}
+          onRateClick={(orderId: string) =>
+            updateRateSellerModal({ isOpen: true, orderId })
+          }
+        />
       )}
     </>
   );

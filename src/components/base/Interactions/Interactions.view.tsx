@@ -13,6 +13,7 @@ import {
   Label,
   DropdownFlipped,
   IconContainer,
+  PlusContainer,
 } from './Interactions.style';
 
 const Interactions = (props: InteractionsProps): JSX.Element => {
@@ -53,6 +54,14 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
         </DropdownFlipped>
       ) : (
         <Dropdown />
+      );
+    }
+
+    if (type === 'plus') {
+      return (
+        <PlusContainer>
+          <p>{pressed ? '-' : '+'}</p>
+        </PlusContainer>
       );
     }
 

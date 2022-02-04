@@ -5,11 +5,13 @@ import moment from 'moment';
 import qs from 'qs';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
+import { orderItemToPendingToShipItem } from 'routes/Seller/Sold/Sold.tranform';
 import {
-  getBuyerOrdersActions,
+  getBuyerOrdersPendingActions,
   getBuyerOrdersPlacedActions,
   getBuyerOrdersTransitActions,
   getBuyerOrdersDeliveredActions,
+  getAllBuyerOrdersActions,
   sendDisputeActions,
   sendOrderRatingActions,
 } from 'store/actions';
@@ -19,6 +21,11 @@ import {
   GetBuyerOrdersInTransit,
   GetBuyerOrdersDelivered,
 } from 'store/selectors/buyer/';
+import {
+  GetAllBuyerOrdersCount,
+  GetAllBuyerOrdersSelectionCount,
+} from 'store/selectors/buyer/orders';
+import { GetAllSellerOrder } from 'types/store/GetAllSellerOrdersState';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
 
@@ -26,8 +33,14 @@ import {
   OrdersGeneratedProps,
   TabOptions,
   RequestFilters,
+  GroupedOrderItemData,
 } from './Orders.props';
-import { groupByDate, transformOrder } from './Orders.transform';
+import {
+  groupByDate,
+  orderItemToOrderItemData,
+  orderItemToPendingOrderItem,
+  transformOrder,
+} from './Orders.transform';
 import OrdersView from './Orders.view';
 
 const OrdersContainer = (): JSX.Element => {
@@ -44,7 +57,7 @@ const OrdersContainer = (): JSX.Element => {
   const [initialPending, setInitialPending] = useState(true);
 
   const getAllOrders = () => {
-    dispatch(getBuyerOrdersActions.request());
+    dispatch(getAllBuyerOrdersActions.request());
   };
 
   const getOrdersPlaced = (filter?: {
@@ -53,6 +66,7 @@ const OrdersContainer = (): JSX.Element => {
     dateFrom: moment.Moment | null;
     dateTo: moment.Moment | null;
   }) => {
+    dispatch(getBuyerOrdersPendingActions.request(filter));
     dispatch(getBuyerOrdersPlacedActions.request(filter));
   };
 
@@ -81,7 +95,11 @@ const OrdersContainer = (): JSX.Element => {
   };
 
   const pendingGetOrdersPlaced =
-    useSelector((state: Store) => state.getBuyerOrdersPlaced.pending) || false;
+    useSelector(
+      (state: Store) =>
+        state.getBuyerOrdersPending.pending ||
+        state.getBuyerOrdersPlaced.pending
+    ) || false;
 
   const pendingGetOrdersTransit =
     useSelector((state: Store) => state.getBuyerOrdersTransit.pending) || false;
@@ -90,10 +108,31 @@ const OrdersContainer = (): JSX.Element => {
     useSelector((state: Store) => state.getBuyerOrdersDelivered.pending) ||
     false;
 
-  const pendingOrders = GetBuyerOrdersToShipPending().map(transformOrder);
-  const toShipOrders = GetBuyerOrdersToShip().map(transformOrder);
-  const inTransitOrders = GetBuyerOrdersInTransit().map(transformOrder);
-  const completedOrders = GetBuyerOrdersDelivered().map(transformOrder);
+  const rawDataToOrderItems = (
+    rawData: GetAllSellerOrder[]
+  ): GroupedOrderItemData[] => {
+    return rawData.map((orderGroup) => {
+      const toShipItemData = orderItemToOrderItemData(orderGroup);
+      const orderTotal = Object.keys(toShipItemData).reduce(
+        (accum, current) => {
+          return accum + toShipItemData[current].length;
+        },
+        0
+      );
+      return {
+        title: orderGroup.date || '',
+        data: toShipItemData,
+        orderTotal,
+      };
+    });
+  };
+
+  const pendingOrders = orderItemToPendingOrderItem(
+    GetBuyerOrdersToShipPending()
+  );
+  const toShipOrders = rawDataToOrderItems(GetBuyerOrdersToShip());
+  const inTransitOrders = rawDataToOrderItems(GetBuyerOrdersInTransit());
+  const completedOrders = rawDataToOrderItems(GetBuyerOrdersDelivered());
 
   const currentTab: TabOptions = tab ? tab : 'Pending';
   const onChangeCurrentTab = (newTab: TabOptions) => {
@@ -105,20 +144,14 @@ const OrdersContainer = (): JSX.Element => {
     );
   };
 
-  const toShipOrdersCount =
-    useSelector(
-      (state: Store) => state.getBuyerOrdersPlaced.data?.data.count
-    ) || '1';
-
-  const inTransitOrdersCount =
-    useSelector(
-      (state: Store) => state.getBuyerOrdersTransit.data?.data.count
-    ) || '1';
-
-  const completedOrdersCount =
-    useSelector(
-      (state: Store) => state.getBuyerOrdersDelivered.data?.data.count
-    ) || '1';
+  const {
+    placed: toShipOrdersCount,
+    transit: inTransitOrdersCount,
+    delivered: completedOrdersCount,
+  } = useSelector(GetAllBuyerOrdersCount);
+  const selectionCount = useSelector(
+    GetAllBuyerOrdersSelectionCount(currentTab)
+  );
 
   const [toShipOrdersFilter, updateToShipOrdersFilter] = useReducer(
     createUpdateReducer<RequestFilters>(),
@@ -264,15 +297,16 @@ const OrdersContainer = (): JSX.Element => {
   };
 
   const generatedProps: OrdersGeneratedProps = {
-    pendingOrders: groupByDate('estCatchmentDate')(pendingOrders),
-    toShipOrders: groupByDate('estDeliveryDate')(toShipOrders),
-    inTransitOrders: groupByDate('estDeliveryDate')(inTransitOrders),
-    completedOrders: groupByDate('deliveredDate')(completedOrders),
+    pendingOrders,
+    toShipOrders,
+    inTransitOrders,
+    completedOrders,
     getAllOrders,
     getCompletedOrders: getOrders.delivered,
     toShipOrdersCount,
     completedOrdersCount,
     inTransitOrdersCount,
+    selectionCount,
     filters,
     updateFilters,
     currentTab,

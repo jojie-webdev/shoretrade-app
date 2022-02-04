@@ -4,9 +4,9 @@ import {
 } from 'types/store/GetAllBuyerOrdersState';
 import { createAsyncReducer } from 'utils/Redux';
 
-import { getBuyerOrdersTransitActions } from '../actions';
+import { getBuyerOrdersPendingActions } from '../actions';
 
 export default createAsyncReducer<
   GetAllBuyerOrdersMeta,
   GetAllBuyerOrdersPayload
->(getBuyerOrdersTransitActions);
+>(getBuyerOrdersPendingActions);

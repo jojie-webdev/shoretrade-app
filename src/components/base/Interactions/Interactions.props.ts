@@ -6,7 +6,8 @@ export type Types =
   | 'edit'
   | 'radio'
   | 'checkbox'
-  | 'none';
+  | 'none'
+  | 'plus';
 export type IconAlignmentTypes = 'flex-start' | 'center' | 'flex-end';
 
 export interface InteractionsProps {

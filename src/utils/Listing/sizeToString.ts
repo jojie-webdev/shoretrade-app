@@ -22,8 +22,8 @@ const toKilograms: Function = (size: string): string =>
 
 export const sizeToString = (
   typeMetric: string,
-  sizeFrom?: string | number,
-  sizeTo?: string | number,
+  sizeFrom?: string | number | null,
+  sizeTo?: string | number | null,
   options?: string[]
 ): string => {
   sizeFrom = sizeFrom ? sizeFrom.toString() : '';

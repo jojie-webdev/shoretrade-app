@@ -125,6 +125,10 @@ import {
   GetAllBuyerListingsPayload,
 } from './GetAllBuyerListingsState';
 import {
+  GetAllBuyerOrdersMeta,
+  GetAllBuyerOrdersPayload,
+} from './GetAllBuyerOrdersState';
+import {
   GetAllListingsMeta,
   GetAllListingsPayload,
 } from './GetAllListingsState';
@@ -140,10 +144,6 @@ import {
   GetBuyerHomepageMeta,
   GetBuyerHomepagePayload,
 } from './GetBuyerHomepageState';
-import {
-  GetBuyerOrdersMeta,
-  GetBuyerOrdersPayload,
-} from './GetBuyerOrdersState';
 import {
   GetBuyerSearchFilterDataMeta,
   GetBuyerSearchFilterDataPayload,
@@ -303,6 +303,10 @@ import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
+  getAllBuyerOrders: AsyncState<
+    GetAllBuyerOrdersMeta,
+    GetAllBuyerOrdersPayload
+  >;
   getAllSellerOrders: AsyncState<
     GetAllSellerOrdersMeta,
     GetAllSellerOrdersPayload
@@ -459,11 +463,21 @@ export interface Store {
   >;
   deleteCard: AsyncState<DeleteCardMeta, DeleteCardPayload>;
   chargeCard: AsyncState<ChargeCardMeta, ChargeCardPayload>;
-  getBuyerOrdersPlaced: AsyncState<GetBuyerOrdersMeta, GetBuyerOrdersPayload>;
-  getBuyerOrdersTransit: AsyncState<GetBuyerOrdersMeta, GetBuyerOrdersPayload>;
+  getBuyerOrdersPending: AsyncState<
+    GetAllBuyerOrdersMeta,
+    GetAllBuyerOrdersPayload
+  >;
+  getBuyerOrdersPlaced: AsyncState<
+    GetAllBuyerOrdersMeta,
+    GetAllBuyerOrdersPayload
+  >;
+  getBuyerOrdersTransit: AsyncState<
+    GetAllBuyerOrdersMeta,
+    GetAllBuyerOrdersPayload
+  >;
   getBuyerOrdersDelivered: AsyncState<
-    GetBuyerOrdersMeta,
-    GetBuyerOrdersPayload
+    GetAllBuyerOrdersMeta,
+    GetAllBuyerOrdersPayload
   >;
   getSellerById: AsyncState<GetSellerByIdMeta, GetSellerByIdPayload>;
   updateFavoriteSeller: AsyncState<

@@ -18,6 +18,7 @@ const Accordion = ({
   border,
   bottomComponent,
   headerBorder,
+  type,
   ...props
 }: AccordionProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(props.isOpen);
@@ -34,7 +35,7 @@ const Accordion = ({
         pressed={isOpen}
         onClick={() => setIsOpen(!isOpen)}
         value={title}
-        type="accordion"
+        type={type || 'accordion'}
         iconColor={iconColor}
         noBg={noBg}
         padding={padding}

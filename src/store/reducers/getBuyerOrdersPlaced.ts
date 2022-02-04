@@ -1,11 +1,12 @@
 import {
-  GetBuyerOrdersMeta,
-  GetBuyerOrdersPayload,
-} from 'types/store/GetBuyerOrdersState';
+  GetAllBuyerOrdersMeta,
+  GetAllBuyerOrdersPayload,
+} from 'types/store/GetAllBuyerOrdersState';
 import { createAsyncReducer } from 'utils/Redux';
 
 import { getBuyerOrdersPlacedActions } from '../actions';
 
-export default createAsyncReducer<GetBuyerOrdersMeta, GetBuyerOrdersPayload>(
-  getBuyerOrdersPlacedActions
-);
+export default createAsyncReducer<
+  GetAllBuyerOrdersMeta,
+  GetAllBuyerOrdersPayload
+>(getBuyerOrdersPlacedActions);

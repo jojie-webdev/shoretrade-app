@@ -5,13 +5,13 @@ import {
 } from 'types/store/GetAllBuyerOrdersState';
 import { createAsyncAction } from 'utils/Redux';
 
-const ns = 'GET_BUYER_ORDERS_DELIVERED';
+const ns = 'GET_BUYER_ORDERS_PENDING';
 const asyncAction = createAsyncAction<
   GetAllBuyerOrdersMeta,
   GetAllBuyerOrdersPayload
 >(ns);
 
-const getBuyerOrdersDeliveredActions = {
+const getBuyerOrdersPendingActions = {
   ...asyncAction,
   request: (filter?: {
     term: string;
@@ -24,14 +24,14 @@ const getBuyerOrdersDeliveredActions = {
   } => ({
     type: asyncAction.REQUEST,
     meta: {
-      status: 'DELIVERED',
+      status: 'PENDING',
       dateFrom: filter?.dateFrom?.format('M/DD/yyyy'),
       dateTo: filter?.dateTo?.format('M/DD/yyyy'),
       term: filter?.term,
       limit: DEFAULT_PAGE_LIMIT,
-      page: filter?.page,
+      page: '1',
     },
   }),
 };
 
-export default getBuyerOrdersDeliveredActions;
+export default getBuyerOrdersPendingActions;

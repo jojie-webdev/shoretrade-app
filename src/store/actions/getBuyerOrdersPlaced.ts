@@ -1,14 +1,14 @@
 import { DEFAULT_PAGE_LIMIT } from 'consts';
 import {
-  GetBuyerOrdersMeta,
-  GetBuyerOrdersPayload,
-} from 'types/store/GetBuyerOrdersState';
+  GetAllBuyerOrdersMeta,
+  GetAllBuyerOrdersPayload,
+} from 'types/store/GetAllBuyerOrdersState';
 import { createAsyncAction } from 'utils/Redux';
 
 const ns = 'GET_BUYER_ORDERS_PLACED';
 const asyncAction = createAsyncAction<
-  GetBuyerOrdersMeta,
-  GetBuyerOrdersPayload
+  GetAllBuyerOrdersMeta,
+  GetAllBuyerOrdersPayload
 >(ns);
 
 const getBuyerOrdersPlacedActions = {
@@ -20,7 +20,7 @@ const getBuyerOrdersPlacedActions = {
     dateTo: moment.Moment | null;
   }): {
     type: string;
-    meta: GetBuyerOrdersMeta;
+    meta: GetAllBuyerOrdersMeta;
   } => ({
     type: asyncAction.REQUEST,
     meta: {

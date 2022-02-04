@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 
+import { Types } from '../Interactions/Interactions.props';
+
 export interface AccordionProps {
   isOpen?: boolean;
   title: string;
@@ -19,4 +21,5 @@ export interface AccordionProps {
   bottomComponent?: ReactNode;
   keepIcon?: boolean;
   sameWidth?: boolean;
+  type?: Types;
 }

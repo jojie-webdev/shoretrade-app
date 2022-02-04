@@ -15,6 +15,7 @@ export interface TabsProps {
   textColor?: string;
   activeTextColor?: string;
   underlineColor?: string;
+  light?: boolean;
 }
 
 export interface TabColProps extends ColProps {

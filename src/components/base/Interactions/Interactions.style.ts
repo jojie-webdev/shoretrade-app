@@ -86,3 +86,15 @@ export const IconContainer = styled.div<{ iconAlignment: IconAlignmentTypes }>`
   align-items: ${(props) => props.iconAlignment}; // defaults to center
   justify-content: center;
 `;
+
+export const PlusContainer = styled.div`
+  background: ${({ theme }) => theme.brand.primary};
+  border-radius: 12px;
+  padding: 8px 13px 14px;
+  color: ${({ theme }) => theme.grey.noshade};
+
+  p {
+    height: 12px;
+    margin-bottom: 0;
+  }
+`;
