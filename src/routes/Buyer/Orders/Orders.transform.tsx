@@ -91,12 +91,12 @@ export const orderItemToPendingOrderItem = (
           locationName,
           sellerAddress,
           marketAddress,
-          sellerDropOffAirport,
+          sellerDropOff,
         } = currentDatum;
         const deliveryMethodLabel = getShipmentMethodLabel(
           current,
           locationName,
-          sellerDropOffAirport
+          sellerDropOff
         );
         const deliveryAddress = [
           'selfPickupOrders',
@@ -137,12 +137,12 @@ export const orderItemToOrderItemData = ({
         locationName,
         sellerAddress,
         marketAddress,
-        sellerDropOffAirport,
+        sellerDropOff,
       } = data;
       const deliveryMethodLabel = getShipmentMethodLabel(
         key,
         locationName,
-        sellerDropOffAirport
+        sellerDropOff
       );
       const soldOrders = orders.map((order) => {
         const deliveryAddress = [
