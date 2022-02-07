@@ -6,7 +6,6 @@ export type GetAllSellerOrderGroup = {
   locationName: string | null;
   sellerAddress: string | null;
   marketAddress: string | null;
-  sellerDropOff: string | null;
   orders: GetSellerOrdersResponseItem[];
 };
 

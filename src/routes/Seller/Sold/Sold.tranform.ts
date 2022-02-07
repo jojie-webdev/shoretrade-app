@@ -105,12 +105,11 @@ export const orderItemToPendingToShipItem = (
           locationName,
           sellerAddress,
           marketAddress,
-          sellerDropOff,
         } = currentDatum;
         const deliveryMethodLabel = getShipmentMethodLabel(
           current,
           locationName,
-          sellerDropOff
+          orders[0].deliveryInstruction?.sellerDropOff
         );
         const totalWeight = orders.reduce((accumA: number, currentA) => {
           return (
@@ -187,14 +186,12 @@ export const orderItemToSoldItemData = ({
   const newObj: { [p: string]: any } = {};
   for (const [key, value] of Object.entries(data)) {
     for (const data of value) {
-      const {
-        orders,
+      const { orders, locationName, sellerAddress, marketAddress } = data;
+      const groupKey = getShipmentMethodLabel(
+        key,
         locationName,
-        sellerAddress,
-        marketAddress,
-        sellerDropOff,
-      } = data;
-      const groupKey = getShipmentMethodLabel(key, locationName, sellerDropOff);
+        orders[0].deliveryInstruction?.sellerDropOff
+      );
       const soldOrders = orders.map((order: GetSellerOrdersResponseItem) => {
         const referenceMeasurementUnit =
           order.orderLineItem.length > 0
