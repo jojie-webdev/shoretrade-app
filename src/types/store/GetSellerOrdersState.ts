@@ -58,6 +58,8 @@ export type GetSellerOrdersResponseItem = {
   deliveryInstruction: {
     locationName: string;
     marketAddress: string;
+    sellerDropOff: string;
+    sellerDropOffAddress: string;
   };
   sellerDropOffCutOffTime: null;
   status: string;
