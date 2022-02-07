@@ -23,14 +23,9 @@ import { GroupedOrderItemsProps } from './GroupedOrderItems.props';
 
 const getDeliveryIcon = (theme: Theme, deliveryMethod?: string) => {
   const iconProps = { width: 14, height: 14, fill: theme.grey.shade9 };
-  switch (deliveryMethod) {
-    case 'ROAD':
-      return <Truck {...iconProps} />;
-    case 'SELLER':
-      return <Box {...iconProps} />;
-    default:
-      return <PaperPlane {...iconProps} />;
-  }
+  if (deliveryMethod?.includes('road')) return <Truck {...iconProps} />;
+  if (deliveryMethod?.includes('self')) return <Box {...iconProps} />;
+  if (deliveryMethod?.includes('air')) return <PaperPlane {...iconProps} />;
 };
 
 export const OrderItemAccordion = (
