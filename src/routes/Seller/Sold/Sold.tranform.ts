@@ -23,7 +23,7 @@ export const getShipmentMethodLabel = (
     case 'roadDeliveryOrders':
       return `Dropoff at ${locationName}`;
     case 'roadPickupOrders':
-      return `Dropoff at ${locationName}`;
+      return `Dropoff at ${sellerDropOff ?? locationName}`;
     case 'selfDeliveryOrder':
       return 'Delivering Yourself';
     case 'selfPickupOrders':
@@ -105,11 +105,12 @@ export const orderItemToPendingToShipItem = (
           locationName,
           sellerAddress,
           marketAddress,
+          sellerDropOff,
         } = currentDatum;
         const deliveryMethodLabel = getShipmentMethodLabel(
           current,
           locationName,
-          orders[0].deliveryInstruction?.sellerDropOff
+          sellerDropOff ?? orders[0].deliveryInstruction?.sellerDropOff
         );
         const totalWeight = orders.reduce((accumA: number, currentA) => {
           return (
@@ -186,11 +187,17 @@ export const orderItemToSoldItemData = ({
   const newObj: { [p: string]: any } = {};
   for (const [key, value] of Object.entries(data)) {
     for (const data of value) {
-      const { orders, locationName, sellerAddress, marketAddress } = data;
+      const {
+        orders,
+        locationName,
+        sellerAddress,
+        marketAddress,
+        sellerDropOff,
+      } = data;
       const groupKey = getShipmentMethodLabel(
         key,
         locationName,
-        orders[0].deliveryInstruction?.sellerDropOff
+        sellerDropOff ?? orders[0].deliveryInstruction?.sellerDropOff
       );
       const soldOrders = orders.map((order: GetSellerOrdersResponseItem) => {
         const referenceMeasurementUnit =

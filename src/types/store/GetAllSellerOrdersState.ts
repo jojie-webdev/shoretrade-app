@@ -5,6 +5,7 @@ import { GetSellerOrdersResponseItem } from './GetSellerOrdersState';
 export type GetAllSellerOrderGroup = {
   locationName: string | null;
   sellerAddress: string | null;
+  sellerDropOff: string | null;
   marketAddress: string | null;
   orders: GetSellerOrdersResponseItem[];
 };

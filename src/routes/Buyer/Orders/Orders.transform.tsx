@@ -82,7 +82,7 @@ const getShipmentMethodLabel = (
     case 'roadDeliveryOrders':
       return `Road Freight: Delivery to Door ${locationName}`;
     case 'roadPickupOrders':
-      return `Pickup at ${locationName}`;
+      return `Pickup at ${sellerDropOff ?? locationName}`;
     case 'selfDeliveryOrder':
       return 'Road Freight: Delivery to Door';
     case 'selfPickupOrders':
@@ -106,11 +106,16 @@ export const orderItemToPendingOrderItem = (
 
       const newOrders: PendingOrder[] = [];
       for (const currentDatum of currentData) {
-        const { orders, locationName, sellerAddress } = currentDatum;
+        const {
+          orders,
+          locationName,
+          sellerAddress,
+          sellerDropOff,
+        } = currentDatum;
         const deliveryMethodLabel = getShipmentMethodLabel(
           current,
           locationName,
-          orders[0].deliveryInstruction?.sellerDropOff,
+          sellerDropOff ?? orders[0].deliveryInstruction?.sellerDropOff,
           orders[0].sellerCompanyName
         );
         const deliveryAddress =
@@ -145,11 +150,11 @@ export const orderItemToOrderItemData = ({
   const newObj: { [p: string]: any } = {};
   for (const [key, value] of Object.entries(data)) {
     for (const data of value) {
-      const { orders, locationName, sellerAddress } = data;
+      const { orders, locationName, sellerAddress, sellerDropOff } = data;
       const deliveryMethodLabel = getShipmentMethodLabel(
         key,
         locationName,
-        orders[0].deliveryInstruction?.sellerDropOff,
+        sellerDropOff ?? orders[0].deliveryInstruction?.sellerDropOff,
         orders[0].sellerCompanyName
       );
       const soldOrders = orders.map((order) => {
