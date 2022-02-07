@@ -13,13 +13,13 @@ import { SoldItemData, PendingToShipItemData, SoldItem } from './Sold.props';
 export const getShipmentMethodLabel = (
   deliveryMethod: string,
   locationName: string | null,
-  sellerDropOffAirport: string | null
+  sellerDropOff: string | null
 ) => {
   switch (deliveryMethod) {
     case 'airDeliveryOrders':
       return 'Air Freight: Delivery to Door';
     case 'airPickupOrders':
-      return `Air Freight: Drop off at ${sellerDropOffAirport}`;
+      return `Air Freight: Drop off at ${sellerDropOff}`;
     case 'roadDeliveryOrders':
       return `Dropoff at ${locationName}`;
     case 'roadPickupOrders':
@@ -105,12 +105,11 @@ export const orderItemToPendingToShipItem = (
           locationName,
           sellerAddress,
           marketAddress,
-          sellerDropOffAirport,
         } = currentDatum;
         const deliveryMethodLabel = getShipmentMethodLabel(
           current,
           locationName,
-          sellerDropOffAirport
+          orders[0].deliveryInstruction?.sellerDropOff
         );
         const totalWeight = orders.reduce((accumA: number, currentA) => {
           return (
@@ -187,17 +186,11 @@ export const orderItemToSoldItemData = ({
   const newObj: { [p: string]: any } = {};
   for (const [key, value] of Object.entries(data)) {
     for (const data of value) {
-      const {
-        orders,
-        locationName,
-        sellerAddress,
-        marketAddress,
-        sellerDropOffAirport,
-      } = data;
+      const { orders, locationName, sellerAddress, marketAddress } = data;
       const groupKey = getShipmentMethodLabel(
         key,
         locationName,
-        sellerDropOffAirport
+        orders[0].deliveryInstruction?.sellerDropOff
       );
       const soldOrders = orders.map((order: GetSellerOrdersResponseItem) => {
         const referenceMeasurementUnit =
