@@ -49,6 +49,8 @@ export const OrderItemsContainer = styled.div`
   background: ${({ theme }) => theme.grey.noshade};
   border: 1px solid ${({ theme }) => theme.grey.shade3};
   border-top: none;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
 
   .item {
     background: ${({ theme }) => theme.grey.shade1};

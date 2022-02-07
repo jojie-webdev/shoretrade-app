@@ -201,6 +201,7 @@ export const transformOrder = (
     id: orderItem.orderId,
     confirmed: orderItem.weightConfirmed,
     data: {
+      isPending: orderItem.status === 'PLACED' && !orderItem.weightConfirmed,
       orderRefNumber: orderItem.orderRefNumber,
       orderNumber: formatOrderReferenceNumber(orderItem.orderRefNumber),
       seller: orderItem.sellerCompanyName,

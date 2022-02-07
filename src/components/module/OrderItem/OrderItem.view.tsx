@@ -51,21 +51,6 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                   <Typography color="shade9">
                     {props.data.orderNumber}
                   </Typography>
-                  <StyledTouchable
-                    onPress={() => {
-                      window.open(
-                        `${API.URL}/${API.VERSION}/order/invoice/${props.data.orderRefNumber}?token=${props.token}`,
-                        '_blank'
-                      );
-                    }}
-                  >
-                    <div className="svg-container">
-                      <DownloadFile />
-                    </div>
-                    <Typography variant="label" color="shade9">
-                      Invoice
-                    </Typography>
-                  </StyledTouchable>
                 </DetailsContainer>
               </Col>
               <Col xs={4}>
@@ -123,13 +108,48 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
             </Col>
           )}
 
-          <Col sm={2}>
-            <Typography color="shade6" variant="label" className="end-text">
-              Total
-            </Typography>
-            <Typography color="shade9" align="right" className="end-text">
-              {props.data.total}
-            </Typography>
+          <Col
+            sm={2}
+            style={{
+              alignItems: 'center',
+              display: 'flex',
+              justifyContent: 'flex-end',
+            }}
+          >
+            {props.data.isPending ? (
+              <div
+                style={{
+                  background: theme.brand.alert,
+                  borderRadius: '8px',
+                  padding: '3px 8px',
+                  width: 'fit-content',
+                }}
+              >
+                <Typography
+                  color="shade9"
+                  variant="caption"
+                  style={{ lineHeight: '15px' }}
+                >
+                  To be confirmed
+                </Typography>
+              </div>
+            ) : (
+              <StyledTouchable
+                onPress={() => {
+                  window.open(
+                    `${API.URL}/${API.VERSION}/order/invoice/${props.data.orderRefNumber}?token=${props.token}`,
+                    '_blank'
+                  );
+                }}
+              >
+                <div className="svg-container">
+                  <DownloadFile />
+                </div>
+                <Typography variant="label" color="shade9">
+                  Invoice
+                </Typography>
+              </StyledTouchable>
+            )}
           </Col>
         </Row>
       </OrderInfoContainer>
@@ -269,9 +289,10 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
           ))}
           <Col xs={12} className="item">
             <Row nogutter={true}>
-              <Col sm={9} style={{ alignSelf: 'center', paddingLeft: '56px' }}>
-                <Typography color="shade9" style={{ margin: '12px 0' }}>
-                  Shipping Fee
+              <Col sm={9} style={{ alignSelf: 'center', margin: '4px 0' }}>
+                <Typography color="shade9">Shipping Fees</Typography>
+                <Typography color="shade6" variant="label" weight="400">
+                  Shipping from {props.data.shippingFrom}
                 </Typography>
               </Col>
               <Col sm={3} style={{ alignSelf: 'center' }}>
@@ -298,10 +319,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
           {props.data.totalCrateFee > 0 && (
             <Col xs={12} className="item">
               <Row nogutter={true}>
-                <Col
-                  sm={9}
-                  style={{ alignSelf: 'center', paddingLeft: '56px' }}
-                >
+                <Col sm={9} style={{ alignSelf: 'center' }}>
                   <Typography color="shade9" style={{ margin: '12px 0' }}>
                     Crate Fee and Levies
                   </Typography>
@@ -326,6 +344,30 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
               </Row>
             </Col>
           )}
+          <Col xs={12}>
+            <Row nogutter={true}>
+              <Col sm={9} style={{ alignSelf: 'center' }}>
+                {props.deliveryAddress && (
+                  <Typography
+                    color="shade6"
+                    variant="label"
+                    weight="400"
+                    style={{ margin: '12px 0' }}
+                  >
+                    Delivering to {props.deliveryAddress}
+                  </Typography>
+                )}
+              </Col>
+              <Col sm={3} style={{ alignSelf: 'center' }}>
+                <Typography color="shade6" variant="label" className="end-text">
+                  Total
+                </Typography>
+                <Typography color="shade9" align="right" className="end-text">
+                  {props.data.total}
+                </Typography>
+              </Col>
+            </Row>
+          </Col>
         </Row>
       </OrderItemsContainer>
 

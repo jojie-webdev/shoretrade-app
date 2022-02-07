@@ -15,6 +15,7 @@ export interface OrderItem {
   id: string;
   confirmed: boolean;
   data: {
+    isPending: boolean;
     orderRefNumber: number;
     orderNumber: string;
     seller: string;
@@ -56,6 +57,7 @@ export interface OrderItem {
   price: string;
   isAquafuture: boolean;
   token?: string;
+  deliveryAddress: string | null;
 }
 
 export type ItemDetailVariants = 'left' | 'center' | 'right';
