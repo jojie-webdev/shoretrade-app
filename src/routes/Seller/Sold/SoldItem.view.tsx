@@ -429,61 +429,6 @@ const SoldItem = (props: {
                       </div>
                     </div>
                     {!isMobile &&
-                      order?.scanHistory &&
-                      order?.scanHistory?.length > 0 && (
-                        <Divider
-                          backgroundColor={theme.grey.shade8}
-                          spacing={12}
-                        />
-                      )}
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'row-reverse',
-                        justifyContent: 'space-between',
-                        width: '100%',
-                      }}
-                    >
-                      <div>
-                        {order.scanHistory &&
-                          order.scanHistory.slice(0, 1).map((sh) => {
-                            return (
-                              <div
-                                className="scan-history-tooltip-btn-container"
-                                key={sh.id}
-                                onClick={(e) => {
-                                  if (props.updateScanHistoryModal) {
-                                    props.updateScanHistoryModal({
-                                      isOpen: true,
-                                      scanHistoryItems: order.scanHistory,
-                                    });
-                                  }
-                                  e.stopPropagation();
-                                }}
-                              >
-                                <div className="text-container">
-                                  <Typography variant="small" color="noshade">
-                                    {`Scanned by ${sh.user_first_name} ${sh.user_last_name} (${sh.user_role})`}
-                                  </Typography>
-                                  <Typography variant="small" color="noshade">
-                                    {`${moment(sh.updated_at).format(
-                                      'DD MMM YYYY hh:MMa'
-                                    )} at Sydney Fish Market`}
-                                  </Typography>
-                                </div>
-                                <div>
-                                  <Expand
-                                    fill={theme.brand.primary}
-                                    width={18}
-                                    height={18}
-                                  />
-                                </div>
-                              </div>
-                            );
-                          })}
-                      </div>
-                    </div>
-                    {!isMobile &&
                       (isPreAuction || index === v.orders.length - 1) && (
                         <Divider
                           backgroundColor={theme.grey.shade8}
@@ -656,6 +601,61 @@ const SoldItem = (props: {
                           )}
                         </div>
                       )}
+                    </div>
+                    {!isMobile &&
+                      order?.scanHistory &&
+                      order?.scanHistory?.length > 0 && (
+                        <Divider
+                          backgroundColor={theme.grey.shade8}
+                          spacing={12}
+                        />
+                      )}
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row-reverse',
+                        justifyContent: 'space-between',
+                        width: '100%',
+                      }}
+                    >
+                      <div>
+                        {order.scanHistory &&
+                          order.scanHistory.slice(0, 1).map((sh) => {
+                            return (
+                              <div
+                                className="scan-history-tooltip-btn-container"
+                                key={sh.id}
+                                onClick={(e) => {
+                                  if (props.updateScanHistoryModal) {
+                                    props.updateScanHistoryModal({
+                                      isOpen: true,
+                                      scanHistoryItems: order.scanHistory,
+                                    });
+                                  }
+                                  e.stopPropagation();
+                                }}
+                              >
+                                <div className="text-container">
+                                  <Typography variant="small" color="noshade">
+                                    {`Scanned by ${sh.user_first_name} ${sh.user_last_name} (${sh.user_role})`}
+                                  </Typography>
+                                  <Typography variant="small" color="noshade">
+                                    {`${moment(sh.updated_at).format(
+                                      'DD MMM YYYY hh:MMa'
+                                    )} at Sydney Fish Market`}
+                                  </Typography>
+                                </div>
+                                <div>
+                                  <Expand
+                                    fill={theme.brand.primary}
+                                    width={18}
+                                    height={18}
+                                  />
+                                </div>
+                              </div>
+                            );
+                          })}
+                      </div>
                     </div>
                   </ItemCard>
                 </CollapsibleContent>

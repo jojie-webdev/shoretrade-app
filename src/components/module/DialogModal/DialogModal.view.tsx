@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Button from 'components/base/Button';
@@ -14,6 +14,16 @@ const DialogModal = (props: DialogModalProps): JSX.Element => {
   // const theme = useTheme();s
   const { children, title, overline, ...modalProps } = props;
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
+  useEffect(() => {
+    const close = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        props.onClickClose();
+      }
+    };
+    window.addEventListener('keydown', close);
+    return () => window.removeEventListener('keydown', close);
+  }, []);
 
   return (
     <Modal {...modalProps}>
