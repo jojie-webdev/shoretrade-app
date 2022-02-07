@@ -3,15 +3,9 @@ import moment from 'moment';
 import { groupBy } from 'ramda';
 import omit from 'ramda/es/omit';
 import pathOr from 'ramda/es/pathOr';
-import {
-  filterDuplicateGroupings,
-  getShipmentMethodLabel,
-} from 'routes/Seller/Sold/Sold.tranform';
+import { filterDuplicateGroupings } from 'routes/Seller/Sold/Sold.tranform';
 import { GetAllSellerOrder } from 'types/store/GetAllSellerOrdersState';
-import {
-  GetBuyerOrdersResponseItem,
-  ListingResponseItem,
-} from 'types/store/GetBuyerOrdersState';
+import { ListingResponseItem } from 'types/store/GetBuyerOrdersState';
 import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -74,6 +68,32 @@ const getLocation = (
   );
 };
 
+const getShipmentMethodLabel = (
+  deliveryMethod: string,
+  locationName: string | null,
+  sellerDropOff: string | null,
+  sellerCompanyName: string
+) => {
+  switch (deliveryMethod) {
+    case 'airDeliveryOrders':
+      return 'Air Freight: Delivery to Door';
+    case 'airPickupOrders':
+      return `Air Freight: Pickup at ${sellerDropOff}`;
+    case 'roadDeliveryOrders':
+      return `Road Freight: Delivery to Door ${locationName}`;
+    case 'roadPickupOrders':
+      return `Pickup at ${locationName}`;
+    case 'selfDeliveryOrder':
+      return 'Road Freight: Delivery to Door';
+    case 'selfPickupOrders':
+      return `Pickup from ${sellerCompanyName}`;
+    case 'preAuctionOrders':
+      return 'Pre-Auction';
+    default:
+      return 'Others';
+  }
+};
+
 export const orderItemToPendingOrderItem = (
   data: GetAllSellerOrder[]
 ): PendingOrder[] => {
@@ -86,25 +106,19 @@ export const orderItemToPendingOrderItem = (
 
       const newOrders: PendingOrder[] = [];
       for (const currentDatum of currentData) {
-        const {
-          orders,
-          locationName,
-          sellerAddress,
-          marketAddress,
-        } = currentDatum;
+        const { orders, locationName, sellerAddress } = currentDatum;
         const deliveryMethodLabel = getShipmentMethodLabel(
           current,
           locationName,
-          orders[0].deliveryInstruction?.sellerDropOff
+          orders[0].deliveryInstruction?.sellerDropOff,
+          orders[0].sellerCompanyName
         );
-        const deliveryAddress = [
-          'selfPickupOrders',
-          'airPickupOrders',
-        ].includes(current)
-          ? sellerAddress
-          : deliveryMethodLabel.includes('Drop')
-          ? orders[0].deliveryInstruction?.marketAddress
-          : marketAddress;
+        const deliveryAddress =
+          current === 'roadPickupOrders'
+            ? orders[0].deliveryInstruction?.sellerDropOffAddress
+            : current === 'selfPickupOrders'
+            ? sellerAddress
+            : '';
         newOrders.push({
           groupKey: `${deliveryMethodLabel}-${deliveryAddress}`,
           groupName: current,
@@ -131,21 +145,20 @@ export const orderItemToOrderItemData = ({
   const newObj: { [p: string]: any } = {};
   for (const [key, value] of Object.entries(data)) {
     for (const data of value) {
-      const { orders, locationName, sellerAddress, marketAddress } = data;
+      const { orders, locationName, sellerAddress } = data;
       const deliveryMethodLabel = getShipmentMethodLabel(
         key,
         locationName,
-        orders[0].deliveryInstruction?.sellerDropOff
+        orders[0].deliveryInstruction?.sellerDropOff,
+        orders[0].sellerCompanyName
       );
       const soldOrders = orders.map((order) => {
-        const deliveryAddress = [
-          'selfPickupOrders',
-          'airPickupOrders',
-        ].includes(key)
-          ? sellerAddress
-          : deliveryMethodLabel.includes('Drop')
-          ? order.deliveryInstruction?.marketAddress
-          : marketAddress;
+        const deliveryAddress =
+          key === 'roadPickupOrders'
+            ? order.deliveryInstruction?.sellerDropOffAddress
+            : key === 'selfPickupOrders'
+            ? sellerAddress
+            : '';
         return {
           ...transformOrder(order),
           groupKey: `${deliveryMethodLabel}-${deliveryAddress}`,
