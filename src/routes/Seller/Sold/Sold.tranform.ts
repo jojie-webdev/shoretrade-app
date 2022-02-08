@@ -19,7 +19,7 @@ export const getShipmentMethodLabel = (
     case 'airDeliveryOrders':
       return 'Air Freight: Delivery to Door';
     case 'airPickupOrders':
-      return `Air Freight: Drop off at ${sellerDropOff}`;
+      return `Air Freight: Drop off to ${sellerDropOff}`;
     case 'roadDeliveryOrders':
       return `Dropoff at ${locationName}`;
     case 'roadPickupOrders':
@@ -104,7 +104,6 @@ export const orderItemToPendingToShipItem = (
           orders,
           locationName,
           sellerAddress,
-          marketAddress,
           sellerDropOff,
         } = currentDatum;
         const deliveryMethodLabel = getShipmentMethodLabel(
@@ -158,13 +157,12 @@ export const orderItemToPendingToShipItem = (
           buyerCompanyName: orders[0].buyerCompanyName,
           deliveryMethod: orders[0].deliveryMethod,
           deliveryMethodLabel,
-          deliveryAddress: ['selfPickupOrders', 'airPickupOrders'].includes(
-            current
-          )
-            ? sellerAddress
-            : deliveryMethodLabel.includes('Drop')
-            ? orders[0].deliveryInstruction?.marketAddress
-            : marketAddress,
+          deliveryAddress:
+            current === 'selfPickupOrders'
+              ? sellerAddress
+              : ['roadPickupOrders', 'airPickupOrders'].includes(current)
+              ? orders[0].deliveryInstruction?.sellerDropOffAddress
+              : orders[0].deliveryInstruction?.marketAddress,
           buyerId: orders[0].buyerId, // this is employee id
           orderCount: orders.length,
           totalWeight,
@@ -187,13 +185,7 @@ export const orderItemToSoldItemData = ({
   const newObj: { [p: string]: any } = {};
   for (const [key, value] of Object.entries(data)) {
     for (const data of value) {
-      const {
-        orders,
-        locationName,
-        sellerAddress,
-        marketAddress,
-        sellerDropOff,
-      } = data;
+      const { orders, locationName, sellerAddress, sellerDropOff } = data;
       const groupKey = getShipmentMethodLabel(
         key,
         locationName,
@@ -212,11 +204,12 @@ export const orderItemToSoldItemData = ({
         return {
           groupName: key,
           key: groupKey,
-          deliveryAddress: ['selfPickupOrders', 'airPickupOrders'].includes(key)
-            ? sellerAddress
-            : groupKey.includes('Drop')
-            ? order.deliveryInstruction?.marketAddress
-            : marketAddress,
+          deliveryAddress:
+            key === 'selfPickupOrders'
+              ? sellerAddress
+              : ['roadPickupOrders', 'airPickupOrders'].includes(key)
+              ? orders[0].deliveryInstruction?.sellerDropOffAddress
+              : orders[0].deliveryInstruction?.marketAddress,
           id: order.orderId,
           date: moment(order.orderDate).toDate(),
           type:
