@@ -11,6 +11,7 @@ import { parseImageUrl } from 'utils/parseImageURL';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
+import ScanHistoryButton from '../ScanHistoryButton';
 import { OrderItemProps } from './OrderItem.props';
 import {
   OrderItemContainer,
@@ -367,6 +368,36 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                 </Typography>
               </Col>
             </Row>
+          </Col>
+          <Col xs={12}>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row-reverse',
+                justifyContent: 'space-between',
+                width: '100%',
+              }}
+            >
+              {props.data.detailsProps[0].scanHistory &&
+                props.data.detailsProps[0].scanHistory.slice(0, 1).map((sh) => {
+                  return (
+                    <ScanHistoryButton
+                      key={sh.id}
+                      scanData={sh}
+                      scanHistoryItems={props.data.detailsProps[0].scanHistory}
+                      onClick={(e) => {
+                        if (props.updateScanHistoryModal) {
+                          props.updateScanHistoryModal({
+                            isOpen: true,
+                            scanHistoryItems:
+                              props.data.detailsProps[0].scanHistory,
+                          });
+                        }
+                      }}
+                    />
+                  );
+                })}
+            </div>
           </Col>
         </Row>
       </OrderItemsContainer>

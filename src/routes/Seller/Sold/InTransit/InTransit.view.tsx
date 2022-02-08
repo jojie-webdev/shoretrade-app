@@ -3,6 +3,7 @@ import React, { useReducer } from 'react';
 import Typography from 'components/base/Typography';
 import DialogModal from 'components/module/DialogModal';
 import Pagination from 'components/module/Pagination';
+import ScanHistoryModal from 'components/module/ScanHistoryModal';
 import { DEFAULT_PAGE_LIMIT } from 'consts';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
@@ -14,7 +15,6 @@ import { SoldGeneratedProps } from '../Sold.props';
 import SoldItem from '../SoldItem.view';
 import { TitleRow } from '../ToShip/ToShip.styles';
 import { ItemRow } from './InTransit.styles';
-import ScanHistoryModal from 'components/module/ScanHistoryModal';
 
 const InTransit = (props: SoldGeneratedProps) => {
   const { inTransit, token, inTransitCount, filters, updateFilters } = props;

@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 import moment from 'moment';
 import { FocusedInputShape } from 'react-dates';
+import { ScanHistoryItem } from 'types/store/GetSellerOrdersState';
 
 export interface OrderItem {
   id: string;
@@ -31,6 +32,7 @@ export interface OrderItem {
       cBorderRadius: string;
       cBorderWidth: string;
       pricePerUnit: string;
+      scanHistory: ScanHistoryItem[];
     }[];
     shippingOption: string;
     shippingPrice: string;

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-// import { useTheme } from 'utils/Theme';
+import { useTheme } from 'utils/Theme';
 import Button from 'components/base/Button';
 import Typography from 'components/base/Typography';
 import Modal from 'components/layout/Modal';
@@ -11,7 +11,8 @@ import { DialogModalProps } from './DialogModal.props';
 import { Content } from './DialogModal.style';
 
 const DialogModal = (props: DialogModalProps): JSX.Element => {
-  // const theme = useTheme();s
+  const theme = useTheme();
+  const isBuyer = theme.appType === 'buyer';
   const { children, title, overline, ...modalProps } = props;
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -30,13 +31,12 @@ const DialogModal = (props: DialogModalProps): JSX.Element => {
       <Content>
         <Typography
           variant="title5"
-          color="noshade"
+          color={isBuyer ? 'shade9' : 'noshade'}
           className="title"
           align={isSmallScreen ? 'center' : 'left'}
         >
           {title}
         </Typography>
-
         <div className="content-container">
           <Typography
             variant="overline"
@@ -50,13 +50,12 @@ const DialogModal = (props: DialogModalProps): JSX.Element => {
 
           {children}
         </div>
-
         <Button
           variant="primary"
           text="Ok"
           onClick={modalProps.onClickClose}
           takeFullWidth={isSmallScreen}
-        />
+        />{' '}
       </Content>
     </Modal>
   );

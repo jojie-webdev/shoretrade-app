@@ -9,6 +9,7 @@ import moment from 'moment';
 import { omit } from 'ramda';
 import { Col, Row } from 'react-grid-system';
 import { useHistory } from 'react-router';
+import { ScanHistoryItem } from 'types/store/GetSellerOrdersState';
 import { Theme } from 'types/Theme';
 import { useTheme } from 'utils/Theme';
 
@@ -33,6 +34,12 @@ export const OrderItemAccordion = (
     token: string;
     onOrderClick?: (d: string) => void;
     onRateClick?: (d: string) => void;
+    updateScanHistoryModal?: React.Dispatch<
+      Partial<{
+        isOpen: boolean;
+        scanHistoryItems: ScanHistoryItem[];
+      }>
+    >;
   }
 ) => {
   const theme = useTheme();
@@ -46,6 +53,7 @@ export const OrderItemAccordion = (
     token,
     onOrderClick,
     onRateClick,
+    updateScanHistoryModal,
   } = props;
 
   return (
@@ -107,6 +115,7 @@ export const OrderItemAccordion = (
           deliveryAddress={deliveryAddress}
           completedOrder={!!(onOrderClick && onRateClick)}
           onRateClick={() => !d.data.rating && onRateClick && onRateClick(d.id)}
+          updateScanHistoryModal={updateScanHistoryModal}
         />
       ))}
     </StyledAccordion>
@@ -122,6 +131,7 @@ const GroupedOrderItems = (props: GroupedOrderItemsProps) => {
     updateFilter,
     onOrderClick,
     onRateClick,
+    updateScanHistoryModal,
   } = props;
   const totalPages = Math.ceil(Number(groupedCount) / DEFAULT_PAGE_LIMIT);
 
@@ -156,6 +166,7 @@ const GroupedOrderItems = (props: GroupedOrderItemsProps) => {
                 token={token}
                 onOrderClick={onOrderClick}
                 onRateClick={onRateClick}
+                updateScanHistoryModal={updateScanHistoryModal}
               />
             );
           })}

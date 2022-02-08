@@ -2,6 +2,7 @@ import { MouseEventHandler } from 'react';
 
 // eslint-disable-next-line import/named
 import { Moment } from 'moment';
+import { ScanHistoryItem } from 'types/store/GetSellerOrdersState';
 
 export interface OrderItemProps extends OrderItem {
   isLoading?: boolean;
@@ -39,6 +40,7 @@ export interface OrderItem {
       cBorderRadius: string;
       cBorderWidth: string;
       pricePerUnit: string;
+      scanHistory: ScanHistoryItem[];
     }[];
     shippingOption: string;
     shippingAddress?: string;
@@ -58,6 +60,12 @@ export interface OrderItem {
   isAquafuture: boolean;
   token?: string;
   deliveryAddress: string | null;
+  updateScanHistoryModal?: React.Dispatch<
+    Partial<{
+      isOpen: boolean;
+      scanHistoryItems: ScanHistoryItem[];
+    }>
+  >;
 }
 
 export type ItemDetailVariants = 'left' | 'center' | 'right';

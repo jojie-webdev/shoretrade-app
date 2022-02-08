@@ -9,6 +9,7 @@ import { ScanHistoryModalProps } from './ScanHistoryModal.props';
 
 const ScanHistoryModal = (props: ScanHistoryModalProps): JSX.Element => {
   const theme = useTheme();
+  const isBuyer = theme.appType === 'buyer';
   if (!props.scanHistoryItems || props?.scanHistoryItems.length < 1) {
     return <></>;
   }
@@ -32,10 +33,16 @@ const ScanHistoryModal = (props: ScanHistoryModalProps): JSX.Element => {
                     : 0,
               }}
             >
-              <Typography variant="caption" color="shade3">
+              <Typography
+                variant="caption"
+                color={isBuyer ? 'shade7' : 'shade3'}
+              >
                 {`Scanned by ${sh.user_first_name} ${sh.user_last_name} (${sh.user_role})`}
               </Typography>
-              <Typography variant="caption" color="shade3">
+              <Typography
+                variant="caption"
+                color={isBuyer ? 'shade7' : 'noshade'}
+              >
                 {`${moment(sh.updated_at).format(
                   'DD MMM YYYY hh:MMa'
                 )} at Sydney Fish Market`}

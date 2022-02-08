@@ -225,6 +225,7 @@ export const transformOrder = (
         return {
           uri: lineItem.listing.images[0],
           name: lineItem.listing.typeName,
+          scanHistory: lineItem.scanHistory,
           price: toPrice(lineItem.price),
           tags: additionalInfos
             .map((info) => ({

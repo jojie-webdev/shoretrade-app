@@ -358,17 +358,6 @@ export const ItemCard = styled.div`
     }
   }
 
-  .scan-history-tooltip-btn-container {
-    border: 1px solid ${({ theme }) => theme.grey.shade8};
-    border-radius: 4px;
-    padding: 6px;
-    display: flex;
-
-    .text-container {
-      margin-right: 12px;
-    }
-  }
-
   .buttons {
     display: flex;
     justify-content: space-between;
