@@ -26,11 +26,12 @@ const BarcodeScannerView = (props: BarcodeScannerGeneratedProps) => {
           color={isSeller ? 'noshade' : 'shade9'}
           style={{ fontFamily: 'Media Sans', marginBottom: 16 }}
         >
-          An App to scan your Barcodes
+          Barcode Scanner available on App
         </Typography>
         <Typography color="shade6">
-          Download the Barcode Scanner App from the App Store to easily add,
-          scan and manage your Barcodes.
+          {isSeller
+            ? 'Download the ShoreTrade Seller app to scan the shipping labels of your Orders'
+            : 'Download the ShoreTrade Buyer app to complete your Orders'}
         </Typography>
         <LinkContainer>
           <LinkButton
