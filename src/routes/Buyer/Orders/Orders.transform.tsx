@@ -118,12 +118,14 @@ export const orderItemToPendingOrderItem = (
           sellerDropOff ?? orders[0].deliveryInstruction?.sellerDropOff,
           orders[0].sellerCompanyName
         );
-        const deliveryAddress =
-          current === 'roadPickupOrders'
-            ? orders[0].deliveryInstruction?.sellerDropOffAddress
-            : current === 'selfPickupOrders'
-            ? sellerAddress
-            : '';
+        const deliveryAddress = [
+          'airPickupOrders',
+          'roadPickupOrders',
+        ].includes(current)
+          ? orders[0].deliveryInstruction?.sellerDropOffAddress
+          : current === 'selfPickupOrders'
+          ? sellerAddress
+          : '';
         newOrders.push({
           groupKey: `${deliveryMethodLabel}-${deliveryAddress}`,
           groupName: current,
@@ -158,12 +160,14 @@ export const orderItemToOrderItemData = ({
         orders[0].sellerCompanyName
       );
       const soldOrders = orders.map((order) => {
-        const deliveryAddress =
-          key === 'roadPickupOrders'
-            ? order.deliveryInstruction?.sellerDropOffAddress
-            : key === 'selfPickupOrders'
-            ? sellerAddress
-            : '';
+        const deliveryAddress = [
+          'airPickupOrders',
+          'roadPickupOrders',
+        ].includes(key)
+          ? order.deliveryInstruction?.sellerDropOffAddress
+          : key === 'selfPickupOrders'
+          ? sellerAddress
+          : '';
         return {
           ...transformOrder(order),
           groupKey: `${deliveryMethodLabel}-${deliveryAddress}`,
