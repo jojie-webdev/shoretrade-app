@@ -1,7 +1,10 @@
 import moment from 'moment';
 import omit from 'ramda/es/omit';
 import { PendingOrder } from 'routes/Buyer/Orders/Orders.props';
-import { GetAllSellerOrder } from 'types/store/GetAllSellerOrdersState';
+import {
+  GetAllSellerOrder,
+  GetAllSellerOrderGroup,
+} from 'types/store/GetAllSellerOrdersState';
 import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -32,6 +35,27 @@ export const getShipmentMethodLabel = (
       return 'Pre-Auction';
     default:
       return 'Others';
+  }
+};
+
+export const getDeliveryAddress = (
+  deliveryMethod: string,
+  orderGroup: GetAllSellerOrderGroup
+) => {
+  const { orders, sellerAddress } = orderGroup;
+  const { sellerDropOffAddress, marketAddress } =
+    orders[0].deliveryInstruction || {};
+
+  switch (deliveryMethod) {
+    case 'selfPickupOrders':
+      return sellerDropOffAddress ?? sellerAddress;
+    case 'roadPickupOrders':
+    case 'airPickupOrders':
+      return sellerDropOffAddress;
+    case 'roadDeliveryOrders':
+      return orderGroup.marketAddress ?? marketAddress;
+    default:
+      return '';
   }
 };
 
@@ -100,12 +124,7 @@ export const orderItemToPendingToShipItem = (
 
       const newOrders: PendingToShipItemData[] = [];
       for (const currentDatum of currentData) {
-        const {
-          orders,
-          locationName,
-          sellerAddress,
-          sellerDropOff,
-        } = currentDatum;
+        const { orders, locationName, sellerDropOff } = currentDatum;
         const deliveryMethodLabel = getShipmentMethodLabel(
           current,
           locationName,
@@ -157,12 +176,7 @@ export const orderItemToPendingToShipItem = (
           buyerCompanyName: orders[0].buyerCompanyName,
           deliveryMethod: orders[0].deliveryMethod,
           deliveryMethodLabel,
-          deliveryAddress:
-            current === 'selfPickupOrders'
-              ? sellerAddress
-              : ['roadPickupOrders', 'airPickupOrders'].includes(current)
-              ? orders[0].deliveryInstruction?.sellerDropOffAddress
-              : orders[0].deliveryInstruction?.marketAddress,
+          deliveryAddress: getDeliveryAddress(current, currentDatum),
           buyerId: orders[0].buyerId, // this is employee id
           orderCount: orders.length,
           totalWeight,
@@ -204,12 +218,7 @@ export const orderItemToSoldItemData = ({
         return {
           groupName: key,
           key: groupKey,
-          deliveryAddress:
-            key === 'selfPickupOrders'
-              ? sellerAddress
-              : ['roadPickupOrders', 'airPickupOrders'].includes(key)
-              ? orders[0].deliveryInstruction?.sellerDropOffAddress
-              : orders[0].deliveryInstruction?.marketAddress,
+          deliveryAddress: getDeliveryAddress(key, data),
           id: order.orderId,
           date: moment(order.orderDate).toDate(),
           type:
