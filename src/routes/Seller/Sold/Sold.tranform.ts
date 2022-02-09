@@ -42,14 +42,15 @@ export const getDeliveryAddress = (
   deliveryMethod: string,
   orderGroup: GetAllSellerOrderGroup
 ) => {
-  const { orders } = orderGroup;
+  const { orders, sellerAddress } = orderGroup;
   const { sellerDropOffAddress, marketAddress } =
     orders[0].deliveryInstruction || {};
 
   switch (deliveryMethod) {
+    case 'selfPickupOrders':
+      return sellerDropOffAddress ?? sellerAddress;
     case 'roadPickupOrders':
     case 'airPickupOrders':
-    case 'selfPickupOrders':
       return sellerDropOffAddress;
     case 'roadDeliveryOrders':
       return orderGroup.marketAddress ?? marketAddress;
