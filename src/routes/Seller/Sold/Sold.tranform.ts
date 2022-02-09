@@ -49,9 +49,9 @@ export const getDeliveryAddress = (
   switch (deliveryMethod) {
     case 'roadPickupOrders':
     case 'airPickupOrders':
+    case 'selfPickupOrders':
       return sellerDropOffAddress;
     case 'roadDeliveryOrders':
-    case 'selfPickupOrders':
       return orderGroup.marketAddress ?? marketAddress;
     default:
       return '';
