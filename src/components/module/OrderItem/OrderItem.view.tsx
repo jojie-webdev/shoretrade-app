@@ -1,12 +1,13 @@
 import React from 'react';
 
 import Button from 'components/base/Button';
-import { DownloadFile, Message, Star } from 'components/base/SVG';
+import { DownloadFile, Message, Star, Check } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { API } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
+import { CollectableBadge } from 'routes/Buyer/Orders/Orders.style';
 import { parseImageUrl } from 'utils/parseImageURL';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
@@ -45,9 +46,22 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
           <Col sm={showDispute ? 9 : 10} className="detail-container">
             <Row nogutter={true}>
               <Col xs={4}>
-                <Typography variant="label" color="shade6">
-                  Order no.
-                </Typography>
+                <DetailsContainer>
+                  <Typography variant="label" color="shade6">
+                    Order no.
+                  </Typography>
+                  {props.data.isCollectable && (
+                    <CollectableBadge
+                      style={{
+                        padding: '4px 5px',
+                        width: '20px',
+                        marginLeft: '4px',
+                      }}
+                    >
+                      <Check fill="#fff" />
+                    </CollectableBadge>
+                  )}
+                </DetailsContainer>
                 <DetailsContainer>
                   <Typography color="shade9">
                     {props.data.orderNumber}

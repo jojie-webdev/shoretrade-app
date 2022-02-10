@@ -118,6 +118,21 @@ export const OrderBadge = styled.div`
   }
 `;
 
+export const CollectableBadge = styled.div`
+  padding: 8px 8px 6px 8px;
+  background: ${(props) => props.theme.brand.info};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  margin-right: 24px;
+  white-space: nowrap;
+
+  p {
+    line-height: 100%;
+  }
+`;
+
 export const AccordionTitleContainer = styled.div<{
   border?: string;
 }>`
