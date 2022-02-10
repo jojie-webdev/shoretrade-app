@@ -26,6 +26,7 @@ import {
   Tag,
   StyledTouchable,
   DetailsContainer,
+  OrderItemScanTotalContainer,
 } from './OrderItem.style';
 
 const OrderItem = (props: OrderItemProps): JSX.Element => {
@@ -361,7 +362,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
           )}
           <Col xs={12}>
             <Row nogutter={true}>
-              <Col sm={9} style={{ alignSelf: 'center' }}>
+              <Col sm={8} style={{ alignSelf: 'center' }}>
                 {props.deliveryAddress && (
                   <Typography
                     color="shade6"
@@ -373,45 +374,52 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                   </Typography>
                 )}
               </Col>
-              <Col sm={3} style={{ alignSelf: 'center' }}>
-                <Typography color="shade6" variant="label" className="end-text">
-                  Total
-                </Typography>
-                <Typography color="shade9" align="right" className="end-text">
-                  {props.data.total}
-                </Typography>
+              <Col sm={4} style={{ alignSelf: 'flex-end' }}>
+                <OrderItemScanTotalContainer>
+                  <div>
+                    {props.data.detailsProps[0].scanHistory &&
+                      props.data.detailsProps[0].scanHistory
+                        .slice(0, 1)
+                        .map((sh) => {
+                          return (
+                            <ScanHistoryButton
+                              key={sh.id}
+                              scanData={sh}
+                              scanHistoryItems={
+                                props.data.detailsProps[0].scanHistory
+                              }
+                              onClick={(e) => {
+                                if (props.updateScanHistoryModal) {
+                                  props.updateScanHistoryModal({
+                                    isOpen: true,
+                                    scanHistoryItems:
+                                      props.data.detailsProps[0].scanHistory,
+                                  });
+                                }
+                              }}
+                            />
+                          );
+                        })}
+                  </div>
+                  <div>
+                    <Typography
+                      color="shade6"
+                      variant="label"
+                      className="end-text"
+                    >
+                      Total
+                    </Typography>
+                    <Typography
+                      color="shade9"
+                      align="right"
+                      className="end-text"
+                    >
+                      {props.data.total}
+                    </Typography>
+                  </div>
+                </OrderItemScanTotalContainer>
               </Col>
             </Row>
-          </Col>
-          <Col xs={12}>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row-reverse',
-                justifyContent: 'space-between',
-                width: '100%',
-              }}
-            >
-              {props.data.detailsProps[0].scanHistory &&
-                props.data.detailsProps[0].scanHistory.slice(0, 1).map((sh) => {
-                  return (
-                    <ScanHistoryButton
-                      key={sh.id}
-                      scanData={sh}
-                      scanHistoryItems={props.data.detailsProps[0].scanHistory}
-                      onClick={(e) => {
-                        if (props.updateScanHistoryModal) {
-                          props.updateScanHistoryModal({
-                            isOpen: true,
-                            scanHistoryItems:
-                              props.data.detailsProps[0].scanHistory,
-                          });
-                        }
-                      }}
-                    />
-                  );
-                })}
-            </div>
           </Col>
         </Row>
       </OrderItemsContainer>
