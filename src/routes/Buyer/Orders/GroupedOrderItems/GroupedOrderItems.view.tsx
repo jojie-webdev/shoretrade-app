@@ -112,7 +112,11 @@ export const OrderItemAccordion = (
           key={d.id}
           onClick={() => onOrderClick && onOrderClick(d.id)}
           deliveredDate={d.deliveredDate}
-          deliveryAddress={deliveryAddress}
+          deliveryAddress={
+            ['roadDeliveryOrders', 'selfDeliveryOrder'].includes(groupName)
+              ? deliveryAddress
+              : null
+          }
           completedOrder={!!(onOrderClick && onRateClick)}
           onRateClick={() => !d.data.rating && onRateClick && onRateClick(d.id)}
           updateScanHistoryModal={updateScanHistoryModal}
