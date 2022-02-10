@@ -272,3 +272,14 @@ export const DetailsContainer = styled.div`
     margin-left: 8px;
   }
 `;
+
+export const OrderItemScanTotalContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+
+  > div {
+    margin-left: 24px;
+  }
+`;
