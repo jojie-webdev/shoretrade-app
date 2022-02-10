@@ -167,11 +167,7 @@ const OrdersView = (props: OrdersGeneratedProps) => {
                 [currentTab]: '',
               });
             }}
-            placeholder={
-              isMobile
-                ? 'Order#, product type, seller..'
-                : 'Search by order#, product type, seller..'
-            }
+            placeholder={'Search for a product, order or Seller'}
             rounded
           />
         </SearchContainer>
