@@ -46,7 +46,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
             <Row nogutter={true}>
               <Col xs={4}>
                 <Typography variant="label" color="shade6">
-                  Order n.
+                  Order no.
                 </Typography>
                 <DetailsContainer>
                   <Typography color="shade9">
