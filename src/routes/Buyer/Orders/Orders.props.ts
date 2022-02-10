@@ -9,6 +9,7 @@ export interface OrderItem {
   confirmed: boolean;
   data: {
     isPending: boolean;
+    isCollectable: boolean;
     orderRefNumber: number;
     orderNumber: string;
     seller: string;
@@ -107,6 +108,7 @@ export type OrderGroupDetails = {
   deliveryMethod: string;
   deliveryMethodLabel: string;
   deliveryAddress: string | null;
+  collectableCount: number;
 };
 
 export type PendingOrder = OrderGroupDetails & {

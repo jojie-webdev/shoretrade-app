@@ -143,6 +143,10 @@ export const orderItemToPendingOrderItem = (
           buyerId: orders[0].buyerId, // this is employee id
           orderCount: orders.length,
           orders: orders.map(transformOrder),
+          collectableCount: orders.reduce(
+            (accum, o) => accum + (o.status === 'FOR_COLLECTION' ? 1 : 0),
+            0
+          ),
         });
       }
       return [...accum, ...newOrders];
@@ -175,6 +179,10 @@ export const orderItemToOrderItemData = ({
           deliveryMethod: key,
           deliveryMethodLabel,
           deliveryAddress,
+          collectableCount: orders.reduce(
+            (accum, o) => accum + (o.status === 'FOR_COLLECTION' ? 1 : 0),
+            0
+          ),
         };
       });
       if (!newObj[deliveryMethodLabel]) {
@@ -206,6 +214,7 @@ export const transformOrder = (
     confirmed: orderItem.weightConfirmed,
     data: {
       isPending: orderItem.status === 'PLACED' && !orderItem.weightConfirmed,
+      isCollectable: orderItem.status === 'FOR_COLLECTION',
       orderRefNumber: orderItem.orderRefNumber,
       orderNumber: formatOrderReferenceNumber(orderItem.orderRefNumber),
       seller: orderItem.sellerCompanyName,

@@ -17,6 +17,7 @@ export interface OrderItem {
   confirmed: boolean;
   data: {
     isPending: boolean;
+    isCollectable: boolean;
     orderRefNumber: number;
     orderNumber: string;
     seller: string;

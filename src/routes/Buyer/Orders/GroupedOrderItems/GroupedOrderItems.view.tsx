@@ -17,6 +17,7 @@ import { PendingOrder } from '../Orders.props';
 import {
   StyledAccordion,
   OrderBadge,
+  CollectableBadge,
   AccordionTitleContainer,
   TitleRow,
 } from '../Orders.style';
@@ -54,6 +55,7 @@ export const OrderItemAccordion = (
     onOrderClick,
     onRateClick,
     updateScanHistoryModal,
+    collectableCount,
   } = props;
 
   return (
@@ -98,11 +100,20 @@ export const OrderItemAccordion = (
         </AccordionTitleContainer>
       }
       rightComponent={
-        <OrderBadge>
-          <Typography color="shade9" variant="overlineSmall">
-            {orderCount} {orderCount > 1 ? 'Orders' : 'Order'}
-          </Typography>
-        </OrderBadge>
+        <>
+          {collectableCount > 0 && (
+            <CollectableBadge>
+              <Typography color="noshade" variant="overlineSmall">
+                {collectableCount} Collectable
+              </Typography>
+            </CollectableBadge>
+          )}
+          <OrderBadge>
+            <Typography color="shade9" variant="overlineSmall">
+              {orderCount} {orderCount > 1 ? 'Orders' : 'Order'}
+            </Typography>
+          </OrderBadge>
+        </>
       }
     >
       {orders.map((d) => (
