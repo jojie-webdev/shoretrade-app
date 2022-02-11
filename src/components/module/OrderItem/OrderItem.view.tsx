@@ -44,7 +44,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
     <OrderItemContainer>
       <OrderInfoContainer theme={theme}>
         <Row nogutter={true}>
-          <Col sm={showDispute ? 9 : 10} className="detail-container">
+          <Col sm={10} className="detail-container">
             <Row nogutter={true}>
               <Col xs={4}>
                 <DetailsContainer>
@@ -108,21 +108,6 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
               </Col>
             </Row>
           </Col>
-
-          {showDispute && (
-            <Col sm={1}>
-              <Button
-                text="Raise Dispute"
-                icon={<Message fill="#FFF" height={16} width={16} />}
-                iconPosition="before"
-                variant="primary"
-                size="sm"
-                onClick={props.onClick}
-                className="btn-raise-dispute"
-                style={{ borderRadius: '8px' }}
-              />
-            </Col>
-          )}
 
           <Col
             sm={2}
@@ -363,7 +348,18 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
           <Col xs={12}>
             <Row nogutter={true}>
               <Col sm={8} style={{ alignSelf: 'center' }}>
-                {props.deliveryAddress && (
+                {showDispute ? (
+                  <Button
+                    text="Raise Dispute"
+                    icon={<Message fill="#FFF" height={16} width={16} />}
+                    iconPosition="before"
+                    variant="primary"
+                    size="sm"
+                    onClick={props.onClick}
+                    className="btn-raise-dispute"
+                    style={{ borderRadius: '8px' }}
+                  />
+                ) : props.deliveryAddress ? (
                   <Typography
                     color="shade6"
                     variant="label"
@@ -372,12 +368,15 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                   >
                     Delivering to {props.deliveryAddress}
                   </Typography>
+                ) : (
+                  <></>
                 )}
               </Col>
               <Col sm={4} style={{ alignSelf: 'flex-end' }}>
                 <OrderItemScanTotalContainer>
                   <div>
-                    {props.data.detailsProps[0].scanHistory &&
+                    {props.data.detailsProps.length > 0 &&
+                      props.data.detailsProps[0].scanHistory &&
                       props.data.detailsProps[0].scanHistory
                         .slice(0, 1)
                         .map((sh) => {
