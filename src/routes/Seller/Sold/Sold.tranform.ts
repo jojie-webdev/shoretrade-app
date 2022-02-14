@@ -59,7 +59,7 @@ export const getDeliveryAddress = (
   }
 };
 
-const formatAddressString = (toAddress: {
+export const formatAddressString = (toAddress: {
   postcode: string;
   state: string;
   streetName: string;
