@@ -306,7 +306,8 @@ const OrdersContainer = (): JSX.Element => {
     getCompletedOrders: getOrders.delivered,
     toShipOrdersCount,
     completedOrdersCount,
-    inTransitOrdersCount: inTransitOrdersCount + collectableOrdersCount,
+    inTransitOrdersCount:
+      inTransitOrdersCount && inTransitOrdersCount + collectableOrdersCount,
     selectionCount,
     filters,
     updateFilters,
