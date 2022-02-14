@@ -6,7 +6,7 @@ import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
 import { Store } from 'types/store/Store';
 
 export const GetAllBuyerOrdersCount = (state: Store) =>
-  state.getBuyerOrdersPlaced.data?.data?.categories.count.headerCount || {};
+  state.getBuyerOrdersPlaced.data?.data?.count.headerCount || {};
 
 export const GetAllBuyerOrdersSelectionCount = (tab: TabOptions) => (
   state: Store
@@ -22,20 +22,20 @@ export const GetAllBuyerOrdersSelectionCount = (tab: TabOptions) => (
     default:
       countState = state.getBuyerOrdersDelivered;
   }
-  return countState.data?.data?.categories.count.selectionCount || 0;
+  return countState.data?.data?.count.selectionCount || 0;
 };
 
 const getAllBuyerOrdersPending = (state: Store) =>
-  state.getBuyerOrdersPending.data?.data?.categories.orders || [];
+  state.getBuyerOrdersPending.data?.data?.orders || [];
 
 const getAllBuyerOrdersPlaced = (state: Store) =>
-  state.getBuyerOrdersPlaced.data?.data?.categories.orders || [];
+  state.getBuyerOrdersPlaced.data?.data?.orders || [];
 
 const getAllBuyerOrdersTransit = (state: Store) =>
-  state.getBuyerOrdersTransit.data?.data?.categories.orders || [];
+  state.getBuyerOrdersTransit.data?.data?.orders || [];
 
 const getAllBuyerOrdersDelivered = (state: Store) =>
-  state.getBuyerOrdersDelivered.data?.data?.categories.orders || [];
+  state.getBuyerOrdersDelivered.data?.data?.orders || [];
 
 const GetAllBuyerOrders = (
   status: 'PENDING' | 'PLACED' | 'TRANSIT' | 'DELIVERED'
