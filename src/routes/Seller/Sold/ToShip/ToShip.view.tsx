@@ -253,7 +253,7 @@ export const PendingItem = (props: {
             </div>
           </div>
         </InnerStyledInteraction>
-        {order.orderLineItem.map((lineItem) => {
+        {order.orderLineItem.map((lineItem, index) => {
           const additionalInfos = [];
           if (lineItem.listing.isIkeJime)
             additionalInfos[additionalInfos.length] = 'Ike Jime';
@@ -353,22 +353,23 @@ export const PendingItem = (props: {
 
                 <div className="buttons" style={{ marginRight: 0 }}>
                   <div>
-                    {order.formattedAddress && (
-                      <>
-                        <Typography color="noshade" variant="label">
-                          Delivery Address
-                        </Typography>
-                        <Typography
-                          variant="caption"
-                          color="shade6"
-                          fontStyle="italic"
-                          className="center-text"
-                          style={{ marginTop: '2px' }}
-                        >
-                          {order.formattedAddress}
-                        </Typography>
-                      </>
-                    )}
+                    {order.formattedAddress &&
+                      index === order.orderLineItem.length - 1 && (
+                        <>
+                          <Typography color="noshade" variant="label">
+                            Delivery Address
+                          </Typography>
+                          <Typography
+                            variant="caption"
+                            color="shade6"
+                            fontStyle="italic"
+                            className="center-text"
+                            style={{ marginTop: '2px' }}
+                          >
+                            {order.formattedAddress}
+                          </Typography>
+                        </>
+                      )}
                   </div>
                   {lineItem.weightConfirmed ? (
                     <Button
