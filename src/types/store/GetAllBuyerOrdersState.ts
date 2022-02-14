@@ -14,7 +14,7 @@ export type GetAllBuyerOrdersMeta = {
 };
 
 export type GetAllBuyerOrdersPayload = GenericResponse<{
-  categories: {
+  orders: {
     count: {
       headerCount: {
         [key: string]: number;
