@@ -443,25 +443,8 @@ const SoldItem = (props: {
                         flex: 1,
                       }}
                     >
-                      {order.formattedAddress && (
-                        <div>
-                          <Typography color="noshade" variant="label">
-                            Delivery Address
-                          </Typography>
-                          <Typography
-                            variant="caption"
-                            color="shade6"
-                            fontStyle="italic"
-                            className="center-text"
-                            style={{ marginTop: '2px' }}
-                          >
-                            {order.formattedAddress}
-                          </Typography>
-                        </div>
-                      )}
-
                       {(isPreAuction || index === v.orders.length - 1) && (
-                        <div className="buttons">
+                        <div className="buttons" style={{ flex: 1 }}>
                           {index === v.orders.length - 1 ? (
                             <div className="downloads-menu">
                               <Button
@@ -552,6 +535,27 @@ const SoldItem = (props: {
                           ) : (
                             <div className="downloads-menu" />
                           )}
+                          {order.formattedAddress &&
+                            index === v.orders.length - 1 && (
+                              <div>
+                                <Typography
+                                  color="noshade"
+                                  variant="label"
+                                  style={{ textAlign: 'end' }}
+                                >
+                                  Delivery Address
+                                </Typography>
+                                <Typography
+                                  variant="caption"
+                                  color="shade6"
+                                  fontStyle="italic"
+                                  className="center-text"
+                                  style={{ marginTop: '2px' }}
+                                >
+                                  {order.formattedAddress}
+                                </Typography>
+                              </div>
+                            )}
                           {isPreAuction && (
                             <>
                               {order.weightConfirmed ? (
