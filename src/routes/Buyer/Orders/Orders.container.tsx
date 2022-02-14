@@ -147,6 +147,7 @@ const OrdersContainer = (): JSX.Element => {
   const {
     placed: toShipOrdersCount,
     transit: inTransitOrdersCount,
+    forCollection: collectableOrdersCount,
     delivered: completedOrdersCount,
   } = useSelector(GetAllBuyerOrdersCount);
   const selectionCount = useSelector(
@@ -305,7 +306,7 @@ const OrdersContainer = (): JSX.Element => {
     getCompletedOrders: getOrders.delivered,
     toShipOrdersCount,
     completedOrdersCount,
-    inTransitOrdersCount,
+    inTransitOrdersCount: inTransitOrdersCount + collectableOrdersCount,
     selectionCount,
     filters,
     updateFilters,
