@@ -98,16 +98,17 @@ export const getAllBuyerOrders = (
   token: string
 ) => {
   //ADD 1 day to the end Date
-  const modifiedEndDate = moment(data.dateTo)
-    .add(1, 'days')
-    .format('M/DD/yyyy');
+  const modifiedStartDate = data.dateFrom ? new Date(data.dateFrom) : undefined;
+  const modifiedEndDate = data.dateTo
+    ? new Date(moment(data.dateTo).add(1, 'days').format('M/DD/yyyy'))
+    : undefined;
   return axios({
     method: 'get',
     url: `${ORDER_URL_V2}/all/buyer?status=${data.status || ''}&limit=${
       data.limit || ''
     }&page=${data.page || ''}&term=${data.term || ''}&dateFrom=${
-      data.dateFrom || ''
-    }&dateTo=${modifiedEndDate || ''}`,
+      modifiedStartDate?.toISOString() || ''
+    }&dateTo=${modifiedEndDate?.toISOString() || ''}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
