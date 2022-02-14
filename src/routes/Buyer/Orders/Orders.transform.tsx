@@ -3,7 +3,10 @@ import moment from 'moment';
 import { groupBy } from 'ramda';
 import omit from 'ramda/es/omit';
 import pathOr from 'ramda/es/pathOr';
-import { filterDuplicateGroupings } from 'routes/Seller/Sold/Sold.tranform';
+import {
+  filterDuplicateGroupings,
+  formatAddressString,
+} from 'routes/Seller/Sold/Sold.tranform';
 import {
   GetAllSellerOrder,
   GetAllSellerOrderGroup,
@@ -101,13 +104,16 @@ export const getDeliveryAddress = (
   orderGroup: GetAllSellerOrderGroup
 ) => {
   const { sellerAddress, orders } = orderGroup;
+  const { toAddress } = orders[0];
   const { marketAddress } = orders[0].deliveryInstruction || {};
 
   switch (deliveryMethod) {
     case 'selfPickupOrders':
       return sellerAddress;
-    case 'roadPickupOrders':
     case 'roadDeliveryOrders':
+    case 'selfDeliveryOrder':
+      return formatAddressString(toAddress);
+    case 'roadPickupOrders':
     case 'airPickupOrders':
       return orderGroup.marketAddress ?? marketAddress;
     default:

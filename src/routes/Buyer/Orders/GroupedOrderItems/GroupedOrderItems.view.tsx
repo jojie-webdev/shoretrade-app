@@ -57,6 +57,9 @@ export const OrderItemAccordion = (
     updateScanHistoryModal,
     collectableCount,
   } = props;
+  const isRoadDelivery = ['roadDeliveryOrders', 'selfDeliveryOrder'].includes(
+    groupName
+  );
 
   return (
     <StyledAccordion
@@ -86,7 +89,7 @@ export const OrderItemAccordion = (
               {deliveryMethodLabel}
             </Typography>
 
-            {deliveryAddress && (
+            {!isRoadDelivery && deliveryAddress && (
               <Typography
                 variant="caption"
                 color="shade6"
@@ -123,11 +126,7 @@ export const OrderItemAccordion = (
           key={d.id}
           onClick={() => onOrderClick && onOrderClick(d.id)}
           deliveredDate={d.deliveredDate}
-          deliveryAddress={
-            ['roadDeliveryOrders', 'selfDeliveryOrder'].includes(groupName)
-              ? deliveryAddress
-              : null
-          }
+          deliveryAddress={isRoadDelivery ? deliveryAddress : null}
           completedOrder={!!(onOrderClick && onRateClick)}
           onRateClick={() => !d.data.rating && onRateClick && onRateClick(d.id)}
           updateScanHistoryModal={updateScanHistoryModal}
