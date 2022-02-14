@@ -14,11 +14,13 @@ export type GetAllBuyerOrdersMeta = {
 };
 
 export type GetAllBuyerOrdersPayload = GenericResponse<{
-  count: {
-    headerCount: {
-      [key: string]: number;
+  orders: {
+    count: {
+      headerCount: {
+        [key: string]: number;
+      };
+      selectionCount: number;
     };
-    selectionCount: number;
+    orders: GetAllSellerOrder[];
   };
-  orders: GetAllSellerOrder[];
 }>;
