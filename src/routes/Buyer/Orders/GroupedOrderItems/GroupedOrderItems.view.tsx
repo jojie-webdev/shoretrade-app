@@ -126,7 +126,7 @@ export const OrderItemAccordion = (
           key={d.id}
           onClick={() => onOrderClick && onOrderClick(d.id)}
           deliveredDate={d.deliveredDate}
-          deliveryAddress={isRoadDelivery ? deliveryAddress : null}
+          deliveryAddress={isRoadDelivery ? d.data.shippingTo : null}
           completedOrder={!!(onOrderClick && onRateClick)}
           onRateClick={() => !d.data.rating && onRateClick && onRateClick(d.id)}
           updateScanHistoryModal={updateScanHistoryModal}
