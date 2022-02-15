@@ -2,12 +2,9 @@ import React, { useReducer } from 'react';
 
 import Typography from 'components/base/Typography';
 import Pagination from 'components/module/Pagination';
-import ScanHistoryModal from 'components/module/ScanHistoryModal';
 import { DEFAULT_PAGE_LIMIT } from 'consts';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
-import { ScanHistoryItem } from 'types/store/GetSellerOrdersState';
-import { createUpdateReducer } from 'utils/Hooks';
 
 import { SoldGeneratedProps } from '../Sold.props';
 import SoldItem from '../SoldItem.view';
@@ -21,28 +18,8 @@ const Delivered = (props: SoldGeneratedProps) => {
     Number(deliveredCount) / DEFAULT_PAGE_LIMIT
   );
 
-  const [scanHistoryModal, updateScanHistoryModal] = useReducer(
-    createUpdateReducer<{
-      scanHistoryItems: ScanHistoryItem[];
-      isOpen: boolean;
-    }>(),
-    {
-      scanHistoryItems: [],
-      isOpen: false,
-    }
-  );
-
   return (
     <>
-      <ScanHistoryModal
-        onClickClose={() => {
-          updateScanHistoryModal({
-            isOpen: false,
-          });
-        }}
-        title="Scan History"
-        {...scanHistoryModal}
-      />
       {delivered.map((group, idx) => {
         const getDisplayDate = () => {
           const targetDate = moment(group.title);
@@ -86,12 +63,7 @@ const Delivered = (props: SoldGeneratedProps) => {
                   </span>
                 </Col>
               </TitleRow>
-              <SoldItem
-                updateScanHistoryModal={updateScanHistoryModal}
-                data={group.data}
-                token={token}
-                status="DELIVERED"
-              />
+              <SoldItem data={group.data} token={token} status="DELIVERED" />
             </Col>
           </ItemRow>
         );

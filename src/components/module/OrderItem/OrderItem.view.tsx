@@ -374,32 +374,35 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
               </Col>
               <Col sm={4} style={{ alignSelf: 'flex-end' }}>
                 <OrderItemScanTotalContainer>
-                  <div>
-                    {props.data.detailsProps.length > 0 &&
-                      props.data.detailsProps[0].scanHistory &&
-                      props.data.detailsProps[0].scanHistory
-                        .slice(0, 1)
-                        .map((sh) => {
-                          return (
-                            <ScanHistoryButton
-                              key={sh.id}
-                              scanData={sh}
-                              scanHistoryItems={
-                                props.data.detailsProps[0].scanHistory
-                              }
-                              onClick={(e) => {
-                                if (props.updateScanHistoryModal) {
-                                  props.updateScanHistoryModal({
-                                    isOpen: true,
-                                    scanHistoryItems:
-                                      props.data.detailsProps[0].scanHistory,
-                                  });
+                  {props.updateScanHistoryModal && (
+                    <div>
+                      {props.data.detailsProps.length > 0 &&
+                        props.data.detailsProps[0].scanHistory &&
+                        props.data.detailsProps[0].scanHistory
+                          .slice(0, 1)
+                          .map((sh) => {
+                            return (
+                              <ScanHistoryButton
+                                key={sh.id}
+                                scanData={sh}
+                                scanHistoryItems={
+                                  props.data.detailsProps[0].scanHistory
                                 }
-                              }}
-                            />
-                          );
-                        })}
-                  </div>
+                                onClick={(e) => {
+                                  if (props.updateScanHistoryModal) {
+                                    props.updateScanHistoryModal({
+                                      isOpen: true,
+                                      scanHistoryItems:
+                                        props.data.detailsProps[0].scanHistory,
+                                    });
+                                  }
+                                }}
+                              />
+                            );
+                          })}
+                    </div>
+                  )}
+
                   <div>
                     <Typography
                       color="shade6"

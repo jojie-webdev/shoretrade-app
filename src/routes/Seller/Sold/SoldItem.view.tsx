@@ -607,7 +607,7 @@ const SoldItem = (props: {
                         </div>
                       )}
                     </div>
-                    {!isMobile &&
+                    {!isMobile && props.updateScanHistoryModal &&
                       order?.scanHistory &&
                       order?.scanHistory?.length > 0 &&
                       index === v.orders.length - 1 && (
@@ -625,7 +625,8 @@ const SoldItem = (props: {
                       }}
                     >
                       <div>
-                        {index === v.orders.length - 1 &&
+                        {props.updateScanHistoryModal &&
+                          index === v.orders.length - 1 &&
                           order.scanHistory &&
                           order.scanHistory.slice(0, 1).map((sh) => {
                             return (
