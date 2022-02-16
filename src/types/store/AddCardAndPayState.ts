@@ -3,25 +3,14 @@ import { GenericResponse } from 'types/GenericResponse';
 import { CartItem } from './CartState';
 import { GetAddressesResponseItem } from './GetAddressesState';
 import { GetCartDataItem } from './GetCartState';
+import {
+  OrderShipping as OrderShippingRef,
+  OrderCartItem as OrderCartItemRef,
+} from './OrderState';
 
-export type OrderShipping = {
-  carrierName: string;
-  deliveryMethod: string; // 'road'
-  deliveryOption: string; // 'depot'
-  gstCharge: number;
-  maxTransitTime: string; // yyyy-mm-dd
-  minTransitTime: string;
-  netCharge: number;
-  price: number;
-  priceId: string;
-  quoteId: number;
-  serviceName: string;
-  expDelDate: string;
-};
+export type OrderShipping = OrderShippingRef;
 
-export type OrderCartItem = (CartItem | GetCartDataItem) & {
-  shipping: OrderShipping;
-};
+export type OrderCartItem = OrderCartItemRef;
 
 export type AddCardAndPayMeta = {
   cartId: string;

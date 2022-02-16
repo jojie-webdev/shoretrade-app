@@ -12,9 +12,11 @@ import { GetDefaultCompany } from 'store/selectors/buyer';
 import { OrderCartItem } from 'types/store/AddCardAndPayState';
 import { GetCartDataItem } from 'types/store/GetCartState';
 import { Store } from 'types/store/Store';
+import { getOrderListingKey } from 'utils/getOrderListingKey';
 import { createUpdateReducer } from 'utils/Hooks';
 import { isPaymentMethodAvailable } from 'utils/isPaymentMethodAvailable';
 
+import { cartItemsToPayload } from '../Checkout.transform';
 import PaymentMethodView from './PaymentMethod.view';
 
 const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
@@ -72,22 +74,7 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
       currentAddress &&
       isPaymentMethodAvailable(paymentModes, 'CREDIT_CARD')
     ) {
-      const groupCartItemByCompany = groupBy(
-        (item: GetCartDataItem) => item.companyId
-      );
-      const groupedCartItems = groupCartItemByCompany(cartItems);
-      const payload = Object.keys(groupedCartItems).reduce(
-        (orderData: OrderCartItem[][], companyId) => {
-          const companySpecificOrder = groupedCartItems[companyId].map(
-            (item) => ({
-              ...item,
-              shipping: props.selectedShipping[item.companyId],
-            })
-          );
-          return [...orderData, companySpecificOrder];
-        },
-        []
-      );
+      const payload = cartItemsToPayload(cartItems, props.selectedShipping);
 
       dispatch(
         addCardAndPayActions.request({
@@ -118,22 +105,7 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
       currentAddress &&
       isPaymentMethodAvailable(paymentModes, 'CREDIT_CARD')
     ) {
-      const groupCartItemByCompany = groupBy(
-        (item: GetCartDataItem) => item.companyId
-      );
-      const groupedCartItems = groupCartItemByCompany(cartItems);
-      const payload = Object.keys(groupedCartItems).reduce(
-        (orderData: OrderCartItem[][], companyId) => {
-          const companySpecificOrder = groupedCartItems[companyId].map(
-            (item) => ({
-              ...item,
-              shipping: props.selectedShipping[item.companyId],
-            })
-          );
-          return [...orderData, companySpecificOrder];
-        },
-        []
-      );
+      const payload = cartItemsToPayload(cartItems, props.selectedShipping);
 
       dispatch(
         addCardAndPayActions.request({

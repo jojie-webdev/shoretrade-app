@@ -35,6 +35,7 @@ import {
   CLICK_AND_COLLECT_SERVICE,
 } from 'utils/String/toShipmentDateString';
 
+import { cartItemsToPayload } from './Checkout.transform';
 import CheckoutView from './Checkout.view';
 
 const Checkout = (): JSX.Element => {
@@ -277,27 +278,8 @@ const Checkout = (): JSX.Element => {
       !processingOrder &&
       isPaymentMethodAvailable(paymentModes, 'ACCT_CRED')
     ) {
-      const groupCartItemByCompany = groupBy((item: GetCartDataItem) =>
-        getOrderListingKey(item)
-      );
-      const groupedCartItems = groupCartItemByCompany(cartItems);
-      const payload = Object.keys(groupedCartItems).reduce(
-        (orderData: OrderCartItem[][], companyId) => {
-          const companySpecificOrder = groupedCartItems[companyId].map(
-            (item) => ({
-              ...item,
-              shipping: {
-                ...selectedShipping[getOrderListingKey(item)],
-                expDelDate: item.listing.isPreAuctionSale
-                  ? item.listing.auctionDate
-                  : selectedShipping.expDelDate,
-              },
-            })
-          );
-          return [...orderData, companySpecificOrder];
-        },
-        []
-      );
+      const payload = cartItemsToPayload(cartItems, selectedShipping);
+
       dispatch(
         orderActions.request({
           cartId: cartData?.id || '',
