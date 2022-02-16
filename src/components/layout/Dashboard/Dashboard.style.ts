@@ -471,6 +471,15 @@ export const HeaderRightContent = styled.div`
   }
 `;
 
+export const SidebarFooter = styled.div`
+  @media (max-height: 768px) {
+    position: fixed;
+    bottom: 0;
+    background: #050e16;
+    width: 222px;
+  }
+`;
+
 export const CreditBalanceContainer = styled.div`
   background: ${(props) => props.theme.grey.shade8};
   padding: 16px;
