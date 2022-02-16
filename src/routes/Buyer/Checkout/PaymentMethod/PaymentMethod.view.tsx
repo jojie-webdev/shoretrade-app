@@ -209,9 +209,12 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
           />
         </div>
       )}
-      <Typography style={{ marginBottom: 12 }}>
-        Please select a payment method
-      </Typography>
+
+      {paymentMethod !== 'card' && (
+        <Typography style={{ marginBottom: 12 }}>
+          Please select a payment method
+        </Typography>
+      )}
 
       {isMobile && (paymentMethod === 'card' || paymentMethod === 'account') && (
         <MobileTopRow>
@@ -309,6 +312,14 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
 
           {currentTab === TABS[0] ? (
             <Col md={12} xl={6}>
+              <Typography
+                className="cc-title"
+                variant="copy"
+                style={{ marginBottom: 12 }}
+              >
+                Top up your account with credit
+              </Typography>
+
               <div className="cc-image-row">
                 <CCImage>
                   <Visa height={32} />
