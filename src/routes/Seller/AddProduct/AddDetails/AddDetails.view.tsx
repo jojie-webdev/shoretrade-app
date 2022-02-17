@@ -140,7 +140,7 @@ const AddDetails = ({
   );
 
   const [isPreAuctionSale, setIsPreAuctionSale] = useState<boolean>(
-    !!editableListing?.isPreAuctionSale
+    true // !!editableListing?.isPreAuctionSale
   );
 
   const [price, setPrice] = useState(
@@ -649,11 +649,11 @@ const AddDetails = ({
         <Row className="textfield-row" style={{ marginTop: '16px' }}>
           <Col sm={12} md={8} className="textfield-col">
             <Checkbox
-              onClick={() => setIsPreAuctionSale((prevState) => !prevState)}
               checked={isPreAuctionSale}
               label="Pre-Auction: Allow your products to be sold on the way to Auction for a set price"
               error={pathOr('', ['isPreAuctionSale', '0'], errors)}
               typographyProps={{ variant: 'label', weight: 'normal' }}
+              style={{ cursor: 'not-allowed' }}
             />
           </Col>
         </Row>

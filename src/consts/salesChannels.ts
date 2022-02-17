@@ -42,9 +42,9 @@ export const SALES_CHANNELS_BUYER = [
     value: 'preAuction',
     constant: 'PRE_AUCTION',
   },
-  {
-    label: 'Auction',
-    value: 'auction',
-    constant: 'AUCTION',
-  },
+  // {
+  //   label: 'Auction',
+  //   value: 'auction',
+  //   constant: 'AUCTION',
+  // },
 ];
