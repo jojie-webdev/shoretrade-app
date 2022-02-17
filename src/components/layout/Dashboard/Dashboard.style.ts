@@ -213,6 +213,19 @@ export const LogoutContainer = styled.div`
 
 export const LogoutButton = styled(Touchable)`
   margin-bottom: 24px;
+
+  @media (max-height: 768px) {
+    position: fixed;
+    bottom: 0;
+    background: ${({ theme }) => theme.grey.shade10};
+    width: 222px;
+    margin-bottom: 0;
+    padding-bottom: 30px;
+
+    &:hover {
+      background: ${({ theme }) => theme.grey.shade10};
+    }
+  }
 `;
 
 export const Content = styled.div<{
@@ -468,15 +481,6 @@ export const HeaderRightContent = styled.div`
     height: 48px;
     width: 48px;
     border-radius: calc(56px / 8);
-  }
-`;
-
-export const SidebarFooter = styled.div`
-  @media (max-height: 768px) {
-    position: fixed;
-    bottom: 0;
-    background: #050e16;
-    width: 222px;
   }
 `;
 
