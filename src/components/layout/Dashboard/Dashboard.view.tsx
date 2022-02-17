@@ -40,7 +40,6 @@ import {
   LogoutContainer,
   LogoutButton,
   CreditBalanceContainer,
-  SidebarFooter,
   HamburgerWrapper,
   MenuIcon,
   MenuOverlay,
@@ -353,7 +352,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
               ))}
             </div>
           </div>
-          <SidebarFooter>
+          <div>
             {theme.appType === 'buyer' && (
               <CreditBalanceContainer
                 onClick={() => {
@@ -393,7 +392,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                 </Typography>
               </LogoutContainer>
             </LogoutButton>
-          </SidebarFooter>
+          </div>
         </div>
       </Sidebar>
 
