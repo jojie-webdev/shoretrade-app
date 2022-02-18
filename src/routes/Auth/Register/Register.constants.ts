@@ -48,6 +48,10 @@ export const BUYER_STEPS = [
       'Provide your business details so we know where to send your purchases.',
   },
   {
+    title: 'SFM Account Detail',
+    description: 'Provide and connect your SFM Account.',
+  },
+  {
     title: 'Payment Method',
     description:
       'ShoreTrade offers multiple payment options, including the ability to apply for ShorePay; our Buy Now Pay Later financing option.',

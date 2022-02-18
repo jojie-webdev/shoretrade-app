@@ -20,6 +20,7 @@ export type RegisterMeta = {
   };
   address: PlaceData;
   businessLogo?: File | null;
+  sfmNumber?: string | null;
   userGroup: 'buyer' | 'seller';
   registerDebtFinancing?: boolean;
   debtFinancingSegment?: string;
@@ -62,6 +63,7 @@ export type RegisterRequestData = {
         accountNumber: string;
       }
     | {};
+  sfmNumber?: string | null;
   playerId?: string;
   sellerLicenses?: {
     url: string;

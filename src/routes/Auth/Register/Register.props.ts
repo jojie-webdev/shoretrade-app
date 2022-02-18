@@ -38,6 +38,9 @@ export interface RegistrationDetails {
   bsb: string;
   accountNumber: string;
 
+  // SFM number
+  sfmNumber: string | null;
+
   // payment method
   selectedPaymentMethod: string;
   estimatedAnnualRevenue: string;

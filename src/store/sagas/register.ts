@@ -142,6 +142,7 @@ function* registerRequest(action: AsyncAction<RegisterMeta, RegisterPayload>) {
         profileImage: '',
         addresses: [data.address],
         bankAccounts: {},
+        sfmNumber: data.sfmNumber,
         debtFinancingSegment: data.debtFinancingSegment || '',
         debtFinancingEstRevenue: Number(data.debtFinancingEstRevenue || 0),
         registerDebtFinancing: data.registerDebtFinancing || false,

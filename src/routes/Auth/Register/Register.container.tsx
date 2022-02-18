@@ -175,6 +175,8 @@ const Register = (): JSX.Element => {
       address: null,
       unitNumber: '',
       businessLogo: null,
+      // SFM number,
+      sfmNumber: null,
       // bank
       accountName: '',
       bsb: '',
@@ -241,6 +243,7 @@ const Register = (): JSX.Element => {
             unitNumber: details.unitNumber,
           },
           businessLogo: details.businessLogo,
+          sfmNumber: details.sfmNumber,
           registerDebtFinancing: interestedInShorePay,
           debtFinancingSegment: details.selectedMarketSector,
           debtFinancingEstRevenue: interestedInShorePay ? '0' : '',
