@@ -98,6 +98,23 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
     justify-content: space-between;
   }
 
+  @media (max-height: 700px) {
+    .nav-items-container {
+      overflow-y: scroll;
+      ${({ theme }) => {
+        if (theme.appType === 'buyer') {
+          return `
+            max-height: 50vh;
+          `;
+        } else {
+          return `
+            max-height: 68vh;
+          `;
+        }
+      }}
+    }
+  }
+
   @media ${BREAKPOINTS['sm']} {
     .nav-items-container {
       margin-bottom: 2rem;
@@ -211,21 +228,17 @@ export const LogoutContainer = styled.div`
   }
 `;
 
-export const LogoutButton = styled(Touchable)`
-  margin-bottom: 24px;
-
+export const SidebarFooter = styled.div`
   @media (max-height: 768px) {
     position: fixed;
     bottom: 0;
     background: ${({ theme }) => theme.grey.shade10};
     width: 222px;
-    margin-bottom: 0;
-    padding-bottom: 30px;
-
-    &:hover {
-      background: ${({ theme }) => theme.grey.shade10};
-    }
   }
+`;
+
+export const LogoutButton = styled(Touchable)`
+  margin-bottom: 24px;
 `;
 
 export const Content = styled.div<{
