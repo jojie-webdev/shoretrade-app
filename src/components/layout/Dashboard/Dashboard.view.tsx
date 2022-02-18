@@ -47,6 +47,7 @@ import {
   SidebarLogoContainer,
   HeaderWrapper,
   HeaderRightContent,
+  SidebarFooter,
 } from './Dashboard.style';
 
 const NavLink = ({
@@ -352,7 +353,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
               ))}
             </div>
           </div>
-          <div>
+          <SidebarFooter>
             {theme.appType === 'buyer' && (
               <CreditBalanceContainer
                 onClick={() => {
@@ -392,7 +393,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                 </Typography>
               </LogoutContainer>
             </LogoutButton>
-          </div>
+          </SidebarFooter>
         </div>
       </Sidebar>
 
