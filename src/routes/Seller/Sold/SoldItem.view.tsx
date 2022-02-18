@@ -436,14 +436,14 @@ const SoldItem = (props: {
                           spacing={12}
                         />
                       )}
-                    <div
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        flex: 1,
-                      }}
-                    >
-                      {(isPreAuction || index === v.orders.length - 1) && (
+                    {(isPreAuction || index === v.orders.length - 1) && (
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          flex: 1,
+                        }}
+                      >
                         <div className="buttons" style={{ flex: 1 }}>
                           {index === v.orders.length - 1 ? (
                             <div className="downloads-menu">
@@ -605,8 +605,8 @@ const SoldItem = (props: {
                             </>
                           )}
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    )}
                     {/* {!isMobile && props.updateScanHistoryModal &&
                       order?.scanHistory &&
                       order?.scanHistory?.length > 0 &&
