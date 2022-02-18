@@ -140,7 +140,7 @@ const AddDetails = ({
   );
 
   const [isPreAuctionSale, setIsPreAuctionSale] = useState<boolean>(
-    true // !!editableListing?.isPreAuctionSale
+    !!editableListing?.isPreAuctionSale
   );
 
   const [price, setPrice] = useState(
@@ -482,6 +482,7 @@ const AddDetails = ({
     setIsAquafuture((prevState) => !prevState);
     setAlwaysAvailable(false);
     setIsAuctionSale(false);
+    setIsPreAuctionSale(false);
   };
 
   const handleToggleAuctionSale = () => {
@@ -489,12 +490,14 @@ const AddDetails = ({
     setIsAuctionSale((prevState) => !prevState);
     setAlwaysAvailable(false);
     setIsAquafuture(false);
+    setIsPreAuctionSale(true);
   };
 
   const handleToggleDirect = () => {
     if (editableListing.isAlreadyCreated) return;
     setIsAquafuture(false);
     setIsAuctionSale(false);
+    setIsPreAuctionSale(false);
   };
 
   const onRevalidateCatchment = (): boolean => {
