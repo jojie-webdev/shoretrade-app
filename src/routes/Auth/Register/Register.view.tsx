@@ -741,7 +741,15 @@ const StepForm = ({
               formikProps.onSubmit(values);
             }
           } else if (step === 3) {
-            formikProps.onSubmit(values);
+            if (
+              !isSeller &&
+              hasSfmNumber &&
+              !registrationDetails.sfmNumber?.trim()
+            ) {
+              setOtherErrors({ sfmNumber: 'Please enter your SFM number' });
+            } else {
+              formikProps.onSubmit(values);
+            }
           } else if (step === 4) {
             formikProps.onSubmit(values);
           } else if (step === 5) {
