@@ -97,8 +97,11 @@ const SALES_CHANNELS = [
   },
   {
     value: 'auction',
-    name: 'Auction',
-    description: 'Put your products to Auction at the Sydney Fish Markets',
+    // name: 'Auction',
+    // description: 'Put your products to Auction at the Sydney Fish Markets',
+    name: 'Pre-Auction',
+    description:
+      'Allow your products to be sold on the way to Auction for a set price',
   },
 ];
 
@@ -648,7 +651,7 @@ const AddDetails = ({
         </CheckboxContainer>
       )} */}
 
-      {isAuctionSale && (
+      {/* {isAuctionSale && (
         <Row className="textfield-row" style={{ marginTop: '16px' }}>
           <Col sm={12} md={8} className="textfield-col">
             <Checkbox
@@ -660,7 +663,7 @@ const AddDetails = ({
             />
           </Col>
         </Row>
-      )}
+      )} */}
       {(!isAuctionSale || (isAuctionSale && isPreAuctionSale)) && (
         <Row className="textfield-row">
           <Col md={6} className="textfield-col">
