@@ -323,23 +323,17 @@ export const computeTotalWeightAndPrice = (newObj: { [p: string]: any }) =>
     return {
       ...map,
       [key]: newObj[key].map(
-        (order: { groupMeasurementUnit: string | undefined }) => {
+        (order: {
+          groupMeasurementUnit: string | undefined;
+          totalPrice: number;
+          totalWeight: number;
+        }) => {
           return {
             ...order,
-            totalPrice: `${toPrice(
-              newObj[key].reduce(
-                (accum: any, o: { totalPrice: any }) => accum + o.totalPrice,
-                0
-              )
-            )}`,
-            totalWeight: `${newObj[key]
-              .reduce(
-                (accum: any, o: { totalWeight: any }) => accum + o.totalWeight,
-                0
-              )
-              .toFixed(2)} ${formatMeasurementUnit(
-              order.groupMeasurementUnit
-            )}`,
+            totalPrice: `${toPrice(order.totalPrice)}`,
+            totalWeight: `${order.totalWeight.toFixed(
+              2
+            )} ${formatMeasurementUnit(order.groupMeasurementUnit)}`,
           };
         }
       ),
