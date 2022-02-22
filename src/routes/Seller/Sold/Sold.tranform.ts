@@ -1,5 +1,6 @@
 import moment from 'moment';
 import omit from 'ramda/es/omit';
+import sortBy from 'ramda/es/sortBy';
 import { PendingOrder } from 'routes/Buyer/Orders/Orders.props';
 import {
   GetAllSellerOrder,
@@ -192,6 +193,10 @@ export const orderItemToPendingToShipItem = (
   return filterDuplicateGroupings(pendingItems);
 };
 
+const sortByOrderRef = sortBy(
+  (data: { orderRefNumber: number }) => -data.orderRefNumber
+);
+
 export const orderItemToSoldItemData = ({
   date,
   ...data
@@ -315,7 +320,16 @@ export const orderItemToSoldItemData = ({
       }
     }
   }
-  return computeTotalWeightAndPrice(newObj);
+
+  const sortedObj = Object.keys(newObj).reduce((accum, key) => {
+    const orders = newObj[key];
+    const sortedOrders = sortByOrderRef(orders);
+    return {
+      ...accum,
+      [key]: sortedOrders,
+    };
+  }, {});
+  return computeTotalWeightAndPrice(sortedObj);
 };
 
 export const computeTotalWeightAndPrice = (newObj: { [p: string]: any }) =>
