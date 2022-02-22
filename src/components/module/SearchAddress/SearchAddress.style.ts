@@ -63,6 +63,45 @@ export const AddressContainer = styled.div`
   }
 `;
 
+export const FiltersContainer = styled.div`
+  margin-top: 24px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+
+  .search-address-select .dropdownSelectContainer {
+    background: ${(props) => props.theme.grey.shade3};
+  }
+`;
+
+export const BuyingQuantityContainer = styled.div`
+  min-width: 33%;
+
+  .weight-input > div {
+    margin-top: 8px;
+  }
+
+  .weight-input > div,
+  .weight-input input {
+    border-radius: 12px;
+  }
+
+  .filters {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
+    .search-address-select {
+      width: 70px;
+    }
+
+    > div:nth-of-type(2) {
+      width: unset;
+    }
+  }
+`;
+
 export const Row = styled.div`
   display: flex;
   flex-direction: row;

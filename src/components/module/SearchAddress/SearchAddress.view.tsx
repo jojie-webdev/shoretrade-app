@@ -2,7 +2,9 @@ import React, { useRef, useState } from 'react';
 
 import PaginateList from 'components/base/PaginateList';
 import Select from 'components/base/Select';
+import Slider from 'components/base/Slider';
 import { Octopus } from 'components/base/SVG';
+import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState';
@@ -11,7 +13,11 @@ import { SearchAddressProps } from 'components/module/SearchAddress/SearchAddres
 import { BUYER_ROUTES } from 'consts';
 import { useHistory } from 'react-router-dom';
 
-import { Container, AddressContainer } from './SearchAddress.style';
+import {
+  Container,
+  FiltersContainer,
+  BuyingQuantityContainer,
+} from './SearchAddress.style';
 
 const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
   const {
@@ -66,7 +72,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
         onKeyPress={blurOnEnter}
       />
 
-      <AddressContainer>
+      {/* <AddressContainer>
         <Select
           className="search-address-select"
           options={addressOptions}
@@ -82,7 +88,92 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
             addressOptions.length > 0 ? currentDefaultAddressId : undefined
           }
         />
-      </AddressContainer>
+      </AddressContainer> */}
+
+      <FiltersContainer>
+        <Select
+          className="search-address-select"
+          options={addressOptions}
+          label="Buying For"
+          unbordered={true}
+          onChange={(e) => {
+            if (e.value !== currentDefaultAddressId) {
+              setTargetAddress(e.value);
+            }
+          }}
+          value={
+            addressOptions.length > 0 ? currentDefaultAddressId : undefined
+          }
+        />
+
+        <Select
+          className="search-address-select"
+          options={addressOptions}
+          label="Buying to"
+          unbordered={true}
+          onChange={(e) => {
+            if (e.value !== currentDefaultAddressId) {
+              setTargetAddress(e.value);
+            }
+          }}
+          value={
+            addressOptions.length > 0 ? currentDefaultAddressId : undefined
+          }
+        />
+
+        <BuyingQuantityContainer>
+          <Typography
+            variant="overline"
+            color="shade6"
+            style={{ width: '100%' }}
+          >
+            Minimum Buying Quantity
+          </Typography>
+          <div className="filters">
+            <TextField className="weight-input" />
+
+            <Select
+              className="search-address-select"
+              options={[
+                { label: 'Kg', value: 'kg' },
+                { label: 'Lb', value: 'lb' },
+              ]}
+              unbordered={true}
+              onChange={(e) => {
+                // something
+              }}
+              value={'kg'}
+            />
+
+            <div style={{ minWidth: '50%', marginTop: '8px' }}>
+              <Slider
+                value={50}
+                onChange={(v) => {
+                  if (v && typeof v === 'object') {
+                    // setSizeRange(v);
+                  }
+                }}
+                max={100}
+                maskValue={(v) => ``}
+                onAfterChange={() => {
+                  // if (!isSizeModified) {
+                  //   setIsSizeModified(true);
+                  // } else {
+                  //   if (
+                  //     sizeFrom.toString() === maskSizeValue(sizeRange[0]) &&
+                  //     sizeTo.toString() === maskSizeValue(sizeRange[1])
+                  //   ) {
+                  //     setIsSizeModified(false);
+                  //   } else {
+                  //     handleUpdate();
+                  //   }
+                  // }
+                }}
+              />
+            </div>
+          </div>
+        </BuyingQuantityContainer>
+      </FiltersContainer>
 
       {!shouldHideResult && !isSearching && searchTerm !== '' && (
         <div className="search-result">
