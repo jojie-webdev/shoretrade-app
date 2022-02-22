@@ -443,6 +443,14 @@ export const ItemDetail = styled(Typography)<{ row?: boolean }>`
     color: ${(props) => props.theme.grey.noshade};
     margin-left: ${(props) => (props.row ? '8px' : '0')};
     line-height: 24px;
+
+    @media (max-width: 1300px) {
+      width: 100px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: inline-block;
+      overflow: hidden;
+    }
   }
 `;
 
