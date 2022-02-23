@@ -252,7 +252,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                 SellerCard={
                   !isMobile ? (
                     <ProductSellerCard
-                      location={productDetailsCard1Props.location}
+                      location={sellerRatingProps.companyLocation}
                       withBackground={false}
                       showFavoriteButton={false}
                       {...sellerRatingProps}
@@ -262,7 +262,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
               />
               {!isPendingAccount && isMobile ? (
                 <ProductSellerCard
-                  location={productDetailsCard1Props.location}
+                  location={sellerRatingProps.companyLocation}
                   withBackground={false}
                   showFavoriteButton={true}
                   {...sellerRatingProps}

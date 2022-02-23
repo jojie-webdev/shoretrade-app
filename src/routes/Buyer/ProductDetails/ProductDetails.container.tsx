@@ -372,6 +372,15 @@ const ProductDetails = (): JSX.Element => {
     isFavorite: isSellerFavorite || false,
     onFavorite: onFavoriteSeller,
     onClickSeller,
+    companyLocation: `${
+      currentSeller?.companyLocation.suburb
+        ? `${currentSeller?.companyLocation.suburb}, `
+        : ''
+    }${currentSeller?.companyLocation.state || ''}${
+      currentSeller?.companyLocation.countryCode
+        ? `, ${currentSeller?.companyLocation.countryCode}`
+        : ''
+    }`,
   };
 
   const generatedProps = {
