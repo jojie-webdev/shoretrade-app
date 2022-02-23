@@ -48,10 +48,6 @@ export const BUYER_STEPS = [
       'Provide your business details so we know where to send your purchases.',
   },
   {
-    title: 'SFM Account Detail',
-    description: 'Provide and connect your SFM Account.',
-  },
-  {
     title: 'Payment Method',
     description:
       'ShoreTrade offers multiple payment options, including the ability to apply for ShorePay; our Buy Now Pay Later financing option.',
@@ -182,8 +178,8 @@ export const SELLER_VARIATIONS = [
 
 export const BUYER_STEP_SUBTITLE: { [key: number]: string } = {
   2: 'By providing us with your business details, we will automatically generate invoices for you and deliver purchases to your door.',
-  4: 'Please, let us know your industry so we can provide you with more tailored information.',
-  5: 'These selections will result in your ShoreTrade experience being more personalised through customised search results and new product notifications. They can also be amended at any time within your account.',
+  3: 'Please, let us know your industry so we can provide you with more tailored information.',
+  4: 'These selections will result in your ShoreTrade experience being more personalised through customised search results and new product notifications. They can also be amended at any time within your account.',
 };
 
 export const SELLER_STEP_SUBTITLE: { [key: number]: string } = {

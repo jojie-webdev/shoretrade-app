@@ -191,6 +191,10 @@ const StepForm = ({
     {}
   );
 
+  const showSFMFields = ['AU', 'NZ'].includes(
+    registrationDetails.address?.countryCode || ''
+  );
+
   const CategoryChildren = (result: Category) => (
     <>
       <CategoryItems>
@@ -299,7 +303,7 @@ const StepForm = ({
         return 'NEXT';
       }
       return 'SKIP';
-    } else if (theme.appType === 'buyer' && step === 6) {
+    } else if (theme.appType === 'buyer' && step === 5) {
       if (selectedCategoryTypes.length > 0) {
         return 'NEXT';
       }
@@ -620,14 +624,17 @@ const StepForm = ({
 
           {!isSeller && (
             <>
-              <CustomInteraction
-                label="SFM Number"
-                value={registrationDetails.sfmNumber || ''}
-                onClick={() => {
-                  summaryHandleStep(3);
-                  setSummaryEdit();
-                }}
-              />
+              {showSFMFields && (
+                <CustomInteraction
+                  label="SFM Number"
+                  value={registrationDetails.sfmNumber || ''}
+                  onClick={() => {
+                    summaryHandleStep(2);
+                    setSummaryEdit();
+                  }}
+                />
+              )}
+
               <CustomInteraction
                 label="Market Sector"
                 value={
@@ -639,7 +646,7 @@ const StepForm = ({
                     : ''
                 }
                 onClick={() => {
-                  summaryHandleStep(5);
+                  summaryHandleStep(4);
                   setSummaryEdit();
                 }}
               />
@@ -652,7 +659,7 @@ const StepForm = ({
                     : PAYMENT_METHOD_OPTIONS[1].label
                 }
                 onClick={() => {
-                  summaryHandleStep(4);
+                  summaryHandleStep(3);
                   setSummaryEdit();
                 }}
               />
@@ -663,7 +670,7 @@ const StepForm = ({
             label={isSeller ? 'Selling Products' : 'Buying Products'}
             arrayValue={selectedCategoryTypes}
             onClick={() => {
-              summaryHandleStep(6);
+              summaryHandleStep(isSeller ? 6 : 5);
               setSummaryEdit();
             }}
           />
@@ -734,24 +741,34 @@ const StepForm = ({
             const error = validateBusinessAddress({
               address: registrationDetails.address,
             });
+
             if (error.address) {
               setOtherErrors({ address: error.address });
-            } else {
-              setOtherErrors({ address: '' });
-              formikProps.onSubmit(values);
-            }
-          } else if (step === 3) {
-            if (
+            } else if (
               !isSeller &&
               hasSfmNumber &&
               !registrationDetails.sfmNumber?.trim()
             ) {
               setOtherErrors({ sfmNumber: 'Please enter your SFM number' });
             } else {
+              setOtherErrors({ address: '' });
               formikProps.onSubmit(values);
             }
-          } else if (step === 4) {
+          } else if (step === 3) {
             formikProps.onSubmit(values);
+          } else if (step === 4) {
+            if (!isSeller) {
+              const error = validateCategoryMarketSector({
+                categoryMarketSector: registrationDetails.categoryMarketSector,
+              });
+
+              if (error.categoryMarketSector) {
+                setOtherErrors(error);
+              } else {
+                setOtherErrors({ categoryMarketSector: '' });
+                formikProps.onSubmit(values);
+              }
+            } else formikProps.onSubmit(values);
           } else if (step === 5) {
             if (isSeller) {
               const error = validateCategoryMarketSector({
@@ -765,20 +782,9 @@ const StepForm = ({
                 formikProps.onSubmit(values);
               }
             } else {
-              const error = validateCategoryMarketSector({
-                categoryMarketSector: registrationDetails.categoryMarketSector,
-              });
-
-              if (error.categoryMarketSector) {
-                setOtherErrors(error);
-              } else {
-                setOtherErrors({ categoryMarketSector: '' });
-                formikProps.onSubmit(values);
-              }
+              formikProps.onSubmit(values);
             }
           } else if (step === 6) {
-            formikProps.onSubmit(values);
-          } else if (step === 7) {
             if (!isSeller) {
               const error = {
                 ...validateAgreement({
@@ -791,18 +797,18 @@ const StepForm = ({
                 setOtherErrors({ agreement: '' });
                 formikProps.onSubmit(values);
               }
+            } else formikProps.onSubmit(values);
+          } else if (step === 7) {
+            const error = {
+              ...validateAgreement({
+                agreement: registrationDetails.tncAgreement,
+              }),
+            };
+            if (error.agreement) {
+              setOtherErrors(error);
             } else {
-              const error = {
-                ...validateAgreement({
-                  agreement: registrationDetails.tncAgreement,
-                }),
-              };
-              if (error.agreement) {
-                setOtherErrors(error);
-              } else {
-                setOtherErrors({ agreement: '' });
-                formikProps.onSubmit(values);
-              }
+              setOtherErrors({ agreement: '' });
+              formikProps.onSubmit(values);
             }
           }
         }}
@@ -859,11 +865,20 @@ const StepForm = ({
                 <>
                   <LocationField>
                     <LocationSearch
-                      onSelect={(address) =>
+                      onSelect={(address) => {
                         updateRegistrationDetails({
                           address,
-                        })
-                      }
+                        });
+
+                        if (
+                          !['AU', 'NZ'].includes(address?.countryCode || '')
+                        ) {
+                          updateRegistrationDetails({
+                            sfmNumber: null,
+                          });
+                          setHasSfmNumber(false);
+                        }
+                      }}
                       textFieldProps={{
                         value: registrationDetails.address?.address || '',
                         label: `Address you will be ${
@@ -909,73 +924,124 @@ const StepForm = ({
                       />
                     </>
                   )}
+                  {!isSeller && showSFMFields && (
+                    <>
+                      <Typography
+                        variant="overline"
+                        color="shade6"
+                        style={{ marginTop: '30px' }}
+                      >
+                        Do you have a SFM Number?
+                      </Typography>
+                      <SFMOption>
+                        <div>
+                          <Typography variant="body" color="shade9">
+                            No
+                          </Typography>
+                          <Typography
+                            variant="caption"
+                            color="shade6"
+                            weight="400"
+                            style={{ marginRight: '6px' }}
+                          >
+                            Click “Next” to continue the Sign up process
+                          </Typography>
+                        </div>
+                        <Radio
+                          checked={!hasSfmNumber}
+                          onClick={() => {
+                            setHasSfmNumber(false);
+                            updateRegistrationDetails({ sfmNumber: null });
+                          }}
+                        />
+                      </SFMOption>
+                      <SFMOption>
+                        <div>
+                          <Typography variant="body" color="shade9">
+                            Yes
+                          </Typography>
+                          <Typography
+                            variant="caption"
+                            color="shade6"
+                            weight="400"
+                            style={{ marginRight: '6px' }}
+                          >
+                            We will use your SFM number to restore your payment
+                            methods and bank details from your SFM account
+                          </Typography>
+                        </div>
+                        <Radio
+                          checked={hasSfmNumber}
+                          onClick={() => setHasSfmNumber(true)}
+                        />
+                      </SFMOption>
+                      {hasSfmNumber && (
+                        <BaseTextField
+                          label="Your SFM Number"
+                          inputType="numeric"
+                          value={registrationDetails.sfmNumber || ''}
+                          onChangeText={(v) =>
+                            updateRegistrationDetails({
+                              sfmNumber: v
+                                .replace(/[^\d]/g, '')
+                                .substring(0, 6),
+                            })
+                          }
+                          error={otherErrors.sfmNumber || ''}
+                          style={{ marginBottom: 8, marginTop: 24 }}
+                          borderRadius="12px"
+                        />
+                      )}
+                    </>
+                  )}
                 </>
               )}
               {step === 3 && !isSeller && (
                 <>
-                  <Typography
-                    variant="overline"
-                    color="shade6"
-                    style={{ marginTop: '30px' }}
-                  >
-                    Do you have a SFM Number?
-                  </Typography>
-                  <SFMOption>
-                    <div>
-                      <Typography variant="body" color="shade9">
-                        No
-                      </Typography>
-                      <Typography
-                        variant="caption"
-                        color="shade6"
-                        weight="400"
-                        style={{ marginRight: '6px' }}
-                      >
-                        Click “Next” to continue the Sign up process
-                      </Typography>
-                    </div>
-                    <Radio
-                      checked={!hasSfmNumber}
-                      onClick={() => {
-                        setHasSfmNumber(false);
-                        updateRegistrationDetails({ sfmNumber: null });
-                      }}
-                    />
-                  </SFMOption>
-                  <SFMOption>
-                    <div>
-                      <Typography variant="body" color="shade9">
-                        Yes
-                      </Typography>
-                      <Typography
-                        variant="caption"
-                        color="shade6"
-                        weight="400"
-                        style={{ marginRight: '6px' }}
-                      >
-                        We will use your SFM number to restore your payment
-                        methods and bank details from your SFM account
-                      </Typography>
-                    </div>
-                    <Radio
-                      checked={hasSfmNumber}
-                      onClick={() => setHasSfmNumber(true)}
-                    />
-                  </SFMOption>
-                  {hasSfmNumber && (
-                    <BaseTextField
-                      label="Your SFM Number"
-                      value={registrationDetails.sfmNumber || ''}
-                      onChangeText={(v) =>
-                        updateRegistrationDetails({
-                          sfmNumber: v,
-                        })
+                  <div>
+                    {BUYER_PAYMENT_METHOD_DETAILS.map((bpmd) => (
+                      <>
+                        <PaymentMethodOverline variant="overline">
+                          {bpmd.label}
+                        </PaymentMethodOverline>
+                        <PaymentMethodDetails variant="label">
+                          {bpmd.text}
+                        </PaymentMethodDetails>
+                      </>
+                    ))}
+                  </div>
+                  <div className="select-container">
+                    <Select
+                      value={
+                        interestedInShorePay
+                          ? INTERESTED_SHOREPAY_OPTIONS[0].value
+                          : INTERESTED_SHOREPAY_OPTIONS[1].value
                       }
-                      error={otherErrors.sfmNumber || ''}
-                      style={{ marginBottom: 8, marginTop: 24 }}
-                      borderRadius="12px"
+                      onChange={(option) => {
+                        handleSelectShorePay(option.value === '1');
+                      }}
+                      options={INTERESTED_SHOREPAY_OPTIONS}
+                      label="Are you interested in applying for ShorePay?"
                     />
-                  )}
+                    {interestedInShorePay && (
+                      <DownloadApplicationFormButton
+                        text="Download Application Form"
+                        variant="outline"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleDownloadApplicationForm();
+                        }}
+                        takeFullWidth
+                        icon={
+                          <Download
+                            fill={theme.brand.primary}
+                            height={15}
+                            width={20}
+                          />
+                        }
+                      />
+                    )}
+                  </div>
                 </>
               )}
               {step === 4 && (
@@ -1180,52 +1246,29 @@ const StepForm = ({
                       )} */}
                     </>
                   ) : (
-                    <>
-                      <div>
-                        {BUYER_PAYMENT_METHOD_DETAILS.map((bpmd) => (
-                          <>
-                            <PaymentMethodOverline variant="overline">
-                              {bpmd.label}
-                            </PaymentMethodOverline>
-                            <PaymentMethodDetails variant="label">
-                              {bpmd.text}
-                            </PaymentMethodDetails>
-                          </>
-                        ))}
-                      </div>
-                      <div className="select-container">
-                        <Select
-                          value={
-                            interestedInShorePay
-                              ? INTERESTED_SHOREPAY_OPTIONS[0].value
-                              : INTERESTED_SHOREPAY_OPTIONS[1].value
-                          }
-                          onChange={(option) => {
-                            handleSelectShorePay(option.value === '1');
-                          }}
-                          options={INTERESTED_SHOREPAY_OPTIONS}
-                          label="Are you interested in applying for ShorePay?"
-                        />
-                        {interestedInShorePay && (
-                          <DownloadApplicationFormButton
-                            text="Download Application Form"
-                            variant="outline"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              handleDownloadApplicationForm();
-                            }}
-                            takeFullWidth
-                            icon={
-                              <Download
-                                fill={theme.brand.primary}
-                                height={15}
-                                width={20}
-                              />
+                    <MarketSectorContainer>
+                      {BUYER_VARIATIONS.map((variant) => (
+                        <MarketSectorItemContainer key={variant.key}>
+                          <MarketSectorItem
+                            variant={variant.key}
+                            selected={
+                              registrationDetails.categoryMarketSector ===
+                              variant.key
                             }
+                            onPress={() => {
+                              updateRegistrationDetails({
+                                categoryMarketSector: variant.key,
+                              });
+                            }}
                           />
-                        )}
-                      </div>
-                    </>
+                        </MarketSectorItemContainer>
+                      ))}
+                      {(otherErrors.categoryMarketSector || '').length > 0 && (
+                        <Error variant="caption" color="error">
+                          {otherErrors.categoryMarketSector}
+                        </Error>
+                      )}
+                    </MarketSectorContainer>
                   )}
                 </>
               )}
@@ -1256,33 +1299,11 @@ const StepForm = ({
                       )}
                     </MarketSectorContainer>
                   ) : (
-                    <MarketSectorContainer>
-                      {BUYER_VARIATIONS.map((variant) => (
-                        <MarketSectorItemContainer key={variant.key}>
-                          <MarketSectorItem
-                            variant={variant.key}
-                            selected={
-                              registrationDetails.categoryMarketSector ===
-                              variant.key
-                            }
-                            onPress={() => {
-                              updateRegistrationDetails({
-                                categoryMarketSector: variant.key,
-                              });
-                            }}
-                          />
-                        </MarketSectorItemContainer>
-                      ))}
-                      {(otherErrors.categoryMarketSector || '').length > 0 && (
-                        <Error variant="caption" color="error">
-                          {otherErrors.categoryMarketSector}
-                        </Error>
-                      )}
-                    </MarketSectorContainer>
+                    categoryPicker()
                   )}
                 </>
               )}
-              {step === 6 && <>{categoryPicker()}</>}
+              {step === 6 && <>{isSeller ? categoryPicker() : summaryUI()}</>}
               {step === 7 && (
                 <>
                   {!isSeller || (isSeller && !isSuccess) ? (
@@ -1397,7 +1418,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
   const renderRef = useRef<HTMLDivElement | null>(null);
 
   const [step, setStep] = useState(0);
-  const MAX_STEP = 7;
+  const MAX_STEP = isSeller ? 7 : 6;
 
   const summaryHandleStep = (step: number) => {
     setStep(step);
@@ -1405,7 +1426,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
 
   const nextStep = () => {
     if (isSummaryEdit) {
-      setStep(7);
+      setStep(isSeller ? 7 : 6);
     } else {
       setStep((s) => (s < MAX_STEP ? ++s : MAX_STEP));
     }
@@ -1439,14 +1460,6 @@ const RegisterView = (props: RegisterGeneratedProps) => {
       abn: registrationDetails.abn,
     },
     validate: validateBusinessDetails,
-    onSubmit: (values: Record<string, string>) => {
-      updateRegistrationDetails(values);
-      nextStep();
-    },
-  };
-
-  const sfmFormikProps = {
-    initialValues: {},
     onSubmit: (values: Record<string, string>) => {
       updateRegistrationDetails(values);
       nextStep();
@@ -1520,7 +1533,9 @@ const RegisterView = (props: RegisterGeneratedProps) => {
       return (
         <StepForm
           {...props}
-          formikProps={isSeller ? bankDetailsFormikProps : sfmFormikProps}
+          formikProps={
+            isSeller ? bankDetailsFormikProps : paymentMethodFormikProps
+          }
           step={step}
           fields={isSeller ? BANK_DETAIL_FIELDS : []}
           summaryHandleStep={summaryHandleStep}
@@ -1530,9 +1545,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
       return (
         <StepForm
           {...props}
-          formikProps={
-            isSeller ? licensesFormikProps : paymentMethodFormikProps
-          }
+          formikProps={licensesFormikProps}
           step={step}
           fields={[]}
           summaryHandleStep={summaryHandleStep}
@@ -1543,9 +1556,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
         <>
           <StepForm
             {...props}
-            formikProps={
-              isSeller ? userDetailsFormikProps : licensesFormikProps
-            }
+            formikProps={userDetailsFormikProps}
             step={step}
             fields={[]}
             summaryHandleStep={summaryHandleStep}
@@ -1558,7 +1569,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
           <StepForm
             {...props}
             getCategoryItem={props.getCategoryItem}
-            formikProps={userDetailsFormikProps}
+            formikProps={isSeller ? userDetailsFormikProps : summaryFormikProps}
             step={step}
             fields={[]}
             summaryHandleStep={summaryHandleStep}
@@ -1597,7 +1608,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
             </LogInLinkContainer>
           </SignUpHeader>
           <GetStartedTitle variant="title5">
-            Signing up is free and complete with 6 simple steps
+            Signing up is free and complete with {MAX_STEP - 1} simple steps
           </GetStartedTitle>
 
           {steps
