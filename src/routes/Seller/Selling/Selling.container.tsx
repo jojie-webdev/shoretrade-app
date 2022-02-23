@@ -5,6 +5,7 @@ import { SALES_CHANNELS } from 'consts/salesChannels';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
+  createListingActions,
   getListingByIdActions,
   getListingsBySalesChannelActions,
 } from 'store/actions';
@@ -137,6 +138,9 @@ const Selling = (): JSX.Element => {
       setShowAlert(false);
       clearTimeout(timerSet);
     }, 6000);
+    return () => {
+      dispatch(createListingActions.clear());
+    };
   }, [isSuccessListing]);
 
   const generatedProps: SellingGeneratedProps = {
