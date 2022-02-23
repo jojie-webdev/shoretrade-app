@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 
+import MultiSelect from 'components/base/MultiSelect';
 import PaginateList from 'components/base/PaginateList';
 import Select from 'components/base/Select';
 import Slider from 'components/base/Slider';
@@ -12,6 +13,7 @@ import Search from 'components/module/Search';
 import { SearchAddressProps } from 'components/module/SearchAddress/SearchAddress.props';
 import { BUYER_ROUTES } from 'consts';
 import { useHistory } from 'react-router-dom';
+import { useTheme } from 'utils/Theme';
 
 import {
   Container,
@@ -34,7 +36,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
     isSearching,
     shouldHideResult,
   } = props;
-
+  const theme = useTheme();
   const history = useHistory();
   const [isFocused, setIsFocused] = useState(false);
   const [minOrderQty, setMinOrderQty] = useState(50);
@@ -107,19 +109,19 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           }
         />
 
-        <Select
+        <MultiSelect
           className="search-address-select"
-          options={addressOptions}
           label="Buying to"
-          unbordered={true}
-          onChange={(e) => {
-            if (e.value !== currentDefaultAddressId) {
-              setTargetAddress(e.value);
-            }
-          }}
-          value={
-            addressOptions.length > 0 ? currentDefaultAddressId : undefined
-          }
+          options={[
+            { name: 'Option 1', id: 1 },
+            { name: 'Option 2', id: 2 },
+            { name: 'Option 3', id: 2 },
+            { name: 'Option 4', id: 2 },
+          ]}
+          displayValue="name"
+          placeholder="Select..."
+          background={theme.grey.shade3}
+          noBorder
         />
 
         <BuyingQuantityContainer>
