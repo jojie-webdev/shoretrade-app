@@ -37,6 +37,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
 
   const history = useHistory();
   const [isFocused, setIsFocused] = useState(false);
+  const [minOrderQty, setMinOrderQty] = useState(50);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   function blurOnEnter(event: any) {
@@ -130,7 +131,11 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
             Minimum Buying Quantity
           </Typography>
           <div className="filters">
-            <TextField className="weight-input" />
+            <TextField
+              className="weight-input"
+              value={minOrderQty}
+              onChange={(e) => setMinOrderQty(Number(e.target.value))}
+            />
 
             <Select
               className="search-address-select"
@@ -147,10 +152,10 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
 
             <div style={{ minWidth: '50%', marginTop: '8px' }}>
               <Slider
-                value={50}
+                value={minOrderQty}
                 onChange={(v) => {
-                  if (v && typeof v === 'object') {
-                    // setSizeRange(v);
+                  if (v && typeof v === 'number') {
+                    setMinOrderQty(v);
                   }
                 }}
                 max={100}
