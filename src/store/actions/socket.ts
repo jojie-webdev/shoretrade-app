@@ -20,6 +20,7 @@ export const SocketEvents: Record<SOCKET_EVENT, string> = {
   CART_CLOSED: `${eventNS}/CART_CLOSED`,
   UPDATE_LISTING: `${eventNS}/UPDATE_LISTING`,
   BARCODE_SCANNED: `${eventNS}/BARCODE_SCANNED`,
+  WEIGHT_CONFIRMED: `${eventNS}/WEIGHT_CONFIRMED`,
 };
 
 const socketActions = {

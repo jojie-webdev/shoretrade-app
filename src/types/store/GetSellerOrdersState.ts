@@ -148,6 +148,11 @@ export type SocketOrderScanPayload = {
   };
 };
 
+export type SocketOrderConfirmWeightPayload = {
+  orderId: string;
+  lineItemId: string;
+};
+
 export enum OrderStatus {
   DELIVERED = 'DELIVERED',
   IN_TRANSIT = 'TRANSIT',
