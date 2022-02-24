@@ -113,6 +113,10 @@ export const filterDuplicateGroupings = (
   return Object.values(groupings);
 };
 
+const sortByOrderRef = sortBy(
+  (data: { orderRefNumber: number }) => -data.orderRefNumber
+);
+
 export const orderItemToPendingToShipItem = (
   data: GetAllSellerOrder[]
 ): PendingToShipItemData[] => {
@@ -189,13 +193,13 @@ export const orderItemToPendingToShipItem = (
     },
     []
   );
-  // @ts-ignore
-  return filterDuplicateGroupings(pendingItems);
-};
+  const regroupedItems: any = filterDuplicateGroupings(pendingItems);
 
-const sortByOrderRef = sortBy(
-  (data: { orderRefNumber: number }) => -data.orderRefNumber
-);
+  return regroupedItems.map((regroupedItem: any) => ({
+    ...regroupedItem,
+    orders: sortByOrderRef(regroupedItem.orders),
+  }));
+};
 
 export const orderItemToSoldItemData = ({
   date,
