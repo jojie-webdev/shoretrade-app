@@ -8,6 +8,7 @@ import {
   ArrowLeft,
   ShoretradeLogo,
   Close,
+  SfmLogo,
 } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
@@ -326,11 +327,16 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
               >
                 <Close height={13} width={13} fill={theme.grey.noshade} />
               </div>
-              <ShoretradeLogo
-                fill={theme.grey.noshade}
-                width={133}
-                height={16}
-              />
+              {!theme.isSFM && (
+                <ShoretradeLogo
+                  fill={theme.grey.noshade}
+                  width={133}
+                  height={16}
+                />
+              )}
+              {theme.isSFM && (
+                <SfmLogo fill={theme.grey.noshade} width={122} height={32} />
+              )}
             </SidebarLogoContainer>
             <div className="nav-items-container">
               {routes.map((route) => (

@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+export { default as SfmLogo } from './SfmLogo';
 export { default as LuggageCart } from './LuggageCart';
 export { default as OrderPlaced } from './OrderPlaced';
 export { default as AddListing } from './AddListing';

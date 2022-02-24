@@ -61,7 +61,7 @@ const Theme = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <ThemeProvider
-      theme={{ ...themeToUse, appType: isSeller ? 'seller' : 'buyer' }}
+      theme={{ ...themeToUse, appType: isSeller ? 'seller' : 'buyer', isSFM }}
     >
       {children}
     </ThemeProvider>

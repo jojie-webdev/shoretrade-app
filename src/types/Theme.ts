@@ -1,6 +1,7 @@
 export type Theme = {
   //  Define themes here
   appType: 'buyer' | 'seller';
+  isSFM: boolean;
   brand: {
     primary: string;
     secondary: string;
