@@ -41,6 +41,9 @@ export type UploadBulkState = {
   typeDisplayText: string;
   specificationsDisplayText: string[];
   quality: string | null;
+  isPreAuctionSale: boolean;
+  isAuctionSale: boolean;
+  auctionDate: string | null;
 };
 
 export type UploadBulkPayload = GenericResponse<{
