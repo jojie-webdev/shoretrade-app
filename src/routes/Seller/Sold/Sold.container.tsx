@@ -271,7 +271,8 @@ const Sold = (): JSX.Element => {
     delivered,
     count,
     toShipCount,
-    inTransitCount: inTransitCount && inTransitCount + collectableCount,
+    inTransitCount:
+      inTransitCount && inTransitCount + (collectableCount ?? null),
     deliveredCount,
     filters,
     updateFilters,
