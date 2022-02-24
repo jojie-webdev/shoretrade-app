@@ -237,6 +237,7 @@ const OrdersContainer = (): JSX.Element => {
     if (currentTab === 'Complete') {
       getOrders.delivered(completedOrdersFilter);
     }
+    dispatch(sendOrderRatingActions.clear());
     // eslint-disable-next-line
   }, [
     currentTab,
@@ -280,7 +281,7 @@ const OrdersContainer = (): JSX.Element => {
   );
 
   const isSendOrderRatingSuccess = useSelector(
-    (state: Store) => !!state.sendOrderRating.data
+    (state: Store) => state.sendOrderRating.data?.status === 200
   );
 
   const sendOrderRating = (
