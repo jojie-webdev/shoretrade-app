@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useTheme } from 'utils/Theme';
+import { useTheme } from 'utils/SFMTheme';
 
 import {
   CheckFilled,
