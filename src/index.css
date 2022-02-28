@@ -41,8 +41,8 @@
 
 @font-face {
   font-family: 'Graphik';
-  src: url('res/fonts/Graphik-regular-webfont.woff') format('woff'),
-    url('res/fonts/Graphik-regular-webfont.ttf') format('ttf');
+  src: url('res/fonts/Graphik.woff') format('woff'),
+    url('res/fonts/Graphik.ttf') format('ttf');
   font-weight: 700;
 }
 
