@@ -1,6 +1,6 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { Theme } from 'types/Theme';
 import styled from 'utils/styled';
-import theme from 'utils/Theme';
 
 export const Container = styled.div`
   width: 100%;
@@ -37,12 +37,14 @@ export const Container = styled.div`
   }
 `;
 
-const ControlButtonColor: Record<'buyer' | 'seller', string> = {
-  buyer: theme.grey.shade8,
-  seller: theme.brand.primary,
+const ControlButtonColor = (
+  theme: Theme
+): Record<'buyer' | 'seller', string> => {
+  return { buyer: theme.grey.shade8, seller: theme.brand.primary };
 };
 
 const ControlButtonTextColor = (
+  theme: Theme,
   active: boolean,
   appType: 'buyer' | 'seller',
   isMobile?: boolean
@@ -73,8 +75,8 @@ export const ControlButton = styled.button<{
   background: ${(props) =>
     props.active
       ? props.isMobile
-        ? theme.grey.noshade
-        : ControlButtonColor[props.theme.appType]
+        ? props.theme.grey.noshade
+        : ControlButtonColor(props.theme)[props.theme.appType]
       : 'none'};
 
   @media ${BREAKPOINTS['sm']} {
@@ -86,7 +88,12 @@ export const ControlButton = styled.button<{
 
   font-size: 14px;
   color: ${(props) =>
-    ControlButtonTextColor(props.active, props.theme.appType, props.isMobile)};
+    ControlButtonTextColor(
+      props.theme,
+      props.active,
+      props.theme.appType,
+      props.isMobile
+    )};
   font-weight: 500;
   line-height: 24px;
 
@@ -107,7 +114,7 @@ export const ControlButton = styled.button<{
     visibility: hidden;
     width: 320px;
     background-color: black;
-    color: ${() => theme.grey.noshade};
+    color: ${({ theme }) => theme.grey.noshade};
     text-align: center;
     border-radius: 6px;
     padding: 8px;

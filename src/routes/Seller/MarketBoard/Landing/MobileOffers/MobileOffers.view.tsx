@@ -7,6 +7,7 @@ import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequest
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
 import { parseImageUrl } from 'utils/parseImageURL';
+import { useTheme } from 'utils/Theme';
 
 import {
   getExpiry,
@@ -27,6 +28,7 @@ const MobileOffers = (props: {
   buyerRequests?: GetAllMarketRequestResponseItem[];
 }): JSX.Element => {
   const { data } = props;
+  const theme = useTheme();
   const {
     image,
     specifications,
@@ -38,6 +40,7 @@ const MobileOffers = (props: {
   } = data;
 
   const statusTextProps = transformMarketRequestStatusText(
+    theme,
     data.statusText,
     true
   );

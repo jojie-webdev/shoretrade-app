@@ -57,6 +57,12 @@ const Theme = ({ children }: { children: React.ReactNode }) => {
     currentDefaultAddressCountryCode === 'AU' ||
     currentDefaultAddressCountryCode === 'NZ';
 
+  if (isSFM) {
+    document.body.classList.add('sfm');
+  } else {
+    document.body.classList.remove('sfm');
+  }
+
   const themeToUse = isSFM ? sfmTheme : theme;
 
   return (

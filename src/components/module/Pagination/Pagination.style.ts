@@ -1,7 +1,6 @@
 import { keyframes } from '@emotion/core';
 import { Theme } from 'types/Theme';
 import styled from 'utils/styled';
-import theme from 'utils/Theme';
 
 export const Container = styled.div`
   display: flex;
@@ -11,9 +10,10 @@ export const Container = styled.div`
 
 // Number Variant
 
-const PaginationButtonColor: Record<Theme['appType'], string> = {
-  buyer: theme.grey.noshade,
-  seller: theme.grey.shade9,
+const PaginationButtonColor = (
+  theme: Theme
+): Record<Theme['appType'], string> => {
+  return { buyer: theme.grey.noshade, seller: theme.grey.shade9 };
 };
 
 export const PaginationButton = styled.button<{ active?: boolean }>`
@@ -22,7 +22,7 @@ export const PaginationButton = styled.button<{ active?: boolean }>`
   background: ${(props) =>
     props.active
       ? props.theme.brand.primary
-      : PaginationButtonColor[props.theme.appType]};
+      : PaginationButtonColor(props.theme)[props.theme.appType]};
   box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
   border-radius: 4px;
   margin-right: 16px;

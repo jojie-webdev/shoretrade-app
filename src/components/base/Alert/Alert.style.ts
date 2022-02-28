@@ -1,15 +1,17 @@
+import { Theme } from 'types/Theme';
 import styled from 'utils/styled';
-import theme from 'utils/Theme';
 
 import { Variants, AlertContainerProps } from './Alert.props';
 
-const backgroundColor: Record<Variants, string> = {
-  info: theme.brand.info,
-  infoAlert: theme.brand.alert,
-  alert: theme.brand.alert,
-  error: theme.brand.error,
-  success: theme.brand.success,
-  warning: theme.brand.warning,
+const backgroundColor = (theme: Theme): Record<Variants, string> => {
+  return {
+    info: theme.brand.info,
+    infoAlert: theme.brand.alert,
+    alert: theme.brand.alert,
+    error: theme.brand.error,
+    success: theme.brand.success,
+    warning: theme.brand.warning,
+  };
 };
 
 export const Container = styled.div<AlertContainerProps>`
@@ -21,7 +23,8 @@ export const Container = styled.div<AlertContainerProps>`
   border-radius: 8px;
 
   .horizontal-style-container {
-    background-color: ${({ variant }) => backgroundColor[variant]};
+    background-color: ${({ variant, theme }) =>
+      backgroundColor(theme)[variant]};
     height: inherit;
     width: 8px;
     border-top-left-radius: 8px;

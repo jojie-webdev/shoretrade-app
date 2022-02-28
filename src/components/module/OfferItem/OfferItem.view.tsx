@@ -19,8 +19,8 @@ import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { getOfferLatestPrice } from 'utils/MarketRequest';
 import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
 import { parseImageUrl } from 'utils/parseImageURL';
+import { useTheme } from 'utils/Theme';
 
-import theme from '../../../utils/Theme';
 import { OfferItemProps } from './OfferItem.props';
 import {
   MajorInfo,
@@ -38,7 +38,7 @@ const Offer = (props: OfferItemProps) => {
   const { sellerOffer, onOfferDelete, onClickItem } = props;
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [offerIdToDelete, setOfferIdToDelete] = useState<string>('');
-
+  const theme = useTheme();
   const getCorrectedSize = (offer: any) => {
     let convertedSize = sizeToString(
       offer.metric,
@@ -106,7 +106,10 @@ const Offer = (props: OfferItemProps) => {
   );
 
   const renderOffersForMobile = (offer: any) => {
-    const statusTextProps = transformMarketRequestStatusText(offer.statusText);
+    const statusTextProps = transformMarketRequestStatusText(
+      theme,
+      offer.statusText
+    );
     return (
       <MarketRequestItemMobileContainer>
         <MajorInfo id="major info">
@@ -194,6 +197,7 @@ const Offer = (props: OfferItemProps) => {
   const renderNonMobile = () => {
     return sellerOffer.offers.map((offer, index) => {
       const statusTextProps = transformMarketRequestStatusText(
+        theme,
         offer.statusText
       );
 

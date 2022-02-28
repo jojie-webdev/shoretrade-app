@@ -172,6 +172,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
   )} / ${formatUnitToPricePerUnit(selectedOffer.measurementUnit)}`;
 
   const mrStatusProps = transformMarketRequestStatusText(
+    theme,
     selectedOffer.statusText,
     false,
     [`${selectedOffer.orderRefNumber}`]

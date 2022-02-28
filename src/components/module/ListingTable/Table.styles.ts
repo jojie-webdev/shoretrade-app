@@ -1,5 +1,4 @@
 import styled from 'utils/styled';
-import theme from 'utils/Theme';
 
 export const Container = styled.div`
   font-size: 14px;
@@ -40,7 +39,7 @@ export const SVGContainer = styled.div`
 
   div {
     margin-top: 24px;
-    color: ${theme.grey.shade7};
+    color: ${({ theme }) => theme.grey.shade7};
     font-weight: 500;
   }
 `;

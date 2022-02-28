@@ -1,15 +1,14 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
-import theme from 'utils/Theme';
 
 export const Container = styled.div`
   display: flex;
   gap: 24px;
   align-items: center;
-  background: ${theme.grey.noshade};
+  background: ${({ theme }) => theme.grey.noshade};
   padding: 16px;
-  border-top: 1px solid ${theme.grey.shade3};
-  color: ${theme.grey.shade7};
+  border-top: 1px solid ${({ theme }) => theme.grey.shade3};
+  color: ${({ theme }) => theme.grey.shade7};
   user-select: none;
   font-size: 14px;
   justify-content: flex-end;

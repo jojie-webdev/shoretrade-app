@@ -1,7 +1,6 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Theme } from 'types/Theme';
 import styled from 'utils/styled';
-import theme from 'utils/Theme';
 
 import {
   ButtonStyleProps,
@@ -10,27 +9,33 @@ import {
   ButtonProps,
 } from './Button.props';
 
-const backgroundColor: Record<Variants | keyof Theme['brand'], string> = {
-  primary: theme.brand.primary,
-  outline: 'transparent',
-  disabled: theme.grey.shade3,
-  success: theme.brand.success,
-  unselected: theme.grey.shade9,
-  white: '#FFF',
-  error: theme.brand.error,
-  alert: theme.brand.alert,
-  info: theme.brand.info,
-  warning: theme.brand.warning,
-  secondary: theme.brand.secondary,
+const backgroundColor = (
+  theme: Theme
+): Record<Variants | keyof Theme['brand'], string> => {
+  return {
+    primary: theme.brand.primary,
+    outline: 'transparent',
+    disabled: theme.grey.shade3,
+    success: theme.brand.success,
+    unselected: theme.grey.shade9,
+    white: '#FFF',
+    error: theme.brand.error,
+    alert: theme.brand.alert,
+    info: theme.brand.info,
+    warning: theme.brand.warning,
+    secondary: theme.brand.secondary,
+  };
 };
 
-const border: Record<Variants, string> = {
-  primary: 'none',
-  outline: `1.5px solid ${theme.brand.primary}`,
-  disabled: `1px solid ${theme.grey.shade5}`,
-  success: 'none',
-  unselected: 'none',
-  white: 'none',
+const border = (theme: Theme): Record<Variants, string> => {
+  return {
+    primary: 'none',
+    outline: `1.5px solid ${theme.brand.primary}`,
+    disabled: `1px solid ${theme.grey.shade5}`,
+    success: 'none',
+    unselected: 'none',
+    white: 'none',
+  };
 };
 
 const sizePadding: Record<ButtonSizes, string> = {
@@ -43,12 +48,12 @@ export const ButtonContainer = styled.button<
   ButtonStyleProps & ButtonProps & { hasText: boolean }
 >`
   max-height: 48px;
-  padding: ${({ size, padding }) => padding ? padding : sizePadding[size]};
-  background-color: ${({ variant, color }) =>
-    color ? backgroundColor[color] : backgroundColor[variant]};
-  border: ${({ variant }) => border[variant]};
-  border-radius: ${({ circular, borderRadius }) => circular ? '50%' 
-    : (borderRadius ? borderRadius : '12px')};
+  padding: ${({ size, padding }) => (padding ? padding : sizePadding[size])};
+  background-color: ${({ variant, color, theme }) =>
+    color ? backgroundColor(theme)[color] : backgroundColor(theme)[variant]};
+  border: ${({ variant, theme }) => border(theme)[variant]};
+  border-radius: ${({ circular, borderRadius }) =>
+    circular ? '50%' : borderRadius ? borderRadius : '12px'};
   width: ${(props) => (props.takeFullWidth ? '100%' : 'auto')};
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
   white-space: nowrap;
@@ -66,7 +71,8 @@ export const ButtonContainer = styled.button<
   }
 
   @media (hover: none) and (pointer: coarse) {
-    padding: ${({ size, padding }) => padding ? padding : (size === 'sm' ? sizePadding[size] : '18px')};
+    padding: ${({ size, padding }) =>
+      padding ? padding : size === 'sm' ? sizePadding[size] : '18px'};
     :hover {
       opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
     }

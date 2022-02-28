@@ -27,7 +27,7 @@ import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
 import { parseImageUrl } from 'utils/parseImageURL';
-import theme from 'utils/Theme';
+import theme, { useTheme } from 'utils/Theme';
 
 import { MarketBoardLandingGeneratedProps, TabOptions } from './Landing.props';
 import {
@@ -142,11 +142,13 @@ const MyActiveOffersInteractions = (props: {
   buyerRequests?: GetAllMarketRequestResponseItem[];
 }) => {
   const { onClick, data } = props;
+  const theme = useTheme();
 
   const sizeUnit =
     formatMeasurementUnit(data.measurementUnit) === 'kg' ? 'kg' : '';
 
   const statusTextProps = transformMarketRequestStatusText(
+    theme,
     data.statusText,
     true
   );

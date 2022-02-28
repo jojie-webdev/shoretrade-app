@@ -11,7 +11,7 @@ import {
 } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestFiltersResponseItem } from 'types/store/GetAllMarketRequestFiltersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
-import theme from 'utils/Theme';
+import { Theme } from 'types/Theme';
 
 export const requestToModalFilter = (
   data?: GetAllMarketRequestFiltersResponseItem
@@ -253,6 +253,7 @@ export const isCounterOfferMade = (
 };
 
 export const getStatusBadgeColor = (
+  theme: Theme,
   status: GetActiveOffersRequestResponseItem['status']
 ) => {
   if (status === 'OPEN') return theme.brand.alert;

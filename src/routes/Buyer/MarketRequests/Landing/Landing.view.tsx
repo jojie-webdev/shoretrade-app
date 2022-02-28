@@ -23,6 +23,7 @@ import {
   transformMarketRequestStatusText,
 } from 'utils/MarketRequest/marketRequestTag';
 import { parseImageUrl } from 'utils/parseImageURL';
+import { useTheme } from 'utils/Theme';
 
 import { MarketRequestsLandingGeneratedProps } from './Landing.props';
 import {
@@ -56,6 +57,7 @@ export const MarketRequestItemNonMobile = (props: {
   status: string;
   size?: { from: number; to: number; options: any; ungraded: boolean };
 }) => {
+  const theme = useTheme();
   const {
     id,
     expiry,
@@ -70,7 +72,10 @@ export const MarketRequestItemNonMobile = (props: {
     metric,
     requestStatus,
   } = props;
-  const statusTextProps = transformMarketRequestStatusText(requestStatus);
+  const statusTextProps = transformMarketRequestStatusText(
+    theme,
+    requestStatus
+  );
   const offersTextProps = numberOffersTransform(offers);
 
   return (
@@ -181,6 +186,7 @@ export const MarketRequestItemMobile = (props: {
   requestStatus: string;
   status: string;
 }) => {
+  const theme = useTheme();
   const {
     expiry,
     offers,
@@ -194,7 +200,10 @@ export const MarketRequestItemMobile = (props: {
     requestStatus,
   } = props;
 
-  const statusTextProps = transformMarketRequestStatusText(requestStatus);
+  const statusTextProps = transformMarketRequestStatusText(
+    theme,
+    requestStatus
+  );
   const offersTextProps = numberOffersTransform(offers);
 
   const subMinorDetail = (label: string, value: string) => (
