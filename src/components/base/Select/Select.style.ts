@@ -119,6 +119,10 @@ export const StyledDropdown = styled(Dropdown)<DropdownProps>`
         dark ? theme.grey.noshade : theme.grey.shade9};
     }
   }
+
+  .HiddenMenu {
+    display: none;
+  }
 `;
 
 export const ArrowContainer = styled.div<{ size?: string; flipped?: boolean }>`

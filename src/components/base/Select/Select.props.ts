@@ -14,6 +14,9 @@ export interface SelectProps extends ReactDropdownProps {
   unbordered?: boolean;
   marginTop?: string;
   arrowIcon?: JSX.Element;
+  isMulti?: boolean;
+  customMenu?: React.ReactNode;
+  customOpenMenu?: () => void;
 }
 
 export interface DropdownProps {
@@ -27,4 +30,9 @@ export interface DropdownProps {
   marginTop?: string;
   height?: string;
   padding?: string;
+}
+
+export interface OptionsType {
+  value: string;
+  label: string;
 }

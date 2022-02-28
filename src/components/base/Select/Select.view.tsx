@@ -23,6 +23,9 @@ const Select = ({
   marginTop,
   borderRadius,
   arrowIcon,
+  isMulti,
+  customMenu,
+  customOpenMenu,
   ...props
 }: SelectProps): JSX.Element => {
   const theme = useTheme();
@@ -34,54 +37,57 @@ const Select = ({
           {label}
         </Label>
       ) : null}
-      <StyledDropdown
-        border={border}
-        borderRadius={borderRadius}
-        background={background}
-        marginTop={marginTop}
-        {...props}
-        unbordered={props.unbordered}
-        controlClassName={
-          props.size === 'small'
-            ? `${PREFIX}ContainerThin`
-            : `${PREFIX}Container`
-        }
-        placeholderClassName={`${PREFIX}Placeholder`}
-        menuClassName={`${PREFIX}Menu`}
-        arrowClosed={
-          <ArrowContainer size={props.size}>
-            {arrowIcon ? (
-              arrowIcon
-            ) : (
-              <DropdownArrow
-                // fill={props.disabled ? theme.grey.shade6 : theme.brand.primary}
-                fill={
-                  props.disabled
-                    ? theme.grey.shade6
-                    : theme.appType === 'buyer'
-                    ? theme.brand.primary
-                    : theme.grey.shade7
-                }
-              />
-            )}
-          </ArrowContainer>
-        }
-        arrowOpen={
-          <ArrowContainer size={props.size} flipped>
-            {arrowIcon ? (
-              arrowIcon
-            ) : (
-              <DropdownArrow
-                fill={
-                  theme.appType === 'buyer'
-                    ? theme.brand.primary
-                    : theme.grey.shade7
-                }
-              />
-            )}
-          </ArrowContainer>
-        }
-      />
+      <div onClick={customOpenMenu}>
+        <StyledDropdown
+          border={border}
+          borderRadius={borderRadius}
+          background={background}
+          marginTop={marginTop}
+          {...props}
+          unbordered={props.unbordered}
+          controlClassName={
+            props.size === 'small'
+              ? `${PREFIX}ContainerThin`
+              : `${PREFIX}Container`
+          }
+          placeholderClassName={`${PREFIX}Placeholder`}
+          menuClassName={`${isMulti ? 'Hidden' : PREFIX}Menu`}
+          arrowClosed={
+            <ArrowContainer size={props.size}>
+              {arrowIcon ? (
+                arrowIcon
+              ) : (
+                <DropdownArrow
+                  // fill={props.disabled ? theme.grey.shade6 : theme.brand.primary}
+                  fill={
+                    props.disabled
+                      ? theme.grey.shade6
+                      : theme.appType === 'buyer'
+                      ? theme.brand.primary
+                      : theme.grey.shade7
+                  }
+                />
+              )}
+            </ArrowContainer>
+          }
+          arrowOpen={
+            <ArrowContainer size={props.size} flipped>
+              {arrowIcon ? (
+                arrowIcon
+              ) : (
+                <DropdownArrow
+                  fill={
+                    theme.appType === 'buyer'
+                      ? theme.brand.primary
+                      : theme.grey.shade7
+                  }
+                />
+              )}
+            </ArrowContainer>
+          }
+        />
+      </div>
+      {customMenu}
 
       {(error || '').length > 0 && (
         <Error variant="caption" color="error">

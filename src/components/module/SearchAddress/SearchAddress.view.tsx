@@ -113,15 +113,15 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           className="search-address-select"
           label="Buying to"
           options={[
-            { name: 'Option 1', id: 1 },
-            { name: 'Option 2', id: 2 },
-            { name: 'Option 3', id: 2 },
-            { name: 'Option 4', id: 2 },
+            { label: 'Option 1', value: '1' },
+            { label: 'Option 2', value: '2' },
+            { label: 'Option 3', value: '3' },
+            { label: 'Option 4', value: '4' },
           ]}
-          displayValue="name"
           placeholder="Select..."
+          selectedAllText="All States"
           background={theme.grey.shade3}
-          noBorder
+          unbordered
         />
 
         <BuyingQuantityContainer>

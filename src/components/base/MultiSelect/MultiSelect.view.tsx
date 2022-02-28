@@ -1,63 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import BaseMultiSelect from 'multiselect-react-dropdown';
 import { useTheme } from 'utils/Theme';
 
-import { DropdownArrow } from '../SVG';
+import Select from '../Select';
+import { OptionsType } from '../Select/Select.props';
 import { MultiSelectProps } from './MultiSelect.props';
 import { Container, Label } from './MultiSelect.style';
+import MultiSelectList from './MultiSelectList.view';
 
 const MultiSelect = (props: MultiSelectProps): JSX.Element => {
+  const { selectedAllText, options } = props;
+  const [showMenu, setShowMenu] = useState(false);
+  const [selected, setSelected] = useState<OptionsType[]>([]);
   const theme = useTheme();
+
+  const updateSelected = (list: OptionsType[]) => setSelected(list);
+
+  const dropdownValue =
+    selected.length === options.length && selectedAllText
+      ? selectedAllText
+      : selected.map((s) => s.label).join(', ');
+
   return (
     <Container>
-      {props.label ? (
-        <Label variant="overline" color="shade6">
-          {props.label}
-        </Label>
-      ) : null}
-      <BaseMultiSelect
+      <Select
         {...props}
-        showArrow
-        showCheckbox
-        style={{
-          multiselectContainer: {
-            'margin-top': '8px',
-          },
-          inputField: {
-            'font-family': `'Basis Grotesque Pro', sans-serif`,
-            'margin-top': 0,
-            'line-height': '24px',
-            'font-weight': 500,
-            color: '#09131D',
-            height: '24px',
-          },
-          chips: {
-            background: theme.brand.primary,
-          },
-          searchBox: {
-            'border-radius': '12px',
-            padding: '12px 16px',
-            height: '48px',
-            border: props.noBorder ? 0 : undefined,
-            background: props.background,
-          },
-          option: {
-            'font-family': `'Basis Grotesque Pro', sans-serif`,
-            'font-size': '0.875rem',
-          },
-        }}
-        customArrow={
-          <DropdownArrow
-            fill={
-              props.disabled
-                ? theme.grey.shade6
-                : theme.appType === 'buyer'
-                ? theme.brand.primary
-                : theme.grey.shade7
-            }
-          />
+        isMulti
+        value={dropdownValue}
+        customMenu={
+          showMenu && (
+            <MultiSelectList
+              updateSelected={updateSelected}
+              options={props.options}
+              selected={selected}
+            />
+          )
         }
+        customOpenMenu={() => setShowMenu((v) => !v)}
       />
     </Container>
   );

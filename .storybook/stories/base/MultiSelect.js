@@ -9,10 +9,9 @@ storiesOf('base/MultiSelect', module).add('Summary', () => (
   <Container appType="buyer">
     <MultiSelect
       options={[
-        { name: 'Option 1', id: 1 },
-        { name: 'Option 2', id: 2 },
+        { label: 'Option 1', value: '1' },
+        { label: 'Option 2', value: '2' },
       ]}
-      displayValue="name"
     />
   </Container>
 ));

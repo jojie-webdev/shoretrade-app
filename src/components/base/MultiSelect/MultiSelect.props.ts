@@ -1,8 +1,10 @@
-import { IMultiselectProps } from 'multiselect-react-dropdown/dist/multiselect/interface';
+import { SelectProps, OptionsType } from '../Select/Select.props';
 
-export interface MultiSelectProps extends IMultiselectProps {
-  disabled?: boolean;
-  label?: string;
-  noBorder?: boolean;
-  background?: string;
+export interface MultiSelectProps extends SelectProps {
+  selectedAllText?: string;
+}
+
+export interface MultiSelectListProps extends MultiSelectProps {
+  updateSelected: (v: OptionsType[]) => void;
+  selected: OptionsType[];
 }
