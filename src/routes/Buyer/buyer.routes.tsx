@@ -113,13 +113,13 @@ const ROUTES: Routes = {
     title: 'Notifications Settings',
     icon: CogIcon,
   },
-  // BARCODE_SCANNER: {
-  //   path: BUYER_ROUTES.BARCODE_SCANNER,
-  //   title: 'Barcode Scanner',
-  //   children: <BarcodeScanner />,
-  //   icon: BarcodeSVG,
-  //   nested: true,
-  // },
+  BARCODE_SCANNER: {
+    path: BUYER_ROUTES.BARCODE_SCANNER,
+    title: 'Barcode Scanner',
+    children: <BarcodeScanner />,
+    icon: BarcodeSVG,
+    nested: true,
+  },
   ACCOUNT: {
     path: BUYER_ROUTES.ACCOUNT,
     children: <Account />,

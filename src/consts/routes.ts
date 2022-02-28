@@ -30,7 +30,7 @@ export const SELLER_ROUTES = {
   CREATES_MANAGEMENT: `${SELLER_ROOT}/creates-management`,
   NOTIFICATIONS: `${SELLER_ROOT}/notifications`,
   NOTIFICATIONS_SETTINGS: `${SELLER_ROOT}/notifications-settings`,
-  // BARCODE_SCANNER: `${SELLER_ROOT}/barcode-scanner`,
+  BARCODE_SCANNER: `${SELLER_ROOT}/barcode-scanner`,
 };
 
 export const SELLER_DASHBOARD_ROUTES = {
@@ -113,7 +113,7 @@ export const BUYER_ROUTES = {
   ALL_LISTING: `${BUYER_ROOT}/all-listings`,
   NOTIFICATIONS: `${BUYER_ROOT}/notifications`,
   NOTIFICATIONS_SETTINGS: `${BUYER_ROOT}/notifications-settings`,
-  // BARCODE_SCANNER: `${BUYER_ROOT}/barcode-scanner`,
+  BARCODE_SCANNER: `${BUYER_ROOT}/barcode-scanner`,
 };
 
 export const BUYER_MARKET_REQUEST_ROUTES = {
