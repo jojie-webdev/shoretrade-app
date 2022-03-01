@@ -68,10 +68,19 @@ export const FiltersContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  gap: 24px;
+  gap: 8px;
 
   .search-address-select .dropdownSelectContainer {
     background: ${(props) => props.theme.grey.shade3};
+  }
+
+  @media (max-width: 1400px) {
+    flex-wrap: wrap;
+
+    > div:first-of-type,
+    > div:nth-of-type(2) {
+      flex: 1;
+    }
   }
 `;
 
@@ -98,6 +107,20 @@ export const BuyingQuantityContainer = styled.div`
 
     > div:nth-of-type(2) {
       width: unset;
+    }
+  }
+
+  @media (max-width: 1400px) {
+    margin-top: 8px;
+    width: 100%;
+    min-width: 100%;
+
+    .filters {
+      .weight-input,
+      .search-address-select,
+      > div:nth-of-type(2) {
+        width: 100%;
+      }
     }
   }
 `;
