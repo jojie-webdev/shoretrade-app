@@ -13,10 +13,11 @@ import ResetPasswordView from './ResetPassword.view';
 const ResetPassword = (): JSX.Element => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { email } = qs.parse(useLocation().search, {
+  const { email, barcode } = qs.parse(useLocation().search, {
     ignoreQueryPrefix: true,
   }) as {
     email: string;
+    barcode?: string;
   };
   const { code } = useParams<{ code: string }>();
   if (!(email && code)) {
@@ -39,6 +40,7 @@ const ResetPassword = (): JSX.Element => {
           password: data.newPassword,
           code,
           email,
+          isBarcode: !!barcode,
         })
       );
     }

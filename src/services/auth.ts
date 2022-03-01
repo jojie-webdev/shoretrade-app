@@ -10,6 +10,8 @@ import { createBasicToken } from 'utils/Token';
 const BASE_URL = `${API.URL}/${API.VERSION}`;
 const AUTH_URL = `${BASE_URL}/auth`;
 const USER_URL = `${BASE_URL}/user`;
+const BARCODE_BASE_URL = `${API.URL}/${API.VERSION_NEXT}/barcode`;
+const BARCODE_USER_URL = `${BARCODE_BASE_URL}/user`;
 
 export const login = (data: LoginMeta) => {
   return axios({
@@ -65,7 +67,7 @@ export const forgotPassword = (data: ForgotPasswordRequestData) => {
 export const resetPassword = (data: ResetPasswordMeta) => {
   return axios({
     method: 'post',
-    url: `${USER_URL}/reset-password`,
+    url: `${data.isBarcode ? BARCODE_USER_URL : USER_URL}/reset-password`,
     data,
   }).catch((e) => {
     return Promise.reject(e.response.data);
