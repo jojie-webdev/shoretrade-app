@@ -167,10 +167,7 @@ const NotificationSettingsCategoryItem = (
           <LeftComponentContainer>
             <div className="icon-container">{SettingsIcon()}</div>
             <div>
-              <Typography
-                color={defaultColor}
-                style={{ fontFamily: 'Media Sans' }}
-              >
+              <Typography color={defaultColor} altFont>
                 {title}
               </Typography>
               <div>{isMobile && <TextIndicators />}</div>

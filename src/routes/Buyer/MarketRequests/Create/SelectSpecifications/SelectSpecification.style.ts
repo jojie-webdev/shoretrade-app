@@ -66,7 +66,6 @@ export const SpecsContainer = styled.div`
 `;
 
 export const StyledTitle = styled(Typography)`
-  font-family: 'Media Sans';
   margin-bottom: 12;
 `;
 

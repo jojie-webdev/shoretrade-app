@@ -63,7 +63,8 @@ const ShippingDateModal = (props: ShippingDateModalProps): JSX.Element => {
         <Typography
           color="noshade"
           variant="title5"
-          style={{ fontFamily: 'Media Sans', marginBottom: '24px' }}
+          style={{ marginBottom: '24px' }}
+          altFont
         >
           {title || 'Shipping Date'}
         </Typography>

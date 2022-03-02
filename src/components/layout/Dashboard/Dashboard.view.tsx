@@ -195,7 +195,9 @@ const Header = ({
         )}
 
         <div className="title-container">
-          <PageTitle color={textColor}>{pageTitle}</PageTitle>
+          <PageTitle altFont color={textColor}>
+            {pageTitle}
+          </PageTitle>
         </div>
       </div>
 

@@ -284,6 +284,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
         variant="title5"
         weight="700"
         color="shade9"
+        altFont
       >
         Select Payment Method
       </Typography>

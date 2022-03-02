@@ -10,7 +10,7 @@ const MobileHeader = (props: MobileHeaderProps): JSX.Element => {
   const isSeller = theme.appType === 'seller';
 
   return (
-    <Header color={isSeller ? 'noshade' : 'shade9'} style={props.style}>
+    <Header altFont color={isSeller ? 'noshade' : 'shade9'} style={props.style}>
       {props.children}
     </Header>
   );

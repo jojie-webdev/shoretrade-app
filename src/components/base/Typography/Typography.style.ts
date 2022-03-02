@@ -93,4 +93,10 @@ export const P = styled.p<TypographyProps>`
   text-align: ${({ align }) => align || 'left'};
   margin: ${({ margin }) => margin || '0'};
   ${({ fontStyle }) => (fontStyle ? `font-style: ${fontStyle};` : '')}
+  font-family: ${({ theme, altFont }) => {
+    if (altFont) {
+      return theme.isSFM ? 'Canela;' : 'Media Sans;';
+    }
+    return theme.isSFM ? 'Graphik;' : 'inherit;';
+  }}
 `;

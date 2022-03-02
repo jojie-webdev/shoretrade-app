@@ -176,7 +176,8 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
           <Typography
             color="shade4"
             className="row-label-friendly-text"
-            style={{ fontFamily: 'Media Sans', marginBottom: 0 }}
+            style={{ marginBottom: 0 }}
+            altFont
           >
             What product do you have available to offer?{' '}
           </Typography>
@@ -240,7 +241,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
                   <Typography
                     color="shade4"
                     className="row-label-friendly-text"
-                    style={{ fontFamily: 'Media Sans' }}
+                    altFont
                   >
                     What size product do you have or let the buyer know it’s
                     ungraded.
@@ -304,11 +305,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
             <Col xs={12}>
               <Row>
                 <Col xs={12} className="textfield-col">
-                  <Typography
-                    color="shade4"
-                    className="friendly-text"
-                    style={{ fontFamily: 'Media Sans' }}
-                  >
+                  <Typography color="shade4" className="friendly-text" altFont>
                     How much product are you willing to offer?
                   </Typography>
                   <TextField
@@ -338,11 +335,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
             <Col xs={12}>
               <Row>
                 <Col xs={12} className="textfield-col">
-                  <Typography
-                    className="friendly-text"
-                    color="shade4"
-                    style={{ fontFamily: 'Media Sans' }}
-                  >
+                  <Typography className="friendly-text" color="shade4" altFont>
                     How much do you want to charge for this product including
                     delivery to {getShippingTo(props.buyerRequest.shippingTo)}?
                   </Typography>
@@ -374,11 +367,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
             <Col xs={12}>
               <Row>
                 <Col xs={12} className="textfield-col">
-                  <Typography
-                    className="friendly-text"
-                    color="shade4"
-                    style={{ fontFamily: 'Media Sans' }}
-                  >
+                  <Typography className="friendly-text" color="shade4" altFont>
                     When will you be able to deliver the product to the buyer?
                   </Typography>
                   <DatePickerDropdown
@@ -406,11 +395,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
             <Col xs={12}>
               <Row>
                 <Col xs={12} className="textfield-col shipping-from-col">
-                  <Typography
-                    className="friendly-text"
-                    color="shade4"
-                    style={{ fontFamily: 'Media Sans' }}
-                  >
+                  <Typography className="friendly-text" color="shade4" altFont>
                     What address will you be shipping the product from?
                   </Typography>
                   <Select

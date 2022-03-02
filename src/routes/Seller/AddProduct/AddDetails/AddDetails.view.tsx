@@ -541,10 +541,10 @@ const AddDetails = ({
             color="noshade"
             className="title"
             style={{
-              fontFamily: 'Media Sans',
               lineHeight: '24px',
               marginBottom: '8px',
             }}
+            altFont
           >
             Sales Channel
           </Typography>
@@ -598,11 +598,11 @@ const AddDetails = ({
             color="noshade"
             className="title"
             style={{
-              fontFamily: 'Media Sans',
               lineHeight: '24px',
               marginTop: '40px',
               marginBottom: '8px',
             }}
+            altFont
           >
             Product Information
           </Typography>

@@ -87,12 +87,7 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
       {...modalProps}
     >
       <>
-        <Typography
-          weight="bold"
-          variant="title4"
-          color={textColor}
-          style={{ fontFamily: 'Media Sans' }}
-        >
+        <Typography weight="bold" variant="title4" color={textColor} altFont>
           Negotiate
         </Typography>
         <Inputs>

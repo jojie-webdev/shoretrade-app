@@ -98,8 +98,9 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
             <div className="menu-header">
               <Typography
                 variant="body"
-                style={{ fontFamily: 'Media Sans', fontSize: '20px' }}
+                style={{ fontSize: '20px' }}
                 color={isSeller ? 'noshade' : 'shade9'}
+                altFont
               >
                 Notifications
               </Typography>

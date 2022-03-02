@@ -85,7 +85,6 @@ export const ModalContentContainer = styled.div`
 export const ModalTitle = styled(Typography)`
   margin-bottom: 12px;
   font-weight: 500;
-  font-family: 'Media Sans', sans-serif;
 `;
 
 export const EmptyValue = styled.span`

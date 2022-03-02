@@ -127,7 +127,8 @@ const ReviewOfferView = ({ setStep, ...props }: ReviewOfferGeneratedProps) => {
             <Typography
               variant="title4"
               color="noshade"
-              style={{ fontFamily: 'Media Sans', marginBottom: 24 }}
+              style={{ marginBottom: 24 }}
+              altFont
             >
               {properOffer.type || ''}
             </Typography>

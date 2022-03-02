@@ -74,7 +74,6 @@ export const HistoricalListingsCard = styled(Card)`
 
 export const Title = styled(Typography)`
   color: ${({ theme }) => theme.grey.noshade};
-  font-family: Media Sans;
   font-weight: bold;
   font-size: 20px;
   line-height: 32px;

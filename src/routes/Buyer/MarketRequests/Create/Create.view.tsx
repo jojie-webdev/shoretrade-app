@@ -198,11 +198,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
                   <TypographyView variant="label" color="shade7">
                     Can&apos;t find your product?
                   </TypographyView>
-                  <TypographyView
-                    weight="700"
-                    variant="title5"
-                    style={{ fontFamily: 'Media Sans' }}
-                  >
+                  <TypographyView weight="700" variant="title5" altFont>
                     Create a new Market Request
                   </TypographyView>
                 </HeaderContainer>
@@ -543,12 +539,7 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
           Your request has been sent to our network of sellers.
         </Typography>
         <br />
-        <Typography
-          style={{ fontFamily: 'Media Sans' }}
-          color="shade7"
-          variant="body"
-          weight="bold"
-        >
+        <Typography altFont color="shade7" variant="body" weight="bold">
           What happens next?
         </Typography>
         <br />

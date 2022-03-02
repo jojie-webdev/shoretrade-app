@@ -6,7 +6,6 @@ import styled from 'utils/styled';
 
 export const Container = styled.div`
   .header-text {
-    font-family: 'Media Sans';
     margin-bottom: 20px;
   }
 

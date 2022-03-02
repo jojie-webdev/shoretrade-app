@@ -234,7 +234,7 @@ export default function ListingView(props: ListingViewProps) {
   const DownloadConfirmationModal = (
     <Modal isOpen={showModal} onClickClose={() => setShowModal(false)}>
       <ModalContentContainer>
-        <ModalTitle variant="title5" className="title">
+        <ModalTitle altFont variant="title5" className="title">
           Confirm Download
         </ModalTitle>
         You are about to download <strong>{downloadListingCount}</strong>{' '}

@@ -22,10 +22,7 @@ const NumberedHero = (props: NumberedHeroProps): JSX.Element => {
       <Col style={{ alignItems: 'center' }}>
         <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}>
           <NumberContainer>
-            <TypographyView
-              color="shade6"
-              style={{ fontFamily: 'Media Sans', marginTop: 4 }}
-            >
+            <TypographyView color="shade6" style={{ marginTop: 4 }} altFont>
               /
             </TypographyView>
             <TypographyView variant="title3" weight="400" color="shade9">

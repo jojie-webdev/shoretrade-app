@@ -424,7 +424,6 @@ export const HeaderContainer = styled.nav<{ isHomeOld?: boolean }>`
 `;
 
 export const PageTitle = styled(Typography)`
-  font-family: 'Media Sans', sans-serif;
   font-weight: bold;
   font-size: ${pxToRem(32)};
   line-height: 40px;

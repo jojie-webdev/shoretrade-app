@@ -288,7 +288,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
                   weight="700"
                   color="shade8"
                   variant="title6"
-                  style={{ fontFamily: 'Media Sans' }}
+                  altFont
                 >
                   There are no offers yet
                 </Typography>
@@ -360,12 +360,7 @@ const MarketRequestDetailView = (props: MarketRequestDetailProps) => {
 
   const renderItemName = () => (
     <Col>
-      <Typography
-        color="shade9"
-        font-weight="700"
-        style={{ fontFamily: 'Media Sans' }}
-        variant="title5"
-      >
+      <Typography color="shade9" font-weight="700" altFont variant="title5">
         {data?.name}
       </Typography>
     </Col>

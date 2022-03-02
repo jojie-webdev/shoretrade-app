@@ -480,7 +480,7 @@ const Step1 = ({
 
       <SummaryContentContainer>
         {isReview && (
-          <Typography color="noshade" style={{ fontFamily: 'Media Sans' }}>
+          <Typography color="noshade" altFont>
             The buyer has requested the following items to be shipped to{' '}
             {getAddressFromBuyerRequest()}.
           </Typography>

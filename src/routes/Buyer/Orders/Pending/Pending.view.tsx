@@ -43,10 +43,7 @@ const Pending = (props: OrdersGeneratedProps) => {
         <>
           <TitleRow>
             <Col md={12} className="title-col">
-              <Typography
-                color="shade9"
-                style={{ fontFamily: 'Media Sans', fontSize: '20px' }}
-              >
+              <Typography color="shade9" style={{ fontSize: '20px' }} altFont>
                 Pending
               </Typography>
               <span className="notification">{pendingOrdersTotal}</span>

@@ -283,7 +283,7 @@ const ConfirmView = (props: ConfirmProps) => {
         <Typography
           color="noshade"
           variant="title5"
-          style={{ fontFamily: 'Media Sans' }}
+          altFont
         >
           Confirm Weights
         </Typography>

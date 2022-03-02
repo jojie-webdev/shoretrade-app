@@ -155,11 +155,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
     const idxToWordKeys = ['first', 'second', 'third', 'fourth'];
     return (
       <FriendlyTextContainer>
-        <Typography
-          color="shade10"
-          className="row-label-friendly-text"
-          style={{ fontFamily: 'Media Sans' }}
-        >
+        <Typography color="shade10" className="row-label-friendly-text" altFont>
           Please select your {idxToWordKeys[props.index]} specification
         </Typography>
         <Typography
@@ -229,6 +225,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
             </Visible>
             <StyledTitle
               variant="title5"
+              altFont
               weight="500"
               style={{ marginBottom: 12 }}
             >

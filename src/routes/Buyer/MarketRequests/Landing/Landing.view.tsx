@@ -408,7 +408,7 @@ const MarketRequestsLandingView = (
   //       </Typography>
   //       <br />
   //       <Typography
-  //         style={{ fontFamily: 'Media Sans' }}
+  //         altFont
   //         color="shade7"
   //         variant="body"
   //         weight="bold"
@@ -464,22 +464,12 @@ const MarketRequestsLandingView = (
       <Row nogutter justify="around" align="center" className="header">
         <Col>
           <Hidden xs sm>
-            <Typography
-              variant="title5"
-              weight="700"
-              color="shade9"
-              style={{ fontFamily: 'Media Sans' }}
-            >
+            <Typography variant="title5" weight="700" color="shade9" altFont>
               My Market Requests
             </Typography>
           </Hidden>
           <Visible xs sm>
-            <Typography
-              variant="title5"
-              weight="700"
-              color="shade9"
-              style={{ fontFamily: 'Media Sans' }}
-            >
+            <Typography variant="title5" weight="700" color="shade9" altFont>
               Market Requests
             </Typography>
           </Visible>

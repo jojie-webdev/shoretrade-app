@@ -155,10 +155,7 @@ const GroupedOrderItems = (props: GroupedOrderItemsProps) => {
         <React.Fragment key={key}>
           <TitleRow>
             <Col md={12} className="title-col">
-              <Typography
-                color="shade9"
-                style={{ fontFamily: 'Media Sans', fontSize: '20px' }}
-              >
+              <Typography color="shade9" style={{ fontSize: '20px' }} altFont>
                 {moment(group.title).format('Do MMMM')}
               </Typography>
               <span className="notification notif-reg">{group.orderTotal}</span>

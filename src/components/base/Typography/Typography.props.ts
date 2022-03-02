@@ -29,4 +29,5 @@ export interface TypographyProps extends HTMLAttributes<HTMLParagraphElement> {
   disabled?: boolean;
   margin?: string;
   fontStyle?: string;
+  altFont?: boolean;
 }

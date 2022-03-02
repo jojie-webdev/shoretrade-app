@@ -32,7 +32,7 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
           variant="title4"
           color={isSeller ? 'noshade' : 'shade8'}
           className="title"
-          style={{ fontFamily: 'Media Sans' }}
+          altFont
         >
           {title}
         </Typography>
@@ -43,7 +43,7 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
           variant="title5"
           color={isSeller ? 'noshade' : 'shade8'}
           className="title"
-          style={{ fontFamily: 'Media Sans' }}
+          altFont
         >
           {title}
         </Typography>
