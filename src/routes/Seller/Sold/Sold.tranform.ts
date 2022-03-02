@@ -349,9 +349,14 @@ export const computeTotalWeightAndPrice = (newObj: { [p: string]: any }) =>
           return {
             ...order,
             totalPrice: `${toPrice(order.totalPrice)}`,
-            totalWeight: `${order.totalWeight.toFixed(
-              2
-            )} ${formatMeasurementUnit(order.groupMeasurementUnit)}`,
+            totalWeight: `${newObj[key]
+              .reduce(
+                (accum: any, o: { totalWeight: any }) => accum + o.totalWeight,
+                0
+              )
+              .toFixed(2)} ${formatMeasurementUnit(
+              order.groupMeasurementUnit
+            )}`,
           };
         }
       ),
