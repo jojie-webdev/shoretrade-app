@@ -814,8 +814,8 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
               paymentMode: 'CREDIT_CARD',
               card: {
                 number: parseInt(cardNumber.replaceAll(/\s/g, '')),
-                exp_month: expiryDate.split('/')[0],
-                exp_year: expiryDate.split('/')[1],
+                exp_month: parseInt(expiryDate.split('/')[0]),
+                exp_year: parseInt(expiryDate.split('/')[1]),
                 cvc: parseInt(cvc),
                 name: nameOnCard,
               },

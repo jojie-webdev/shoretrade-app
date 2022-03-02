@@ -77,6 +77,7 @@ import getSellerOrdersPlaced from './getSellerOrdersPlaced';
 import getSellerOrdersTransit from './getSellerOrdersTransit';
 import getShippingQuote from './getShippingQuote';
 import getStates from './getStates';
+import getSubscriptionPlans from './getSubscriptionPlans';
 import getTransactionHistory from './getTransactionHistory';
 import getUser from './getUser';
 import globalModal from './globalModal';
@@ -124,6 +125,7 @@ export default (routeHistory: History) =>
     Object.fromEntries(
       Object.entries({
         /* PLOP_INJECT_INSTANCE */
+        getSubscriptionPlans,
         getAllBuyerOrders,
         getSellerOrdersPending,
         getAllSellerOrders,

@@ -25,6 +25,16 @@ export const SELLER_STEPS = [
       'Let us know more about your business by selecting your market sector.',
   },
   {
+    title: 'Your Plan',
+    description:
+      'Sell your seafood products directly to businesses with a few clicks.',
+  },
+  {
+    title: 'Payment Method',
+    description:
+      'ShoreTrade offers multiple payment options, including the ability to apply for ShorePay; our Buy Now Pay Later financing option.',
+  },
+  {
     title: "I'm Selling",
     description:
       'Optimise your experience and select the seafood products your business commonly sells.',
@@ -48,14 +58,19 @@ export const BUYER_STEPS = [
       'Provide your business details so we know where to send your purchases.',
   },
   {
-    title: 'Payment Method',
-    description:
-      'ShoreTrade offers multiple payment options, including the ability to apply for ShorePay; our Buy Now Pay Later financing option.',
-  },
-  {
     title: 'Market Sector',
     description:
       'Let us know more about your business by selecting your market sector.',
+  },
+  {
+    title: 'Your Plan',
+    description:
+      'Gain access to renowned Seafood Sellers to purchase products for your business.',
+  },
+  {
+    title: 'Payment Method',
+    description:
+      'ShoreTrade offers multiple payment options, including the ability to apply for ShorePay; our Buy Now Pay Later financing option.',
   },
   {
     title: 'I’m looking for',
@@ -179,15 +194,14 @@ export const SELLER_VARIATIONS = [
 export const BUYER_STEP_SUBTITLE: { [key: number]: string } = {
   2: 'By providing us with your business details, we will automatically generate invoices for you and deliver purchases to your door.',
   3: 'Please, let us know your industry so we can provide you with more tailored information.',
-  4: 'These selections will result in your ShoreTrade experience being more personalised through customised search results and new product notifications. They can also be amended at any time within your account.',
+  6: 'These selections will result in your ShoreTrade experience being more personalised through customised search results and new product notifications. They can also be amended at any time within your account.',
 };
 
 export const SELLER_STEP_SUBTITLE: { [key: number]: string } = {
   2: 'By providing your business details we will automatically generate invoices and can organise shipment of your sales.',
   3: 'Providing your bank details allows us to deposit your sales directly to your nominated account.',
-  4: '',
   5: 'By choosing your market sector, we learn more about your business and can optimise your ShoreTrade experience.',
-  6: 'These selections will result in a personalised ShoreTrade experience through customised notifications and relevant market statistics. They can also be amended at any time within your account.',
+  8: 'These selections will result in a personalised ShoreTrade experience through customised notifications and relevant market statistics. They can also be amended at any time within your account.',
 };
 
 export const BUYER_PAYMENT_METHOD_DETAILS = [

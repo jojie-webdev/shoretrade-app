@@ -181,11 +181,20 @@ const Register = (): JSX.Element => {
       accountName: '',
       bsb: '',
       accountNumber: '',
-      selectedPaymentMethod: '',
-      estimatedAnnualRevenue: '',
+
       selectedMarketSector: '',
       tncAgreement: false,
       categoryMarketSector: '',
+      // plan payment
+      cardNumber: '',
+      cardExpiryDate: '',
+      cardCvc: '',
+      cardName: '',
+      cardBillingAddress: '',
+      cardZipCode: '',
+      cardCity: '',
+      cardState: '',
+      cardToken: '',
       //license
       licenses: [],
     }
@@ -219,6 +228,7 @@ const Register = (): JSX.Element => {
           marketSector: details.categoryMarketSector,
           marketSelling: selectedCategoryTypes,
           licenses: details.licenses,
+          cardToken: details.cardToken,
         })
       );
     }
@@ -250,6 +260,7 @@ const Register = (): JSX.Element => {
           userGroup: 'buyer',
           marketSector: details.categoryMarketSector,
           marketBuying: selectedCategoryTypes,
+          cardToken: details.cardToken,
         })
       );
     }

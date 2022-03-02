@@ -5,6 +5,19 @@ import { storiesOf } from '@storybook/react';
 import {
   /* PLOP_INJECT_IMPORT */
   SfmLogo,
+  ArrowGrowth,
+  SellingOutline,
+  FileAlt,
+  HelmOutline,
+  CreditCardOutline,
+  ShoretradeProSellerLogo,
+  ShoretradeProLogo,
+  BoxOutline,
+  ListOutline,
+  SearchOutline,
+  DashboardOutline,
+  CategoriesOutline,
+  Swatchbook,
   LuggageCart,
   OrderPlaced,
   AddListing,
@@ -205,6 +218,45 @@ storiesOf('base/SVG', module).add('Summary', () => {
         {/* PLOP_INJECT_INSTANCE*/}
         <Wrapper label="SfmLogo">
           <SfmLogo width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="ArrowGrowth">
+          <ArrowGrowth width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="SellingOutline">
+          <SellingOutline width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="FileAlt">
+          <FileAlt width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="HelmOutline">
+          <HelmOutline width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="CreditCardOutline">
+          <CreditCardOutline width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="ShoretradeProSellerLogo">
+          <ShoretradeProSellerLogo width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="ShoretradeProLogo">
+          <ShoretradeProLogo width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="BoxOutline">
+          <BoxOutline width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="ListOutline">
+          <ListOutline width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="SearchOutline">
+          <SearchOutline width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="DashboardOutline">
+          <DashboardOutline width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="CategoriesOutline">
+          <CategoriesOutline width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Swatchbook">
+          <Swatchbook width={30} height={30} />
         </Wrapper>
         <Wrapper label="LuggageCart">
           <LuggageCart width={30} height={30} />

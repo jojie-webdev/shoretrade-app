@@ -1,7 +1,6 @@
 import { fork, all } from 'redux-saga/effects';
 
 /* PLOP_INJECT_IMPORT */
-import getAllBuyerOrders from './getAllBuyerOrders';
 import addAddress from './addAddress';
 import addCardAndPay from './addCardAndPay';
 import addCardToken from './addCardToken';
@@ -30,6 +29,7 @@ import getAccountCompletion from './getAccountCompletion';
 import getActiveOffers from './getActiveOffers';
 import getAddresses from './getAddresses';
 import getAllBuyerListings from './getAllBuyerListings';
+import getAllBuyerOrders from './getAllBuyerOrders';
 import getAllListings from './getAllListings';
 import getAllMarketRequest from './getAllMarketRequest';
 import getAllMarketRequestFilters from './getAllMarketRequestFilters';
@@ -67,6 +67,7 @@ import getSellerLicense from './getSellerLicense';
 import getSellerOrders from './getSellerOrders';
 import getShippingQuote from './getShippingQuote';
 import getStates from './getStates';
+import getSubscriptionPlans from './getSubscriptionPlans';
 import getTransactionHistory from './getTransactionHistory';
 import getUser from './getUser';
 import globalModal from './globalModal';
@@ -111,6 +112,7 @@ import verify from './verify';
 
 const sagas = [
   /* PLOP_INJECT_INSTANCE */
+  getSubscriptionPlans,
   getAllBuyerOrders,
   getAllSellerOrders,
   getHistoricalListings,

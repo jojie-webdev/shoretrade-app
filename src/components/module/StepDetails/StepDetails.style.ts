@@ -11,15 +11,17 @@ export const StepNumberContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.grey.shade9};
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
+  background-color: ${({ theme }) =>
+    theme.appType === 'buyer' ? theme.grey.noshade : theme.grey.shade9};
+  ${({ theme }) =>
+    theme.appType === 'buyer' ? `border: 1px solid ${theme.grey.shade3};` : ''}
+  box-shadow: 0px 4px 12px rgba(41, 43, 50, 0.04);
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
 `;
 
-export const StepNumber = styled(Typography)`
-  color: ${({ theme }) => theme.grey.shade1};
-`;
+export const StepNumber = styled(Typography)``;
 
 export const StepInfo = styled.div`
   display: flex;

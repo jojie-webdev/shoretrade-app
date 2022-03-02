@@ -42,8 +42,8 @@ export interface AcceptOffer {
   existingCard?: string;
   card?: {
     number: number;
-    exp_month: string;
-    exp_year: string;
+    exp_month: number;
+    exp_year: number;
     cvc: number;
     name: string;
   };

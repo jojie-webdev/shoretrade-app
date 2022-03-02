@@ -227,6 +227,10 @@ import {
 } from './GetShippingQuoteState';
 import { GetStatesMeta, GetStatesPayload } from './GetStatesState';
 import {
+  GetSubscriptionPlansMeta,
+  GetSubscriptionPlansPayload,
+} from './GetSubscriptionPlansState';
+import {
   GetTransactionHistoryMeta,
   GetTransactionHistoryPayload,
 } from './GetTransactionHistoryState';
@@ -303,6 +307,10 @@ import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
+  getSubscriptionPlans: AsyncState<
+    GetSubscriptionPlansMeta,
+    GetSubscriptionPlansPayload
+  >;
   getAllBuyerOrders: AsyncState<
     GetAllBuyerOrdersMeta,
     GetAllBuyerOrdersPayload
