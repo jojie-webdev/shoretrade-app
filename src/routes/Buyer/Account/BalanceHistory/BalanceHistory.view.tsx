@@ -1,22 +1,30 @@
 import React from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
+import Button from 'components/base/Button';
+import { Prawn } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import moment from 'moment';
 import { Col } from 'react-grid-system';
+import { useHistory } from 'react-router-dom';
 import { toPrice } from 'utils/String/toPrice';
 
 import { BalanceHistoryGeneratedProps } from './BalanceHistory.props';
 import {
   Container,
+  EmptyStateContainer,
   Transx,
   TransxLeft,
   TransxRight,
 } from './BalanceHistory.style';
 
-const BalanceHistoryView = (props: BalanceHistoryGeneratedProps) => {
+const BalanceHistoryView = ({
+  isLoading,
+  transactions,
+}: BalanceHistoryGeneratedProps) => {
+  const history = useHistory();
   const getTransactionLabel = (
     desc: string
   ): {
@@ -111,14 +119,31 @@ const BalanceHistoryView = (props: BalanceHistoryGeneratedProps) => {
               label: 'Balance & Payments',
               link: BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
             },
-            { label: 'Credit History' },
+            { label: 'Payment History' },
           ]}
         />
       </div>
 
       <Col md={12}>
-        {props.isLoading && <Loading />}
-        {props.transactions.map((transaction, idx) => {
+        {isLoading && <Loading />}
+        {!isLoading && transactions.length === 0 && (
+          <EmptyStateContainer>
+            <Prawn />
+            <Typography variant="title4" style={{ fontFamily: 'Media Sans' }}>
+              There’s no invoice here
+            </Typography>
+            <Typography
+              variant="body"
+              weight="400"
+              color="shade7"
+              style={{ margin: '24px 0' }}
+            >
+              There’s no invoices available for your account
+            </Typography>
+            <Button onClick={() => history.goBack()} text="Back" />
+          </EmptyStateContainer>
+        )}
+        {transactions.map((transaction, idx) => {
           const { title, subtitle } = getTransactionLabel(
             transaction.description
           );

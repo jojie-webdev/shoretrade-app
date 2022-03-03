@@ -8,6 +8,7 @@ export const Container = styled.div`
 
 export const TopSection = styled.div`
   display: flex;
+  margin-bottom: 30px;
   @media ${BREAKPOINTS['sm']} {
     display: grid;
     grid-row-gap: 10px;
@@ -44,25 +45,5 @@ export const ChangeMarketSector = styled.div<{
 
   .change-btn:hover {
     cursor: pointer;
-  }
-`;
-
-export const FeaturesContainer = styled.div<{
-  isSeller: boolean;
-}>`
-  margin-top: 30px;
-  margin-bottom: 15px;
-  display: grid;
-  grid-row-gap: 24px;
-
-  .icon-holder {
-    display: grid;
-    padding: 9px;
-    border-radius: 12px;
-    background: ${({ isSeller }) =>
-      isSeller ? theme.grey.shade9 : theme.grey.noshade};
-    border: 1px solid
-      ${({ isSeller }) => (isSeller ? theme.grey.shade9 : theme.grey.shade3)};
-    box-shadow: 0px 4px 12px rgba(41, 43, 50, 0.04);
   }
 `;

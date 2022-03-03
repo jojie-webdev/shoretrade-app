@@ -155,6 +155,10 @@ import {
   GetCustomFormDataPayload,
 } from './GetCustomFormDataState';
 import {
+  GetFreeTrialExpiryMeta,
+  GetFreeTrialExpiryPayload,
+} from './GetFreeTrialExpiryState';
+import {
   GetHistoricalListingsMeta,
   GetHistoricalListingsPayload,
 } from './GetHistoricalListingsState';
@@ -307,6 +311,10 @@ import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
+  getFreeTrialExpiry: AsyncState<
+    GetFreeTrialExpiryMeta,
+    GetFreeTrialExpiryPayload
+  >;
   getSubscriptionPlans: AsyncState<
     GetSubscriptionPlansMeta,
     GetSubscriptionPlansPayload

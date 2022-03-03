@@ -67,7 +67,7 @@ const BalanceView = (props: BalanceGeneratedProps) => {
 
           {!isMobile && (
             <LinkCreditHistory
-              value="Credit History"
+              value="Payment History"
               onClick={() => {
                 history.push(`${BUYER_ACCOUNT_ROUTES.BALANCE_HISTORY}`);
               }}
@@ -85,7 +85,7 @@ const BalanceView = (props: BalanceGeneratedProps) => {
 
           {isMobile && (
             <LinkCreditHistory
-              value="Credit History"
+              value="Payment History"
               onClick={() => {
                 history.push(`${BUYER_ACCOUNT_ROUTES.BALANCE_HISTORY}`);
               }}

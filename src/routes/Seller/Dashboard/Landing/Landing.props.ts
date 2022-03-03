@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+import { GetFreeTrialExpiryResponseData } from 'types/store/GetFreeTrialExpiryState';
 
 type RangeObject = {
   id: string;
@@ -82,4 +83,5 @@ export interface DashboardLandingGeneratedProps {
   userPending: boolean;
   salesData: SalesData;
   topCategoriesData: TopCategoriesData;
+  freeTrialCountdown?: GetFreeTrialExpiryResponseData;
 }

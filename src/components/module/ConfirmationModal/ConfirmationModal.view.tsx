@@ -56,13 +56,16 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
       <Content>
         {renderTitle()}
         <div className="content-container">
-          <Typography
-            variant="body"
-            color={isSeller ? 'noshade' : 'shade8'}
-            weight="Medium"
-          >
-            {description}
-          </Typography>
+          {description && (
+            <Typography
+              variant="body"
+              color={isSeller ? 'noshade' : 'shade8'}
+              weight="Medium"
+            >
+              {description}
+            </Typography>
+          )}
+          {children && <>{children}</>}
         </div>
         <div className="actions-container">
           {!hideCancel && (

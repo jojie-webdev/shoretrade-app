@@ -114,6 +114,7 @@ export const BUYER_ROUTES = {
   NOTIFICATIONS: `${BUYER_ROOT}/notifications`,
   NOTIFICATIONS_SETTINGS: `${BUYER_ROOT}/notifications-settings`,
   BARCODE_SCANNER: `${BUYER_ROOT}/barcode-scanner`,
+  UPGRADE: `${BUYER_ROOT}/upgrade`,
 };
 
 export const BUYER_MARKET_REQUEST_ROUTES = {
@@ -144,4 +145,5 @@ export const BUYER_ACCOUNT_ROUTES = {
   ACCOUNT_COMPLETION: `${BUYER_ROUTES.ACCOUNT}/account-completion`,
   MARKET_INTERESTS: `${BUYER_ROUTES.ACCOUNT}/market-interests`,
   NOTIFICATIONS_SETTINGS: `${BUYER_ROUTES.ACCOUNT}/notifications`,
+  SUBSCRIPTION_PLAN: `${BUYER_ROUTES.ACCOUNT}/subscription-plan`,
 };

@@ -43,6 +43,7 @@ import Orders from './Orders';
 import ProductDetails from './ProductDetails';
 import Search from './Search';
 import SellerDetails from './SellerDetails';
+import Upgrade from './Upgrade';
 
 const ROUTES: Routes = {
   HOME: {
@@ -155,6 +156,12 @@ const ROUTES: Routes = {
     path: BUYER_ROUTES.SELLERS,
     children: <SellerLanding />,
     title: 'Sellers',
+    hideFromSidebar: true,
+  },
+  UPGRADE: {
+    path: BUYER_ROUTES.UPGRADE,
+    children: <Upgrade />,
+    title: 'Upgrade',
     hideFromSidebar: true,
   },
 };

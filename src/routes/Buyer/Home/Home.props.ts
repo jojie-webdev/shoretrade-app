@@ -1,4 +1,5 @@
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
+import { GetFreeTrialExpiryResponseData } from 'types/store/GetFreeTrialExpiryState';
 
 export type CategoryResults = {
   id: string;
@@ -29,6 +30,7 @@ export interface HomeGeneratedProps {
   favouriteSellers: SellerResults[];
   sellers: SellerResults[];
   loadingHomePage: boolean;
+  freeTrialCountdown?: GetFreeTrialExpiryResponseData;
 }
 
 export interface HomeData {

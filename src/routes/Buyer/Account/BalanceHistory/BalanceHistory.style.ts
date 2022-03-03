@@ -6,6 +6,16 @@ export const Container = styled.div`
   }
 `;
 
+export const EmptyStateContainer = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+  svg {
+    margin: 30px 0;
+  }
+`;
+
 export const Transx = styled.div`
   flex: 1;
   padding: 18px 24px;

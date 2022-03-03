@@ -2,18 +2,39 @@ import React from 'react';
 
 import Button from 'components/base/Button';
 import Select from 'components/base/Select';
+import {
+  Account,
+  Anchor,
+  CategoriesOutline,
+  Cog,
+  CreditCardOutline,
+  FileAlt,
+  HelmOutline,
+  Location,
+  Lock,
+} from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import AccountPicture from 'components/module/AccountPicture';
+import FreeTrialCountdown from 'components/module/FreeTrialCountdown';
+import GradientProgressCircle from 'components/module/GradientProgressCircle';
 import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import qs from 'qs';
 import { isEmpty } from 'ramda';
+import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
+import theme from 'utils/Theme';
 
 import { LandingGeneratedProps } from './Landing.props';
-import { Container, Header, NavInteraction } from './Landing.style';
+import {
+  Container,
+  Header,
+  NavInteraction,
+  UserInfoContainer,
+  AccountPictureProgress,
+} from './Landing.style';
 
 const LandingView = (props: LandingGeneratedProps) => {
   const history = useHistory();
@@ -29,35 +50,94 @@ const LandingView = (props: LandingGeneratedProps) => {
     updateImage,
     updatingImage,
     permission,
+    accountCompletion,
+    freeTrialCountdown,
   } = props;
+
+  const getIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'account':
+        return <Account fill={theme.grey.shade6} />;
+      case 'creditCardOutline':
+        return <CreditCardOutline fill={theme.grey.shade6} />;
+      case 'dashboardOutline':
+        return <HelmOutline fill={theme.grey.shade6} />;
+      case 'fileAlt':
+        return <FileAlt fill={theme.grey.shade6} />;
+      case 'anchor':
+        return <Anchor fill={theme.grey.shade6} />;
+      case 'lock':
+        return <Lock width={24} height={24} fill={theme.grey.shade6} />;
+      case 'location':
+        return <Location width={24} height={24} fill={theme.grey.shade6} />;
+      case 'categoriesOutline':
+        return <CategoriesOutline fill={theme.grey.shade6} />;
+      case 'cog':
+        return <Cog fill={theme.grey.shade6} />;
+    }
+  };
 
   const INTERACTIONS = [
     {
+      iconName: 'account',
       value: 'Account Completion',
       path: BUYER_ACCOUNT_ROUTES.ACCOUNT_COMPLETION,
     },
-    { value: 'Balance & Payments', path: BUYER_ACCOUNT_ROUTES.BANK_DETAILS },
     {
+      iconName: 'creditCardOutline',
+      value: 'Balance & Payments',
+      path: BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
+    },
+    {
+      iconName: 'dashboardOutline',
+      value: 'Your Plan',
+      path: BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
+    },
+    {
+      iconName: 'fileAlt',
+      value: 'Payment History',
+      path: BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
+    },
+    permission
+      ? {
+          iconName: 'anchor',
+          value: 'Linked Accounts & Assistants',
+          path: BUYER_ACCOUNT_ROUTES.LINKED_ACCOUNTS,
+        }
+      : {},
+    {
+      iconName: 'lock',
+      value: 'Change Password',
+      path: BUYER_ACCOUNT_ROUTES.CHANGE_PASSWORD,
+    },
+    {
+      iconName: 'location',
+      value: 'Delivery Address',
+      path: BUYER_ACCOUNT_ROUTES.ADDRESS,
+    },
+    {
+      iconName: 'location',
       value: 'Your Details',
       path: BUYER_ACCOUNT_ROUTES.DETAILS,
     },
-    { value: 'Delivery Address', path: BUYER_ACCOUNT_ROUTES.ADDRESS },
     {
+      iconName: 'categoriesOutline',
       value: "Products I'm Buying",
       path: BUYER_ACCOUNT_ROUTES.MARKET_INTERESTS,
     },
-    permission
-      ? { value: 'Linked Accounts', path: BUYER_ACCOUNT_ROUTES.LINKED_ACCOUNTS }
-      : {},
-    { value: 'Change Password', path: BUYER_ACCOUNT_ROUTES.CHANGE_PASSWORD },
     {
+      iconName: 'cog',
       value: 'Notifications Settings',
       path: `${BUYER_ACCOUNT_ROUTES.NOTIFICATIONS_SETTINGS}${qs.stringify(
         { companyId: currentCompany?.id },
         { addQueryPrefix: true }
       )}`,
     },
-    { value: 'Help & Support', path: BUYER_ACCOUNT_ROUTES.HELP },
+    {
+      iconName: 'cog',
+      value: 'Help & Support',
+      path: BUYER_ACCOUNT_ROUTES.HELP,
+    },
   ];
 
   if (loadingUser) {
@@ -73,61 +153,84 @@ const LandingView = (props: LandingGeneratedProps) => {
 
   return (
     <Container>
-      <Header>
-        <div className="left-content">
-          <AccountPicture
-            profilePicture={profilePicture}
-            updateImage={updateImage}
-            updatingImage={updatingImage}
-          />
-          <div>
+      <Row>
+        <Col sm={4}>
+          <UserInfoContainer>
+            <AccountPictureProgress>
+              <AccountPicture
+                size={64}
+                profilePicture={profilePicture}
+                updateImage={updateImage}
+                updatingImage={updatingImage}
+              />
+              <div>
+                <GradientProgressCircle
+                  width={55}
+                  percentage={parseInt(
+                    accountCompletion?.progressPercentage?.replace('%', '') ||
+                      '0'
+                  )}
+                  primaryColor={[theme.brand.success, theme.brand.success]}
+                />
+              </div>
+            </AccountPictureProgress>
+
             <Typography variant="overline" color="shade6">
               {companyRelationship === 'ADMIN' ? 'Owner' : companyRelationship}
             </Typography>
-            <Typography variant="title5" color="shade8">
+
+            <Typography
+              variant="title6"
+              color="shade8"
+              style={{ fontFamily: 'Media Sans' }}
+            >
               {profileName}
             </Typography>
-            {isMobile && (
-              <div style={{ width: 167, marginTop: 8 }}>
-                <Select
-                  label=""
-                  options={companyOptions}
-                  value={currentCompany?.id}
-                  size="small"
-                  grey
-                />
-              </div>
-            )}
-          </div>
-        </div>
 
-        {!isMobile && (
-          <div>
-            <Select
-              label=""
-              options={companyOptions}
-              value={currentCompany?.id}
-              size="small"
-              grey
+            <div style={{ width: '60%' }}>
+              <Select
+                label=""
+                options={companyOptions}
+                value={currentCompany?.id}
+                size="large"
+                grey
+                border="none"
+              />
+            </div>
+          </UserInfoContainer>
+
+          {freeTrialCountdown?.isFreeTrial && (
+            <FreeTrialCountdown
+              daysLeft={freeTrialCountdown.countdown}
+              small={true}
             />
-          </div>
-        )}
-      </Header>
+          )}
+        </Col>
 
-      {INTERACTIONS.map((link: any) => {
-        if (isEmpty(link)) {
-          return <></>;
-        }
-        return (
-          <NavInteraction
-            key={link.path}
-            value={link.value}
-            onClick={() => {
-              history.push(link.path);
-            }}
-          />
-        );
-      })}
+        <Col sm={8}>
+          {INTERACTIONS.map((link: any) => {
+            if (isEmpty(link)) {
+              return <></>;
+            }
+            return (
+              <NavInteraction
+                leftComponent={
+                  <>
+                    <div style={{ marginRight: '13px' }}>
+                      {getIcon(link.iconName)}
+                    </div>
+                    {link.value}
+                  </>
+                }
+                key={link.path}
+                onClick={() => {
+                  history.push(link.path);
+                }}
+              />
+            );
+          })}
+        </Col>
+      </Row>
 
       {isMobile && (
         <Button

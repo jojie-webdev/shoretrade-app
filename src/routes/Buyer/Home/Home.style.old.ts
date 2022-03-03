@@ -2,7 +2,7 @@ import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col } from 'react-grid-system';
 import styled from 'utils/styled';
-import { pxToRem } from 'utils/Theme';
+import theme, { pxToRem } from 'utils/Theme';
 
 export const ViewContainer = styled.div`
   flex-direction: row;
@@ -72,3 +72,12 @@ export const ViewCol = styled(Col)``;
 export const RecentContainer = styled.div``;
 
 export const SellerContainer = styled(CategoriesContainer)``;
+
+export const FreeTrialCountdown = styled.div`
+  padding: 16px;
+  margin: 0 auto 24px auto;
+  width: calc(100% - 200px);
+  display: flex;
+  background: ${theme.grey.noshade};
+  border-radius: 12px;
+`;

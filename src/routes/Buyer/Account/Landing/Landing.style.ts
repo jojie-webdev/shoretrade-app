@@ -25,3 +25,16 @@ export const Header = styled.div`
 export const NavInteraction = styled(Interactions)`
   margin-bottom: 12px;
 `;
+
+export const UserInfoContainer = styled.div`
+  background: ${({ theme }) => theme.grey.noshade};
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 8px;
+`;
+
+export const AccountPictureProgress = styled.div`
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+`;

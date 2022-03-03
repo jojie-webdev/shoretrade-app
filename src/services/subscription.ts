@@ -11,3 +11,15 @@ export const getPlans = () => {
     return Promise.reject(e.response.data);
   });
 };
+
+export const getFreeTrialExpiry = (token: string) => {
+  return axios({
+    method: 'get',
+    url: `${URL}/free-trial-expiry`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).catch((e) => {
+    return Promise.reject(e.response.data);
+  });
+};

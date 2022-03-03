@@ -21,6 +21,7 @@ import Assistants from './LinkedAccounts';
 import MarketInterests from './MarketInterests';
 import NotificationsSettings from './NotificationsSettings';
 import YourDetails from './YourDetails';
+import { SubscriptionPlan } from './SubscriptionPlan/SubscriptionPlan.container';
 
 const ROUTES: Routes = {
   LANDING: {
@@ -94,6 +95,10 @@ const ROUTES: Routes = {
   NOTIFICATIONS_SETTINGS: {
     path: BUYER_ACCOUNT_ROUTES.NOTIFICATIONS_SETTINGS,
     children: <NotificationsSettings />,
+  },
+  SUBSCRIPTION_PLAN: {
+    path: BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
+    children: <SubscriptionPlan />,
   },
 };
 

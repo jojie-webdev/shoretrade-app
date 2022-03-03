@@ -50,6 +50,7 @@ import getCart from './getCart';
 import getCoopUsers from './getCoopUsers';
 import getCrates from './getCrates';
 import getCustomFormData from './getCustomFormData';
+import getFreeTrialExpiry from './getFreeTrialExpiry';
 import getHistoricalListings from './getHistoricalListings';
 import getLinkedAccounts from './getLinkedAccounts';
 import getListing from './getListing';
@@ -125,6 +126,7 @@ export default (routeHistory: History) =>
     Object.fromEntries(
       Object.entries({
         /* PLOP_INJECT_INSTANCE */
+        getFreeTrialExpiry,
         getSubscriptionPlans,
         getAllBuyerOrders,
         getSellerOrdersPending,
