@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Expand } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import { MARKET_BY_ROLES } from 'consts/markets';
 import moment from 'moment';
 import { useTheme } from 'utils/Theme';
 
@@ -26,10 +27,8 @@ const ScanHistoryButton = (props: ScanHistoryButtonProps): JSX.Element => {
           {`Scanned by ${scanData.user_first_name} ${scanData.user_last_name} (${scanData.user_role})`}
         </Typography>
         <Typography variant="small" color={isBuyer ? 'shade6' : 'noshade'}>
-          {`${moment(scanData.updated_at).format('DD MMM YYYY hh:MMa')}${
-            ['Buyer', 'Seller'].includes(scanData.user_role)
-              ? 'at Sydney Fish Market'
-              : ''
+          {`${moment(scanData.updated_at).format('DD MMM YYYY hh:mm a')} at ${
+            MARKET_BY_ROLES[scanData.user_role_alias] || MARKET_BY_ROLES.DEFAULT
           }`}
         </Typography>
       </div>
