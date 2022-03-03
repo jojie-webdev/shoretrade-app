@@ -43,9 +43,11 @@ const ScanHistoryModal = (props: ScanHistoryModalProps): JSX.Element => {
                 variant="caption"
                 color={isBuyer ? 'shade7' : 'noshade'}
               >
-                {`${moment(sh.updated_at).format(
-                  'DD MMM YYYY hh:MMa'
-                )} at Sydney Fish Market`}
+                {`${moment(sh.updated_at).format('DD MMM YYYY hh:MMa')}${
+                  ['Buyer', 'Seller'].includes(sh.user_role)
+                    ? 'at Sydney Fish Market'
+                    : ''
+                }`}
               </Typography>
             </div>
           </div>

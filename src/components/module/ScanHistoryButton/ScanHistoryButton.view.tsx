@@ -26,9 +26,11 @@ const ScanHistoryButton = (props: ScanHistoryButtonProps): JSX.Element => {
           {`Scanned by ${scanData.user_first_name} ${scanData.user_last_name} (${scanData.user_role})`}
         </Typography>
         <Typography variant="small" color={isBuyer ? 'shade6' : 'noshade'}>
-          {`${moment(scanData.updated_at).format(
-            'DD MMM YYYY hh:MMa'
-          )} at Sydney Fish Market`}
+          {`${moment(scanData.updated_at).format('DD MMM YYYY hh:MMa')}${
+            ['Buyer', 'Seller'].includes(scanData.user_role)
+              ? 'at Sydney Fish Market'
+              : ''
+          }`}
         </Typography>
       </div>
       <div>
