@@ -58,6 +58,7 @@ export const InputContainer = styled.div<{
       outline: none;
       border: none;
     }
+    
 
     ::placeholder {
       color: ${({ darkMode, theme }) =>

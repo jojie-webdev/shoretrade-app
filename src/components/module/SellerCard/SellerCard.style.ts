@@ -10,6 +10,11 @@ export const Container = styled.div`
     width: 100%;
     max-height: 205px;
     transition: transform 0.2s;
+    ${({ theme }) => {
+      if (theme.isSFM) {
+        return `outline: 2px solid ${theme.brand.secondary};`;
+      }
+    }}
   }
 
   .card:hover {
@@ -25,16 +30,22 @@ export const Container = styled.div`
   img {
     display: block;
     border: 0;
-    border-radius: 4px;
+    border-radius: ${({ theme }) => (theme.isSFM ? '0px' : '4px')};
     height: 150px;
     width: 100%;
     object-fit: contain;
+    ${({ theme }) => {
+      if (theme.isSFM) {
+        return `border-bottom: 2px solid ${theme.brand.secondary};`;
+      }
+    }}
   }
 
   .placeholder-image {
     width: 100%;
     height: 150px;
-    background-color: ${({ theme }) => theme.grey.shade2};
+    background-color: ${({ theme }) =>
+      theme.isSFM ? theme.grey.shade5 : theme.grey.shade2};
     display: flex;
     justify-content: center;
     align-items: center;

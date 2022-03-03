@@ -36,7 +36,7 @@ const MobileNavView = (props: MobileNavGeneratedProps): JSX.Element | null => {
           {leftContent && showLogo && (
             <div className="left-content">{leftContent}</div>
           )}
-          {showLogo && theme.isSFM && (
+          {showLogo && !theme.isSFM && (
             <div onClick={onHome}>
               <ShoretradeLogo
                 fill={theme.grey.noshade}
@@ -45,9 +45,9 @@ const MobileNavView = (props: MobileNavGeneratedProps): JSX.Element | null => {
               />
             </div>
           )}
-          {showLogo && !theme.isSFM && (
+          {showLogo && theme.isSFM && (
             <div onClick={onHome}>
-              <SfmLogo fill={theme.grey.noshade} width={133} height={16} />
+              <SfmLogo fill={theme.grey.noshade} width={122} height={32} />
             </div>
           )}
           {showBack() && (

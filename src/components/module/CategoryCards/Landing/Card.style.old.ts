@@ -5,6 +5,11 @@ export const CardContainer = styled.div`
   img {
     display: block;
     border: 0;
+    ${({ theme }) => {
+      if (theme.isSFM) {
+        return `border-bottom: 2px solid ${theme.brand.secondary};`;
+      }
+    }}
   }
 
   .card {
@@ -22,6 +27,12 @@ export const CardContainer = styled.div`
       min-height: 160px;
       height: auto;
     }
+
+    ${({ theme }) => {
+      if (theme.isSFM) {
+        return `outline: 2px solid ${theme.brand.secondary};`;
+      }
+    }}
   }
 
   .card:hover {

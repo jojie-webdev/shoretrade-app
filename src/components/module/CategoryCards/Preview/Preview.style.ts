@@ -1,5 +1,6 @@
 import TypographyView from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { SpecialColors } from 'utils/SFMTheme';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
@@ -20,6 +21,11 @@ export const CardContainer = styled.div<{ img: string }>`
     box-shadow: 0px 4px 12px rgba(41, 43, 50, 0.04);
     border-radius: 4px;
     padding-bottom: 8px;
+    ${({ theme }) => {
+      if (theme.isSFM) {
+        return `outline: 2px solid ${SpecialColors.blue};`;
+      }
+    }}
     width: 265px;
     /* flex-wrap: wrap; */
     transition: transform 0.2s;
@@ -60,6 +66,11 @@ export const CardContainer = styled.div<{ img: string }>`
     border-radius: 4px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
+    ${({ theme }) => {
+      if (theme.isSFM) {
+        return `border-bottom: 2px solid ${SpecialColors.blue};`;
+      }
+    }}
   }
 `;
 

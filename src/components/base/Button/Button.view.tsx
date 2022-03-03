@@ -80,6 +80,7 @@ const Button = (props: ButtonProps): JSX.Element => {
 
       {text && (
         <Typography
+          noSfmFont
           variant={props.textVariant || textVariant}
           color={defaultTextColor}
           weight={props.textWeight || textWeight}

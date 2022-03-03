@@ -1,4 +1,5 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { SpecialColors } from 'utils/SFMTheme';
 import styled from 'utils/styled';
 
 export const Container = styled.div<{ isOpenMenu: boolean }>`
@@ -16,6 +17,7 @@ export const Container = styled.div<{ isOpenMenu: boolean }>`
     align-items: center;
     justify-content: center;
     border: 1px solid
+    border: 1px solid
       ${({ theme }) =>
         theme.appType === 'buyer' ? theme.grey.shade4 : theme.grey.shade10};
     background: ${({ theme }) =>
@@ -24,8 +26,19 @@ export const Container = styled.div<{ isOpenMenu: boolean }>`
     @media ${BREAKPOINTS.nonDesktop} {
       width: 32px;
       height: 32px;
-      border: 1px solid ${({ theme }) => theme.grey.shade10};
-      background: ${({ theme }) => theme.grey.shade8};
+      border: 1px solid ${({ theme }) =>
+        theme.isSFM && theme.appType === 'buyer'
+          ? SpecialColors.ocean
+          : theme.grey.shade10};
+      background: ${({ theme }) => {
+        if (theme.appType === 'buyer') {
+          if (theme.isSFM && theme.appType === 'buyer') {
+            return `${SpecialColors.deepSea};`;
+          }
+          return `${theme.grey.shade8};`;
+        }
+        return `${theme.grey.shade8};`;
+      }}
     }
 
     .menu-container {

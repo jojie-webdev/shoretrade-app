@@ -101,7 +101,13 @@ const Cart = ({ cartItems }: { cartItems: number }) => {
         onClick={() => history.push(BUYER_ROUTES.CHECKOUT)}
       >
         <CartIcon
-          fill={isNonDesktop ? theme.grey.noshade : theme.grey.shade8}
+          fill={
+            isNonDesktop
+              ? theme.grey.noshade
+              : theme.isSFM
+              ? SpecialColors.blue
+              : theme.grey.shade8
+          }
         />
         {cartItems > 0 && (
           <CheckoutCount>

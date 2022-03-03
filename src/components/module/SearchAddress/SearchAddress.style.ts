@@ -1,4 +1,5 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { SpecialColors } from 'utils/SFMTheme';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -6,7 +7,6 @@ export const Container = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   margin-bottom: 32px;
-
   .search-result {
     width: 100%;
     margin: auto;
@@ -24,33 +24,35 @@ export const Container = styled.div`
     margin-bottom: 0;
 
     border: ${(props) => `1px solid ${props.theme.grey.shade3}`};
-
     @media ${BREAKPOINTS.sm} {
       padding: ${(props) =>
         props.theme.appType === 'buyer' ? '12px' : '10px 15px'};
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
+      margin-bottom: 12px;
     }
+
+    outline: 2px solid
+      ${({ theme }) => (theme.isSFM ? SpecialColors.blue : theme.grey.shade6)};
+    margin-right: 24px;
+    border-radius: 12px;
+    height: 56px;
   }
 `;
 
 export const AddressContainer = styled.div`
   flex-direction: column;
   flex: 1;
-  background: #f9faff;
-  border: ${(props) => `1px solid ${props.theme.grey.shade3}`};
   border-radius: ${(props) =>
     props.theme.appType === 'buyer' ? '4px' : '100px'};
 
   width: 100%;
-  padding: 12.5px 16px;
+  padding: 4px 16px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
 
   .search-address-select {
     .dropdownSelectContainerThin {
-      background: ${(props) => props.theme.grey.shade1};
+      background: ${(props) => props.theme.grey.shade3};
     }
     margin-left: -16px;
   }
@@ -61,6 +63,14 @@ export const AddressContainer = styled.div`
     border-top-left-radius: 0;
     border-top-right-radius: 0;
   }
+
+  ${({ theme }) => {
+    if (theme.isSFM) {
+      return `
+        height: 56px;
+      `;
+    }
+  }}
 `;
 
 export const Row = styled.div`

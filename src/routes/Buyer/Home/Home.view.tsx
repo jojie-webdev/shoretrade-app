@@ -131,23 +131,29 @@ const HomeView = (props: HomeGeneratedProps) => {
       <FavouriteProductThumbnail src={props.images[0]} />
       <DetailsContainer>
         <ResultContainer>
-          <Typography>{props.type}</Typography>
+          <Typography color={theme.isSFM ? 'secondary' : undefined}>
+            {props.type}
+          </Typography>
           <StatusContainer>
             {props.state?.map((item) => {
               return (
                 <StatusBadge
                   key={item}
                   fontColor={theme.grey.shade9}
-                  badgeColor={theme.grey.shade2}
+                  badgeColor={
+                    theme.isSFM ? theme.grey.shade5 : theme.grey.shade2
+                  }
                 >
                   <BadgeText
                     variant="caption"
                     weight="bold"
+                    noSfmFont
                     style={{
                       textOverflow: 'ellipsis',
                       whiteSpace: 'nowrap',
                       overflow: 'hidden',
                     }}
+                    color={theme.isSFM ? 'secondary' : 'shade8'}
                   >
                     {item}
                   </BadgeText>
@@ -156,7 +162,10 @@ const HomeView = (props: HomeGeneratedProps) => {
             })}
           </StatusContainer>
           <div className="size">
-            <Typography variant="small">
+            <Typography
+              color={theme.isSFM ? 'secondary' : undefined}
+              variant="small"
+            >
               {sizeToString(props.size.unit, props.size.from, props.size.to)}
             </Typography>
           </div>

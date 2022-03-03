@@ -3,16 +3,22 @@ import React from 'react';
 import Button from 'components/base/Button';
 import { ArrowRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import { useTheme } from 'utils/Theme';
 
 import { HomeSectionHeaderProps } from './HomeSectionHeader.props';
 import { Container } from './HomeSectionHeader.style';
 
 const HomeSectionHeader = (props: HomeSectionHeaderProps): JSX.Element => {
+  const theme = useTheme();
   const { title, onClick, noMargin } = props;
 
   return (
     <Container noMargin={noMargin}>
-      <Typography variant="title5" color="shade8">
+      <Typography
+        altFont={theme.isSFM}
+        variant="title5"
+        color={theme.isSFM ? 'secondary' : 'shade8'}
+      >
         {title}
       </Typography>
 
@@ -20,8 +26,7 @@ const HomeSectionHeader = (props: HomeSectionHeaderProps): JSX.Element => {
         <Button
           text="See All"
           variant="unselected"
-          size="sm"
-          icon={<ArrowRight fill="#E35D32" />}
+          icon={<ArrowRight fill={theme.brand.primary} />}
           style={{ padding: '4px 8px' }}
           onClick={onClick}
         />

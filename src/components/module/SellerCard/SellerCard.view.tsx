@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { PlaceholderProfile } from 'components/base/SVG';
 import Typography from 'components/base/Typography/Typography.view';
 import { parseImageUrl } from 'utils/parseImageURL';
+import { SpecialColors } from 'utils/SFMTheme';
+import { useTheme } from 'utils/Theme';
 
 import { SellerCardProps } from './SellerCard.props';
 import { Container } from './SellerCard.style';
@@ -10,7 +12,7 @@ import { Container } from './SellerCard.style';
 const SellerCard = (props: SellerCardProps): JSX.Element => {
   const { companyName, companyImage } = props;
   const [defaultImage, setDefaultImage] = useState(companyImage);
-
+  const theme = useTheme();
   return (
     <Container className="centered">
       <div className="card">
@@ -24,7 +26,11 @@ const SellerCard = (props: SellerCardProps): JSX.Element => {
           />
         ) : (
           <div className="placeholder-image">
-            <PlaceholderProfile width={120} height={120} />
+            <PlaceholderProfile
+              fill={theme.isSFM ? SpecialColors.blue : undefined}
+              width={120}
+              height={120}
+            />
           </div>
         )}
 

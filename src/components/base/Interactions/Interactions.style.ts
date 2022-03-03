@@ -1,5 +1,6 @@
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { SpecialColors } from 'utils/SFMTheme';
 import styled from 'utils/styled';
 
 import { InteractionsProps, IconAlignmentTypes } from './Interactions.props';
@@ -26,6 +27,12 @@ export const Container = styled.div<InteractionsProps>`
       backgroundColor || (isSeller ? theme.grey.shade9 : theme.grey.noshade)
     );
   }};
+
+  ${({ theme }) => {
+    if (theme.isSFM) {
+      return `outline: 2px solid ${SpecialColors.blue};`;
+    }
+  }}
 
   margin-top: ${({ label }) => (label ? '20px' : 0)};
   box-shadow: ${({ theme, noBg, flat }) => {

@@ -1,5 +1,6 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Theme } from 'types/Theme';
+import { SpecialColors } from 'utils/SFMTheme';
 import styled from 'utils/styled';
 
 import {
@@ -17,7 +18,10 @@ const backgroundColor = (
     outline: 'transparent',
     disabled: theme.grey.shade3,
     success: theme.brand.success,
-    unselected: theme.grey.shade9,
+    unselected:
+      theme.isSFM && theme.appType === 'buyer'
+        ? SpecialColors.blue
+        : theme.grey.shade9,
     white: '#FFF',
     error: theme.brand.error,
     alert: theme.brand.alert,

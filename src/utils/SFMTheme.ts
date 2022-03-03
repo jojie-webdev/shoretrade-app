@@ -46,6 +46,8 @@ export const SpecialColors = {
   sky: '#BAD4ED',
   sand: '#FDF9EE',
   deepSea: '#2C306D',
+  blue: '#313579',
+  secondaryOpacity: '#F0F5FF',
 };
 
 export default theme;
