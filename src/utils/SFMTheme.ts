@@ -37,4 +37,15 @@ export const theme: Theme = {
   },
 };
 
+export const SpecialColors = {
+  ocean: '#30347E',
+  seaweed: '#4AABA6',
+  tropical: '#96FFDE',
+  earth: '#E05D21',
+  salmon: '#F1C8CD',
+  sky: '#BAD4ED',
+  sand: '#FDF9EE',
+  deepSea: '#2C306D',
+};
+
 export default theme;

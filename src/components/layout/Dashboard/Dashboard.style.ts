@@ -2,6 +2,7 @@ import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Link, NavLink } from 'react-router-dom';
+import { SpecialColors } from 'utils/SFMTheme';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
@@ -82,7 +83,10 @@ export const MenuOverlay = styled.div<{ openSidebar: boolean }>`
 
 export const Sidebar = styled.aside<{ openSidebar: boolean }>`
   padding: 0 24px;
-  background: #050e16;
+  background: ${({ theme }) =>
+    theme.isSFM && theme.appType === 'buyer'
+      ? SpecialColors.ocean
+      : theme.grey.shade10};
   width: 270px;
   display: flex;
   flex-direction: column;
@@ -190,7 +194,10 @@ export const SidebarItem = styled(NavLink)`
 `;
 
 export const TabletSidebar = styled.aside`
-  background: #050e16;
+  background: ${({ theme }) =>
+    theme.isSFM && theme.appType === 'buyer'
+      ? SpecialColors.ocean
+      : theme.grey.shade10};
   width: 72px;
   display: flex;
   flex-direction: column;
@@ -497,7 +504,10 @@ export const HeaderRightContent = styled.div`
 `;
 
 export const CreditBalanceContainer = styled.div`
-  background: ${(props) => props.theme.grey.shade8};
+  background: ${({ theme }) =>
+    theme.isSFM && theme.appType === 'buyer'
+      ? SpecialColors.deepSea
+      : theme.grey.shade8};
   padding: 16px;
   box-sizing: border-box;
   border-radius: 4px;
@@ -521,6 +531,10 @@ export const CreditBalanceContainer = styled.div`
   }
 
   cursor: pointer;
+`;
+
+export const PoweredByContainer = styled.div`
+  padding: 16px;
 `;
 
 export const CheckoutCount = styled.div`

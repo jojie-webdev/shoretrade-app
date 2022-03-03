@@ -9,6 +9,7 @@ import {
   ShoretradeLogo,
   Close,
   SfmLogo,
+  ShoretradeLogoAlt,
 } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
@@ -23,6 +24,7 @@ import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { Theme } from 'types/Theme';
 import useHomeOld from 'utils/Hooks/useHomeOld';
+import { SpecialColors } from 'utils/SFMTheme';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
@@ -49,6 +51,7 @@ import {
   HeaderWrapper,
   HeaderRightContent,
   SidebarFooter,
+  PoweredByContainer,
 } from './Dashboard.style';
 
 const NavLink = ({
@@ -63,7 +66,13 @@ const NavLink = ({
   const theme = useTheme();
   return (
     <SidebarItem
-      activeStyle={{ background: theme.grey.shade8, borderRadius: '8px' }}
+      activeStyle={{
+        background:
+          theme.isSFM && theme.appType === 'buyer'
+            ? SpecialColors.deepSea
+            : theme.grey.shade8,
+        borderRadius: '8px',
+      }}
       to={to}
       onClick={onClick}
     >
@@ -276,7 +285,8 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
   const isSeller = theme.appType === 'seller';
   const textColor: keyof Theme['grey'] = isSeller ? 'noshade' : 'noshade';
 
-  const iconColor = isSeller ? theme.grey.shade7 : theme.grey.shade7;
+  const iconColor =
+    theme.isSFM && !isSeller ? theme.grey.noshade : theme.grey.shade7;
 
   const isHomeOld = useHomeOld();
 
@@ -336,7 +346,10 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                   height={16}
                 />
               )}
-              {theme.isSFM && (
+              {theme.isSFM && theme.appType === 'seller' && (
+                <SfmLogo fill={theme.grey.noshade} width={122} height={32} />
+              )}
+              {theme.isSFM && theme.appType === 'buyer' && (
                 <SfmLogo fill={theme.grey.noshade} width={122} height={32} />
               )}
             </SidebarLogoContainer>
@@ -362,6 +375,14 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
             </div>
           </div>
           <SidebarFooter>
+            {theme.isSFM && (
+              <PoweredByContainer>
+                <Typography color="noshade" variant="small">
+                  Powered by
+                </Typography>
+                <ShoretradeLogoAlt />
+              </PoweredByContainer>
+            )}
             {theme.appType === 'buyer' && (
               <CreditBalanceContainer
                 onClick={() => {
@@ -394,9 +415,19 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
             >
               <LogoutContainer>
                 <div className="icon-container">
-                  <Exit />
+                  <Exit
+                    fill={
+                      theme.isSFM && !isSeller
+                        ? theme.grey.noshade
+                        : theme.grey.shade7
+                    }
+                  />
                 </div>
-                <Typography color="shade7" className="link" weight="500">
+                <Typography
+                  color={theme.isSFM ? 'noshade' : 'shade7'}
+                  className="link"
+                  weight="500"
+                >
                   Logout
                 </Typography>
               </LogoutContainer>
