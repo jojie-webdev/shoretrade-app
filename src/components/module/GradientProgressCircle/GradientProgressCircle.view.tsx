@@ -13,12 +13,12 @@ const GradientProgressCircle = (
 
   return (
     <CircleProgress
-      width={68}
+      width={props.width || 68}
       fontSize={14}
       fontFamily="Basis Grotesque Pro"
       fontColor={theme.grey.shade7}
-      strokeWidth={2}
-      primaryColor={['#00C48C', '#FF647C']}
+      strokeWidth={props.strokeWidth || 2}
+      primaryColor={props.primaryColor || ['#00C48C', '#FF647C']}
       secondaryColor={theme.grey.shade2}
       {...props}
     />

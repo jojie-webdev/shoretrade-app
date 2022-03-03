@@ -57,12 +57,7 @@ const Content = (props: NegotiateSellerModalProps) => {
 
   return (
     <>
-      <Typography
-        weight="bold"
-        variant="title4"
-        color="noshade"
-        style={{ fontFamily: 'Media Sans' }}
-      >
+      <Typography weight="bold" variant="title4" color="noshade" altFont>
         Negotiate
       </Typography>
 

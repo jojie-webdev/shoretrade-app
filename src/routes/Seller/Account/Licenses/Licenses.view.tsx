@@ -104,7 +104,8 @@ const LicensesView = ({
                 variant="title5"
                 weight="700"
                 color="noshade"
-                style={{ fontFamily: 'Media Sans', maxWidth: '300px' }}
+                style={{ maxWidth: '300px' }}
+                altFont
               >
                 You have no licenses uploaded yet
               </Typography>

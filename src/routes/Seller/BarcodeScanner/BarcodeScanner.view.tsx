@@ -24,7 +24,8 @@ const BarcodeScannerView = (props: BarcodeScannerGeneratedProps) => {
         <Typography
           variant="title3"
           color={isSeller ? 'noshade' : 'shade9'}
-          style={{ fontFamily: 'Media Sans', marginBottom: 16 }}
+          style={{ marginBottom: 16 }}
+          altFont
         >
           Barcode Scanner available on App
         </Typography>

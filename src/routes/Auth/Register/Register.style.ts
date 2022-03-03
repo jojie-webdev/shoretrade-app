@@ -8,7 +8,6 @@ import PhoneTextField from 'components/module/PhoneTextField';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Form } from 'formik';
 import styled from 'utils/styled';
-import theme from 'utils/Theme';
 
 export const Container = styled.div`
   display: flex;
@@ -393,7 +392,7 @@ export const DownloadApplicationFormButton = styled(Button)`
 `;
 
 export const SFMOption = styled.div`
-  background: ${theme.grey.noshade};
+  background: ${({ theme }) => theme.grey.noshade};
   margin-top: 8px;
   padding: 16px 24px;
   border-radius: 12px;

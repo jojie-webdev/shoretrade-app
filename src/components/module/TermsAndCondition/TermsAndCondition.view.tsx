@@ -45,12 +45,7 @@ const TermsAndCondition = (props: TermsAndConditionProps): JSX.Element => {
       <Row>
         <Col>
           <div style={{ display: 'flex' }}>
-            <Typography
-              variant="title6"
-              weight="700"
-              color="shade5"
-              style={{ fontFamily: 'Media Sans' }}
-            >
+            <Typography variant="title6" weight="700" color="shade5" altFont>
               /
             </Typography>
             <Typography
@@ -152,7 +147,7 @@ const TermsAndCondition = (props: TermsAndConditionProps): JSX.Element => {
           variant="title5"
           weight="700"
           color={appType === 'seller' ? 'noshade' : 'shade9'}
-          style={{ fontFamily: 'Media Sans' }}
+          altFont
         >
           {textWeb2}
         </Typography>
@@ -162,7 +157,7 @@ const TermsAndCondition = (props: TermsAndConditionProps): JSX.Element => {
           variant="title5"
           weight="700"
           color={appType === 'seller' ? 'noshade' : 'shade9'}
-          style={{ fontFamily: 'Media Sans' }}
+          altFont
         >
           {textMobile1}
         </Typography>

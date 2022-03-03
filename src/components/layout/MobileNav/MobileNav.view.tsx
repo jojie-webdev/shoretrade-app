@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ArrowLeft, ShoretradeLogo } from 'components/base/SVG';
+import { ArrowLeft, SfmLogo, ShoretradeLogo } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { MobileNavGeneratedProps } from 'components/layout/MobileNav/MobileNav.props';
 import {
@@ -36,13 +36,18 @@ const MobileNavView = (props: MobileNavGeneratedProps): JSX.Element | null => {
           {leftContent && showLogo && (
             <div className="left-content">{leftContent}</div>
           )}
-          {showLogo && (
+          {showLogo && !theme.isSFM && (
             <div onClick={onHome}>
               <ShoretradeLogo
                 fill={theme.grey.noshade}
                 width={133}
                 height={16}
               />
+            </div>
+          )}
+          {showLogo && theme.isSFM && (
+            <div onClick={onHome}>
+              <SfmLogo fill={theme.grey.noshade} width={122} height={32} />
             </div>
           )}
           {showBack() && (

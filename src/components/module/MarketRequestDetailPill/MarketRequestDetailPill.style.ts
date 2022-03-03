@@ -1,6 +1,5 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
-import theme from 'utils/Theme';
 
 export const Container = styled.div`
   border: 1px solid ${({ theme }) => theme.grey.shade4};
@@ -43,14 +42,14 @@ export const DeleteButtonContainer = styled.div`
   margin: auto;
 
   .delete-button {
-    background-color: ${theme.grey.shade2};
+    background-color: ${({ theme }) => theme.grey.shade2};
     height: 32px;
     width: 32px;
     border-radius: 12px;
     align-self: center;
-    border: 1px solid ${theme.grey.shade4};
+    border: 1px solid ${({ theme }) => theme.grey.shade4};
     path {
-      fill: ${theme.grey.shade7};
+      fill: ${({ theme }) => theme.grey.shade7};
     }
   }
 `;

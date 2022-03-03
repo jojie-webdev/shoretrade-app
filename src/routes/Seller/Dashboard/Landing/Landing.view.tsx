@@ -8,6 +8,7 @@ import Typography from 'components/base/Typography';
 import CategoryImage from 'components/module/CategoryImage';
 import DatePickerModal from 'components/module/DatePickerModal';
 import EmptyDashboard from 'components/module/EmptyDashboard';
+import FreeTrialCountdown from 'components/module/FreeTrialCountdown';
 import LinePath from 'components/module/LinePath';
 import Loading from 'components/module/Loading';
 import MobileHeader from 'components/module/MobileHeader';
@@ -425,6 +426,7 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
     userPending,
     salesData,
     topCategoriesData,
+    freeTrialCountdown,
   } = props;
 
   const [startDate, setStartDate] = useState(moment().subtract(7, 'days'));
@@ -453,6 +455,10 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
   return (
     <Container>
       <>
+        {freeTrialCountdown?.isFreeTrial && (
+          <FreeTrialCountdown daysLeft={freeTrialCountdown.countdown} />
+        )}
+
         {userPending && (
           <Alert
             variant="alert"

@@ -98,9 +98,13 @@ export const getAllBuyerOrders = (
   token: string
 ) => {
   //ADD 1 day to the end Date
-  const modifiedStartDate = data.dateFrom ? new Date(data.dateFrom) : undefined;
+  const modifiedStartDate = data.dateFrom
+    ? new Date(moment(data.dateFrom).format('M/DD/yyyy'))
+    : undefined;
   const modifiedEndDate = data.dateTo
     ? new Date(moment(data.dateTo).add(1, 'days').format('M/DD/yyyy'))
+    : modifiedStartDate
+    ? new Date(moment(modifiedStartDate).add(1, 'days').format('M/DD/yyyy'))
     : undefined;
   return axios({
     method: 'get',

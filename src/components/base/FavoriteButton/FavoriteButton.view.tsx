@@ -1,18 +1,18 @@
 import React from 'react';
 
-// import { useTheme } from 'utils/Theme';
 import { HeartFilled, Heart } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import { useTheme } from 'utils/Theme';
 
 import { FavoriteButtonProps } from './FavoriteButton.props';
 import { Container, SvgContainer } from './FavoriteButton.style';
 
 const FavoriteButton = (props: FavoriteButtonProps): JSX.Element => {
-  // const theme = useTheme();
+  const theme = useTheme();
   const { isFavorite, onClick, iconOnly = true } = props;
 
   const icon = isFavorite ? (
-    <HeartFilled width={22} height={22} />
+    <HeartFilled fill={theme.brand.error} width={22} height={22} />
   ) : (
     <Heart width={22} height={22} />
   );

@@ -12,6 +12,7 @@ export interface ProductSellerRatingProps {
   isFavorite?: boolean;
   onFavorite: () => Promise<void>;
   onClickSeller: () => void;
+  companyLocation: string;
 }
 
 interface ProductDetailsCard1Props {

@@ -10,6 +10,7 @@ import {
   formatUnitToPricePerUnit,
 } from 'utils/Listing/formatMeasurementUnit';
 import { parseImageUrl } from 'utils/parseImageURL';
+import { SpecialColors } from 'utils/SFMTheme';
 import { ellipsisOnOverflow } from 'utils/String/ellipsisOnOverflow';
 import { useTheme } from 'utils/Theme';
 
@@ -252,9 +253,13 @@ const Preview = (props: PreviewProps): JSX.Element => {
           <div className="img" style={{ maxHeight: 200 }} />
 
           <LocationContainer>
-            <Badge>
+            <Badge badgeColor={theme.isSFM ? SpecialColors.blue : undefined}>
               <div style={{ flexDirection: 'row', display: 'flex' }}>
-                <Location height={10.06} width={8.5} />
+                <Location
+                  fill={theme.isSFM ? theme.grey.noshade : undefined}
+                  height={10.06}
+                  width={8.5}
+                />
                 <Typography
                   className="location-font"
                   variant="small"
@@ -268,22 +273,58 @@ const Preview = (props: PreviewProps): JSX.Element => {
 
           <BadgeContainer>
             {props.isAquafuture && (
-              <Badge className="badge" badgeColor={theme.grey.shade8}>
-                <Typography color="shade4" variant="overline">
+              <Badge
+                className="badge"
+                badgeColor={
+                  theme.isSFM
+                    ? SpecialColors.secondaryOpacity
+                    : theme.grey.shade8
+                }
+              >
+                <Typography
+                  noSfmFont
+                  color={theme.isSFM ? 'info' : 'shade4'}
+                  variant="overline"
+                  weight={theme.isSFM ? '900' : '500'}
+                >
                   Aquafuture
                 </Typography>
               </Badge>
             )}
             {parseInt(props.remaining || '0') <= 50 && !props.catchRecurrence && (
-              <Badge className="badge" badgeColor={theme.brand.warning}>
-                <Typography color="noshade" variant="overline">
+              <Badge
+                className="badge"
+                badgeColor={
+                  theme.isSFM
+                    ? SpecialColors.secondaryOpacity
+                    : theme.brand.warning
+                }
+              >
+                <Typography
+                  noSfmFont
+                  color={theme.isSFM ? 'warning' : 'noshade'}
+                  variant="overline"
+                  weight={theme.isSFM ? '900' : '500'}
+                >
                   Almost Gone!
                 </Typography>
               </Badge>
             )}
             {props.catchRecurrence && (
-              <Badge className="badge" badgeColor={theme.brand.success}>
-                <Typography color="noshade" variant="overline">
+              <Badge
+                className="badge"
+                badgeColor={
+                  theme.isSFM
+                    ? SpecialColors.secondaryOpacity
+                    : theme.brand.success
+                }
+              >
+                <Typography
+                  noSfmFont
+                  color={theme.isSFM ? 'success' : 'noshade'}
+                  variant="overline"
+                  weight={theme.isSFM ? '900' : '500'}
+                >
                   Next Day Shipment
                 </Typography>
               </Badge>
@@ -294,19 +335,33 @@ const Preview = (props: PreviewProps): JSX.Element => {
           <HeaderContainer>
             <Row nogutter>
               <div style={{ flex: 1, height: 40 }}>
-                <Title style={{ width: '100%' }} variant="body" weight="bold">
+                <Title
+                  altFont={theme.isSFM}
+                  style={{ width: '100%' }}
+                  variant="body"
+                  weight="bold"
+                  color={theme.isSFM ? 'secondary' : undefined}
+                >
                   {props.type}
                 </Title>
               </div>
               {!hiddenPrice && (
                 <PriceContainer>
-                  <Price variant="body" weight="bold">
+                  <Price
+                    color={theme.isSFM ? 'secondary' : undefined}
+                    variant="body"
+                    weight="bold"
+                  >
                     {props.price}
                   </Price>
                   <Typography
-                    style={{ textAlign: 'end' }}
+                    noSfmFont
+                    style={{
+                      textAlign: 'end',
+                      opacity: theme.isSFM ? '0.5' : '1',
+                    }}
                     variant="small"
-                    color="shade6"
+                    color={theme.isSFM ? 'secondary' : 'shade6'}
                   >
                     per{' '}
                     {formatUnitToPricePerUnit(
@@ -332,6 +387,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
                             variant="caption"
                             weight="bold"
                             color="noshade"
+                            noSfmFont
                             style={{
                               textOverflow: 'ellipsis',
                               whiteSpace: 'nowrap',
@@ -355,6 +411,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
                         variant="caption"
                         weight="bold"
                         color="noshade"
+                        noSfmFont
                         style={{
                           textOverflow: 'ellipsis',
                           whiteSpace: 'nowrap',
@@ -371,17 +428,25 @@ const Preview = (props: PreviewProps): JSX.Element => {
                     <Col xs="content" style={{ marginTop: '5px' }}>
                       <Badge
                         key={item}
-                        fontColor={theme.grey.shade9}
-                        badgeColor={theme.grey.shade2}
+                        fontColor={
+                          theme.isSFM
+                            ? theme.brand.secondary
+                            : theme.grey.noshade
+                        }
+                        badgeColor={
+                          theme.isSFM ? theme.grey.shade5 : theme.grey.shade2
+                        }
                       >
                         <BadgeText
                           variant="caption"
                           weight="bold"
+                          noSfmFont
                           style={{
                             textOverflow: 'ellipsis',
                             whiteSpace: 'nowrap',
                             overflow: 'hidden',
                           }}
+                          color={theme.isSFM ? 'secondary' : 'shade8'}
                         >
                           {item}
                         </BadgeText>
@@ -401,7 +466,11 @@ const Preview = (props: PreviewProps): JSX.Element => {
               >
                 Remaining:
               </ResultText>
-              <ResultTextValue variant="small" weight="bold">
+              <ResultTextValue
+                color={theme.isSFM ? 'secondary' : undefined}
+                variant="small"
+                weight="bold"
+              >
                 {props.remaining} {formatMeasurementUnit(props.unit)}
               </ResultTextValue>
             </Row>
@@ -413,7 +482,11 @@ const Preview = (props: PreviewProps): JSX.Element => {
               >
                 Size:
               </ResultText>
-              <ResultTextValue variant="small" weight="bold">
+              <ResultTextValue
+                color={theme.isSFM ? 'secondary' : undefined}
+                variant="small"
+                weight="bold"
+              >
                 {props.weight}
               </ResultTextValue>
             </Row>
@@ -426,7 +499,11 @@ const Preview = (props: PreviewProps): JSX.Element => {
                 >
                   Vendor:
                 </ResultText>
-                <ResultTextValue variant="small" weight="700">
+                <ResultTextValue
+                  color={theme.isSFM ? 'secondary' : undefined}
+                  variant="small"
+                  weight="700"
+                >
                   {props.coop?.name}
                 </ResultTextValue>
               </Row>
@@ -439,7 +516,11 @@ const Preview = (props: PreviewProps): JSX.Element => {
               >
                 Min Order:
               </ResultText>
-              <ResultTextValue variant="small" weight="bold">
+              <ResultTextValue
+                color={theme.isSFM ? 'secondary' : undefined}
+                variant="small"
+                weight="bold"
+              >
                 {props.minimumOrder} {props.unit}
               </ResultTextValue>
             </Row>
@@ -455,7 +536,11 @@ const Preview = (props: PreviewProps): JSX.Element => {
               >
                 Est. Collection:
               </ResultText>
-              <ResultTextValue variant="small" weight="bold">
+              <ResultTextValue
+                color={theme.isSFM ? 'secondary' : undefined}
+                variant="small"
+                weight="bold"
+              >
                 {props.templateDeliveryDate}
               </ResultTextValue>
             </Row>

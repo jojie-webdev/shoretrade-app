@@ -3,7 +3,6 @@ import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
 export const Header = styled(Typography)`
-  font-family: 'Media Sans', sans-serif;
   font-weight: bold;
   font-size: ${pxToRem(24)};
   line-height: 32px;

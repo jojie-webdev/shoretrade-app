@@ -185,7 +185,8 @@ const SummaryView = (props: SummaryProps) => {
             <Typography
               variant="title5"
               weight="500"
-              style={{ fontFamily: 'Media Sans', marginBottom: 12 }}
+              style={{ marginBottom: 12 }}
+              altFont
             >
               {listingFormData?.type.name}
             </Typography>

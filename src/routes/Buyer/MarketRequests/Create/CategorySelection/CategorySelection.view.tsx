@@ -120,7 +120,8 @@ const CategorySelectionView = (props: CategorySelectionProps) => {
             <Typography
               variant="title5"
               weight="500"
-              style={{ fontFamily: 'Media Sans', marginBottom: 12 }}
+              style={{ marginBottom: 12 }}
+              altFont
             >
               Request a Product
             </Typography>

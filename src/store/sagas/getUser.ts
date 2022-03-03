@@ -35,11 +35,10 @@ function* getUserRequest(action: AsyncAction<GetUserMeta, GetUserPayload>) {
 
 function* getUserSuccess(action: AsyncAction<GetUserMeta, GetUserPayload>) {
   const state: Store = yield select();
+  const { companies } = action.payload.data.user;
+  const companyId: string = pathOr('', ['0', 'id'], companies);
 
   if (state.auth.type === 'buyer') {
-    const { companies } = action.payload.data.user;
-    const companyId: string = pathOr('', ['0', 'id'], companies);
-
     yield put(getPaymentModeActions.request({}));
 
     if (companyId) {
@@ -68,6 +67,15 @@ function* getUserSuccess(action: AsyncAction<GetUserMeta, GetUserPayload>) {
             })
           );
         }
+      }
+    }
+  } else {
+    if (companyId) {
+      if (
+        (state.getAddresses.data?.data.addresses || []).length === 0 ||
+        state.getAddresses.request?.companyId !== companyId
+      ) {
+        yield put(getAddressesActions.request({ companyId }));
       }
     }
   }

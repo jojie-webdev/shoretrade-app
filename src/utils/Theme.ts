@@ -8,6 +8,7 @@ export const pxToRem = (n: number): string => `${n / rootFontSizePx}rem`;
 
 export const theme: Theme = {
   appType: 'seller', // should be overridden on provider level
+  isSFM: false,
   brand: {
     primary: '#E35D32',
     secondary: '#B6B4CA',

@@ -374,7 +374,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
               </Col>
               <Col sm={4} style={{ alignSelf: 'flex-end' }}>
                 <OrderItemScanTotalContainer>
-                  {/* {props.updateScanHistoryModal && (
+                  {props.updateScanHistoryModal && (
                     <div>
                       {props.data.detailsProps.length > 0 &&
                         props.data.detailsProps[0].scanHistory &&
@@ -401,7 +401,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                             );
                           })}
                     </div>
-                  )} */}
+                  )}
 
                   <div>
                     <Typography

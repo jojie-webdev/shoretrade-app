@@ -23,7 +23,7 @@ import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
 import { toPrice } from 'utils/String/toPrice';
-import theme from 'utils/Theme';
+import { useTheme } from 'utils/Theme';
 
 import { getShippingAddress } from '../Landing/Landing.transform';
 import MakeOffer from './MakeOffer';
@@ -54,6 +54,7 @@ const Step1 = ({
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const history = useHistory();
+  const theme = useTheme();
 
   const unit = formatMeasurementUnit(
     isReview ? buyerRequest.measurementUnit : activeOffer.measurementUnit
@@ -410,6 +411,7 @@ const Step1 = ({
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   const statusTextProps = transformMarketRequestStatusText(
+    theme,
     activeOffer?.statusText || '',
     true,
     [`${activeOffer?.orderRefNumber}`]
@@ -478,7 +480,7 @@ const Step1 = ({
 
       <SummaryContentContainer>
         {isReview && (
-          <Typography color="noshade" style={{ fontFamily: 'Media Sans' }}>
+          <Typography color="noshade" altFont>
             The buyer has requested the following items to be shipped to{' '}
             {getAddressFromBuyerRequest()}.
           </Typography>

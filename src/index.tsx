@@ -14,6 +14,7 @@ import { store, persistor, sagaMiddleware, history } from 'store';
 import sagas from 'store/sagas';
 import { Store } from 'types/store/Store';
 import ScrollToTop from 'utils/ScrollToTop';
+import sfmTheme from 'utils/SFMTheme';
 import theme from 'utils/Theme';
 
 // Initialize languages
@@ -36,15 +37,38 @@ window.addEventListener('resize', () => {
 sagaMiddleware.run(sagas);
 
 // Update theme appType based on path
+// Update what theme to use based on location
 const Theme = ({ children }: { children: React.ReactNode }) => {
   const pathname = useSelector(
     (state: Store) => state.router.location.pathname
   );
+  const addresses = useSelector(
+    (state: Store) => state.getAddresses.data?.data.addresses || []
+  );
+
   const isSeller =
     pathname.startsWith('/seller') || pathname === SELLER_ROUTES.REGISTER;
 
+  const currentDefaultAddressCountryCode = (
+    addresses.find((i) => i.countryCode) || { countryCode: '' }
+  ).countryCode;
+
+  const isSFM =
+    currentDefaultAddressCountryCode === 'AU' ||
+    currentDefaultAddressCountryCode === 'NZ';
+
+  if (isSFM) {
+    document.body.classList.add('sfm');
+  } else {
+    document.body.classList.remove('sfm');
+  }
+
+  const themeToUse = isSFM ? sfmTheme : theme;
+
   return (
-    <ThemeProvider theme={{ ...theme, appType: isSeller ? 'seller' : 'buyer' }}>
+    <ThemeProvider
+      theme={{ ...themeToUse, appType: isSeller ? 'seller' : 'buyer', isSFM }}
+    >
       {children}
     </ThemeProvider>
   );

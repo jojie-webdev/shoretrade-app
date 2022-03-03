@@ -116,7 +116,7 @@ export const Content = styled.div<{
   position: relative;
   display: flex;
   flex-direction: column;
-  max-width: 460px;
+  max-width: 525px;
   width: 100%;
   background-color: ${({ theme }) =>
     theme.appType === 'buyer' ? theme.grey.shade1 : theme.grey.shade8};

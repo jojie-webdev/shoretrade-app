@@ -36,6 +36,7 @@ export type RegisterMeta = {
   marketSector: string;
   marketSelling?: CategoryPayload[];
   marketBuying?: CategoryPayload[];
+  cardToken: string;
 };
 
 export type RegisterRequestData = {
@@ -77,6 +78,7 @@ export type RegisterRequestData = {
   marketSector: string;
   marketSelling?: CategoryPayload[];
   marketBuying?: CategoryPayload[];
+  cardToken: string;
 };
 
 export type RegisterPayload = GenericResponse;

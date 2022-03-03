@@ -1,4 +1,19 @@
 /* PLOP_INJECT_IMPORT */
+export { default as ShoretradeLogoAlt } from './ShoretradeLogoAlt';
+export { default as SfmLogo } from './SfmLogo';
+export { default as ArrowGrowth } from './ArrowGrowth';
+export { default as SellingOutline } from './SellingOutline';
+export { default as FileAlt } from './FileAlt';
+export { default as HelmOutline } from './HelmOutline';
+export { default as CreditCardOutline } from './CreditCardOutline';
+export { default as ShoretradeProSellerLogo } from './ShoretradeProSellerLogo';
+export { default as ShoretradeProBuyerLogo } from './ShoretradeProBuyerLogo';
+export { default as BoxOutline } from './BoxOutline';
+export { default as ListOutline } from './ListOutline';
+export { default as SearchOutline } from './SearchOutline';
+export { default as DashboardOutline } from './DashboardOutline';
+export { default as CategoriesOutline } from './CategoriesOutline';
+export { default as Swatchbook } from './Swatchbook';
 export { default as LuggageCart } from './LuggageCart';
 export { default as OrderPlaced } from './OrderPlaced';
 export { default as AddListing } from './AddListing';

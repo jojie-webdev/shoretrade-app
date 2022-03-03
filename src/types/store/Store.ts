@@ -159,6 +159,10 @@ import {
   GetCustomFormDataPayload,
 } from './GetCustomFormDataState';
 import {
+  GetFreeTrialExpiryMeta,
+  GetFreeTrialExpiryPayload,
+} from './GetFreeTrialExpiryState';
+import {
   GetHistoricalListingsMeta,
   GetHistoricalListingsPayload,
 } from './GetHistoricalListingsState';
@@ -230,6 +234,10 @@ import {
   GetShippingQuotePayload,
 } from './GetShippingQuoteState';
 import { GetStatesMeta, GetStatesPayload } from './GetStatesState';
+import {
+  GetSubscriptionPlansMeta,
+  GetSubscriptionPlansPayload,
+} from './GetSubscriptionPlansState';
 import {
   GetTransactionHistoryMeta,
   GetTransactionHistoryPayload,
@@ -318,6 +326,14 @@ export interface Store {
   updatePreferences: AsyncState<
     UpdatePreferencesMeta,
     UpdatePreferencesPayload
+  >;
+  getFreeTrialExpiry: AsyncState<
+    GetFreeTrialExpiryMeta,
+    GetFreeTrialExpiryPayload
+  >;
+  getSubscriptionPlans: AsyncState<
+    GetSubscriptionPlansMeta,
+    GetSubscriptionPlansPayload
   >;
   getAllBuyerOrders: AsyncState<
     GetAllBuyerOrdersMeta,

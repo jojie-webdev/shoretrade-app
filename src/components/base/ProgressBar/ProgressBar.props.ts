@@ -1,10 +1,13 @@
 export interface ProgressBarProps {
   progress: number;
-  width?: string;
-  height?: string;
-  borderRadius?: string;
+  width?: number;
+  height?: number;
+  borderRadius?: number;
+  color?: string;
 }
 
 export type StyledProgressLineProps = {
   width: string;
+  color?: string;
+  borderRadius?: number;
 };

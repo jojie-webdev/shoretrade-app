@@ -4,7 +4,6 @@ import { SVGProps } from './SVG.props';
 
 const Exit = (props: SVGProps): JSX.Element => {
   const { width, height, fill } = props;
-
   // Paste converted svg below
   // https://react-svgr.com/playground/?typescript=true
   return (

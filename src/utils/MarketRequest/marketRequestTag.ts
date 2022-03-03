@@ -1,6 +1,6 @@
 import { Variants } from 'components/base/Alert/Alert.props';
 import { TypographyProps } from 'components/base/Typography/Typography.props';
-import theme from 'utils/Theme';
+import { Theme } from 'types/Theme';
 
 type statuses =
   | 'NEGOTIATION'
@@ -61,6 +61,7 @@ type types =
   | 'Payment Required';
 
 export const transformMarketRequestStatusText = (
+  theme: Theme,
   statusText: types | string,
   isSeller?: boolean,
   stringTokens?: string[]

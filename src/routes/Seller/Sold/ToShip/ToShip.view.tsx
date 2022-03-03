@@ -642,10 +642,7 @@ const ToShip = (props: SoldGeneratedProps) => {
       <>
         <TitleRow>
           <Col md={12} className="title-col">
-            <Typography
-              color="noshade"
-              style={{ fontFamily: 'Media Sans', fontSize: '20px' }}
-            >
+            <Typography color="noshade" style={{ fontSize: '20px' }} altFont>
               Pending
             </Typography>
             <span className="notification">{pendingToShipTotal}</span>
@@ -761,7 +758,8 @@ const ToShip = (props: SoldGeneratedProps) => {
                 <Col md={12} className="title-col">
                   <Typography
                     color="noshade"
-                    style={{ fontFamily: 'Media Sans', fontSize: '20px' }}
+                    style={{ fontSize: '20px' }}
+                    altFont
                   >
                     {moment(group.title).format('Do MMMM')}
                   </Typography>

@@ -25,7 +25,7 @@ const RateSellerModal = (props: RateSellerModalProps): JSX.Element => {
 
   return (
     <Modal {...modalProps} style={{ borderRadius: '12px', width: '686px' }}>
-      <Typography variant="title4" style={{ fontFamily: 'Media Sans' }}>
+      <Typography variant="title4" altFont>
         Rate Seller
       </Typography>
       <Typography

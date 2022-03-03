@@ -43,6 +43,7 @@ import Orders from './Orders';
 import ProductDetails from './ProductDetails';
 import Search from './Search';
 import SellerDetails from './SellerDetails';
+import Upgrade from './Upgrade';
 
 const ROUTES: Routes = {
   HOME: {
@@ -113,13 +114,13 @@ const ROUTES: Routes = {
     title: 'Notifications Settings',
     icon: CogIcon,
   },
-  // BARCODE_SCANNER: {
-  //   path: BUYER_ROUTES.BARCODE_SCANNER,
-  //   title: 'Barcode Scanner',
-  //   children: <BarcodeScanner />,
-  //   icon: BarcodeSVG,
-  //   nested: true,
-  // },
+  BARCODE_SCANNER: {
+    path: BUYER_ROUTES.BARCODE_SCANNER,
+    title: 'Barcode Scanner',
+    children: <BarcodeScanner />,
+    icon: BarcodeSVG,
+    nested: true,
+  },
   ACCOUNT: {
     path: BUYER_ROUTES.ACCOUNT,
     children: <Account />,
@@ -155,6 +156,12 @@ const ROUTES: Routes = {
     path: BUYER_ROUTES.SELLERS,
     children: <SellerLanding />,
     title: 'Sellers',
+    hideFromSidebar: true,
+  },
+  UPGRADE: {
+    path: BUYER_ROUTES.UPGRADE,
+    children: <Upgrade />,
+    title: 'Upgrade',
     hideFromSidebar: true,
   },
 };

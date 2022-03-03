@@ -1,5 +1,5 @@
+import { Theme } from 'types/Theme';
 import styled from 'utils/styled';
-import theme from 'utils/Theme';
 
 export const Container = styled.div`
   height: 40px;
@@ -20,12 +20,14 @@ export const Container = styled.div`
   }
 `;
 
-const ControlButtonColor: Record<'buyer' | 'seller', string> = {
-  buyer: theme.grey.shade8,
-  seller: theme.grey.noshade,
+const ControlButtonColor = (
+  theme: Theme
+): Record<'buyer' | 'seller', string> => {
+  return { buyer: theme.grey.shade8, seller: theme.grey.noshade };
 };
 
 const ControlButtonTextColor = (
+  theme: Theme,
   active: boolean,
   appType: 'buyer' | 'seller'
 ): string => {
@@ -43,12 +45,14 @@ export const ControlButton = styled.button<{ active: boolean }>`
   border-radius: 12px;
   border: none;
   background: ${(props) =>
-    props.active ? ControlButtonColor[props.theme.appType] : 'none'};
+    props.active
+      ? ControlButtonColor(props.theme)[props.theme.appType]
+      : 'none'};
 
   /* Text Properties */
   font-size: 14px;
   color: ${(props) =>
-    ControlButtonTextColor(props.active, props.theme.appType)};
+    ControlButtonTextColor(props.theme, props.active, props.theme.appType)};
   font-weight: 400;
   line-height: 20px;
 
@@ -69,7 +73,7 @@ export const ControlButton = styled.button<{ active: boolean }>`
     visibility: hidden;
     width: 320px;
     background-color: black;
-    color: ${() => theme.grey.noshade};
+    color: ${({ theme }) => theme.grey.noshade};
     text-align: center;
     border-radius: 6px;
     padding: 8px;

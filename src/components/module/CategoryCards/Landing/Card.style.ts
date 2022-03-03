@@ -13,6 +13,11 @@ export const CardContainer = styled.div<{ responsive?: boolean }>`
     min-height: 160px;
     margin-right: 24px;
     transition: transform 0.2s;
+    ${({ theme }) => {
+      if (theme.isSFM) {
+        return `outline: 2px solid ${theme.brand.secondary};`;
+      }
+    }}
   }
 
   .card:hover {

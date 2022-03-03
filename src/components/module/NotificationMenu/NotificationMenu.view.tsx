@@ -19,6 +19,7 @@ import {
   NotifCount,
   DropdownItemContainer,
 } from './NotificationMenu.style';
+import { SpecialColors } from 'utils/SFMTheme';
 
 const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
   const theme = useTheme();
@@ -67,6 +68,9 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
 
   const bellColor = () => {
     if (isNonDesktop) {
+      if (theme.isSFM && theme.appType === 'buyer') {
+        return SpecialColors.blue;
+      }
       return theme.grey.noshade;
     } else if (isSeller) {
       return theme.grey.noshade;
@@ -98,8 +102,9 @@ const NotificationMenu = (props: NotificationMenuProps): JSX.Element => {
             <div className="menu-header">
               <Typography
                 variant="body"
-                style={{ fontFamily: 'Media Sans', fontSize: '20px' }}
+                style={{ fontSize: '20px' }}
                 color={isSeller ? 'noshade' : 'shade9'}
+                altFont
               >
                 Notifications
               </Typography>

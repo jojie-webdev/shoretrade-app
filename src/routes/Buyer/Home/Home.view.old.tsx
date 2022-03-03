@@ -1,12 +1,15 @@
 import React from 'react';
 
 import Alert from 'components/base/Alert';
+import ProgressBar from 'components/base/ProgressBar';
 import { ChevronRight } from 'components/base/SVG';
+import Typography from 'components/base/Typography';
 import Carousel from 'components/module/Carousel';
 import Card from 'components/module/CategoryCards/Landing';
 import { CardProps } from 'components/module/CategoryCards/Landing/Card.props';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import { PreviewProps } from 'components/module/CategoryCards/Preview/Preview.props';
+import FreeTrialCountdown from 'components/module/FreeTrialCountdown';
 import HomeSectionHeader from 'components/module/HomeSectionHeader';
 import Loading from 'components/module/Loading';
 import MultipleCarousel from 'components/module/MultipleCarousel';
@@ -20,7 +23,7 @@ import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
-import { useTheme } from 'utils/Theme';
+import theme, { useTheme } from 'utils/Theme';
 
 import {
   HomeGeneratedProps,
@@ -95,6 +98,7 @@ const HomeView = (props: HomeGeneratedProps) => {
     sellers,
     loadingHomePage,
     isPendingAccount,
+    freeTrialCountdown,
   } = props;
 
   const hideCarouselArrowArea = useMediaQuery({
@@ -107,6 +111,10 @@ const HomeView = (props: HomeGeneratedProps) => {
 
   return (
     <ViewContainer>
+      {freeTrialCountdown?.isFreeTrial && (
+        <FreeTrialCountdown daysLeft={freeTrialCountdown.countdown || 0} />
+      )}
+
       {isPendingAccount && (
         <div className="wrapper" style={{ marginBottom: 16 }}>
           <Col xs={12}>

@@ -199,7 +199,8 @@ const SoldView = (props: SoldGeneratedProps) => {
       {isNonDesktop && (
         <Typography
           variant="title5"
-          style={{ fontFamily: 'Media Sans', marginBottom: 16 }}
+          style={{ marginBottom: 16 }}
+          altFont
           color="noshade"
         >
           Sold

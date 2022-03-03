@@ -1,12 +1,11 @@
 import styled from 'utils/styled';
-import theme from 'utils/Theme';
 
 export const TableDataContainer = styled.div`
   padding-top: 12px;
   padding-bottom: 12px;
   position: relative;
-  background: ${theme.grey.noshade};
-  border-bottom: 1px solid ${theme.grey.shade4};
+  background: ${({ theme }) => theme.grey.noshade};
+  border-bottom: 1px solid ${({ theme }) => theme.grey.shade4};
   font-weight: 500;
 
   &[data-row-sticky='true'] {
@@ -17,7 +16,7 @@ export const TableDataContainer = styled.div`
 
   &[data-row-type='header'] {
     font-weight: 700;
-    background: ${theme.grey.shade3};
+    background: ${({ theme }) => theme.grey.shade3};
     border-bottom: 0;
     cursor: pointer;
 
@@ -57,7 +56,7 @@ export const TableDataContainer = styled.div`
   .btn-view-product {
     display: flex;
     background: #ffffff;
-    border: 1px solid ${theme.brand.primary};
+    border: 1px solid ${({ theme }) => theme.brand.primary};
     border-radius: 8px;
     padding: 6px 8px 4px 8px;
     position: absolute;
@@ -85,7 +84,7 @@ export const DataWrapper = styled.div`
     position: absolute;
     right: 0;
     height: 24px;
-    border-right: 1px solid ${theme.grey.shade5};
+    border-right: 1px solid ${({ theme }) => theme.grey.shade5};
     top: 0;
   }
 `;

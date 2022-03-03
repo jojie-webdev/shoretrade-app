@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Typography from 'components/base/Typography';
+import { MARKET_BY_ROLES } from 'consts/markets';
 import moment from 'moment';
 import { useTheme } from 'utils/Theme';
 
@@ -43,9 +44,11 @@ const ScanHistoryModal = (props: ScanHistoryModalProps): JSX.Element => {
                 variant="caption"
                 color={isBuyer ? 'shade7' : 'noshade'}
               >
-                {`${moment(sh.updated_at).format(
-                  'DD MMM YYYY hh:MMa'
-                )} at Sydney Fish Market`}
+                {`${moment(sh.updated_at).format('DD MMM YYYY hh:mm a')} at 
+                  ${
+                    MARKET_BY_ROLES[sh.user_role_alias] ||
+                    MARKET_BY_ROLES.DEFAULT
+                  }`}
               </Typography>
             </div>
           </div>

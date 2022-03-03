@@ -1,4 +1,5 @@
 import { MOBILE_HEADER_HEIGHT } from 'consts/mobileHeader';
+import { SpecialColors } from 'utils/SFMTheme';
 import styled from 'utils/styled';
 
 export const Container = styled.div<{ position?: string }>`
@@ -12,7 +13,10 @@ export const Container = styled.div<{ position?: string }>`
   z-index: 1111;
   height: ${MOBILE_HEADER_HEIGHT}px;
   min-height: ${MOBILE_HEADER_HEIGHT}px;
-  background-color: ${({ theme }) => theme.grey.shade9};
+  background-color: ${({ theme }) =>
+    theme.isSFM && theme.appType === 'buyer'
+      ? SpecialColors.ocean
+      : theme.grey.shade9};
 
   .right-content {
     justify-content: flex-end;

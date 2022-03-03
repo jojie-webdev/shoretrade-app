@@ -172,6 +172,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
   )} / ${formatUnitToPricePerUnit(selectedOffer.measurementUnit)}`;
 
   const mrStatusProps = transformMarketRequestStatusText(
+    theme,
     selectedOffer.statusText,
     false,
     [`${selectedOffer.orderRefNumber}`]
@@ -416,12 +417,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
       <Row>
         {' '}
         <Col>
-          <Typography
-            color="shade9"
-            font-weight="700"
-            style={{ fontFamily: 'Media Sans' }}
-            variant="title5"
-          >
+          <Typography color="shade9" font-weight="700" altFont variant="title5">
             {marketRequest.type}
           </Typography>
         </Col>

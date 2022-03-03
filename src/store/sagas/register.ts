@@ -126,6 +126,7 @@ function* registerRequest(action: AsyncAction<RegisterMeta, RegisterPayload>) {
           marketSector: data.marketSector,
           marketSelling: data.marketSelling,
           sellerLicenses,
+          cardToken: data.cardToken,
         };
       }
       // buyer
@@ -148,6 +149,7 @@ function* registerRequest(action: AsyncAction<RegisterMeta, RegisterPayload>) {
         registerDebtFinancing: data.registerDebtFinancing || false,
         marketSector: data.marketSector,
         marketBuying: data.marketBuying,
+        cardToken: data.cardToken,
       };
     };
 

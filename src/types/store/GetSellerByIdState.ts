@@ -5,6 +5,7 @@ export type Seller = {
   companyName: string;
   companyImage: string;
   companyLocation: {
+    suburb: string;
     state: string;
     countryCode: string;
   };

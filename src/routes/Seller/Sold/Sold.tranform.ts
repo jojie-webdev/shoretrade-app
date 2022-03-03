@@ -1,5 +1,6 @@
 import moment from 'moment';
 import omit from 'ramda/es/omit';
+import sortBy from 'ramda/es/sortBy';
 import { PendingOrder } from 'routes/Buyer/Orders/Orders.props';
 import {
   GetAllSellerOrder,
@@ -112,6 +113,10 @@ export const filterDuplicateGroupings = (
   return Object.values(groupings);
 };
 
+const sortByOrderRef = sortBy(
+  (data: { orderRefNumber: number }) => -data.orderRefNumber
+);
+
 export const orderItemToPendingToShipItem = (
   data: GetAllSellerOrder[]
 ): PendingToShipItemData[] => {
@@ -188,8 +193,12 @@ export const orderItemToPendingToShipItem = (
     },
     []
   );
-  // @ts-ignore
-  return filterDuplicateGroupings(pendingItems);
+  const regroupedItems: any = filterDuplicateGroupings(pendingItems);
+
+  return regroupedItems.map((regroupedItem: any) => ({
+    ...regroupedItem,
+    orders: sortByOrderRef(regroupedItem.orders),
+  }));
 };
 
 export const orderItemToSoldItemData = ({
@@ -315,7 +324,16 @@ export const orderItemToSoldItemData = ({
       }
     }
   }
-  return computeTotalWeightAndPrice(newObj);
+
+  const sortedObj = Object.keys(newObj).reduce((accum, key) => {
+    const orders = newObj[key];
+    const sortedOrders = sortByOrderRef(orders);
+    return {
+      ...accum,
+      [key]: sortedOrders,
+    };
+  }, {});
+  return computeTotalWeightAndPrice(sortedObj);
 };
 
 export const computeTotalWeightAndPrice = (newObj: { [p: string]: any }) =>
@@ -331,9 +349,14 @@ export const computeTotalWeightAndPrice = (newObj: { [p: string]: any }) =>
           return {
             ...order,
             totalPrice: `${toPrice(order.totalPrice)}`,
-            totalWeight: `${order.totalWeight.toFixed(
-              2
-            )} ${formatMeasurementUnit(order.groupMeasurementUnit)}`,
+            totalWeight: `${newObj[key]
+              .reduce(
+                (accum: any, o: { totalWeight: any }) => accum + o.totalWeight,
+                0
+              )
+              .toFixed(2)} ${formatMeasurementUnit(
+              order.groupMeasurementUnit
+            )}`,
           };
         }
       ),

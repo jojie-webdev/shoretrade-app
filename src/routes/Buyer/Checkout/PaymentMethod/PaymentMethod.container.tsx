@@ -86,8 +86,10 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
           email: user,
           card: {
             number: Number(values.number.replace(/\D/g, '')),
-            exp_month: values.exp.split('/')[0].trim(),
-            exp_year: moment(values.exp.split('/')[1], 'YY').format('YYYY'),
+            exp_month: parseInt(values.exp.split('/')[0].trim()),
+            exp_year: parseInt(
+              moment(values.exp.split('/')[1], 'YY').format('YYYY')
+            ),
             cvc: Number(values.cvc),
             name: values.name,
           },

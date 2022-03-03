@@ -2,11 +2,13 @@ import React from 'react';
 
 import Typography from 'components/base/Typography/Typography.view';
 import CategoryImageView from 'components/module/CategoryImage';
+import { SpecialColors, useTheme } from 'utils/SFMTheme';
 
 import { CardProps } from './Card.props';
 import { CardContainer } from './Card.style';
 
 const Card = (props: CardProps): JSX.Element => {
+  const theme = useTheme();
   return (
     <CardContainer responsive={props.responsive}>
       <div className="card">
@@ -17,9 +19,14 @@ const Card = (props: CardProps): JSX.Element => {
           cBorderRadius={'8px 8px 0px 0px'}
           customSVGSize={2}
           circled={true}
+          fill={theme.isSFM ? SpecialColors.blue : undefined}
         />
         <div className="card-content">
-          <Typography variant="label" weight="bold">
+          <Typography
+            color={theme.isSFM ? 'secondary' : undefined}
+            variant="label"
+            weight="bold"
+          >
             {props.label}
           </Typography>
         </div>

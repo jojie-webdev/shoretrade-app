@@ -2,6 +2,7 @@ import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Link, NavLink } from 'react-router-dom';
+import { SpecialColors } from 'utils/SFMTheme';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
@@ -44,7 +45,10 @@ export const HamburgerWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => props.theme.grey.shade8};
+  background-color: ${(props) =>
+    props.theme.isSFM && props.theme.appType === 'buyer'
+      ? SpecialColors.deepSea
+      : props.theme.grey.shade8};
   border-radius: 8px;
 
   margin-bottom: 64px;
@@ -82,7 +86,10 @@ export const MenuOverlay = styled.div<{ openSidebar: boolean }>`
 
 export const Sidebar = styled.aside<{ openSidebar: boolean }>`
   padding: 0 24px;
-  background: #050e16;
+  background: ${({ theme }) =>
+    theme.isSFM && theme.appType === 'buyer'
+      ? SpecialColors.ocean
+      : theme.grey.shade10};
   width: 270px;
   display: flex;
   flex-direction: column;
@@ -160,7 +167,10 @@ export const SidebarLogoContainer = styled.div`
     border-radius: 8px;
     width: 38px;
     height: 38px;
-    background-color: ${({ theme }) => theme.grey.shade8};
+    background-color: ${({ theme }) =>
+      theme.isSFM && theme.appType === 'buyer'
+        ? SpecialColors.deepSea
+        : theme.grey.shade8};
     cursor: pointer;
     margin-right: 12px;
 
@@ -190,7 +200,10 @@ export const SidebarItem = styled(NavLink)`
 `;
 
 export const TabletSidebar = styled.aside`
-  background: #050e16;
+  background: ${({ theme }) =>
+    theme.isSFM && theme.appType === 'buyer'
+      ? SpecialColors.ocean
+      : theme.grey.shade10};
   width: 72px;
   display: flex;
   flex-direction: column;
@@ -232,7 +245,10 @@ export const SidebarFooter = styled.div`
   @media (max-height: 768px) {
     position: fixed;
     bottom: 0;
-    background: ${({ theme }) => theme.grey.shade10};
+    background: ${({ theme }) =>
+      theme.isSFM && theme.appType === 'buyer'
+        ? SpecialColors.ocean
+        : theme.grey.shade10};
     width: 222px;
   }
 `;
@@ -424,7 +440,6 @@ export const HeaderContainer = styled.nav<{ isHomeOld?: boolean }>`
 `;
 
 export const PageTitle = styled(Typography)`
-  font-family: 'Media Sans', sans-serif;
   font-weight: bold;
   font-size: ${pxToRem(32)};
   line-height: 40px;
@@ -456,15 +471,28 @@ export const HeaderRightContent = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-
-    border: 1px solid ${({ theme }) => theme.grey.shade3};
     border-radius: 12px;
 
+    border: 1px solid
+      ${({ theme }) =>
+        theme.appType === 'buyer' ? theme.grey.shade4 : theme.grey.shade10};
+    background: ${({ theme }) =>
+      theme.appType === 'buyer' ? theme.grey.shade2 : theme.grey.shade8};
     @media ${BREAKPOINTS.nonDesktop} {
       width: 32px;
       height: 32px;
-      border: 1px solid ${({ theme }) => theme.grey.shade10};
-      background: ${({ theme }) => theme.grey.shade8};
+      border: 1px solid
+        ${({ theme }) =>
+          theme.isSFM ? SpecialColors.ocean : theme.grey.shade10};
+      background: ${({ theme }) => {
+        if (theme.appType === 'buyer') {
+          if (theme.isSFM) {
+            return `${SpecialColors.deepSea};`;
+          }
+          return `${theme.grey.shade8};`;
+        }
+        return `${theme.grey.shade8};`;
+      }};
     }
   }
 
@@ -498,7 +526,10 @@ export const HeaderRightContent = styled.div`
 `;
 
 export const CreditBalanceContainer = styled.div`
-  background: ${(props) => props.theme.grey.shade8};
+  background: ${({ theme }) =>
+    theme.isSFM && theme.appType === 'buyer'
+      ? SpecialColors.deepSea
+      : theme.grey.shade8};
   padding: 16px;
   box-sizing: border-box;
   border-radius: 4px;
@@ -522,6 +553,10 @@ export const CreditBalanceContainer = styled.div`
   }
 
   cursor: pointer;
+`;
+
+export const PoweredByContainer = styled.div`
+  padding: 16px;
 `;
 
 export const CheckoutCount = styled.div`

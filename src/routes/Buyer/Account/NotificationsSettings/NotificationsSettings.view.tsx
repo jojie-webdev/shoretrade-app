@@ -99,11 +99,7 @@ const NotificationsSettingsView = ({
       )}
       <GlobalNotificationsContainer>
         <header className="header">
-          <Typography
-            className="section-title"
-            variant="body"
-            style={{ fontFamily: 'Media Sans' }}
-          >
+          <Typography className="section-title" variant="body" altFont>
             Global Notification Settings{' '}
           </Typography>
           <IconTooltip
@@ -155,11 +151,7 @@ const NotificationsSettingsView = ({
       {groupedNotifSettings.map((ns) => (
         <CategoryItemContainer key={ns.resource}>
           <div>
-            <Typography
-              color={defaultColor}
-              variant="body"
-              style={{ fontFamily: 'Media Sans' }}
-            >
+            <Typography color={defaultColor} variant="body" altFont>
               {ns.resource}
             </Typography>
           </div>

@@ -6,6 +6,7 @@ import {
   Close,
   ShoretradeLogo,
   ShoretradeLogo2,
+  SfmLogo,
 } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import { SHORETRADE_HOME } from 'consts';

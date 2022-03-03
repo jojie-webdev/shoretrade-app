@@ -17,7 +17,7 @@ import {
 const AccountPicture = (props: AccountPictureProps): JSX.Element => {
   const theme = useTheme();
 
-  const { profilePicture, updateImage, updatingImage } = props;
+  const { profilePicture, updateImage, updatingImage, size } = props;
 
   const [imageError, setImageError] = useState(false);
   const [hideBrokenProfileImage, setHideBrokenProfileImage] = useState(false);
@@ -69,7 +69,7 @@ const AccountPicture = (props: AccountPictureProps): JSX.Element => {
           <Spinner />
         </div>
       ) : (
-        <ImageContainer>
+        <ImageContainer size={size}>
           <>
             {profilePicture !== '' ? (
               <>
@@ -91,11 +91,12 @@ const AccountPicture = (props: AccountPictureProps): JSX.Element => {
               </>
             ) : (
               <NoProfilePic
+                size={size}
                 onClick={() => {
                   handleOnClick();
                 }}
               >
-                <PlaceholderProfile width={96} height={96} />
+                <PlaceholderProfile width={size || 96} height={size || 96} />
               </NoProfilePic>
             )}
           </>

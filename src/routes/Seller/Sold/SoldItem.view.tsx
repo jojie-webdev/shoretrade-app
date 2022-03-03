@@ -607,7 +607,7 @@ const SoldItem = (props: {
                         </div>
                       </div>
                     )}
-                    {/* {!isMobile && props.updateScanHistoryModal &&
+                    {!isMobile && props.updateScanHistoryModal &&
                       order?.scanHistory &&
                       order?.scanHistory?.length > 0 &&
                       index === v.orders.length - 1 && (
@@ -646,7 +646,7 @@ const SoldItem = (props: {
                             );
                           })}
                       </div>
-                    </div> */}
+                    </div>
                   </ItemCard>
                 </CollapsibleContent>
               ))}

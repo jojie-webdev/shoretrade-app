@@ -213,9 +213,9 @@ const NoSelling = () => {
           variant="title4"
           color="noshade"
           style={{
-            fontFamily: 'Media Sans',
             fontSize: isSmallScreen ? '20px' : '32px',
           }}
+          altFont
         >
           You have no selling products
         </Typography>

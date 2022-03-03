@@ -1,6 +1,7 @@
 import Typography from 'components/base/Typography/Typography.view';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import Dropdown from 'react-dropdown';
+import { SpecialColors } from 'utils/SFMTheme';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
@@ -69,8 +70,15 @@ export const StyledDropdown = styled(Dropdown)<DropdownProps>`
 
   .${PREFIX}Placeholder {
     ${font};
-    color: ${({ theme, dark }) =>
-      dark ? theme.grey.noshade : theme.grey.shade9};
+    color: ${({ theme, dark }) => {
+      if (dark) {
+        return `${theme.grey.noshade};`;
+      }
+      if (theme.isSFM) {
+        return `${SpecialColors.blue};`;
+      }
+      return `${theme.grey.shade9};`;
+    }}
     margin-right: 10px;
   }
 

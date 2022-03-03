@@ -39,6 +39,19 @@
   font-weight: 700;
 }
 
+@font-face {
+  font-family: 'Graphik';
+  src: url('res/fonts/Graphik.woff') format('woff'),
+    url('res/fonts/Graphik.ttf') format('ttf');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Canela';
+  src: url('res/fonts/Canela Bold.ttf') format('ttf');
+  font-weight: 700;
+}
+
 body {
   margin: 0;
 }
@@ -47,6 +60,11 @@ body * {
   font-family: 'Basis Grotesque Pro', sans-serif;
   box-sizing: border-box;
 }
+/* 
+body.sfm * {
+  font-family: 'Graphik', sans-serif;
+  box-sizing: border-box;
+} */
 
 body.no-scroll {
   overflow: hidden;

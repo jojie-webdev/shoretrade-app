@@ -14,6 +14,7 @@ import { createUpdateReducer } from 'utils/Hooks';
 import { AddPhotosProps } from './AddPhotos.props';
 import { Container, PhotoTypeWrapper } from './AddPhotos.style';
 import Checkbox from 'components/base/Checkbox';
+import Radio from 'components/base/Radio';
 
 const AddPhotos = ({
   isCustomType,
@@ -138,7 +139,7 @@ const AddPhotos = ({
         {!!Object.keys(images).length && (
           <Col md={12} className="add-col">
             <PhotoTypeWrapper>
-              <Checkbox
+              <Radio
                 label={'This is an actual photo of the product'}
                 checked={photoTypes.isActualPhoto}
                 onClick={() => {
@@ -148,7 +149,7 @@ const AddPhotos = ({
                   });
                 }}
               />
-              <Checkbox
+              <Radio
                 label={'This is a representation of the product for sale'}
                 checked={photoTypes.isForSaleRepPhoto}
                 onClick={() => {

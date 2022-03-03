@@ -8,6 +8,7 @@ import {
   GetSellerOrdersMeta,
   GetSellerOrdersPayload,
   OrderStatus,
+  SocketOrderConfirmWeightPayload,
   SocketOrderScanPayload,
 } from 'types/store/GetSellerOrdersState';
 import { Store } from 'types/store/Store';
@@ -19,6 +20,7 @@ import {
   getSellerOrdersDeliveredActions,
   getAllSellerOrdersActions,
   socketActions,
+  getSellerOrdersPendingActions,
 } from '../actions';
 
 function* getSellerOrdersActionsRequest(
@@ -96,12 +98,69 @@ function* getSellerScanOrder(action: Action<any>) {
   }
 }
 
+function* updateSellerScanWeightConfirmed(action: Action<any>) {
+  const state: Store = yield select();
+  const realtimeData: SocketOrderConfirmWeightPayload = action.payload;
+  const modifyData: GetAllSellerOrdersPayload | null = produce(
+    state.getSellerOrdersPlaced,
+    (draft) => {
+      if (
+        state.getSellerOrdersPlaced.data &&
+        state.getSellerOrdersPlaced?.data?.data?.orders &&
+        draft &&
+        draft.data &&
+        draft.data.data &&
+        draft.data.data.orders
+      ) {
+        state.getSellerOrdersPlaced.data.data.orders.forEach((d, index) => {
+          for (const [key, value] of Object.entries(d)) {
+            if (Array.isArray(value)) {
+              value.forEach((y, x) => {
+                if (Array.isArray(y.orders)) {
+                  y.orders.forEach((order, orderIdx) => {
+                    if (draft.data && order.orderId === realtimeData.orderId) {
+                      draft.data.data.orders[index][key][x].orders[
+                        orderIdx
+                      ].weightConfirmed = true;
+                      draft.data.data.orders[index][key][x].orders[
+                        orderIdx
+                      ].weightConfirmed = true;
+                      order.orderLineItem.forEach((ol, olIdx) => {
+                        if (ol.id === realtimeData.lineItemId && draft.data) {
+                          draft.data.data.orders[index][key][x].orders[
+                            orderIdx
+                          ].orderLineItem[olIdx].weightConfirmed = true;
+                        }
+                      });
+                    }
+                  });
+                }
+              });
+            }
+          }
+        });
+      }
+    }
+  ).data;
+  if (
+    modifyData &&
+    state.getSellerOrdersPlaced.data &&
+    state.getSellerOrdersPlaced?.data?.data?.orders
+  ) {
+    yield put(getSellerOrdersPlacedActions.patch(modifyData));
+  }
+}
+
 function* getSellerOrdersWatcher() {
   yield takeLatest(
     getSellerOrdersActions.REQUEST,
     getSellerOrdersActionsRequest
   );
   yield takeLatest(socketActions.BARCODE_SCANNED, getSellerScanOrder);
+  yield takeLatest(
+    socketActions.WEIGHT_CONFIRMED,
+    updateSellerScanWeightConfirmed
+  );
   // yield takeLatest(
   //   getSellerOrdersPlacedActions.REQUEST,
   //   createGetSellerOrdersRequest(getSellerOrdersPlacedActions)

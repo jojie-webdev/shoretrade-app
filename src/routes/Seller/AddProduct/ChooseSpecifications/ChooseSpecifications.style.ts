@@ -1,6 +1,5 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
-import theme from 'utils/Theme';
 
 export const Container = styled.div`
   @media ${BREAKPOINTS['sm']} {
@@ -23,7 +22,7 @@ export const Container = styled.div`
     .additional-product-info {
       padding: 24px;
       border-radius: 12px;
-      background: ${theme.grey.shade9};
+      background: ${({ theme }) => theme.grey.shade9};
     }
   }
 

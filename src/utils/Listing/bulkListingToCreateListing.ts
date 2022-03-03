@@ -27,4 +27,7 @@ export const bulkListingToCreateListing = (
   ends: data?.ends ? moment(data.ends).toISOString() : null,
   isAquafuture: data?.isAquafuture || false,
   addressId: shippingAddress,
+  isPreAuctionSale: data?.isPreAuctionSale || false,
+  isAuctionSale: data?.isAuctionSale || false,
+  auctionDate: data?.auctionDate || null,
 });

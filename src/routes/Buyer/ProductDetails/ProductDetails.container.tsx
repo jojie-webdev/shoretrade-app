@@ -331,11 +331,13 @@ const ProductDetails = (): JSX.Element => {
       currentListing?.size.from,
       currentListing?.size.to
     ),
-    location: `${currentListing?.address.suburb || ''}, ${
-      currentListing?.address.state || ''
-    }, ${currentListing?.address.countryCode || ''}, ${
-      currentListing?.address.postcode || ''
-    }`,
+    location: currentListing?.origin
+      ? `${currentListing?.origin.suburb}, ${currentListing?.origin.state}, ${currentListing?.origin.countryCode}`
+      : `${currentListing?.address.suburb || ''}, ${
+          currentListing?.address.state || ''
+        }, ${currentListing?.address.countryCode || ''}, ${
+          currentListing?.address.postcode || ''
+        }`,
   };
   const productDetailsCard6Props: ProductDetailsCard6Props = {
     price: price.toFixed(2),
@@ -370,6 +372,15 @@ const ProductDetails = (): JSX.Element => {
     isFavorite: isSellerFavorite || false,
     onFavorite: onFavoriteSeller,
     onClickSeller,
+    companyLocation: `${
+      currentSeller?.companyLocation.suburb
+        ? `${currentSeller?.companyLocation.suburb}, `
+        : ''
+    }${currentSeller?.companyLocation.state || ''}${
+      currentSeller?.companyLocation.countryCode
+        ? `, ${currentSeller?.companyLocation.countryCode}`
+        : ''
+    }`,
   };
 
   const generatedProps = {

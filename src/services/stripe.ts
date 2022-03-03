@@ -6,10 +6,14 @@ const BASE_URL = `https://api.stripe.com/v1/tokens`;
 
 export const createCardToken = (card: {
   number: number;
-  exp_month: string;
-  exp_year: string;
+  exp_month: number;
+  exp_year: number;
   cvc: number;
   name: string;
+  address_line1?: string;
+  address_city?: string;
+  address_state?: string;
+  address_zip?: string;
 }) => {
   return axios({
     method: 'post',

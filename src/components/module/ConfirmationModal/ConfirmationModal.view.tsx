@@ -32,7 +32,7 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
           variant="title4"
           color={isSeller ? 'noshade' : 'shade8'}
           className="title"
-          style={{ fontFamily: 'Media Sans' }}
+          altFont
         >
           {title}
         </Typography>
@@ -43,7 +43,7 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
           variant="title5"
           color={isSeller ? 'noshade' : 'shade8'}
           className="title"
-          style={{ fontFamily: 'Media Sans' }}
+          altFont
         >
           {title}
         </Typography>
@@ -56,13 +56,16 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
       <Content>
         {renderTitle()}
         <div className="content-container">
-          <Typography
-            variant="body"
-            color={isSeller ? 'noshade' : 'shade8'}
-            weight="Medium"
-          >
-            {description}
-          </Typography>
+          {description && (
+            <Typography
+              variant="body"
+              color={isSeller ? 'noshade' : 'shade8'}
+              weight="Medium"
+            >
+              {description}
+            </Typography>
+          )}
+          {children && <>{children}</>}
         </div>
         <div className="actions-container">
           {!hideCancel && (

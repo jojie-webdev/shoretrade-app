@@ -51,6 +51,7 @@ import getCart from './getCart';
 import getCoopUsers from './getCoopUsers';
 import getCrates from './getCrates';
 import getCustomFormData from './getCustomFormData';
+import getFreeTrialExpiry from './getFreeTrialExpiry';
 import getHistoricalListings from './getHistoricalListings';
 import getLinkedAccounts from './getLinkedAccounts';
 import getListing from './getListing';
@@ -78,6 +79,7 @@ import getSellerOrdersPlaced from './getSellerOrdersPlaced';
 import getSellerOrdersTransit from './getSellerOrdersTransit';
 import getShippingQuote from './getShippingQuote';
 import getStates from './getStates';
+import getSubscriptionPlans from './getSubscriptionPlans';
 import getTransactionHistory from './getTransactionHistory';
 import getUser from './getUser';
 import globalModal from './globalModal';
@@ -128,6 +130,8 @@ export default (routeHistory: History) =>
         /* PLOP_INJECT_INSTANCE */
         getBuyerSearchFilters,
         updatePreferences,
+        getFreeTrialExpiry,
+        getSubscriptionPlans,
         getAllBuyerOrders,
         getSellerOrdersPending,
         getAllSellerOrders,

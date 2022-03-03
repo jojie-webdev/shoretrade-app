@@ -42,8 +42,16 @@ export interface RegistrationDetails {
   sfmNumber: string | null;
 
   // payment method
-  selectedPaymentMethod: string;
-  estimatedAnnualRevenue: string;
+  cardNumber: string;
+  cardExpiryDate: string;
+  cardCvc: string;
+  cardName: string;
+  cardBillingAddress: string;
+  cardZipCode: string;
+  cardCity: string;
+  cardState: string;
+  cardToken: string;
+
   selectedMarketSector: string;
 
   tncAgreement: boolean;
@@ -101,6 +109,7 @@ export interface StepFormProps extends RegisterGeneratedProps {
     onSubmit: (values: Record<string, string>) => void;
   };
   step: number;
+  previousStep?: () => void;
   fields: {
     label: string;
     key: string;

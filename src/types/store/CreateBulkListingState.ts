@@ -33,6 +33,9 @@ export type CreateBulkListingRequestData = {
   ends: string | null; // date iso string
   isAquafuture: boolean;
   addressId: string;
+  isPreAuctionSale: boolean;
+  isAuctionSale: boolean;
+  auctionDate: string | null;
 };
 
 export type CreateBulkListingPayload = GenericResponse;

@@ -1,9 +1,7 @@
 import styled, { css } from 'utils/styled';
 
 const imgStyle = css`
-  width: 96px;
-  height: 96px;
-  border-radius: 8px;
+  border-radius: 12px;
   margin-right: 16px;
   cursor: pointer;
 `;
@@ -22,10 +20,14 @@ export const Container = styled.div`
   }
 `;
 
-export const ImageContainer = styled.div`
+export const ImageContainer = styled.div<{
+  size?: number;
+}>`
   position: relative;
   img {
     ${imgStyle}
+    width: ${({ size }) => size || 96}px;
+    height: ${({ size }) => size || 96}px;
   }
 
   .loading-indicator {
@@ -46,7 +48,11 @@ export const ImageContainer = styled.div`
   }
 `;
 
-export const NoProfilePic = styled.div`
+export const NoProfilePic = styled.div<{
+  size?: number;
+}>`
   ${imgStyle};
+  width: ${({ size }) => size || 96}px;
+  height: ${({ size }) => size || 96}px;
   background-color: #edeffa;
 `;

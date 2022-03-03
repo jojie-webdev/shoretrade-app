@@ -6,6 +6,7 @@ import pathOr from 'ramda/es/pathOr';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
+  getFreeTrialExpiryActions,
   getMarketNotificationActions,
   getSellerDashboardSalesActions,
   getSellerDashboardTopCategoriesActions,
@@ -57,6 +58,10 @@ const Dashboard = (): JSX.Element => {
     topCategories: [],
     previousTopCategories: [],
   };
+
+  const freeTrialCountdown = useSelector(
+    (state: Store) => state.getFreeTrialExpiry.data?.data
+  );
 
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
 
@@ -187,6 +192,7 @@ const Dashboard = (): JSX.Element => {
       })
     );
     dispatch(getMarketNotificationActions.request({}));
+    dispatch(getFreeTrialExpiryActions.request({}));
     // eslint-disable-next-line
   }, []);
 
@@ -236,6 +242,7 @@ const Dashboard = (): JSX.Element => {
     userPending,
     salesData,
     topCategoriesData,
+    freeTrialCountdown,
   };
   return <DashboardView {...generatedProps} />;
 };

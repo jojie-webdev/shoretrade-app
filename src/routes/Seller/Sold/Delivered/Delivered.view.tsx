@@ -54,7 +54,8 @@ const Delivered = (props: SoldGeneratedProps) => {
                 <Col md={12} className="title-col">
                   <Typography
                     color="noshade"
-                    style={{ fontFamily: 'Media Sans', fontSize: '20px' }}
+                    style={{ fontSize: '20px' }}
+                    altFont
                   >
                     {calendarDateString}
                   </Typography>

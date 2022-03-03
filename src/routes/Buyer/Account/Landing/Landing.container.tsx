@@ -8,6 +8,8 @@ import {
   editableListingActions,
   updateUserActions,
   logoutActions,
+  getAccountCompletionActions,
+  getFreeTrialExpiryActions,
 } from 'store/actions';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
@@ -30,6 +32,13 @@ const Landing = (): JSX.Element => {
   const addresses = useSelector(
     (state: Store) => state.getAddresses.data?.data.addresses
   );
+  const accountCompletion = useSelector(
+    (store: Store) => store.getAccountCompletion.data?.data
+  );
+  const freeTrialCountdown = useSelector(
+    (store: Store) => store.getFreeTrialExpiry.data?.data
+  );
+
   const isPendingAccount =
     addresses !== undefined &&
     !(addresses || []).some((a) => a.approved === 'APPROVED');
@@ -70,6 +79,21 @@ const Landing = (): JSX.Element => {
     // eslint-disable-next-line
   }, [loadingUser]);
 
+  useEffect(() => {
+    if (currentCompany?.id) {
+      dispatch(
+        getAccountCompletionActions.request({
+          companyId: currentCompany.id,
+        })
+      );
+    }
+    // eslint-disable-next-line
+  }, [currentCompany]);
+
+  useEffect(() => {
+    dispatch(getFreeTrialExpiryActions.request({}));
+  }, []);
+
   const generatedProps: LandingGeneratedProps = {
     credit: currentCompany?.credit,
     currentCompany,
@@ -82,6 +106,8 @@ const Landing = (): JSX.Element => {
     updateImage,
     logout,
     permission,
+    accountCompletion,
+    freeTrialCountdown,
   };
   return <LandingView {...generatedProps} />;
 };

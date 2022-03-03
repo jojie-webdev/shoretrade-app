@@ -13,4 +13,6 @@ export type MarketInterestItem = {
 export type GetMarketInterestsPayload = GenericResponse<{
   selling: MarketInterestItem[];
   buying: MarketInterestItem[];
+  sector: string;
+  sectorAlias: string;
 }>;

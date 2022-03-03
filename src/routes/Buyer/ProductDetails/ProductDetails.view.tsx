@@ -112,7 +112,11 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
             <Col xs={12} sm={12} md={12} lg={12} className="title">
               <TopBarContainer>
                 <div>
-                  <Typography variant="title4" weight="500">
+                  <Typography
+                    altFont={theme.isSFM}
+                    variant="title4"
+                    weight="500"
+                  >
                     {productDetailsCard1Props.title}
                   </Typography>
                   {!isMobile ? (
@@ -252,7 +256,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                 SellerCard={
                   !isMobile ? (
                     <ProductSellerCard
-                      location={productDetailsCard1Props.location}
+                      location={sellerRatingProps.companyLocation}
                       withBackground={false}
                       showFavoriteButton={false}
                       {...sellerRatingProps}
@@ -262,7 +266,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
               />
               {!isPendingAccount && isMobile ? (
                 <ProductSellerCard
-                  location={productDetailsCard1Props.location}
+                  location={sellerRatingProps.companyLocation}
                   withBackground={false}
                   showFavoriteButton={true}
                   {...sellerRatingProps}

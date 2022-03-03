@@ -58,7 +58,7 @@ const HistoricalListings = (props: HistoricalListingsProps) => {
   return (
     <Container>
       <GetStartedCard>
-        <Title>Create New Listing</Title>
+        <Title altFont>Create New Listing</Title>
         <Description>
           Choose Product Type, Size, Specs, upload Photos and create a New
           Listing from scratch.
