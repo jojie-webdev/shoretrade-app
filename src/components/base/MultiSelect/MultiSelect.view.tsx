@@ -3,18 +3,14 @@ import React, { useState } from 'react';
 import { useTheme } from 'utils/Theme';
 
 import Select from '../Select';
-import { OptionsType } from '../Select/Select.props';
 import { MultiSelectProps } from './MultiSelect.props';
-import { Container, Label } from './MultiSelect.style';
+import { Container } from './MultiSelect.style';
 import MultiSelectList from './MultiSelectList.view';
 
 const MultiSelect = (props: MultiSelectProps): JSX.Element => {
-  const { selectedAllText, options } = props;
+  const { selectedAllText, options, selected, updateSelected } = props;
   const [showMenu, setShowMenu] = useState(false);
-  const [selected, setSelected] = useState<OptionsType[]>([]);
   const theme = useTheme();
-
-  const updateSelected = (list: OptionsType[]) => setSelected(list);
 
   const dropdownValue =
     selected.length === options.length && selectedAllText

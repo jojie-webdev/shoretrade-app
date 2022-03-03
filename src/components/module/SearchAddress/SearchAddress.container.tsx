@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+import { OptionsType } from 'components/base/Select/Select.props';
 import {
   addressToPlaceData,
   placeDataToUpdateAddressMeta,
@@ -11,15 +12,33 @@ import {
   updateAddressActions,
   searchAndCountProductTypeActions,
   historyActions,
+  getBuyerSearchFiltersActions,
+  updatePreferencesActions,
 } from 'store/actions';
 import { GetAddressOptions, GetDefaultCompany } from 'store/selectors/buyer';
+import { UserSearchPreferences } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
+import { UpdatePreferencesMeta } from 'types/store/UpdatePreferencesState';
 
 import SearchAddressView from './SearchAddress.view';
 
 const SearchAddress = (): JSX.Element => {
   const dispatch = useDispatch();
   //#region Address
+
+  useEffect(() => {
+    dispatch(getBuyerSearchFiltersActions.request({}));
+    // eslint-disable-next-line
+  }, []);
+
+  const searchPreferences = useSelector(
+    (state: Store) =>
+      state.getUser.data?.data?.user.preferences?.searchPreferences || {}
+  );
+
+  const buyerSearchFilters = useSelector(
+    (state: Store) => state.getBuyerSearchFilters.data?.data.filters
+  );
 
   const companyId = GetDefaultCompany()?.id || '';
 
@@ -107,6 +126,10 @@ const SearchAddress = (): JSX.Element => {
     }
   };
 
+  const updatePreferences = (data: UpdatePreferencesMeta) => {
+    dispatch(updatePreferencesActions.request(data));
+  };
+
   useEffect(() => {
     if (searchTerm.length > 2) {
       if (!shouldHideResult) {
@@ -151,6 +174,22 @@ const SearchAddress = (): JSX.Element => {
     data,
     shouldHideResult,
     //#endregion
+
+    buyingStates: (buyerSearchFilters?.states || []).map((v) => ({
+      label: v,
+      value: v,
+    })),
+    listingMetrics: (buyerSearchFilters?.metrics || []).map((v) =>
+      v === null
+        ? { label: 'All', value: 'All' }
+        : {
+            label: v,
+            value: v,
+          }
+    ),
+    minBuyingQuantity: Number(buyerSearchFilters?.minimum_order || '0'),
+    searchPreferences,
+    updatePreferences,
   };
 
   return <SearchAddressView {...generatedProps} />;

@@ -1,4 +1,6 @@
 /* PLOP_INJECT_IMPORT */
+export { default as getBuyerSearchFiltersActions } from './getBuyerSearchFilters';
+export { default as updatePreferencesActions } from './updatePreferences';
 export { default as getAllBuyerOrdersActions } from './getAllBuyerOrders';
 export { default as getSellerOrdersPendingActions } from './getSellerOrdersPending';
 export { default as getAllSellerOrdersActions } from './getAllSellerOrders';

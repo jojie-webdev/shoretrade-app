@@ -1,6 +1,8 @@
 import { fork, all } from 'redux-saga/effects';
 
 /* PLOP_INJECT_IMPORT */
+import getBuyerSearchFilters from './getBuyerSearchFilters';
+import updatePreferences from './updatePreferences';
 import getAllBuyerOrders from './getAllBuyerOrders';
 import addAddress from './addAddress';
 import addCardAndPay from './addCardAndPay';
@@ -111,6 +113,8 @@ import verify from './verify';
 
 const sagas = [
   /* PLOP_INJECT_INSTANCE */
+  getBuyerSearchFilters,
+  updatePreferences,
   getAllBuyerOrders,
   getAllSellerOrders,
   getHistoricalListings,

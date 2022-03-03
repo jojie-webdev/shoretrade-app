@@ -1,5 +1,9 @@
 import { Dispatch } from 'react';
 
+import { OptionsType } from 'components/base/Select/Select.props';
+import { UserSearchPreferences } from 'types/store/GetUserState';
+import { UpdatePreferencesMeta } from 'types/store/UpdatePreferencesState';
+
 export type SearchInterface = {
   count: string;
   label: string;
@@ -24,4 +28,10 @@ export interface SearchAddressProps {
   data: SearchInterface[];
   shouldHideResult: boolean;
   //#endregion
+
+  buyingStates: OptionsType[];
+  listingMetrics: OptionsType[];
+  minBuyingQuantity: number;
+  searchPreferences: UserSearchPreferences;
+  updatePreferences: (v: UpdatePreferencesMeta) => void;
 }
