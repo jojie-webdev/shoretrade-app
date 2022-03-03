@@ -18,6 +18,7 @@ const Slider = (props: SliderProps): JSX.Element => {
   const {
     value,
     onChange,
+    min,
     max,
     maskValue = (v: number) => v,
     onAfterChange,
@@ -65,6 +66,7 @@ const Slider = (props: SliderProps): JSX.Element => {
         onChange={onChange}
         renderTrack={Track}
         renderThumb={Thumb}
+        min={min}
         max={max}
         onAfterChange={onAfterChange}
       />

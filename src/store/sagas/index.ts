@@ -39,6 +39,7 @@ import getBankDetails from './getBankDetails';
 import getBuyerHomepage from './getBuyerHomePage';
 import getBuyerOrders from './getBuyerOrders';
 import getBuyerSearchFilterData from './getBuyerSearchFilterData';
+import getBuyerSearchFilters from './getBuyerSearchFilters';
 import getCart from './getCart';
 import getCoopUsers from './getCoopUsers';
 import getCrates from './getCrates';
@@ -105,6 +106,7 @@ import updateFavouriteProduct from './updateFavouriteProduct';
 import updateListing from './updateListing';
 import updateMarketInterests from './updateMarketInterests';
 import updateNotificationSettings from './updateNotificationSettings';
+import updatePreferences from './updatePreferences';
 import updateSellerLicense from './updateSellerLicense';
 import updateUser from './updateUser';
 import uploadBulk from './uploadBulk';
@@ -113,6 +115,8 @@ import verify from './verify';
 
 const sagas = [
   /* PLOP_INJECT_INSTANCE */
+  getBuyerSearchFilters,
+  updatePreferences,
   getFreeTrialExpiry,
   getSubscriptionPlans,
   getAllBuyerOrders,

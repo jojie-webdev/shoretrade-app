@@ -41,6 +41,8 @@ export const StyledTrack = styled.div<{ index: number; single?: boolean }>`
   top: 0;
   bottom: 0;
   background: ${({ index, single, theme }) =>
-    index === 1 && !single ? theme.brand.primary : theme.grey.shade3};
+    (single && index === 0) || (!single && index === 1)
+      ? theme.brand.primary
+      : theme.grey.shade3};
   border-radius: 999px;
 `;

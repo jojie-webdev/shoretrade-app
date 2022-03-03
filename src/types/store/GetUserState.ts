@@ -41,6 +41,12 @@ export type UserCompany = {
   ];
 };
 
+export type UserSearchPreferences = {
+  metric?: string;
+  states?: string[];
+  weight?: number;
+};
+
 export type GetUserPayload = GenericResponse<{
   user: {
     id: string;
@@ -64,6 +70,9 @@ export type GetUserPayload = GenericResponse<{
         description: string;
         groups: string[];
       }[];
+    };
+    preferences: {
+      searchPreferences: UserSearchPreferences;
     };
   };
   token: string;

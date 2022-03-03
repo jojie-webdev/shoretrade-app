@@ -11,6 +11,7 @@ export const Container = styled.div`
   .box-group {
     display: inline-flex;
     flex-direction: row;
+    align-items: center;
   }
 
   @media (hover: none) and (pointer: coarse) {

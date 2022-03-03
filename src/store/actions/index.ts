@@ -1,4 +1,6 @@
 /* PLOP_INJECT_IMPORT */
+export { default as getBuyerSearchFiltersActions } from './getBuyerSearchFilters';
+export { default as updatePreferencesActions } from './updatePreferences';
 export { default as getFreeTrialExpiryActions } from './getFreeTrialExpiry';
 export { default as getSubscriptionPlansActions } from './getSubscriptionPlans';
 export { default as getAllBuyerOrdersActions } from './getAllBuyerOrders';

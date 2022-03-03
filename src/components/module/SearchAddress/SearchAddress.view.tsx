@@ -1,17 +1,27 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
+import MultiSelect from 'components/base/MultiSelect';
 import PaginateList from 'components/base/PaginateList';
 import Select from 'components/base/Select';
+import { OptionsType } from 'components/base/Select/Select.props';
+import Slider from 'components/base/Slider';
 import { Octopus } from 'components/base/SVG';
+import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import EmptyState from 'components/module/EmptyState';
 import Search from 'components/module/Search';
 import { SearchAddressProps } from 'components/module/SearchAddress/SearchAddress.props';
 import { BUYER_ROUTES } from 'consts';
+import debounce from 'lodash.debounce';
 import { useHistory } from 'react-router-dom';
+import { useTheme } from 'utils/Theme';
 
-import { Container, AddressContainer } from './SearchAddress.style';
+import {
+  Container,
+  FiltersContainer,
+  BuyingQuantityContainer,
+} from './SearchAddress.style';
 
 const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
   const {
@@ -27,17 +37,71 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
     data,
     isSearching,
     shouldHideResult,
+    buyingStates,
+    listingMetrics,
+    minBuyingQuantity,
+    searchPreferences,
+    updatePreferences,
   } = props;
-
+  const theme = useTheme();
   const history = useHistory();
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const [selectedBuyingStates, setSelectedBuyingStates] = useState<
+    OptionsType[]
+  >(buyingStates);
+  const [selectedMinBuyingQty, setSelectedMinBuyingQty] = useState(0);
+  const [selectedMetric, setSelectedMetric] = useState('All');
+
+  useEffect(() => {
+    searchPreferences.states &&
+      setSelectedBuyingStates(
+        searchPreferences.states.map((s) => ({
+          label: s,
+          value: s,
+        }))
+      );
+    searchPreferences.weight &&
+      selectedMinBuyingQty === 0 &&
+      setSelectedMinBuyingQty(searchPreferences.weight);
+    searchPreferences.metric && setSelectedMetric(searchPreferences.metric);
+  }, [searchPreferences]);
 
   function blurOnEnter(event: any) {
     if (event.key === 'Enter' && inputRef !== null) {
       inputRef?.current?.blur();
     }
   }
+
+  const updateBuyingState = (states: OptionsType[]) => {
+    setSelectedBuyingStates(states);
+    updatePreferences({
+      search: {
+        ...searchPreferences,
+        states: states.map((s) => s.value),
+      },
+    });
+  };
+
+  const updateMinBuyingQty = debounce((weight: number) => {
+    setSelectedMinBuyingQty(weight);
+    updatePreferences({
+      search: {
+        ...searchPreferences,
+        weight,
+      },
+    });
+  }, 500);
+
+  const updateMetric = (metric: string) => {
+    setSelectedMetric(metric);
+    updatePreferences({
+      search: {
+        ...searchPreferences,
+        metric,
+      },
+    });
+  };
 
   return (
     <Container>
@@ -64,15 +128,15 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           setIsFocused(true);
         }}
         onKeyPress={blurOnEnter}
+        rounded
       />
 
-      <AddressContainer>
+      <FiltersContainer>
         <Select
           className="search-address-select"
           options={addressOptions}
           label="Buying For"
           unbordered={true}
-          size="small"
           onChange={(e) => {
             if (e.value !== currentDefaultAddressId) {
               setTargetAddress(e.value);
@@ -82,7 +146,63 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
             addressOptions.length > 0 ? currentDefaultAddressId : undefined
           }
         />
-      </AddressContainer>
+
+        <MultiSelect
+          className="search-address-select"
+          label="Buying to"
+          options={buyingStates}
+          placeholder="Select..."
+          selectedAllText="All States"
+          background={theme.grey.shade3}
+          selected={selectedBuyingStates}
+          updateSelected={updateBuyingState}
+          unbordered
+        />
+
+        <BuyingQuantityContainer>
+          <Typography
+            variant="overline"
+            color="shade6"
+            style={{ width: '100%' }}
+          >
+            Minimum Buying Quantity
+          </Typography>
+          <div className="filters">
+            <TextField
+              className="weight-input"
+              value={selectedMinBuyingQty}
+              onChange={(e) => updateMinBuyingQty(Number(e.target.value))}
+              type="number"
+            />
+
+            <Select
+              className="search-address-select"
+              options={listingMetrics}
+              unbordered={true}
+              onChange={(e) => {
+                updateMetric(e.value);
+              }}
+              value={selectedMetric}
+            />
+
+            <div style={{ minWidth: '50%', marginTop: '8px' }}>
+              <Slider
+                value={selectedMinBuyingQty}
+                onChange={(v) => {
+                  if (v && typeof v === 'number') {
+                    updateMinBuyingQty(v);
+                  }
+                }}
+                min={0}
+                max={minBuyingQuantity}
+                maskValue={(v) => ``}
+                // eslint-disable-next-line @typescript-eslint/no-empty-function
+                onAfterChange={() => {}}
+              />
+            </div>
+          </div>
+        </BuyingQuantityContainer>
+      </FiltersContainer>
 
       {!shouldHideResult && !isSearching && searchTerm !== '' && (
         <div className="search-result">

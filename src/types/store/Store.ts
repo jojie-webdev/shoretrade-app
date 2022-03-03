@@ -148,6 +148,10 @@ import {
   GetBuyerSearchFilterDataMeta,
   GetBuyerSearchFilterDataPayload,
 } from './GetBuyerSearchFilterDataState';
+import {
+  GetBuyerSearchFiltersMeta,
+  GetBuyerSearchFiltersPayload,
+} from './GetBuyerSearchFiltersState';
 import { GetCartMeta, GetCartPayload } from './GetCartState';
 import { GetCoopUsersMeta, GetCoopUsersPayload } from './GetCoopUsersState';
 import {
@@ -306,11 +310,23 @@ import {
   UpdateNotificationSettingsPayload,
   UpdateNotificationSettingsMetaData,
 } from './UpdateNotificationSettingsState';
+import {
+  UpdatePreferencesMeta,
+  UpdatePreferencesPayload,
+} from './UpdatePreferencesState';
 import { UpdateUserPayload, UpdateUserMeta } from './UpdateUserState';
 import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
+  getBuyerSearchFilters: AsyncState<
+    GetBuyerSearchFiltersMeta,
+    GetBuyerSearchFiltersPayload
+  >;
+  updatePreferences: AsyncState<
+    UpdatePreferencesMeta,
+    UpdatePreferencesPayload
+  >;
   getFreeTrialExpiry: AsyncState<
     GetFreeTrialExpiryMeta,
     GetFreeTrialExpiryPayload
