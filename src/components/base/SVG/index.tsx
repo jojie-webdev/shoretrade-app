@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+export { default as LogOut } from './LogOut';
 export { default as ShoretradeLogoAlt } from './ShoretradeLogoAlt';
 export { default as SfmLogo } from './SfmLogo';
 export { default as ArrowGrowth } from './ArrowGrowth';

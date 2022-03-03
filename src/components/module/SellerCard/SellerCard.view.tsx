@@ -35,7 +35,11 @@ const SellerCard = (props: SellerCardProps): JSX.Element => {
         )}
 
         <div className="card-content">
-          <Typography variant="label" weight="bold">
+          <Typography
+            color={theme.isSFM ? 'secondary' : undefined}
+            variant="label"
+            weight="bold"
+          >
             {companyName}
           </Typography>
         </div>

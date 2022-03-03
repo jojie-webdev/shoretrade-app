@@ -119,7 +119,11 @@ const Carousel = (props: CarouselProps): JSX.Element => {
                 }
               }}
             >
-              <CarouselChevronLeft width={18} height={18} />
+              <CarouselChevronLeft
+                fill={theme.isSFM ? theme.grey.shade7 : undefined}
+                width={18}
+                height={18}
+              />
             </Touchable>
           )}
         </ArrowArea>
@@ -139,7 +143,11 @@ const Carousel = (props: CarouselProps): JSX.Element => {
                   }
                 }}
               >
-                <CarouselChevronLeft width={14} height={14} />
+                <CarouselChevronLeft
+                  fill={theme.isSFM ? theme.grey.shade7 : undefined}
+                  width={14}
+                  height={14}
+                />
               </ArrowButton>
             </LeftInsideArrowArea>
             <RightInsideArrowArea>
@@ -150,7 +158,11 @@ const Carousel = (props: CarouselProps): JSX.Element => {
                   }
                 }}
               >
-                <CarouselChevronRight width={14} height={14} />
+                <CarouselChevronRight
+                  fill={theme.isSFM ? theme.grey.shade7 : undefined}
+                  width={14}
+                  height={14}
+                />
               </ArrowButton>
             </RightInsideArrowArea>
           </>
@@ -214,7 +226,11 @@ const Carousel = (props: CarouselProps): JSX.Element => {
                 }
               }}
             >
-              <CarouselChevronRight width={18} height={18} />
+              <CarouselChevronRight
+                fill={theme.isSFM ? theme.grey.shade7 : undefined}
+                width={18}
+                height={18}
+              />
             </Touchable>
           )}
         </ArrowArea>

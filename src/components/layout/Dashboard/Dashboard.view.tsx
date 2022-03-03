@@ -10,6 +10,7 @@ import {
   Close,
   SfmLogo,
   ShoretradeLogoAlt,
+  LogOut,
 } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
@@ -420,8 +421,8 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
               dark={isSeller}
             >
               <LogoutContainer>
-                <div className="icon-container">
-                  <Exit
+                <div style={{ opacity: 0.25 }} className="icon-container">
+                  <LogOut
                     fill={
                       theme.isSFM && !isSeller
                         ? theme.grey.noshade
@@ -473,7 +474,12 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                   totalUnreadNotifs={totalUnreadNotifs}
                   notifsData={notifsData}
                   textColor={
-                    headerTextColor || (isSeller ? 'noshade' : 'shade9')
+                    headerTextColor ||
+                    (isSeller
+                      ? 'noshade'
+                      : theme.isSFM
+                      ? 'secondary'
+                      : 'shade9')
                   }
                   onClick={() => onClickOpenSideBar(!openSidebar)}
                   openSidebar={openSidebar}
@@ -496,7 +502,10 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                 totalNotifs={totalNotifs}
                 totalUnreadNotifs={totalUnreadNotifs}
                 notifsData={notifsData}
-                textColor={headerTextColor || (isSeller ? 'noshade' : 'shade9')}
+                textColor={
+                  headerTextColor ||
+                  (isSeller ? 'noshade' : theme.isSFM ? 'secondary' : 'shade9')
+                }
                 onClick={() => onClickOpenSideBar(!openSidebar)}
                 openSidebar={openSidebar}
                 onBack={onBack}
