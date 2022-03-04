@@ -9,4 +9,5 @@ export interface MultiSelectProps extends SelectProps {
 export interface MultiSelectListProps extends MultiSelectProps {
   updateSelected: (v: OptionsType[]) => void;
   selected: OptionsType[];
+  show: boolean;
 }

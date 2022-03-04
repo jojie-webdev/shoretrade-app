@@ -51,7 +51,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
     OptionsType[]
   >(buyingStates);
   const [selectedMinBuyingQty, setSelectedMinBuyingQty] = useState(0);
-  const [selectedMetric, setSelectedMetric] = useState('All');
+  const [selectedMetric, setSelectedMetric] = useState('ALL');
 
   useEffect(() => {
     searchPreferences.states &&

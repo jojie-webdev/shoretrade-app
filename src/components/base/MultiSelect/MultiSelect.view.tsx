@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-
-import { useTheme } from 'utils/Theme';
+import React, { useEffect, useState } from 'react';
 
 import Select from '../Select';
 import { MultiSelectProps } from './MultiSelect.props';
@@ -10,27 +8,38 @@ import MultiSelectList from './MultiSelectList.view';
 const MultiSelect = (props: MultiSelectProps): JSX.Element => {
   const { selectedAllText, options, selected, updateSelected } = props;
   const [showMenu, setShowMenu] = useState(false);
-  const theme = useTheme();
 
   const dropdownValue =
     selected.length === options.length && selectedAllText
       ? selectedAllText
       : selected.map((s) => s.label).join(', ');
 
+  useEffect(() => {
+    document.addEventListener('mouseup', function (e) {
+      const container = document.getElementById('multi-select');
+      // @ts-ignore
+      if (container && !container.contains(e.target)) {
+        setShowMenu(false);
+      }
+    });
+  }, []);
+
   return (
-    <Container>
+    <Container id="multi-select">
       <Select
         {...props}
         isMulti
         value={dropdownValue}
         customMenu={
-          showMenu && (
-            <MultiSelectList
-              updateSelected={updateSelected}
-              options={props.options}
-              selected={selected}
-            />
-          )
+          <MultiSelectList
+            show={showMenu}
+            updateSelected={(v) => {
+              updateSelected(v);
+              setShowMenu(false);
+            }}
+            options={props.options}
+            selected={selected}
+          />
         }
         customOpenMenu={() => setShowMenu((v) => !v)}
       />
