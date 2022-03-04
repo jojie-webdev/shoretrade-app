@@ -46,17 +46,19 @@ const Sold = (): JSX.Element => {
     tab: TabOptions;
   };
 
-  // MARK:- Selectors
   const token = useSelector((state: Store) => state.auth.token) || '';
+  const currentTab: TabOptions = tab ? tab : 'To Ship';
 
   const {
     placed: toShipCount,
     transit: inTransitCount,
     forCollection: collectableCount,
     delivered: deliveredCount,
-  } = useSelector(GetAllSellerOrdersCount);
+  } = useSelector((state: Store) => GetAllSellerOrdersCount(state, tab));
 
-  const count = useSelector(GetAllSellerOrdersSelectionCount);
+  const count = useSelector((state: Store) =>
+    GetAllSellerOrdersSelectionCount(state, tab)
+  );
 
   const pendingGetOrdersPlaced =
     useSelector((state: Store) => state.getSellerOrdersPlaced.pending) || false;
@@ -115,9 +117,6 @@ const Sold = (): JSX.Element => {
       dateTo: null,
     }
   );
-
-  // MARK:- State
-  const currentTab: TabOptions = tab ? tab : 'To Ship';
 
   // MARK: Methods
 

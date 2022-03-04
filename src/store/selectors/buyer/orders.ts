@@ -5,24 +5,41 @@ import { GetAllSellerOrder } from 'types/store/GetAllSellerOrdersState';
 import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
 import { Store } from 'types/store/Store';
 
-export const GetAllBuyerOrdersCount = (state: Store) =>
-  state.getBuyerOrdersPlaced.data?.data?.orders.count.headerCount || {};
-
-export const GetAllBuyerOrdersSelectionCount = (tab: TabOptions) => (
-  state: Store
-) => {
-  let countState;
-  switch (tab) {
-    case 'Pending':
-      countState = state.getBuyerOrdersPlaced;
-      break;
-    case 'In Transit':
-      countState = state.getBuyerOrdersTransit;
-      break;
-    default:
-      countState = state.getBuyerOrdersDelivered;
+export const GetAllBuyerOrdersCount = (state: Store, tab: TabOptions) => {
+  if (tab === 'In Transit') {
+    return (
+      state.getBuyerOrdersTransit.data?.data?.orders.count.headerCount || {}
+    );
   }
-  return countState.data?.data?.orders.count.selectionCount || 0;
+
+  if (tab === 'Complete') {
+    return (
+      state.getBuyerOrdersDelivered.data?.data?.orders.count.headerCount || {}
+    );
+  }
+
+  return state.getBuyerOrdersPlaced.data?.data?.orders.count.headerCount || {};
+};
+
+export const GetAllBuyerOrdersSelectionCount = (
+  state: Store,
+  tab: TabOptions
+) => {
+  if (tab === 'In Transit') {
+    return (
+      state.getBuyerOrdersTransit.data?.data?.orders.count.selectionCount || 0
+    );
+  }
+
+  if (tab === 'Complete') {
+    return (
+      state.getBuyerOrdersDelivered.data?.data?.orders.count.selectionCount || 0
+    );
+  }
+
+  return (
+    state.getBuyerOrdersPlaced.data?.data?.orders.count.selectionCount || 0
+  );
 };
 
 const getAllBuyerOrdersPending = (state: Store) =>

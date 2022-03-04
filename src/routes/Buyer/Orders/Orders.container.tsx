@@ -52,6 +52,7 @@ const OrdersContainer = (): JSX.Element => {
   };
 
   const token = useSelector((state: Store) => state.auth.token) || '';
+  const currentTab: TabOptions = tab ? tab : 'Pending';
 
   // eslint-disable-next-line
   const [initialPending, setInitialPending] = useState(true);
@@ -134,7 +135,6 @@ const OrdersContainer = (): JSX.Element => {
   const inTransitOrders = rawDataToOrderItems(GetBuyerOrdersInTransit());
   const completedOrders = rawDataToOrderItems(GetBuyerOrdersDelivered());
 
-  const currentTab: TabOptions = tab ? tab : 'Pending';
   const onChangeCurrentTab = (newTab: TabOptions) => {
     history.push(
       `${BUYER_ROUTES.ORDERS}${qs.stringify(
@@ -149,9 +149,10 @@ const OrdersContainer = (): JSX.Element => {
     transit: inTransitOrdersCount,
     forCollection: collectableOrdersCount,
     delivered: completedOrdersCount,
-  } = useSelector(GetAllBuyerOrdersCount);
-  const selectionCount = useSelector(
-    GetAllBuyerOrdersSelectionCount(currentTab)
+  } = useSelector((state: Store) => GetAllBuyerOrdersCount(state, currentTab));
+
+  const selectionCount = useSelector((state: Store) =>
+    GetAllBuyerOrdersSelectionCount(state, currentTab)
   );
 
   const [toShipOrdersFilter, updateToShipOrdersFilter] = useReducer(

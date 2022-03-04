@@ -12,11 +12,9 @@ import { TitleRow } from '../ToShip/ToShip.styles';
 import { ItemRow } from './Delivered.styles';
 
 const Delivered = (props: SoldGeneratedProps) => {
-  const { delivered, token, deliveredCount, updateFilters, filters } = props;
+  const { delivered, token, updateFilters, filters, count } = props;
 
-  const deliveredPagesTotal = Math.ceil(
-    Number(deliveredCount) / DEFAULT_PAGE_LIMIT
-  );
+  const deliveredPagesTotal = Math.ceil(Number(count) / DEFAULT_PAGE_LIMIT);
 
   return (
     <>

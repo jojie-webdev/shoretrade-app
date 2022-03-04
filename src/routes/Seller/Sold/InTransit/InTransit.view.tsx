@@ -17,11 +17,9 @@ import { TitleRow } from '../ToShip/ToShip.styles';
 import { ItemRow } from './InTransit.styles';
 
 const InTransit = (props: SoldGeneratedProps) => {
-  const { inTransit, token, inTransitCount, filters, updateFilters } = props;
+  const { inTransit, token, count, filters, updateFilters } = props;
   const theme = useTheme();
-  const inTransitPagesTotal = Math.ceil(
-    Number(inTransitCount) / DEFAULT_PAGE_LIMIT
-  );
+  const inTransitPagesTotal = Math.ceil(Number(count) / DEFAULT_PAGE_LIMIT);
 
   const [scanHistoryModal, updateScanHistoryModal] = useReducer(
     createUpdateReducer<{

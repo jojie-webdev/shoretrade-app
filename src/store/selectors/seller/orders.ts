@@ -1,14 +1,36 @@
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
+import { TabOptions } from 'routes/Seller/Sold/Sold.props';
 import { GetAllSellerOrder } from 'types/store/GetAllSellerOrdersState';
 import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
 import { Store } from 'types/store/Store';
 
-export const GetAllSellerOrdersCount = (state: Store) =>
-  state.getSellerOrdersPlaced.data?.data.count.headerCount || {};
+export const GetAllSellerOrdersCount = (state: Store, tab: TabOptions) => {
+  if (tab === 'In Transit') {
+    return state.getSellerOrdersTransit.data?.data.count.headerCount || {};
+  }
 
-export const GetAllSellerOrdersSelectionCount = (state: Store) =>
-  state.getSellerOrdersPlaced.data?.data.count.selectionCount || 0;
+  if (tab === 'Delivered') {
+    return state.getSellerOrdersDelivered.data?.data.count.headerCount || {};
+  }
+
+  return state.getSellerOrdersPlaced.data?.data.count.headerCount || {};
+};
+
+export const GetAllSellerOrdersSelectionCount = (
+  state: Store,
+  tab: TabOptions
+) => {
+  if (tab === 'In Transit') {
+    return state.getSellerOrdersTransit.data?.data.count.selectionCount || 0;
+  }
+
+  if (tab === 'Delivered') {
+    return state.getSellerOrdersDelivered.data?.data.count.selectionCount || 0;
+  }
+
+  return state.getSellerOrdersPlaced.data?.data.count.selectionCount || 0;
+};
 
 const getAllSellerOrdersPending = (state: Store) =>
   state.getSellerOrdersPending.data?.data.orders || [];
