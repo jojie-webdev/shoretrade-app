@@ -13,7 +13,7 @@ import {
 } from './MultiSelect.style';
 
 const MultiSelectList = (props: MultiSelectListProps): JSX.Element => {
-  const { options, selected = [], updateSelected } = props;
+  const { options, selected = [], updateSelected, show } = props;
 
   const [stateSelected, setStateSelected] = useState(selected);
 
@@ -60,7 +60,7 @@ const MultiSelectList = (props: MultiSelectListProps): JSX.Element => {
   }, [stateSelected]);
 
   return (
-    <SelectListContainer>
+    <SelectListContainer style={{ display: show ? undefined : 'none' }}>
       <CheckboxContainer>
         <Checkbox
           label="Select All"

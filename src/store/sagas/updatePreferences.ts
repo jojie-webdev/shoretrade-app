@@ -8,7 +8,7 @@ import {
   UpdatePreferencesPayload,
 } from 'types/store/UpdatePreferencesState';
 
-import { updatePreferencesActions } from '../actions';
+import { getBuyerHomepageActions, updatePreferencesActions } from '../actions';
 
 function* updatePreferencesRequest(
   action: AsyncAction<UpdatePreferencesMeta, UpdatePreferencesPayload>
@@ -30,8 +30,13 @@ function* updatePreferencesRequest(
   }
 }
 
+function* updatePreferencesSuccess() {
+  yield put(getBuyerHomepageActions.request());
+}
+
 function* updatePreferencesWatcher() {
   yield takeLatest(updatePreferencesActions.REQUEST, updatePreferencesRequest);
+  yield takeLatest(updatePreferencesActions.SUCCESS, updatePreferencesSuccess);
 }
 
 export default updatePreferencesWatcher;

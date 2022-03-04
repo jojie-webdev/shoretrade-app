@@ -42,7 +42,7 @@ export type UserCompany = {
 };
 
 export type UserSearchPreferences = {
-  metric?: string;
+  metric?: string | null;
   states?: string[];
   weight?: number;
 };

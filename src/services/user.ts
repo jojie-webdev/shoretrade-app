@@ -46,7 +46,7 @@ export const updatePreferences = (
 ) => {
   return axios({
     method: 'patch',
-    url: `${API.URL}/${API.VERSION_NEXT}/update-preferences`,
+    url: `${API.URL}/${API.VERSION_NEXT}/user/update-preferences`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

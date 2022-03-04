@@ -127,7 +127,11 @@ const SearchAddress = (): JSX.Element => {
   };
 
   const updatePreferences = (data: UpdatePreferencesMeta) => {
-    dispatch(updatePreferencesActions.request(data));
+    const { states, metric, weight } = data.search || {};
+    if ((states && states.length > 0) || (weight && weight > 0)) {
+      data.search.metric = metric === 'ALL' ? null : metric;
+      dispatch(updatePreferencesActions.request(data));
+    }
   };
 
   useEffect(() => {
@@ -181,7 +185,7 @@ const SearchAddress = (): JSX.Element => {
     })),
     listingMetrics: (buyerSearchFilters?.metrics || []).map((v) =>
       v === null
-        ? { label: 'All', value: 'All' }
+        ? { label: 'ALL', value: 'ALL' }
         : {
             label: v,
             value: v,
