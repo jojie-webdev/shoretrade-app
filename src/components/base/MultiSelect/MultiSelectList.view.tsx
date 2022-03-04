@@ -59,6 +59,10 @@ const MultiSelectList = (props: MultiSelectListProps): JSX.Element => {
     updateSelected?.(stateSelected);
   }, [stateSelected]);
 
+  useEffect(() => {
+    setStateSelected(selected);
+  }, [selected]);
+
   return (
     <SelectListContainer style={{ display: show ? undefined : 'none' }}>
       <CheckboxContainer>
