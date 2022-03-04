@@ -175,7 +175,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
               type="number"
             />
 
-            <Select
+            {/* <Select
               className="search-address-select"
               options={listingMetrics}
               unbordered={true}
@@ -183,9 +183,9 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
                 updateMetric(e.value);
               }}
               value={selectedMetric}
-            />
+            /> */}
 
-            <div style={{ minWidth: '50%', marginTop: '8px' }}>
+            <div style={{ minWidth: '70%', marginTop: '8px' }}>
               <Slider
                 value={selectedMinBuyingQty}
                 onChange={(v) => {
