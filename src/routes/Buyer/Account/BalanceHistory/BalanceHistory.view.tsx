@@ -129,7 +129,7 @@ const BalanceHistoryView = ({
         {!isLoading && transactions.length === 0 && (
           <EmptyStateContainer>
             <Prawn />
-            <Typography variant="title4" style={{ fontFamily: 'Media Sans' }}>
+            <Typography variant="title4" altFont>
               There’s no invoice here
             </Typography>
             <Typography

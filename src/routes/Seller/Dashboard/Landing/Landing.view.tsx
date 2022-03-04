@@ -455,7 +455,7 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
   return (
     <Container>
       <>
-        {freeTrialCountdown?.isFreeTrial && (
+        {freeTrialCountdown?.is_free_trial && (
           <FreeTrialCountdown daysLeft={freeTrialCountdown.countdown} />
         )}
 

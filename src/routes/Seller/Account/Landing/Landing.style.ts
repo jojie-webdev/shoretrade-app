@@ -8,18 +8,17 @@ export const Container = styled.div`
   }
 `;
 
-export const Header = styled.div`
+export const UserInfoContainer = styled.div`
+  background: ${({ theme }) => theme.grey.shade9};
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 8px;
+`;
+
+export const AccountPictureProgress = styled.div`
+  margin-bottom: 16px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 40px;
-
-  .left-content {
-    display: flex;
-    align-items: center;
-    position: relative;
-    height: 120px;
-  }
 `;
 
 export const NavInteraction = styled(Interactions)`

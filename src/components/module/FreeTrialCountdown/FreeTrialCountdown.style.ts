@@ -12,9 +12,14 @@ export const Container = styled.div<FreeTrialCountdownProps>`
     theme.appType === 'buyer' ? theme.grey.noshade : theme.grey.shade9};
   border-radius: 12px;
 
+  ${({ daysLeft }) =>
+    daysLeft === 0
+      ? `
   &:hover {
     cursor: pointer;
   }
+  `
+      : ''}
 
   > div {
     ${({ small }) => (!small ? 'margin-left: 24px;' : '')}

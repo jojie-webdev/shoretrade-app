@@ -20,7 +20,9 @@ import Landing from './Landing';
 import Licenses from './Licenses';
 import MarketInterests from './MarketInterests';
 import NotificationsSettings from './NotificationsSettings';
+import PaymentHistory from './PaymentHistory';
 import ShippingAddresses from './ShippingAddresses';
+import SubscriptionPlan from './SubscriptionPlan';
 import YourDetails from './YourDetails';
 
 const ROUTES: Routes = {
@@ -31,6 +33,14 @@ const ROUTES: Routes = {
   YOUR_DETAILS: {
     path: SELLER_ACCOUNT_ROUTES.YOUR_DETAILS,
     children: <YourDetails />,
+  },
+  SUBSCRIPTION_PLAN: {
+    path: SELLER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
+    children: <SubscriptionPlan />,
+  },
+  PAYMENT_HISTORY: {
+    path: SELLER_ACCOUNT_ROUTES.PAYMENT_HISTORY,
+    children: <PaymentHistory />,
   },
   SHIPPING_ADDRESS: {
     path: SELLER_ACCOUNT_ROUTES.SHIPPING_ADDRESS,

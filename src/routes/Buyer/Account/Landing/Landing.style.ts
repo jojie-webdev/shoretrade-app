@@ -8,24 +8,6 @@ export const Container = styled.div`
   }
 `;
 
-export const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 40px;
-
-  .left-content {
-    display: flex;
-    align-items: center;
-    position: relative;
-    height: 120px;
-  }
-`;
-
-export const NavInteraction = styled(Interactions)`
-  margin-bottom: 12px;
-`;
-
 export const UserInfoContainer = styled.div`
   background: ${({ theme }) => theme.grey.noshade};
   border-radius: 12px;
@@ -37,4 +19,8 @@ export const AccountPictureProgress = styled.div`
   margin-bottom: 16px;
   display: flex;
   justify-content: space-between;
+`;
+
+export const NavInteraction = styled(Interactions)`
+  margin-bottom: 12px;
 `;

@@ -31,6 +31,7 @@ export const SELLER_ROUTES = {
   NOTIFICATIONS: `${SELLER_ROOT}/notifications`,
   NOTIFICATIONS_SETTINGS: `${SELLER_ROOT}/notifications-settings`,
   BARCODE_SCANNER: `${SELLER_ROOT}/barcode-scanner`,
+  UPGRADE: `${SELLER_ROOT}/upgrade`,
 };
 
 export const SELLER_DASHBOARD_ROUTES = {
@@ -84,6 +85,8 @@ export const SELLER_ACCOUNT_ROUTES = {
   EDIT_LICENSE: `${SELLER_ROUTES.ACCOUNT}/licenses/edit-license`,
   MARKET_INTERESTS: `${SELLER_ROUTES.ACCOUNT}/market-interests`,
   NOTIFICATIONS_SETTINGS: `${SELLER_ROUTES.ACCOUNT}/notifications`,
+  SUBSCRIPTION_PLAN: `${SELLER_ROUTES.ACCOUNT}/subscription-plan`,
+  PAYMENT_HISTORY: `${SELLER_ROUTES.ACCOUNT}/payment-history`,
 };
 
 export const BUYER_ROUTES = {

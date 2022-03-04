@@ -20,8 +20,8 @@ import Landing from './Landing';
 import Assistants from './LinkedAccounts';
 import MarketInterests from './MarketInterests';
 import NotificationsSettings from './NotificationsSettings';
+import SubscriptionPlan from './SubscriptionPlan';
 import YourDetails from './YourDetails';
-import { SubscriptionPlan } from './SubscriptionPlan/SubscriptionPlan.container';
 
 const ROUTES: Routes = {
   LANDING: {

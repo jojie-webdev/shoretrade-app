@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs';
-import { Calendar, Mastercard } from 'components/base/SVG';
+import {
+  Calendar,
+  Mastercard,
+  ShoretradeProBuyerLogo,
+} from 'components/base/SVG';
 import Toggle from 'components/base/Toggle';
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import PlanFeatures from 'components/module/PlanFeatures';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import moment from 'moment';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
 import { useTheme } from 'utils/Theme';
 
-import { SubscriptionPlanViewProps } from './SubscriptionPlan.props';
+import { SubscriptionPlanGeneratedProps } from './SubscriptionPlan.props';
 import {
   BillingSection,
   BreadcrumbsContainer,
@@ -25,7 +30,10 @@ import {
   ToggleContainer,
 } from './SubscriptionPlan.style';
 
-export const SubscriptionPlanView = ({ plans }: SubscriptionPlanViewProps) => {
+export const SubscriptionPlanView = ({
+  plans,
+  activePlan,
+}: SubscriptionPlanGeneratedProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS.sm });
   const isSmallDesktop = useMediaQuery({
@@ -37,6 +45,9 @@ export const SubscriptionPlanView = ({ plans }: SubscriptionPlanViewProps) => {
 
   const annualPlan = plans.find((plan) => plan.alias.includes('YEARLY'));
   const monthlyPlan = plans.find((plan) => !plan.alias.includes('YEARLY'));
+  const price = (isAnnual ? annualPlan?.price : monthlyPlan?.price) || '0';
+  const endDateFormatted =
+    activePlan && moment(activePlan.end_date).format('D MMMM YYYY');
 
   return (
     <Container>
@@ -116,7 +127,7 @@ export const SubscriptionPlanView = ({ plans }: SubscriptionPlanViewProps) => {
               <div className="billing-date">
                 <Calendar fill={theme.grey.shade7} />
                 <Typography variant="body" style={{ marginLeft: '6px' }}>
-                  22 February 2023
+                  {endDateFormatted}
                 </Typography>
               </div>
 
@@ -138,16 +149,20 @@ export const SubscriptionPlanView = ({ plans }: SubscriptionPlanViewProps) => {
 
           <Col xs={12} sm={6}>
             <PlanSection className="section">
-              <Typography variant="body" weight="400">
-                Your Plan
-              </Typography>
-              <Typography variant="label" weight="400" color="shade7">
-                Description of this plan
+              <ShoretradeProBuyerLogo />
+              <Typography
+                variant="label"
+                weight="400"
+                color="shade7"
+                style={{ marginTop: '8px' }}
+              >
+                Gain access to renowned Seafood Sellers to purchase products for
+                your business.
               </Typography>
 
               <div className="plan-rate">
                 <Typography variant="title3" weight="400">
-                  ${isAnnual ? annualPlan?.price : monthlyPlan?.price}
+                  ${price}
                 </Typography>
                 <Typography variant="label" weight="400" color="shade6">
                   &nbsp;/ {isAnnual ? 'Year' : 'Month'}
@@ -182,11 +197,12 @@ export const SubscriptionPlanView = ({ plans }: SubscriptionPlanViewProps) => {
           setIsAnnual(!isAnnual);
         }}
         action={() => setShowToggleModal(false)}
+        style={{ width: '686px' }}
       >
         <Typography color="shade7">Your new plan will be:</Typography>
         <div style={{ display: 'flex', margin: '8px 0' }}>
           <Typography variant="title3" weight="400">
-            ${isAnnual ? annualPlan?.price : monthlyPlan?.price}
+            ${price}
           </Typography>
           <Typography variant="label" weight="400" color="shade6">
             &nbsp;/ {isAnnual ? 'Year' : 'Month'}
@@ -197,13 +213,13 @@ export const SubscriptionPlanView = ({ plans }: SubscriptionPlanViewProps) => {
             You will be charged
           </Typography>
           <Typography variant="body" weight="700">
-            &nbsp;${isAnnual ? annualPlan?.price : monthlyPlan?.price}
+            &nbsp;${price}
           </Typography>
           <Typography variant="body" weight="400" color="shade7">
             &nbsp;on
           </Typography>
           <Typography variant="body" weight="700">
-            &nbsp;14 March 2022
+            &nbsp;{endDateFormatted}
           </Typography>
         </div>
       </ConfirmationModal>
@@ -211,7 +227,7 @@ export const SubscriptionPlanView = ({ plans }: SubscriptionPlanViewProps) => {
       <ConfirmationModal
         isOpen={showCancelModal}
         title="Cancel Subscription"
-        description="Sit phasellus pellentesque libero etiam euismod. Faucibus in enim, amet vulputate tincidunt vitae. Vel id ut euismod suspendisse quis. Sit quis fermentum ornare iaculis nisi id mattis arcu. Laoreet dis habitant donec euismod posuere in."
+        description="Are you sure you want to cancel your ShoreTrade account? Your account will be deactivated until you contact info@shoretrade.com to renew your subscription. You will not be able to access any data that is within your account."
         actionText="Continue Subscription"
         cancelText="Cancel Subscription"
         onClickClose={() => setShowCancelModal(false)}

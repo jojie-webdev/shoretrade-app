@@ -1,6 +1,5 @@
 import { Col, Row } from 'react-grid-system';
 import styled from 'utils/styled';
-import theme from 'utils/Theme';
 
 export const Container = styled.div``;
 
@@ -15,7 +14,7 @@ export const CCImageCol = styled(Col)`
     display: flex;
     width: 48px;
     justify-content: center;
-    background: ${theme.grey.noshade};
+    background: ${({ theme }) => theme.grey.noshade};
   }
 `;
 

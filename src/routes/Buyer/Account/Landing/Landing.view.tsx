@@ -25,12 +25,11 @@ import { isEmpty } from 'ramda';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
-import theme from 'utils/Theme';
+import { useTheme } from 'utils/Theme';
 
 import { LandingGeneratedProps } from './Landing.props';
 import {
   Container,
-  Header,
   NavInteraction,
   UserInfoContainer,
   AccountPictureProgress,
@@ -38,6 +37,7 @@ import {
 
 const LandingView = (props: LandingGeneratedProps) => {
   const history = useHistory();
+  const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   const {
@@ -62,8 +62,6 @@ const LandingView = (props: LandingGeneratedProps) => {
         return <CreditCardOutline fill={theme.grey.shade6} />;
       case 'dashboardOutline':
         return <HelmOutline fill={theme.grey.shade6} />;
-      case 'fileAlt':
-        return <FileAlt fill={theme.grey.shade6} />;
       case 'anchor':
         return <Anchor fill={theme.grey.shade6} />;
       case 'lock':
@@ -84,31 +82,9 @@ const LandingView = (props: LandingGeneratedProps) => {
       path: BUYER_ACCOUNT_ROUTES.ACCOUNT_COMPLETION,
     },
     {
-      iconName: 'creditCardOutline',
-      value: 'Balance & Payments',
-      path: BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
-    },
-    {
-      iconName: 'dashboardOutline',
-      value: 'Your Plan',
-      path: BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
-    },
-    {
-      iconName: 'fileAlt',
-      value: 'Payment History',
-      path: BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
-    },
-    permission
-      ? {
-          iconName: 'anchor',
-          value: 'Linked Accounts & Assistants',
-          path: BUYER_ACCOUNT_ROUTES.LINKED_ACCOUNTS,
-        }
-      : {},
-    {
-      iconName: 'lock',
-      value: 'Change Password',
-      path: BUYER_ACCOUNT_ROUTES.CHANGE_PASSWORD,
+      iconName: 'account',
+      value: 'Your Details',
+      path: BUYER_ACCOUNT_ROUTES.DETAILS,
     },
     {
       iconName: 'location',
@@ -116,10 +92,28 @@ const LandingView = (props: LandingGeneratedProps) => {
       path: BUYER_ACCOUNT_ROUTES.ADDRESS,
     },
     {
-      iconName: 'location',
-      value: 'Your Details',
-      path: BUYER_ACCOUNT_ROUTES.DETAILS,
+      iconName: 'dashboardOutline',
+      value: 'Your Plan',
+      path: BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
     },
+    {
+      iconName: 'creditCardOutline',
+      value: 'Balance & Payments',
+      path: BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
+    },
+    {
+      iconName: 'lock',
+      value: 'Change Password',
+      path: BUYER_ACCOUNT_ROUTES.CHANGE_PASSWORD,
+    },
+
+    permission
+      ? {
+          iconName: 'anchor',
+          value: 'Linked Accounts & Assistants',
+          path: BUYER_ACCOUNT_ROUTES.LINKED_ACCOUNTS,
+        }
+      : {},
     {
       iconName: 'categoriesOutline',
       value: "Products I'm Buying",
@@ -179,11 +173,7 @@ const LandingView = (props: LandingGeneratedProps) => {
               {companyRelationship === 'ADMIN' ? 'Owner' : companyRelationship}
             </Typography>
 
-            <Typography
-              variant="title6"
-              color="shade8"
-              style={{ fontFamily: 'Media Sans' }}
-            >
+            <Typography variant="title6" color="shade8" altFont>
               {profileName}
             </Typography>
 
@@ -199,7 +189,7 @@ const LandingView = (props: LandingGeneratedProps) => {
             </div>
           </UserInfoContainer>
 
-          {freeTrialCountdown?.isFreeTrial && (
+          {freeTrialCountdown?.is_free_trial && (
             <FreeTrialCountdown
               daysLeft={freeTrialCountdown.countdown}
               small={true}

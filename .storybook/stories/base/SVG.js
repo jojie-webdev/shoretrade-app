@@ -5,6 +5,8 @@ import { storiesOf } from '@storybook/react';
 import {
   /* PLOP_INJECT_IMPORT */
   LogOut,
+  CatchNet,
+  ClipboardNotes,
   ShoretradeLogoAlt,
   SfmLogo,
   ArrowGrowth,
@@ -220,6 +222,12 @@ storiesOf('base/SVG', module).add('Summary', () => {
         {/* PLOP_INJECT_INSTANCE*/}
         <Wrapper label="LogOut">
           <LogOut width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="CatchNet">
+          <CatchNet width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="ClipboardNotes">
+          <ClipboardNotes width={30} height={30} />
         </Wrapper>
         <Wrapper label="ShoretradeLogoAlt">
           <ShoretradeLogoAlt width={30} height={30} />

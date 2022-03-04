@@ -10,7 +10,7 @@ import { Store } from 'types/store/Store';
 import { useTheme } from 'utils/Theme';
 
 import { BUYER_VARIATIONS, SELLER_VARIATIONS } from '../Register.constants';
-import { YourPlanProps } from './YourPlan.props';
+import { YourPlanGeneratedProps } from './YourPlan.props';
 import {
   Container,
   FlexContainer,
@@ -18,24 +18,14 @@ import {
   ChangeMarketSector,
 } from './YourPlan.style';
 
-export const YourPlanView = ({
+const YourPlanView = ({
   currentMarketSector,
   previousStep,
-}: YourPlanProps) => {
+  currentPlan,
+}: YourPlanGeneratedProps) => {
   const theme = useTheme();
-  const dispatch = useDispatch();
   const isSeller = theme.appType === 'seller';
   const marketSectors = isSeller ? SELLER_VARIATIONS : BUYER_VARIATIONS;
-  const plans = useSelector(
-    (store: Store) => store.getSubscriptionPlans.data?.data || []
-  );
-  const currentPlan = plans.find(
-    (plan) => plan.alias === `STANDARD_${currentMarketSector}`
-  );
-
-  useEffect(() => {
-    dispatch(getSubscriptionPlansActions.request({}));
-  }, []);
 
   return (
     <Container>
@@ -85,3 +75,5 @@ export const YourPlanView = ({
     </Container>
   );
 };
+
+export default YourPlanView;

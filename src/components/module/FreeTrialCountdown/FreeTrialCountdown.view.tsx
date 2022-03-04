@@ -6,7 +6,7 @@ import {
   ShoretradeProSellerLogo,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import { BUYER_ROUTES } from 'consts';
+import { BUYER_ROUTES, SELLER_ROUTES } from 'consts';
 import { useHistory } from 'react-router-dom';
 import { useTheme } from 'utils/Theme';
 
@@ -26,11 +26,16 @@ const FreeTrialCountdown = (props: FreeTrialCountdownProps): JSX.Element => {
       ? theme.brand.alert
       : theme.brand.error;
 
+  const pushToUpgrade = () => {
+    if (isBuyer) {
+      history.push(BUYER_ROUTES.UPGRADE);
+    } else {
+      history.push(SELLER_ROUTES.UPGRADE);
+    }
+  };
+
   return (
-    <Container
-      {...props}
-      onClick={() => daysLeft === 0 && history.push(BUYER_ROUTES.UPGRADE)}
-    >
+    <Container {...props} onClick={() => daysLeft === 0 && pushToUpgrade()}>
       {!small && <Logo width={82} />}
       <div>
         <Typography

@@ -9,7 +9,7 @@ import {
   updateUserActions,
   logoutActions,
   getAccountCompletionActions,
-  getFreeTrialExpiryActions,
+  getActivePlanActions,
 } from 'store/actions';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
@@ -36,7 +36,7 @@ const Landing = (): JSX.Element => {
     (store: Store) => store.getAccountCompletion.data?.data
   );
   const freeTrialCountdown = useSelector(
-    (store: Store) => store.getFreeTrialExpiry.data?.data
+    (store: Store) => store.getActivePlan.data?.data
   );
 
   const isPendingAccount =
@@ -86,13 +86,11 @@ const Landing = (): JSX.Element => {
           companyId: currentCompany.id,
         })
       );
+
+      dispatch(getActivePlanActions.request({ companyId: currentCompany.id }));
     }
     // eslint-disable-next-line
   }, [currentCompany]);
-
-  useEffect(() => {
-    dispatch(getFreeTrialExpiryActions.request({}));
-  }, []);
 
   const generatedProps: LandingGeneratedProps = {
     credit: currentCompany?.credit,

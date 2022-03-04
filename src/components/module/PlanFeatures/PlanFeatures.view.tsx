@@ -66,7 +66,7 @@ const PlanFeatures = (): JSX.Element => {
             </Typography>
             <Typography
               variant="label"
-              color={theme.appType === 'seller' ? 'shade3' : 'shade7'}
+              color={theme.appType === 'seller' ? 'shade6' : 'shade7'}
               weight="400"
             >
               {feat.description}

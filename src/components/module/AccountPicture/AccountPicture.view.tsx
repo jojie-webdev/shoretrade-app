@@ -34,7 +34,6 @@ const AccountPicture = (props: AccountPictureProps): JSX.Element => {
     const files = Array.from(e.target.files || []);
 
     let invalid = false;
-    console.log(files);
 
     files.forEach((f) => {
       if (!['image/jpeg', 'image/png'].includes(f.type)) {

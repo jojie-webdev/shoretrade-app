@@ -7,6 +7,8 @@ import {
   editableListingActions,
   updateUserActions,
   logoutActions,
+  getAccountCompletionActions,
+  getActivePlanActions,
 } from 'store/actions';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
@@ -33,6 +35,12 @@ const AccountLanding = (): JSX.Element => {
   const profileName = `${user?.firstName || ''} ${user?.lastName || ''}`;
   const updatingImage =
     useSelector((state: Store) => state.updateUser.pending) || false;
+  const accountCompletion = useSelector(
+    (store: Store) => store.getAccountCompletion.data?.data
+  );
+  const freeTrialCountdown = useSelector(
+    (store: Store) => store.getActivePlan.data?.data
+  );
 
   const updateImage = (image: File) => {
     dispatch(
@@ -60,6 +68,18 @@ const AccountLanding = (): JSX.Element => {
     // eslint-disable-next-line
   }, [loadingUser]);
 
+  useEffect(() => {
+    if (currentCompany?.id) {
+      dispatch(
+        getAccountCompletionActions.request({
+          companyId: currentCompany.id,
+        })
+      );
+      dispatch(getActivePlanActions.request({ companyId: currentCompany.id }));
+    }
+    // eslint-disable-next-line
+  }, [currentCompany]);
+
   // Mark:- Render
   const generatedProps: AccountLandingGeneratedProps = {
     // generated props here
@@ -72,6 +92,8 @@ const AccountLanding = (): JSX.Element => {
     updatingImage,
     updateImage,
     logout,
+    accountCompletion,
+    freeTrialCountdown,
   };
   return <AccountLandingView {...generatedProps} />;
 };

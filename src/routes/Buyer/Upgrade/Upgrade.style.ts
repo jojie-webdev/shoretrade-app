@@ -1,5 +1,4 @@
 import styled from 'utils/styled';
-import theme from 'utils/Theme';
 
 export const Container = styled.div``;
 
@@ -43,7 +42,7 @@ export const PlanSection = styled.div`
     width: 35%;
     max-width: 400px;
     padding: 30px;
-    background: ${theme.grey.noshade};
+    background: ${({ theme }) => theme.grey.noshade};
     border-radius: 12px;
   }
 

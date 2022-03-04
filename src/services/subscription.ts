@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API } from 'consts';
+import { GetActivePlanMeta } from 'types/store/GetActivePlanState';
 
 const URL = `${API.URL}/${API.VERSION_NEXT}/subscription`;
 
@@ -12,10 +13,13 @@ export const getPlans = () => {
   });
 };
 
-export const getFreeTrialExpiry = (token: string) => {
+export const getActivePlan = (
+  { companyId }: GetActivePlanMeta,
+  token: string
+) => {
   return axios({
     method: 'get',
-    url: `${URL}/free-trial-expiry`,
+    url: `${URL}/active-plan/${companyId}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

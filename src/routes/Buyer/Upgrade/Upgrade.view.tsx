@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
+import Button from 'components/base/Button';
 import { ShoretradeProBuyerLogo } from 'components/base/SVG';
 import Toggle from 'components/base/Toggle';
 import Typography from 'components/base/Typography';
 import PlanFeatures from 'components/module/PlanFeatures';
 
-// import { useTheme } from 'utils/Theme';
 import { UpgradeGeneratedProps } from './Upgrade.props';
 import {
   Container,
@@ -14,11 +14,13 @@ import {
   PlanSection,
   ToggleContainer,
 } from './Upgrade.style';
-import Button from 'components/base/Button';
 
-const UpgradeView = (props: UpgradeGeneratedProps) => {
-  // const theme = useTheme();
+const UpgradeView = ({ plans }: UpgradeGeneratedProps) => {
   const [isAnnual, setIsAnnual] = useState(true);
+
+  const annualPlan = plans.find((plan) => plan.alias.includes('YEARLY'));
+  const monthlyPlan = plans.find((plan) => !plan.alias.includes('YEARLY'));
+
   return (
     <Container>
       <TitleContainer>
@@ -63,10 +65,10 @@ const UpgradeView = (props: UpgradeGeneratedProps) => {
 
           <div className="plan-rate">
             <Typography variant="title3" weight="400">
-              $17.00
+              ${(isAnnual ? annualPlan?.price : monthlyPlan?.price) || '0'}
             </Typography>
             <Typography variant="label" weight="400" color="shade6">
-              &nbsp;/ Month
+              &nbsp;/ {isAnnual ? 'Year' : 'Month'}
             </Typography>
           </div>
 

@@ -125,7 +125,7 @@ import {
   validateCategoryMarketSector,
   validateCard,
 } from './Register.validation';
-import { YourPlanView } from './YourPlan/YourPlan.view';
+import YourPlan from './YourPlan';
 
 const StepForm = ({
   formikProps,
@@ -1252,7 +1252,7 @@ const StepForm = ({
                       )} */}
                     </>
                   ) : (
-                    <YourPlanView
+                    <YourPlan
                       currentMarketSector={
                         registrationDetails.categoryMarketSector
                       }
@@ -1298,7 +1298,7 @@ const StepForm = ({
               {step === 6 && (
                 <>
                   {isSeller ? (
-                    <YourPlanView
+                    <YourPlan
                       currentMarketSector={
                         registrationDetails.categoryMarketSector
                       }
@@ -1343,7 +1343,7 @@ const StepForm = ({
                         style={{ marginBottom: 32 }}
                       >
                         We need to check a few things before you can start
-                        buying. We’ll send you and email and notification when
+                        selling. We’ll send you and email and notification when
                         your account is approved. This normally takes less than
                         24 hours.
                       </Typography>
@@ -1353,17 +1353,8 @@ const StepForm = ({
                         weight="400"
                         style={{ marginBottom: 32 }}
                       >
-                        30-day Free Trial will start when your account is
+                        1 Month Free Trial will start when your account is
                         approved
-                      </Typography>
-                      <Typography
-                        variant="body"
-                        color="noshade"
-                        weight="Medium"
-                      >
-                        Our plaftorm comes with two different plans. Try
-                        ShoreTrade Pro with the 30-day Free Trial to unlock all
-                        plaftorm potential.
                       </Typography>
                     </>
                   )}
@@ -1516,10 +1507,22 @@ const RegisterView = (props: RegisterGeneratedProps) => {
       cardExpiryDate: registrationDetails.cardExpiryDate,
       cardCvc: registrationDetails.cardCvc,
       cardName: registrationDetails.cardName,
-      cardBillingAddress: registrationDetails.cardBillingAddress,
-      cardZipCode: registrationDetails.cardZipCode,
-      cardCity: registrationDetails.cardCity,
-      cardState: registrationDetails.cardState,
+      cardBillingAddress:
+        registrationDetails.cardBillingAddress || registrationDetails.address
+          ? `${registrationDetails.address?.streetNumber} ${registrationDetails.address?.route}`.trim()
+          : '',
+      cardZipCode:
+        registrationDetails.cardZipCode ||
+        registrationDetails.address?.postcode ||
+        '',
+      cardCity:
+        registrationDetails.cardCity ||
+        registrationDetails.address?.locality ||
+        '',
+      cardState:
+        registrationDetails.cardState ||
+        registrationDetails.address?.administrativeAreaLevel1 ||
+        '',
     },
     validate: validateCard,
     onSubmit: (values: Record<string, string>) => {
@@ -1669,7 +1672,8 @@ const RegisterView = (props: RegisterGeneratedProps) => {
             </LogInLinkContainer>
           </SignUpHeader>
           <GetStartedTitle variant="title5">
-            Signing up is <b>free</b> and <b>complete</b> with {MAX_STEP - 2} simple steps
+            Signing up is <b>free</b> and <b>complete</b> with {MAX_STEP - 2}{' '}
+            simple steps
           </GetStartedTitle>
 
           {steps

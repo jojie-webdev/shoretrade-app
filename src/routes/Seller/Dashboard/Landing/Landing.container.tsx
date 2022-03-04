@@ -6,7 +6,7 @@ import pathOr from 'ramda/es/pathOr';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
-  getFreeTrialExpiryActions,
+  getActivePlanActions,
   getMarketNotificationActions,
   getSellerDashboardSalesActions,
   getSellerDashboardTopCategoriesActions,
@@ -33,6 +33,7 @@ const Dashboard = (): JSX.Element => {
     !(user.companies || []).some((a) =>
       a.addresses.some((b) => b.approved === 'APPROVED')
     );
+  const companyId = user?.companies[0].id
 
   const dateRange =
     useSelector((state: Store) => state.sellerDashboardDate) ||
@@ -60,7 +61,7 @@ const Dashboard = (): JSX.Element => {
   };
 
   const freeTrialCountdown = useSelector(
-    (state: Store) => state.getFreeTrialExpiry.data?.data
+    (state: Store) => state.getActivePlan.data?.data
   );
 
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
@@ -192,9 +193,15 @@ const Dashboard = (): JSX.Element => {
       })
     );
     dispatch(getMarketNotificationActions.request({}));
-    dispatch(getFreeTrialExpiryActions.request({}));
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    if (companyId) {
+      dispatch(getActivePlanActions.request({ companyId }));
+    }
+    // eslint-disable-next-line
+  }, [companyId]);
 
   // Market Notification Logic - Start
   const marketNotification = useSelector(

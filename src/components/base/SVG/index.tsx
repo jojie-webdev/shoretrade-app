@@ -1,5 +1,7 @@
 /* PLOP_INJECT_IMPORT */
 export { default as LogOut } from './LogOut';
+export { default as CatchNet } from './CatchNet';
+export { default as ClipboardNotes } from './ClipboardNotes';
 export { default as ShoretradeLogoAlt } from './ShoretradeLogoAlt';
 export { default as SfmLogo } from './SfmLogo';
 export { default as ArrowGrowth } from './ArrowGrowth';

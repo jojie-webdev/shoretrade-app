@@ -27,6 +27,7 @@ import endListing from './endListing';
 import forgotPassword from './forgotPassword';
 import getAccountCompletion from './getAccountCompletion';
 import getActiveOffers from './getActiveOffers';
+import getActivePlan from './getActivePlan';
 import getAddresses from './getAddresses';
 import getAllBuyerListings from './getAllBuyerListings';
 import getAllBuyerOrders from './getAllBuyerOrders';
@@ -44,7 +45,6 @@ import getCart from './getCart';
 import getCoopUsers from './getCoopUsers';
 import getCrates from './getCrates';
 import getCustomFormData from './getCustomFormData';
-import getFreeTrialExpiry from './getFreeTrialExpiry';
 import getHistoricalListings from './getHistoricalListings';
 import getLinkedAccounts from './getLinkedAccounts';
 import getListing from './getListing';
@@ -117,7 +117,7 @@ const sagas = [
   /* PLOP_INJECT_INSTANCE */
   getBuyerSearchFilters,
   updatePreferences,
-  getFreeTrialExpiry,
+  getActivePlan,
   getSubscriptionPlans,
   getAllBuyerOrders,
   getAllSellerOrders,

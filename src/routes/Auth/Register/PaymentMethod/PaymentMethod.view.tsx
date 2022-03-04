@@ -6,7 +6,7 @@ import { connect } from 'formik';
 import { Row, Col } from 'react-grid-system';
 import { cardExpiryInputFilter } from 'utils/InputFilters/cardExpiryInputFilter';
 import { cardNumberInputFilter } from 'utils/InputFilters/cardNumberInputFilter';
-import theme from 'utils/Theme';
+import { useTheme } from 'utils/Theme';
 
 import { PaymentMethodProps } from './PaymentMethod.props';
 import {
@@ -19,6 +19,8 @@ import {
 
 export const PaymentMethod = connect((props: PaymentMethodProps) => {
   const { formik, otherErrors, setOtherErrors } = props;
+  const theme = useTheme();
+
   return (
     <Container>
       <CCImagesRow gutterWidth={8}>

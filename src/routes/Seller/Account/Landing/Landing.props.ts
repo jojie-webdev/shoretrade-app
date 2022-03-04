@@ -1,3 +1,5 @@
+import { GetAccountCompletionRequestData } from 'types/store/GetAccountCompletionState';
+import { GetActivePlanResponseData } from 'types/store/GetActivePlanState';
 import { UserCompany } from 'types/store/GetUserState';
 
 export interface AccountLandingGeneratedProps {
@@ -10,4 +12,6 @@ export interface AccountLandingGeneratedProps {
   updateImage: (image: File) => void;
   updatingImage: boolean;
   logout: () => void;
+  accountCompletion?: GetAccountCompletionRequestData;
+  freeTrialCountdown?: GetActivePlanResponseData;
 }

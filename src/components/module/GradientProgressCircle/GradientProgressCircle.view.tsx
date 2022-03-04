@@ -16,10 +16,10 @@ const GradientProgressCircle = (
       width={props.width || 68}
       fontSize={14}
       fontFamily="Basis Grotesque Pro"
-      fontColor={theme.grey.shade7}
+      fontColor={props.fontColor || theme.grey.shade7}
       strokeWidth={props.strokeWidth || 2}
       primaryColor={props.primaryColor || ['#00C48C', '#FF647C']}
-      secondaryColor={theme.grey.shade2}
+      secondaryColor={props.secondaryColor || theme.grey.shade2}
       {...props}
     />
   );

@@ -1,5 +1,4 @@
 import styled from 'utils/styled';
-import theme from 'utils/Theme';
 
 export const Container = styled.div``;
 
@@ -37,7 +36,7 @@ export const SubscriptionContainer = styled.div`
   justify-content: center;
 
   .section {
-    background: ${theme.grey.noshade};
+    background: ${({ theme }) => theme.grey.noshade};
     border-radius: 12px;
     padding: 24px;
   }
@@ -73,6 +72,7 @@ export const BillingSection = styled.div`
     display: flex;
     margin-bottom: 24px;
     margin-top: 8px;
+    align-items: center;
   }
 `;
 

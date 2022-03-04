@@ -31,6 +31,7 @@ import editableMarketRequest from './editableMarketRequest';
 import endListing from './endListing';
 import forgotPassword from './forgotPassword';
 import getActiveOffers from './getActiveOffers';
+import getActivePlan from './getActivePlan';
 import getAddresses from './getAddresses';
 import getAllBuyerListings from './getAllBuyerListings';
 import getAllBuyerOrders from './getAllBuyerOrders';
@@ -51,7 +52,6 @@ import getCart from './getCart';
 import getCoopUsers from './getCoopUsers';
 import getCrates from './getCrates';
 import getCustomFormData from './getCustomFormData';
-import getFreeTrialExpiry from './getFreeTrialExpiry';
 import getHistoricalListings from './getHistoricalListings';
 import getLinkedAccounts from './getLinkedAccounts';
 import getListing from './getListing';
@@ -130,7 +130,7 @@ export default (routeHistory: History) =>
         /* PLOP_INJECT_INSTANCE */
         getBuyerSearchFilters,
         updatePreferences,
-        getFreeTrialExpiry,
+        getActivePlan,
         getSubscriptionPlans,
         getAllBuyerOrders,
         getSellerOrdersPending,

@@ -256,7 +256,6 @@ const OfferDetails = (): JSX.Element => {
 
   useEffect(() => {
     if (offerSentStatus === 200) {
-      console.log(offerSentStatus);
       setShowOfferSentModal(true);
     } else {
       setShowOfferSentModal(false);

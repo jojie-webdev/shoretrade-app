@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { getFreeTrialExpiryActions } from 'store/actions';
+import { getActivePlanActions } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
@@ -49,7 +49,7 @@ const Home = (): JSX.Element => {
   const loadingHomePage = buyerHomePageData.pending === null;
 
   const freeTrialCountdown = useSelector(
-    (store: Store) => store.getFreeTrialExpiry.data?.data
+    (store: Store) => store.getActivePlan.data?.data
   );
 
   // MARK:- State
@@ -78,12 +78,9 @@ const Home = (): JSX.Element => {
   useEffect(() => {
     if (company) {
       setCurrentCompany(company);
+      dispatch(getActivePlanActions.request({ companyId: company.id }));
     }
   }, [company]);
-
-  useEffect(() => {
-    dispatch(getFreeTrialExpiryActions.request({}));
-  }, []);
 
   // MARK:- Bottom Variables
   const creditBalance = currentCompany?.credit || '0';

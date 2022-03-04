@@ -42,6 +42,7 @@ import MarketPrices from './MarketPrices';
 import Notifications from './Notifications';
 import Selling from './Selling/selling.routes';
 import Sold from './Sold/sold.routes';
+import Upgrade from './Upgrade';
 
 const ROUTES: Routes = {
   DASHBOARD: {
@@ -125,6 +126,12 @@ const ROUTES: Routes = {
     path: SELLER_ROUTES.MARKET_PRICE_DETAIL(),
     title: '',
     children: <MarketPriceDetail />,
+    hideFromSidebar: true,
+  },
+  UPGRADE: {
+    path: SELLER_ROUTES.UPGRADE,
+    children: <Upgrade />,
+    title: 'Upgrade',
     hideFromSidebar: true,
   },
 };

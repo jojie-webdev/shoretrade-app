@@ -111,7 +111,7 @@ const HomeView = (props: HomeGeneratedProps) => {
 
   return (
     <ViewContainer>
-      {freeTrialCountdown?.isFreeTrial && (
+      {freeTrialCountdown?.is_free_trial && (
         <FreeTrialCountdown daysLeft={freeTrialCountdown.countdown || 0} />
       )}
 

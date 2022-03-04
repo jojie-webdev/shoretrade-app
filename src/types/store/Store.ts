@@ -119,6 +119,7 @@ import {
   ForgotPasswordMeta,
   ForgotPasswordPayload,
 } from './ForgotPasswordState';
+import { GetActivePlanMeta, GetActivePlanPayload } from './GetActivePlanState';
 import { GetAddressesMeta, GetAddressesPayload } from './GetAddressesState';
 import {
   GetAllBuyerListingsMeta,
@@ -158,10 +159,6 @@ import {
   GetCustomFormDataMeta,
   GetCustomFormDataPayload,
 } from './GetCustomFormDataState';
-import {
-  GetFreeTrialExpiryMeta,
-  GetFreeTrialExpiryPayload,
-} from './GetFreeTrialExpiryState';
 import {
   GetHistoricalListingsMeta,
   GetHistoricalListingsPayload,
@@ -327,10 +324,7 @@ export interface Store {
     UpdatePreferencesMeta,
     UpdatePreferencesPayload
   >;
-  getFreeTrialExpiry: AsyncState<
-    GetFreeTrialExpiryMeta,
-    GetFreeTrialExpiryPayload
-  >;
+  getActivePlan: AsyncState<GetActivePlanMeta, GetActivePlanPayload>;
   getSubscriptionPlans: AsyncState<
     GetSubscriptionPlansMeta,
     GetSubscriptionPlansPayload

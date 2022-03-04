@@ -1,6 +1,5 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
-import theme from 'utils/Theme';
 
 export const Container = styled.div`
   margin-top: 45px;
@@ -28,11 +27,11 @@ export const ChangeMarketSector = styled.div<{
   }
   padding: 8px;
   border-radius: 12px;
-  background: ${({ isSeller }) =>
-    isSeller ? theme.grey.shade9 : theme.grey.noshade};
+  background: ${({ theme }) =>
+    theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};
   box-shadow: 0px 4px 12px rgba(41, 43, 50, 0.04);
-  ${({ isSeller }) =>
-    !isSeller ? `border: 1px solid ${theme.grey.shade3};` : ''}
+  ${({ theme }) =>
+    theme.appType !== 'seller' ? `border: 1px solid ${theme.grey.shade3};` : ''}
   display: flex;
   flex-direction: column;
   align-items: center;
