@@ -114,6 +114,9 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
             max-height: 50vh;
           `;
         } else {
+          if (theme.isSFM) {
+            return `max-height: 56vh;`;
+          }
           return `
             max-height: 68vh;
           `;
