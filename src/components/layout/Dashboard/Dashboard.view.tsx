@@ -421,7 +421,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
               dark={isSeller}
             >
               <LogoutContainer>
-                <div style={{ opacity: 0.25 }} className="icon-container">
+                <div className="icon-container">
                   <LogOut
                     fill={
                       theme.isSFM && !isSeller

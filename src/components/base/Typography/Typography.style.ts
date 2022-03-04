@@ -90,7 +90,8 @@ export const P = styled.p<TypographyProps>`
   font-weight: ${({ variant, weight }) => weight || font[variant || 'body']};
   color: ${({ theme, color = 'shade9' }) =>
     ({ ...theme.grey, ...theme.brand }[
-      theme.isSFM && (color === 'shade9' || color === 'shade8' || color === 'shade10')
+      theme.isSFM &&
+      (color === 'shade9' || color === 'shade8' || color === 'shade10')
         ? 'secondary'
         : color
     ])};
@@ -104,7 +105,7 @@ export const P = styled.p<TypographyProps>`
     return theme.isSFM && !noSfmFont ? 'Graphik;' : 'inherit;';
   }}
   ${({ theme, altFont }) => {
-    if (theme.isSFM && altFont) {
+    if (theme.isSFM && altFont && theme.appType === 'buyer') {
       return `
         color: ${theme.brand.secondary};
       `;

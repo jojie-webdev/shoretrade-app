@@ -11,6 +11,7 @@ import { AnimatedOctopus } from 'res/images/animated/octopus';
 import { AnimatedSwordfish } from 'res/images/animated/swordfish';
 import { SwiperSlide } from 'swiper/react';
 import { getTermsAndConditions } from 'utils/Links';
+import { useTheme } from 'utils/Theme';
 
 import { TermsAndConditionProps } from './TermsAndCondition.props';
 import {
@@ -25,6 +26,7 @@ import {
 } from './TermsAndCondition.style';
 
 const TermsAndCondition = (props: TermsAndConditionProps): JSX.Element => {
+  const theme = useTheme();
   const {
     appType,
     textWeb1,
@@ -146,7 +148,13 @@ const TermsAndCondition = (props: TermsAndConditionProps): JSX.Element => {
         <Typography
           variant="title5"
           weight="700"
-          color={appType === 'seller' ? 'noshade' : 'shade9'}
+          color={
+            appType === 'seller'
+              ? 'noshade'
+              : theme.isSFM
+              ? 'secondary'
+              : 'shade9'
+          }
           altFont
         >
           {textWeb2}
@@ -156,7 +164,13 @@ const TermsAndCondition = (props: TermsAndConditionProps): JSX.Element => {
         <Typography
           variant="title5"
           weight="700"
-          color={appType === 'seller' ? 'noshade' : 'shade9'}
+          color={
+            appType === 'seller'
+              ? 'noshade'
+              : theme.isSFM
+              ? 'secondary'
+              : 'shade9'
+          }
           altFont
         >
           {textMobile1}
@@ -167,14 +181,22 @@ const TermsAndCondition = (props: TermsAndConditionProps): JSX.Element => {
         <Typography
           variant="label"
           weight="400"
-          color={appType === 'seller' ? 'noshade' : 'shade7'}
+          color={
+            appType === 'seller' ? 'noshade' : theme.isSFM ? 'shade7' : 'shade9'
+          }
         >
           {textMobile2}
         </Typography>
         <Typography
           variant="body"
           weight="700"
-          color={appType === 'seller' ? 'noshade' : 'shade9'}
+          color={
+            appType === 'seller'
+              ? 'noshade'
+              : theme.isSFM
+              ? 'secondary'
+              : 'shade9'
+          }
         >
           {textMobile3}
         </Typography>

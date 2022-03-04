@@ -241,6 +241,7 @@ export const LogoutContainer = styled.div`
 
   .icon-container {
     margin-right: 12px;
+     opacity: ${({ theme }) => (theme.appType === 'seller' ? 1 : 0.25)}}
   }
 `;
 
