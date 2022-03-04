@@ -1,3 +1,4 @@
+import { SpecialColors } from 'utils/SFMTheme';
 import styled from 'utils/styled';
 
 export const Container = styled.div``;
@@ -23,7 +24,11 @@ export const GlobalNotificationsContainer = styled.div`
 
   .section-title {
     color: ${({ theme }) =>
-      theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9};
+      theme.appType === 'seller'
+        ? theme.grey.noshade
+        : theme.isSFM
+        ? SpecialColors.blue
+        : theme.grey.shade9};
   }
 `;
 

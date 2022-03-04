@@ -158,12 +158,7 @@ const SelectSpecificationsView = (props: SelectSpecificationProps) => {
         <Typography color="shade10" className="row-label-friendly-text" altFont>
           Please select your {idxToWordKeys[props.index]} specification
         </Typography>
-        <Typography
-          color="shade6"
-          style={{ fontFamily: 'Basis Grotesque Pro' }}
-        >
-          You can select more than one
-        </Typography>
+        <Typography color="shade6">You can select more than one</Typography>
       </FriendlyTextContainer>
     );
   };

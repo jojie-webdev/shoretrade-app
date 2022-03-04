@@ -399,7 +399,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                   history.push(BUYER_ACCOUNT_ROUTES.BANK_DETAILS);
                 }}
               >
-                <Typography color="shade6" variant="overline" weight="900">
+                <Typography color="primary" variant="overline" weight="900">
                   Credit balance
                 </Typography>
                 <div className="balance-arrow">

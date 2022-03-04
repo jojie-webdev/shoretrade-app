@@ -11,6 +11,7 @@ export const Container = styled.div<InteractionsProps>`
   padding: ${({ padding }) => padding || '24px'};
   margin-bottom: ${({ marginBottom }) => marginBottom};
   display: flex;
+  color: ${({ theme }) => (theme.isSFM ? SpecialColors.blue : 'inherit')};
   justify-content: space-between;
   position: relative;
   flex-direction: ${({ bottomComponent }) =>
@@ -27,12 +28,6 @@ export const Container = styled.div<InteractionsProps>`
       backgroundColor || (isSeller ? theme.grey.shade9 : theme.grey.noshade)
     );
   }};
-
-  ${({ theme }) => {
-    if (theme.isSFM) {
-      return `outline: 2px solid ${SpecialColors.blue};`;
-    }
-  }}
 
   margin-top: ${({ label }) => (label ? '20px' : 0)};
   box-shadow: ${({ theme, noBg, flat }) => {
@@ -68,7 +63,14 @@ export const Container = styled.div<InteractionsProps>`
 export const Value = styled(Typography)<{ fontColor?: string }>`
   color: ${({ theme, fontColor }) => {
     const isSeller = theme.appType !== 'buyer';
-    return fontColor || (isSeller ? '#ffffff' : theme.grey.shade9);
+    return (
+      fontColor ||
+      (isSeller
+        ? '#ffffff'
+        : theme.isSFM
+        ? SpecialColors.blue
+        : theme.grey.shade9)
+    );
   }};
   padding-right: 16px;
   white-space: nowrap;

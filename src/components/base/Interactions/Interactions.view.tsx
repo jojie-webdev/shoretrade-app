@@ -4,6 +4,7 @@ import Checkbox from 'components/base/Checkbox';
 import Radio from 'components/base/Radio';
 import { ChevronRight, DropdownArrow, Pen } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import { SpecialColors } from 'utils/SFMTheme';
 import { useTheme } from 'utils/Theme';
 
 import { InteractionsProps } from './Interactions.props';
@@ -45,7 +46,11 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
 
     if (type === 'accordion') {
       const Dropdown = () => (
-        <DropdownArrow fill={iconColor || theme.grey.shade8} />
+        <DropdownArrow
+          fill={
+            iconColor || theme.isSFM ? SpecialColors.blue : theme.grey.shade8
+          }
+        />
       );
 
       return pressed ? (

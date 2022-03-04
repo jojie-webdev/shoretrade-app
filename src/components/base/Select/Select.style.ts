@@ -54,12 +54,18 @@ export const StyledDropdown = styled(Dropdown)<DropdownProps>`
         : dark
         ? theme.grey.shade9
         : '#ffffff'};
-    color: ${({ theme, disabled, dark }) =>
-      disabled
-        ? theme.grey.shade6
-        : dark
-        ? theme.grey.noshade
-        : theme.grey.shade9};
+    color: ${({ theme, disabled, dark }) => {
+      if (disabled) {
+        return `${theme.grey.shade6};`;
+      }
+      if (dark) {
+        return `${theme.grey.noshade};`;
+      }
+      if (theme.isSFM) {
+        return `${SpecialColors.blue};`;
+      }
+      return `${theme.grey.shade9};`;
+    }}
     border: ${({ theme, dark }) =>
       `1px solid ` + dark ? theme.grey.shade9 : theme.grey.shade5};
     border-radius: ${({ borderRadius }) =>
@@ -100,7 +106,11 @@ export const StyledDropdown = styled(Dropdown)<DropdownProps>`
     background-color: ${({ theme }) =>
       theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};
     color: ${({ theme }) =>
-      theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9};
+      theme.appType === 'seller'
+        ? theme.grey.noshade
+        : theme.isSFM
+        ? SpecialColors.blue
+        : theme.grey.shade9};
     padding: 12px 16px;
     &:hover {
       background-color: ${({ theme }) =>

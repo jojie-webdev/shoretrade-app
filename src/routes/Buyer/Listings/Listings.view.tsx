@@ -16,6 +16,7 @@ import { SALES_CHANNELS_BUYER } from 'consts/salesChannels';
 import debounce from 'lodash.debounce';
 import { useMediaQuery } from 'react-responsive';
 import { useComponentShouldUpdate } from 'utils/Hooks/useComponentShouldUpdate';
+import { SpecialColors } from 'utils/SFMTheme';
 import theme from 'utils/Theme';
 
 import { COLUMNS, columnTemplate, COLUMN_GROUPS } from './Listings.constants';
@@ -165,7 +166,7 @@ export default function ListingView(props: ListingViewProps) {
       <Tabs
         tabStyle={{ padding: '9px' }}
         textColor={theme.grey.shade6}
-        activeTextColor={theme.grey.shade9}
+        activeTextColor={theme.isSFM ? SpecialColors.blue : theme.grey.shade9}
         underlineColor={theme.grey.shade3}
         fitTabWidthToContent={true}
         selectedTab={activeTab}

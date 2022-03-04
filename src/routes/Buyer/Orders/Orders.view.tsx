@@ -9,8 +9,9 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { createUpdateReducer } from 'utils/Hooks';
+import { SpecialColors } from 'utils/SFMTheme';
 import { parseOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
-import theme from 'utils/Theme';
+import { useTheme } from 'utils/Theme';
 
 import Complete from './Complete/Complete.view';
 import InTransit from './InTransit/InTransit.view';
@@ -28,6 +29,7 @@ const IN_TRANSIT = 'In Transit';
 const COMPLETE = 'Complete';
 
 const OrdersView = (props: OrdersGeneratedProps) => {
+  const theme = useTheme();
   const [searchValue, setSearchValue] = useState('');
   const [searchValueTable, updateSearchValueTable] = useReducer(
     createUpdateReducer<Record<string, string>>(),
@@ -137,7 +139,9 @@ const OrdersView = (props: OrdersGeneratedProps) => {
             tabs={[PENDING, IN_TRANSIT, COMPLETE]}
             selectedTab={currentTab}
             onClickTab={(value) => onChangeCurrentTab(value as TabOptions)}
-            activeTextColor={theme.grey.shade9}
+            activeTextColor={
+              theme.isSFM ? SpecialColors.blue : theme.grey.shade9
+            }
             textColor={theme.grey.shade6}
             underlineColor={theme.grey.shade3}
             customTabContent={[

@@ -1,4 +1,5 @@
 import Typography from 'components/base/Typography';
+import { SpecialColors } from 'utils/SFMTheme';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -81,6 +82,9 @@ export const Label = styled(Typography)`
   color: ${({ disabled, theme }) => {
     if (disabled) return theme.grey.shade7;
     const isSeller = theme.appType !== 'buyer';
+    if (theme.isSFM) {
+      return SpecialColors.blue;
+    }
     return isSeller ? '#ffffff' : theme.grey.shade9;
   }};
 `;

@@ -1,4 +1,6 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { is } from 'ramda';
+import { SpecialColors } from 'utils/SFMTheme';
 import styled from 'utils/styled';
 
 import Interactions from '../Interactions';
@@ -57,6 +59,17 @@ export const Content = styled.div<{
       return sameWidth ? '0' : '8px 0';
     }};
   }
+
+  ${({ theme }) => {
+    if (theme.isSFM) {
+      return `
+        border: 2px solid ${SpecialColors.blue};
+        border-top: none;
+        border-bottom-right-radius: 8px;
+        border-bottom-left-radius: 8px;
+      `;
+    }
+  }}
 `;
 
 export const StyledInteractions = styled(Interactions)<{
@@ -72,4 +85,18 @@ export const StyledInteractions = styled(Interactions)<{
     return sameWidth ? '12px 12px 0px 0px' : '12px';
   }};
   border: ${({ border }) => (border ? border : 'none')};
+  ${({ theme, isOpen }) => {
+    if (theme.isSFM) {
+      return `
+        border: 2px solid ${SpecialColors.blue};
+      `;
+    }
+  }}
+  ${({ isOpen }) => {
+    if (isOpen) {
+      return `
+        border-bottom: none;
+      `;
+    }
+  }}
 `;

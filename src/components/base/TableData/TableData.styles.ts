@@ -1,3 +1,4 @@
+import { SpecialColors } from 'utils/SFMTheme';
 import styled from 'utils/styled';
 
 export const TableDataContainer = styled.div`
@@ -7,6 +8,7 @@ export const TableDataContainer = styled.div`
   background: ${({ theme }) => theme.grey.noshade};
   border-bottom: 1px solid ${({ theme }) => theme.grey.shade4};
   font-weight: 500;
+  color: ${({ theme }) => (theme.isSFM ? SpecialColors.blue : 'inherit')};
 
   &[data-row-sticky='true'] {
     left: 0;

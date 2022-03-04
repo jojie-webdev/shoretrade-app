@@ -36,6 +36,7 @@ import {
   DropdownItemContainer,
   RightComponentContainer,
 } from './NotificationItem.style';
+import { SpecialColors } from 'utils/SFMTheme';
 
 const MoreMenu = (props: {
   fullView?: boolean;
@@ -62,7 +63,7 @@ const MoreMenu = (props: {
     <MoreMenuContainer ref={ref} isOpen={isComponentVisible}>
       <div className="more-container">
         <Touchable onPress={() => handlePress()}>
-          <More />
+          <More fill={theme.isSFM ? SpecialColors.blue : undefined} />
         </Touchable>
         <div className="dropdown-container">
           <div className="dropdown-menu">
@@ -73,7 +74,9 @@ const MoreMenu = (props: {
               <div className="dropdown-content">
                 <DropdownItemContainer>
                   <Touchable onPress={() => onMarkasRead()}>
-                    <CheckCircle />
+                    <CheckCircle
+                      fill={theme.isSFM ? SpecialColors.blue : undefined}
+                    />
                     <Typography className="text" color={defaultColor}>
                       Mark as Read
                     </Typography>
@@ -81,7 +84,9 @@ const MoreMenu = (props: {
                 </DropdownItemContainer>
                 <DropdownItemContainer>
                   <Touchable onPress={() => onDelete()}>
-                    <FolderDownload />
+                    <FolderDownload
+                      fill={theme.isSFM ? SpecialColors.blue : undefined}
+                    />
                     <Typography className="text" color={defaultColor}>
                       Delete Notification
                     </Typography>

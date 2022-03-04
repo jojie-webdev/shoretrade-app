@@ -44,7 +44,11 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
   return (
     <Container>
       {!isSmallScreen ? (
-        <Typography variant="title4" className="header-title">
+        <Typography
+          color={theme.isSFM ? 'secondary' : undefined}
+          variant="title4"
+          className="header-title"
+        >
           <>
             {searchTerm.length <= 2 && (
               <>

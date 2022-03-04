@@ -30,6 +30,7 @@ import {
   TextIndicatorsContainer,
   Description,
 } from './NotificationSettingsCategoryItem.style';
+import { SpecialColors } from 'utils/SFMTheme';
 
 const NotificationSettingsCategoryItem = (
   props: NotificationSettingsCategoryItemProps
