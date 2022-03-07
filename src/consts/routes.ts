@@ -22,7 +22,7 @@ export const SELLER_ROUTES = {
   ADD_PRODUCT: `${SELLER_ROOT}/add-product`,
   DASHBOARD: `${SELLER_ROOT}/dashboard`,
   MARKET_PRICE_DETAIL: (id = ':id') => `${SELLER_ROOT}/market-prices/${id}`,
-  MARKET_PRICES: `${SELLER_ROOT}/market-prices`,
+  MARKET_DATA: `${SELLER_ROOT}/market-data`,
   SELLING: `${SELLER_ROOT}/selling`,
   SOLD: `${SELLER_ROOT}/sold`,
   BULK_UPLOAD: `${SELLER_ROOT}/bulk-upload`,

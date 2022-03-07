@@ -7,6 +7,7 @@ import MobileHeader from 'components/module/MobileHeader';
 import Search from 'components/module/Search';
 import { Row, Col, Visible } from 'react-grid-system';
 import { Link } from 'react-router-dom';
+import MarketDataImg from 'res/images/market-data.png';
 
 import { MarketPricesGeneratedProps } from './MarketPrices.props';
 import { MarketContainer, SpinnerContainer } from './MarketPrices.style';
@@ -22,12 +23,15 @@ const MarketPricesView = (props: MarketPricesGeneratedProps): JSX.Element => {
     currentPath,
   } = props;
 
-  return (
+  return <img src={MarketDataImg} width="100%" />;
+
+  {
+    /* return (
     <MarketContainer>
       <Visible xs>
         <Row>
           <Col xs={12}>
-            <MobileHeader>Market Prices</MobileHeader>
+            <MobileHeader>Market Data</MobileHeader>
           </Col>
         </Row>
       </Visible>
@@ -41,7 +45,6 @@ const MarketPricesView = (props: MarketPricesGeneratedProps): JSX.Element => {
           />
         </Col>
       </Row>
-      {/* Market Items List */}
       <Row className="items-row">
         <Col xs={12}>
           {loading ? (
@@ -56,7 +59,6 @@ const MarketPricesView = (props: MarketPricesGeneratedProps): JSX.Element => {
                   className="market-item"
                   key={r.typeId}
                 >
-                  {/* eslint-disable-next-line */}
                   <Interactions value={r.typeName} onClick={() => {}} />
                 </Link>
               ))}
@@ -65,7 +67,8 @@ const MarketPricesView = (props: MarketPricesGeneratedProps): JSX.Element => {
         </Col>
       </Row>
     </MarketContainer>
-  );
+  ); */
+  }
 };
 
 export default MarketPricesView;
