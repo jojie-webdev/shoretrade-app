@@ -39,8 +39,8 @@ const BarcodeScannerView = (props: BarcodeScannerGeneratedProps) => {
             onClick={() =>
               window.open(
                 isSeller
-                  ? 'https://testflight.apple.com/join/2zIfrfEY'
-                  : 'https://testflight.apple.com/join/yp5Uz4ik',
+                  ? 'https://apps.apple.com/au/app/shoretrade-seller/id1460087449'
+                  : 'https://apps.apple.com/au/app/shoretrade-buyer/id1460087124',
                 '_blank'
               )
             }
