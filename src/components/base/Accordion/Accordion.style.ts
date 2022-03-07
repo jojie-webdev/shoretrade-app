@@ -96,6 +96,11 @@ export const StyledInteractions = styled(Interactions)<{
     if (isOpen) {
       return `
         border-bottom: none;
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 0px;
+
+        position: relative;
+        top: 2px;
       `;
     }
   }}
