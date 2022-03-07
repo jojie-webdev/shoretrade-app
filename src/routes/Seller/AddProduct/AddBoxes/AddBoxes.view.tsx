@@ -52,7 +52,7 @@ export const BoxDetails = ({
       <div className="texts">
         <div className="text-container">
           <Typography variant="overline" color="shade6" className="overline">
-            Weight
+            {unit === 'kg' ? 'Weight' : unit === 'doz' ? 'Dozen' : 'Portions'}
           </Typography>
           <Typography color="noshade" variant="copy">
             {weight.toFixed(2)} {unit}
@@ -165,7 +165,9 @@ const AddBoxInputs = ({
           borderRadius="12px"
           type="number"
           inputType="decimal"
-          label={'Weight'}
+          label={
+            unit === 'kg' ? 'Weight' : unit === 'doz' ? 'Dozen' : 'Portions'
+          }
           value={values.weight}
           onChangeText={(v) => {
             setValues({ ...values, weight: v });
