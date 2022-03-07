@@ -68,9 +68,9 @@ const ROUTES: Routes = {
     nested: true,
   },
   // Market Prices
-  MARKET_PRICES: {
-    path: SELLER_ROUTES.MARKET_PRICES,
-    title: 'Market Prices',
+  MARKET_DATA: {
+    path: SELLER_ROUTES.MARKET_DATA,
+    title: 'Market Data',
     children: <MarketPrices />,
     icon: FileCheck,
   },
