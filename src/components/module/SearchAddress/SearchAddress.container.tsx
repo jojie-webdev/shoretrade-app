@@ -183,7 +183,7 @@ const SearchAddress = (): JSX.Element => {
       label: v,
       value: v,
     })),
-    listingMetrics: (buyerSearchFilters?.metrics || []).map((v) =>
+    listingMetrics: (buyerSearchFilters?.metric || []).map((v) =>
       v === null
         ? { label: 'ALL', value: 'ALL' }
         : {

@@ -9,6 +9,6 @@ export type GetBuyerSearchFiltersPayload = GenericResponse<{
   filters: {
     minimum_order: string;
     states: string[];
-    metrics: string[];
+    metric: string[];
   };
 }>;
