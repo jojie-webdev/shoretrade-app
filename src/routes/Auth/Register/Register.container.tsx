@@ -24,6 +24,7 @@ const Register = (): JSX.Element => {
   const dispatch = useDispatch();
 
   const theme = useTheme();
+  const token = useSelector((state: Store) => state.auth.token);
   const isSeller = theme.appType === 'seller';
   const [categories, setCategories] = useState<Category[]>([]);
   const [categoryItems, setCategoryItems] = useState<CategoryType[]>([]);
@@ -144,7 +145,7 @@ const Register = (): JSX.Element => {
     setCategoryItems([]);
     setSearchCategoryType([]);
 
-    const data = await getInactiveTypesByCategory(id);
+    const data = await getInactiveTypesByCategory(id, token);
     const result = data.data.data.type;
 
     setCategoryItems(result);

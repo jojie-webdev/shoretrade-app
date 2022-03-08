@@ -22,6 +22,7 @@ const MarketInterests = (): JSX.Element => {
     useSelector(
       (store: Store) => store.getMarketInterests.data?.data.selling
     ) || [];
+  const token = useSelector((store: Store) => store.auth.token);
   const updateMarketInterests = useSelector(
     (store: Store) => store.updateMarketInterests
   );
@@ -119,7 +120,7 @@ const MarketInterests = (): JSX.Element => {
     setSearchTerm('');
     setLoadingInnerCategories(true);
 
-    const { data } = await getInactiveTypesByCategory(id);
+    const { data } = await getInactiveTypesByCategory(id, token);
     const newInnerCategories: Listing[] = data.data.type;
 
     setLoadingInnerCategories(false);
