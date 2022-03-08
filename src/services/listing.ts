@@ -248,10 +248,16 @@ export const getMarketEstimate = (
   });
 };
 
-export const getInactiveTypesByCategory = (id: string) => {
+export const getInactiveTypesByCategory = (
+  id: string,
+  token: string | null
+) => {
   return axios({
     method: 'get',
     url: `${LISTING_URL}/types-by-category/${id}?inactive=true`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 };
 
