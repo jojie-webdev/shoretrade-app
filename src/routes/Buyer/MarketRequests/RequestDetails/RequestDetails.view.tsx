@@ -72,12 +72,12 @@ export const OffersSellerAccordionContent = (props: {
             <span className="value">{sellerRating}</span>
           </div>
           <div>
-            <StarRating
+            {/* <StarRating
               rating={sellerRating || 0}
               spacing={3}
               starSize={16}
               unfilledColor={theme.brand.alert}
-            />
+            /> */}
           </div>
         </div>
       </div>
