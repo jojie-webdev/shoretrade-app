@@ -47,6 +47,7 @@ export const editableListingToEditSelectedListing = (
     isAquafuture: data?.is_aquafuture || false,
     isAuctionSale: data?.is_auction_sale || false,
     isPreAuctionSale: data?.is_pre_auction_sale || false,
+    auctionDate: data?.auction_date ? new Date(data?.auction_date) : null,
     addressId: data?.address_id || '',
     ...(data?.packaging
       ? {
