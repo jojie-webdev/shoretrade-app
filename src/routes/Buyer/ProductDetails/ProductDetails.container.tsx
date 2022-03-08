@@ -373,12 +373,12 @@ const ProductDetails = (): JSX.Element => {
     onFavorite: onFavoriteSeller,
     onClickSeller,
     companyLocation: `${
-      currentSeller?.companyLocation.suburb
-        ? `${currentSeller?.companyLocation.suburb}, `
+      currentListing?.address.suburb
+        ? `${currentListing?.address.suburb}, `
         : ''
-    }${currentSeller?.companyLocation.state || ''}${
-      currentSeller?.companyLocation.countryCode
-        ? `, ${currentSeller?.companyLocation.countryCode}`
+    }${currentListing?.address.state || ''}${
+      currentListing?.address.countryCode
+        ? `, ${currentListing?.address.countryCode}`
         : ''
     }`,
   };
