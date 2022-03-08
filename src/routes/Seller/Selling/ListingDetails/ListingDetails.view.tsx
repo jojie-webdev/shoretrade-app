@@ -558,10 +558,10 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                     {productDetails.vendor.name}
                   </Typography>
                   <div>
-                    <StarRating
+                    {/* <StarRating
                       rating={productDetails.vendor.rating || 0}
                       style={{ marginTop: '5px' }}
-                    />
+                    /> */}
                   </div>
                 </div>
               </div>

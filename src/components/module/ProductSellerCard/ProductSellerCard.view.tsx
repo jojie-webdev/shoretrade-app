@@ -67,7 +67,7 @@ const ProductSellerCard = (props: ProductSellerProps): JSX.Element => {
           <Typography variant="body" weight="bold" color="shade9">
             {name}
           </Typography>
-          <RatingRow>
+          {/* <RatingRow>
             <Typography
               className="rating-value"
               variant="caption"
@@ -77,7 +77,7 @@ const ProductSellerCard = (props: ProductSellerProps): JSX.Element => {
               {isMobile ? '' : rating || 0}
             </Typography>
             <StarRating rating={Number(rating)} spacing={6} />
-          </RatingRow>
+          </RatingRow> */}
         </FlexShrinked>
         <EndRow>
           {showFavoriteButton && (

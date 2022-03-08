@@ -273,7 +273,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
               </StyledTypography2>
             </div>
 
-            <StarContainer>
+            {/* <StarContainer>
               <StyledNumberRating variant="caption" color="shade7">
                 {seller?.rating || 0}
               </StyledNumberRating>
@@ -283,7 +283,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
                 starSize={13}
                 unfilledColor={theme.brand.alert}
               />
-            </StarContainer>
+            </StarContainer> */}
 
             <Typography
               variant="caption"
