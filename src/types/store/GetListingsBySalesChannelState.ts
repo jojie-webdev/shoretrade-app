@@ -66,6 +66,7 @@ export type GetListingsBySalesChannelResponseItem = {
   addressState: string;
   addressCountryCode: string;
   flatDeliveryFee?: any;
+  auction_date?: string;
   is_aquafuture: boolean;
   is_auction_sale: boolean;
   is_pre_auction_sale: boolean;
