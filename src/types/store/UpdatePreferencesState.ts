@@ -7,4 +7,6 @@ export type UpdatePreferencesMeta = {
 };
 
 // TODO: Update response value
-export type UpdatePreferencesPayload = GenericResponse;
+export type UpdatePreferencesPayload = GenericResponse<{
+  searchPreferences: UserSearchPreferences;
+}>;

@@ -49,23 +49,16 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [selectedBuyingStates, setSelectedBuyingStates] = useState<
     OptionsType[]
-  >(buyingStates);
-  const [selectedMinBuyingQty, setSelectedMinBuyingQty] = useState(0);
+  >(
+    searchPreferences.states?.map((s) => ({
+      label: s,
+      value: s,
+    })) ?? buyingStates
+  );
+  const [selectedMinBuyingQty, setSelectedMinBuyingQty] = useState(
+    searchPreferences.weight ?? 0
+  );
   const [selectedMetric, setSelectedMetric] = useState('ALL');
-
-  useEffect(() => {
-    searchPreferences.states &&
-      setSelectedBuyingStates(
-        searchPreferences.states.map((s) => ({
-          label: s,
-          value: s,
-        }))
-      );
-    searchPreferences.weight &&
-      selectedMinBuyingQty === 0 &&
-      setSelectedMinBuyingQty(searchPreferences.weight);
-    searchPreferences.metric && setSelectedMetric(searchPreferences.metric);
-  }, [searchPreferences]);
 
   function blurOnEnter(event: any) {
     if (event.key === 'Enter' && inputRef !== null) {
@@ -189,7 +182,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
               <Slider
                 value={selectedMinBuyingQty}
                 onChange={(v) => {
-                  if (v && typeof v === 'number') {
+                  if (typeof v === 'number') {
                     updateMinBuyingQty(v);
                   }
                 }}

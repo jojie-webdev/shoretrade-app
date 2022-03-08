@@ -36,6 +36,8 @@ const SearchAddress = (): JSX.Element => {
       state.getUser.data?.data?.user.preferences?.searchPreferences || {}
   );
 
+  const loadingUser = useSelector((state: Store) => state.getUser.pending);
+
   const buyerSearchFilters = useSelector(
     (state: Store) => state.getBuyerSearchFilters.data?.data.filters
   );
@@ -195,6 +197,8 @@ const SearchAddress = (): JSX.Element => {
     searchPreferences,
     updatePreferences,
   };
+
+  if (loadingUser) return <></>;
 
   return <SearchAddressView {...generatedProps} />;
 };
