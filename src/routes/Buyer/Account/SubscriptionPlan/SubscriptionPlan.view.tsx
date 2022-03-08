@@ -15,8 +15,9 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from 'utils/Theme';
+import _ from 'lodash'
 
 import { SubscriptionPlanGeneratedProps } from './SubscriptionPlan.props';
 import {
@@ -29,11 +30,17 @@ import {
   SubscriptionContainer,
   ToggleContainer,
 } from './SubscriptionPlan.style';
+import CreditCardLogo from 'components/module/CreditCardLogo';
+import { toPrice } from 'utils/String';
 
 export const SubscriptionPlanView = ({
-  plans,
-  activePlan,
+  annualPrice,
+  monthlyPrice,
+  nextBillingDate,
+  cardBrand,
+  cardNumberMasked,
 }: SubscriptionPlanGeneratedProps) => {
+  const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS.sm });
   const isSmallDesktop = useMediaQuery({
@@ -42,12 +49,13 @@ export const SubscriptionPlanView = ({
   const [isAnnual, setIsAnnual] = useState(false);
   const [showToggleModal, setShowToggleModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
-
-  const annualPlan = plans.find((plan) => plan.alias.includes('YEARLY'));
-  const monthlyPlan = plans.find((plan) => !plan.alias.includes('YEARLY'));
-  const price = (isAnnual ? annualPlan?.price : monthlyPlan?.price) || '0';
-  const endDateFormatted =
-    activePlan && moment(activePlan.end_date).format('D MMMM YYYY');
+  const price = toPrice(isAnnual ? annualPrice : monthlyPrice);
+  const redirectState = {
+    from: {
+      label: 'Plan',
+      link: location.pathname
+    }
+  }
 
   return (
     <Container>
@@ -99,14 +107,17 @@ export const SubscriptionPlanView = ({
 
               <div className="card-info">
                 <div className="card-icon">
-                  <Mastercard />
+                  <CreditCardLogo type={cardBrand} />
                 </div>
-                <Typography variant="body">**** **** **** 4242</Typography>
+                <Typography variant="body">{cardNumberMasked}</Typography>
               </div>
 
               <Link
                 className="see-payment-methods"
-                to={BUYER_ACCOUNT_ROUTES.BANK_DETAILS}
+                to={{ 
+                  pathname: BUYER_ACCOUNT_ROUTES.BANK_DETAILS, 
+                  state: redirectState
+                }}
               >
                 <Typography
                   variant="label"
@@ -127,13 +138,16 @@ export const SubscriptionPlanView = ({
               <div className="billing-date">
                 <Calendar fill={theme.grey.shade7} />
                 <Typography variant="body" style={{ marginLeft: '6px' }}>
-                  {endDateFormatted}
+                  {nextBillingDate}
                 </Typography>
               </div>
 
               <Link
                 className="see-payment-history"
-                to={BUYER_ACCOUNT_ROUTES.BALANCE_HISTORY}
+                to={{ 
+                  pathname: BUYER_ACCOUNT_ROUTES.BALANCE_HISTORY,
+                  state: redirectState
+                }}
               >
                 <Typography
                   variant="label"
@@ -162,7 +176,7 @@ export const SubscriptionPlanView = ({
 
               <div className="plan-rate">
                 <Typography variant="title3" weight="400">
-                  ${price}
+                  {price}
                 </Typography>
                 <Typography variant="label" weight="400" color="shade6">
                   &nbsp;/ {isAnnual ? 'Year' : 'Month'}
@@ -202,7 +216,7 @@ export const SubscriptionPlanView = ({
         <Typography color="shade7">Your new plan will be:</Typography>
         <div style={{ display: 'flex', margin: '8px 0' }}>
           <Typography variant="title3" weight="400">
-            ${price}
+            {price}
           </Typography>
           <Typography variant="label" weight="400" color="shade6">
             &nbsp;/ {isAnnual ? 'Year' : 'Month'}
@@ -213,13 +227,13 @@ export const SubscriptionPlanView = ({
             You will be charged
           </Typography>
           <Typography variant="body" weight="700">
-            &nbsp;${price}
+            &nbsp;{price}
           </Typography>
           <Typography variant="body" weight="400" color="shade7">
             &nbsp;on
           </Typography>
           <Typography variant="body" weight="700">
-            &nbsp;{endDateFormatted}
+            &nbsp;{nextBillingDate}
           </Typography>
         </div>
       </ConfirmationModal>

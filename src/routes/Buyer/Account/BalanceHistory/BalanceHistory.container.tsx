@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 
+import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { getTransactionHistoryActions } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
@@ -9,6 +11,13 @@ import { BalanceHistoryGeneratedProps } from './BalanceHistory.props';
 import BalanceHistoryView from './BalanceHistory.view';
 
 const BalanceHistory = (): JSX.Element => {
+  const location = useLocation<{
+    from: {
+      label: string;
+      link: string;
+    };
+  }>();
+
   const dispatch = useDispatch();
   const currentCompany = GetDefaultCompany();
   const companyId = currentCompany?.id || '';
@@ -35,6 +44,10 @@ const BalanceHistory = (): JSX.Element => {
     // generated props here
     transactions: transactions || [],
     isLoading,
+    redirectFrom: location.state?.from || {
+      label: 'Balance & Payments',
+      link: BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
+    },
   };
   return <BalanceHistoryView {...generatedProps} />;
 };

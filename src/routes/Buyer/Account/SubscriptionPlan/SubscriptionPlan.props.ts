@@ -2,6 +2,9 @@ import { GetActivePlanResponseData } from 'types/store/GetActivePlanState';
 import { GetSubscriptionPlansResponseData } from 'types/store/GetSubscriptionPlansState';
 
 export interface SubscriptionPlanGeneratedProps {
-  plans: GetSubscriptionPlansResponseData[];
-  activePlan?: GetActivePlanResponseData;
+  annualPrice: string;
+  monthlyPrice: string;
+  nextBillingDate: string;
+  cardBrand: string;
+  cardNumberMasked: string;
 }
