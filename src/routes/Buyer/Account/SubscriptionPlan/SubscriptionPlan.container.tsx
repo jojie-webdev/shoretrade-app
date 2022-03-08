@@ -10,6 +10,7 @@ import {
 import { Store } from 'types/store/Store';
 
 import { SubscriptionPlanGeneratedProps } from './SubscriptionPlan.props';
+import { activePlanToProps } from './SubscriptionPlan.transform';
 import { SubscriptionPlanView } from './SubscriptionPlan.view';
 
 const SubscriptionPlan = () => {
@@ -40,15 +41,17 @@ const SubscriptionPlan = () => {
     dispatch(getSubscriptionPlansActions.request({}));
   }, []);
 
-  const params: SubscriptionPlanGeneratedProps = {
-    plans:
-      (marketSector &&
-        subscriptionPlans?.filter((plan) =>
-          plan.alias.includes(_.snakeCase(marketSector?.sector).toUpperCase())
-        )) ||
-      [],
-    activePlan,
-  };
+  const plans =
+    (marketSector &&
+      subscriptionPlans?.filter((plan) =>
+        plan.alias.includes(_.snakeCase(marketSector?.sector).toUpperCase())
+      )) ||
+    [];
+
+  const params: SubscriptionPlanGeneratedProps = activePlanToProps(
+    plans,
+    activePlan
+  );
 
   return <SubscriptionPlanView {...params} />;
 };

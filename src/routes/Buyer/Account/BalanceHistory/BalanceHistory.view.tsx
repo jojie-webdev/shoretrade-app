@@ -23,6 +23,7 @@ import {
 const BalanceHistoryView = ({
   isLoading,
   transactions,
+  redirectFrom,
 }: BalanceHistoryGeneratedProps) => {
   const history = useHistory();
   const getTransactionLabel = (
@@ -115,10 +116,7 @@ const BalanceHistoryView = ({
         <Breadcrumbs
           sections={[
             { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
-            {
-              label: 'Balance & Payments',
-              link: BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
-            },
+            redirectFrom,
             { label: 'Payment History' },
           ]}
         />
