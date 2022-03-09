@@ -181,6 +181,7 @@ export const orderItemToPendingToShipItem = (
           buyerCompanyName: orders[0].buyerCompanyName,
           deliveryMethod: orders[0].deliveryMethod,
           deliveryMethodLabel,
+          dropOff: currentDatum.sellerDropOff || currentDatum.locationName || '',
           deliveryAddress: getDeliveryAddress(current, currentDatum),
           buyerId: orders[0].buyerId, // this is employee id
           orderCount: orders.length,

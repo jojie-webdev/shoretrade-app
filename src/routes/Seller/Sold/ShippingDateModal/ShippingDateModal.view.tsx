@@ -9,13 +9,14 @@ import moment from 'moment';
 import { ShippingDateModalProps } from './ShippingDateModal.props';
 import { Content } from './ShippingDateModal.style';
 
-const getTitleAndDescription = (key: string) => {
+const getTitleAndDescription = (key: string, dropOff: string) => {
   return (
     {
       airPickupOrders: {
         title: 'Drop-off Date',
-        desc:
-          'Please confirm the date this order will be dropped off to Airport',
+        desc: `Please confirm the date this order will be dropped off to ${
+          dropOff || 'Airport'
+        }`,
       },
       airDeliveryOrders: {
         title: 'Shipment Date',
@@ -24,13 +25,15 @@ const getTitleAndDescription = (key: string) => {
       },
       roadPickupOrders: {
         title: 'Arrival Date',
-        desc:
-          'Please confirm the date that this order will arrive at the depot',
+        desc: `Please confirm the date that this order will arrive at ${
+          dropOff || 'the depot'
+        }`,
       },
       roadDeliveryOrders: {
         title: 'Arrival Date',
-        desc:
-          'Please confirm the date that this order will arrive at the depot',
+        desc: `Please confirm the date that this order will arrive at ${
+          dropOff || 'the depot'
+        }`,
       },
       selfPickupOrders: {
         title: 'Collection Date',
@@ -45,11 +48,21 @@ const getTitleAndDescription = (key: string) => {
 };
 
 const ShippingDateModal = (props: ShippingDateModalProps): JSX.Element => {
-  const { children, onConfirm, loading, shippingMethod, ...modalProps } = props;
+  const {
+    children,
+    onConfirm,
+    loading,
+    shippingMethod,
+    dropOff,
+    ...modalProps
+  } = props;
 
   const [showError, setShowError] = useState(false);
   const [deliveryDate, setDeliveryDate] = useState<Date | null>(null);
-  const { title, desc } = getTitleAndDescription(shippingMethod);
+  const { title, desc } = getTitleAndDescription(
+    shippingMethod,
+    dropOff.toLowerCase() !== 'others' ? dropOff : ''
+  );
 
   useEffect(() => {
     if (modalProps.isOpen) {
@@ -70,7 +83,7 @@ const ShippingDateModal = (props: ShippingDateModalProps): JSX.Element => {
         </Typography>
 
         <Typography color="shade7" variant="body">
-          {desc || 'Please, select a date that this will arrive at the depot'}
+          {desc || `Please, select a date that this will arrive at the depot`}
         </Typography>
 
         <div className="content-container">

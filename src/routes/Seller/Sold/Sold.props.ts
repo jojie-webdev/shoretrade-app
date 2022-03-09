@@ -25,6 +25,7 @@ export type PendingToShipItemData = {
   totalPrice: number;
   totalWeight: number;
   groupName?: string;
+  dropOff: string;
 };
 
 export type SoldItemData = {

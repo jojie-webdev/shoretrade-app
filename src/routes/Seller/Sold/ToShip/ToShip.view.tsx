@@ -96,6 +96,7 @@ export const PendingItem = (props: {
       isOpen: boolean;
       order: PlaceOrderMeta;
       group: string;
+      dropOff: string;
     }>
   >;
   isPlacingOrder: boolean;
@@ -222,6 +223,7 @@ export const PendingItem = (props: {
                         order,
                       }),
                       group: data.groupName || '',
+                      dropOff: data.dropOff || '',
                     });
                     e.stopPropagation();
                   }}
@@ -244,6 +246,7 @@ export const PendingItem = (props: {
                         order,
                       }),
                       group: data.groupName || '',
+                      dropOff: data.dropOff || '',
                     });
                     e.stopPropagation();
                   }}
@@ -474,11 +477,13 @@ const ToShip = (props: SoldGeneratedProps) => {
       order: PlaceOrderMeta | null;
       isOpen: boolean;
       group: string | null;
+      dropOff: string;
     }>(),
     {
       order: null,
       isOpen: false,
       group: null,
+      dropOff: '',
     }
   );
 
@@ -638,6 +643,7 @@ const ToShip = (props: SoldGeneratedProps) => {
         }}
         loading={isPlacingOrder}
         shippingMethod={shippingDateModal.group || ''}
+        dropOff={shippingDateModal.dropOff || ''}
       />
       <>
         <TitleRow>
