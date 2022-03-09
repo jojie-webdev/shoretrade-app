@@ -71,11 +71,21 @@ const ShippingCard = (props: ShippingCardProps): JSX.Element => {
 
             <Col>
               <div className="shipping-option-right">
+                {isFreeShipping && o.shipmentMode !== 'AIR' && (
+                  <div className="free-badge">
+                    <Typography variant="caption">FREE</Typography>
+                  </div>
+                )}
                 <Typography
+                  className={
+                    isFreeShipping && o.shipmentMode !== 'AIR'
+                      ? 'line-through-text'
+                      : undefined
+                  }
                   variant={isMobile ? 'caption' : 'body'}
                   align="right"
                 >
-                  {isFreeShipping ? 'FREE SHIPPING' : `${o.price}`}
+                  {`${o.price}`}
                 </Typography>
                 {selectedPriceId === o.id ? (
                   <CheckFilled

@@ -42,9 +42,27 @@ export const Rectangle = styled.div`
     align-items: center;
     justify-content: flex-end;
 
+    .line-through-text {
+      text-decoration: line-through;
+      text-decoration-color: ${({ theme }) => theme.brand.primary};
+      text-decoration-thickness: 2.5px;
+    }
+
     svg {
       margin-bottom: 4px;
       margin-left: 26px;
+    }
+  }
+
+  .free-badge {
+    padding: 2px 8px;
+    border-radius: 8px;
+    background-color: ${({ theme }) => theme.brand.primary};
+    margin: 0px 8px 8px 0px;
+
+    p {
+      font-size: 8px;
+      color ${({ theme }) => theme.grey.noshade}
     }
   }
 `;

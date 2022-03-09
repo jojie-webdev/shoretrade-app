@@ -21,6 +21,7 @@ export type OrderItem = {
     price: string;
     imageUrl: string;
     subAddress?: string;
+    shipmentMode: string;
   }[];
   crateFee?: number;
   isFreeShipping: boolean;

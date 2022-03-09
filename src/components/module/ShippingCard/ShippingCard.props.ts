@@ -6,6 +6,7 @@ export type Option = {
   est: string;
   price: string;
   imageUrl: string;
+  shipmentMode: string;
 };
 
 export interface ShippingCardProps {

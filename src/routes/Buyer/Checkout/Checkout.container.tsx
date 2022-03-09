@@ -177,6 +177,7 @@ const Checkout = (): JSX.Element => {
               return {
                 id: data.id,
                 priceId: data.priceId,
+                shipmentMode: data.shipmentMode,
                 name:
                   data.serviceName === CLICK_AND_COLLECT_SERVICE
                     ? `${serviceName} ${data.locationName}`
