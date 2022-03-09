@@ -586,30 +586,24 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
               <ProductDetailsContainer
                 isCreatListingSuccess={isCreatListingSuccess}
               >
-                {orderDetails.validUntil && (
-                  <>
-                    <ProductLabelContainer>
-                      <Typography
-                        variant="overline"
-                        color="shade6"
-                        weight="bold"
-                      >
-                        Time Left
-                      </Typography>
-                      <div className="product-value">
-                        <Typography
-                          variant="label"
-                          color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
-                          weight="bold"
-                          className="product-desc"
-                        >
-                          {orderDetails.validUntil}
-                        </Typography>
-                      </div>
-                    </ProductLabelContainer>
-                    <div className="separator" />
-                  </>
-                )}
+                <ProductLabelContainer>
+                  <Typography variant="overline" color="shade6" weight="bold">
+                    Time Left
+                  </Typography>
+                  <div className="product-value">
+                    <Typography
+                      variant="label"
+                      color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                      weight="bold"
+                      className="product-desc"
+                    >
+                      {orderDetails.validUntil
+                        ? orderDetails.validUntil
+                        : 'Always Available'}
+                    </Typography>
+                  </div>
+                </ProductLabelContainer>
+                <div className="separator" />
 
                 <ProductLabelContainer>
                   <Typography variant="overline" color="shade6" weight="bold">
