@@ -21,6 +21,7 @@ import { BUYER_ROUTES, SELLER_ROUTES } from 'consts';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import useComponentVisible from 'utils/Hooks/useComponentVisible';
+import { SpecialColors } from 'utils/SFMTheme';
 import { ellipsisOnOverflow } from 'utils/String/ellipsisOnOverflow';
 import { useTheme } from 'utils/Theme';
 
@@ -36,7 +37,6 @@ import {
   DropdownItemContainer,
   RightComponentContainer,
 } from './NotificationItem.style';
-import { SpecialColors } from 'utils/SFMTheme';
 
 const MoreMenu = (props: {
   fullView?: boolean;

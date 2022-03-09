@@ -105,24 +105,20 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
     justify-content: space-between;
   }
 
-  @media (max-height: 700px) {
+  @media (max-height: 768px) {
     .nav-items-container {
       overflow-y: scroll;
+
+      max-height: ${({ theme }) =>
+        theme.appType === 'buyer' ? '50vh' : '68vh'};
+
       ${({ theme }) => {
-        if (theme.appType === 'buyer') {
+        if (theme.isSFM) {
           return `
-            max-height: 50vh;
-          `;
-        } else {
-          if (theme.isSFM) {
-            return `max-height: 56vh;`;
-          }
-          return `
-            max-height: 68vh;
+            max-height: ${theme.appType === 'buyer' ? '40vh' : '50vh'};
           `;
         }
       }}
-    }
   }
 
   @media ${BREAKPOINTS['sm']} {
