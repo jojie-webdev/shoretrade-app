@@ -48,6 +48,7 @@ export const getDeliveryAddress = (
     orders[0].deliveryInstruction || {};
 
   switch (deliveryMethod) {
+    case 'selfDeliveryOrder':
     case 'selfPickupOrders':
       return sellerDropOffAddress ?? sellerAddress;
     case 'roadPickupOrders':
