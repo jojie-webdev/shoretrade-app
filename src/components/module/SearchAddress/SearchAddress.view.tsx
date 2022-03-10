@@ -142,7 +142,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
 
         <MultiSelect
           className="search-address-select"
-          label="Buying to"
+          label="Buying from"
           options={buyingStates}
           placeholder="Select..."
           selectedAllText="All States"
