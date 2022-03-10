@@ -445,11 +445,12 @@ export const ItemDetail = styled(Typography)<{ row?: boolean }>`
     line-height: 24px;
 
     @media (max-width: 1300px) {
-      width: 100px;
+      width: 110px;
       text-overflow: ellipsis;
       white-space: nowrap;
       display: inline-block;
       overflow: hidden;
+      margin-top: 4px;
     }
   }
 `;

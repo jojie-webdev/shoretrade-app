@@ -543,7 +543,7 @@ const ToShip = (props: SoldGeneratedProps) => {
   }, 0);
 
   const getDeliveryIcon = (deliveryMethod: string) => {
-    const iconProps = { width: 14, height: 14, fill: theme.grey.noshade };
+    const iconProps = { fill: theme.grey.noshade };
     switch (deliveryMethod) {
       case 'ROAD':
         return <Truck {...iconProps} />;
@@ -692,13 +692,7 @@ const ToShip = (props: SoldGeneratedProps) => {
                         </span>
                         <div>
                           {isMobile ? (
-                            <Typography
-                              variant="label"
-                              color="noshade"
-                              className="center-text"
-                            >
-                              {getDeliveryMobileLabel(group.deliveryMethod)}
-                            </Typography>
+                            <></>
                           ) : (
                             renderDeliveryLabelAndAddress(group)
                           )}

@@ -173,7 +173,7 @@ const SoldItem = (props: {
           bottomComponent={
             isMobile && (
               <div>
-                {renderDeliveryLabelAndAddress(true)}
+                {renderDeliveryLabelAndAddress(false)}
                 {renderSoldWeight()}
               </div>
             )
@@ -191,17 +191,9 @@ const SoldItem = (props: {
                 >
                   <Icon />
                 </span>
-                {isMobile ? (
-                  <Typography
-                    variant="label"
-                    color="noshade"
-                    className="center-text"
-                  >
-                    {getDeliveryMobileLabel()}
-                  </Typography>
-                ) : (
-                  renderDeliveryLabelAndAddress(false)
-                )}
+                <div>
+                  {isMobile ? <></> : renderDeliveryLabelAndAddress(false)}
+                </div>
               </div>
             </div>
             <div className="right-content">
@@ -607,7 +599,8 @@ const SoldItem = (props: {
                         </div>
                       </div>
                     )}
-                    {!isMobile && props.updateScanHistoryModal &&
+                    {!isMobile &&
+                      props.updateScanHistoryModal &&
                       order?.scanHistory &&
                       order?.scanHistory?.length > 0 &&
                       index === v.orders.length - 1 && (
