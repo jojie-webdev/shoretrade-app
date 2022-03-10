@@ -16,6 +16,7 @@ import moment from 'moment';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
+import { toPrice } from 'utils/String';
 import { useTheme } from 'utils/Theme';
 
 import { SubscriptionPlanGeneratedProps } from './SubscriptionPlan.props';
@@ -29,10 +30,14 @@ import {
   SubscriptionContainer,
   ToggleContainer,
 } from './SubscriptionPlan.style';
+import CreditCardLogo from 'components/module/CreditCardLogo';
 
 export const SubscriptionPlanView = ({
-  plans,
-  activePlan,
+  annualPrice,
+  monthlyPrice,
+  nextBillingDate,
+  cardBrand,
+  cardNumberMasked,
 }: SubscriptionPlanGeneratedProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS.sm });
@@ -42,12 +47,7 @@ export const SubscriptionPlanView = ({
   const [isAnnual, setIsAnnual] = useState(false);
   const [showToggleModal, setShowToggleModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
-
-  const annualPlan = plans.find((plan) => plan.alias.includes('YEARLY'));
-  const monthlyPlan = plans.find((plan) => !plan.alias.includes('YEARLY'));
-  const price = (isAnnual ? annualPlan?.price : monthlyPlan?.price) || '0';
-  const endDateFormatted =
-    activePlan && moment(activePlan.end_date).format('D MMMM YYYY');
+  const price = toPrice(isAnnual ? annualPrice : monthlyPrice);
 
   return (
     <Container>
@@ -57,6 +57,10 @@ export const SubscriptionPlanView = ({
             { label: 'Account', link: SELLER_ACCOUNT_ROUTES.LANDING },
             {
               label: 'Plan',
+              link: SELLER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
+            },
+            {
+              label: 'Card',
             },
           ]}
         />
@@ -115,16 +119,16 @@ export const SubscriptionPlanView = ({
 
               <div className="card-info">
                 <div className="card-icon">
-                  <Mastercard />
+                  <CreditCardLogo type={cardBrand} />
                 </div>
                 <Typography variant="body" color="noshade">
-                  **** **** **** 4242
+                  {cardNumberMasked}
                 </Typography>
               </div>
 
-              <div
+              <Link
                 className="see-payment-methods"
-                // to={SELLER_ACCOUNT_ROUTES.BANK_DETAILS}
+                to={SELLER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD}
               >
                 <Typography
                   variant="label"
@@ -134,7 +138,7 @@ export const SubscriptionPlanView = ({
                 >
                   See Payment Methods
                 </Typography>
-              </div>
+              </Link>
             </PaymentMethodSection>
 
             <BillingSection className="section">
@@ -149,7 +153,7 @@ export const SubscriptionPlanView = ({
                   color="noshade"
                   style={{ marginLeft: '6px' }}
                 >
-                  {endDateFormatted}
+                  {nextBillingDate}
                 </Typography>
               </div>
 
@@ -184,7 +188,7 @@ export const SubscriptionPlanView = ({
 
               <div className="plan-rate">
                 <Typography variant="title3" weight="400" color="noshade">
-                  ${price}
+                  {price}
                 </Typography>
                 <Typography variant="label" weight="400" color="shade6">
                   &nbsp;/ {isAnnual ? 'Year' : 'Month'}
@@ -224,7 +228,7 @@ export const SubscriptionPlanView = ({
         <Typography color="shade7">Your new plan will be:</Typography>
         <div style={{ display: 'flex', margin: '8px 0' }}>
           <Typography variant="title3" weight="400" color="noshade">
-            ${price}
+            {price}
           </Typography>
           <Typography variant="label" weight="400" color="shade6">
             &nbsp;/ {isAnnual ? 'Year' : 'Month'}
@@ -235,13 +239,13 @@ export const SubscriptionPlanView = ({
             You will be charged
           </Typography>
           <Typography variant="body" weight="700" color="noshade">
-            &nbsp;${price}
+            &nbsp;{price}
           </Typography>
           <Typography variant="body" weight="400" color="shade7">
             &nbsp;on
           </Typography>
           <Typography variant="body" weight="700" color="noshade">
-            &nbsp;{endDateFormatted}
+            &nbsp;{nextBillingDate}
           </Typography>
         </div>
       </ConfirmationModal>

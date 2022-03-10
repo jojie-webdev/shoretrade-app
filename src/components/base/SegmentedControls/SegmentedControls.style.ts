@@ -21,24 +21,41 @@ export const Container = styled.div`
 `;
 
 const ControlButtonColor = (
-  theme: Theme
+  theme: Theme,
+  backgroundColor?: string
 ): Record<'buyer' | 'seller', string> => {
-  return { buyer: theme.grey.shade8, seller: theme.grey.noshade };
+  return {
+    buyer: backgroundColor || theme.grey.shade8,
+    seller: backgroundColor || theme.grey.noshade,
+  };
 };
 
 const ControlButtonTextColor = (
   theme: Theme,
   active: boolean,
-  appType: 'buyer' | 'seller'
+  appType: 'buyer' | 'seller',
+  textColor?: string
 ): string => {
   if (appType === 'buyer') {
-    return active ? theme.grey.noshade : theme.grey.shade6;
+    return active
+      ? theme.grey.noshade
+      : textColor
+      ? textColor
+      : theme.grey.shade6;
   } else {
-    return active ? theme.grey.shade9 : theme.grey.noshade;
+    return active
+      ? theme.grey.shade9
+      : textColor
+      ? textColor
+      : theme.grey.noshade;
   }
 };
 
-export const ControlButton = styled.button<{ active: boolean }>`
+export const ControlButton = styled.button<{
+  active: boolean;
+  backgroundColor?: string;
+  textColor?: string;
+}>`
   height: 100%;
   min-width: 90px;
   width: 100%;
@@ -46,13 +63,20 @@ export const ControlButton = styled.button<{ active: boolean }>`
   border: none;
   background: ${(props) =>
     props.active
-      ? ControlButtonColor(props.theme)[props.theme.appType]
+      ? ControlButtonColor(props.theme, props.backgroundColor)[
+          props.theme.appType
+        ]
       : 'none'};
 
   /* Text Properties */
   font-size: 14px;
   color: ${(props) =>
-    ControlButtonTextColor(props.theme, props.active, props.theme.appType)};
+    ControlButtonTextColor(
+      props.theme,
+      props.active,
+      props.theme.appType,
+      props.textColor
+    )};
   font-weight: 400;
   line-height: 20px;
 

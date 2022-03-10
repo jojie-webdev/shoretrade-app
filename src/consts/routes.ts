@@ -87,6 +87,7 @@ export const SELLER_ACCOUNT_ROUTES = {
   NOTIFICATIONS_SETTINGS: `${SELLER_ROUTES.ACCOUNT}/notifications`,
   SUBSCRIPTION_PLAN: `${SELLER_ROUTES.ACCOUNT}/subscription-plan`,
   PAYMENT_HISTORY: `${SELLER_ROUTES.ACCOUNT}/payment-history`,
+  PLAN_PAYMENT_METHOD: `${SELLER_ROUTES.ACCOUNT}/subscription-plan/payment-method`,
 };
 
 export const BUYER_ROUTES = {
@@ -149,4 +150,5 @@ export const BUYER_ACCOUNT_ROUTES = {
   MARKET_INTERESTS: `${BUYER_ROUTES.ACCOUNT}/market-interests`,
   NOTIFICATIONS_SETTINGS: `${BUYER_ROUTES.ACCOUNT}/notifications`,
   SUBSCRIPTION_PLAN: `${BUYER_ROUTES.ACCOUNT}/subscription-plan`,
+  PLAN_PAYMENT_METHOD: `${BUYER_ROUTES.ACCOUNT}/subscription-plan/payment-method`,
 };

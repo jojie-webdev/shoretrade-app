@@ -20,6 +20,7 @@ import Landing from './Landing';
 import Assistants from './LinkedAccounts';
 import MarketInterests from './MarketInterests';
 import NotificationsSettings from './NotificationsSettings';
+import PlanPaymentMethod from './PlanPaymentMethod';
 import SubscriptionPlan from './SubscriptionPlan';
 import YourDetails from './YourDetails';
 
@@ -99,6 +100,10 @@ const ROUTES: Routes = {
   SUBSCRIPTION_PLAN: {
     path: BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
     children: <SubscriptionPlan />,
+  },
+  PLAN_PAYMENT_METHOD: {
+    path: BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD,
+    children: <PlanPaymentMethod />,
   },
 };
 

@@ -79,7 +79,10 @@ export const CustomCheckbox = styled.span<{
 
 export const Label = styled(Typography)`
   margin-left: 8px;
-  color: ${({ disabled, theme }) => {
+  ${({ color, disabled, theme }) =>
+    !color
+      ? `
+  color: ${() => {
     if (disabled) return theme.grey.shade7;
     const isSeller = theme.appType !== 'buyer';
     if (theme.isSFM) {
@@ -87,6 +90,8 @@ export const Label = styled(Typography)`
     }
     return isSeller ? '#ffffff' : theme.grey.shade9;
   }};
+  `
+      : ''}
 `;
 
 export const Error = styled(Typography)`

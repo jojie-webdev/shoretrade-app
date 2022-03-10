@@ -21,6 +21,7 @@ import Licenses from './Licenses';
 import MarketInterests from './MarketInterests';
 import NotificationsSettings from './NotificationsSettings';
 import PaymentHistory from './PaymentHistory';
+import PlanPaymentMethod from './PlanPaymentMethod';
 import ShippingAddresses from './ShippingAddresses';
 import SubscriptionPlan from './SubscriptionPlan';
 import YourDetails from './YourDetails';
@@ -37,6 +38,10 @@ const ROUTES: Routes = {
   SUBSCRIPTION_PLAN: {
     path: SELLER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
     children: <SubscriptionPlan />,
+  },
+  PLAN_PAYMENT_METHOD: {
+    path: SELLER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD,
+    children: <PlanPaymentMethod />,
   },
   PAYMENT_HISTORY: {
     path: SELLER_ACCOUNT_ROUTES.PAYMENT_HISTORY,

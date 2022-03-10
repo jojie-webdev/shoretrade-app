@@ -11,7 +11,14 @@ import { Container, ControlButton } from './SegmentedControls.style';
 const SegmentedControls = (props: SegmentedControlsProps): JSX.Element => {
   // const theme = useTheme();
 
-  const { options, selectedOption, onClickControl, tooltips } = props;
+  const {
+    options,
+    selectedOption,
+    onClickControl,
+    tooltips,
+    controlButtonColor,
+    controlButtonTextColor,
+  } = props;
   const Icon: React.FC<SVGProps> = InfoFilled;
   const theme = useTheme();
   return (
@@ -26,6 +33,9 @@ const SegmentedControls = (props: SegmentedControlsProps): JSX.Element => {
               <ControlButton
                 active={option === selectedOption}
                 onClick={() => onClickControl(option)}
+                backgroundColor={controlButtonColor}
+                textColor={controlButtonTextColor}
+                type="button"
               >
                 {option}
                 {value && (

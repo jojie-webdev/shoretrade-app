@@ -29,7 +29,7 @@ const InteractionCreditCard = (
       }
     >
       <CardName variant="overline" color="shade6">
-        Credit Cards
+        Credit Card
       </CardName>
       <CreditCard
         lastFour={props.lastFour}

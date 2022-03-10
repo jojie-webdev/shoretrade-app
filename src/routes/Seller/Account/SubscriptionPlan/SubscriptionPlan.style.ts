@@ -46,9 +46,12 @@ export const PaymentMethodSection = styled.div`
     margin-top: 4px;
 
     .card-icon {
-      padding: 0 8px;
-      border-radius: 8px;
       box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      background: ${({ theme }) => theme.grey.noshade};
+      padding: 0 8px;
       margin-right: 4px;
     }
   }

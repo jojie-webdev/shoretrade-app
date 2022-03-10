@@ -9,15 +9,17 @@ import {
 import Toggle from 'components/base/Toggle';
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
+import CreditCardLogo from 'components/module/CreditCardLogo';
 import PlanFeatures from 'components/module/PlanFeatures';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import _ from 'lodash';
 import moment from 'moment';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { Link, useLocation } from 'react-router-dom';
+import { toPrice } from 'utils/String';
 import { useTheme } from 'utils/Theme';
-import _ from 'lodash'
 
 import { SubscriptionPlanGeneratedProps } from './SubscriptionPlan.props';
 import {
@@ -30,8 +32,6 @@ import {
   SubscriptionContainer,
   ToggleContainer,
 } from './SubscriptionPlan.style';
-import CreditCardLogo from 'components/module/CreditCardLogo';
-import { toPrice } from 'utils/String';
 
 export const SubscriptionPlanView = ({
   annualPrice,
@@ -53,9 +53,9 @@ export const SubscriptionPlanView = ({
   const redirectState = {
     from: {
       label: 'Plan',
-      link: location.pathname
-    }
-  }
+      link: location.pathname,
+    },
+  };
 
   return (
     <Container>
@@ -114,10 +114,7 @@ export const SubscriptionPlanView = ({
 
               <Link
                 className="see-payment-methods"
-                to={{ 
-                  pathname: BUYER_ACCOUNT_ROUTES.BANK_DETAILS, 
-                  state: redirectState
-                }}
+                to={BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD}
               >
                 <Typography
                   variant="label"
@@ -144,9 +141,9 @@ export const SubscriptionPlanView = ({
 
               <Link
                 className="see-payment-history"
-                to={{ 
+                to={{
                   pathname: BUYER_ACCOUNT_ROUTES.BALANCE_HISTORY,
-                  state: redirectState
+                  state: redirectState,
                 }}
               >
                 <Typography
