@@ -19,11 +19,11 @@ export const CardContainer = styled.div<{ img: string }>`
     background: white;
     margin-bottom: 2em;
     box-shadow: 0px 4px 12px rgba(41, 43, 50, 0.04);
-    border-radius: 4px;
+    border-radius: 12px;
     padding-bottom: 8px;
     ${({ theme }) => {
       if (theme.isSFM) {
-        return `outline: 2px solid ${SpecialColors.blue};`;
+        return `border: 2px solid ${SpecialColors.blue};`;
       }
     }}
     width: 265px;
@@ -61,9 +61,9 @@ export const CardContainer = styled.div<{ img: string }>`
     background-position: 50% 50%;
     display: block;
     border: 0;
-    width: 265px;
+    width: 100%;
     height: 200px;
-    border-radius: 4px;
+    border-radius: 8px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
     ${({ theme }) => {
@@ -204,7 +204,7 @@ export const Image = styled.div<{ imgSrc: string }>`
   background-size: cover;
   margin-right: 8px;
   min-width: 40px;
-  border-radius: 4px;
+  border-radius: 12px;
 `;
 
 export const TitleContainer = styled.div`

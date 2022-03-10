@@ -6,13 +6,13 @@ export const Container = styled.div`
     background: white;
     margin-bottom: 2rem;
     box-shadow: 0px 4px 12px rgba(41, 43, 50, 0.04);
-    border-radius: 8px;
+    border-radius: 12px;
     width: 100%;
     max-height: 205px;
     transition: transform 0.2s;
     ${({ theme }) => {
       if (theme.isSFM) {
-        return `outline: 2px solid ${theme.brand.secondary};`;
+        return `border: 2px solid ${theme.brand.secondary};`;
       }
     }}
   }

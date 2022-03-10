@@ -21,7 +21,7 @@ export const Container = styled.div`
     background: white;
     margin-bottom: 2rem;
     box-shadow: 0px 4px 12px rgba(41, 43, 50, 0.04);
-    border-radius: 4px;
+    border-radius: 12px;
     width: 100%;
     min-width: 265px;
     box-sizing: border-box;
@@ -29,7 +29,7 @@ export const Container = styled.div`
     transition: transform 0.2s;
     ${({ theme }) => {
       if (theme.isSFM) {
-        return `outline: 2px solid ${theme.brand.secondary};`;
+        return `border: 2px solid ${theme.brand.secondary};`;
       }
     }}
   }

@@ -6,7 +6,7 @@ export const CardContainer = styled.div<{ responsive?: boolean }>`
     background: white;
     margin-bottom: 2em;
     box-shadow: 0px 4px 12px rgba(41, 43, 50, 0.04);
-    border-radius: 8px;
+    border-radius: 12px;
     box-sizing: border-box;
     width: ${(props) => (props.responsive ? '100%' : '142px')};
     max-width: ${(props) => (props.responsive ? '156px' : '142px')};
@@ -15,7 +15,7 @@ export const CardContainer = styled.div<{ responsive?: boolean }>`
     transition: transform 0.2s;
     ${({ theme }) => {
       if (theme.isSFM) {
-        return `outline: 2px solid ${theme.brand.secondary};`;
+        return `border: 2px solid ${theme.brand.secondary};`;
       }
     }}
   }

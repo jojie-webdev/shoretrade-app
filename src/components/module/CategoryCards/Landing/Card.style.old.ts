@@ -30,7 +30,7 @@ export const CardContainer = styled.div`
 
     ${({ theme }) => {
       if (theme.isSFM) {
-        return `outline: 2px solid ${theme.brand.secondary};`;
+        return `border: 2px solid ${theme.brand.secondary};`;
       }
     }}
   }
