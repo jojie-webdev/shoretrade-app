@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import 'react-dropdown/style.css';
 
@@ -30,6 +30,14 @@ const Select = ({
 }: SelectProps): JSX.Element => {
   const theme = useTheme();
 
+  useEffect(() => {
+    const divElem = document.getElementById(`${label}-dropdown`);
+    divElem?.addEventListener(
+      'touchstart',
+      () => customOpenMenu && customOpenMenu()
+    );
+  }, []);
+
   return (
     <Container label={label} marginTop={marginTop}>
       {label ? (
@@ -37,7 +45,7 @@ const Select = ({
           {label}
         </Label>
       ) : null}
-      <div onClick={customOpenMenu}>
+      <div id={`${label}-dropdown`}>
         <StyledDropdown
           border={border}
           borderRadius={borderRadius}
