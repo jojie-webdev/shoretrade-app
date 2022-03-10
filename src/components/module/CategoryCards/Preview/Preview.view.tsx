@@ -9,6 +9,7 @@ import {
   formatMeasurementUnit,
   formatUnitToPricePerUnit,
 } from 'utils/Listing/formatMeasurementUnit';
+import { formatTemplateDeliveryDateLabel } from 'utils/Listing/formatTemplateDeliveryDateLabel';
 import { parseImageUrl } from 'utils/parseImageURL';
 import { SpecialColors } from 'utils/SFMTheme';
 import { ellipsisOnOverflow } from 'utils/String/ellipsisOnOverflow';
@@ -222,7 +223,8 @@ export const PreviewDetailAlt = (props: PreviewProps) => {
               Est. Collection cool:
             </ResultTextAlt>
             <ResultTextValueAlt variant="small" weight="bold">
-              {props.templateDeliveryDate}
+              {props.templateDeliveryDate &&
+                formatTemplateDeliveryDateLabel(props.templateDeliveryDate)}
             </ResultTextValueAlt>
           </Row>
         </BodyColumnContainer>
@@ -541,7 +543,8 @@ const Preview = (props: PreviewProps): JSX.Element => {
                 variant="small"
                 weight="bold"
               >
-                {props.templateDeliveryDate}
+                {props.templateDeliveryDate &&
+                  formatTemplateDeliveryDateLabel(props.templateDeliveryDate)}
               </ResultTextValue>
             </Row>
           </BodyContainer>

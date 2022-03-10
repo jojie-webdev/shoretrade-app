@@ -4,6 +4,7 @@ import Typography from 'components/base/Typography';
 import moment from 'moment';
 import { Row as TableRow, Col as TableCol } from 'react-grid-system';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
+import { formatTemplateDeliveryDateLabel } from 'utils/Listing/formatTemplateDeliveryDateLabel';
 import { toPrice, capitalize } from 'utils/String';
 import theme from 'utils/Theme';
 
@@ -151,7 +152,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
           </Label>
           <Label variant="label" weight="bold">
             {' '}
-            {templateDeliveryDate}
+            {formatTemplateDeliveryDateLabel(templateDeliveryDate)}
           </Label>
         </Row>
       )}

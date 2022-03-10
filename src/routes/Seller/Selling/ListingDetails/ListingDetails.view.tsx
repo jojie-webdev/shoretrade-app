@@ -27,6 +27,7 @@ import { useHistory } from 'react-router-dom';
 import { BadgeText } from 'routes/Buyer/ProductDetails/ProductDetails.style';
 import { base64ToFile } from 'utils/File';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
+import { formatTemplateDeliveryDateLabel } from 'utils/Listing/formatTemplateDeliveryDateLabel';
 import { capitalize } from 'utils/String';
 import { useTheme } from 'utils/Theme';
 
@@ -281,7 +282,9 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                           color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
                           weight="bold"
                         >
-                          {orderDetails.templateDeliveryDate}
+                          {formatTemplateDeliveryDateLabel(
+                            orderDetails.templateDeliveryDate
+                          )}
                         </Typography>
                       </div>
                     </ProductLabelMobileContainer>
