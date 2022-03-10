@@ -109,6 +109,7 @@ export const DetailsContainer = styled.div`
   width: 100%;
   padding-left: 15px;
   padding-right: 15px;
+  height: 240px; // fixed height
 `;
 
 export const HeaderContainer = styled.div`
