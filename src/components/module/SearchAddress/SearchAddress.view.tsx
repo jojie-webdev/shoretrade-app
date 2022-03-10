@@ -68,12 +68,13 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
 
   const updateBuyingState = (states: OptionsType[]) => {
     setSelectedBuyingStates(states);
-    updatePreferences({
-      search: {
-        ...searchPreferences,
-        states: states.map((s) => s.value),
-      },
-    });
+    if (searchPreferences.states?.length !== states.length)
+      updatePreferences({
+        search: {
+          ...searchPreferences,
+          states: states.map((s) => s.value),
+        },
+      });
   };
 
   const updateMinBuyingQty = debounce((weight: number) => {

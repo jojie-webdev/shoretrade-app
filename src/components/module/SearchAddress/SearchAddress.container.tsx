@@ -130,11 +130,25 @@ const SearchAddress = (): JSX.Element => {
 
   const updatePreferences = (data: UpdatePreferencesMeta) => {
     const { states, metric, weight } = data.search || {};
-    if ((states && states.length > 0) || (weight && weight > 0)) {
+    if (states && weight && weight > 0) {
       data.search.metric = metric === 'ALL' ? null : metric;
       dispatch(updatePreferencesActions.request(data));
     }
   };
+
+  useEffect(() => {
+    if (
+      Object.keys(searchPreferences).length === 0 &&
+      Object.keys(buyerSearchFilters || {}).length > 0
+    ) {
+      updatePreferences({
+        search: {
+          states: buyerSearchFilters?.states,
+          weight: Number(buyerSearchFilters?.minimum_order || '0'),
+        },
+      });
+    }
+  }, [buyerSearchFilters]);
 
   useEffect(() => {
     if (searchTerm.length > 2) {
