@@ -77,11 +77,11 @@ export const StyledDropdown = styled(Dropdown)<DropdownProps>`
   .${PREFIX}Placeholder {
     ${font};
     color: ${({ theme, dark }) => {
-      if (dark) {
-        return `${theme.grey.noshade};`;
-      }
       if (theme.isSFM) {
         return `${SpecialColors.blue};`;
+      }
+      if (dark) {
+        return `${theme.grey.noshade};`;
       }
       return `${theme.grey.shade9};`;
     }}
@@ -133,9 +133,12 @@ export const StyledDropdown = styled(Dropdown)<DropdownProps>`
 
   .Dropdown-placeholder{
     @media ${BREAKPOINTS['sm']} {
-      color: ${({ theme, dark }) =>
-        dark ? theme.grey.noshade : theme.grey.shade9};
-    }
+      color: ${({ theme, dark }) => {
+        if (theme.isSFM) {
+          return `${SpecialColors.blue};`;
+        }
+        return dark ? `${theme.grey.noshade};` : `${theme.grey.shade9};`;
+      }}
   }
 
   .HiddenMenu {

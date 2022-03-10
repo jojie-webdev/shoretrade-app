@@ -29,9 +29,14 @@ export const Container = styled.div`
         props.theme.appType === 'buyer' ? '12px' : '10px 15px'};
       margin-bottom: 12px;
     }
+    ${({ theme }) => {
+      if (theme.isSFM) {
+        return `
+        border: 2px solid ${SpecialColors.blue};
+        `;
+      }
+    }}
 
-    outline: 2px solid
-      ${({ theme }) => (theme.isSFM ? SpecialColors.blue : theme.grey.shade6)};
     border-radius: 12px;
     height: 56px;
   }

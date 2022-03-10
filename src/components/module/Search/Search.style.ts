@@ -1,4 +1,5 @@
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { SpecialColors } from 'utils/SFMTheme';
 import styled from 'utils/styled';
 
 export const InputContainer = styled.div<{
@@ -58,7 +59,6 @@ export const InputContainer = styled.div<{
       outline: none;
       border: none;
     }
-    
 
     ::placeholder {
       color: ${({ darkMode, theme }) =>
@@ -75,6 +75,14 @@ export const InputContainer = styled.div<{
       width: 100%;
       height: 38px;
     }
+
+    ${({ theme }) => {
+      if (theme.isSFM) {
+        return `
+          color: ${SpecialColors.blue};
+        `;
+      }
+    }}
   }
 
   @media ${BREAKPOINTS.sm} {

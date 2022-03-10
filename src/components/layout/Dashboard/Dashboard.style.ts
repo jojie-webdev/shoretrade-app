@@ -119,6 +119,7 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
           `;
         }
       }}
+    }
   }
 
   @media ${BREAKPOINTS['sm']} {

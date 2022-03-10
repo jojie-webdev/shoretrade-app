@@ -1,5 +1,6 @@
 import Typography from 'components/base/Typography';
 import { fontStyle } from 'consts/textField';
+import { SpecialColors } from 'utils/SFMTheme';
 import styled from 'utils/styled';
 
 export const Container = styled.div``;
@@ -39,7 +40,8 @@ export const Field = styled.input<{
   border: 0;
   width: 100%;
   height: 100%;
-  color: 1px solid ${({ theme }) => theme.grey.shade9};
+  color: ${({ theme }) =>
+    theme.isSFM ? SpecialColors.blue : theme.grey.shade9};
   :focus {
     outline: none;
   }
