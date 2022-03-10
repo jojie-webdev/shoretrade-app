@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
 import Select from 'components/base/Select';
 import {
@@ -40,7 +41,6 @@ import {
   ProductPreviewContainer,
 } from './Selling.style';
 import { listingToItem } from './Selling.transform';
-import Alert from 'components/base/Alert';
 
 const flatMap = (array: [], fn: any) => {
   let result: any[] = [];
@@ -168,10 +168,12 @@ const Item = (props: ItemProp) => {
 
                     <Col xs={6} style={{ marginTop: '8px' }}>
                       <Typography variant="caption" color="shade7">
-                        {props.timeLeft && 'Time Left'}
+                        Time Left
                       </Typography>
                       <Typography variant="label" color="noshade" weight="400">
-                        {props.timeLeft} {props.timeLeft && 'left'}
+                        {props.timeLeft
+                          ? `${props.timeLeft} left`
+                          : 'Always Available'}
                       </Typography>
                     </Col>
                   </Row>
