@@ -588,7 +588,7 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
               >
                 <ProductLabelContainer>
                   <Typography variant="overline" color="shade6" weight="bold">
-                    Time Left
+                    Order Cut Off Time:
                   </Typography>
                   <div className="product-value">
                     <Typography

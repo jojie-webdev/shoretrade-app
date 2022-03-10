@@ -50,7 +50,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
       {!props.catchRecurrence && (
         <Row>
           <Label variant="label" color="shade6" style={{ marginRight: 4 }}>
-            Time Left:
+            Order Cut Off Time:
           </Label>
           <Label variant="label" weight="bold">
             <ListingTimeLeftView timeLeft={moment(timeLeft)} />
