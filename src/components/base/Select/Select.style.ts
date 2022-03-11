@@ -41,6 +41,8 @@ export const StyledDropdown = styled(Dropdown)<DropdownProps>`
     border-radius: ${({ borderRadius }) =>
       borderRadius ? borderRadius : '4px'};
     padding: ${({ padding }) => (padding ? padding : '12px 16px')};
+    display: flex;
+    align-items: center;
   }
 
   /* TODO: Should extend .${PREFIX}Container */
@@ -76,6 +78,7 @@ export const StyledDropdown = styled(Dropdown)<DropdownProps>`
 
   .${PREFIX}Placeholder {
     ${font};
+    line-height: 14px;
     color: ${({ theme, dark }) => {
       if (theme.isSFM) {
         return `${SpecialColors.blue};`;
@@ -98,7 +101,7 @@ export const StyledDropdown = styled(Dropdown)<DropdownProps>`
     margin-top: 8px;
     background-color: ${({ theme }) =>
       theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};
-    
+    display: ${({ hiddenMenu }) => (hiddenMenu ? 'none' : 'block')};
   }
 
   .Dropdown-option {
@@ -139,10 +142,6 @@ export const StyledDropdown = styled(Dropdown)<DropdownProps>`
         }
         return dark ? `${theme.grey.noshade};` : `${theme.grey.shade9};`;
       }}
-  }
-
-  .HiddenMenu {
-    display: none;
   }
 `;
 
