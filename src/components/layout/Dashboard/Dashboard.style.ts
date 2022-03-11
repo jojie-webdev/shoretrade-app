@@ -85,6 +85,7 @@ export const MenuOverlay = styled.div<{ openSidebar: boolean }>`
 `;
 
 export const Sidebar = styled.aside<{ openSidebar: boolean }>`
+  -webkit-transform: translate3d(0, 0, 0);
   padding: 0 24px;
   background: ${({ theme }) =>
     theme.isSFM && theme.appType === 'buyer'
