@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Alert from 'components/base/Alert';
+import { Variants } from 'components/base/Alert/Alert.props';
 import Button from 'components/base/Button';
 import AuthContainer from 'components/layout/AuthContainer';
 import MobileHeader from 'components/layout/MobileNav';
@@ -9,6 +10,7 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { Formik, Form } from 'formik';
 import { useMediaQuery } from 'react-responsive';
 
+import { MESSAGES } from './ResetPassword.consts';
 import { ResetPasswordGeneratedProps } from './ResetPassword.props';
 import {
   MobileContainer,
@@ -20,7 +22,7 @@ import {
 import { validate } from './ResetPassword.validation';
 
 const ResetPasswordView = (props: ResetPasswordGeneratedProps): JSX.Element => {
-  const { savePassword, pending, isError } = props;
+  const { savePassword, pending, isError, noAppFound } = props;
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   const formikProps = {
@@ -32,22 +34,16 @@ const ResetPasswordView = (props: ResetPasswordGeneratedProps): JSX.Element => {
     onSubmit: savePassword,
   };
 
-  const AlertView = () => {
-    return (
-      <>
-        {isError && (
-          <Alert
-            content={'Updating Password Failed! Please try again.'}
-            variant="error"
-            fullWidth
-            style={{
-              marginTop: 16,
-            }}
-          />
-        )}
-      </>
-    );
-  };
+  const ErrMsgAlert = (message: string, variant: Variants) => (
+    <Alert
+      content={message}
+      variant={variant}
+      fullWidth
+      style={{
+        marginTop: 16,
+      }}
+    />
+  );
 
   return isSmallScreen ? (
     <MobileHeader titleOverride={'Reset Password?'}>
@@ -72,7 +68,8 @@ const ResetPasswordView = (props: ResetPasswordGeneratedProps): JSX.Element => {
           </Form>
         </Formik>
 
-        <AlertView />
+        {isError && ErrMsgAlert(MESSAGES[0], 'error')}
+        {noAppFound && ErrMsgAlert(MESSAGES[1], 'warning')}
       </MobileContainer>
     </MobileHeader>
   ) : (
@@ -101,7 +98,8 @@ const ResetPasswordView = (props: ResetPasswordGeneratedProps): JSX.Element => {
           </ResetPasswordButtonContainer>
         </Form>
       </Formik>
-      <AlertView />
+      {isError && ErrMsgAlert(MESSAGES[0], 'error')}
+      {noAppFound && ErrMsgAlert(MESSAGES[1], 'warning')}
     </AuthContainer>
   );
 };

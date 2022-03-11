@@ -7,4 +7,5 @@ export interface ResetPasswordGeneratedProps {
   pending: boolean;
   isError: boolean;
   savePassword: (data: ResetPasswordForm) => void;
+  noAppFound: boolean;
 }

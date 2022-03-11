@@ -29,7 +29,7 @@ function* resetPasswordSuccess(
 
 function* resetPasswordWatcher() {
   yield takeLatest(resetPasswordActions.REQUEST, resetPasswordRequest);
-  yield takeLatest(resetPasswordActions.SUCCESS, resetPasswordSuccess);
+  // yield takeLatest(resetPasswordActions.SUCCESS, resetPasswordSuccess);
 }
 
 export default resetPasswordWatcher;
