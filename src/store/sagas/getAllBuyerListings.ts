@@ -50,6 +50,17 @@ function* getAllBuyerListingsCSV(action: any) {
         exceptId: action?.payload?.exceptId,
       });
 
+      const currentSelectedTotal =
+        // @ts-ignore
+        state.getAllBuyerListings.data?.data.counter[
+          (salesChannel !== 'ALL' ? salesChannel : 'all_listing').toLowerCase()
+        ];
+      const selectedIdCount = (action?.payload?.ids || []).length;
+      const exceptIdCount = (action?.payload?.exceptId || []).length;
+      const csvCount = action?.payload?.ids
+        ? selectedIdCount
+        : currentSelectedTotal - exceptIdCount;
+
       const salesChannelLabel = SALES_CHANNELS_BUYER.find(
         (channel) => channel.constant === salesChannel
       )?.label;
@@ -60,7 +71,7 @@ function* getAllBuyerListingsCSV(action: any) {
           salesChannel && salesChannel !== 'ALL'
             ? ` - ${salesChannelLabel}`
             : ''
-        }.csv`
+        } - ${csvCount}.csv`
       );
       yield put(getAllBuyerListingsActions.requestCsvSuccess());
     } catch (e) {
