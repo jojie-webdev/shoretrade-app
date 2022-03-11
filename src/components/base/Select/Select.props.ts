@@ -30,6 +30,7 @@ export interface DropdownProps {
   marginTop?: string;
   height?: string;
   padding?: string;
+  hiddenMenu?: boolean;
 }
 
 export interface OptionsType {

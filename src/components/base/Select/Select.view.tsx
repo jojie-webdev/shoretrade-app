@@ -3,6 +3,8 @@ import React, { useEffect } from 'react';
 import 'react-dropdown/style.css';
 
 import { DropdownArrow } from 'components/base/SVG';
+import { BREAKPOINTS } from 'consts/breakpoints';
+import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
 
 import { SelectProps } from './Select.props';
@@ -29,11 +31,12 @@ const Select = ({
   ...props
 }: SelectProps): JSX.Element => {
   const theme = useTheme();
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   useEffect(() => {
     const divElem = document.getElementById(`${label}-dropdown`);
     divElem?.addEventListener(
-      'touchstart',
+      isMobile ? 'touchstart' : 'click',
       () => customOpenMenu && customOpenMenu()
     );
   }, []);
@@ -51,6 +54,7 @@ const Select = ({
           borderRadius={borderRadius}
           background={background}
           marginTop={marginTop}
+          hiddenMenu={isMulti}
           {...props}
           unbordered={props.unbordered}
           controlClassName={
@@ -59,7 +63,7 @@ const Select = ({
               : `${PREFIX}Container`
           }
           placeholderClassName={`${PREFIX}Placeholder`}
-          menuClassName={`${isMulti ? 'Hidden' : PREFIX}Menu`}
+          menuClassName={`${PREFIX}Menu`}
           arrowClosed={
             <ArrowContainer size={props.size}>
               {arrowIcon ? (
