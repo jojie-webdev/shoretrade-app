@@ -130,7 +130,7 @@ const SearchAddress = (): JSX.Element => {
 
   const updatePreferences = (data: UpdatePreferencesMeta) => {
     const { states, metric, weight } = data.search || {};
-    if (states && weight && weight > 0) {
+    if (states && weight !== undefined) {
       data.search.metric = metric === 'ALL' ? null : metric;
       dispatch(updatePreferencesActions.request(data));
     }
