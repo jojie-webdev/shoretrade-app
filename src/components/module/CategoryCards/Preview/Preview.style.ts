@@ -78,6 +78,9 @@ export const LocationContainer = styled.div`
   position: absolute;
   top: 15px;
   right: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 
   .location-font {
     padding-left: 5.75px;

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Badge from 'components/base/Badge';
-import { Location } from 'components/base/SVG';
+import { Crates, Location } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { ADDITIONAL_INFOS } from 'consts/listingAdditionalInfos';
 import { Row, Col } from 'react-grid-system';
@@ -271,6 +271,18 @@ const Preview = (props: PreviewProps): JSX.Element => {
                 </Typography>
               </div>
             </Badge>
+
+            {props.isSFMCrate && (
+              <Badge
+                badgeColor={theme.isSFM ? SpecialColors.blue : undefined}
+                style={{ marginTop: '4px' }}
+              >
+                <Crates
+                  width={8.5}
+                  fill={theme.isSFM ? theme.grey.noshade : undefined}
+                />
+              </Badge>
+            )}
           </LocationContainer>
 
           <BadgeContainer>
@@ -328,6 +340,25 @@ const Preview = (props: PreviewProps): JSX.Element => {
                   weight={theme.isSFM ? '900' : '500'}
                 >
                   Next Day Shipment
+                </Typography>
+              </Badge>
+            )}
+            {props.isForSaleRepPhoto && (
+              <Badge
+                className="badge"
+                badgeColor={
+                  theme.isSFM
+                    ? SpecialColors.secondaryOpacity
+                    : theme.brand.error
+                }
+              >
+                <Typography
+                  noSfmFont
+                  color={theme.isSFM ? 'error' : 'noshade'}
+                  variant="overline"
+                  weight={theme.isSFM ? '900' : '500'}
+                >
+                  Not Actual Product
                 </Typography>
               </Badge>
             )}

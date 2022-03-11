@@ -34,4 +34,6 @@ export interface PreviewProps {
   isIceSlurry: boolean;
   quality?: string;
   templateDeliveryDate: string | null;
+  isForSaleRepPhoto: boolean;
+  isSFMCrate: boolean;
 }

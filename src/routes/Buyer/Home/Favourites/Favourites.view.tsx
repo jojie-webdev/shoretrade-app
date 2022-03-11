@@ -83,6 +83,8 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
                           isIceSlurry={fav.isIceSlurry}
                           quality={fav.quality}
                           templateDeliveryDate={fav.templateDeliveryDate}
+                          isForSaleRepPhoto={fav.isForSaleRepPhoto}
+                          isSFMCrate={fav.packaging?.type === 'SFM'}
                         />
                       </StyledInteraction>
                     ) : (
@@ -110,6 +112,8 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
                         isIceSlurry={fav.isIceSlurry}
                         quality={fav.quality}
                         templateDeliveryDate={fav.templateDeliveryDate}
+                        isForSaleRepPhoto={fav.isForSaleRepPhoto}
+                        isSFMCrate={fav.packaging?.type === 'SFM'}
                       />
                     )}
                   </Link>

@@ -166,6 +166,8 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                         isIceSlurry={product.isIceSlurry}
                         quality={product.quality}
                         templateDeliveryDate={product.templateDeliveryDate}
+                        isForSaleRepPhoto={product.isForSaleRepPhoto}
+                        isSFMCrate={product.packaging?.type === 'SFM'}
                       />
                     </StyledInteraction>
                   ) : (
@@ -194,6 +196,8 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                       isIceSlurry={product.isIceSlurry}
                       quality={product.quality}
                       templateDeliveryDate={product.templateDeliveryDate}
+                      isForSaleRepPhoto={product.isForSaleRepPhoto}
+                      isSFMCrate={product.packaging?.type === 'SFM'}
                     />
                   )}
                 </Link>

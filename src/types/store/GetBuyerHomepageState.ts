@@ -49,6 +49,17 @@ export type GetBuyerHomepageResponseListingItem = {
   isIceSlurry: boolean;
   quality?: string;
   templateDeliveryDate: string | null;
+  isForSaleRepPhoto: boolean;
+  packaging: {
+    airline_approved: boolean;
+    company_id: string | null;
+    height: number;
+    id: string;
+    label: string;
+    length: number;
+    type: string;
+    width: number;
+  };
 };
 
 export type GetBuyerHomepagePayload = GenericResponse<{

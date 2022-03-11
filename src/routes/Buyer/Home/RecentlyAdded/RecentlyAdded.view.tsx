@@ -83,6 +83,8 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
                           isIceSlurry={rec.isIceSlurry}
                           quality={rec.quality}
                           templateDeliveryDate={rec.templateDeliveryDate}
+                          isForSaleRepPhoto={rec.isForSaleRepPhoto}
+                          isSFMCrate={rec.packaging?.type === 'SFM'}
                         />
                       </StyledInteraction>
                     ) : (
@@ -111,6 +113,8 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
                         isIceSlurry={rec.isIceSlurry}
                         quality={rec.quality}
                         templateDeliveryDate={rec.templateDeliveryDate}
+                        isForSaleRepPhoto={rec.isForSaleRepPhoto}
+                        isSFMCrate={rec.packaging?.type === 'SFM'}
                       />
                     )}
                   </Link>

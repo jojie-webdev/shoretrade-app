@@ -70,6 +70,8 @@ export function recentlyAddedToPreviewProps(
     isIceSlurry: data.isIceSlurry,
     quality: data.quality,
     templateDeliveryDate: data.templateDeliveryDate,
+    isForSaleRepPhoto: data.isForSaleRepPhoto,
+    isSFMCrate: data.packaging?.type === 'SFM',
   };
 }
 
@@ -104,6 +106,8 @@ export function favouritesToPreviewProps(
     isIceSlurry: data.isIceSlurry,
     quality: data.quality,
     templateDeliveryDate: data.templateDeliveryDate,
+    isForSaleRepPhoto: data.isForSaleRepPhoto,
+    isSFMCrate: data.packaging?.type === 'SFM',
   };
 }
 
