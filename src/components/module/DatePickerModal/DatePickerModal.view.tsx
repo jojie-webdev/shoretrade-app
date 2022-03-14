@@ -55,7 +55,7 @@ const DatePickerModal = ({
               Reset
             </Typography>
           </Touchable>
-          <ExitButton
+          {/* <ExitButton
             onClick={(e) => {
               e.preventDefault();
               onClickCloseMobile && onClickCloseMobile();
@@ -64,7 +64,7 @@ const DatePickerModal = ({
             <div className="close-wrapper">
               <Close width={13} height={13} fill={theme.grey.shade9} />
             </div>
-          </ExitButton>
+          </ExitButton> */}
         </LeftFilterContent>
       </TopMobileHeaderContainer>
       {children && isSmallScreen && <div className="filters"> {children}</div>}
