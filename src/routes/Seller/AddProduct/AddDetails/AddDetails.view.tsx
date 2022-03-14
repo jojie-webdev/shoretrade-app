@@ -411,7 +411,8 @@ const AddDetails = ({
         origin &&
         listingEndDate &&
         listingEndTime &&
-        shippingAddress
+        shippingAddress &&
+        !isAuctionSale
       ) {
         onUpdateDetails({
           isAquafuture,
