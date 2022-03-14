@@ -11,16 +11,27 @@ export const StyledInteraction = styled(Interaction)<{
   margin-bottom: ${({ pressed }) => (pressed ? '0' : '8px')};
   padding: 16px 24px;
 
+  > .left-content,
+  .top-content > .left-content {
+    width: 100%;
+  }
+
   @media ${BREAKPOINTS.sm} {
     padding: 16px;
 
     > .left-content,
     .top-content > .left-content {
       padding-right: 0 !important;
+      width: 95%;
     }
 
-    > .right-content {
+    > .right-content,
+    > .top-content {
       align-items: flex-start;
+    }
+
+    .content > .right-content {
+      width: unset;
     }
 
     .bottom-content {
@@ -28,6 +39,16 @@ export const StyledInteraction = styled(Interaction)<{
 
       > div > p {
         margin-top: 8px;
+      }
+
+      .order-count {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 4px 8px;
+        background-color: ${({ theme }) => theme.grey.shade8};
+        border-radius: 8px;
+        min-width: 85px;
       }
     }
   }
@@ -62,11 +83,6 @@ export const StyledInteraction = styled(Interaction)<{
     }
   }}
 
-  > .left-content,
-  .top-content > .left-content {
-    width: 100%;
-  }
-
   .content {
     display: flex;
     flex: 1;
@@ -95,6 +111,10 @@ export const StyledInteraction = styled(Interaction)<{
       @media ${BREAKPOINTS.sm} {
         flex-direction: column;
         align-items: flex-start;
+
+        .label {
+          align-items: flex-start;
+        }
       }
     }
 
@@ -206,6 +226,13 @@ export const InnerStyledInteraction = styled(StyledInteraction)`
   }}
 
   @media ${BREAKPOINTS.sm} {
+    .bottom-content {
+      .order-count {
+        margin-top: 8px;
+        margin-bottom: 8px;
+      }
+    }
+
     .content {
       flex-direction: column;
       align-items: flex-start;

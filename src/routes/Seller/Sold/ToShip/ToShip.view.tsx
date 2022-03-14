@@ -605,6 +605,15 @@ const ToShip = (props: SoldGeneratedProps) => {
     </ItemDetail>
   );
 
+  const renderOrderCount = (group: PendingToShipItemData) => (
+    <div className="order-count">
+      <Typography variant="overlineSmall" color="noshade">
+        {group.orderCount}&nbsp;
+        {group.orderCount === 1 ? 'ORDER' : 'ORDERS'}
+      </Typography>
+    </div>
+  );
+
   return (
     <>
       <ConfirmModal
@@ -672,7 +681,7 @@ const ToShip = (props: SoldGeneratedProps) => {
                   bottomComponent={
                     isMobile && (
                       <div>
-                        {renderDeliveryLabelAndAddress(group)}
+                        {renderOrderCount(group)}
                         {renderSoldWeight()}
                       </div>
                     )
@@ -690,23 +699,16 @@ const ToShip = (props: SoldGeneratedProps) => {
                         >
                           {getDeliveryIcon(group.deliveryMethod)}
                         </span>
-                        <div>
-                          {isMobile ? (
-                            <></>
-                          ) : (
-                            renderDeliveryLabelAndAddress(group)
-                          )}
-                        </div>
+                        <div>{renderDeliveryLabelAndAddress(group)}</div>
                       </div>
                     </div>
                     <div className="right-content">
-                      <div className="order-count">
-                        <Typography variant="overlineSmall" color="noshade">
-                          {group.orderCount}&nbsp;
-                          {group.orderCount === 1 ? 'ORDER' : 'ORDERS'}
-                        </Typography>
-                      </div>
-                      {!isMobile && renderSoldWeight()}
+                      {!isMobile && (
+                        <>
+                          {renderOrderCount(group)}
+                          {renderSoldWeight()}
+                        </>
+                      )}
                     </div>
                   </div>
                 </StyledInteraction>

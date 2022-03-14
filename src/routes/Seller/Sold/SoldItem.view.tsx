@@ -159,6 +159,15 @@ const SoldItem = (props: {
       </ItemDetail>
     );
 
+    const renderOrderCount = (entry: SoldItemData[]) => (
+      <div className="order-count">
+        <Typography variant="overlineSmall" color="noshade">
+          {entry.length}&nbsp;
+          {entry.length > 1 ? 'ORDERS' : 'ORDER'}
+        </Typography>
+      </div>
+    );
+
     const accordionId = `${key}-${toAddressState}`;
 
     return (
@@ -173,7 +182,7 @@ const SoldItem = (props: {
           bottomComponent={
             isMobile && (
               <div>
-                {renderDeliveryLabelAndAddress(false)}
+                {renderOrderCount(entry)}
                 {renderSoldWeight()}
               </div>
             )
@@ -191,19 +200,16 @@ const SoldItem = (props: {
                 >
                   <Icon />
                 </span>
-                <div>
-                  {isMobile ? <></> : renderDeliveryLabelAndAddress(false)}
-                </div>
+                <div>{renderDeliveryLabelAndAddress(false)}</div>
               </div>
             </div>
             <div className="right-content">
-              <div className="order-count">
-                <Typography variant="overlineSmall" color="noshade">
-                  {entry.length}&nbsp;
-                  {entry.length > 1 ? 'ORDERS' : 'ORDER'}
-                </Typography>
-              </div>
-              {!isMobile && renderSoldWeight()}
+              {!isMobile && (
+                <>
+                  {renderOrderCount(entry)}
+                  {renderSoldWeight()}
+                </>
+              )}
             </div>
           </div>
         </StyledInteraction>

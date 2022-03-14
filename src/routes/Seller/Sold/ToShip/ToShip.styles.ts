@@ -53,6 +53,11 @@ export const StyledInteraction = styled(Interaction)<{
   margin-bottom: ${({ pressed }) => (pressed ? '0' : '8px')};
   padding: 16px 24px;
 
+  > .left-content,
+  .top-content > .left-content {
+    width: 100%;
+  }
+
   ${({ pressed }) => {
     if (pressed) {
       return `
@@ -89,10 +94,15 @@ export const StyledInteraction = styled(Interaction)<{
     > .left-content,
     .top-content > .left-content {
       padding-right: 0 !important;
+      width: 95%;
     }
 
-    > .right-content {
+    > .right-content, > .top-content {
       align-items: flex-start;
+    }
+
+    .content > .right-content {
+      width: unset;
     }
 
     .bottom-content {
@@ -101,12 +111,17 @@ export const StyledInteraction = styled(Interaction)<{
       > div > p {
         margin-top: 8px;
       }
-    }
-  }
 
-  > .left-content,
-  .top-content > .left-content {
-    width: 100%;
+      .order-count {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 4px 8px;
+        background-color: ${({ theme }) => theme.grey.shade8};
+        border-radius: 8px;
+        min-width: 85px;
+      }
+    }
   }
 
   .content {
@@ -120,6 +135,17 @@ export const StyledInteraction = styled(Interaction)<{
       align-items: center;
       justify-content: space-between;
 
+      .label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 8px;
+
+        svg {
+          margin-right: 4px;
+        }
+      }
+
       @media ${BREAKPOINTS.genericTablet} {
         max-width: 370px;
       }
@@ -127,16 +153,9 @@ export const StyledInteraction = styled(Interaction)<{
       @media ${BREAKPOINTS.sm} {
         flex-direction: column;
         align-items: flex-start;
-      }
 
-      .label {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        margin-right: 8px;
-
-        svg {
-          margin-right: 4px;
+        .label {
+          align-items: flex-start;
         }
       }
     }
@@ -245,6 +264,13 @@ export const InnerStyledInteraction = styled(StyledInteraction)`
   }}
 
   @media ${BREAKPOINTS.sm} {
+    .bottom-content {
+      .order-count {
+        margin-top: 8px;
+        margin-bottom: 8px;
+      }
+    }
+
     .content {
       flex-direction: column;
       align-items: flex-start;
