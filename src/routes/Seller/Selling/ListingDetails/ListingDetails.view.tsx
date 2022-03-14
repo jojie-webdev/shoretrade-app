@@ -554,6 +554,15 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   </NoProfilePic>
                 )}
                 <div className="seller-container">
+                  <div>
+                    <Location width={16} height={16} fill={theme.grey.shade5} />
+                    <Typography
+                      variant="label"
+                      color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                    >
+                      {productDetails.listingAddress}
+                    </Typography>
+                  </div>
                   <Typography
                     color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
                     weight="bold"

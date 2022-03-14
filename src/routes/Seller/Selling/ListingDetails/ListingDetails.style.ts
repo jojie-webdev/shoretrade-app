@@ -106,6 +106,12 @@ export const SalesDetailsCard = styled.div<{ isCreatListingSuccess?: boolean }>`
       display: flex;
       flex-direction: column;
       margin-top: 3%;
+
+      > div {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
     }
   }
 
