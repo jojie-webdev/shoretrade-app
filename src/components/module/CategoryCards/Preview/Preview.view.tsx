@@ -220,7 +220,7 @@ export const PreviewDetailAlt = (props: PreviewProps) => {
                 visibility: props.templateDeliveryDate ? 'visible' : 'hidden',
               }}
             >
-              Est. Collection cool:
+              Est. Collection:
             </ResultTextAlt>
             <ResultTextValueAlt variant="small" weight="bold">
               {props.templateDeliveryDate &&
