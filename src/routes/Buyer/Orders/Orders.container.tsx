@@ -145,10 +145,10 @@ const OrdersContainer = (): JSX.Element => {
   };
 
   const {
-    placed: toShipOrdersCount,
-    transit: inTransitOrdersCount,
-    forCollection: collectableOrdersCount,
-    delivered: completedOrdersCount,
+    placed: toShipOrdersCount = 0,
+    transit: inTransitOrdersCount = 0,
+    forCollection: collectableOrdersCount = 0,
+    delivered: completedOrdersCount = 0,
   } = useSelector((state: Store) => GetAllBuyerOrdersCount(state, currentTab));
 
   const selectionCount = useSelector((state: Store) =>
@@ -308,9 +308,7 @@ const OrdersContainer = (): JSX.Element => {
     getCompletedOrders: getOrders.delivered,
     toShipOrdersCount,
     completedOrdersCount,
-    inTransitOrdersCount:
-      inTransitOrdersCount &&
-      inTransitOrdersCount + (collectableOrdersCount ?? null),
+    inTransitOrdersCount: inTransitOrdersCount + collectableOrdersCount,
     selectionCount,
     filters,
     updateFilters,
