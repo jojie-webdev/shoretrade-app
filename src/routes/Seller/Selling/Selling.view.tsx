@@ -397,7 +397,9 @@ const SellingView = (props: SellingGeneratedProps) => {
               <Col sm={3}>
                 <div style={{ width: '100%', marginTop: '8px' }}>
                   <Typography variant="label" color="shade6">
-                    <span style={{ color: '#fff' }}>{counter.allListing}</span>{' '}
+                    <span style={{ color: '#fff' }}>
+                      {counter[activeTab as keyof CounterProps]}
+                    </span>{' '}
                     Results
                   </Typography>
                 </div>
