@@ -119,95 +119,56 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                   >
                     {productDetailsCard1Props.title}
                   </Typography>
-                  {!isMobile ? (
-                    <>
-                      <EstimationsContainer>
-                        <div style={{ marginRight: 6 }}>
-                          <Location
-                            fill={theme.grey.shade5}
-                            width={16}
-                            height={16}
-                          />
-                        </div>
-                        <Typography
-                          color="shade9"
-                          variant="label"
-                          style={{ marginRight: 10 }}
+
+                  <EstimationsContainer>
+                    <div style={{ marginRight: 6 }}>
+                      <Location
+                        fill={theme.grey.shade5}
+                        width={16}
+                        height={16}
+                      />
+                    </div>
+                    <Typography
+                      color="shade9"
+                      variant="label"
+                      style={{ marginRight: 10 }}
+                    >
+                      {productDetailsCard1Props.location}
+                    </Typography>
+                    <div style={{ marginLeft: 6 }}>
+                      <Expand width={18} height={18} fill={theme.grey.shade5} />
+                    </div>
+                    <Typography color="shade9" variant="label">
+                      {productDetailsCard1Props.size}
+                    </Typography>
+                  </EstimationsContainer>
+                  <StatusContainer>
+                    {productDetailsCard1Props.tags?.map((item, index) => {
+                      return (
+                        <Badge
+                          key={index}
+                          fontColor={
+                            item.type === 'blue'
+                              ? theme.grey.noshade
+                              : theme.grey.shade9
+                          }
+                          badgeColor={
+                            item.type === 'blue'
+                              ? theme.brand.info
+                              : theme.grey.shade3
+                          }
                         >
-                          {productDetailsCard1Props.location}
-                        </Typography>
-                        <div style={{ marginLeft: 6 }}>
-                          <Expand
-                            width={18}
-                            height={18}
-                            fill={theme.grey.shade5}
-                          />
-                        </div>
-                        <Typography color="shade9" variant="label">
-                          {productDetailsCard1Props.size}
-                        </Typography>
-                      </EstimationsContainer>
-                      <StatusContainer>
-                        {productDetailsCard1Props.tags?.map((item, index) => {
-                          return (
-                            <Badge
-                              key={index}
-                              fontColor={
-                                item.type === 'blue'
-                                  ? theme.grey.noshade
-                                  : theme.grey.shade9
-                              }
-                              badgeColor={
-                                item.type === 'blue'
-                                  ? theme.brand.info
-                                  : theme.grey.shade3
-                              }
-                            >
-                              <BadgeText
-                                variant="caption"
-                                weight="bold"
-                                color={
-                                  item.type === 'blue' ? 'noshade' : 'shade9'
-                                }
-                              >
-                                {item.label}
-                              </BadgeText>
-                            </Badge>
-                          );
-                        })}
-                      </StatusContainer>
-                    </>
-                  ) : (
-                    <StatusContainer>
-                      {productDetailsCard1Props.tags?.map((item, index) => {
-                        return (
-                          <Badge
-                            key={index}
-                            fontColor={
-                              item.type === 'blue'
-                                ? theme.grey.noshade
-                                : theme.grey.shade9
-                            }
-                            badgeColor={
-                              item.type === 'blue'
-                                ? theme.brand.info
-                                : theme.grey.shade3
-                            }
+                          <BadgeText
+                            variant="caption"
+                            weight="bold"
+                            color={item.type === 'blue' ? 'noshade' : 'shade9'}
                           >
-                            <BadgeText
-                              variant="caption"
-                              weight="bold"
-                              color={
-                                item.type === 'blue' ? 'noshade' : 'shade9'
-                              }
-                            >
-                              {item.label}
-                            </BadgeText>
-                          </Badge>
-                        );
-                      })}
-                    </StatusContainer>
-                  )}
+                            {item.label}
+                          </BadgeText>
+                        </Badge>
+                      );
+                    })}
+                  </StatusContainer>
                 </div>
                 {!isMobile && (
                   <FavoriteButtonView
