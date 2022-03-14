@@ -75,7 +75,7 @@ const HistoricalListings = (props: HistoricalListingsProps) => {
         </div>
       </GetStartedCard>
       <HistoricalListingsCard>
-        <Title>Historical Listing</Title>
+        <Title altFont>Historical Listing</Title>
         <Description>
           Start from a Listing you created in the last 60 Days
         </Description>
