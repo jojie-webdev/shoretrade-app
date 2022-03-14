@@ -1,3 +1,4 @@
+import { SpecialColors } from 'utils/SFMTheme';
 import styled from 'utils/styled';
 
 const fontStyle = `
@@ -12,6 +13,8 @@ export const Field = styled.textarea<{ height?: number }>`
   ${fontStyle};
   margin-top: 4px;
   width: 100%;
+  color: ${({ theme }) =>
+    theme.isSFM ? SpecialColors.blue : theme.grey.shade6};
   max-width: 100%;
   min-width: 100%;
   border-radius: 4px;

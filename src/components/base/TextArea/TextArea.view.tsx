@@ -1,13 +1,13 @@
 import React from 'react';
 
-// import { useTheme } from 'utils/Theme';
 import Typography from 'components/base/Typography';
+import { useTheme } from 'utils/Theme';
 
 import { TextAreaProps } from './TextArea.props';
 import { Container, Field } from './TextArea.style';
 
 const TextArea = (props: TextAreaProps): JSX.Element => {
-  // const theme = useTheme();
+  const theme = useTheme();
   const {
     label,
     value,
@@ -26,7 +26,7 @@ const TextArea = (props: TextAreaProps): JSX.Element => {
   return (
     <Container>
       {(label || '').length > 0 && (
-        <Typography variant={'overline'} color={'shade6'}>
+        <Typography variant={'overline'} color="shade6">
           {label}
         </Typography>
       )}
