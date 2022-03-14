@@ -138,6 +138,7 @@ const SearchAddress = (): JSX.Element => {
 
   useEffect(() => {
     if (
+      !loadingUser &&
       Object.keys(searchPreferences).length === 0 &&
       Object.keys(buyerSearchFilters || {}).length > 0
     ) {
@@ -148,7 +149,7 @@ const SearchAddress = (): JSX.Element => {
         },
       });
     }
-  }, [buyerSearchFilters]);
+  }, [searchPreferences]);
 
   useEffect(() => {
     if (searchTerm.length > 2) {
