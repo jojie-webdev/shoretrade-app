@@ -153,6 +153,41 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
     z-index: 2222;
     min-height: 100vh;
   }
+
+  @media (max-height: 640px) {
+    .nav-items-container {
+      overflow-y: scroll;
+
+      max-height: ${({ theme }) =>
+        theme.appType === 'buyer' ? '40vh' : '58vh'};
+
+      ${({ theme }) => {
+        if (theme.isSFM) {
+          return `
+            max-height: ${theme.appType === 'buyer' ? '30vh' : '40vh'};
+          `;
+        }
+      }}
+    }
+  }
+
+  @media (max-height: 570px) {
+    .nav-items-container {
+      overflow-y: scroll;
+      padding-bottom: 36px;
+
+      max-height: ${({ theme }) =>
+        theme.appType === 'buyer' ? '30vh' : '48vh'};
+
+      ${({ theme }) => {
+        if (theme.isSFM) {
+          return `
+            max-height: ${theme.appType === 'buyer' ? '20vh' : '30vh'};
+          `;
+        }
+      }}
+    }
+  }
 `;
 
 export const SidebarLogoContainer = styled.div`
