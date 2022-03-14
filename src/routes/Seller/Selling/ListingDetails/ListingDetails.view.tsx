@@ -304,26 +304,22 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                     </div>
                   </ProductLabelMobileContainer>
 
-                  {orderDetails.validUntil && (
-                    <ProductLabelMobileContainer>
+                  <ProductLabelMobileContainer>
+                    <Typography variant="label" color="shade6" weight="regular">
+                      Order Cut Off Time:
+                    </Typography>
+                    <div className="product-value">
                       <Typography
                         variant="label"
-                        color="shade6"
-                        weight="regular"
+                        color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                        weight="bold"
                       >
-                        Listing Valid Until:
+                        {orderDetails.validUntil
+                          ? orderDetails.validUntil
+                          : 'Always Available'}
                       </Typography>
-                      <div className="product-value">
-                        <Typography
-                          variant="label"
-                          color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
-                          weight="bold"
-                        >
-                          {moment().to(orderDetails.validUntil)}
-                        </Typography>
-                      </div>
-                    </ProductLabelMobileContainer>
-                  )}
+                    </div>
+                  </ProductLabelMobileContainer>
 
                   <ProductLabelMobileContainer>
                     <Typography variant="label" color="shade6" weight="regular">
