@@ -4,6 +4,7 @@ import MultiSelect from 'components/base/MultiSelect';
 import PaginateList from 'components/base/PaginateList';
 import Select from 'components/base/Select';
 import { OptionsType } from 'components/base/Select/Select.props';
+import { Label } from 'components/base/Select/Select.style';
 import Slider from 'components/base/Slider';
 import { Octopus } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
@@ -17,6 +18,7 @@ import debounce from 'lodash.debounce';
 import { useHistory } from 'react-router-dom';
 import { useTheme } from 'utils/Theme';
 
+import IconTooltip from '../IconTooltip';
 import {
   Container,
   FiltersContainer,
@@ -151,16 +153,22 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
           selected={selectedBuyingStates}
           updateSelected={updateBuyingState}
           unbordered
+          labelTooltip={
+            <IconTooltip
+              variant="info"
+              content="Only want to buy from certain areas? Restrict the states you want to purchase from using this filter."
+            />
+          }
         />
 
         <BuyingQuantityContainer>
-          <Typography
-            variant="overline"
-            color="shade6"
-            style={{ width: '100%' }}
-          >
+          <Label variant="overline" color="shade6" style={{ width: '100%' }}>
             Minimum Buying Quantity
-          </Typography>
+            <IconTooltip
+              variant="info"
+              content="Are the Minimum Order amounts to large for your business? Reduce the toggle here to see listings that have a less than or equal to Minimum Order amount."
+            />
+          </Label>
           <div className="filters">
             <TextField
               className="weight-input"
@@ -179,7 +187,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
               value={selectedMetric}
             /> */}
 
-            <div style={{ minWidth: '70%', marginTop: '8px' }}>
+            <div style={{ minWidth: '70%' }}>
               <Slider
                 value={selectedMinBuyingQty}
                 onChange={(v) => {

@@ -17,6 +17,7 @@ export interface SelectProps extends ReactDropdownProps {
   isMulti?: boolean;
   customMenu?: React.ReactNode;
   customOpenMenu?: () => void;
+  labelTooltip?: React.ReactNode;
 }
 
 export interface DropdownProps {

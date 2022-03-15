@@ -101,10 +101,6 @@ export const FiltersContainer = styled.div`
 export const BuyingQuantityContainer = styled.div`
   min-width: 33%;
 
-  .weight-input > div {
-    margin-top: 8px;
-  }
-
   .weight-input > div,
   .weight-input input {
     border-radius: 12px;

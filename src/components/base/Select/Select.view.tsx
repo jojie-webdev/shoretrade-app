@@ -28,6 +28,7 @@ const Select = ({
   isMulti,
   customMenu,
   customOpenMenu,
+  labelTooltip,
   ...props
 }: SelectProps): JSX.Element => {
   const theme = useTheme();
@@ -46,6 +47,7 @@ const Select = ({
       {label ? (
         <Label variant="overline" color="shade6">
           {label}
+          {labelTooltip}
         </Label>
       ) : null}
       <div id={`${label}-dropdown`}>

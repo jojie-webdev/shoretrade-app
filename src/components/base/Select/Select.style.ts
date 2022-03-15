@@ -155,6 +155,25 @@ export const ArrowContainer = styled.div<{ size?: string; flipped?: boolean }>`
 
 export const Label = styled(Typography)`
   margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  .tooltip-container {
+    margin: 0;
+    height: 12px;
+    .__react_component_tooltip p {
+      display: inline-block;
+      text-transform: lowercase;
+    }
+    .__react_component_tooltip p:first-letter {
+      text-transform: uppercase;
+    }
+
+    svg {
+      height: 16px;
+    }
+  }
 `;
 
 export const Error = styled(Typography)`
