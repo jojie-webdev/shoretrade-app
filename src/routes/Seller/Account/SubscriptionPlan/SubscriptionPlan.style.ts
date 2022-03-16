@@ -87,3 +87,7 @@ export const PlanSection = styled.div`
     }
   }
 `;
+
+export const FlexContainer = styled.div`
+  display: flex;
+`;

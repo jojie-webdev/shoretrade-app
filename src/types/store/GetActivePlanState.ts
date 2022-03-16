@@ -15,9 +15,10 @@ export type ActivePlanPaymentMethodCard = {
 
 export type GetActivePlanResponseData = {
   countdown: number;
-  end_date: string;
+  ends_at: string;
   id: string;
   is_free_trial: boolean;
+  paid_at?: string;
   payment_methods: {
     id: string;
     defaultCard: string;
@@ -27,8 +28,11 @@ export type GetActivePlanResponseData = {
   plan_name: string;
   price: string;
   recurring_interval: string;
-  start_date: string;
-  status: string;
+  starts_at: string;
+  subscription_preference: {
+    saasInterval: string;
+    isSaasSubscribed: boolean;
+  };
 };
 
 // TODO: Update response value

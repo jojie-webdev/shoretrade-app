@@ -12,8 +12,8 @@ import {
   Barcode as BarcodeSVG,
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
-import { BUYER_ROUTES } from 'consts';
-import { useSelector } from 'react-redux';
+import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Route,
   Switch,
@@ -171,6 +171,7 @@ const ROUTES_ARRAY: TRoute[] = Object.values(ROUTES).map((value) => value);
 const BuyerRoutes = (): JSX.Element => {
   const history = useHistory();
   const location = useLocation();
+  const dispatch = useDispatch();
   const { pathname } = location;
   interface ILocationState {
     ref?: string;
@@ -182,6 +183,9 @@ const BuyerRoutes = (): JSX.Element => {
   const firstName =
     useSelector((state: Store) => state.getUser.data?.data.user.firstName) ||
     '';
+
+  const subscription = useSelector((store: Store) => store.subscription);
+  const isAccountDeactivated = subscription.isAccountDeactivated;
 
   const getThemeOverride = (): {
     background?: string;
@@ -268,13 +272,24 @@ const BuyerRoutes = (): JSX.Element => {
       {...getThemeOverride()}
     >
       <Switch>
-        {ROUTES_ARRAY.map((r) => (
+        {ROUTES_ARRAY.filter(
+          (r) =>
+            (r.title === 'Account' || !isAccountDeactivated) &&
+            (subscription.isFreeTrial ||
+              (!subscription.isFreeTrial && r.title !== 'Upgrade'))
+        ).map((r) => (
           <Route key={`${r.path}`} path={`${r.path}`} exact={!r.nested}>
             {r.children}
           </Route>
         ))}
         <Route>
-          <Redirect to="/buyer/home" />
+          <Redirect
+            to={
+              isAccountDeactivated
+                ? BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN
+                : '/buyer/home'
+            }
+          />
         </Route>
       </Switch>
     </DashboardLayout>

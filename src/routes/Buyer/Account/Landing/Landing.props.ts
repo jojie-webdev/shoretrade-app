@@ -16,5 +16,5 @@ export interface LandingGeneratedProps {
   logout: () => void;
   permission: boolean;
   accountCompletion?: GetAccountCompletionRequestData;
-  freeTrialCountdown?: GetActivePlanResponseData;
+  activePlan?: GetActivePlanResponseData;
 }

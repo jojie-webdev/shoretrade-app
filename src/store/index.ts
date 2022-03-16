@@ -28,6 +28,7 @@ const persistConfig = {
     'uploadBulk',
     'modifyBulkUpload',
     'getHistoricalListings',
+    'subscription',
   ],
 };
 

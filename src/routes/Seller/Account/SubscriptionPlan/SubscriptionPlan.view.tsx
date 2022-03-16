@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
+import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import {
   Calendar,
   Mastercard,
   ShoretradeProSellerLogo,
 } from 'components/base/SVG';
-import Toggle from 'components/base/Toggle';
+import TwoWayToggle from 'components/base/TwoWayToggle';
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
+import CreditCardLogo from 'components/module/CreditCardLogo';
 import PlanFeatures from 'components/module/PlanFeatures';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -17,6 +19,7 @@ import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
 import { toPrice } from 'utils/String';
+import { getButtonTextByStatus } from 'utils/SubscriptionPlan/getButtonTextByStatus';
 import { useTheme } from 'utils/Theme';
 
 import { SubscriptionPlanGeneratedProps } from './SubscriptionPlan.props';
@@ -25,12 +28,12 @@ import {
   BreadcrumbsContainer,
   Container,
   DicountContainer,
+  FlexContainer,
   PaymentMethodSection,
   PlanSection,
   SubscriptionContainer,
   ToggleContainer,
 } from './SubscriptionPlan.style';
-import CreditCardLogo from 'components/module/CreditCardLogo';
 
 export const SubscriptionPlanView = ({
   annualPrice,
@@ -38,16 +41,29 @@ export const SubscriptionPlanView = ({
   nextBillingDate,
   cardBrand,
   cardNumberMasked,
+  planStatus,
+  planInterval,
+  cancelSubscription,
+  updateSubscription,
+  renewSubscription,
 }: SubscriptionPlanGeneratedProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS.sm });
   const isSmallDesktop = useMediaQuery({
     query: '(min-width: 768px) and (max-width: 1439px)',
   });
-  const [isAnnual, setIsAnnual] = useState(false);
+  const [isMonthly, setIsMonthly] = useState(true);
   const [showToggleModal, setShowToggleModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
-  const price = toPrice(isAnnual ? annualPrice : monthlyPrice);
+  const [showRenewModal, setShowRenewModal] = useState(false);
+  const price = toPrice(isMonthly ? monthlyPrice : annualPrice);
+
+  useEffect(() => {
+    setIsMonthly(planInterval !== 'ANNUAL');
+  }, [planInterval]);
+
+  const ifForRenewal = ['CANCELLED', 'OVERDUE'].includes(planStatus);
+  const interval = isMonthly ? 'MONTHLY' : 'ANNUAL';
 
   return (
     <Container>
@@ -58,9 +74,6 @@ export const SubscriptionPlanView = ({
             {
               label: 'Plan',
               link: SELLER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
-            },
-            {
-              label: 'Card',
             },
           ]}
         />
@@ -88,10 +101,10 @@ export const SubscriptionPlanView = ({
           Monthly
         </Typography>
 
-        <Toggle
-          checked={isAnnual}
+        <TwoWayToggle
+          checked={isMonthly}
           onClick={() => {
-            setIsAnnual(!isAnnual);
+            setIsMonthly(!isMonthly);
             setShowToggleModal(true);
           }}
         />
@@ -122,7 +135,7 @@ export const SubscriptionPlanView = ({
                   <CreditCardLogo type={cardBrand} />
                 </div>
                 <Typography variant="body" color="noshade">
-                  {cardNumberMasked}
+                  <b>{cardNumberMasked}</b>
                 </Typography>
               </div>
 
@@ -153,7 +166,7 @@ export const SubscriptionPlanView = ({
                   color="noshade"
                   style={{ marginLeft: '6px' }}
                 >
-                  {nextBillingDate}
+                  <b>{nextBillingDate}</b>
                 </Typography>
               </div>
 
@@ -175,7 +188,27 @@ export const SubscriptionPlanView = ({
 
           <Col xs={12} sm={6}>
             <PlanSection className="section">
-              <ShoretradeProSellerLogo />
+              <FlexContainer>
+                <Typography variant="body" weight="400" color="noshade">
+                  Your Plan
+                </Typography>
+                {ifForRenewal && (
+                  <Badge
+                    badgeColor={theme.brand.primary}
+                    borderRadius="8px"
+                    style={{ marginLeft: '8px' }}
+                  >
+                    <Typography
+                      variant="overline"
+                      color="noshade"
+                      style={{ lineHeight: 'normal' }}
+                    >
+                      {planStatus}
+                    </Typography>
+                  </Badge>
+                )}
+              </FlexContainer>
+
               <Typography
                 variant="label"
                 weight="400"
@@ -191,7 +224,7 @@ export const SubscriptionPlanView = ({
                   {price}
                 </Typography>
                 <Typography variant="label" weight="400" color="shade6">
-                  &nbsp;/ {isAnnual ? 'Year' : 'Month'}
+                  &nbsp;/ {isMonthly ? 'Month' : 'Year'}
                 </Typography>
               </div>
 
@@ -199,7 +232,11 @@ export const SubscriptionPlanView = ({
 
               <div
                 className="cancel-subscription"
-                onClick={() => setShowCancelModal(true)}
+                onClick={() =>
+                  ifForRenewal
+                    ? setShowRenewModal(true)
+                    : setShowCancelModal(true)
+                }
               >
                 <Typography
                   variant="label"
@@ -207,7 +244,7 @@ export const SubscriptionPlanView = ({
                   weight="400"
                   style={{ textDecoration: 'underline' }}
                 >
-                  Cancel Subscription
+                  {getButtonTextByStatus(planStatus)}
                 </Typography>
               </div>
             </PlanSection>
@@ -216,13 +253,16 @@ export const SubscriptionPlanView = ({
       </SubscriptionContainer>
       <ConfirmationModal
         isOpen={showToggleModal}
-        title={`Change to ${isAnnual ? 'annual' : 'monthly'} billing?`}
+        title={`Change to ${interval.toLowerCase()} billing?`}
         actionText="Confirm new plan"
         onClickClose={() => {
           setShowToggleModal(false);
-          setIsAnnual(!isAnnual);
+          setIsMonthly(!isMonthly);
         }}
-        action={() => setShowToggleModal(false)}
+        action={() => {
+          updateSubscription(interval);
+          setShowToggleModal(false);
+        }}
         style={{ width: '686px' }}
       >
         <Typography color="shade7">Your new plan will be:</Typography>
@@ -231,7 +271,7 @@ export const SubscriptionPlanView = ({
             {price}
           </Typography>
           <Typography variant="label" weight="400" color="shade6">
-            &nbsp;/ {isAnnual ? 'Year' : 'Month'}
+            &nbsp;/ {isMonthly ? 'Month' : 'Year'}
           </Typography>
         </div>
         <div style={{ display: 'flex' }}>
@@ -258,6 +298,25 @@ export const SubscriptionPlanView = ({
         cancelText="Cancel Subscription"
         onClickClose={() => setShowCancelModal(false)}
         action={() => setShowCancelModal(false)}
+        cancel={() => {
+          cancelSubscription(interval);
+          setShowCancelModal(false);
+        }}
+        style={{ width: '686px' }}
+      />
+
+      <ConfirmationModal
+        isOpen={showRenewModal}
+        title="Renew your subscription"
+        description="To gain access to your account, you will need to renew your subscription. Press Renew Subscription to confirm your payment details and payment frequency. The relevant amount will be debited from your nominated card and once successfully received, your account will be reactivated."
+        actionText="Renew Subscription"
+        cancelText="Cancel"
+        onClickClose={() => setShowRenewModal(false)}
+        action={() => {
+          renewSubscription(interval);
+          setShowRenewModal(false);
+        }}
+        cancel={() => setShowRenewModal(false)}
         style={{ width: '686px' }}
       />
     </Container>

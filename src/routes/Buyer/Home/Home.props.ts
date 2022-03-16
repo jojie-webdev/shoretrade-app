@@ -1,5 +1,5 @@
-import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
 import { GetActivePlanResponseData } from 'types/store/GetActivePlanState';
+import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
 
 export type CategoryResults = {
   id: string;
@@ -30,7 +30,7 @@ export interface HomeGeneratedProps {
   favouriteSellers: SellerResults[];
   sellers: SellerResults[];
   loadingHomePage: boolean;
-  freeTrialCountdown?: GetActivePlanResponseData;
+  activePlan?: GetActivePlanResponseData;
 }
 
 export interface HomeData {

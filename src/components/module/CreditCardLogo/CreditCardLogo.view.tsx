@@ -6,7 +6,7 @@ import { CreditCardLogoProps } from './CreditCardLogo.props';
 
 const CreditCardLogo = (props: CreditCardLogoProps): JSX.Element => {
   const creditCardLogos: Record<string, JSX.Element> = {
-    mastercard: <Mastercard />,
+    master_card: <Mastercard />,
     visa: <Visa />,
     american_express: <Amex />,
   };

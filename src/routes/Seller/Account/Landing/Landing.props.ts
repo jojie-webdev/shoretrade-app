@@ -13,5 +13,5 @@ export interface AccountLandingGeneratedProps {
   updatingImage: boolean;
   logout: () => void;
   accountCompletion?: GetAccountCompletionRequestData;
-  freeTrialCountdown?: GetActivePlanResponseData;
+  activePlan?: GetActivePlanResponseData;
 }

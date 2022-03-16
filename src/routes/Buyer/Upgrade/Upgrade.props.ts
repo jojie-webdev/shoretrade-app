@@ -1,5 +1,6 @@
-import { GetSubscriptionPlansResponseData } from 'types/store/GetSubscriptionPlansState';
-
 export interface UpgradeGeneratedProps {
-  plans: GetSubscriptionPlansResponseData[];
+  annualPrice: string;
+  monthlyPrice: string;
+  upgrading: boolean;
+  upgradeSubscription: (interval: 'MONTHLY' | 'ANNUAL') => void;
 }

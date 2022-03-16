@@ -9,6 +9,7 @@ import {
   authActions,
   cartActions,
   editableListingActions,
+  subscriptionActions,
 } from '../actions';
 
 function* logoutRequest(action: AsyncAction<string, LoginPayload>) {
@@ -28,6 +29,7 @@ function* logoutFinished(action: AsyncAction<string, LoginPayload>) {
   yield put(authActions.clear());
   yield put(cartActions.clear());
   yield put(editableListingActions.clear());
+  yield put(subscriptionActions.clear());
 }
 
 function* logoutWatcher() {

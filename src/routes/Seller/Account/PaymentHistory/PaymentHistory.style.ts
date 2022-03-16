@@ -22,19 +22,27 @@ export const Transx = styled.div`
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  background-color: white;
-  border: 1px solid ${({ theme }) => theme.grey.shade2};
-  border-radius: 4px;
+  background-color: ${({ theme }) => theme.grey.shade9};
+  border-radius: 8px;
   margin-left: 0px;
   margin-right: 0px;
   margin-bottom: 16px;
+  align-items: center;
 `;
 
 export const TransxLeft = styled.div`
+  display: flex;
+  align-items: center;
+
+  .text {
+    margin-left: 16px;
+  }
+
   & > * {
     text-align: left;
   }
 `;
+
 export const TransxRight = styled.div`
   & > * {
     text-align: right;

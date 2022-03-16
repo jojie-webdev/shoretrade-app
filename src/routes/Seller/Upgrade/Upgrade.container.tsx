@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react';
 
+import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import _ from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
+  getActivePlanActions,
   getMarketInterestsActions,
   getSubscriptionPlansActions,
+  upgradeSubscriptionActions,
 } from 'store/actions';
 import { Store } from 'types/store/Store';
 
@@ -13,6 +17,10 @@ import UpgradeView from './Upgrade.view';
 
 const Upgrade = (): JSX.Element => {
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  // SELECTORS
+
   const user = useSelector((store: Store) => store.getUser.data?.data.user);
   const company = user?.companies[0];
 
@@ -24,6 +32,19 @@ const Upgrade = (): JSX.Element => {
     (store: Store) => store.getSubscriptionPlans.data?.data
   );
 
+  const upgradeSuccess = useSelector(
+    (store: Store) => store.upgradeSubscription.data?.data
+  );
+
+  const upgrading =
+    useSelector((store: Store) => store.upgradeSubscription.pending) || false;
+
+  // USE EFFECTS
+
+  useEffect(() => {
+    dispatch(getSubscriptionPlansActions.request({}));
+  }, []);
+
   useEffect(() => {
     if (company) {
       dispatch(getMarketInterestsActions.request({ companyId: company.id }));
@@ -31,16 +52,45 @@ const Upgrade = (): JSX.Element => {
   }, [company]);
 
   useEffect(() => {
-    dispatch(getSubscriptionPlansActions.request({}));
-  }, []);
+    if (upgradeSuccess && company?.id) {
+      dispatch(
+        getActivePlanActions.request({
+          companyId: company?.id,
+        })
+      );
+      history.push(SELLER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN);
+    }
+  }, [upgradeSuccess]);
+
+  // METHODS
+
+  const upgradeSubscription = (interval: 'MONTHLY' | 'ANNUAL') => {
+    if (company?.id) {
+      dispatch(
+        upgradeSubscriptionActions.request({
+          companyId: company.id,
+          saasInterval: interval,
+        })
+      );
+    }
+  };
+
+  // VARIABLES
+
+  const plans =
+    (marketSector &&
+      subscriptionPlans?.filter((plan) =>
+        plan.alias.includes(_.snakeCase(marketSector?.sector).toUpperCase())
+      )) ||
+    [];
+  const annualPlan = plans.find((plan) => plan.alias.includes('YEARLY'));
+  const monthlyPlan = plans.find((plan) => !plan.alias.includes('YEARLY'));
 
   const generatedProps: UpgradeGeneratedProps = {
-    plans:
-      (marketSector &&
-        subscriptionPlans?.filter((plan) =>
-          plan.alias.includes(_.snakeCase(marketSector?.sector).toUpperCase())
-        )) ||
-      [],
+    annualPrice: annualPlan?.price || '0',
+    monthlyPrice: monthlyPlan?.price || '0',
+    upgrading,
+    upgradeSubscription,
   };
 
   return <UpgradeView {...generatedProps} />;

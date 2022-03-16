@@ -30,9 +30,10 @@ import {
 import { validateCard } from './PlanPaymentMethod.validation';
 
 const PlanPaymentMethodView = ({
-  payPlanAmountDue,
   cards,
+  amountDue,
   selectedCardId,
+  payPlanAmountDue,
   setSelectedCardId,
 }: PlanPaymentMethodGeneratedProps) => {
   const theme = useTheme();
@@ -101,7 +102,7 @@ const PlanPaymentMethodView = ({
               {(!isMobile || (isMobile && !showExistingTab)) && (
                 <Col xs={12} sm={6}>
                   <Typography variant="copy" style={{ marginBottom: 24 }}>
-                    Pay the amount due: <b>$18.00</b>
+                    Pay the amount due: <b>{amountDue}</b>
                   </Typography>
                   <Row gutterWidth={8}>
                     <CCImageCol xs="content">

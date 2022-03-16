@@ -9,6 +9,7 @@ import {
   useHistory,
   useLocation,
 } from 'react-router-dom';
+import { getActivePlanActions } from 'store/actions';
 import getUserActions from 'store/actions/getUser';
 import { Routes } from 'types/Routes';
 import { Store } from 'types/store/Store';
@@ -167,6 +168,20 @@ const RoutesComponent = (): JSX.Element => {
   const authenticatedUserType =
     useSelector((state: Store) => state.auth.type) || '';
   const currentPath = location.pathname;
+  const verifyUserData = useSelector(
+    (state: Store) => state.verify.data?.data.user
+  );
+
+  useEffect(() => {
+    if (verifyUserData) {
+      dispatch(
+        getActivePlanActions.request({
+          companyId: verifyUserData.companies[0].id,
+        })
+      );
+    }
+    // eslint-disable-next-line
+  }, [verifyUserData]);
 
   useEffect(() => {
     if (isAuthenticated) {

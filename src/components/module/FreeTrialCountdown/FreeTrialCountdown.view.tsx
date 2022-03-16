@@ -44,7 +44,9 @@ const FreeTrialCountdown = (props: FreeTrialCountdownProps): JSX.Element => {
           style={{ marginBottom: '8px' }}
         >
           {daysLeft > 0
-            ? `FREE Trial will expire in ${daysLeft} days`
+            ? `FREE Trial will expire in ${daysLeft} day ${
+                daysLeft > 1 ? 's' : ''
+              }`
             : 'Free Trial Expired'}
         </Typography>
         <ProgressBar

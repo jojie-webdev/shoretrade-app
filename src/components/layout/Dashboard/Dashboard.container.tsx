@@ -16,7 +16,9 @@ import {
   readNotificationActions,
   // getUserActions,
   globalModalActions,
+  getActivePlanActions,
 } from 'store/actions';
+import { Route } from 'types/Routes';
 import { NotificationType, NotifName } from 'types/store/GetNotificationsState';
 import { Store } from 'types/store/Store';
 import { notifURLMapper } from 'utils/Notification';
@@ -67,6 +69,10 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     (state: Store) => state.getNotifications
   );
 
+  const isAccountDeactivated = useSelector(
+    (store: Store) => store.subscription.isAccountDeactivated
+  );
+
   const getCartData =
     useSelector((state: Store) => state.getCart.data?.data) || null;
 
@@ -85,6 +91,11 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   // MARK:- Variables
   const isInnerRoute = (path: string) =>
     location.pathname.search(path.split('/')[2]) > 0;
+
+  const isRouteAccessible = (route: Route) => {
+    const isInactive = isAccountDeactivated && route.title !== 'Account';
+    return !isInactive;
+  };
 
   const userType = useSelector((state: Store) => state.auth.type) || '';
 
@@ -213,6 +224,18 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    if (defaultCompany) {
+      dispatch(
+        getActivePlanActions.request({
+          companyId: defaultCompany.id,
+        })
+      );
+    }
+
+    // eslint-disable-next-line
+  }, [defaultCompany]);
+
   // useEffect(() => {
   //   dispatch(getUserActions.request());
   // }, [buyerRequests.data?.data.marketRequests]);
@@ -222,6 +245,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
     ...props,
     pageTitle,
     isInnerRoute,
+    isRouteAccessible,
     shouldIncludePadding,
     userData,
     logout,

@@ -79,6 +79,10 @@ import {
 } from './AddLinkedAccountState';
 import { AsyncState } from './AsyncState';
 import { AuthState } from './AuthState';
+import {
+  CancelSubscriptionPlanMeta,
+  CancelSubscriptionPlanPayload,
+} from './CancelSubscriptionPlanState';
 import { CartState } from './CartState';
 import {
   ChangePasswordMeta,
@@ -266,6 +270,10 @@ import {
   RemoveCartItemPayload,
 } from './RemoveCartItemState';
 import {
+  RenewSubscriptionPlanMeta,
+  RenewSubscriptionPlanPayload,
+} from './RenewSubscriptionPlanState';
+import {
   ResendVerificationMeta,
   ResendVerificationPayload,
 } from './ResendVerificationState';
@@ -285,6 +293,7 @@ import {
   SendOrderRatingPayload,
 } from './SendOrderRatingState';
 import { SocketState } from './SocketState';
+import { SubscriptionState } from './SubscriptionState';
 import { UpdateAddressMeta, UpdateAddressPayload } from './UpdateAddressState';
 import {
   UpdateBankDetailsMeta,
@@ -311,11 +320,36 @@ import {
   UpdatePreferencesMeta,
   UpdatePreferencesPayload,
 } from './UpdatePreferencesState';
+import {
+  UpdateSubscriptionPlanMeta,
+  UpdateSubscriptionPlanPayload,
+} from './UpdateSubscriptionPlanState';
 import { UpdateUserPayload, UpdateUserMeta } from './UpdateUserState';
+import {
+  UpgradeSubscriptionMeta,
+  UpgradeSubscriptionPayload,
+} from './UpgradeSubscriptionState';
 import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
+  upgradeSubscription: AsyncState<
+    UpgradeSubscriptionMeta,
+    UpgradeSubscriptionPayload
+  >;
+  subscription: SubscriptionState;
+  renewSubscriptionPlan: AsyncState<
+    RenewSubscriptionPlanMeta,
+    RenewSubscriptionPlanPayload
+  >;
+  updateSubscriptionPlan: AsyncState<
+    UpdateSubscriptionPlanMeta,
+    UpdateSubscriptionPlanPayload
+  >;
+  cancelSubscriptionPlan: AsyncState<
+    CancelSubscriptionPlanMeta,
+    CancelSubscriptionPlanPayload
+  >;
   getBuyerSearchFilters: AsyncState<
     GetBuyerSearchFiltersMeta,
     GetBuyerSearchFiltersPayload

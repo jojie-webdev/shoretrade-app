@@ -48,7 +48,7 @@ const AccountLandingView = ({
   updateImage,
   updatingImage,
   accountCompletion,
-  freeTrialCountdown,
+  activePlan,
 }: AccountLandingGeneratedProps) => {
   const history = useHistory();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -226,11 +226,8 @@ const AccountLandingView = ({
             </div>
           </UserInfoContainer>
 
-          {freeTrialCountdown?.is_free_trial && (
-            <FreeTrialCountdown
-              daysLeft={freeTrialCountdown.countdown}
-              small={true}
-            />
+          {activePlan?.is_free_trial && (
+            <FreeTrialCountdown daysLeft={activePlan.countdown} small={true} />
           )}
         </Col>
 

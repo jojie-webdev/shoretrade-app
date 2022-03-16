@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
-
 import { SVGProps } from 'components/base/SVG/SVG.props';
 import { Route } from 'types/Routes';
 import {
@@ -26,6 +24,7 @@ export interface DashboardPublicProps {
 export interface DashboardGeneratedProps extends DashboardPublicProps {
   pageTitle?: string;
   isInnerRoute: (path: string) => boolean;
+  isRouteAccessible: (route: Route) => boolean;
   shouldIncludePadding: boolean;
   userData: GetUserPayload['data']['user'] | undefined;
   logout: () => void;
@@ -57,6 +56,7 @@ export type NavLinkProps = {
   Icon?: React.FC<SVGProps>;
   onClick: () => void;
   isActive: boolean;
+  isAccessible: boolean;
 };
 
 // Inner component props

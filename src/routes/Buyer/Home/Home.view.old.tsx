@@ -16,6 +16,7 @@ import MultipleCarousel from 'components/module/MultipleCarousel';
 import SearchAddress from 'components/module/SearchAddress';
 import SellerCard from 'components/module/SellerCard';
 import { SellerCardProps } from 'components/module/SellerCard/SellerCard.props';
+import SubscriptionAlert from 'components/module/SubscriptionAlert';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import partialRight from 'ramda/es/partialRight';
@@ -98,7 +99,7 @@ const HomeView = (props: HomeGeneratedProps) => {
     sellers,
     loadingHomePage,
     isPendingAccount,
-    freeTrialCountdown,
+    activePlan,
   } = props;
 
   const hideCarouselArrowArea = useMediaQuery({
@@ -111,8 +112,14 @@ const HomeView = (props: HomeGeneratedProps) => {
 
   return (
     <ViewContainer>
-      {freeTrialCountdown?.is_free_trial && (
-        <FreeTrialCountdown daysLeft={freeTrialCountdown.countdown || 0} />
+      {activePlan?.is_free_trial && (
+        <FreeTrialCountdown daysLeft={activePlan.countdown || 0} />
+      )}
+
+      {!activePlan?.is_free_trial && (
+        <div className="wrapper">
+          <SubscriptionAlert activePlan={activePlan} />
+        </div>
       )}
 
       {isPendingAccount && (
@@ -127,12 +134,15 @@ const HomeView = (props: HomeGeneratedProps) => {
           </Col>
         </div>
       )}
-      <div className="wrapper">
-        <Credit creditState={creditState} loading={loading} />
-        <Col xs={12}>
-          <SearchAddress />
-        </Col>
-      </div>
+
+      {!!activePlan && (
+        <div className="wrapper">
+          <Credit creditState={creditState} loading={loading} />
+          <Col xs={12}>
+            <SearchAddress />
+          </Col>
+        </div>
+      )}
 
       {/* Main Content */}
       {loadingHomePage ? (

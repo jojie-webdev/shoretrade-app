@@ -2,12 +2,15 @@ import React from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
-import { Prawn } from 'components/base/SVG';
+import { FileAlt, Prawn } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Loading from 'components/module/Loading';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import moment from 'moment';
 import { Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
+import theme from 'utils/SFMTheme';
+import { toPrice } from 'utils/String';
 
 import { PaymentHistoryGeneratedProps } from './PaymentHistory.props';
 import {
@@ -23,91 +26,6 @@ const PaymentHistoryView = ({
   transactions,
 }: PaymentHistoryGeneratedProps) => {
   const history = useHistory();
-
-  const getTransactionLabel = (
-    desc: string
-  ): {
-    title: string;
-    subtitle: string;
-  } => {
-    const isCreditAdjustment = desc.includes('Credit Adjustment - ');
-    const isCashDeposit = desc.includes('Cash Deposit - ');
-    const isChequeDeposit = desc.includes('Cheque Deposit - ');
-    const isBankTransfer = desc.includes('Bank Transfer - ');
-    const includesOrderNumber = desc.includes('- Order #');
-    if (isCreditAdjustment) {
-      if (includesOrderNumber) {
-        const orderNumber = desc.split('- Order #')[1].split(' ')[0];
-        return {
-          title: `Credit Adjustment - #${orderNumber}`,
-          subtitle: desc
-            .replace('Credit Adjustment - ', '')
-            .replace(` - Order #${orderNumber}`, ''),
-        };
-      } else {
-        return {
-          title: 'Credit Adjustment',
-          subtitle: desc.replace('Credit Adjustment - ', ''),
-        };
-      }
-    }
-
-    if (isCashDeposit) {
-      if (includesOrderNumber) {
-        const orderNumber = desc.split('- Order #')[1].split(' ')[0];
-        return {
-          title: `Cash Deposit - #${orderNumber}`,
-          subtitle: desc
-            .replace('Cash Deposit - ', '')
-            .replace(` - Order #${orderNumber}`, ''),
-        };
-      } else {
-        return {
-          title: 'Cash Deposit',
-          subtitle: desc.replace('Cash Deposit - ', ''),
-        };
-      }
-    }
-
-    if (isChequeDeposit) {
-      if (includesOrderNumber) {
-        const orderNumber = desc.split('- Order #')[1].split(' ')[0];
-        return {
-          title: `Cheque Deposit - #${orderNumber}`,
-          subtitle: desc
-            .replace('Cheque Deposit - ', '')
-            .replace(` - Order #${orderNumber}`, ''),
-        };
-      } else {
-        return {
-          title: 'Cheque Deposit',
-          subtitle: desc.replace('Cheque Deposit - ', ''),
-        };
-      }
-    }
-
-    if (isBankTransfer) {
-      if (includesOrderNumber) {
-        const orderNumber = desc.split('- Order #')[1].split(' ')[0];
-        return {
-          title: `Bank Transfer - #${orderNumber}`,
-          subtitle: desc
-            .replace('Bank Transfer - ', '')
-            .replace(` - Order #${orderNumber}`, ''),
-        };
-      } else {
-        return {
-          title: 'Bank Transfer',
-          subtitle: desc.replace('Bank Transfer - ', ''),
-        };
-      }
-    }
-
-    return {
-      title: desc,
-      subtitle: '',
-    };
-  };
 
   return (
     <Container>
@@ -139,36 +57,28 @@ const PaymentHistoryView = ({
             <Button onClick={() => history.goBack()} text="Back" />
           </EmptyStateContainer>
         )}
-        {/* {transactions.map((transaction, idx) => {
-          const { title, subtitle } = getTransactionLabel(
-            transaction.description
-          );
+        {transactions.map((transaction, idx) => {
           return (
             <Transx key={idx}>
               <TransxLeft>
-                <Typography variant="body" color="shade9">
-                  {title}
-                </Typography>
-                {subtitle.length > 0 && (
-                  <Typography variant="caption" color="shade9">
-                    {subtitle}
+                <FileAlt fill={theme.grey.shade6} />
+                <div className="text">
+                  <Typography variant="body" color="noshade">
+                    {transaction.description}
                   </Typography>
-                )}
-                <Typography variant="caption" color="shade6">
-                  {moment(transaction.createdAt).format('DD MMM YYYY')}
-                </Typography>
+                  <Typography variant="caption" color="shade6">
+                    {moment(transaction.createdAt).format('DD MMM YYYY')}
+                  </Typography>
+                </div>
               </TransxLeft>
               <TransxRight>
-                <Typography variant="body" color="shade9">
+                <Typography variant="body" color="shade6">
                   {toPrice(transaction.adjustmentAmount)}
-                </Typography>
-                <Typography variant="caption" color="shade6">
-                  Balance: {toPrice(transaction.balance)}
                 </Typography>
               </TransxRight>
             </Transx>
           );
-        })} */}
+        })}
       </Col>
     </Container>
   );

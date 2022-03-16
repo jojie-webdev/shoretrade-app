@@ -63,8 +63,10 @@ const NavLink = ({
   Icon,
   onClick,
   isActive,
+  isAccessible,
 }: NavLinkProps) => {
   const theme = useTheme();
+  const disabledColor = theme.appType === 'buyer' ? 'shade6' : 'shade7';
   return (
     <SidebarItem
       activeStyle={{
@@ -74,13 +76,30 @@ const NavLink = ({
             : theme.grey.shade8,
         borderRadius: '8px',
       }}
+      isAccessible={isAccessible}
       to={to}
-      onClick={onClick}
+      onClick={(e) => {
+        if (isAccessible) {
+          onClick();
+        } else {
+          e.preventDefault();
+        }
+      }}
     >
       <div className="icon-container">
-        {Icon && <Icon fill={iconColor} height={20} width={20} />}
+        {Icon && (
+          <Icon
+            fill={isAccessible ? iconColor : theme.grey[disabledColor]}
+            height={20}
+            width={20}
+          />
+        )}
       </div>
-      <Typography className="link" color={color} weight="500">
+      <Typography
+        className="link"
+        color={isAccessible ? color : disabledColor}
+        weight="500"
+      >
         {linkText}
       </Typography>
     </SidebarItem>
@@ -264,6 +283,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
     routes,
     pageTitle,
     isInnerRoute,
+    isRouteAccessible,
     shouldIncludePadding,
     userData,
     children,
@@ -377,6 +397,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                   }
                   linkText={route.title || ''}
                   Icon={route.icon}
+                  isAccessible={isRouteAccessible(route)}
                 />
               ))}
             </div>

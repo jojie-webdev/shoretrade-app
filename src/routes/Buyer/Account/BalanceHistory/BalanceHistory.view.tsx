@@ -2,13 +2,14 @@ import React from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
-import { Prawn } from 'components/base/SVG';
+import { FileAlt, Prawn } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import moment from 'moment';
 import { Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
+import theme from 'utils/SFMTheme';
 import { toPrice } from 'utils/String/toPrice';
 
 import { BalanceHistoryGeneratedProps } from './BalanceHistory.props';
@@ -148,25 +149,30 @@ const BalanceHistoryView = ({
           return (
             <Transx key={idx}>
               <TransxLeft>
-                <Typography variant="body" color="shade9">
-                  {title}
-                </Typography>
-                {subtitle.length > 0 && (
-                  <Typography variant="caption" color="shade9">
-                    {subtitle}
+                <FileAlt fill={theme.grey.shade6} />
+                <div className="text">
+                  <Typography variant="body" color="shade9">
+                    {title}
                   </Typography>
-                )}
-                <Typography variant="caption" color="shade6">
-                  {moment(transaction.createdAt).format('DD MMM YYYY')}
-                </Typography>
+                  {subtitle.length > 0 && (
+                    <Typography variant="caption" color="shade9">
+                      {subtitle}
+                    </Typography>
+                  )}
+                  <Typography variant="caption" color="shade6">
+                    {moment(transaction.createdAt).format('DD MMM YYYY')}
+                  </Typography>
+                </div>
               </TransxLeft>
               <TransxRight>
                 <Typography variant="body" color="shade9">
                   {toPrice(transaction.adjustmentAmount)}
                 </Typography>
-                <Typography variant="caption" color="shade6">
-                  Balance: {toPrice(transaction.balance)}
-                </Typography>
+                {transaction.description !== 'ShoreTrade Plan' && (
+                  <Typography variant="caption" color="shade6">
+                    Balance: {toPrice(transaction.balance)}
+                  </Typography>
+                )}
               </TransxRight>
             </Transx>
           );

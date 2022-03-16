@@ -12,6 +12,7 @@ import FreeTrialCountdown from 'components/module/FreeTrialCountdown';
 import LinePath from 'components/module/LinePath';
 import Loading from 'components/module/Loading';
 import MobileHeader from 'components/module/MobileHeader';
+import SubscriptionAlert from 'components/module/SubscriptionAlert';
 import { SELLER_DASHBOARD_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
@@ -426,7 +427,7 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
     userPending,
     salesData,
     topCategoriesData,
-    freeTrialCountdown,
+    activePlan,
   } = props;
 
   const [startDate, setStartDate] = useState(moment().subtract(7, 'days'));
@@ -455,8 +456,12 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
   return (
     <Container>
       <>
-        {freeTrialCountdown?.is_free_trial && (
-          <FreeTrialCountdown daysLeft={freeTrialCountdown.countdown} />
+        {activePlan?.is_free_trial && (
+          <FreeTrialCountdown daysLeft={activePlan.countdown} />
+        )}
+
+        {!activePlan?.is_free_trial && (
+          <SubscriptionAlert activePlan={activePlan} />
         )}
 
         {userPending && (

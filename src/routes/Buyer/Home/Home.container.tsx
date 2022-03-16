@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { getActivePlanActions } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
@@ -14,7 +13,6 @@ import HomeView from './Home.view';
 import HomeViewOld from './Home.view.old';
 
 const Home = (): JSX.Element => {
-  const dispatch = useDispatch();
   const isOld = useHomeOld();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -46,11 +44,14 @@ const Home = (): JSX.Element => {
   const company = GetDefaultCompany();
   const featured: string[] =
     (isMobile ? bannerData?.app : bannerData?.web) || [];
-  const loadingHomePage = buyerHomePageData.pending === null;
 
-  const freeTrialCountdown = useSelector(
+  const activePlan = useSelector(
     (store: Store) => store.getActivePlan.data?.data
   );
+  const subscription = useSelector((store: Store) => store.subscription);
+
+  const loadingHomePage =
+    buyerHomePageData.pending === null || subscription.status === null;
 
   // MARK:- State
   const [currentCompany, setCurrentCompany] = useState<
@@ -78,7 +79,6 @@ const Home = (): JSX.Element => {
   useEffect(() => {
     if (company) {
       setCurrentCompany(company);
-      dispatch(getActivePlanActions.request({ companyId: company.id }));
     }
   }, [company]);
 
@@ -100,7 +100,7 @@ const Home = (): JSX.Element => {
     favouriteSellers,
     sellers,
     loadingHomePage,
-    freeTrialCountdown,
+    activePlan,
   };
 
   return isOld ? (

@@ -7,6 +7,7 @@ import addCardToken from './addCardToken';
 import addCartItem from './addCartItem';
 import addLinkedAccount from './addLinkedAccount';
 import addSellerLicense from './addSellerLicense';
+import cancelSubscriptionPlan from './cancelSubscriptionPlan';
 import changePassword from './changePassword';
 import chargeCard from './chargeCard';
 import confirmWeight from './confirmWeight';
@@ -88,6 +89,7 @@ import readMarketNotification from './readMarketNotification';
 import readNotification from './readNotification';
 import register from './register';
 import removeCartItem from './removeCartItem';
+import renewSubscriptionPlan from './renewSubscriptionPlan';
 import resendVerification from './resendVerification';
 import resetPassword from './resetPassword';
 import router from './router';
@@ -108,13 +110,19 @@ import updateMarketInterests from './updateMarketInterests';
 import updateNotificationSettings from './updateNotificationSettings';
 import updatePreferences from './updatePreferences';
 import updateSellerLicense from './updateSellerLicense';
+import updateSubscriptionPlan from './updateSubscriptionPlan';
 import updateUser from './updateUser';
+import upgradeSubscription from './upgradeSubscription';
 import uploadBulk from './uploadBulk';
 import useHistoricalListing from './useHistoricalListing';
 import verify from './verify';
 
 const sagas = [
   /* PLOP_INJECT_INSTANCE */
+  upgradeSubscription,
+  renewSubscriptionPlan,
+  updateSubscriptionPlan,
+  cancelSubscriptionPlan,
   getBuyerSearchFilters,
   updatePreferences,
   getActivePlan,

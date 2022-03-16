@@ -1,8 +1,10 @@
 import React from 'react';
 
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
-import { Route, Switch } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
+import { Store } from 'types/store/Store';
 
 import AccountCompletion from './AccountCompletion';
 import AddAddress from './AddAddress';
@@ -110,14 +112,34 @@ const ROUTES: Routes = {
 const ROUTES_ARRAY: TRoute[] = Object.values(ROUTES).map((value) => value);
 
 const BuyerAccountRoutes = (props: any): JSX.Element => {
+  const isAccountDeactivated = useSelector(
+    (store: Store) => store.subscription.isAccountDeactivated
+  );
+
   return (
     <>
       <Switch>
-        {ROUTES_ARRAY.map((r) => (
+        {ROUTES_ARRAY.filter(
+          (r) =>
+            [
+              BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
+              BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD,
+              BUYER_ACCOUNT_ROUTES.BALANCE_HISTORY,
+            ].includes(r.path) || !isAccountDeactivated
+        ).map((r) => (
           <Route key={r.path} path={`${r.path}`} exact>
             {r.children}
           </Route>
         ))}
+        <Route>
+          <Redirect
+            to={
+              isAccountDeactivated
+                ? BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN
+                : BUYER_ACCOUNT_ROUTES.LANDING
+            }
+          />
+        </Route>
       </Switch>
     </>
   );

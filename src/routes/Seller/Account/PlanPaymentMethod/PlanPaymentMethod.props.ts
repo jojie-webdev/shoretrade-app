@@ -18,6 +18,7 @@ export interface PlanPaymentMethodGeneratedProps {
     lastFour: string;
     name: string;
   }[];
+  amountDue: string;
   selectedCardId: string;
   setSelectedCardId: Dispatch<SetStateAction<string>>;
 }

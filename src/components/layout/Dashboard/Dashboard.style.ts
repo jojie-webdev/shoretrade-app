@@ -221,7 +221,9 @@ export const SidebarLogoContainer = styled.div`
   }
 `;
 
-export const SidebarItem = styled(NavLink)`
+export const SidebarItem = styled(NavLink)<{
+  isAccessible: boolean;
+}>`
   height: 48px;
   width: 100%;
   margin-bottom: 2px;
@@ -232,6 +234,10 @@ export const SidebarItem = styled(NavLink)`
   padding-left: 14px;
   .icon-container {
     margin-right: 12px;
+  }
+
+  :hover {
+    cursor: ${({ isAccessible }) => (isAccessible ? 'pointer' : 'default')};
   }
 `;
 

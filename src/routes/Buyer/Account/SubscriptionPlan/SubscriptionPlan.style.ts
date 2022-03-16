@@ -83,8 +83,13 @@ export const PlanSection = styled.div`
   }
 
   .cancel-subscription {
+    margin-top: 24px;
     &:hover {
       cursor: pointer;
     }
   }
+`;
+
+export const FlexContainer = styled.div`
+  display: flex;
 `;

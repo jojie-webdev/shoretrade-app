@@ -1,6 +1,9 @@
 import React, { useReducer, useState } from 'react';
 
+import { useSelector } from 'react-redux';
+import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
+import { toPrice } from 'utils/String';
 
 import {
   NewCardDetails,
@@ -10,6 +13,11 @@ import PlanPaymentMethodView from './PlanPaymentMethod.view';
 
 const PlanPaymentMethod = (): JSX.Element => {
   const [selectedCardId, setSelectedCardId] = useState('');
+
+  const activePlan = useSelector(
+    (store: Store) => store.getActivePlan.data?.data
+  );
+
   const payPlanAmountDue = (newCardDetails: NewCardDetails) => {
     if (selectedCardId) {
       console.log(selectedCardId); // temporary
@@ -21,18 +29,10 @@ const PlanPaymentMethod = (): JSX.Element => {
   };
 
   const generatedProps: PlanPaymentMethodGeneratedProps = {
-    payPlanAmountDue,
-    cards: [
-      {
-        brand: 'Visa',
-        expMonth: 12,
-        expYear: 2022,
-        id: '4242',
-        lastFour: '4242',
-        name: 'Tester',
-      },
-    ],
+    cards: activePlan?.payment_methods.cards || [],
+    amountDue: toPrice(activePlan?.price || ''),
     selectedCardId,
+    payPlanAmountDue,
     setSelectedCardId,
   };
 

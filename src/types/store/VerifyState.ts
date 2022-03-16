@@ -1,3 +1,5 @@
+import { UserCompany } from './GetUserState';
+
 export type VerifyMeta = {
   email: string;
   verify2Fa: string;
@@ -8,7 +10,9 @@ export type VerifyPayload = {
   status: number;
   message: string;
   data: {
-    user: any;
+    user: {
+      companies: UserCompany[];
+    };
     token: string;
   };
 };

@@ -6,7 +6,6 @@ import pathOr from 'ramda/es/pathOr';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
-  getActivePlanActions,
   getMarketNotificationActions,
   getSellerDashboardSalesActions,
   getSellerDashboardTopCategoriesActions,
@@ -27,13 +26,14 @@ const Dashboard = (): JSX.Element => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
+
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
   const userPending =
     user !== undefined &&
     !(user.companies || []).some((a) =>
       a.addresses.some((b) => b.approved === 'APPROVED')
     );
-  const companyId = user?.companies[0].id
 
   const dateRange =
     useSelector((state: Store) => state.sellerDashboardDate) ||
@@ -60,15 +60,16 @@ const Dashboard = (): JSX.Element => {
     previousTopCategories: [],
   };
 
-  const freeTrialCountdown = useSelector(
-    (state: Store) => state.getActivePlan.data?.data
+  const activePlan = useSelector(
+    (store: Store) => store.getActivePlan.data?.data
   );
 
-  const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
+  const subscription = useSelector((store: Store) => store.subscription);
 
-  const isLoading =
+  const isDashboardPending =
     useSelector((state: Store) => state.getSellerDashboardSales.pending) ||
     false;
+  const isLoading = isDashboardPending || subscription.status === null;
 
   const toggleModal = () => setIsCalendarModalOpen(!isCalendarModalOpen);
 
@@ -196,13 +197,6 @@ const Dashboard = (): JSX.Element => {
     // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    if (companyId) {
-      dispatch(getActivePlanActions.request({ companyId }));
-    }
-    // eslint-disable-next-line
-  }, [companyId]);
-
   // Market Notification Logic - Start
   const marketNotification = useSelector(
     (state: Store) => state.getMarketNotification.data?.data.currentNotification
@@ -249,7 +243,7 @@ const Dashboard = (): JSX.Element => {
     userPending,
     salesData,
     topCategoriesData,
-    freeTrialCountdown,
+    activePlan,
   };
   return <DashboardView {...generatedProps} />;
 };

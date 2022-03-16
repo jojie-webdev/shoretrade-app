@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 
 import Button from 'components/base/Button';
 import { ShoretradeProBuyerLogo } from 'components/base/SVG';
-import Toggle from 'components/base/Toggle';
+import TwoWayToggle from 'components/base/TwoWayToggle';
 import Typography from 'components/base/Typography';
 import PlanFeatures from 'components/module/PlanFeatures';
+import { toPrice } from 'utils/String';
 
 import { UpgradeGeneratedProps } from './Upgrade.props';
 import {
@@ -15,11 +16,15 @@ import {
   ToggleContainer,
 } from './Upgrade.style';
 
-const UpgradeView = ({ plans }: UpgradeGeneratedProps) => {
-  const [isAnnual, setIsAnnual] = useState(true);
+const UpgradeView = ({
+  annualPrice,
+  monthlyPrice,
+  upgrading,
+  upgradeSubscription,
+}: UpgradeGeneratedProps) => {
+  const [isMonthly, setIsMonthly] = useState(true);
 
-  const annualPlan = plans.find((plan) => plan.alias.includes('YEARLY'));
-  const monthlyPlan = plans.find((plan) => !plan.alias.includes('YEARLY'));
+  const price = toPrice(isMonthly ? monthlyPrice : annualPrice);
 
   return (
     <Container>
@@ -43,7 +48,10 @@ const UpgradeView = ({ plans }: UpgradeGeneratedProps) => {
           Monthly
         </Typography>
 
-        <Toggle checked={isAnnual} onClick={() => setIsAnnual(!isAnnual)} />
+        <TwoWayToggle
+          checked={isMonthly}
+          onClick={() => setIsMonthly(!isMonthly)}
+        />
 
         <Typography variant="label" weight="400" style={{ marginLeft: '8px' }}>
           Annually
@@ -65,17 +73,23 @@ const UpgradeView = ({ plans }: UpgradeGeneratedProps) => {
 
           <div className="plan-rate">
             <Typography variant="title3" weight="400">
-              ${(isAnnual ? annualPlan?.price : monthlyPlan?.price) || '0'}
+              {price}
             </Typography>
             <Typography variant="label" weight="400" color="shade6">
-              &nbsp;/ {isAnnual ? 'Year' : 'Month'}
+              &nbsp;/ {isMonthly ? 'Month' : 'Year'}
             </Typography>
           </div>
 
           <PlanFeatures />
 
           <div className="upgrade-btn">
-            <Button text="Upgrade" />
+            <Button
+              text="Upgrade"
+              loading={upgrading}
+              onClick={() =>
+                upgradeSubscription(isMonthly ? 'MONTHLY' : 'ANNUAL')
+              }
+            />
           </div>
         </div>
       </PlanSection>

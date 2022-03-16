@@ -8,7 +8,6 @@ import {
   updateUserActions,
   logoutActions,
   getAccountCompletionActions,
-  getActivePlanActions,
 } from 'store/actions';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
@@ -38,7 +37,7 @@ const AccountLanding = (): JSX.Element => {
   const accountCompletion = useSelector(
     (store: Store) => store.getAccountCompletion.data?.data
   );
-  const freeTrialCountdown = useSelector(
+  const activePlan = useSelector(
     (store: Store) => store.getActivePlan.data?.data
   );
 
@@ -75,7 +74,6 @@ const AccountLanding = (): JSX.Element => {
           companyId: currentCompany.id,
         })
       );
-      dispatch(getActivePlanActions.request({ companyId: currentCompany.id }));
     }
     // eslint-disable-next-line
   }, [currentCompany]);
@@ -93,7 +91,7 @@ const AccountLanding = (): JSX.Element => {
     updateImage,
     logout,
     accountCompletion,
-    freeTrialCountdown,
+    activePlan,
   };
   return <AccountLandingView {...generatedProps} />;
 };

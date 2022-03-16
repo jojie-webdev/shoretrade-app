@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+
 import { GetActivePlanResponseData } from 'types/store/GetActivePlanState';
 
 type RangeObject = {
@@ -83,5 +84,5 @@ export interface DashboardLandingGeneratedProps {
   userPending: boolean;
   salesData: SalesData;
   topCategoriesData: TopCategoriesData;
-  freeTrialCountdown?: GetActivePlanResponseData;
+  activePlan?: GetActivePlanResponseData;
 }

@@ -12,6 +12,7 @@ import addCartItem from './addCartItem';
 import addLinkedAccount from './addLinkedAccount';
 import addSellerLicense from './addSellerLicense';
 import auth from './auth';
+import cancelSubscriptionPlan from './cancelSubscriptionPlan';
 import cart from './cart';
 import changePassword from './changePassword';
 import chargeCard from './chargeCard';
@@ -101,6 +102,7 @@ import readMarketNotification from './readMarketNotification';
 import readNotification from './readNotification';
 import register from './register';
 import removeCartItem from './removeCartItem';
+import renewSubscriptionPlan from './renewSubscriptionPlan';
 import resendVerification from './resendVerification';
 import resetPassword from './resetPassword';
 import searchAndCountProductType from './searchAndCountProductType';
@@ -110,6 +112,7 @@ import sendDispute from './sendDispute';
 import sendMessage from './sendMessage';
 import sendOrderRating from './sendOrderRating';
 import socket from './socket';
+import subscription from './subscription';
 import updateAddress from './updateAddress';
 import updateBankDetails from './updateBankDetails';
 import updateDefaultCard from './updateDefaultCard';
@@ -120,7 +123,9 @@ import updateMarketInterests from './updateMarketInterests';
 import updateNotificationSettings from './updateNotificationSettings';
 import updatePreferences from './updatePreferences';
 import updateSellerLicense from './updateSellerLicense';
+import updateSubscriptionPlan from './updateSubscriptionPlan';
 import updateUser from './updateUser';
+import upgradeSubscription from './upgradeSubscription';
 import uploadBulk from './uploadBulk';
 import verify from './verify';
 
@@ -129,6 +134,11 @@ export default (routeHistory: History) =>
     Object.fromEntries(
       Object.entries({
         /* PLOP_INJECT_INSTANCE */
+        upgradeSubscription,
+        subscription,
+        renewSubscriptionPlan,
+        updateSubscriptionPlan,
+        cancelSubscriptionPlan,
         getBuyerSearchFilters,
         updatePreferences,
         getActivePlan,

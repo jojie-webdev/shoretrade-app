@@ -13,7 +13,7 @@ import {
   Barcode as BarcodeSVG,
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
-import { SELLER_ROUTES } from 'consts';
+import { SELLER_ACCOUNT_ROUTES, SELLER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
@@ -149,6 +149,9 @@ const SellerRoutes = (): JSX.Element => {
   );
   const isCreatListingSuccess = creatingListingStatus.data?.status === 200;
 
+  const subscription = useSelector((store: Store) => store.subscription);
+  const isAccountDeactivated = subscription.isAccountDeactivated;
+
   const getThemeOverride = (): {
     background?: string;
     screenBackground?: string;
@@ -233,13 +236,24 @@ const SellerRoutes = (): JSX.Element => {
       {...getThemeOverride()}
     >
       <Switch>
-        {ROUTES_ARRAY.map((r) => (
+        {ROUTES_ARRAY.filter(
+          (r) =>
+            (r.title === 'Account' || !isAccountDeactivated) &&
+            (subscription.isFreeTrial ||
+              (!subscription.isFreeTrial && r.title !== 'Upgrade'))
+        ).map((r) => (
           <Route key={r.path} path={`${r.path}`} exact={!r.nested}>
             {r.children}
           </Route>
         ))}
         <Route>
-          <Redirect to="/seller/dashboard" />
+          <Redirect
+            to={
+              isAccountDeactivated
+                ? SELLER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN
+                : '/seller/dashboard'
+            }
+          />
         </Route>
       </Switch>
     </DashboardLayout>

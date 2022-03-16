@@ -51,7 +51,7 @@ const LandingView = (props: LandingGeneratedProps) => {
     updatingImage,
     permission,
     accountCompletion,
-    freeTrialCountdown,
+    activePlan,
   } = props;
 
   const getIcon = (iconName: string) => {
@@ -189,11 +189,8 @@ const LandingView = (props: LandingGeneratedProps) => {
             </div>
           </UserInfoContainer>
 
-          {freeTrialCountdown?.is_free_trial && (
-            <FreeTrialCountdown
-              daysLeft={freeTrialCountdown.countdown}
-              small={true}
-            />
+          {activePlan?.is_free_trial && (
+            <FreeTrialCountdown daysLeft={activePlan.countdown} small={true} />
           )}
         </Col>
 

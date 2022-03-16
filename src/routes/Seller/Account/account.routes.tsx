@@ -1,10 +1,12 @@
 import React from 'react';
 
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
-import { Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
-
 // Screens
+import { Store } from 'types/store/Store';
+
 import AccountCompletion from './AccountCompletion';
 import AddLicense from './AddLicense';
 import Assistants from './Assistants';
@@ -112,13 +114,35 @@ const ROUTES: Routes = {
 const ROUTES_ARRAY: TRoute[] = Object.values(ROUTES).map((value) => value);
 
 const SellerAccountRoutes = (): JSX.Element => {
+  const isAccountDeactivated = useSelector(
+    (store: Store) => store.subscription.isAccountDeactivated
+  );
+
   return (
     <>
-      {ROUTES_ARRAY.map((r) => (
-        <Route key={r.path} path={`${r.path}`} exact>
-          {r.children}
+      <Switch>
+        {ROUTES_ARRAY.filter(
+          (r) =>
+            [
+              SELLER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
+              SELLER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD,
+              SELLER_ACCOUNT_ROUTES.PAYMENT_HISTORY,
+            ].includes(r.path) || !isAccountDeactivated
+        ).map((r) => (
+          <Route key={r.path} path={`${r.path}`} exact>
+            {r.children}
+          </Route>
+        ))}
+        <Route>
+          <Redirect
+            to={
+              isAccountDeactivated
+                ? SELLER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN
+                : SELLER_ACCOUNT_ROUTES.LANDING
+            }
+          />
         </Route>
-      ))}
+      </Switch>
     </>
   );
 };
