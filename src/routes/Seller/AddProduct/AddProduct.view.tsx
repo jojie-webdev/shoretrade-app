@@ -296,7 +296,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
 
         <InnerHeaderContainer currentPage={currentPage}>
           <InnerRouteHeader
-            title={currentPage > 1.5 && !isMobile ? title : ''}
+            title={currentPage > 1.5 ? title : ''}
             onClickBack={() => {
               if (isExisting) {
                 if (currentPage === 9) {
@@ -311,8 +311,6 @@ const AddProductView = (props: AddProductGeneratedProps) => {
               }
             }}
             showIcon={false}
-            subtitle={currentPage > 2 && isMobile ? typeName : undefined}
-            addProductSubtitle={currentPage > 2 && isMobile ? true : false}
           />
           {currentPage === 2 && !isMobile && (
             <SearchContainerDesktop>
