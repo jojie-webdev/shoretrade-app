@@ -311,6 +311,10 @@ export const ItemCard = styled.div`
   .content {
     display: flex;
     flex-direction: row;
+
+    @media ${BREAKPOINTS['sm']} {
+      flex-direction: column;
+    }
   }
 
   .left-content {
@@ -365,10 +369,6 @@ export const ItemCard = styled.div`
     flex: 1;
     padding: 16px 0px;
     flex-wrap: wrap;
-
-    @media ${BREAKPOINTS['sm']} {
-      display: none;
-    }
 
     .data-content {
       display: flex;
