@@ -24,6 +24,7 @@ interface ProductDetailsCard1Props {
   location?: string;
   isFavorite?: boolean;
   onFavorite?: () => void;
+  packaging?: string;
 }
 
 export interface ProductDetailsGeneratedProps {

@@ -5,7 +5,7 @@ import Alert from 'components/base/Alert';
 import Badge from 'components/base/Badge';
 import Divider from 'components/base/Divider';
 import FavoriteButtonView from 'components/base/FavoriteButton';
-import { Expand, Location, Cart } from 'components/base/SVG';
+import { Expand, Location, Cart, Crate } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import BoxRadio from 'components/module/BoxRadio';
@@ -138,9 +138,31 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                     <div style={{ marginLeft: 6 }}>
                       <Expand width={18} height={18} fill={theme.grey.shade5} />
                     </div>
-                    <Typography color="shade9" variant="label">
+                    <Typography
+                      color="shade9"
+                      variant="label"
+                      style={{ marginRight: 10 }}
+                    >
                       {productDetailsCard1Props.size}
                     </Typography>
+                    {productDetailsCard1Props.packaging && (
+                      <>
+                        <div style={{ marginLeft: 6 }}>
+                          <Crate
+                            width={18}
+                            height={18}
+                            fill={theme.grey.shade5}
+                          />
+                        </div>
+                        <Typography
+                          color="shade9"
+                          variant="label"
+                          style={{ marginLeft: 6 }}
+                        >
+                          Packed with {productDetailsCard1Props.packaging}
+                        </Typography>
+                      </>
+                    )}
                   </EstimationsContainer>
                   <StatusContainer>
                     {productDetailsCard1Props.tags?.map((item, index) => {

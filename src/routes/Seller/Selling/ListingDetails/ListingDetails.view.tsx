@@ -12,6 +12,7 @@ import {
   Pen,
   TrashCan,
   Close,
+  Crate,
 } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
@@ -235,6 +236,20 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                       {productDetails.location}
                     </Typography>
                   </div>
+                  {productDetails.packaging && (
+                    <div
+                      className="location-container"
+                      style={{ marginLeft: '8px' }}
+                    >
+                      <Crate width={16} height={16} fill={theme.grey.shade5} />
+                      <Typography
+                        variant="label"
+                        color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                      >
+                        {productDetails.packaging}
+                      </Typography>
+                    </div>
+                  )}
                 </div>
               </ListingCard>
               <ListingCard isCreatListingSuccess={isCreatListingSuccess}>
@@ -466,6 +481,20 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   {productDetails.size}
                 </Typography>
               </div>
+              {productDetails.packaging && (
+                <div
+                  className="location-container"
+                  style={{ marginLeft: '8px' }}
+                >
+                  <Crate width={16} height={16} fill={theme.grey.shade5} />
+                  <Typography
+                    variant="label"
+                    color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                  >
+                    {productDetails.packaging}
+                  </Typography>
+                </div>
+              )}
             </div>
             <div className="tags-container">
               {productDetails.tags.map(({ label, type }) => (

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Badge from 'components/base/Badge';
-import { Crates, Location } from 'components/base/SVG';
+import { Crate, Location } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { ADDITIONAL_INFOS } from 'consts/listingAdditionalInfos';
 import { Row, Col } from 'react-grid-system';
@@ -276,9 +276,10 @@ const Preview = (props: PreviewProps): JSX.Element => {
               <Badge
                 badgeColor={theme.isSFM ? SpecialColors.blue : undefined}
                 style={{ marginTop: '4px' }}
+                padding="0 6px"
               >
-                <Crates
-                  width={8.5}
+                <Crate
+                  width={14}
                   fill={theme.isSFM ? theme.grey.noshade : undefined}
                 />
               </Badge>

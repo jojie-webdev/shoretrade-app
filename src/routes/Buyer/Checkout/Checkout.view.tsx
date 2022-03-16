@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Accordion from 'components/base/Accordion/Accordion.view';
 import Button from 'components/base/Button';
-import { Cart, Crab, LuggageCart } from 'components/base/SVG';
+import { Cart, Crab, Crate } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import CheckoutCard from 'components/module/CheckoutCard/CheckoutCard.view';
 import Loading from 'components/module/Loading';
@@ -87,7 +87,7 @@ const Orders = (props: CheckoutGeneratedProps) => {
           {!!item.totalCrateFee && item.totalCrateFee > 0 && (
             <CrateFee>
               <div className="crate-fee-label">
-                <LuggageCart fill={theme.grey.shade6} />
+                <Crate fill={theme.grey.shade6} />
                 {isMobile ? (
                   <Typography variant="label" weight="700">
                     Crate Fee and Levies

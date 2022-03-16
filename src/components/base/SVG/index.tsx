@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+export { default as Crate } from './Crate';
 export { default as LogOut } from './LogOut';
 export { default as CatchNet } from './CatchNet';
 export { default as ClipboardNotes } from './ClipboardNotes';

@@ -338,6 +338,7 @@ const ProductDetails = (): JSX.Element => {
         }, ${currentListing?.address.countryCode || ''}, ${
           currentListing?.address.postcode || ''
         }`,
+    packaging: currentListing?.packaging?.label,
   };
   const productDetailsCard6Props: ProductDetailsCard6Props = {
     price: price.toFixed(2),

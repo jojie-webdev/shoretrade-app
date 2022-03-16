@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  Crate,
   LogOut,
   CatchNet,
   ClipboardNotes,
@@ -220,6 +221,9 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background="white">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="Crate">
+          <Crate width={30} height={30} />
+        </Wrapper>
         <Wrapper label="LogOut">
           <LogOut width={30} height={30} />
         </Wrapper>
