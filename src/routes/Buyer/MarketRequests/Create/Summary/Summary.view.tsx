@@ -31,6 +31,7 @@ import {
   CheckboxContainer,
   CheckboxMain,
   StyledAddressSelect,
+  SummarySectionContainer,
 } from './Summary.style';
 
 const SummaryView = (props: SummaryProps) => {
@@ -76,16 +77,12 @@ const SummaryView = (props: SummaryProps) => {
     return (
       <div>
         {items[0] !== '' && (
-          <>
-            <Typography
-              style={{ marginBottom: '8px' }}
-              color="shade10"
-              variant="overline"
-            >
+          <SummarySectionContainer>
+            <Typography color="shade10" variant="overline">
               {label}
             </Typography>
             <BadgesContainer>{tagsMarkup}</BadgesContainer>
-          </>
+          </SummarySectionContainer>
         )}
       </div>
     );
@@ -108,7 +105,7 @@ const SummaryView = (props: SummaryProps) => {
               Size
             </Typography>
             <Badge
-              className="offers-state-badge"
+              className={`.offers-state-badge`}
               badgeColor={theme.grey.shade3}
             >
               <BadgeText color="shade9" weight="900" variant="overline">
@@ -216,15 +213,19 @@ const SummaryView = (props: SummaryProps) => {
                 })}
               </>
             )}
-            <div className="size-container">{sizeSummary()}</div>
-            <Typography
-              style={{ marginBottom: '8px' }}
-              color="shade10"
-              variant="overline"
-            >
-              Quantity
-            </Typography>
-            <div className="quantity-container">
+            <SummarySectionContainer className="size-container">
+              {sizeSummary()}
+            </SummarySectionContainer>
+
+            <SummarySectionContainer className="quantity-container">
+              {' '}
+              <Typography
+                style={{ marginBottom: '8px' }}
+                color="shade10"
+                variant="overline"
+              >
+                Quantity
+              </Typography>
               <Row style={{ marginLeft: 0, marginBottom: 24 }}>
                 <div>
                   <Badge
@@ -274,7 +275,6 @@ const SummaryView = (props: SummaryProps) => {
                 options={props.addressOptions}
                 label="Shipping To"
               />
-
               <CheckboxMain>
                 <Typography
                   style={{ marginBottom: 4 }}
@@ -293,7 +293,7 @@ const SummaryView = (props: SummaryProps) => {
                   </Typography>
                 </CheckboxContainer>
               </CheckboxMain>
-            </div>
+            </SummarySectionContainer>
             <Hidden xs>
               <SubmitButton
                 onClick={() => handleSubmit()}

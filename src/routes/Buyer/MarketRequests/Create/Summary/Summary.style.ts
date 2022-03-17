@@ -16,14 +16,9 @@ export const SummaryContentContainer = styled(
     margin-top: 1rem;
   }
 
-  .size-container {
-    margin-bottom: 24px;
-  }
-
   .quantity-container {
     display: flex;
     flex-direction: column;
-    margin-bottom: 24px;
 
     .text-field {
       margin-bottom: 1rem;
@@ -40,7 +35,8 @@ export const StyledTextField = styled(TextField)``;
 export const BadgesContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 24px;
+  margin-top: 8px;
+  margin-bottom: -0.6rem; // offset
 
   .offers-state-badge {
     margin-right: 0.6rem;
@@ -75,4 +71,8 @@ export const StyledAddressSelect = styled(Select)`
   .dropdownSelectContainer {
     height: auto;
   }
+`;
+
+export const SummarySectionContainer = styled.div`
+  margin-top: 24px;
 `;
