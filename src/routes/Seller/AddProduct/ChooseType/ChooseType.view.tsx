@@ -246,7 +246,7 @@ const ChooseType = ({
                 </Typography>
               )}
 
-              {(!desktopSearchValue && productsToSell.length
+              {(!(desktopSearchValue || searchKey) && productsToSell.length
                 ? productsToSell
                 : searchResults
               ).map((item, index) => (
