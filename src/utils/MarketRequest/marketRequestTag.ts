@@ -37,7 +37,7 @@ const descriptions: Record<statuses, string> = {
     'The offer has automatically closed due to missed payment.' ||
     'The Buyer needs to process the payment for the accepted offer. ',
   CLOSED: 'Closed',
-  FINALISED: 'This offer is now Order #0000-:t0.',
+  FINALISED: 'This offer is now Order :t0.',
   PAYMENT_MISSED: 'The offer has automatically closed due to missed payment.',
   DECLINED: 'Your offer was declined by the Buyer. ',
   NO_OFFERS: '',

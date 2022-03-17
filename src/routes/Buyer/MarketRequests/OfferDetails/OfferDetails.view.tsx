@@ -49,6 +49,7 @@ import {
   HeaderContainer,
   AlertsContainer,
 } from './OfferDetails.style';
+import { formatOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
 
 const OfferDetailsView = (props: OfferDetailsProps) => {
   const {
@@ -175,7 +176,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
     theme,
     selectedOffer.statusText,
     false,
-    [`${selectedOffer.orderRefNumber}`]
+    [`${formatOrderReferenceNumber(selectedOffer.orderRefNumber)}`]
   );
 
   const AlertContent = (props: { text: string; description: string }) => {

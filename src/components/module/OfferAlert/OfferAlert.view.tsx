@@ -10,6 +10,7 @@ import { useHistory } from 'react-router';
 
 import { OfferAlertProps } from './OfferAlert.props';
 import { Container } from './OfferAlert.style';
+import { formatOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
 
 const OfferAlert = (props: OfferAlertProps): JSX.Element => {
   // const theme = useTheme();
@@ -70,7 +71,11 @@ const OfferAlert = (props: OfferAlertProps): JSX.Element => {
             onClick={() => history.replace(BUYER_ROUTES.ORDERS)}
             style={{ cursor: 'pointer' }}
           >
-            {contentTypo(`This offer is now Order #0000-${orderRefNumber}.`)}
+            {contentTypo(
+              `This offer is now Order ${formatOrderReferenceNumber(
+                Number(orderRefNumber)
+              )}.`
+            )}
           </span>
         ),
       };
