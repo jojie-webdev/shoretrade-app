@@ -135,14 +135,12 @@ const HomeView = (props: HomeGeneratedProps) => {
         </div>
       )}
 
-      {!!activePlan && (
-        <div className="wrapper">
-          <Credit creditState={creditState} loading={loading} />
-          <Col xs={12}>
-            <SearchAddress />
-          </Col>
-        </div>
-      )}
+      <div className="wrapper">
+        <Credit creditState={creditState} loading={loading} />
+        <Col xs={12}>
+          <SearchAddress />
+        </Col>
+      </div>
 
       {/* Main Content */}
       {loadingHomePage ? (
