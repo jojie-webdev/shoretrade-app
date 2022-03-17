@@ -69,7 +69,7 @@ const Dashboard = (): JSX.Element => {
   const isDashboardPending =
     useSelector((state: Store) => state.getSellerDashboardSales.pending) ||
     false;
-  const isLoading = isDashboardPending || subscription.status === null;
+  const isLoading = isDashboardPending; //|| subscription.status === null;
 
   const toggleModal = () => setIsCalendarModalOpen(!isCalendarModalOpen);
 
