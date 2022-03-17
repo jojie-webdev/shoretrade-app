@@ -164,7 +164,9 @@ const Step1 = ({
     const latestBuyerNego = buyerNegos.slice(-1)[0];
 
     const currentOfferPrice =
-      acceptedOffer?.price || latestSellerNego?.price || activeOffer.price;
+      acceptedOffer?.price ||
+      latestSellerNego?.price ||
+      activeOffer.originalOfferPrice;
 
     // buyerNegos is always greater or equal sellerNegos
     // if buyerNegos is greater than sellerNegos, updatedPrice is latestBuyerNego
@@ -263,7 +265,7 @@ const Step1 = ({
                 Your Offer
               </Typography>
               <Typography variant="label" weight="bold" color="noshade">
-                {toPrice(activeOffer.price)}/{unit}
+                {toPrice(activeOffer.originalOfferPrice)}/{unit}
               </Typography>
             </div>
           )}

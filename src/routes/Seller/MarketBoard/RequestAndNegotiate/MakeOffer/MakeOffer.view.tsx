@@ -170,7 +170,7 @@ const MakeOfferView = ({ errors, ...props }: MakeOfferGeneratedProps) => {
               'You need to make sure that the product is available if the buyer accepts.'
             }
             style={{
-              marginBottom: 32,
+              marginBottom: 24,
             }}
           />
           <Typography

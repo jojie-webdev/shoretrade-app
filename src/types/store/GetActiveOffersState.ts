@@ -52,6 +52,7 @@ export type GetActiveOffersRequestResponseItem = {
   createdAt: string;
   deliveryDate?: string;
   price: number;
+  originalOfferPrice: number;
   weight: number;
   image: string;
   name: string;
