@@ -130,12 +130,12 @@ const Offer = (props: OfferItemProps) => {
             <Typography variant="label" style={{ lineHeight: '20px' }}>
               {sellerOffer?.company?.name}
             </Typography>
-            <StarRating
+            {/* <StarRating
               rating={sellerOffer?.company?.rating || 0}
               spacing={3}
               starSize={12}
               unfilledColor={theme.brand.alert}
-            />
+            /> */}
           </MajorInfoContainer>
         </MajorInfo>
 
@@ -243,12 +243,12 @@ const Offer = (props: OfferItemProps) => {
                 >
                   {sellerOffer.company.name}
                 </Typography>
-                <StarRating
+                {/* <StarRating
                   rating={sellerOffer?.company?.rating || 0}
                   spacing={3}
                   starSize={12}
                   unfilledColor={theme.brand.alert}
-                />
+                /> */}
               </MajorInfoNonMobileContainer>
             </Col>
 
