@@ -30,4 +30,8 @@ export const bulkListingToCreateListing = (
   isPreAuctionSale: data?.isPreAuctionSale || false,
   isAuctionSale: data?.isAuctionSale || false,
   auctionDate: data?.auctionDate || null,
+  quality: data?.quality || null,
+  isIkeJime: data?.isIkeJime || false,
+  isIceSlurry: data?.isIceSlurry || false,
+  packaging: data?.packaging || null,
 });

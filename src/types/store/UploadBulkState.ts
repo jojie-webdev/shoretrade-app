@@ -44,6 +44,9 @@ export type UploadBulkState = {
   isPreAuctionSale: boolean;
   isAuctionSale: boolean;
   auctionDate: string | null;
+  isIkeJime: boolean;
+  isIceSlurry: boolean;
+  packaging: { id: string | null } | null;
 };
 
 export type UploadBulkPayload = GenericResponse<{

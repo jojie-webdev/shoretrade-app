@@ -36,6 +36,10 @@ export type CreateBulkListingRequestData = {
   isPreAuctionSale: boolean;
   isAuctionSale: boolean;
   auctionDate: string | null;
+  quality: string | null;
+  isIkeJime: boolean;
+  isIceSlurry: boolean;
+  packaging: { id: string | null } | null;
 };
 
 export type CreateBulkListingPayload = GenericResponse;
