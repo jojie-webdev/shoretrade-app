@@ -11,7 +11,7 @@ export const parseOrderReferenceNumber = (value: string) => {
   }
 
   // check if in reference number format
-  if ((value.includes('#') && value.includes('-')) || value.includes('-')) {
+  if (value[0] === '#') {
     return Number(value.replace('#', '').replace('-', '')).toFixed(0);
   }
 

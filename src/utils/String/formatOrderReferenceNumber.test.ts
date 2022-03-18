@@ -17,10 +17,19 @@ describe('parseOrderReferenceNumber', () => {
       });
     });
 
-  describe('when value starts with # symbol', () => {
+  describe('when value starts with # symbol and contains -', () => {
     it('should return the next non zero values', () => {
       const input = '#0000-0123';
       const expected = '123';
+      const result = parseOrderReferenceNumber(input);
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when value starts with # symbol', () => {
+    it('should return the next non zero values', () => {
+      const input = '#123456';
+      const expected = '123456';
       const result = parseOrderReferenceNumber(input);
       expect(result).toEqual(expected);
     });
