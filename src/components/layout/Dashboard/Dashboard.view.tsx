@@ -202,9 +202,7 @@ const Header = ({
             notifTotal={totalNotifs}
             unreadTotal={totalUnreadNotifs}
           />
-          {!onBack && theme.appType === 'buyer' && (
-            <Cart cartItems={cartItems} />
-          )}
+          {theme.appType === 'buyer' && <Cart cartItems={cartItems} />}
         </HeaderRightContent>
       }
     />
