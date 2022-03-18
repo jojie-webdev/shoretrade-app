@@ -727,7 +727,7 @@ const AddDetails = ({
           <DatePickerDropdown
             placeholder={alwaysAvailable ? 'Always Available' : ''}
             label="Catch Date"
-            date={catchDate ? moment(catchDate) : null}
+            date={!alwaysAvailable && catchDate ? moment(catchDate) : null}
             onDateChange={(d) => {
               setCatchDate(d?.toDate() || null);
               setAlwaysAvailable(false);
