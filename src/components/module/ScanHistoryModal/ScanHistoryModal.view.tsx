@@ -44,11 +44,11 @@ const ScanHistoryModal = (props: ScanHistoryModalProps): JSX.Element => {
                 variant="caption"
                 color={isBuyer ? 'shade7' : 'noshade'}
               >
-                {`${moment(scanData.updated_at).format('DD MMM YYYY hh:mm a')}${
-                  ['BUYER', 'SELLER'].includes(scanData.user_role_alias)
+                {`${moment(sh.updated_at).format('DD MMM YYYY hh:mm a')}${
+                  ['BUYER', 'SELLER'].includes(sh.user_role_alias)
                     ? ''
                     : ` at ${
-                        MARKET_BY_ROLES[scanData.user_role_alias] ||
+                        MARKET_BY_ROLES[sh.user_role_alias] ||
                         MARKET_BY_ROLES.DEFAULT
                       }`
                 }`}
