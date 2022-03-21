@@ -45,6 +45,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
     searchPreferences,
     updatePreferences,
     initialisedPreferences,
+    clearUpdate,
   } = props;
   const theme = useTheme();
   const history = useHistory();
@@ -72,6 +73,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
         })) ?? buyingStates
       );
       setSelectedMinBuyingQty(searchPreferences.weight ?? 0);
+      clearUpdate();
     }
   }, [initialisedPreferences]);
 

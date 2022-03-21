@@ -35,4 +35,5 @@ export interface SearchAddressProps {
   searchPreferences: UserSearchPreferences;
   updatePreferences: (v: UpdatePreferencesMeta) => void;
   initialisedPreferences: boolean;
+  clearUpdate: () => void;
 }
