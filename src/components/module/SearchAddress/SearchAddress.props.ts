@@ -34,4 +34,5 @@ export interface SearchAddressProps {
   minBuyingQuantity: number;
   searchPreferences: UserSearchPreferences;
   updatePreferences: (v: UpdatePreferencesMeta) => void;
+  initialisedPreferences: boolean;
 }
