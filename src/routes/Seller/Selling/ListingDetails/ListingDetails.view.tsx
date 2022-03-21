@@ -236,20 +236,55 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                       {productDetails.location}
                     </Typography>
                   </div>
-                  {productDetails.packaging && (
-                    <div
-                      className="location-container"
-                      style={{ marginLeft: '8px' }}
+                </div>
+                {productDetails.packaging && (
+                  <div className="packaging-container">
+                    <Crate width={16} height={16} fill={theme.grey.shade5} />
+                    <Typography
+                      variant="label"
+                      color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
                     >
-                      <Crate width={16} height={16} fill={theme.grey.shade5} />
+                      {productDetails.packaging}
+                    </Typography>
+                  </div>
+                )}
+              </ListingCard>
+              <ListingCard>
+                <div className="seller-details-container">
+                  {productDetails.vendor.uri ? (
+                    <SellerPreview src={productDetails.vendor.uri} />
+                  ) : (
+                    <NoProfilePic>
+                      <PlaceholderProfile width={90} height={90} />
+                    </NoProfilePic>
+                  )}
+                  <div className="seller-container">
+                    <Typography
+                      color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                      weight="bold"
+                    >
+                      {productDetails.vendor.name}
+                    </Typography>
+                    <div>
+                      <Location
+                        width={16}
+                        height={16}
+                        fill={theme.grey.shade5}
+                      />
                       <Typography
                         variant="label"
                         color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
                       >
-                        {productDetails.packaging}
+                        {productDetails.listingAddress}
                       </Typography>
                     </div>
-                  )}
+                    <div>
+                      {/* <StarRating
+                      rating={productDetails.vendor.rating || 0}
+                      style={{ marginTop: '5px' }}
+                    /> */}
+                    </div>
+                  </div>
                 </div>
               </ListingCard>
               <ListingCard isCreatListingSuccess={isCreatListingSuccess}>

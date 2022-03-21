@@ -301,6 +301,17 @@ export const MobileWrapper = styled.div`
     }
   }
 
+  .packaging-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 8px;
+
+    svg {
+      margin-left: -3px;
+      margin-right: 4px;
+    }
+  }
+
   .size-container {
     display: flex;
     flex-direction: row;
@@ -354,6 +365,23 @@ export const ListingCard = styled.div<{ isCreatListingSuccess?: boolean }>`
   border-radius: 4px;
   border: ${({ theme, isCreatListingSuccess }) =>
     isCreatListingSuccess ? 'none' : `1px solid ${theme.grey.shade3}`};
+
+  .seller-details-container {
+    display: flex;
+    flex-direction: row;
+
+    .seller-container {
+      display: flex;
+      flex-direction: column;
+      margin-top: 3%;
+
+      > div {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+    }
+  }
 `;
 
 export const MobileSalesCard = styled(ListingCard)`
