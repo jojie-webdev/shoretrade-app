@@ -80,6 +80,7 @@ export const DEFAULT_TABLE_SETTINGS = {
 export const COLUMN_GROUPS = [
   ['price', 'size'],
   ['remainingWeight', 'endDate'],
+  ['catchDate', 'auctionDate'],
 ];
 
 const DIRECT_SALE_COLUMNS = [

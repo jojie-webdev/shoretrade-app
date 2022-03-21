@@ -183,6 +183,7 @@ export default function ListingContainer() {
     setIsAllSelected(false);
     setSelectedIds([]);
     setUnselectedIds([]);
+    setTableSettings(DEFAULT_TABLE_SETTINGS[activeTab as keyof CounterProps]);
     // eslint-disable-next-line
   }, [activeTab]);
 
