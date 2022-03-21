@@ -153,6 +153,28 @@ export const AccordionTitleContainer = styled.div<{
   }
 `;
 
+export const MobileAccordionTitleContainer = styled.div<{
+  border?: string;
+}>`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  .label {
+    margin-right: 10px;
+  }
+
+  .first-section {
+    margin-bottom: 8px;
+    .icon {
+      float: left;
+      position: relative;
+      bottom: 2px;
+      margin-right: 8px;
+    }
+  }
+`;
+
 export const AlertContainer = styled.div`
   overflow: hidden;
   height: 98px;

@@ -26,20 +26,42 @@ export const OrderInfoContainer = styled.div`
     text-align: right;
   }
 
+  .detail-container {
+    display: flex;
+    justify-content: space-between;
+
+    .group {
+      display: flex;
+      justify-content: space-between;
+      width: 40%;
+
+      .group-item {
+      }
+    }
+    .group-reverse {
+      flex-direction: row-reverse;
+    }
+  }
+
   @media ${BREAKPOINTS['sm']} {
     border: none;
+    background: none;
     border-radius: 0;
-
-    .end-text {
-      text-align: left;
-    }
-
-    .btn-rate-seller {
-      margin: auto 0 auto auto !important;
-    }
+    padding-bottom: 0px;
 
     .detail-container {
-      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+
+      .group {
+        display: block;
+        width: auto;
+
+        .group-item {
+          margin-bottom: 12px;
+          height: 52px;
+        }
+      }
     }
   }
 `;
@@ -75,7 +97,7 @@ export const OrderItemsContainer = styled.div`
   }
 
   @media ${BREAKPOINTS['sm']} {
-    padding: 8px 0;
+    padding: 8px;
     background: none;
     border: none;
     border-radius: 0;

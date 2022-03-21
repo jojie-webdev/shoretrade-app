@@ -43,116 +43,103 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
   return (
     <OrderItemContainer>
       <OrderInfoContainer theme={theme}>
-        <Row nogutter={true}>
-          <Col sm={10} className="detail-container">
-            <Row nogutter={true}>
-              <Col xs={4}>
-                <DetailsContainer>
-                  <Typography variant="label" color="shade6">
-                    Order no.
-                  </Typography>
-                  {props.data.isCollectable && (
-                    <CollectableBadge
-                      style={{
-                        padding: '4px 5px',
-                        width: '20px',
-                        marginLeft: '4px',
-                      }}
-                    >
-                      <Check fill="#fff" />
-                    </CollectableBadge>
-                  )}
-                </DetailsContainer>
-                <DetailsContainer>
-                  <Typography color="shade9">
-                    {props.data.orderNumber}
-                  </Typography>
-                </DetailsContainer>
-              </Col>
-              <Col xs={4}>
+        <div className="detail-container">
+          <div className="group">
+            <div className="group-item">
+              <DetailsContainer>
                 <Typography variant="label" color="shade6">
-                  Seller
+                  Order no.
                 </Typography>
-                <DetailsContainer>
-                  <Typography color="shade9">{props.data.seller}</Typography>
-                  {props.completedOrder && (
-                    <StyledTouchable
-                      onPress={() => props.onRateClick && props.onRateClick()}
-                      bgColor={rating ? theme.brand.primary : undefined}
+                {props.data.isCollectable && (
+                  <CollectableBadge
+                    style={{
+                      padding: '4px 5px',
+                      width: '20px',
+                      marginLeft: '4px',
+                    }}
+                  >
+                    <Check fill="#fff" />
+                  </CollectableBadge>
+                )}
+              </DetailsContainer>
+              <DetailsContainer>
+                <Typography color="shade9">{props.data.orderNumber}</Typography>
+              </DetailsContainer>
+            </div>
+            <div className="group-item">
+              <Typography variant="label" color="shade6">
+                Seller
+              </Typography>
+              <DetailsContainer>
+                <Typography color="shade9">{props.data.seller}</Typography>
+                {props.completedOrder && (
+                  <StyledTouchable
+                    onPress={() => props.onRateClick && props.onRateClick()}
+                    bgColor={rating ? theme.brand.primary : undefined}
+                  >
+                    <div className="svg-container">
+                      <Star
+                        width={13}
+                        height={13}
+                        fill={rating ? theme.grey.noshade : theme.brand.primary}
+                      />
+                    </div>
+                    <Typography
+                      variant="label"
+                      color={rating ? 'noshade' : 'shade9'}
                     >
-                      <div className="svg-container">
-                        <Star
-                          width={13}
-                          height={13}
-                          fill={
-                            rating ? theme.grey.noshade : theme.brand.primary
-                          }
-                        />
-                      </div>
-                      <Typography
-                        variant="label"
-                        color={rating ? 'noshade' : 'shade9'}
-                      >
-                        {rating ? `${rating}` : 'Rate'}
-                      </Typography>
-                    </StyledTouchable>
-                  )}
-                </DetailsContainer>
-              </Col>
-
-              <Col xs={4}>
-                <Typography color="shade6" variant="label">
-                  Ordered By:
-                </Typography>
-                <Typography color="shade9">{props.data.orderedBy}</Typography>
-              </Col>
-            </Row>
-          </Col>
-
-          <Col
-            sm={2}
-            style={{
-              alignItems: 'center',
-              display: 'flex',
-              justifyContent: 'flex-end',
-            }}
-          >
-            {props.data.isPending ? (
-              <div
-                style={{
-                  background: theme.brand.alert,
-                  borderRadius: '8px',
-                  padding: '3px 8px',
-                  width: 'fit-content',
-                }}
-              >
-                <Typography
-                  color="shade9"
-                  variant="caption"
-                  style={{ lineHeight: '15px' }}
+                      {rating ? `${rating}` : 'Rate'}
+                    </Typography>
+                  </StyledTouchable>
+                )}
+              </DetailsContainer>
+            </div>
+          </div>
+          <div className="group group-reverse">
+            <div className="group-item">
+              {props.data.isPending ? (
+                <div
+                  style={{
+                    background: theme.brand.alert,
+                    borderRadius: '8px',
+                    padding: '3px 8px',
+                    width: 'fit-content',
+                  }}
                 >
-                  To be confirmed
-                </Typography>
-              </div>
-            ) : (
-              <StyledTouchable
-                onPress={() => {
-                  window.open(
-                    `${API.URL}/${API.VERSION}/order/invoice/${props.data.orderRefNumber}?token=${props.token}`,
-                    '_blank'
-                  );
-                }}
-              >
-                <div className="svg-container">
-                  <DownloadFile />
+                  <Typography
+                    color="shade9"
+                    variant="caption"
+                    style={{ lineHeight: '15px' }}
+                  >
+                    To be confirmed
+                  </Typography>
                 </div>
-                <Typography variant="label" color="shade9">
-                  Invoice
-                </Typography>
-              </StyledTouchable>
-            )}
-          </Col>
-        </Row>
+              ) : (
+                <StyledTouchable
+                  onPress={() => {
+                    window.open(
+                      `${API.URL}/${API.VERSION}/order/invoice/${props.data.orderRefNumber}?token=${props.token}`,
+                      '_blank'
+                    );
+                  }}
+                >
+                  <div className="svg-container">
+                    <DownloadFile />
+                  </div>
+                  <Typography variant="label" color="shade9">
+                    Invoice
+                  </Typography>
+                </StyledTouchable>
+              )}
+            </div>
+            <div className="group-item">
+              <Typography color="shade6" variant="label">
+                Ordered By:
+              </Typography>
+              <Typography color="shade9">{props.data.orderedBy}</Typography>
+            </div>
+          </div>
+        </div>
       </OrderInfoContainer>
 
       <OrderItemsContainer>

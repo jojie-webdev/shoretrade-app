@@ -5,9 +5,11 @@ import Typography from 'components/base/Typography';
 import OrderItemView from 'components/module/OrderItem';
 import Pagination from 'components/module/Pagination';
 import { DEFAULT_PAGE_LIMIT } from 'consts';
+import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
 import { omit } from 'ramda';
 import { Col, Row } from 'react-grid-system';
+import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router';
 import { ScanHistoryItem } from 'types/store/GetSellerOrdersState';
 import { Theme } from 'types/Theme';
@@ -20,6 +22,7 @@ import {
   CollectableBadge,
   AccordionTitleContainer,
   TitleRow,
+  MobileAccordionTitleContainer,
 } from '../Orders.style';
 import { GroupedOrderItemsProps } from './GroupedOrderItems.props';
 
@@ -44,6 +47,7 @@ export const OrderItemAccordion = (
   }
 ) => {
   const theme = useTheme();
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const {
     groupKey,
     groupName,
@@ -74,33 +78,71 @@ export const OrderItemAccordion = (
       iconColor={theme.brand.primary}
       type="plus"
       leftComponent={
-        <AccordionTitleContainer>
-          <span
-            style={{
-              background: theme.grey.shade2,
-              borderRadius: '8px',
-              marginRight: '8px',
-            }}
-          >
-            {getDeliveryIcon(theme, groupName)}
-          </span>
-          <div>
-            <Typography variant="label" color="shade9" className="center-text">
-              {deliveryMethodLabel}
-            </Typography>
-
-            {!isRoadDelivery && deliveryAddress && (
-              <Typography
-                variant="caption"
-                color="shade6"
-                fontStyle="italic"
-                className="center-text"
+        <>
+          {isMobile ? (
+            <MobileAccordionTitleContainer>
+              <div className="first-section">
+                <span className="icon">
+                  {getDeliveryIcon(theme, groupName)}
+                </span>
+                <Typography
+                  variant="label"
+                  color="shade9"
+                  className="center-text"
+                >
+                  {deliveryMethodLabel}
+                  {!isRoadDelivery && deliveryAddress && (
+                    <Typography
+                      variant="caption"
+                      color="shade6"
+                      fontStyle="italic"
+                      className="center-text"
+                    >
+                      {deliveryAddress}
+                    </Typography>
+                  )}
+                </Typography>
+              </div>
+              <OrderBadge>
+                <Typography color="shade9" variant="overlineSmall">
+                  {orderCount} {orderCount > 1 ? 'Orders' : 'Order'}
+                </Typography>
+              </OrderBadge>
+            </MobileAccordionTitleContainer>
+          ) : (
+            <AccordionTitleContainer>
+              <span
+                style={{
+                  background: theme.grey.shade2,
+                  borderRadius: '8px',
+                  marginRight: '8px',
+                }}
               >
-                {deliveryAddress}
-              </Typography>
-            )}
-          </div>
-        </AccordionTitleContainer>
+                {getDeliveryIcon(theme, groupName)}
+              </span>
+              <div>
+                <Typography
+                  variant="label"
+                  color="shade9"
+                  className="center-text"
+                >
+                  {deliveryMethodLabel}
+                </Typography>
+
+                {!isRoadDelivery && deliveryAddress && (
+                  <Typography
+                    variant="caption"
+                    color="shade6"
+                    fontStyle="italic"
+                    className="center-text"
+                  >
+                    {deliveryAddress}
+                  </Typography>
+                )}
+              </div>
+            </AccordionTitleContainer>
+          )}
+        </>
       }
       rightComponent={
         <>
@@ -111,11 +153,13 @@ export const OrderItemAccordion = (
               </Typography>
             </CollectableBadge>
           )}
-          <OrderBadge>
-            <Typography color="shade9" variant="overlineSmall">
-              {orderCount} {orderCount > 1 ? 'Orders' : 'Order'}
-            </Typography>
-          </OrderBadge>
+          {!isMobile && (
+            <OrderBadge>
+              <Typography color="shade9" variant="overlineSmall">
+                {orderCount} {orderCount > 1 ? 'Orders' : 'Order'}
+              </Typography>
+            </OrderBadge>
+          )}
         </>
       }
     >
