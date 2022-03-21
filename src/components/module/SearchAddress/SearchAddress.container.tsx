@@ -149,7 +149,7 @@ const SearchAddress = (): JSX.Element => {
         },
       });
     }
-  }, [searchPreferences]);
+  }, [searchPreferences, buyerSearchFilters]);
 
   useEffect(() => {
     if (searchTerm.length > 2) {
