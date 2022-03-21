@@ -47,6 +47,11 @@ const SearchAddress = (): JSX.Element => {
     (state: Store) => state.updatePreferences.pending
   );
 
+  const clearUpdate = () => {
+    setHasInitPreferences(false);
+    dispatch(updatePreferencesActions.clear());
+  };
+
   const companyId = GetDefaultCompany()?.id || '';
 
   const addresses =
@@ -221,6 +226,7 @@ const SearchAddress = (): JSX.Element => {
       loadingUpdatePref === false &&
       Object.keys(searchPreferences).length > 0 &&
       hasInitPreferences,
+    clearUpdate,
   };
 
   if (loadingUser) return <></>;
