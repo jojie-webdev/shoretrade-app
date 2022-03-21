@@ -579,6 +579,12 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                   </NoProfilePic>
                 )}
                 <div className="seller-container">
+                  <Typography
+                    color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
+                    weight="bold"
+                  >
+                    {productDetails.vendor.name}
+                  </Typography>
                   <div>
                     <Location width={16} height={16} fill={theme.grey.shade5} />
                     <Typography
@@ -588,12 +594,6 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                       {productDetails.listingAddress}
                     </Typography>
                   </div>
-                  <Typography
-                    color={!isCreatListingSuccess ? 'shade9' : 'noshade'}
-                    weight="bold"
-                  >
-                    {productDetails.vendor.name}
-                  </Typography>
                   <div>
                     {/* <StarRating
                       rating={productDetails.vendor.rating || 0}
