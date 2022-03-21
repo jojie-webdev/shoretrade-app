@@ -44,6 +44,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
     minBuyingQuantity,
     searchPreferences,
     updatePreferences,
+    initialisedPreferences,
   } = props;
   const theme = useTheme();
   const history = useHistory();
@@ -61,6 +62,18 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
     searchPreferences.weight ?? 0
   );
   const [selectedMetric, setSelectedMetric] = useState('ALL');
+
+  useEffect(() => {
+    if (initialisedPreferences) {
+      setSelectedBuyingStates(
+        searchPreferences.states?.map((s) => ({
+          label: s,
+          value: s,
+        })) ?? buyingStates
+      );
+      setSelectedMinBuyingQty(searchPreferences.weight ?? 0);
+    }
+  }, [initialisedPreferences]);
 
   function blurOnEnter(event: any) {
     if (event.key === 'Enter' && inputRef !== null) {

@@ -24,6 +24,7 @@ import SearchAddressView from './SearchAddress.view';
 
 const SearchAddress = (): JSX.Element => {
   const dispatch = useDispatch();
+  const [hasInitPreferences, setHasInitPreferences] = useState(false);
   //#region Address
 
   useEffect(() => {
@@ -40,6 +41,10 @@ const SearchAddress = (): JSX.Element => {
 
   const buyerSearchFilters = useSelector(
     (state: Store) => state.getBuyerSearchFilters.data?.data.filters
+  );
+
+  const loadingUpdatePref = useSelector(
+    (state: Store) => state.updatePreferences.pending
   );
 
   const companyId = GetDefaultCompany()?.id || '';
@@ -148,6 +153,7 @@ const SearchAddress = (): JSX.Element => {
           weight: Number(buyerSearchFilters?.minimum_order || '0'),
         },
       });
+      setHasInitPreferences(true);
     }
   }, [searchPreferences, buyerSearchFilters]);
 
@@ -211,6 +217,10 @@ const SearchAddress = (): JSX.Element => {
     minBuyingQuantity: Number(buyerSearchFilters?.minimum_order || '0'),
     searchPreferences,
     updatePreferences,
+    initialisedPreferences:
+      loadingUpdatePref === false &&
+      Object.keys(searchPreferences).length > 0 &&
+      hasInitPreferences,
   };
 
   if (loadingUser) return <></>;
