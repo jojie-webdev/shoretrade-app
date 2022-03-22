@@ -410,7 +410,7 @@ const SoldItem = (props: {
                         <div className="right-content-alternate">
                           <div className="data-content">
                             <ItemDetail variant="caption" color="shade6">
-                              Sold Weight <span>{order.weight}</span>
+                              Total Weight <span>{order.weight}</span>
                             </ItemDetail>
                           </div>
                           <div className="data-content">
@@ -418,6 +418,9 @@ const SoldItem = (props: {
                               Price per {formatUnitToPricePerUnit(order.unit)}{' '}
                               <span>{order.price}</span>
                             </ItemDetail>
+                          </div>
+                          <div className="data-content">
+                            {renderSoldWeight()}
                           </div>
                           <div className="data-content">
                             <ItemDetail variant="caption" color="shade6">
@@ -442,7 +445,7 @@ const SoldItem = (props: {
                           flex: 1,
                         }}
                       >
-                        <div className="buttons" style={{ flex: 1 }}>
+                        <div className="buttons">
                           {index === v.orders.length - 1 ? (
                             <div className="downloads-menu">
                               <Button
