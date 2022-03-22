@@ -1,5 +1,6 @@
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
+import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
@@ -308,6 +309,10 @@ export const DetailsContentContainer = styled.div`
   flex-direction: column;
   margin-left: -8px;
   margin-bottom: 16px;
+
+  .multi {
+    margin-bottom: 16px;
+  }
 `;
 
 export const MainContainer = styled.div`
@@ -380,4 +385,21 @@ export const StyledBreadCrumbs = styled(Breadcrumbs)`
 
 export const FriendlyTextContainer = styled.div`
   margin-bottom: 8px;
+`;
+
+export const FishermanNoteLabel = styled(Typography)`
+  margin-bottom: 16px;
+  font-size: ${({ theme }) => (theme.isSFM ? '14px' : '36px')};
+`;
+
+export const FishermanNoteHeader = styled(Typography)`
+  margin-bottom: 16px;
+  font-size: ${({ theme }) => (theme.isSFM ? '14px' : '42px')};
+`;
+
+export const FishermanNoteValue = styled(Typography)`
+  margin-top: ${({ theme }) => (theme.isSFM ? '0px' : '-8px')};
+  margin-left: 8.5px;
+  font-size: ${({ theme }) => (theme.isSFM ? '14px' : '42px')};
+  line-height: '0.8em';
 `;

@@ -31,4 +31,5 @@ export interface TypographyProps extends HTMLAttributes<HTMLParagraphElement> {
   fontStyle?: string;
   altFont?: boolean;
   noSfmFont?: boolean;
+  customFont?: string;
 }

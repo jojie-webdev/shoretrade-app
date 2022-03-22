@@ -25,6 +25,7 @@ import { groupBy } from 'ramda';
 import { Col, Hidden, Row, Visible } from 'react-grid-system';
 import { getTermsAndConditions } from 'utils/Links';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { useTheme } from 'utils/SFMTheme';
 
 import CategorySelectionView from './CategorySelection/CategorySelection.view';
 import { CreateRequestGeneratedProps, CreateRequestStep } from './Create.props';
@@ -51,6 +52,9 @@ import {
   MultipleTopGroupContainer,
   DetailsHeaderContainer,
   CreateRequestContainer,
+  FishermanNoteValue,
+  FishermanNoteLabel,
+  FishermanNoteHeader,
 } from './Create.style';
 import SelectQuantityView from './SelectQuantity/SelectQuantity.view';
 import SelectSizeView from './SelectSize/SelectSize.view';
@@ -93,6 +97,9 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     onConfirmSentRequest,
     showRequestSentModal,
   } = props;
+
+  const theme = useTheme();
+
   const [checkAgree, setCheckAgree] = useState(false);
   const handleCheck = (v: any) => {
     setCheckAgree(!checkAgree);
@@ -276,62 +283,44 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
     return (
       <>
         <DetailsHeaderContainer>
-          <Typography
-            style={{
-              marginBottom: 16,
-              fontFamily: 'Wilderness',
-              fontSize: 42,
-            }}
+          <FishermanNoteHeader
+            customFont={!theme.isSFM ? 'Wilderness' : undefined}
           >
             Summary
-          </Typography>
-          <Typography
-            style={{
-              marginBottom: 16,
-              fontFamily: 'Wilderness',
-              fontSize: 42,
-            }}
+          </FishermanNoteHeader>
+          <FishermanNoteHeader
+            customFont={!theme.isSFM ? 'Wilderness' : undefined}
           >
             {selectedCategory?.name}
-          </Typography>
+          </FishermanNoteHeader>
         </DetailsHeaderContainer>
         {/* eslint-disable-next-line react/prop-types */}
         {selectedSpecifications.items.length > 0 && (
           <DetailsContentContainer>
             {Object.keys(groupSpecs).map((group, index) => {
               return (
-                <>
-                  <Typography
+                <div key={index} className="multi">
+                  <FishermanNoteLabel
+                    customFont={!theme.isSFM ? 'Wilderness' : undefined}
                     color="shade6"
                     variant="label"
-                    style={{
-                      marginBottom: 16,
-                      fontFamily: 'Wilderness',
-                      fontSize: 36,
-                    }}
                   >
                     Specs: {index + 1}
-                  </Typography>
+                  </FishermanNoteLabel>
                   <DetailsDataContainer>
                     <Cross7 />
-                    <Typography
+                    <FishermanNoteValue
                       color="shade9"
                       variant="label"
-                      style={{
-                        fontFamily: 'Wilderness',
-                        fontSize: 42,
-                        marginLeft: 8.5,
-                        marginTop: -8,
-                        lineHeight: '0.8em',
-                      }}
+                      customFont={!theme.isSFM ? 'Wilderness' : undefined}
                     >
                       {groupSpecs[group].map(
                         (spec, i, arr) =>
                           `${spec.label}${i < arr.length - 1 ? ', ' : ''}`
                       )}
-                    </Typography>
+                    </FishermanNoteValue>
                   </DetailsDataContainer>
-                </>
+                </div>
               );
             })}
           </DetailsContentContainer>
@@ -339,29 +328,19 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
         {((selectedSize?.items.length > 0 && selectedSize?.items[0] !== '') ||
           selectedSize?.from !== '') && (
           <DetailsContentContainer>
-            <Typography
+            <FishermanNoteLabel
               color="shade6"
               variant="label"
-              style={{
-                marginBottom: 16,
-                fontFamily: 'Wilderness',
-                fontSize: 36,
-              }}
+              customFont={!theme.isSFM ? 'Wilderness' : undefined}
             >
               Size:
-            </Typography>
+            </FishermanNoteLabel>
             <DetailsDataContainer>
               <Cross7 />
-              <Typography
+              <FishermanNoteValue
                 color="shade9"
                 variant="label"
-                style={{
-                  fontFamily: 'Wilderness',
-                  fontSize: 42,
-                  marginLeft: 8.5,
-                  marginTop: -8,
-                  lineHeight: '0.8em',
-                }}
+                customFont={!theme.isSFM ? 'Wilderness' : undefined}
               >
                 {selectedSize?.items[0] !== '' && !selectedSize?.from
                   ? selectedSize?.items?.map((i, index) => {
@@ -377,41 +356,31 @@ const CreateRequestLandingView = (props: CreateRequestGeneratedProps) => {
                         selectedSize?.to
                       }${listingFormData?.metric?.name?.toLowerCase()}`
                     }`}
-              </Typography>
+              </FishermanNoteValue>
             </DetailsDataContainer>
           </DetailsContentContainer>
         )}
         {selectedQuantity?.from && (
           <DetailsContentContainer>
-            <Typography
+            <FishermanNoteLabel
               color="shade6"
               variant="label"
-              style={{
-                marginBottom: 16,
-                fontFamily: 'Wilderness',
-                fontSize: 36,
-              }}
+              customFont={!theme.isSFM ? 'Wilderness' : undefined}
             >
               Quantity:
-            </Typography>
+            </FishermanNoteLabel>
             <DetailsDataContainer>
               <Cross7 />
-              <Typography
+              <FishermanNoteValue
                 color="shade9"
                 variant="label"
-                style={{
-                  fontFamily: 'Wilderness',
-                  fontSize: 42,
-                  marginLeft: 8.5,
-                  marginTop: -8,
-                  lineHeight: '0.8em',
-                }}
+                customFont={!theme.isSFM ? 'Wilderness' : undefined}
               >
                 {`${selectedQuantity?.from}${measurement} ${
                   selectedQuantity?.to &&
                   `- ${selectedQuantity?.to}${measurement}`
                 }`}
-              </Typography>
+              </FishermanNoteValue>
             </DetailsDataContainer>
           </DetailsContentContainer>
         )}
