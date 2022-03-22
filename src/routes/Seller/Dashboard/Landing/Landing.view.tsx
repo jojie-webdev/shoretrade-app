@@ -456,13 +456,13 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
   return (
     <Container>
       <>
-        {activePlan?.is_free_trial && (
+        {/* {activePlan?.is_free_trial && (
           <FreeTrialCountdown daysLeft={activePlan.countdown} />
         )}
 
         {!activePlan?.is_free_trial && (
           <SubscriptionAlert activePlan={activePlan} />
-        )}
+        )} */}
 
         {userPending && (
           <Alert

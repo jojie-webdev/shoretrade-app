@@ -37,18 +37,18 @@ const ROUTES: Routes = {
     path: SELLER_ACCOUNT_ROUTES.YOUR_DETAILS,
     children: <YourDetails />,
   },
-  SUBSCRIPTION_PLAN: {
-    path: SELLER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
-    children: <SubscriptionPlan />,
-  },
-  PLAN_PAYMENT_METHOD: {
-    path: SELLER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD,
-    children: <PlanPaymentMethod />,
-  },
-  PAYMENT_HISTORY: {
-    path: SELLER_ACCOUNT_ROUTES.PAYMENT_HISTORY,
-    children: <PaymentHistory />,
-  },
+  // SUBSCRIPTION_PLAN: {
+  //   path: SELLER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
+  //   children: <SubscriptionPlan />,
+  // },
+  // PLAN_PAYMENT_METHOD: {
+  //   path: SELLER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD,
+  //   children: <PlanPaymentMethod />,
+  // },
+  // PAYMENT_HISTORY: {
+  //   path: SELLER_ACCOUNT_ROUTES.PAYMENT_HISTORY,
+  //   children: <PaymentHistory />,
+  // },
   SHIPPING_ADDRESS: {
     path: SELLER_ACCOUNT_ROUTES.SHIPPING_ADDRESS,
     children: <ShippingAddresses />,

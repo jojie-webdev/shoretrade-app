@@ -128,12 +128,12 @@ const ROUTES: Routes = {
     children: <MarketPriceDetail />,
     hideFromSidebar: true,
   },
-  UPGRADE: {
-    path: SELLER_ROUTES.UPGRADE,
-    children: <Upgrade />,
-    title: 'Upgrade',
-    hideFromSidebar: true,
-  },
+  // UPGRADE: {
+  //   path: SELLER_ROUTES.UPGRADE,
+  //   children: <Upgrade />,
+  //   title: 'Upgrade',
+  //   hideFromSidebar: true,
+  // },
 };
 
 const ROUTES_ARRAY: TRoute[] = Object.values(ROUTES).map((value) => value);

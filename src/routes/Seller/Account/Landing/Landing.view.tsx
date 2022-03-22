@@ -98,16 +98,16 @@ const AccountLandingView = ({
         { addQueryPrefix: true }
       )}`,
     },
-    {
-      iconName: 'dashboardOutline',
-      value: 'Your Plan',
-      path: SELLER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
-    },
-    {
-      iconName: 'fileAlt',
-      value: 'Payment History',
-      path: SELLER_ACCOUNT_ROUTES.PAYMENT_HISTORY,
-    },
+    // {
+    //   iconName: 'dashboardOutline',
+    //   value: 'Your Plan',
+    //   path: SELLER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
+    // },
+    // {
+    //   iconName: 'fileAlt',
+    //   value: 'Payment History',
+    //   path: SELLER_ACCOUNT_ROUTES.PAYMENT_HISTORY,
+    // },
     {
       iconName: 'location',
       value: 'Shipping Addresses',
@@ -226,9 +226,9 @@ const AccountLandingView = ({
             </div>
           </UserInfoContainer>
 
-          {activePlan?.is_free_trial && (
+          {/* {activePlan?.is_free_trial && (
             <FreeTrialCountdown daysLeft={activePlan.countdown} small={true} />
-          )}
+          )} */}
         </Col>
 
         <Col sm={8}>

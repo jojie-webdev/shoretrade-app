@@ -24,16 +24,16 @@ export const SELLER_STEPS = [
     description:
       'Let us know more about your business by selecting your market sector.',
   },
-  {
-    title: 'Your Plan',
-    description:
-      'Sell your seafood products directly to businesses with a few clicks.',
-  },
-  {
-    title: 'Payment Method',
-    description:
-      'ShoreTrade offers multiple payment options, including the ability to apply for ShorePay; our Buy Now Pay Later financing option.',
-  },
+  // {
+  //   title: 'Your Plan',
+  //   description:
+  //     'Sell your seafood products directly to businesses with a few clicks.',
+  // },
+  // {
+  //   title: 'Payment Method',
+  //   description:
+  //     'ShoreTrade offers multiple payment options, including the ability to apply for ShorePay; our Buy Now Pay Later financing option.',
+  // },
   {
     title: "I'm Selling",
     description:

@@ -162,7 +162,8 @@ const StepForm = ({
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
-  const MAX_STEP = isSeller ? 9 : 7;
+  // const MAX_STEP = isSeller ? 9 : 7;
+  const MAX_STEP = 7;
 
   const [license, setLicense] = useState<{
     file: File | null;
@@ -306,10 +307,7 @@ const StepForm = ({
   const buttonTextHandler = (step: number) => {
     if (isSeller && step === 4) {
       return 'ADD LICENSE';
-    } else if (
-      (theme.appType === 'buyer' && step === 6) ||
-      (theme.appType === 'seller' && step === 8)
-    ) {
+    } else if (step === 6) {
       if (selectedCategoryTypes.length > 0) {
         return 'NEXT';
       }
@@ -659,16 +657,18 @@ const StepForm = ({
             </>
           )}
 
-          <CustomInteraction
-            label="Payment Method"
-            value={`Credit Card ****-${registrationDetails.cardNumber.substring(
-              registrationDetails.cardNumber.length - 5
-            )}`}
-            onClick={() => {
-              summaryHandleStep(isSeller ? 7 : 5);
-              setSummaryEdit();
-            }}
-          />
+          {!isSeller && (
+            <CustomInteraction
+              label="Payment Method"
+              value={`Credit Card ****-${registrationDetails.cardNumber.substring(
+                registrationDetails.cardNumber.length - 5
+              )}`}
+              onClick={() => {
+                summaryHandleStep(isSeller ? 7 : 5);
+                setSummaryEdit();
+              }}
+            />
+          )}
 
           <CustomInteraction
             label={isSeller ? 'Selling Products' : 'Buying Products'}
@@ -810,24 +810,7 @@ const StepForm = ({
           } else if (step === 6) {
             formikProps.onSubmit(values);
           } else if (step === 7) {
-            if (!isSeller) {
-              const error = {
-                ...validateAgreement({
-                  agreement: registrationDetails.tncAgreement,
-                }),
-              };
-              if (error.agreement) {
-                setOtherErrors(error);
-              } else {
-                setOtherErrors({ agreement: '' });
-                formikProps.onSubmit(values);
-              }
-            } else {
-              getCardToken();
-            }
-          } else if (step === 8) {
-            formikProps.onSubmit(values);
-          } else if (step === 9) {
+            // if (!isSeller) {
             const error = {
               ...validateAgreement({
                 agreement: registrationDetails.tncAgreement,
@@ -839,7 +822,25 @@ const StepForm = ({
               setOtherErrors({ agreement: '' });
               formikProps.onSubmit(values);
             }
+            // } else {
+            //   getCardToken();
+            // }
           }
+          // else if (step === 8) {
+          //   formikProps.onSubmit(values);
+          // } else if (step === 9) {
+          //   const error = {
+          //     ...validateAgreement({
+          //       agreement: registrationDetails.tncAgreement,
+          //     }),
+          //   };
+          //   if (error.agreement) {
+          //     setOtherErrors(error);
+          //   } else {
+          //     setOtherErrors({ agreement: '' });
+          //     formikProps.onSubmit(values);
+          //   }
+          // }
         }}
       >
         <FormikContainer>
@@ -1297,31 +1298,67 @@ const StepForm = ({
               )}
               {step === 6 && (
                 <>
-                  {isSeller ? (
-                    <YourPlan
-                      currentMarketSector={
-                        registrationDetails.categoryMarketSector
-                      }
-                      previousStep={() => previousStep && previousStep()}
-                    />
-                  ) : (
+                  {
+                    // isSeller ? (
+                    //   <YourPlan
+                    //     currentMarketSector={
+                    //       registrationDetails.categoryMarketSector
+                    //     }
+                    //     previousStep={() => previousStep && previousStep()}
+                    //   />
+                    // ) : (
                     categoryPicker()
-                  )}
+                    // )
+                  }
                 </>
               )}
               {step === 7 && (
                 <>
-                  {isSeller ? (
+                  {/* {isSeller ? (
                     <PaymentMethod
                       otherErrors={otherErrors}
                       setOtherErrors={setOtherErrors}
                     />
                   ) : (
                     summaryUI()
+                  )} */}
+                  {!isSuccess || !isSeller ? (
+                    summaryUI()
+                  ) : (
+                    <>
+                      <Typography
+                        variant="title5"
+                        color="noshade"
+                        weight="400"
+                        style={{ marginBottom: 32 }}
+                      >
+                        Thanks for signing up! Your account is pending approval
+                      </Typography>
+                      <Typography
+                        variant="body"
+                        color="noshade"
+                        weight="Medium"
+                        style={{ marginBottom: 32 }}
+                      >
+                        We need to check a few things before you can start
+                        selling. We’ll send you and email and notification when
+                        your account is approved. This normally takes less than
+                        24 hours.
+                      </Typography>
+                      <Typography
+                        variant="title5"
+                        color="noshade"
+                        weight="400"
+                        style={{ marginBottom: 32 }}
+                      >
+                        1 Month Free Trial will start when your account is
+                        approved
+                      </Typography>
+                    </>
                   )}
                 </>
               )}
-              {step === 8 && isSeller && categoryPicker()}
+              {/* {step === 8 && isSeller && categoryPicker()}
               {step === 9 && isSeller && (
                 <>
                   {!isSuccess ? (
@@ -1359,7 +1396,7 @@ const StepForm = ({
                     </>
                   )}
                 </>
-              )}
+              )} */}
               <Spacer />
             </Content>
           </Container>
@@ -1432,7 +1469,8 @@ const RegisterView = (props: RegisterGeneratedProps) => {
   const renderRef = useRef<HTMLDivElement | null>(null);
 
   const [step, setStep] = useState(0);
-  const MAX_STEP = isSeller ? 9 : 7;
+  // const MAX_STEP = isSeller ? 9 : 7;
+  const MAX_STEP = 7;
 
   const summaryHandleStep = (step: number) => {
     setStep(step);
@@ -1440,7 +1478,8 @@ const RegisterView = (props: RegisterGeneratedProps) => {
 
   const nextStep = () => {
     if (isSummaryEdit) {
-      setStep(isSeller ? 9 : 7);
+      // setStep(isSeller ? 9 : 7);
+      setStep(7);
     } else {
       setStep((s) => (s < MAX_STEP ? ++s : MAX_STEP));
     }
@@ -1607,6 +1646,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
         <>
           <StepForm
             {...props}
+            getCategoryItem={props.getCategoryItem}
             formikProps={userDetailsFormikProps}
             step={step}
             fields={[]}
@@ -1621,7 +1661,8 @@ const RegisterView = (props: RegisterGeneratedProps) => {
           <StepForm
             {...props}
             formikProps={
-              isSeller ? paymentMethodFormikProps : summaryFormikProps
+              // isSeller ? paymentMethodFormikProps :
+              summaryFormikProps
             }
             step={step}
             fields={[]}
@@ -1629,27 +1670,27 @@ const RegisterView = (props: RegisterGeneratedProps) => {
           />
         </>
       );
-    } else if (step === 8) {
-      return (
-        <StepForm
-          {...props}
-          getCategoryItem={props.getCategoryItem}
-          formikProps={userDetailsFormikProps}
-          step={step}
-          fields={[]}
-          summaryHandleStep={summaryHandleStep}
-        />
-      );
-    } else if (step === 9) {
-      return (
-        <StepForm
-          {...props}
-          formikProps={summaryFormikProps}
-          step={step}
-          fields={[]}
-          summaryHandleStep={summaryHandleStep}
-        />
-      );
+      // } else if (step === 8) {
+      //   return (
+      //     <StepForm
+      //       {...props}
+      //       getCategoryItem={props.getCategoryItem}
+      //       formikProps={userDetailsFormikProps}
+      //       step={step}
+      //       fields={[]}
+      //       summaryHandleStep={summaryHandleStep}
+      //     />
+      //   );
+      // } else if (step === 9) {
+      //   return (
+      //     <StepForm
+      //       {...props}
+      //       formikProps={summaryFormikProps}
+      //       step={step}
+      //       fields={[]}
+      //       summaryHandleStep={summaryHandleStep}
+      //     />
+      //   );
     } else {
       return (
         <GetStartedWrapper>
