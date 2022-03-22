@@ -48,7 +48,8 @@ export const Field = styled.input<{
   ${fontStyle};
 
   ::placeholder {
-    color: ${({ theme }) => theme.grey.shade5};
+    color: ${({ theme }) =>
+      theme.isSFM ? theme.grey.shade6 : theme.grey.shade5};
     opacity: 1;
   }
 

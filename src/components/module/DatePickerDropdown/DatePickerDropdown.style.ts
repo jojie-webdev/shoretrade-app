@@ -15,6 +15,10 @@ export const Container = styled.div`
     width: 100%;
   }
 
+  .CalendarMonth_caption {
+    color: ${({ theme }) => (theme.isSFM ? theme.grey.shade7 : 'inherit')};
+  }
+
   .DayPicker {
     position: absolute;
     /* 48 is the height of the dropdown */
@@ -25,10 +29,16 @@ export const Container = styled.div`
     z-index: 999;
   }
 
+  .DayPicker_weekHeader {
+    color: ${({ theme }) => (theme.isSFM ? theme.grey.shade7 : 'inherit')};
+    font-weight: 700;
+  }
+
   .CalendarDay__default {
     border: none;
     margin: 0;
     border-radius: 4px;
+    color: ${({ theme }) => (theme.isSFM ? theme.grey.shade7 : 'inherit')};
 
     :hover {
       border-radius: 100px;

@@ -81,7 +81,7 @@ export const StyledDropdown = styled(Dropdown)<DropdownProps>`
     line-height: 14px;
     color: ${({ theme, dark }) => {
       if (theme.isSFM) {
-        return `${SpecialColors.blue};`;
+        return `${theme.grey.shade6};`;
       }
       if (dark) {
         return `${theme.grey.noshade};`;
@@ -138,7 +138,7 @@ export const StyledDropdown = styled(Dropdown)<DropdownProps>`
     @media ${BREAKPOINTS['sm']} {
       color: ${({ theme, dark }) => {
         if (theme.isSFM) {
-          return `${SpecialColors.blue};`;
+          return `${theme.grey.shade6};`;
         }
         return dark ? `${theme.grey.noshade};` : `${theme.grey.shade9};`;
       }}

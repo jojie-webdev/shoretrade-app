@@ -52,6 +52,7 @@ import {
   isValidExpiryDate,
   isListingExpiryDateValid,
 } from './AddDetails.validation';
+import theme, { SpecialColors } from 'utils/SFMTheme';
 
 // Note: even this is AEST, keep calculations on local time
 const timeOptions = [...Array(48)].map((v, i) => {
@@ -674,7 +675,13 @@ const AddDetails = ({
               label={`Price per ${formatUnitToPricePerUnit(
                 formatMeasurementUnit(listingFormData?.measurementUnit)
               )} (excluding freight)`}
-              LeftComponent={<DollarSign height={15} width={15} />}
+              LeftComponent={
+                <DollarSign
+                  fill={theme.isSFM ? theme.grey.shade6 : undefined}
+                  height={15}
+                  width={15}
+                />
+              }
               value={price}
               onChangeText={(v) => {
                 if (!Number.isNaN(Number(v))) {

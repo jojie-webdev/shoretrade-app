@@ -58,12 +58,12 @@ const DatePickerDropdown = (props: DatePickerDropdownProps): JSX.Element => {
       noBorder
       navNext={
         <NavButton direction="right">
-          <ArrowRight />
+          <ArrowRight fill={theme.isSFM ? theme.grey.shade7 : undefined} />
         </NavButton>
       }
       navPrev={
         <NavButton direction="left">
-          <ArrowLeft />
+          <ArrowLeft fill={theme.isSFM ? theme.grey.shade7 : undefined} />
         </NavButton>
       }
     />

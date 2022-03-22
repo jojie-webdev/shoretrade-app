@@ -25,4 +25,10 @@ export const Field = styled.textarea<{ height?: number }>`
   :focus {
     outline: none;
   }
+
+  ::placeholder {
+    color: ${({ theme }) =>
+      theme.isSFM ? theme.grey.shade6 : theme.grey.shade5};
+    opacity: 1;
+  }
 `;

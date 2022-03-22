@@ -7,6 +7,7 @@ import TextField from 'components/base/TextField';
 import { isEmpty } from 'ramda';
 import parseGooglePlaceData from 'utils/Address/parseGooglePlaceData';
 import useScript from 'utils/Hooks/useScript';
+import { useTheme } from 'utils/Theme';
 
 import { LocationSearchProps } from './LocationSearch.props';
 import {
@@ -24,6 +25,7 @@ const LocationSearch = ({
   textFieldProps,
   ...props
 }: LocationSearchProps): JSX.Element => {
+  const theme = useTheme();
   const [searchValue, setSearchValue] = useState(
     textFieldProps?.value ? String(textFieldProps.value) : ''
   );
@@ -179,7 +181,9 @@ const LocationSearch = ({
     <Container onClick={() => setDoSearch(false)}>
       <TextField
         {...textFieldProps}
-        LeftComponent={<Location />}
+        LeftComponent={
+          <Location fill={theme.isSFM ? theme.grey.shade6 : undefined} />
+        }
         // RightComponent={
         //   doSearch ? (
         //     <SearchLocationContainer onClick={() => setDoSearch(false)}>
