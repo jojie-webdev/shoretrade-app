@@ -245,10 +245,6 @@ export const InnerStyledInteraction = styled(StyledInteraction)`
           margin-top: 8px;
           margin-bottom: 8px;
         }
-
-        > p {
-          display: none;
-        }
       }
 
       .buttons {
