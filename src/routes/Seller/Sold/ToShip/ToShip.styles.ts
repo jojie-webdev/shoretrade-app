@@ -164,7 +164,12 @@ export const StyledInteraction = styled(Interaction)<{
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-direction: 'row'
+      flex-direction: 'row';
+
+      .order-details {
+        display: flex;
+        align-items: center;
+      }
 
       @media (max-width: 1237px) {
         justify-content: flex-start;
@@ -176,6 +181,10 @@ export const StyledInteraction = styled(Interaction)<{
         margin-left: 0;
         justify-content: flex-end;
         flex: 1;
+
+        .order-details {
+          display: flex;
+        }
       }
 
       .order-count {

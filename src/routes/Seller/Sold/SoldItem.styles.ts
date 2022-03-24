@@ -225,6 +225,11 @@ export const InnerStyledInteraction = styled(StyledInteraction)`
     }
   }}
 
+  .order-details {
+    display: flex;
+    align-items: center;
+  }
+
   @media ${BREAKPOINTS.sm} {
     .bottom-content {
       .order-count {
@@ -240,10 +245,18 @@ export const InnerStyledInteraction = styled(StyledInteraction)`
       .right-content {
         flex-direction: column;
         align-items: flex-start;
+        width: 100%;
 
         .order-count {
           margin-top: 8px;
           margin-bottom: 8px;
+        }
+
+        .order-details {
+          display: flex;
+          width: 100%;
+          align-items: center;
+          justify-content: space-between;
         }
       }
 

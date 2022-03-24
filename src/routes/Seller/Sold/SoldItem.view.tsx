@@ -253,18 +253,20 @@ const SoldItem = (props: {
                         {v.orders.length > 1 ? 'ITEMS' : 'ITEM'}
                       </Typography>
                     </div>
-                    <ItemDetail variant="caption" color="shade6">
-                      Price (AUD)
-                      <span style={{ fontSize: '14px' }}>{v.totalPrice}</span>
-                    </ItemDetail>
-                    <div className="buyer-type">
-                      <ItemDetail variant="caption" color="shade6" row>
-                        Buyer <span>{v.buyerCompanyName}</span>
+                    <div className="order-details">
+                      <ItemDetail variant="caption" color="shade6">
+                        Price (AUD)
+                        <span style={{ fontSize: '14px' }}>{v.totalPrice}</span>
                       </ItemDetail>
+                      <div className="buyer-type">
+                        <ItemDetail variant="caption" color="shade6" row>
+                          Buyer <span>{v.buyerCompanyName}</span>
+                        </ItemDetail>
 
-                      <ItemDetail variant="caption" color="shade6" row>
-                        Type <span>{v.salesChannel}</span>
-                      </ItemDetail>
+                        <ItemDetail variant="caption" color="shade6" row>
+                          Type <span>{v.salesChannel}</span>
+                        </ItemDetail>
+                      </div>
                     </div>
                   </div>
                   <Spacer />

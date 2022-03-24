@@ -170,20 +170,22 @@ export const PendingItem = (props: {
                   {order.itemCount === 1 ? 'ITEM' : 'ITEMS'}
                 </Typography>
               </div>
-              <ItemDetail variant="caption" color="shade6">
-                Price (AUD)
-                <span style={{ fontSize: '14px' }}>
-                  {toPrice(order.totalPrice)}
-                </span>
-              </ItemDetail>
-              <div className="buyer-type">
-                <ItemDetail variant="caption" color="shade6" row>
-                  Buyer <span>{order.buyerCompanyName}</span>
+              <div className="order-details">
+                <ItemDetail variant="caption" color="shade6">
+                  Price (AUD)s
+                  <span style={{ fontSize: '14px' }}>
+                    {toPrice(order.totalPrice)}
+                  </span>
                 </ItemDetail>
+                <div className="buyer-type">
+                  <ItemDetail variant="caption" color="shade6" row>
+                    Buyer <span>{order.buyerCompanyName}</span>
+                  </ItemDetail>
 
-                <ItemDetail variant="caption" color="shade6" row>
-                  Type <span>{order.salesChannel}</span>
-                </ItemDetail>
+                  <ItemDetail variant="caption" color="shade6" row>
+                    Type <span>{order.salesChannel}</span>
+                  </ItemDetail>
+                </div>
               </div>
             </div>
             <Spacer />
