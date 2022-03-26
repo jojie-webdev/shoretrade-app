@@ -42,6 +42,9 @@ export type UpdateListingRequestData = {
   isIkeJime: boolean;
   isIceSlurry: boolean;
   templateDeliveryDate: string | null;
+  isForSaleRepPhoto: boolean;
+  isActualPhoto: boolean;
+  hasNoSelectedType: boolean;
 };
 
 export type UpdateListingPayload = GenericResponse;

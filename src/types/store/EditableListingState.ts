@@ -71,6 +71,7 @@ export type EditableListingState = Partial<{
   templateDeliveryDate: string | null;
   isActualPhoto: boolean;
   isForSaleRepPhoto: boolean;
+  hasNoSelectedType: boolean;
 }>;
 
 export type EditableListingPayload = EditableListingState;

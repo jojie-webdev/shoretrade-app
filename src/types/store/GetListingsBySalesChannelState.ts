@@ -70,6 +70,8 @@ export type GetListingsBySalesChannelResponseItem = {
   is_aquafuture: boolean;
   is_auction_sale: boolean;
   is_pre_auction_sale: boolean;
+  is_for_sale_rep_photo: boolean;
+  is_actual_photo: boolean;
   allowedWeightAdjustment: number;
   measurement_unit: string; // ex. 'kg' or 'dozen'
   metric_label?: string;

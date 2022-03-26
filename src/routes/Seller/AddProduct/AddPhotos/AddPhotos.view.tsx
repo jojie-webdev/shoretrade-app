@@ -1,6 +1,8 @@
 import React, { useReducer, useEffect } from 'react';
 
 import Button from 'components/base/Button';
+import Checkbox from 'components/base/Checkbox';
+import Radio from 'components/base/Radio';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
 import AddImage from 'components/module/AddImage';
@@ -13,8 +15,6 @@ import { createUpdateReducer } from 'utils/Hooks';
 
 import { AddPhotosProps } from './AddPhotos.props';
 import { Container, PhotoTypeWrapper } from './AddPhotos.style';
-import Checkbox from 'components/base/Checkbox';
-import Radio from 'components/base/Radio';
 
 const AddPhotos = ({
   isCustomType,
@@ -136,7 +136,8 @@ const AddPhotos = ({
           </Col>
         ))}
 
-        {!!Object.keys(images).length && (
+        {(!!Object.keys(images).length ||
+          !!Object.keys(existingImages).length) && (
           <Col md={12} className="add-col">
             <PhotoTypeWrapper>
               <Radio
