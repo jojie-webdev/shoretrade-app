@@ -27,6 +27,7 @@ import {
   StyledTouchable,
   DetailsContainer,
   OrderItemScanTotalContainer,
+  SubtotalContainer,
 } from './OrderItem.style';
 
 const OrderItem = (props: OrderItemProps): JSX.Element => {
@@ -284,23 +285,28 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                 </Typography>
               </Col>
               <Col sm={3} style={{ alignSelf: 'center' }}>
-                <ItemDetailLabel
-                  className="end-text"
-                  color="shade6"
-                  variant="caption"
-                >
-                  Subtotal
-                </ItemDetailLabel>
-                <ItemDetailValue
-                  className="end-text value"
-                  variant="label"
-                  weight="bold"
-                  color="shade9"
-                >
-                  {toPrice(
-                    props.data.shippingChargeNet + props.data.shippingChargeGst
-                  )}
-                </ItemDetailValue>
+                <SubtotalContainer>
+                  <div>
+                    <ItemDetailLabel
+                      className="end-text"
+                      color="shade6"
+                      variant="caption"
+                    >
+                      Subtotal
+                    </ItemDetailLabel>
+                    <ItemDetailValue
+                      className="end-text value"
+                      variant="label"
+                      weight="bold"
+                      color="shade9"
+                    >
+                      {toPrice(
+                        props.data.shippingChargeNet +
+                          props.data.shippingChargeGst
+                      )}
+                    </ItemDetailValue>
+                  </div>
+                </SubtotalContainer>
               </Col>
             </Row>
           </Col>
@@ -313,21 +319,25 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                   </Typography>
                 </Col>
                 <Col sm={3} style={{ alignSelf: 'center' }}>
-                  <ItemDetailLabel
-                    className="end-text"
-                    color="shade6"
-                    variant="caption"
-                  >
-                    Subtotal
-                  </ItemDetailLabel>
-                  <ItemDetailValue
-                    className="end-text value"
-                    variant="label"
-                    weight="bold"
-                    color="shade9"
-                  >
-                    {toPrice(props.data.totalCrateFee)}
-                  </ItemDetailValue>
+                  <SubtotalContainer>
+                    <div>
+                      <ItemDetailLabel
+                        className="end-text"
+                        color="shade6"
+                        variant="caption"
+                      >
+                        Subtotal
+                      </ItemDetailLabel>
+                      <ItemDetailValue
+                        className="end-text value"
+                        variant="label"
+                        weight="bold"
+                        color="shade9"
+                      >
+                        {toPrice(props.data.totalCrateFee)}
+                      </ItemDetailValue>
+                    </div>
+                  </SubtotalContainer>
                 </Col>
               </Row>
             </Col>

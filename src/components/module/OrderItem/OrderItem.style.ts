@@ -304,4 +304,19 @@ export const OrderItemScanTotalContainer = styled.div`
   > div {
     margin-left: 24px;
   }
+
+  @media ${BREAKPOINTS['sm']} {
+    > div {
+      margin-left: 0px;
+      margin-right: 38px;
+    }
+  }
+`;
+
+export const SubtotalContainer = styled.div`
+  @media ${BREAKPOINTS['sm']} {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-right: 28px;
+  }
 `;
