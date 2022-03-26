@@ -255,6 +255,10 @@ import {
 } from './MarketOfferState';
 import { NotifyState } from './NotifyState';
 import { OrderMeta, OrderPayload } from './OrderState';
+import {
+  PaySubscriptionMeta,
+  PaySubscriptionPayload,
+} from './PaySubscriptionState';
 import { PlaceOrderMeta, PlaceOrderPayload } from './PlaceOrderState';
 import {
   ReadMarketNotificationMeta,
@@ -333,6 +337,7 @@ import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
+  paySubscription: AsyncState<PaySubscriptionMeta, PaySubscriptionPayload>;
   upgradeSubscription: AsyncState<
     UpgradeSubscriptionMeta,
     UpgradeSubscriptionPayload

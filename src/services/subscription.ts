@@ -2,6 +2,7 @@ import axios from 'axios';
 import { API } from 'consts';
 import { CancelSubscriptionPlanMeta } from 'types/store/CancelSubscriptionPlanState';
 import { GetActivePlanMeta } from 'types/store/GetActivePlanState';
+import { PaySubscriptionMeta } from 'types/store/PaySubscriptionState';
 import { RenewSubscriptionPlanMeta } from 'types/store/RenewSubscriptionPlanState';
 import { UpdateSubscriptionPlanMeta } from 'types/store/UpdateSubscriptionPlanState';
 
@@ -55,6 +56,27 @@ export const renewPlan = (param: RenewSubscriptionPlanMeta, token: string) => {
   return axios({
     method: 'post',
     url: `${URL}/company/renew-account`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: param,
+  }).catch((e) => {
+    return Promise.reject(e.response.data);
+  });
+};
+
+export const payPlan = (
+  param: {
+    companyId: string;
+    existingCard?: string;
+    cardToken?: string;
+    isDefault?: boolean;
+  },
+  token: string
+) => {
+  return axios({
+    method: 'post',
+    url: `${URL}/company/charge-card`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

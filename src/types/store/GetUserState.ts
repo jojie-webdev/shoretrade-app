@@ -14,6 +14,7 @@ export type UserCompany = {
   bankRefNumber: string;
   stripeId?: string;
   debtFinancing?: string;
+  status: string;
   addresses: [
     {
       id: string;

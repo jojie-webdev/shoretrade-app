@@ -97,6 +97,7 @@ import marketRequestOfferConfirm from './marketRequestOfferConfirm';
 import modifyBulkUpload from './modifyBulkUpload';
 import notify from './notify';
 import order from './order';
+import paySubscription from './paySubscription';
 import placeOrder from './placeOrder';
 import readMarketNotification from './readMarketNotification';
 import readNotification from './readNotification';
@@ -134,6 +135,7 @@ export default (routeHistory: History) =>
     Object.fromEntries(
       Object.entries({
         /* PLOP_INJECT_INSTANCE */
+        paySubscription,
         upgradeSubscription,
         subscription,
         renewSubscriptionPlan,

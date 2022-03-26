@@ -184,8 +184,12 @@ const BuyerRoutes = (): JSX.Element => {
     useSelector((state: Store) => state.getUser.data?.data.user.firstName) ||
     '';
 
-  const subscription = useSelector((store: Store) => store.subscription);
-  const isAccountDeactivated = subscription.isAccountDeactivated;
+  const isFreeTrial = useSelector(
+    (store: Store) => store.subscription.isFreeTrial
+  );
+  const isAccountDeactivated = useSelector(
+    (store: Store) => store.subscription.isAccountDeactivated
+  );
 
   const getThemeOverride = (): {
     background?: string;
@@ -275,8 +279,7 @@ const BuyerRoutes = (): JSX.Element => {
         {ROUTES_ARRAY.filter(
           (r) =>
             (r.title === 'Account' || !isAccountDeactivated) &&
-            (subscription.isFreeTrial ||
-              (!subscription.isFreeTrial && r.title !== 'Upgrade'))
+            (isFreeTrial || (!isFreeTrial && r.title !== 'Upgrade'))
         ).map((r) => (
           <Route key={`${r.path}`} path={`${r.path}`} exact={!r.nested}>
             {r.children}

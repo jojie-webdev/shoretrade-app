@@ -17,7 +17,12 @@ function* getActivePlanRequest(
   const state: Store = yield select();
   if (state.auth.token) {
     try {
-      const { data } = yield call(getActivePlan, action.meta, state.auth.token);
+      const company = state.getUser.data?.data.user.companies[0];
+      const { data } = yield call(
+        getActivePlan,
+        { companyId: company?.id || action.meta.companyId },
+        state.auth.token
+      );
       yield put(getActivePlanActions.success(data));
     } catch (e) {
       yield put(getActivePlanActions.failed(e.message));
@@ -31,8 +36,12 @@ function* getActivePlanSuccess(
   action: AsyncAction<GetActivePlanMeta, GetActivePlanPayload>
 ) {
   if (action.payload.data) {
+    const state: Store = yield select();
+    const isCompanyDeactivated =
+      state.getUser.data?.data.user.companies[0].status === 'DEACTIVATED';
     const plan = action.payload.data;
     const planStatus = getActivePlanStatus(plan);
+    const isPaid = !!action.payload.data.paid_at;
     const planEnded = moment().utc().isSameOrAfter(plan.ends_at);
 
     yield put(
@@ -41,13 +50,16 @@ function* getActivePlanSuccess(
         interval: plan.subscription_preference.saasInterval,
         isFreeTrial: plan.is_free_trial,
         isAccountDeactivated:
-          planStatus === 'OVERDUE' || (planStatus === 'CANCELLED' && planEnded),
+          isCompanyDeactivated ||
+          planStatus === 'OVERDUE' ||
+          (planStatus === 'CANCELLED' && planEnded) ||
+          (planStatus === 'CANCELLED' && !isPaid),
       })
     );
   } else {
     yield put(
       subscriptionActions.update({
-        status: 'EXPIRED',
+        status: 'UNSUBSCRIBED',
         interval: null,
         isFreeTrial: false,
         isAccountDeactivated: false,

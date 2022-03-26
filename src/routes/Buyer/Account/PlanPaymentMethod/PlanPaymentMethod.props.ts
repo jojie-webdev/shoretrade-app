@@ -20,5 +20,6 @@ export interface PlanPaymentMethodGeneratedProps {
   }[];
   amountDue: string;
   selectedCardId: string;
+  isPaymentLoading: boolean;
   setSelectedCardId: Dispatch<SetStateAction<string>>;
 }

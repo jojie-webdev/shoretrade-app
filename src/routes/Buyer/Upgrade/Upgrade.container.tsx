@@ -53,11 +53,6 @@ const Upgrade = (): JSX.Element => {
 
   useEffect(() => {
     if (upgradeSuccess && company?.id) {
-      dispatch(
-        getActivePlanActions.request({
-          companyId: company?.id,
-        })
-      );
       history.push(BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN);
     }
   }, [upgradeSuccess]);

@@ -194,6 +194,7 @@ const StepForm = ({
   const [hasSfmNumber, setHasSfmNumber] = useState(
     !!registrationDetails.sfmNumber || false
   );
+  const [isGeneratingCardToken, setIsGeneratingCardToken] = useState(false);
 
   const [otherErrors, setOtherErrors] = useReducer(
     createUpdateReducer<Record<string, string>>(),
@@ -742,9 +743,11 @@ const StepForm = ({
               address_zip: values.cardZipCode,
             })
               .then(({ data }) => {
+                setIsGeneratingCardToken(false);
                 formikProps.onSubmit({ ...values, cardToken: data.id });
               })
               .catch((e) => {
+                setIsGeneratingCardToken(false);
                 setOtherErrors(resErrorToCardFieldError(e));
               });
 
@@ -805,6 +808,7 @@ const StepForm = ({
                 formikProps.onSubmit(values);
               }
             } else {
+              setIsGeneratingCardToken(true);
               getCardToken();
             }
           } else if (step === 6) {
@@ -1405,7 +1409,10 @@ const StepForm = ({
               <>
                 <NextButton
                   takeFullWidth={isSmallScreen}
-                  loading={isPending && step === MAX_STEP}
+                  loading={
+                    (isPending && step === MAX_STEP) ||
+                    (step === 5 && isGeneratingCardToken)
+                  }
                   type={step === MAX_STEP ? 'submit' : 'button'}
                   text={buttonTextHandler(step)}
                   onClick={() =>

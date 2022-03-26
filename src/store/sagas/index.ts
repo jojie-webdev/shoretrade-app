@@ -84,6 +84,7 @@ import marketRequestNegotiation from './marketRequestNegotiation';
 import marketRequestOfferConfirm from './marketRequestOfferConfirm';
 import modifyBulkUpload from './modifyBulkUpload';
 import order from './order';
+import paySubscription from './paySubscription';
 import placeOrder from './placeOrder';
 import readMarketNotification from './readMarketNotification';
 import readNotification from './readNotification';
@@ -119,6 +120,7 @@ import verify from './verify';
 
 const sagas = [
   /* PLOP_INJECT_INSTANCE */
+  paySubscription,
   upgradeSubscription,
   renewSubscriptionPlan,
   updateSubscriptionPlan,

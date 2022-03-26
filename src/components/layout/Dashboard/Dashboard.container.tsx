@@ -14,7 +14,7 @@ import {
   getNotificationsActions,
   logoutActions,
   readNotificationActions,
-  // getUserActions,
+  getUserActions,
   globalModalActions,
   getActivePlanActions,
 } from 'store/actions';
@@ -213,14 +213,22 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   }, [props.pageTitle]);
 
   useEffect(() => {
+    dispatch(getNotificationsActions.request());
+    const unlisten = history.listen(() => {
+      dispatch(getUserActions.request());
+      dispatch(
+        getActivePlanActions.request({
+          companyId: defaultCompany?.id || '',
+        })
+      );
+    });
+
     return () => {
       // cleanup
       document.getElementsByTagName('body')[0].classList.remove('no-scroll');
+      unlisten();
     };
-  }, []);
 
-  useEffect(() => {
-    dispatch(getNotificationsActions.request());
     // eslint-disable-next-line
   }, []);
 

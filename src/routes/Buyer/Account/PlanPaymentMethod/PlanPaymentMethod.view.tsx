@@ -33,6 +33,7 @@ const PlanPaymentMethodView = ({
   cards,
   amountDue,
   selectedCardId,
+  isPaymentLoading,
   payPlanAmountDue,
   setSelectedCardId,
 }: PlanPaymentMethodGeneratedProps) => {
@@ -73,7 +74,7 @@ const PlanPaymentMethodView = ({
           isDefault: false,
         }}
         validate={(values) =>
-          (!isMobile && !selectedCardId) || !showExistingTab
+          (!isMobile && !selectedCardId) || (isMobile && !showExistingTab)
             ? validateCard(values)
             : undefined
         }
@@ -240,6 +241,7 @@ const PlanPaymentMethodView = ({
                             text="PAY USING CREDIT CARD"
                             variant="primary"
                             type="submit"
+                            loading={isPaymentLoading}
                           />
                         </Col>
                       </FormikRow>
@@ -284,6 +286,7 @@ const PlanPaymentMethodView = ({
                   variant="primary"
                   type="submit"
                   takeFullWidth
+                  loading={isPaymentLoading}
                 />
               </ButtonMobileContainer>
             )}
