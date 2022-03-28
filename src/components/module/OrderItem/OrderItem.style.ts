@@ -309,6 +309,7 @@ export const OrderItemScanTotalContainer = styled.div`
     > div {
       margin-left: 0px;
       margin-right: 38px;
+      margin-top: 12px;
     }
   }
 `;

@@ -344,7 +344,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
           )}
           <Col xs={12}>
             <Row nogutter={true}>
-              <Col sm={8} style={{ alignSelf: 'center' }}>
+              <Col xs={6} sm={8} style={{ alignSelf: 'center' }}>
                 {showDispute ? (
                   <Button
                     text="Raise Dispute"
@@ -369,7 +369,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                   <></>
                 )}
               </Col>
-              <Col sm={4} style={{ alignSelf: 'flex-end' }}>
+              <Col xs={6} sm={4}>
                 <OrderItemScanTotalContainer>
                   {props.updateScanHistoryModal && (
                     <div>
