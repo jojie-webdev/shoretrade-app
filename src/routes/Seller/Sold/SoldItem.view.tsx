@@ -422,9 +422,6 @@ const SoldItem = (props: {
                             </ItemDetail>
                           </div>
                           <div className="data-content">
-                            {renderSoldWeight()}
-                          </div>
-                          <div className="data-content">
                             <ItemDetail variant="caption" color="shade6">
                               Price (AUD) <span>{order.totalPrice}</span>
                             </ItemDetail>
