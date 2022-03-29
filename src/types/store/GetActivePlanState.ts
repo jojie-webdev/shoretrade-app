@@ -1,7 +1,7 @@
 import { GenericResponse } from 'types/GenericResponse';
 
 export type GetActivePlanMeta = {
-  companyId: string;
+  companyId?: string;
 };
 
 export type ActivePlanPaymentMethodCard = {

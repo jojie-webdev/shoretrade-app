@@ -215,34 +215,17 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   useEffect(() => {
     dispatch(getNotificationsActions.request());
     const unlisten = history.listen(() => {
-      dispatch(getUserActions.request());
-      dispatch(
-        getActivePlanActions.request({
-          companyId: defaultCompany?.id || '',
-        })
-      );
+      dispatch(getActivePlanActions.request({}));
     });
 
     return () => {
       // cleanup
-      document.getElementsByTagName('body')[0].classList.remove('no-scroll');
       unlisten();
+      document.getElementsByTagName('body')[0].classList.remove('no-scroll');
     };
 
     // eslint-disable-next-line
   }, []);
-
-  useEffect(() => {
-    if (defaultCompany) {
-      dispatch(
-        getActivePlanActions.request({
-          companyId: defaultCompany.id,
-        })
-      );
-    }
-
-    // eslint-disable-next-line
-  }, [defaultCompany]);
 
   // useEffect(() => {
   //   dispatch(getUserActions.request());

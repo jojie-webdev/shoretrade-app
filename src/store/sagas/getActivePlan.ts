@@ -17,13 +17,16 @@ function* getActivePlanRequest(
   const state: Store = yield select();
   if (state.auth.token) {
     try {
-      const company = state.getUser.data?.data.user.companies[0];
-      const { data } = yield call(
-        getActivePlan,
-        { companyId: company?.id || action.meta.companyId },
-        state.auth.token
-      );
-      yield put(getActivePlanActions.success(data));
+      const companyId = state.getUser.data?.data.user.companies[0].id;
+
+      if (action.meta.companyId || companyId) {
+        const { data } = yield call(
+          getActivePlan,
+          { companyId: action.meta.companyId || companyId },
+          state.auth.token
+        );
+        yield put(getActivePlanActions.success(data));
+      }
     } catch (e) {
       yield put(getActivePlanActions.failed(e.message));
     }
