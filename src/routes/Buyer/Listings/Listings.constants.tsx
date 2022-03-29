@@ -83,6 +83,11 @@ export const COLUMN_GROUPS = [
   ['catchDate', 'auctionDate'],
 ];
 
+export const PRE_AUCTION_COLUMN_GROUPS = [
+  ['price', 'size'],
+  ['remainingWeight', 'auctionDate'],
+];
+
 const DIRECT_SALE_COLUMNS = [
   {
     name: 'Category',

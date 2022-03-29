@@ -19,7 +19,12 @@ import { useComponentShouldUpdate } from 'utils/Hooks/useComponentShouldUpdate';
 import { SpecialColors } from 'utils/SFMTheme';
 import theme from 'utils/Theme';
 
-import { COLUMNS, columnTemplate, COLUMN_GROUPS } from './Listings.constants';
+import {
+  COLUMNS,
+  columnTemplate,
+  COLUMN_GROUPS,
+  PRE_AUCTION_COLUMN_GROUPS,
+} from './Listings.constants';
 import { ListingViewProps, CounterProps } from './Listings.props';
 import {
   ActionContainer,
@@ -369,7 +374,11 @@ export default function ListingView(props: ListingViewProps) {
                   key={`listing-card-${listing?.id}`}
                   data={listing}
                   columns={columns}
-                  groups={COLUMN_GROUPS}
+                  groups={
+                    activeTab === 'preAuction'
+                      ? PRE_AUCTION_COLUMN_GROUPS
+                      : COLUMN_GROUPS
+                  }
                   tableSettings={tableSettings}
                   isSelected={
                     unselectedIds.includes(listing?.id)
