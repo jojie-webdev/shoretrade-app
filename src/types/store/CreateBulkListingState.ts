@@ -40,6 +40,7 @@ export type CreateBulkListingRequestData = {
   isIkeJime: boolean;
   isIceSlurry: boolean;
   packaging: { id: string | null } | null;
+  catchRecurrence?: string | null;
 };
 
 export type CreateBulkListingPayload = GenericResponse;

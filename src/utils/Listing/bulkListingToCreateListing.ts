@@ -34,4 +34,5 @@ export const bulkListingToCreateListing = (
   isIkeJime: data?.isIkeJime || false,
   isIceSlurry: data?.isIceSlurry || false,
   packaging: data?.packaging || null,
+  catchRecurrence: data?.catchRecurrence || null,
 });
