@@ -192,7 +192,7 @@ const AddDetails = ({
   );
 
   const [templateDeliveryDate, setTemplateDeliveryDate] = useState(
-    editableListing?.templateDeliveryDate || null
+    !isAquafuture && editableListing?.templateDeliveryDate || null
   );
   const [customDeliveryDate, setCustomDeliveryDate] = useState<{
     from: Moment | null;
@@ -320,7 +320,6 @@ const AddDetails = ({
     listingEndDate,
     listingEndTime,
     shippingAddress,
-    selectedChannel,
   ]);
 
   const toggleAlwaysAvailable = () => {
@@ -483,8 +482,15 @@ const AddDetails = ({
   //       )} in the past 14 days`
   //     : 'No Data Available';
 
+  const handleSelectedChannelChange = () => {
+    setListingEndDate(null);
+    setListingEndTimeString('')
+    setTemplateDeliveryDate(null)
+    setCatchDate(null)
+  }
+
   const handleToggleAquafuture = () => {
-    if (editableListing.isAlreadyCreated) return;
+    handleSelectedChannelChange()
     setIsAquafuture((prevState) => !prevState);
     setAlwaysAvailable(false);
     setIsAuctionSale(false);
@@ -492,7 +498,7 @@ const AddDetails = ({
   };
 
   const handleToggleAuctionSale = () => {
-    if (editableListing.isAlreadyCreated) return;
+    handleSelectedChannelChange()
     setIsAuctionSale((prevState) => !prevState);
     setAlwaysAvailable(false);
     setIsAquafuture(false);
@@ -500,7 +506,7 @@ const AddDetails = ({
   };
 
   const handleToggleDirect = () => {
-    if (editableListing.isAlreadyCreated) return;
+    handleSelectedChannelChange()
     setIsAquafuture(false);
     setIsAuctionSale(false);
     setIsPreAuctionSale(false);
