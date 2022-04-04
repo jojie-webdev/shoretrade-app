@@ -61,6 +61,7 @@ export const getAllBuyerListings = (
   if (requestOptions?.term) url += `&term=${requestOptions.term}`;
   if (requestOptions?.salesChannel)
     url += `&salesChannel=${requestOptions.salesChannel}`;
+  if (requestOptions?.address) url += `&address=${requestOptions.address}`;
 
   return axios({
     method: 'get',

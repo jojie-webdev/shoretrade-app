@@ -59,4 +59,5 @@ export const editableListingToUpdateListing = (
   isForSaleRepPhoto: data?.isForSaleRepPhoto || false,
   isActualPhoto: data?.isActualPhoto || false,
   hasNoSelectedType: data?.hasNoSelectedType || false,
+  restrictToState: data?.restrictToState || false,
 });

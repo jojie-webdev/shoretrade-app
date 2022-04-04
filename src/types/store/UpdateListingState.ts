@@ -45,6 +45,7 @@ export type UpdateListingRequestData = {
   isForSaleRepPhoto: boolean;
   isActualPhoto: boolean;
   hasNoSelectedType: boolean;
+  restrictToState?: boolean;
 };
 
 export type UpdateListingPayload = GenericResponse;

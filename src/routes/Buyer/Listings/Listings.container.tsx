@@ -120,6 +120,12 @@ export default function ListingContainer() {
   const listingRequestData = useSelector(
     (state: Store) => state.getAllBuyerListings.data?.data
   );
+  const addresses =
+    useSelector((state: Store) => state.getAddresses.data?.data.addresses) ||
+    [];
+  const currentDefaultAddressId = (
+    addresses.find((i) => i.default) || { id: '' }
+  ).id;
   const baseListings = listingRequestData?.listings || [];
   const listings = baseListings.map((a: any) => ({
     ...a,
@@ -174,10 +180,11 @@ export default function ListingContainer() {
         page,
         limit: isMobile ? 100 : pageLimit,
         sortOrder: tabSortOrder[activeTab as keyof TabSortProps],
+        address: currentDefaultAddressId,
       })
     );
     // eslint-disable-next-line
-  }, [activeTab, searchFilters, page, tabSortOrder, pageLimit]);
+  }, [activeTab, searchFilters, page, tabSortOrder, pageLimit, currentDefaultAddressId]);
 
   useEffect(() => {
     setIsAllSelected(false);

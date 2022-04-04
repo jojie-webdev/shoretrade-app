@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, useMemo } from 'react';
 
 // import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
@@ -214,6 +214,10 @@ const AddDetails = ({
     gotSkipped: false,
   });
 
+  const [restrictToState, setRestrictToState] = useState<boolean>(
+    editableListing?.restrictToState || false
+  );
+
   const selectedCompany = editableListing?.company || '';
 
   const shippingAddressOptions = GetCompanyAddresses(selectedCompany).map(
@@ -223,12 +227,21 @@ const AddDetails = ({
       }, ${address.state}, ${address.countryCode}, ${address.postcode}`,
       value: address.id,
       isDefault: address.default,
+      state: address.state,
     })
   );
 
   const defaultShippingAddress = shippingAddressOptions.find(
     (s) => s.isDefault
   );
+
+  const selectedShippingState = useMemo(() => {
+    const address = shippingAddressOptions.find(
+      (s) => s.value === shippingAddress
+    );
+
+    return address ? address.state : '';
+  }, [shippingAddress, shippingAddressOptions]);
 
   useEffect(() => {
     if (listingEndTimeString) {
@@ -428,6 +441,7 @@ const AddDetails = ({
           addressId: shippingAddress,
           alwaysAvailable: false,
           templateDeliveryDate: formattedDeliveryDate,
+          restrictToState,
         });
       } else if (
         isEmptyError &&
@@ -450,6 +464,7 @@ const AddDetails = ({
           alwaysAvailable: false,
           addressId: shippingAddress || defaultShippingAddress?.value || '',
           templateDeliveryDate: formattedDeliveryDate,
+          restrictToState,
         });
       }
     } else {
@@ -468,6 +483,7 @@ const AddDetails = ({
           addressId: shippingAddress,
           alwaysAvailable: true,
           templateDeliveryDate: formattedDeliveryDate,
+          restrictToState,
         });
       }
     }
@@ -813,6 +829,17 @@ const AddDetails = ({
           />
         </Col>
       </Row>
+      {shippingAddress && (
+        <Row className="textfield-row">
+          <Col md={6} className="textfield-col">
+            <Checkbox
+              checked={restrictToState}
+              label={`Restrict to ${selectedShippingState}`}
+              onClick={() => setRestrictToState(!restrictToState)}
+            />
+          </Col>
+        </Row>
+      )}
       {!alwaysAvailable && !isAuctionSale && (
         <>
           <Row className="textfield-row">

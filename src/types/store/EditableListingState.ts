@@ -72,6 +72,7 @@ export type EditableListingState = Partial<{
   isActualPhoto: boolean;
   isForSaleRepPhoto: boolean;
   hasNoSelectedType: boolean;
+  restrictToState?: boolean;
 }>;
 
 export type EditableListingPayload = EditableListingState;

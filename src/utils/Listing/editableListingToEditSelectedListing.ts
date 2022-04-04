@@ -75,5 +75,6 @@ export const editableListingToEditSelectedListing = (
     templateDeliveryDate: data?.template_delivery_date || null,
     isForSaleRepPhoto: data?.is_for_sale_rep_photo || false,
     isActualPhoto: data?.is_actual_photo || false,
+    restrictToState: data?.restrict_to_state || false,
   };
 };

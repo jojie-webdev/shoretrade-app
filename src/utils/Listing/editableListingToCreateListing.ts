@@ -56,4 +56,5 @@ export const editableListingToCreateListing = (
   templateDeliveryDate: data?.templateDeliveryDate || null,
   isActualPhoto: data?.isActualPhoto || false,
   isForSaleRepPhoto: data?.isForSaleRepPhoto || false,
+  restrictToState: data?.restrictToState || false,
 });

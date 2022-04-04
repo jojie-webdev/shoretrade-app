@@ -90,6 +90,7 @@ export type GetListingsBySalesChannelResponseItem = {
   is_ike_jime: boolean;
   is_ice_slurry: boolean;
   template_delivery_date: string | null;
+  restrict_to_state?: boolean;
 };
 
 export type CounterResponseItem = {

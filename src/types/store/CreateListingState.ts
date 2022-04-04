@@ -49,6 +49,7 @@ export type CreateListingRequestData = {
   templateDeliveryDate: string | null;
   isActualPhoto: boolean;
   isForSaleRepPhoto: boolean;
+  restrictToState?: boolean;
 };
 
 export type CreateListingPayload = GenericResponse;

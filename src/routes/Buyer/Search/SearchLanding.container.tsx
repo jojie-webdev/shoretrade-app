@@ -32,6 +32,14 @@ const SearchLanding = (): JSX.Element => {
     useSelector((state: Store) => state.searchAndCountProductType.pending) ||
     false;
 
+  const addresses =
+    useSelector((state: Store) => state.getAddresses.data?.data.addresses) ||
+    [];
+
+  const currentDefaultAddressId = (
+    addresses.find((i) => i.default) || { id: '' }
+  ).id;
+
   const onReset = () => {
     setSearchTerm('');
   };
@@ -79,7 +87,7 @@ const SearchLanding = (): JSX.Element => {
         dispatch(
           searchAndCountProductTypeActions.request({
             term: searchTerm,
-            address: '',
+            address: currentDefaultAddressId,
           })
         );
       }, 500);

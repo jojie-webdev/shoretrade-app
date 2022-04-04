@@ -17,6 +17,7 @@ export type AddDetailsPublicProps = {
     isAuctionSale,
     isPreAuctionSale,
     templateDeliveryDate,
+    restrictToState,
   }: {
     isAquafuture: boolean;
     isAuctionSale: boolean;
@@ -35,6 +36,7 @@ export type AddDetailsPublicProps = {
     addressId: string;
     alwaysAvailable: boolean;
     templateDeliveryDate: string | null;
+    restrictToState?: boolean;
   }) => void;
   marketEstimate: {
     min: number | null;

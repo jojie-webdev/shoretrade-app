@@ -44,6 +44,7 @@ export interface GetAllBuyerListingRequestOption {
   ids?: string[];
   all?: boolean;
   exceptId?: string[];
+  address?: string;
 }
 
 export type CounterResponseItem = {

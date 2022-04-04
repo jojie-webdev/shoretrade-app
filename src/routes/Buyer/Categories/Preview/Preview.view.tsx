@@ -52,7 +52,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   useEffect(() => {
-    selectAddress(typeId);
+    //selectAddress();
     // onLoad(typeId);
     // eslint-disable-next-line
   }, []);
