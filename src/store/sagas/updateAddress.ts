@@ -13,6 +13,7 @@ import {
   updateAddressActions,
   getAddressesActions,
   cartActions,
+  currentAddressActions,
 } from '../actions';
 
 function* updateAddressRequest(
@@ -32,6 +33,14 @@ function* updateAddressRequest(
           },
         })
       );
+
+      if (state.auth.type === 'buyer') {
+        yield put(
+          currentAddressActions.update({
+            id: action.meta.addressId,
+          })
+        );
+      }
     } catch (e) {
       yield put(updateAddressActions.failed(e.message));
     }

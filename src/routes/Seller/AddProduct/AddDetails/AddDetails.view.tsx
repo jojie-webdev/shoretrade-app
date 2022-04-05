@@ -834,7 +834,7 @@ const AddDetails = ({
           <Col md={6} className="textfield-col">
             <Checkbox
               checked={restrictToState}
-              label={`Restrict to ${selectedShippingState}`}
+              label={`Restrict purchases to ${selectedShippingState} buyers only`}
               onClick={() => setRestrictToState(!restrictToState)}
             />
           </Col>
