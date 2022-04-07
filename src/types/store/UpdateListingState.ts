@@ -21,6 +21,7 @@ export type UpdateListingRequestData = {
     weight: number;
     quantity: number;
     count?: number;
+    sold?: number;
   }[];
   ends: string | null; // date iso string
   auctionDate: string | null;

@@ -7,6 +7,7 @@ export type BoxType = {
   quantity: number;
   count?: number;
   fixed?: boolean;
+  sold?: number;
 };
 
 export type AddBoxesPublicProps = {
@@ -22,6 +23,7 @@ export type AddBoxesPublicProps = {
       weight: number;
       quantity: number;
       count?: number;
+      sold?: number;
     }[];
     minimumOrder: string;
     isAquafuture: boolean;

@@ -402,6 +402,7 @@ const AddProduct = (): JSX.Element => {
       weight: number;
       quantity: number;
       count?: number;
+      sold?: number;
     }[];
     minimumOrder: string;
     isAquafuture: boolean;

@@ -257,6 +257,7 @@ const AddBoxes = ({
     ? (editableListing?.boxes || []).map((b) => ({
         ...b,
         fixed: true,
+        quantity: b.quantity - (b.sold || 0),
       }))
     : editableListing?.boxes || []
   ).filter(
