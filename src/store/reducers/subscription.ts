@@ -7,7 +7,7 @@ import { subscriptionActions } from '../actions';
 const DEFAULT_STATE: SubscriptionState = {
   status: null,
   interval: null,
-  isFreeTrial: true,
+  isFreeTrial: false,
   isAccountDeactivated: false,
 };
 
@@ -16,7 +16,7 @@ const DEFAULT_ACTION: Action<SubscriptionState> = {
   payload: {
     status: null,
     interval: null,
-    isFreeTrial: true,
+    isFreeTrial: false,
     isAccountDeactivated: false,
   },
 };

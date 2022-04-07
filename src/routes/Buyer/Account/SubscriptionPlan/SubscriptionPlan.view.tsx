@@ -14,7 +14,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { toPrice } from 'utils/String';
 import { getButtonTextByStatus } from 'utils/SubscriptionPlan/getButtonTextByStatus';
 import { useTheme } from 'utils/Theme';
@@ -38,13 +38,16 @@ export const SubscriptionPlanView = ({
   nextBillingDate,
   cardBrand,
   cardNumberMasked,
+  isSaasSubscribed,
   planStatus,
   planInterval,
+  isDeactivated,
   cancelSubscription,
   updateSubscription,
   renewSubscription,
 }: SubscriptionPlanGeneratedProps) => {
   const location = useLocation();
+  const history = useHistory();
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS.sm });
   const isSmallDesktop = useMediaQuery({
@@ -66,8 +69,26 @@ export const SubscriptionPlanView = ({
     setIsMonthly(planInterval !== 'ANNUAL');
   }, [planInterval]);
 
-  const ifForRenewal = ['CANCELLED', 'OVERDUE'].includes(planStatus);
   const interval = isMonthly ? 'MONTHLY' : 'ANNUAL';
+  const isForRenewal =
+    ['CANCELLED', 'OVERDUE', 'UNSUBSCRIBED'].includes(planStatus) ||
+    isDeactivated;
+
+  const yourPlanBadgeText = isForRenewal
+    ? planStatus === 'OVERDUE'
+      ? 'OVERDUE'
+      : 'CANCELLED'
+    : !isSaasSubscribed
+    ? 'CANCELLED'
+    : null;
+  const isOverdueBadgeVisible = [
+    'UNSUCCESSFUL',
+    'LATE',
+    'OVERDUE',
+    'UNSUBSCRIBED',
+  ].includes(planStatus);
+  const yourPlanButtonText = getButtonTextByStatus(planStatus);
+  const showYourPlanOnly = !cardNumberMasked && !nextBillingDate;
 
   return (
     <Container>
@@ -109,68 +130,91 @@ export const SubscriptionPlanView = ({
       <SubscriptionContainer>
         <Row
           gutterWidth={20}
+          justify="center"
           style={{ width: isMobile ? '100%' : isSmallDesktop ? '85%' : '65%' }}
         >
-          <Col xs={12} sm={6}>
-            <PaymentMethodSection className="section">
-              <Typography variant="body" weight="400">
-                Your Payment Method
-              </Typography>
+          {!showYourPlanOnly && (
+            <Col xs={12} sm={6}>
+              <PaymentMethodSection className="section">
+                <Typography variant="body" weight="400">
+                  Your Payment Method
+                </Typography>
 
-              <div className="card-info">
-                <div className="card-icon">
-                  <CreditCardLogo type={cardBrand} />
+                <div className="card-info">
+                  <div className="card-icon">
+                    <CreditCardLogo type={cardBrand} />
+                  </div>
+                  <Typography variant="body">
+                    <b>{cardNumberMasked}</b>
+                  </Typography>
                 </div>
-                <Typography variant="body">
-                  <b>{cardNumberMasked}</b>
-                </Typography>
-              </div>
 
-              <Link
-                className="see-payment-methods"
-                to={BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD}
-              >
-                <Typography
-                  variant="label"
-                  color="primary"
-                  weight="400"
-                  style={{ textDecoration: 'underline' }}
+                <Link
+                  className="see-payment-methods"
+                  to={BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD}
                 >
-                  See Payment Methods
+                  <Typography
+                    variant="label"
+                    color="primary"
+                    weight="400"
+                    style={{ textDecoration: 'underline' }}
+                  >
+                    {isOverdueBadgeVisible
+                      ? 'Pay Outstanding Balance'
+                      : 'See Payment Methods'}
+                  </Typography>
+                </Link>
+              </PaymentMethodSection>
+
+              <BillingSection className="section">
+                <Typography variant="body" weight="400">
+                  Next Billing Date
                 </Typography>
-              </Link>
-            </PaymentMethodSection>
 
-            <BillingSection className="section">
-              <Typography variant="body" weight="400">
-                Next Billing Date
-              </Typography>
+                <div className="billing-date">
+                  <Calendar fill={theme.grey.shade7} />
+                  <Typography
+                    variant="body"
+                    style={{ marginLeft: '6px', lineHeight: 'normal' }}
+                  >
+                    <b>{nextBillingDate}</b>
+                  </Typography>
+                  {isOverdueBadgeVisible && (
+                    <Badge
+                      badgeColor={theme.brand.error}
+                      borderRadius="8px"
+                      style={{ marginLeft: '8px' }}
+                    >
+                      <Typography
+                        variant="overline"
+                        color="noshade"
+                        style={{ lineHeight: 'unset' }}
+                      >
+                        OVERDUE
+                      </Typography>
+                    </Badge>
+                  )}
+                </div>
 
-              <div className="billing-date">
-                <Calendar fill={theme.grey.shade7} />
-                <Typography variant="body" style={{ marginLeft: '6px' }}>
-                  <b>{nextBillingDate}</b>
-                </Typography>
-              </div>
-
-              <Link
-                className="see-payment-history"
-                to={{
-                  pathname: BUYER_ACCOUNT_ROUTES.BALANCE_HISTORY,
-                  state: redirectState,
-                }}
-              >
-                <Typography
-                  variant="label"
-                  color="primary"
-                  weight="400"
-                  style={{ textDecoration: 'underline' }}
+                <Link
+                  className="see-payment-history"
+                  to={{
+                    pathname: BUYER_ACCOUNT_ROUTES.BALANCE_HISTORY,
+                    state: redirectState,
+                  }}
                 >
-                  See Payment History
-                </Typography>
-              </Link>
-            </BillingSection>
-          </Col>
+                  <Typography
+                    variant="label"
+                    color="primary"
+                    weight="400"
+                    style={{ textDecoration: 'underline' }}
+                  >
+                    See Payment History
+                  </Typography>
+                </Link>
+              </BillingSection>
+            </Col>
+          )}
 
           <Col xs={12} sm={6}>
             <PlanSection className="section">
@@ -178,7 +222,7 @@ export const SubscriptionPlanView = ({
                 <Typography variant="body" weight="400">
                   Your Plan
                 </Typography>
-                {ifForRenewal && (
+                {!!yourPlanBadgeText && (
                   <Badge
                     badgeColor={theme.brand.primary}
                     borderRadius="8px"
@@ -189,7 +233,7 @@ export const SubscriptionPlanView = ({
                       color="noshade"
                       style={{ lineHeight: 'normal' }}
                     >
-                      {planStatus}
+                      {yourPlanBadgeText}
                     </Typography>
                   </Badge>
                 )}
@@ -216,23 +260,27 @@ export const SubscriptionPlanView = ({
 
               <PlanFeatures />
 
-              <div
-                className="cancel-subscription"
-                onClick={() =>
-                  ifForRenewal
-                    ? setShowRenewModal(true)
-                    : setShowCancelModal(true)
-                }
-              >
-                <Typography
-                  variant="label"
-                  color="primary"
-                  weight="400"
-                  style={{ textDecoration: 'underline' }}
+              {!!yourPlanButtonText && isSaasSubscribed && (
+                <div
+                  className="cancel-subscription"
+                  onClick={() =>
+                    isForRenewal
+                      ? showYourPlanOnly
+                        ? history.push(BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD)
+                        : setShowRenewModal(true)
+                      : setShowCancelModal(true)
+                  }
                 >
-                  {getButtonTextByStatus(planStatus)}
-                </Typography>
-              </div>
+                  <Typography
+                    variant="label"
+                    color="primary"
+                    weight="400"
+                    style={{ textDecoration: 'underline' }}
+                  >
+                    {yourPlanButtonText}
+                  </Typography>
+                </div>
+              )}
             </PlanSection>
           </Col>
         </Row>

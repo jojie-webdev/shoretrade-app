@@ -72,7 +72,10 @@ export const BillingSection = styled.div`
     display: flex;
     margin-bottom: 24px;
     margin-top: 8px;
-    align-items: center;
+
+    svg {
+      align-self: center;
+    }
   }
 `;
 

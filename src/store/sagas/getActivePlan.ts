@@ -38,14 +38,16 @@ function* getActivePlanRequest(
 function* getActivePlanSuccess(
   action: AsyncAction<GetActivePlanMeta, GetActivePlanPayload>
 ) {
+  const state: Store = yield select();
+  const isCompanyDeactivated =
+    state.getUser.data?.data.user.companies[0].status === 'DEACTIVATED';
+
   if (action.payload.data) {
-    const state: Store = yield select();
-    const isCompanyDeactivated =
-      state.getUser.data?.data.user.companies[0].status === 'DEACTIVATED';
     const plan = action.payload.data;
     const planStatus = getActivePlanStatus(plan);
     const isPaid = !!action.payload.data.paid_at;
-    const planEnded = moment().utc().isSameOrAfter(plan.ends_at);
+    const endsAt = moment(plan.ends_at).utc();
+    const planEnded = moment().utc().isSameOrAfter(endsAt);
 
     yield put(
       subscriptionActions.update({
@@ -65,7 +67,7 @@ function* getActivePlanSuccess(
         status: 'UNSUBSCRIBED',
         interval: null,
         isFreeTrial: false,
-        isAccountDeactivated: false,
+        isAccountDeactivated: isCompanyDeactivated,
       })
     );
   }

@@ -12,9 +12,12 @@ export const activePlanToProps = (
 ): SubscriptionPlanTransformOutputProps => {
   const annualPlan = plans.find((plan) => plan.alias.includes('YEARLY'));
   const monthlyPlan = plans.find((plan) => !plan.alias.includes('YEARLY'));
+
   const nextBillingDate = activePlan
-    ? moment(activePlan.ends_at).format('D MMMM YYYY')
-    : '';
+    ? !activePlan.paid_at
+      ? moment(activePlan.starts_at).utc().format('D MMMM YYYY')
+      : moment(activePlan?.ends_at).utc().format('D MMMM YYYY')
+    : null;
   const defaultPaymentMethod = activePlan?.payment_methods.cards.find(
     (card) => card.id === activePlan.payment_methods.defaultCard
   );
@@ -25,9 +28,11 @@ export const activePlanToProps = (
     monthlyPrice: monthlyPlan?.price || '0',
     nextBillingDate,
     cardBrand,
-    cardNumberMasked: toMaskedCardNumber(
-      cardBrand,
-      defaultPaymentMethod?.lastFour || ''
-    ),
+    cardNumberMasked: defaultPaymentMethod
+      ? toMaskedCardNumber(cardBrand, defaultPaymentMethod?.lastFour)
+      : null,
+    isSaasSubscribed: activePlan
+      ? activePlan.subscription_preference.isSaasSubscribed
+      : true,
   };
 };

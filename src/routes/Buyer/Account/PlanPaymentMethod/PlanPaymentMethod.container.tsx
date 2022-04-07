@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
+import _ from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { paySubscriptionActions } from 'store/actions';
+import {
+  getMarketInterestsActions,
+  getPaymentMethodsActions,
+  getSubscriptionPlansActions,
+  paySubscriptionActions,
+} from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
@@ -20,6 +26,16 @@ const PlanPaymentMethod = (): JSX.Element => {
   const history = useHistory();
   const [selectedCardId, setSelectedCardId] = useState('');
 
+  // SELECTORS
+
+  const marketSector = useSelector(
+    (store: Store) => store.getMarketInterests.data?.data
+  );
+
+  const subscriptionPlans = useSelector(
+    (store: Store) => store.getSubscriptionPlans.data?.data
+  );
+
   const activePlan = useSelector(
     (store: Store) => store.getActivePlan.data?.data
   );
@@ -33,6 +49,32 @@ const PlanPaymentMethod = (): JSX.Element => {
 
   const companyId = GetDefaultCompany()?.id;
 
+  const cards =
+    useSelector(
+      (state: Store) => state.getPaymentMethods.data?.data.data?.cards
+    ) || [];
+
+  // USE EFFECTS
+
+  useEffect(() => {
+    if (companyId) {
+      dispatch(getMarketInterestsActions.request({ companyId }));
+      dispatch(getPaymentMethodsActions.request({ companyId }));
+    }
+  }, [companyId]);
+
+  useEffect(() => {
+    dispatch(getSubscriptionPlansActions.request({}));
+  }, []);
+
+  useEffect(() => {
+    if (isPaymentSuccess) {
+      history.push(BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN);
+    }
+  }, [isPaymentSuccess]);
+
+  // METHODS
+
   const payPlanAmountDue = (newCardDetails: NewCardDetails) => {
     if (companyId) {
       dispatch(
@@ -45,15 +87,19 @@ const PlanPaymentMethod = (): JSX.Element => {
     }
   };
 
-  useEffect(() => {
-    if (isPaymentSuccess) {
-      history.push(BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN);
-    }
-  }, [isPaymentSuccess]);
+  // VARIABLES
+
+  const plans =
+    (marketSector &&
+      subscriptionPlans?.filter((plan) =>
+        plan.alias.includes(_.snakeCase(marketSector?.sector).toUpperCase())
+      )) ||
+    [];
+  const monthlyPlan = plans.find((plan) => !plan.alias.includes('YEARLY'));
 
   const generatedProps: PlanPaymentMethodGeneratedProps = {
-    cards: activePlan?.payment_methods.cards || [],
-    amountDue: toPrice(activePlan?.price || ''),
+    cards,
+    amountDue: toPrice(activePlan?.price || monthlyPlan?.price || '0'),
     selectedCardId,
     isPaymentLoading,
     payPlanAmountDue,

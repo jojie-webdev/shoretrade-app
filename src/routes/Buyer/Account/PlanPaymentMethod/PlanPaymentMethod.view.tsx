@@ -48,6 +48,7 @@ const PlanPaymentMethodView = ({
   );
 
   const showExistingTab = mobileActiveTab === 'Existing';
+  const hasCards = cards.length > 0;
 
   return (
     <Container>
@@ -84,7 +85,7 @@ const PlanPaymentMethodView = ({
       >
         {(formik) => (
           <form onSubmit={formik.handleSubmit}>
-            {isMobile && (
+            {isMobile && hasCards && (
               <Row style={{ marginBottom: 24 }}>
                 <Col>
                   <SegmentedControls
@@ -250,11 +251,11 @@ const PlanPaymentMethodView = ({
                 </Col>
               )}
 
-              {(!isMobile || (isMobile && showExistingTab)) && (
+              {((!isMobile && hasCards) || (isMobile && showExistingTab)) && (
                 <Col xs={12} sm={6}>
                   {isMobile ? (
                     <Typography variant="copy" style={{ marginBottom: 24 }}>
-                      Pay the amount due: <b>$18.00</b>
+                      Pay the amount due: <b>{amountDue}</b>
                     </Typography>
                   ) : (
                     <Typography variant="copy" style={{ marginBottom: 24 }}>

@@ -4,10 +4,11 @@ export const getButtonTextByStatus = (status: string) => {
     case 'LATE':
     case 'ACTIVE':
       return 'Cancel Subscription';
+    case 'UNSUBSCRIBED':
     case 'OVERDUE':
     case 'CANCELLED':
       return 'Renew Account';
     default:
-      return '';
+      return null;
   }
 };

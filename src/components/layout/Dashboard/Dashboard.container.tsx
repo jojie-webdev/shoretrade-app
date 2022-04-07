@@ -16,7 +16,6 @@ import {
   readNotificationActions,
   getUserActions,
   globalModalActions,
-  getActivePlanActions,
 } from 'store/actions';
 import { Route } from 'types/Routes';
 import { NotificationType, NotifName } from 'types/store/GetNotificationsState';
@@ -215,7 +214,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   useEffect(() => {
     dispatch(getNotificationsActions.request());
     const unlisten = history.listen(() => {
-      dispatch(getActivePlanActions.request({}));
+      dispatch(getUserActions.request());
     });
 
     return () => {

@@ -4,9 +4,10 @@ import _ from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   cancelSubscriptionPlanActions,
-  getActivePlanActions,
   getMarketInterestsActions,
   getSubscriptionPlansActions,
+  getUserActions,
+  paySubscriptionActions,
   renewSubscriptionPlanActions,
   updateSubscriptionPlanActions,
 } from 'store/actions';
@@ -53,6 +54,10 @@ const SubscriptionPlan = () => {
     (store: Store) => store.renewSubscriptionPlan.data?.data
   );
 
+  const isDeactivated = useSelector(
+    (store: Store) => store.subscription.isAccountDeactivated
+  );
+
   // USE EFFECTS
 
   useEffect(() => {
@@ -63,11 +68,12 @@ const SubscriptionPlan = () => {
 
   useEffect(() => {
     dispatch(getSubscriptionPlansActions.request({}));
+    dispatch(paySubscriptionActions.clear());
   }, []);
 
   useEffect(() => {
     if (company?.id && (updateSuccess || cancelSuccess || renewSuccess)) {
-      dispatch(getActivePlanActions.request({ companyId: company.id }));
+      dispatch(getUserActions.request());
     }
   }, [updateSuccess, cancelSuccess, renewSuccess]);
 
@@ -119,6 +125,7 @@ const SubscriptionPlan = () => {
     ...activePlanToProps(plans, activePlan),
     planStatus,
     planInterval,
+    isDeactivated,
     cancelSubscription,
     updateSubscription,
     renewSubscription,
