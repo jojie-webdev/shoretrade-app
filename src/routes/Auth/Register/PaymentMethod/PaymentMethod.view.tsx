@@ -1,7 +1,9 @@
 import React from 'react';
 
+import Select from 'components/base/Select';
 import { Amex, Mastercard, Visa } from 'components/base/SVG';
 import FormikTextField from 'components/module/FormikTextField';
+import { State } from 'country-state-city';
 import { connect } from 'formik';
 import { Row, Col } from 'react-grid-system';
 import { cardExpiryInputFilter } from 'utils/InputFilters/cardExpiryInputFilter';
@@ -18,8 +20,13 @@ import {
 } from './PaymentMethod.style';
 
 export const PaymentMethod = connect((props: PaymentMethodProps) => {
-  const { formik, otherErrors, setOtherErrors } = props;
+  const { details, formik, otherErrors, setOtherErrors } = props;
   const theme = useTheme();
+
+  const states = State.getStatesOfCountry(details.address?.countryCode || 'AU');
+  const initialState = states.find(
+    (state) => state.isoCode === formik.initialValues.cardState
+  );
 
   return (
     <Container>
@@ -170,16 +177,19 @@ export const PaymentMethod = connect((props: PaymentMethodProps) => {
 
         <FormikRow nogutter>
           <Col>
-            <FormikTextField
+            <Select
               borderRadius="12px"
-              type="text"
-              name="cardState"
-              id="cardState"
               label="STATE"
-              color={theme.appType === 'seller' ? 'shade4' : 'shade6'}
               placeholder="State"
-              otherError={otherErrors.cardState}
-              onChangeText={(value) => setOtherErrors({ cardState: '' })}
+              value={initialState?.name}
+              options={states.map((state) => ({
+                value: state.isoCode,
+                label: state.name,
+              }))}
+              onChange={(option) =>
+                formik.setFieldValue('cardState', option.value, false)
+              }
+              border={`1px solid ${theme.grey.shade5}`}
             />
           </Col>
         </FormikRow>

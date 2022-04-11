@@ -18,6 +18,7 @@ export const Container = styled(Row)`
   margin-left: 0px !important;
   margin-right: 0px !important;
   max-height: 100vh;
+  flex-wrap: nowrap !important;
 `;
 
 export const BackgroundContainer = styled(Col)`

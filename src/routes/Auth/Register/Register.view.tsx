@@ -1296,6 +1296,7 @@ const StepForm = ({
                     <PaymentMethod
                       otherErrors={otherErrors}
                       setOtherErrors={setOtherErrors}
+                      details={registrationDetails}
                     />
                   )}
                 </>
