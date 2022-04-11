@@ -244,6 +244,7 @@ const Checkout = (): JSX.Element => {
           expDelDate: selectedPriceData?.estimatedDateISO || '',
           sellerDropOffAddress: selectedPriceData?.sellerDropOffAddress,
           sellerDropOff: selectedPriceData?.sellerDropOff,
+          viaSFM: selectedPriceData?.viaSFM,
         },
       };
     },

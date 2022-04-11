@@ -16,6 +16,7 @@ export type OrderShipping = {
   priceId: string;
   quoteId: number;
   serviceName: string;
+  viaSFM?: boolean;
 };
 
 export type OrderCartItem = (CartItem | GetCartDataItem) & {
