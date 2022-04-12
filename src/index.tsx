@@ -50,7 +50,7 @@ const Theme = ({ children }: { children: React.ReactNode }) => {
     pathname.startsWith('/seller') || pathname === SELLER_ROUTES.REGISTER;
 
   const currentDefaultAddressCountryCode = (
-    addresses.find((i) => i.countryCode) || { countryCode: '' }
+    addresses.find((i) => i.default) || { countryCode: '' }
   ).countryCode;
 
   const isSFM =
