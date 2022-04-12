@@ -38,7 +38,7 @@ import BarcodeScanner from './BarcodeScanner';
 import DashboardRoutes from './Dashboard/dashboard.routes';
 import MarketBoardRoutes from './MarketBoard/market-board.routes';
 import MarketPriceDetail from './MarketPriceDetail';
-import MarketPrices from './MarketPrices';
+import MarketDataRoutes from './MarketPrices/market-data.routes';
 import Notifications from './Notifications';
 import Selling from './Selling/selling.routes';
 import Sold from './Sold/sold.routes';
@@ -71,8 +71,9 @@ const ROUTES: Routes = {
   MARKET_DATA: {
     path: SELLER_ROUTES.MARKET_DATA,
     title: 'Market Data',
-    children: <MarketPrices />,
+    children: <MarketDataRoutes />,
     icon: FileCheck,
+    nested: true,
   },
   //Market Board
   MARKET_BOARD: {

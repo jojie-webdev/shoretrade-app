@@ -18,6 +18,7 @@ import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
 import { CustomSettingKey } from 'types/store/GetNotificationSettingsState';
+import { SpecialColors } from 'utils/SFMTheme';
 import { useTheme } from 'utils/Theme';
 
 import { NotificationSettingsCategoryItemProps } from './NotificationSettingsCategoryItem.props';
@@ -30,7 +31,6 @@ import {
   TextIndicatorsContainer,
   Description,
 } from './NotificationSettingsCategoryItem.style';
-import { SpecialColors } from 'utils/SFMTheme';
 
 const NotificationSettingsCategoryItem = (
   props: NotificationSettingsCategoryItemProps

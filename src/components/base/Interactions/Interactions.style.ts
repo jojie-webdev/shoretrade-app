@@ -58,6 +58,10 @@ export const Container = styled.div<InteractionsProps>`
   .left-radio {
     flex-direction: row;
   }
+
+  .top-content {
+    justify-content: space-between;
+  }
 `;
 
 export const Value = styled(Typography)<{ fontColor?: string }>`

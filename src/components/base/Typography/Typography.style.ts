@@ -60,6 +60,11 @@ const styles: Record<Variants, string> = {
       text-transform: uppercase;
       letter-spacing: 2px;
     `,
+  display4: `
+    font-size: ${pxToRem(32)};
+    line-height: 40px;
+    text-transform: uppercase;
+  `,
 };
 
 const weights: Record<string, string> = {
