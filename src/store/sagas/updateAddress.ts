@@ -1,8 +1,11 @@
 import { goBack } from 'connected-react-router';
 import pathOr from 'ramda/es/pathOr';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
+import { closeCart } from 'services/cart';
 import { updateAddress } from 'services/company';
 import { AsyncAction } from 'types/Action';
+import { GetCartData } from 'types/store/GetCartState';
+import { GetUserPayload, UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
 import {
   UpdateAddressMeta,
@@ -14,6 +17,7 @@ import {
   getAddressesActions,
   cartActions,
   currentAddressActions,
+  getCartActions,
 } from '../actions';
 
 function* updateAddressRequest(
@@ -34,12 +38,32 @@ function* updateAddressRequest(
         })
       );
 
-      if (state.auth.type === 'buyer') {
+      if (state.auth.type === 'buyer' && action.meta.default) {
         yield put(
           currentAddressActions.update({
             id: action.meta.addressId,
           })
         );
+
+        const getCartData: GetCartData | null | undefined =
+          state.getCart.data?.data;
+        const getUser: GetUserPayload | null | undefined = state.getUser.data;
+        const company: UserCompany | null = getUser?.data.user.companies.length
+          ? getUser?.data.user.companies[0]
+          : null;
+
+        if (getCartData?.id && company) {
+          yield call(
+            closeCart,
+            {
+              cartId: getCartData?.id,
+              employeeId: company.employeeId,
+              changeAddress: true,
+            },
+            state.auth.token
+          );
+          yield put(getCartActions.clear());
+        }
       }
     } catch (e) {
       yield put(updateAddressActions.failed(e.message));

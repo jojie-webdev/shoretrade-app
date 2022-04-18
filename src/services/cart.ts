@@ -61,6 +61,7 @@ export const closeCart = (
   data: {
     employeeId: string;
     cartId: string;
+    changeAddress?: boolean;
   },
   token: string
 ) => {
