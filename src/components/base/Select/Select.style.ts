@@ -142,6 +142,13 @@ export const StyledDropdown = styled(Dropdown)<DropdownProps>`
         }
         return dark ? `${theme.grey.noshade};` : `${theme.grey.shade9};`;
       }}
+    @media ${BREAKPOINTS['xs']} {
+      height: 18px;
+      width: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 `;
 
