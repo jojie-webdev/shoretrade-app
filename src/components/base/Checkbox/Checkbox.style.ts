@@ -79,19 +79,17 @@ export const CustomCheckbox = styled.span<{
 
 export const Label = styled(Typography)`
   margin-left: 8px;
-  ${({ color, disabled, theme }) =>
-    !color
-      ? `
-  color: ${() => {
-    if (disabled) return theme.grey.shade7;
-    const isSeller = theme.appType !== 'buyer';
-    if (theme.isSFM) {
-      return SpecialColors.blue;
+  color: ${({ color, disabled, theme }) => {
+    if (!color) {
+      if (disabled) return theme.grey.shade7;
+      const isSeller = theme.appType !== 'buyer';
+      if (theme.isSFM) {
+        return SpecialColors.blue;
+      }
+      return isSeller ? '#ffffff' : theme.grey.shade9;
     }
-    return isSeller ? '#ffffff' : theme.grey.shade9;
+    return 'inherit';
   }};
-  `
-      : ''}
 `;
 
 export const Error = styled(Typography)`
