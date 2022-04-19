@@ -10,7 +10,7 @@ export const theme: Theme = {
   appType: 'seller', // should be overridden on provider level
   isSFM: true,
   brand: {
-    primary: '#E35D32',
+    primary: '#E05D21',
     secondary: '#30347E',
     info: '#31769D',
     alert: '#E8D743',
