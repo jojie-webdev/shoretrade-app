@@ -20,6 +20,9 @@ const Assistants = (): JSX.Element => {
   const dispatch = useDispatch();
   const currentCompany = GetDefaultCompany();
   const companyId = currentCompany?.id || '';
+  const loadingUser = useSelector(
+    (state: Store) => state.getUser.pending || false
+  );
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
 
   const currentCompanyName = currentCompany?.name || 'Your Company';
@@ -58,7 +61,7 @@ const Assistants = (): JSX.Element => {
     if (companyId) {
       dispatch(getLinkedAccountsActions.request({ companyId }));
     }
-    if (!permission) {
+    if (!loadingUser && !permission) {
       history.push(`${BUYER_ACCOUNT_ROUTES.LANDING}`);
     }
     // eslint-disable-next-line
