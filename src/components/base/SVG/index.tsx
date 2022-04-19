@@ -1,4 +1,6 @@
 /* PLOP_INJECT_IMPORT */
+export { default as ArrowDownRight } from './ArrowDownRight';
+export { default as ArrowUpRight } from './ArrowUpRight';
 export { default as Crate } from './Crate';
 export { default as LogOut } from './LogOut';
 export { default as CatchNet } from './CatchNet';
