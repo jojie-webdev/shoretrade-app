@@ -16,6 +16,7 @@ import { createUpdateReducer } from 'utils/Hooks';
 import { cardExpiryInputFilter } from 'utils/InputFilters/cardExpiryInputFilter';
 import { cardNumberInputFilter } from 'utils/InputFilters/cardNumberInputFilter';
 import { useTheme } from 'utils/Theme';
+import { useHistory } from 'react-router-dom';
 
 import { PlanPaymentMethodGeneratedProps } from './PlanPaymentMethod.props';
 import {
@@ -39,6 +40,7 @@ const PlanPaymentMethodView = ({
 }: PlanPaymentMethodGeneratedProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const history = useHistory();
 
   const [isDefault, setIsDefault] = useState(false);
   const [mobileActiveTab, setMobileActiveTab] = useState('Add');
@@ -276,6 +278,17 @@ const PlanPaymentMethodView = ({
                       }
                     />
                   ))}
+                  <Button
+                    style={{ marginTop: '12px' }}
+                    text="Add Card"
+                    variant="primary"
+                    type="button"
+                    onClick={() => {
+                      history.push(`${BUYER_ACCOUNT_ROUTES.CREDIT_CARD}`, {
+                        card: {},
+                      });
+                    }}
+                  />
                 </Col>
               )}
             </Row>
