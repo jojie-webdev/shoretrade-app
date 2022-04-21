@@ -116,6 +116,7 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
             <Typography
               variant="title3"
               weight="bold"
+              customFont={theme.isSFM ? 'Canela' : undefined}
               color={isSeller ? 'noshade' : 'shade8'}
             >
               {isSeller ? 'Seller' : 'Buyer'} Log in
