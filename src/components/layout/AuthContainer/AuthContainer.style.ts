@@ -23,7 +23,6 @@ export const Container = styled(Row)`
   margin-left: 0px !important;
   margin-right: 0px !important;
   max-height: 100vh;
-  flex-wrap: nowrap !important;
 `;
 
 export const BackgroundContainer = styled(Col)`
@@ -37,22 +36,17 @@ export const Background = styled.div`
   height: 100%;
   background-image: url(${({ theme }) => getBackgroundImage(theme)});
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size: cover;
 
-  @media ${BREAKPOINTS['lg']} {
-    background-size: cover;
-  }
-  @media ${BREAKPOINTS['md']} {
-    background-size: cover;
-  }
   @media ${BREAKPOINTS['sm']} {
-    background-size: cover;
     height: 0%;
   }
 `;
 
 export const Wrapper = styled(Col)`
   width: 100%;
+  max-height: 100vh;
+  overflow-y: scroll;
   display: flex;
   align-items: center;
   justify-content: center;
