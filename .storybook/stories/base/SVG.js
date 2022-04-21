@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  ShoretradeLogoAlt2,
   ArrowDownRight,
   ArrowUpRight,
   Crate,
@@ -223,6 +224,9 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background="white">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="ShoretradeLogoAlt2">
+          <ShoretradeLogoAlt2 width={30} height={30} />
+        </Wrapper>
         <Wrapper label="ArrowDownRight">
           <ArrowDownRight width={30} height={30} />
         </Wrapper>

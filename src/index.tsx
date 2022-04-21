@@ -49,13 +49,7 @@ const Theme = ({ children }: { children: React.ReactNode }) => {
   const isSeller =
     pathname.startsWith('/seller') || pathname === SELLER_ROUTES.REGISTER;
 
-  const currentDefaultAddressCountryCode = (
-    addresses.find((i) => i.default) || { countryCode: '' }
-  ).countryCode;
-
-  const isSFM =
-    currentDefaultAddressCountryCode === 'AU' ||
-    currentDefaultAddressCountryCode === 'NZ';
+  const isSFM = process.env.REACT_APP_SFM;
 
   if (isSFM) {
     document.body.classList.add('sfm');

@@ -1703,7 +1703,11 @@ const RegisterView = (props: RegisterGeneratedProps) => {
       return (
         <GetStartedWrapper>
           <SignUpHeader>
-            <AppTypeTitle variant="title3" weight="700">
+            <AppTypeTitle
+              customFont={theme.isSFM ? 'Canela' : undefined}
+              variant="title3"
+              weight="700"
+            >
               {isSeller ? 'Seller' : 'Buyer'} Sign Up
             </AppTypeTitle>
             <LogInLinkContainer>
@@ -1793,7 +1797,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
                 <Title
                   variant="title5"
                   weight="500"
-                  color={isSeller ? 'noshade' : 'shade8'}
+                  customFont={theme.isSFM ? 'Canela' : undefined}
                 >
                   {steps[step - 1].title}
                 </Title>

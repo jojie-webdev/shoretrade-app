@@ -9,6 +9,7 @@ import {
   SfmLogo,
 } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
+import Typography from 'components/base/Typography';
 import { SHORETRADE_HOME } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
@@ -29,6 +30,7 @@ import {
   ProgressContainer,
   BackgroundContainer,
   MobileFooter,
+  PoweredByContainer,
 } from './AuthContainer.style';
 
 const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
@@ -81,10 +83,22 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
               }
             >
               <a href={SHORETRADE_HOME} style={{ cursor: 'pointer' }}>
-                {!horizontalLogo ? (
-                  <ShoretradeLogo2 fill={!isSeller ? 'black' : 'white'} />
-                ) : (
-                  <ShoretradeLogo height={24} width={190} />
+                {!theme.isSFM && (
+                  <>
+                    {!horizontalLogo ? (
+                      <ShoretradeLogo2 fill={!isSeller ? 'black' : 'white'} />
+                    ) : (
+                      <ShoretradeLogo height={24} width={190} />
+                    )}
+                  </>
+                )}
+
+                {theme.isSFM && (
+                  <SfmLogo
+                    fill={!isSeller ? theme.brand.secondary : 'white'}
+                    height={52}
+                    width={200}
+                  />
                 )}
               </a>
 
@@ -135,6 +149,21 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
             </HeaderContainer>
           )}
           {children}
+          {theme.isSFM && (
+            <PoweredByContainer>
+              <Typography
+                color={theme.appType === 'buyer' ? 'secondary' : 'noshade'}
+                variant="small"
+              >
+                Powered by
+              </Typography>
+              {theme.appType === 'buyer' ? (
+                <ShoretradeLogo />
+              ) : (
+                <ShoretradeLogo />
+              )}
+            </PoweredByContainer>
+          )}
         </Content>
       </Wrapper>
       {mobileFooter && isSmallScreen && (

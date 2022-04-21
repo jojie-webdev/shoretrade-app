@@ -88,8 +88,27 @@ export const GetStartedButton = styled(Button)`
 `;
 
 export const GetStartedTitle = styled(Typography)`
-  color: ${({ theme }) =>
-    theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9};
+  ${({ theme }) => {
+    if (theme.isSFM) {
+      return `
+      color: ${
+        theme.appType === 'seller' ? theme.grey.noshade : theme.brand.secondary
+      };
+      `;
+    }
+    return `
+      color: ${
+        theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9
+      };
+    `;
+  }}
+  ${({ theme }) => {
+    if (theme.isSFM && theme.appType === 'seller') {
+      return `
+        opacity: 75%;
+      `;
+    }
+  }}
 `;
 
 export const Spacer = styled.div`
@@ -145,8 +164,18 @@ export const StepCount = styled(Typography)`
 `;
 
 export const Title = styled(Typography)`
-  color: ${({ theme }) =>
-    theme.appType === 'seller' ? theme.grey.shade1 : theme.grey.shade8};
+  ${({ theme }) => {
+    if (theme.isSFM) {
+      return `
+    color: ${
+      theme.appType === 'seller' ? theme.grey.noshade : theme.brand.secondary
+    };
+  `;
+    }
+    return `
+color: ${theme.appType === 'seller' ? theme.grey.shade1 : theme.grey.shade8};
+`;
+  }}
   margin-top: 4px;
 `;
 
@@ -330,8 +359,20 @@ export const LogInLink = styled(Typography)`
 `;
 
 export const AppTypeTitle = styled(Typography)`
-  color: ${({ theme }) =>
-    theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9};
+  ${({ theme }) => {
+    if (theme.isSFM) {
+      return `
+      color: ${
+        theme.appType === 'seller' ? theme.grey.noshade : theme.brand.secondary
+      };
+    `;
+    }
+    return `
+    color: ${
+      theme.appType === 'seller' ? theme.grey.noshade : theme.grey.shade9
+    };
+  `;
+  }}
 `;
 
 // @ts-ignore

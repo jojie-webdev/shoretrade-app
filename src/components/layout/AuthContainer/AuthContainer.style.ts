@@ -3,9 +3,14 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col, Row } from 'react-grid-system';
 import BuyerBackgroundImage from 'res/images/buyer-image.png';
 import SellerBackgroundImage from 'res/images/seller-image.png';
+import SFMBackgroundImage from 'res/images/sfm-register-image.png';
+import { Theme } from 'types/Theme';
 import styled from 'utils/styled';
 
-const getBackgroundImage = (theme: { appType: 'seller' | 'buyer' }) => {
+const getBackgroundImage = (theme: Theme) => {
+  if (theme.isSFM) {
+    return SFMBackgroundImage;
+  }
   return theme.appType === 'seller'
     ? SellerBackgroundImage
     : BuyerBackgroundImage;
@@ -171,4 +176,9 @@ export const MobileFooter = styled.div`
   z-index: 2222;
   position: fixed;
   bottom: 0;
+`;
+
+export const PoweredByContainer = styled.div`
+  padding: 16px;
+  align-self: flex-end;
 `;

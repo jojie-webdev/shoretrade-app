@@ -27,7 +27,9 @@ const StepDetails = (props: StepDetailsProps): JSX.Element => {
         </StepNumber>
       </StepNumberContainer>
       <StepInfo>
-        <StepTitle>{title}</StepTitle>
+        <StepTitle customFont={theme.isSFM ? 'Canela' : undefined}>
+          {title}
+        </StepTitle>
         <StepDescription variant="label" weight="400">
           {description}
         </StepDescription>

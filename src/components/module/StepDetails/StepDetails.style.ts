@@ -31,8 +31,19 @@ export const StepInfo = styled.div`
 `;
 
 export const StepTitle = styled(Typography)`
-  color: ${({ theme }) =>
-    theme.appType === 'seller' ? theme.grey.shade1 : theme.grey.shade8};
+  ${({ theme }) => {
+    if (theme.isSFM) {
+      return `
+      font-family: 'Canela';
+      color: ${
+        theme.appType === 'seller' ? theme.grey.noshade : theme.brand.secondary
+      };
+    `;
+    }
+    return `
+  color: ${theme.appType === 'seller' ? theme.grey.shade1 : theme.grey.shade8};
+`;
+  }}
 `;
 
 export const StepDescription = styled(Typography)`

@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+export { default as ShoretradeLogoAlt2 } from './ShoretradeLogoAlt2';
 export { default as ArrowDownRight } from './ArrowDownRight';
 export { default as ArrowUpRight } from './ArrowUpRight';
 export { default as Crate } from './Crate';
