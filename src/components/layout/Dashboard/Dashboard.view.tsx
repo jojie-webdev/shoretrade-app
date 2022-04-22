@@ -372,10 +372,10 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                 />
               )}
               {theme.isSFM && theme.appType === 'seller' && (
-                <SfmLogo fill={theme.grey.noshade} width={122} height={32} />
+                <SfmLogo fill={theme.grey.noshade} width={200} height={52} />
               )}
               {theme.isSFM && theme.appType === 'buyer' && (
-                <SfmLogo fill={theme.grey.noshade} width={122} height={32} />
+                <SfmLogo fill={theme.grey.noshade} width={200} height={52} />
               )}
             </SidebarLogoContainer>
             <div className="nav-items-container">
@@ -406,7 +406,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                 <Typography color="noshade" variant="small">
                   Powered by
                 </Typography>
-                <ShoretradeLogoAlt />
+                <ShoretradeLogo fill={theme.grey.shade6} />
               </PoweredByContainer>
             )}
             {theme.appType === 'buyer' && (

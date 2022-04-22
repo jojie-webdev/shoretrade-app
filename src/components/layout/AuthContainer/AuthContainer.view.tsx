@@ -157,11 +157,7 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
               >
                 Powered by
               </Typography>
-              {theme.appType === 'buyer' ? (
-                <ShoretradeLogo />
-              ) : (
-                <ShoretradeLogo />
-              )}
+              <ShoretradeLogo />
             </PoweredByContainer>
           )}
         </Content>
