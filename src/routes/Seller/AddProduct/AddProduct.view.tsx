@@ -55,7 +55,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     editableListing,
     onSelectSpecifications,
     isCustomType,
-    isGst,
+    isGstIncl,
     onSelectSizes,
     onUpdateImage,
     onSetProductPhotoType,
@@ -210,7 +210,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
           <AddDetails
             isBulkUpload={isBulkUpload}
             isCustomType={isCustomType}
-            isGst={isGst}
+            isGstIncl={isGstIncl}
             editableListing={editableListing}
             listingFormData={listingFormData}
             onUpdateDetails={onUpdateDetails}

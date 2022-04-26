@@ -116,7 +116,7 @@ const AddDetails = ({
   marketEstimate,
   listingFormData,
   navBack,
-  isGst
+  isGstIncl
 }: AddDetailsProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -723,7 +723,7 @@ const AddDetails = ({
               }}
               RightComponent={
                 <>
-                  {isGst ? <GstBadge>
+                  {isGstIncl ? <GstBadge>
                     <OfferTag
                       text={'INCLUDE GST'}
                       badgeColor={'#E35D32'}
@@ -740,7 +740,7 @@ const AddDetails = ({
                   </Typography>
                 </>
               }
-              rightComponentDirection={isGst ? 'row' : 'column'}
+              rightComponentDirection={isGstIncl ? 'row' : 'column'}
             />
           </Col>
         </Row>

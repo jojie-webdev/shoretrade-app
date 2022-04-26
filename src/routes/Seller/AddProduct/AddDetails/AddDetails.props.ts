@@ -48,7 +48,7 @@ export type AddDetailsPublicProps = {
 export type AddDetailsProps = AddDetailsPublicProps & {
   isBulkUpload: boolean;
   isCustomType: boolean;
-  isGst: boolean;
+  isGstIncl: boolean;
   listingFormData: GetListingFormDataResponse | null;
   editableListing: EditableListingState;
 };

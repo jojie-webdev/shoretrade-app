@@ -226,7 +226,7 @@ const AddProduct = (): JSX.Element => {
 
   const isCustomType = editableListing?.isCustomType || false;
 
-  const isGst = listingFormData?.type.isGst || false
+  const isGstIncl = listingFormData?.type.isGstIncl || false
 
   const isBulkUpload = modifyBulkUpload.currentData.index !== undefined;
 
@@ -678,7 +678,7 @@ const AddProduct = (): JSX.Element => {
     editableListing,
     typeName,
     isCustomType,
-    isGst,
+    isGstIncl,
     onSelectSpecifications,
     onSelectSizes,
     onUpdateImage,
