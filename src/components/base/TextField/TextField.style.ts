@@ -78,10 +78,10 @@ export const LeftComponentContainer = styled.div<{ disabled?: boolean }>`
   ${(props) => props.disabled && `background-color: ${props.theme.grey.shade3}`}
 `;
 
-export const RightComponentContainer = styled.div`
+export const RightComponentContainer = styled.div<{ direction?: string}>`
   display: flex;
   height: 100%;
-  flex-direction: column;
+  flex-direction: ${(props) => props.direction || 'column'};
   justify-content: center;
   align-items: center;
   // border-left: 1px solid ${({ theme }) => theme.grey.shade6};

@@ -9,6 +9,7 @@ export interface TextFieldProps
   error?: string;
   LeftComponent?: React.ReactNode;
   RightComponent?: React.ReactNode;
+  rightComponentDirection?: string;
   className?: string;
   alert?: string;
   prefix?: string;

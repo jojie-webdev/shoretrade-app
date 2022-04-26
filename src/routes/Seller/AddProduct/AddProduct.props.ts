@@ -27,6 +27,7 @@ export interface AddProductGeneratedProps
   onChangeCurrentPage: (newPage: number) => void;
   typeName: string;
   isCustomType: boolean;
+  isGst: boolean;
   listingFormData: GetListingFormDataResponse | null;
   editableListing: EditableListingState;
   saveListing: () => void;

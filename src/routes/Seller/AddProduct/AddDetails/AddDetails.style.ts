@@ -102,3 +102,11 @@ export const SfmContainer = styled(Col)(({ theme }) => ({
     marginTop: 8,
   },
 }));
+
+export const GstBadge = styled.div`
+ margin-bottom: 5px;
+ margin-right: 8px;
+ p {
+   font-family: initial;
+ }
+`

@@ -37,6 +37,7 @@ export type GetListingFormDataResponse = {
     activeSizeUnit: string;
     cmSizingOptions: SizingOption[];
     gmSizingOptions: SizingOption[];
+    isGst: boolean;
   };
   qualityOptions: string[];
 };

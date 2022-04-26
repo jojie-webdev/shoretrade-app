@@ -48,6 +48,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
     inputType,
     maxLength,
     suffix,
+    rightComponentDirection
   } = props;
 
   const [showSecuredText, setShowSecuredText] = useState(false);
@@ -172,7 +173,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
         {!readOnly && (prefix || '').length > 0 && <Prefix>{prefix}</Prefix>}
         {suffix ? renderTextFieldHandlesSuffix() : renderNormalTextField()}
         {RightComponent && (
-          <RightComponentContainer>{RightComponent}</RightComponentContainer>
+          <RightComponentContainer direction={rightComponentDirection}>{RightComponent}</RightComponentContainer>
         )}
         {secured && (
           <VisibilityContainer>

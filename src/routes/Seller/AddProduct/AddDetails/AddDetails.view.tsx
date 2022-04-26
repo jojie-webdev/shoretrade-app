@@ -16,6 +16,7 @@ import DatePickerDropdown from 'components/module/DatePickerDropdown';
 import DateRangePicker from 'components/module/DateRangePicker';
 // import IconTooltip from 'components/module/IconTooltip';
 import LocationSearch from 'components/module/LocationSearch';
+import OfferTag from 'components/module/OfferTag';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Moment } from 'moment';
 import moment from 'moment-timezone';
@@ -40,6 +41,7 @@ import {
   CustomCol,
   DatePickerTop,
   SfmContainer,
+  GstBadge
 } from './AddDetails.style';
 import { combineDateTime } from './AddDetails.transform';
 import {
@@ -114,6 +116,7 @@ const AddDetails = ({
   marketEstimate,
   listingFormData,
   navBack,
+  isGst
 }: AddDetailsProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -719,14 +722,25 @@ const AddDetails = ({
                 setErrors(isValid({ price }));
               }}
               RightComponent={
-                <Typography
-                  variant="overlineSmall"
-                  color="shade6"
-                  style={{ paddingRight: '14px' }}
-                >
-                  AUD
-                </Typography>
+                <>
+                  {isGst ? <GstBadge>
+                    <OfferTag
+                      text={'INCLUDE GST'}
+                      badgeColor={'#E35D32'}
+                      variantColor={'alert'}
+                      color={'alert'}
+                    />
+                  </GstBadge> : <></>}
+                  <Typography
+                    variant="overlineSmall"
+                    color="shade6"
+                    style={{ paddingRight: '14px' }}
+                  >
+                    AUD
+                  </Typography>
+                </>
               }
+              rightComponentDirection={isGst ? 'row' : 'column'}
             />
           </Col>
         </Row>
