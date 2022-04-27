@@ -19,6 +19,7 @@ import {
 import getSellerByIdActions from 'store/actions/getSellerById';
 import { GetAddressOptions, GetDefaultCompany } from 'store/selectors/buyer';
 // import { CartItem } from 'types/store/CartState';
+import { AddCartItemPayload } from 'types/store/AddCartItemState';
 import { GetListingResponseItem } from 'types/store/GetListingState';
 import { Seller } from 'types/store/GetSellerByIdState';
 import { Store } from 'types/store/Store';
@@ -85,6 +86,12 @@ const ProductDetails = (): JSX.Element => {
 
   const getListingBoxesResponse =
     useSelector((state: Store) => state.getListingBoxes.data?.data.boxes) || [];
+
+  const isLoadingAddCart =
+    useSelector((state: Store) => state.addCartItem.pending) || false;
+
+  const addCartItemData: AddCartItemPayload | null =
+    useSelector((state: Store) => state.addCartItem.data) || null;
 
   const isLoadingListingBoxes =
     useSelector((state: Store) => state.getListingBoxes.pending) || false;
@@ -194,6 +201,8 @@ const ProductDetails = (): JSX.Element => {
           })),
         })
       );
+      setPressedBoxRadio('');
+      setWeight('');
       // history.push(BUYER_ROUTES.CHECKOUT); // moved to sagas
     }
   };
@@ -287,6 +296,12 @@ const ProductDetails = (): JSX.Element => {
     }
     // eslint-disable-next-line
   }, [currentSeller?.isFavourite]);
+
+  useEffect(() => {
+    if (addCartItemData?.data.items && weight !== '') {
+      dispatch(addCartItemActions.clear());
+    }
+  }, [weight, addCartItemData]);
 
   // On error, set favorite back to what it originally was
   // useEffect(() => {
@@ -410,6 +425,8 @@ const ProductDetails = (): JSX.Element => {
     onAddToCart,
     isLoadingListingBoxes,
     isPendingAccount,
+    isLoadingAddCart,
+    addCartItemData,
   };
   return <ProductDetailsView {...generatedProps} />;
 };

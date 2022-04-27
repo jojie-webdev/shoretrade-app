@@ -91,7 +91,7 @@ const Button = (props: ButtonProps): JSX.Element => {
       )}
 
       {loading && (
-        <LoadingContainer>
+        <LoadingContainer hasText={hasText}>
           <Spinner width={24} height={24} />
         </LoadingContainer>
       )}

@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Alert from 'components/base/Alert';
 import Badge from 'components/base/Badge';
 import Divider from 'components/base/Divider';
 import FavoriteButtonView from 'components/base/FavoriteButton';
-import { Expand, Location, Cart, Crate } from 'components/base/SVG';
+import {
+  Expand,
+  Location,
+  Cart,
+  Crate,
+  CheckFilled,
+} from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import BoxRadio from 'components/module/BoxRadio';
@@ -60,6 +66,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     isPendingAccount,
     isAquafuture,
     catchRecurrence,
+    isLoadingAddCart,
+    addCartItemData,
   } = props;
 
   const [images, setImages] = useState<string[]>([]);
@@ -327,21 +335,33 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                     )}
                   </div>
                   <ButtonContainer>
-                    <AddToCartButton
-                      text="Add to Cart"
-                      onClick={onAddToCart}
-                      iconPosition="before"
-                      icon={
-                        <Cart
-                          fill={
-                            pressedBoxRadio
-                              ? theme.grey.noshade
-                              : theme.grey.shade5
-                          }
-                        />
-                      }
-                      variant={pressedBoxRadio ? undefined : 'disabled'}
-                    />
+                    {addCartItemData?.data.items ? (
+                      <AddToCartButton
+                        variant="success"
+                        iconPosition="before"
+                        icon={
+                          <CheckFilled width={14} fill={theme.grey.noshade} />
+                        }
+                        text="Product added to cart!"
+                      />
+                    ) : (
+                      <AddToCartButton
+                        text={isLoadingAddCart ? '' : 'Add to cart'}
+                        onClick={onAddToCart}
+                        loading={isLoadingAddCart}
+                        iconPosition="before"
+                        icon={
+                          <Cart
+                            fill={
+                              pressedBoxRadio
+                                ? theme.grey.noshade
+                                : theme.grey.shade5
+                            }
+                          />
+                        }
+                        variant={pressedBoxRadio ? undefined : 'disabled'}
+                      />
+                    )}
                   </ButtonContainer>
                 </DesiredQuantityContainer>
               )}

@@ -33,6 +33,12 @@ storiesOf('base/Button', module).add('Summary', () => (
           style={{ marginBottom: '5px' }}
           loading
         />
+        <Button
+          text=""
+          style={{ marginBottom: '5px' }}
+          loading
+          noTextOnLoading
+        />
       </div>
       <div style={{ marginRight: '20px', marginBottom: '30px' }}>
         <Button

@@ -103,11 +103,11 @@ export const ButtonContainer = styled.button<
   }
 `;
 
-export const LoadingContainer = styled.div`
+export const LoadingContainer = styled.div<{ hasText: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 8px;
+  margin-left: ${({ hasText }) => (hasText ? '8px' : '0px')};
 `;
 
 export const IconContainer = styled.div<{

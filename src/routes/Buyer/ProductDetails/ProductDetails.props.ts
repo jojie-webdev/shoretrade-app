@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 import { ProductDetailsCard6Props } from 'components/module/ProductDetailsCard6/ProductDetailsCard6.props';
 import { GetListingResponseItem } from 'types/store/GetListingState';
+import { AddCartItemPayload } from 'types/store/AddCartItemState';
 
 export interface ProductSellerRatingProps {
   name: string;
@@ -51,6 +52,8 @@ export interface ProductDetailsGeneratedProps {
   setWeight: Dispatch<string>;
   getBoxes: () => void;
   isLoadingListingBoxes: boolean;
+  isLoadingAddCart: boolean;
+  addCartItemData: AddCartItemPayload | null;
   groupedBox: {
     id: string;
     totalWeight: number;

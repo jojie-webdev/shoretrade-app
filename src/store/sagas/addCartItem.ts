@@ -30,7 +30,7 @@ function* addCartItemRequest(
 function* addCartItemSuccess(
   action: AsyncAction<AddCartItemMeta, AddCartItemPayload>
 ) {
-  yield put(push(BUYER_ROUTES.CHECKOUT));
+  // yield put(push(BUYER_ROUTES.CHECKOUT));
 }
 
 function* addCartItemWatcher() {
