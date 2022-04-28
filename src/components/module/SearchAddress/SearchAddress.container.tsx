@@ -21,6 +21,7 @@ import { Store } from 'types/store/Store';
 import { UpdatePreferencesMeta } from 'types/store/UpdatePreferencesState';
 
 import SearchAddressView from './SearchAddress.view';
+import debounce from 'lodash.debounce';
 
 const SearchAddress = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -138,13 +139,13 @@ const SearchAddress = (): JSX.Element => {
     }
   };
 
-  const updatePreferences = (data: UpdatePreferencesMeta) => {
+  const updatePreferences = debounce((data: UpdatePreferencesMeta) => {
     const { states, metric, weight } = data.search || {};
     if (states && weight !== undefined) {
       data.search.metric = metric === 'ALL' ? null : metric;
       dispatch(updatePreferencesActions.request(data));
     }
-  };
+  }, 1000);
 
   useEffect(() => {
     if (

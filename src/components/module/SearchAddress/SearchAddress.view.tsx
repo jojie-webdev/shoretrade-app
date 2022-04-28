@@ -94,7 +94,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
       });
   };
 
-  const updateMinBuyingQty = debounce((weight: number) => {
+  const updateMinBuyingQty = (weight: number) => {
     setSelectedMinBuyingQty(weight);
     updatePreferences({
       search: {
@@ -102,7 +102,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
         weight,
       },
     });
-  }, 500);
+  };
 
   const updateMetric = (metric: string) => {
     setSelectedMetric(metric);
