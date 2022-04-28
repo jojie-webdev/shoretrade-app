@@ -199,7 +199,7 @@ export const SubscriptionPlanView = ({
                 <Link
                   className="see-payment-history"
                   to={{
-                    pathname: BUYER_ACCOUNT_ROUTES.BALANCE_HISTORY,
+                    pathname: BUYER_ACCOUNT_ROUTES.PAYMENT_HISTORY,
                     state: redirectState,
                   }}
                 >

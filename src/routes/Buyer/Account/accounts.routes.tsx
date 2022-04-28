@@ -79,6 +79,10 @@ const ROUTES: Routes = {
     path: BUYER_ACCOUNT_ROUTES.BALANCE_HISTORY,
     children: <BalanceHistory />,
   },
+  PAYMENT_HISTORY: {
+    path: BUYER_ACCOUNT_ROUTES.PAYMENT_HISTORY,
+    children: <BalanceHistory isPlanView />,
+  },
   CREDIT_CARD: {
     path: BUYER_ACCOUNT_ROUTES.CREDIT_CARD,
     children: <Card />,
@@ -125,6 +129,7 @@ const BuyerAccountRoutes = (props: any): JSX.Element => {
               BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
               BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD,
               BUYER_ACCOUNT_ROUTES.BALANCE_HISTORY,
+              BUYER_ACCOUNT_ROUTES.PAYMENT_HISTORY,
             ].includes(r.path) || !isAccountDeactivated
         ).map((r) => (
           <Route key={r.path} path={`${r.path}`} exact>

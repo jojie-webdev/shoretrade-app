@@ -25,6 +25,7 @@ const BalanceHistoryView = ({
   isLoading,
   transactions,
   redirectFrom,
+  isPlanView,
 }: BalanceHistoryGeneratedProps) => {
   const history = useHistory();
   const getTransactionLabel = (
@@ -117,8 +118,13 @@ const BalanceHistoryView = ({
         <Breadcrumbs
           sections={[
             { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
-            redirectFrom,
-            { label: 'Payment History' },
+            {
+              label: isPlanView ? 'Plan' : 'Balance & Payments',
+              link: isPlanView
+                ? BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN
+                : BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
+            },
+            { label: `${isPlanView ? 'Payment' : 'Credit'} History` },
           ]}
         />
       </div>

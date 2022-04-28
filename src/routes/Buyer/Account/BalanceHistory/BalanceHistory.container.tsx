@@ -10,13 +10,15 @@ import { Store } from 'types/store/Store';
 import { BalanceHistoryGeneratedProps } from './BalanceHistory.props';
 import BalanceHistoryView from './BalanceHistory.view';
 
-const BalanceHistory = (): JSX.Element => {
+const BalanceHistory = (props: { isPlanView?: boolean }): JSX.Element => {
   const location = useLocation<{
     from: {
       label: string;
       link: string;
     };
   }>();
+
+  const { isPlanView } = props;
 
   const dispatch = useDispatch();
   const currentCompany = GetDefaultCompany();
@@ -42,12 +44,17 @@ const BalanceHistory = (): JSX.Element => {
 
   const generatedProps: BalanceHistoryGeneratedProps = {
     // generated props here
-    transactions: transactions || [],
+    transactions:
+      (isPlanView
+        ? transactions?.filter((t) => t.description === 'ShoreTrade Plan')
+        : transactions?.filter((t) => t.description !== 'ShoreTrade Plan')) ||
+      [],
     isLoading,
     redirectFrom: location.state?.from || {
       label: 'Balance & Payments',
       link: BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
     },
+    isPlanView,
   };
   return <BalanceHistoryView {...generatedProps} />;
 };

@@ -3,6 +3,7 @@ import { GetTransactionHistoryResponseItem } from 'types/store/GetTransactionHis
 export interface BalanceHistoryGeneratedProps {
   transactions: GetTransactionHistoryResponseItem[];
   isLoading: boolean;
+  isPlanView?: boolean;
   redirectFrom: {
     label: string;
     link: string;

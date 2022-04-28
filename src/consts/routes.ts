@@ -149,6 +149,7 @@ export const BUYER_ACCOUNT_ROUTES = {
   EDIT_ASSISTANT: (id = ':id') => `${BUYER_ROUTES.ACCOUNT}/assistant/${id}`,
   ASSISTANT: `${BUYER_ROUTES.ACCOUNT}/assistant`,
   BALANCE_HISTORY: `${BUYER_ROUTES.ACCOUNT}/bank-details/credit-history`,
+  PAYMENT_HISTORY: `${BUYER_ROUTES.ACCOUNT}/subscription-plan/payment-history`,
   CREDIT_CARD: `${BUYER_ROUTES.ACCOUNT}/bank-details/credit-card`,
   ADD_CREDIT: `${BUYER_ROUTES.ACCOUNT}/bank-details/add-credit`,
   ACCOUNT_COMPLETION: `${BUYER_ROUTES.ACCOUNT}/account-completion`,
