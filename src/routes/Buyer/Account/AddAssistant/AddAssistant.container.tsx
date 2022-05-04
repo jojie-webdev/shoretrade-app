@@ -29,6 +29,10 @@ const AddAssistant = (): JSX.Element => {
   const isPendingAccount =
     addresses !== undefined &&
     !(addresses || []).some((a) => a.approved === 'APPROVED');
+
+  const loadingUser = useSelector(
+    (state: Store) => state.getUser.pending || false
+  );
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
   const permission =
     !isPendingAccount &&
@@ -69,11 +73,11 @@ const AddAssistant = (): JSX.Element => {
 
   // MARK:- Effects
   useEffect(() => {
-    if (!permission) {
+    if (!loadingUser && !permission) {
       history.push(`${BUYER_ACCOUNT_ROUTES.LANDING}`);
     }
     // eslint-disable-next-line
-  }, [permission]);
+  }, [loadingUser]);
 
   const generatedProps: AddAssistantGeneratedProps = {
     type: 'CREATE',
