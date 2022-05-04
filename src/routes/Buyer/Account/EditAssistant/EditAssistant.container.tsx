@@ -43,6 +43,9 @@ const EditAssistant = (): JSX.Element => {
   const isPendingAccount =
     addresses !== undefined &&
     !(addresses || []).some((a) => a.approved === 'APPROVED');
+  const loadingUser = useSelector(
+    (state: Store) => state.getUser.pending || false
+  );
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
   const permission =
     !isPendingAccount &&
@@ -69,11 +72,11 @@ const EditAssistant = (): JSX.Element => {
     if (companyId && !getLinkedAccounts.data) {
       dispatch(getLinkedAccountsActions.request({ companyId }));
     }
-    if (!permission) {
+    if (!loadingUser && !permission) {
       history.push(`${BUYER_ACCOUNT_ROUTES.LANDING}`);
     }
     // eslint-disable-next-line
-  }, [companyId, getLinkedAccounts.data, permission]);
+  }, [companyId, getLinkedAccounts.data, loadingUser]);
 
   // MARK:- Variables
   const formikInitial: FormikForm = {
