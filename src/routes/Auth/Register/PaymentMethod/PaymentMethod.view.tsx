@@ -3,7 +3,6 @@ import React from 'react';
 import Select from 'components/base/Select';
 import { Amex, Mastercard, Visa } from 'components/base/SVG';
 import FormikTextField from 'components/module/FormikTextField';
-import { State } from 'country-state-city';
 import { connect } from 'formik';
 import { Row, Col } from 'react-grid-system';
 import { cardExpiryInputFilter } from 'utils/InputFilters/cardExpiryInputFilter';
@@ -18,12 +17,16 @@ import {
   FormContainer,
   FormikRow,
 } from './PaymentMethod.style';
+import COUNTRY_STATES from 'consts/countryStates';
 
 export const PaymentMethod = connect((props: PaymentMethodProps) => {
   const { details, formik, otherErrors, setOtherErrors } = props;
   const theme = useTheme();
 
-  const states = State.getStatesOfCountry(details.address?.countryCode || 'AU');
+  const states = COUNTRY_STATES.filter(
+    ({ countryCode }) => countryCode == details.address?.countryCode || 'AU'
+  );
+
   const initialState = states.find(
     (state) => state.isoCode === formik.initialValues.cardState
   );
