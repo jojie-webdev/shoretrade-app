@@ -19,3 +19,14 @@ export const Container = styled.div<{
     box-shadow: 0px 4px 12px rgba(41, 43, 50, 0.04);
   }
 `;
+
+export const AdditionalSubscription = styled.div`
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+export const CheckboxContainer = styled.div`
+  padding: 4px;
+`;

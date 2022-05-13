@@ -70,6 +70,7 @@ export const SubscriptionPlanView = ({
   }, [planInterval]);
 
   const interval = isMonthly ? 'MONTHLY' : 'ANNUAL';
+  const plan = isMonthly ? 'Base' : 'Premium';
   const isForRenewal =
     ['CANCELLED', 'OVERDUE', 'UNSUBSCRIBED'].includes(planStatus) ||
     isDeactivated;
@@ -111,7 +112,7 @@ export const SubscriptionPlanView = ({
 
       <ToggleContainer>
         <Typography variant="label" weight="400" style={{ marginRight: '8px' }}>
-          Monthly
+          Base
         </Typography>
 
         <TwoWayToggle
@@ -123,7 +124,7 @@ export const SubscriptionPlanView = ({
         />
 
         <Typography variant="label" weight="400" style={{ marginLeft: '8px' }}>
-          Annually
+          Premium
         </Typography>
       </ToggleContainer>
 
@@ -287,7 +288,7 @@ export const SubscriptionPlanView = ({
       </SubscriptionContainer>
       <ConfirmationModal
         isOpen={showToggleModal}
-        title={`Change to ${interval.toLowerCase()} billing?`}
+        title={`Change to ${plan.toLowerCase()} billing?`}
         actionText="Confirm new plan"
         onClickClose={() => {
           setShowToggleModal(false);

@@ -2,7 +2,7 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
-  margin-top: 45px;
+  margin-top: 25px;
 `;
 
 export const TopSection = styled.div`
@@ -45,4 +45,23 @@ export const ChangeMarketSector = styled.div<{
   .change-btn:hover {
     cursor: pointer;
   }
+`;
+
+export const AdditionalSubscription = styled.div`
+  margin-top: 32px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+export const CheckboxContainer = styled.div`
+  padding: 4px;
+`;
+
+export const Footer = styled.div`
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap 8px;
 `;

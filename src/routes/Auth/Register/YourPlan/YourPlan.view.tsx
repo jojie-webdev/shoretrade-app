@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 
+import Checkbox from 'components/base/Checkbox';
 import Typography from 'components/base/Typography';
+import AdditionalPlanFeatures from 'components/module/AdditionalPlanFeatures';
 import MarketSectorIcon from 'components/module/MarketSectorIcon';
 import PlanFeatures from 'components/module/PlanFeatures';
+import { MARKET_GROUP_1 } from 'consts/markets';
 import { Col } from 'react-grid-system';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSubscriptionPlansActions } from 'store/actions';
@@ -16,16 +19,33 @@ import {
   FlexContainer,
   TopSection,
   ChangeMarketSector,
+  AdditionalSubscription,
+  CheckboxContainer,
+  Footer,
 } from './YourPlan.style';
 
 const YourPlanView = ({
   currentMarketSector,
   previousStep,
   currentPlan,
+  selectedPlan,
+  additionalSubscriptionHandler,
 }: YourPlanGeneratedProps) => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
   const marketSectors = isSeller ? SELLER_VARIATIONS : BUYER_VARIATIONS;
+
+  const [additionalSubs, setadditionalSubs] = useState(true);
+
+  const setAdditionalSubscription = (hasAddOn: boolean) => {
+    setadditionalSubs(hasAddOn);
+    additionalSubscriptionHandler(hasAddOn);
+  };
+
+  const [highlight, setHighlight] = useState('1 Month Free');
+  const highlighthandler = (value: string) => {
+    setHighlight(value);
+  };
 
   return (
     <Container>
@@ -35,11 +55,11 @@ const YourPlanView = ({
             variant="title4"
             color={theme.appType === 'seller' ? 'noshade' : 'shade9'}
           >
-            1 Month Free!
+            {highlight}
           </Typography>
           <FlexContainer>
             <Typography variant="label" color="shade6" weight="400">
-              Then
+              then
             </Typography>
             <Typography
               variant="label"
@@ -71,7 +91,46 @@ const YourPlanView = ({
         </div>
       </TopSection>
 
-      <PlanFeatures />
+      <PlanFeatures
+        selectedPlan={selectedPlan}
+        currentMarketSector={currentMarketSector}
+        highlighthandler={highlighthandler}
+      />
+
+      <AdditionalSubscription>
+        <CheckboxContainer>
+          <Checkbox
+            checked={additionalSubs}
+            allowTransparency
+            onClick={() => {
+              setAdditionalSubscription(!additionalSubs);
+            }}
+          />
+        </CheckboxContainer>
+        <Typography variant="body">
+          Additonal subscription for $49.99/month
+        </Typography>
+      </AdditionalSubscription>
+
+      <AdditionalPlanFeatures
+        selectedPlan={selectedPlan}
+        currentMarketSector={currentMarketSector}
+      />
+
+      {selectedPlan === 'Standard' && (
+        <Footer>
+          <Typography variant="caption" weight="regular">
+            *The Transaction Value is the total value of the products in your
+            order excluding any crate fees and shipping costs.
+          </Typography>
+          {MARKET_GROUP_1.includes(currentMarketSector) && (
+            <Typography variant="caption" weight="regular">
+              *Minimum 3 month sign up, starting from your account approval
+              date.
+            </Typography>
+          )}
+        </Footer>
+      )}
     </Container>
   );
 };

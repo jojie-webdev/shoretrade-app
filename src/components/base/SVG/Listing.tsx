@@ -1,9 +1,12 @@
 import React from 'react';
 
+import { useTheme } from 'utils/Theme';
+
 import { SVGProps } from './SVG.props';
 
 const Listing = (props: SVGProps): JSX.Element => {
-  const { width, height, fill = '#565A6A' } = props;
+  const theme = useTheme();
+  const { width, height, fill } = props;
 
   // Paste converted svg below
   // https://react-svgr.com/playground/?typescript=true
@@ -23,7 +26,7 @@ const Listing = (props: SVGProps): JSX.Element => {
         fillRule="evenodd"
         clipRule="evenodd"
         d="M13.9967 0.667482C15.8377 0.667481 17.3301 2.15987 17.3301 4.00081L17.3301 14.0008C17.3301 15.8418 15.8377 17.3341 13.9967 17.3341H3.99672C2.15578 17.3341 0.663391 15.8418 0.663391 14.0008L0.663391 4.00081C0.663391 2.15986 2.15578 0.66748 3.99672 0.66748L13.9967 0.667482ZM15.6634 4.00081V9.00082C15.6634 9.92129 14.9172 10.6675 13.9967 10.6675H3.99672C3.07625 10.6675 2.33006 9.92129 2.33006 9.00081L2.33006 4.00081C2.33006 3.08034 3.07625 2.33415 3.99672 2.33415L13.9967 2.33415C14.9172 2.33415 15.6634 3.08034 15.6634 4.00081Z"
-        fill={fill}
+        fill={fill || theme.grey.shade7}
       />
     </svg>
   );

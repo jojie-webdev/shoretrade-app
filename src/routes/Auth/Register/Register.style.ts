@@ -20,6 +20,12 @@ export const Container = styled.div`
   }
 `;
 
+export const TabsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 30px;
+`;
+
 export const BackIcon = styled(ArrowLeft)``;
 
 export const TitleContainer = styled.div`

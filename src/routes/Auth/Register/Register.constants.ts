@@ -63,7 +63,7 @@ export const BUYER_STEPS = [
       'Let us know more about your business by selecting your market sector.',
   },
   {
-    title: 'Your Plan',
+    title: 'Choose Your Plan',
     description:
       'Gain access to renowned Seafood Sellers to purchase products for your business.',
   },

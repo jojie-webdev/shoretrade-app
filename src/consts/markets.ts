@@ -6,3 +6,12 @@ export const MARKET_BY_ROLES: MarketRoles = {
   RAPTIS_OPS: 'Raptis Seafood',
   MCLAUGHLIN_OPS: 'Melbourne Seafood Centre',
 };
+
+export const MARKET_GROUP_1 = [
+  'PROCESSOR',
+  'WHOLESALER',
+  'RETAILER',
+  'WET_SHOP',
+];
+
+export const MARKET_GROUP_2 = ['HOTEL', 'RESTAURANT_BAR'];

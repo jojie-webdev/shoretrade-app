@@ -184,6 +184,11 @@ const Register = (): JSX.Element => {
       accountNumber: '',
 
       selectedMarketSector: '',
+      subscriptionType: {
+        plan: 'Standard',
+        reverseMarketPlace: true,
+      },
+
       tncAgreement: false,
       categoryMarketSector: '',
       // plan payment

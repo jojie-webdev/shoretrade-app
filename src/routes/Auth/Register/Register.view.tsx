@@ -15,6 +15,7 @@ import Interactions from 'components/base/Interactions';
 import Radio from 'components/base/Radio';
 import Select from 'components/base/Select';
 import { CloseFilled, Download, Search } from 'components/base/SVG';
+import Tabs from 'components/base/Tabs';
 import BaseTextField from 'components/base/TextField';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
@@ -43,6 +44,7 @@ import {
 } from 'types/store/GetCategories';
 import { createUpdateReducer } from 'utils/Hooks';
 import { getTermsAndConditions } from 'utils/Links';
+import { SpecialColors } from 'utils/SFMTheme';
 import { useTheme } from 'utils/Theme';
 
 import { Image, CategoryItems } from './Categories.style';
@@ -55,13 +57,10 @@ import {
   BANK_DETAIL_FIELDS,
   SELLER_LOCATION_NOTES,
   BUYER_LOCATION_NOTES,
-  PAYMENT_METHOD_OPTIONS,
   SELLER_VARIATIONS,
   BUYER_VARIATIONS,
   BUYER_STEP_SUBTITLE,
   SELLER_STEP_SUBTITLE,
-  BUYER_PAYMENT_METHOD_DETAILS,
-  INTERESTED_SHOREPAY_OPTIONS,
 } from './Register.constants';
 import { RegisterGeneratedProps, StepFormProps } from './Register.props';
 import {
@@ -81,8 +80,6 @@ import {
   Error,
   BusinessLogoLabel,
   MobileField,
-  PaymentMethodDetails,
-  PaymentMethodOverline,
   Spacer,
   BackIcon,
   TitleContainer,
@@ -111,6 +108,7 @@ import {
   ButtonsContainer,
   DownloadApplicationFormButton,
   SFMOption,
+  TabsContainer,
 } from './Register.style';
 import {
   addressToPlaceData,
@@ -318,6 +316,29 @@ const StepForm = ({
     } else {
       return 'NEXT';
     }
+  };
+
+  const [selectedPlan, setSelectedPlan] = useState('Base');
+
+  const selectedPlanHandler = (value: string) => {
+    setSelectedPlan(value);
+
+    const plan = value === 'Base' ? 'Standard' : 'Premium';
+    updateRegistrationDetails({
+      subscriptionType: {
+        ...registrationDetails.subscriptionType,
+        plan: plan,
+      },
+    });
+  };
+
+  const additionalSubscriptionHandler = (hasAddOn: boolean) => {
+    updateRegistrationDetails({
+      subscriptionType: {
+        ...registrationDetails.subscriptionType,
+        reverseMarketPlace: hasAddOn,
+      },
+    });
   };
 
   const categoryPicker = () => {
@@ -1057,6 +1078,19 @@ const StepForm = ({
               )}
               {step === 4 && (
                 <>
+                  {!isSeller && (
+                    <TabsContainer>
+                      <Tabs
+                        tabs={['Base', 'Premium']}
+                        selectedTab={selectedPlan}
+                        onClickTab={(value) => selectedPlanHandler(value)}
+                        textColor={theme.grey.shade6}
+                        activeTextColor={
+                          theme.isSFM ? SpecialColors.blue : theme.grey.shade9
+                        }
+                      />
+                    </TabsContainer>
+                  )}
                   {isSeller ? (
                     <>
                       {/* {activeLicenseIdx !== null ? (*/}
@@ -1258,6 +1292,10 @@ const StepForm = ({
                     </>
                   ) : (
                     <YourPlan
+                      additionalSubscriptionHandler={
+                        additionalSubscriptionHandler
+                      }
+                      selectedPlan={registrationDetails.subscriptionType.plan}
                       currentMarketSector={
                         registrationDetails.categoryMarketSector
                       }
@@ -1730,7 +1768,9 @@ const RegisterView = (props: RegisterGeneratedProps) => {
           </GetStartedTitle>
 
           {steps
-            .filter((i) => i.title !== 'Summary' && i.title !== 'Your Plan')
+            .filter(
+              (i) => i.title !== 'Summary' && i.title !== 'Choose Your Plan'
+            )
             .map((step, index) => (
               <StepDetails
                 key={step.title}
