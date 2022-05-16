@@ -11,6 +11,7 @@ import {
   Union,
   Fishes,
   TagAlt,
+  Chat,
   ShoretradeLogoAlt2,
   ArrowDownRight,
   ArrowUpRight,
@@ -251,6 +252,9 @@ storiesOf('base/SVG', module).add('Summary', () => {
         </Wrapper>
         <Wrapper label="TagAlt">
           <TagAlt width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="Chat">
+          <Chat width={30} height={30} />
         </Wrapper>
         <Wrapper label="ShoretradeLogoAlt2">
           <ShoretradeLogoAlt2 width={30} height={30} />

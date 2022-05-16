@@ -6,6 +6,7 @@ export { default as Fan } from './Fan';
 export { default as Union } from './Union';
 export { default as Fishes } from './Fishes';
 export { default as TagAlt } from './TagAlt';
+export { default as Chat } from './Chat';
 export { default as ShoretradeLogoAlt2 } from './ShoretradeLogoAlt2';
 export { default as ArrowDownRight } from './ArrowDownRight';
 export { default as ArrowUpRight } from './ArrowUpRight';

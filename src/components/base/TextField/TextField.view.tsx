@@ -48,7 +48,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
     inputType,
     maxLength,
     suffix,
-    rightComponentDirection
+    rightComponentDirection,
   } = props;
 
   const [showSecuredText, setShowSecuredText] = useState(false);
@@ -111,6 +111,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
 
   const renderTextFieldHandlesSuffix = () => (
     <Field
+      className="text_field__field_container__input--with-suffix"
       id={id}
       ref={fieldRef}
       type="text"
@@ -135,6 +136,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
 
   const renderNormalTextField = () => (
     <Field
+      className="text_field__field_container__input"
       id={id}
       type={secured && !showSecuredText ? 'password' : defaultInputType}
       inputMode={inputType}
@@ -160,20 +162,26 @@ const TextField = (props: TextFieldProps): JSX.Element => {
         {label}
       </Typography>
       <FieldContainer
+        className="text_field__field_container"
         error={(error || '').length > 0}
         readOnly={props.readOnly}
         borderRadius={props.borderRadius}
         height={props.height?.toString()}
       >
         {LeftComponent && (
-          <LeftComponentContainer disabled={disabled}>
+          <LeftComponentContainer
+            className="text_field__field_container__left_component"
+            disabled={disabled}
+          >
             {LeftComponent}
           </LeftComponentContainer>
         )}
         {!readOnly && (prefix || '').length > 0 && <Prefix>{prefix}</Prefix>}
         {suffix ? renderTextFieldHandlesSuffix() : renderNormalTextField()}
         {RightComponent && (
-          <RightComponentContainer direction={rightComponentDirection}>{RightComponent}</RightComponentContainer>
+          <RightComponentContainer direction={rightComponentDirection}>
+            {RightComponent}
+          </RightComponentContainer>
         )}
         {secured && (
           <VisibilityContainer>

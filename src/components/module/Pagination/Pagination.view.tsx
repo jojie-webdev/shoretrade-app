@@ -21,7 +21,7 @@ const Pagination = (props: PaginationProps): JSX.Element => {
     currentValue,
     onClickButton = () => null,
     variant = 'number',
-    color
+    color,
   } = props;
 
   const initialOffset = currentValue - 3;
@@ -40,19 +40,30 @@ const Pagination = (props: PaginationProps): JSX.Element => {
   let pagination;
 
   if (variant === 'number') {
-    const textColor = color ? color : theme.appType === 'buyer' ? 'primary' : 'noshade';
-    const iconColor = props.iconColor ? props.iconColor :
-      theme.appType === 'buyer' ? theme.brand.primary : theme.grey.noshade;
+    const textColor = color
+      ? color
+      : theme.appType === 'buyer'
+      ? 'primary'
+      : 'noshade';
+    const iconColor = props.iconColor
+      ? props.iconColor
+      : theme.appType === 'buyer'
+      ? theme.brand.primary
+      : theme.grey.noshade;
 
     pagination = (
       <>
         {numPages > 3 && offset > 0 && (
-          <PaginationButton onClick={() => onPrevious()}>
+          <PaginationButton
+            className="pagination__btn"
+            onClick={() => onPrevious()}
+          >
             <ChevronLeft fill={iconColor} />
           </PaginationButton>
         )}
 
         <PaginationButton
+          className="pagination__btn"
           active={currentValue === offset + 1}
           onClick={() => onClickButton(offset + 1)}
         >
@@ -66,6 +77,7 @@ const Pagination = (props: PaginationProps): JSX.Element => {
 
         {numPages >= offset + 2 && (
           <PaginationButton
+            className="pagination__btn"
             active={currentValue === offset + 2}
             onClick={() => onClickButton(offset + 2)}
           >
@@ -80,6 +92,7 @@ const Pagination = (props: PaginationProps): JSX.Element => {
 
         {numPages >= offset + 3 && (
           <PaginationButton
+            className="pagination__btn"
             active={currentValue === offset + 3}
             onClick={() => onClickButton(offset + 3)}
           >
@@ -93,7 +106,10 @@ const Pagination = (props: PaginationProps): JSX.Element => {
         )}
 
         {numPages > 3 && numPages > offset + 3 && (
-          <PaginationButton onClick={() => onNext()}>
+          <PaginationButton
+            className="pagination__btn"
+            onClick={() => onNext()}
+          >
             <ChevronRight fill={iconColor} />
           </PaginationButton>
         )}
@@ -133,7 +149,7 @@ const Pagination = (props: PaginationProps): JSX.Element => {
     }
   }
 
-  return <Container>{pagination}</Container>;
+  return <Container className={props.className}>{pagination}</Container>;
 };
 
 export default React.memo(Pagination);

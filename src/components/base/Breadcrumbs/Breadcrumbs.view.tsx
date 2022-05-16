@@ -29,6 +29,7 @@ const Breadcrumbs = (props: BreadcrumbsProps): JSX.Element => {
             {section.link && (
               <Link key={i} to={section.link}>
                 <Typography
+                  className="breadcrumbs__label"
                   color={
                     section.isDone
                       ? 'shade9'
@@ -43,7 +44,7 @@ const Breadcrumbs = (props: BreadcrumbsProps): JSX.Element => {
 
             {section.onClick && (
               <Typography
-                className="alt-link"
+                className="breadcrumbs__label alt-link"
                 color={
                   section.isDone
                     ? 'shade9'
@@ -57,7 +58,9 @@ const Breadcrumbs = (props: BreadcrumbsProps): JSX.Element => {
             )}
 
             {!section.link && !section.onClick && (
-              <Typography color="primary">{section.label}</Typography>
+              <Typography className="breadcrumbs__label" color="primary">
+                {section.label}
+              </Typography>
             )}
           </React.Fragment>
         );

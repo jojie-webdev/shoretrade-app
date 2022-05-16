@@ -130,7 +130,7 @@ const LandingView = (props: LandingGeneratedProps) => {
     {
       iconName: 'cog',
       value: 'Help & Support',
-      path: BUYER_ACCOUNT_ROUTES.HELP,
+      path: BUYER_ACCOUNT_ROUTES.HELP_AND_SUPPORT,
     },
   ];
 

@@ -16,6 +16,13 @@ export const API = {
   VERSION: process.env.REACT_APP_API_VERSION || 'v1',
   VERSION_NEXT: process.env.REACT_APP_API_VERSION_NEXT || 'v2',
   ADMIN_URL: process.env.REACT_APP_ADMIN_URL || 'https://admin.shoretrade.com',
+  CONTENTFUL_CONTENT_DELIVERY_API_ACCESS_TOKEN:
+    process.env.REACT_APP_PUBLIC_CONTENTFUL_CONTENT_DELIVERY_API_ACCESS_TOKEN ||
+    '',
+  CONTENTFUL_SPACE_ID: process.env.REACT_APP_PUBLIC_CONTENTFUL_SPACE_ID || '',
+  CONTENTFUL_HOST:
+    process.env.REACT_APP_PUBLIC_CONTENTFUL_HOST || 'preview.contentful.com',
+  CONTENTFUL_ENV: process.env.REACT_APP_CONTENTFUL_ENV || 'master',
 };
 export const placeholderImage =
   'https://s3-ap-southeast-2.amazonaws.com/shoretrade-prod-assets/No-Image-Placeholder-(blue).png';

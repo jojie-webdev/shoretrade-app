@@ -18,6 +18,8 @@ import ChangePassword from './ChangePassword';
 import EditAddress from './EditAddress';
 import EditAssistant from './EditAssistant';
 import HelpAndSupport from './HelpAndSupport';
+import Category from './HelpAndSupport/Category';
+import Inner from './HelpAndSupport/Inner';
 import Landing from './Landing';
 import Assistants from './LinkedAccounts';
 import MarketInterests from './MarketInterests';
@@ -59,9 +61,17 @@ const ROUTES: Routes = {
     path: BUYER_ACCOUNT_ROUTES.CHANGE_PASSWORD,
     children: <ChangePassword />,
   },
-  HELP: {
-    path: BUYER_ACCOUNT_ROUTES.HELP,
+  HELP_AND_SUPPORT: {
+    path: BUYER_ACCOUNT_ROUTES.HELP_AND_SUPPORT,
     children: <HelpAndSupport />,
+  },
+  HELP_AND_SUPPORT_CATEGORY: {
+    path: BUYER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY(),
+    children: <Category />,
+  },
+  HELP_AND_SUPPORT_CATEGORY_TOPIC: {
+    path: BUYER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY_TOPIC(),
+    children: <Inner />,
   },
   ASSISTANT: {
     path: BUYER_ACCOUNT_ROUTES.ASSISTANT,

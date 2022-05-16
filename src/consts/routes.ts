@@ -144,7 +144,13 @@ export const BUYER_ACCOUNT_ROUTES = {
   EDIT_ADDRESS: (id = ':id') => `${BUYER_ROUTES.ACCOUNT}/address/${id}`,
   LINKED_ACCOUNTS: `${BUYER_ROUTES.ACCOUNT}/linked-accounts`,
   CHANGE_PASSWORD: `${BUYER_ROUTES.ACCOUNT}/change-password`,
-  HELP: `${BUYER_ROUTES.ACCOUNT}/help`,
+  HELP_AND_SUPPORT: `${BUYER_ROUTES.ACCOUNT}/help-and-support`,
+  HELP_AND_SUPPORT_CATEGORY: (id = ':id') =>
+    `${BUYER_ROUTES.ACCOUNT}/help-and-support/category/${id}`,
+  HELP_AND_SUPPORT_CATEGORY_TOPIC: (
+    categoryId = ':categoryId',
+    topicId = ':topicId'
+  ) => `${BUYER_ROUTES.ACCOUNT}/help-and-support/category/${categoryId}/topic/${topicId}`,
   ADD_ASSISTANT: `${BUYER_ROUTES.ACCOUNT}/assistant/add`,
   EDIT_ASSISTANT: (id = ':id') => `${BUYER_ROUTES.ACCOUNT}/assistant/${id}`,
   ASSISTANT: `${BUYER_ROUTES.ACCOUNT}/assistant`,
