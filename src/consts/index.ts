@@ -25,7 +25,7 @@ export const API = {
   CONTENTFUL_ENV: process.env.REACT_APP_CONTENTFUL_ENV || 'master',
 };
 export const placeholderImage =
-  'https://s3-ap-southeast-2.amazonaws.com/shoretrade-prod-assets/No-Image-Placeholder-(blue).png';
+  'https://s3-ap-southeast-2.amazonaws.com/shoretrade-prod-assets/No-Image-Placeholder-(Shoretrade).png';
 export const STRIPE_PUBLIC_KEY = process.env.REACT_APP_STRIPE_PUBLIC_KEY || '';
 
 export const clickAndCollectAddress = 'Sydney Fish Market (Loading Dock 3)';
