@@ -35,7 +35,7 @@ const YourPlanView = ({
   const isSeller = theme.appType === 'seller';
   const marketSectors = isSeller ? SELLER_VARIATIONS : BUYER_VARIATIONS;
 
-  const [additionalSubs, setadditionalSubs] = useState(true);
+  const [additionalSubs, setadditionalSubs] = useState(false);
 
   const setAdditionalSubscription = (hasAddOn: boolean) => {
     setadditionalSubs(hasAddOn);

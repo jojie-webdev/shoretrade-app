@@ -1085,6 +1085,7 @@ const StepForm = ({
                         selectedTab={selectedPlan}
                         onClickTab={(value) => selectedPlanHandler(value)}
                         textColor={theme.grey.shade6}
+                        underlineColor={theme.grey.shade6}
                         activeTextColor={
                           theme.isSFM ? SpecialColors.blue : theme.grey.shade9
                         }

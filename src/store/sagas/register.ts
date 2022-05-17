@@ -127,6 +127,10 @@ function* registerRequest(action: AsyncAction<RegisterMeta, RegisterPayload>) {
           marketSelling: data.marketSelling,
           sellerLicenses,
           cardToken: data.cardToken,
+          subscriptionType: {
+            plan: data.subscriptionType.plan,
+            reverseMarketPlace: data.subscriptionType.reverseMarketPlace,
+          },
         };
       }
       // buyer
@@ -150,6 +154,10 @@ function* registerRequest(action: AsyncAction<RegisterMeta, RegisterPayload>) {
         marketSector: data.marketSector,
         marketBuying: data.marketBuying,
         cardToken: data.cardToken,
+        subscriptionType: {
+          plan: data.subscriptionType.plan,
+          reverseMarketPlace: data.subscriptionType.reverseMarketPlace,
+        },
       };
     };
 

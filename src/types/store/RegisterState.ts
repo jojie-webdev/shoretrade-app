@@ -37,6 +37,10 @@ export type RegisterMeta = {
   marketSelling?: CategoryPayload[];
   marketBuying?: CategoryPayload[];
   cardToken: string;
+  subscriptionType: {
+    plan: string;
+    reverseMarketPlace?: boolean;
+  };
 };
 
 export type RegisterRequestData = {
@@ -79,6 +83,10 @@ export type RegisterRequestData = {
   marketSelling?: CategoryPayload[];
   marketBuying?: CategoryPayload[];
   cardToken: string;
+  subscriptionType: {
+    plan: string;
+    reverseMarketPlace?: boolean;
+  };
 };
 
 export type RegisterPayload = GenericResponse;

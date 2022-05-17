@@ -55,7 +55,7 @@ export interface RegistrationDetails {
   selectedMarketSector: string;
 
   subscriptionType: {
-    plan?: string;
+    plan: string;
     reverseMarketPlace?: boolean;
   };
 

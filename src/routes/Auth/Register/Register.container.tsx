@@ -186,7 +186,7 @@ const Register = (): JSX.Element => {
       selectedMarketSector: '',
       subscriptionType: {
         plan: 'Standard',
-        reverseMarketPlace: true,
+        reverseMarketPlace: false,
       },
 
       tncAgreement: false,
@@ -235,6 +235,10 @@ const Register = (): JSX.Element => {
           marketSelling: selectedCategoryTypes,
           licenses: details.licenses,
           cardToken: details.cardToken,
+          subscriptionType: {
+            plan: details.subscriptionType.plan,
+            reverseMarketPlace: details.subscriptionType.reverseMarketPlace,
+          },
         })
       );
     }
@@ -267,6 +271,10 @@ const Register = (): JSX.Element => {
           marketSector: details.categoryMarketSector,
           marketBuying: selectedCategoryTypes,
           cardToken: details.cardToken,
+          subscriptionType: {
+            plan: details.subscriptionType.plan,
+            reverseMarketPlace: details.subscriptionType.reverseMarketPlace,
+          },
         })
       );
     }
