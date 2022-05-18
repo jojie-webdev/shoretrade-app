@@ -27,7 +27,10 @@ const Breadcrumbs = (props: BreadcrumbsProps): JSX.Element => {
               </div>
             )}
             {section.link && (
-              <Link key={i} to={section.link}>
+              <Link
+                key={i}
+                to={{ state: section.state, pathname: section.link }}
+              >
                 <Typography
                   className="breadcrumbs__label"
                   color={

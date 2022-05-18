@@ -1,4 +1,4 @@
 export interface HelpAndSupportGeneratedProps {
   mainPage: any;
-  handleCategoryClick: (categoryId: string) => void;
+  handleCategoryClick: (categoryId: string, slug: string) => void;
 }

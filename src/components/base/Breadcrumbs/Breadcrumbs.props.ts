@@ -1,3 +1,4 @@
+import { LocationState } from 'history';
 import { Theme } from 'types/Theme';
 
 export interface BreadcrumbsProps {
@@ -10,6 +11,7 @@ export interface BreadcrumbsProps {
 export interface BreadCrumbSection {
   label: string;
   link?: string;
+  state?: LocationState;
   onClick?: () => void;
   isDone?: boolean;
 }

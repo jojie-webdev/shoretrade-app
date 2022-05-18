@@ -145,12 +145,10 @@ export const BUYER_ACCOUNT_ROUTES = {
   LINKED_ACCOUNTS: `${BUYER_ROUTES.ACCOUNT}/linked-accounts`,
   CHANGE_PASSWORD: `${BUYER_ROUTES.ACCOUNT}/change-password`,
   HELP_AND_SUPPORT: `${BUYER_ROUTES.ACCOUNT}/help-and-support`,
-  HELP_AND_SUPPORT_CATEGORY: (id = ':id') =>
-    `${BUYER_ROUTES.ACCOUNT}/help-and-support/category/${id}`,
-  HELP_AND_SUPPORT_CATEGORY_TOPIC: (
-    categoryId = ':categoryId',
-    topicId = ':topicId'
-  ) => `${BUYER_ROUTES.ACCOUNT}/help-and-support/category/${categoryId}/topic/${topicId}`,
+  HELP_AND_SUPPORT_CATEGORY: (slug = ':slug') =>
+    `${BUYER_ROUTES.ACCOUNT}/help-and-support/category/${slug}`,
+  HELP_AND_SUPPORT_CATEGORY_TOPIC: (slug = ':slug', topicSlug = ':topicSlug') =>
+    `${BUYER_ROUTES.ACCOUNT}/help-and-support/category/${slug}/topic/${topicSlug}`,
   ADD_ASSISTANT: `${BUYER_ROUTES.ACCOUNT}/assistant/add`,
   EDIT_ASSISTANT: (id = ':id') => `${BUYER_ROUTES.ACCOUNT}/assistant/${id}`,
   ASSISTANT: `${BUYER_ROUTES.ACCOUNT}/assistant`,

@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 import { getEntryById } from 'services/contentful';
 
 import { PAGE_SIZE } from './Category.contants';
 import CategoryView from './Category.view';
 
 const Category = (): JSX.Element => {
-  const { id } = useParams<{ id: string }>();
+  const { slug } = useParams<{ slug: string }>();
   const history = useHistory();
+  const location = useLocation();
 
   const [category, setCategory] = useState<any>({});
   const [topics, setTopics] = useState([]);
@@ -23,9 +24,16 @@ const Category = (): JSX.Element => {
     setPage(currentPage);
   };
 
-  const handleTopicClick = (topicId: string) => {
+  const handleTopicClick = (topicId: string, topicSlug: string) => {
+    const locationState: {
+      categoryId?: string;
+    } = location.state || {};
     history.push(
-      BUYER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY_TOPIC(id, topicId)
+      BUYER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY_TOPIC(slug, topicSlug),
+      {
+        topicId,
+        categoryId: locationState.categoryId,
+      }
     );
   };
 
@@ -49,16 +57,19 @@ const Category = (): JSX.Element => {
   totalPages = Math.ceil(totalTopics / PAGE_SIZE);
 
   useEffect(() => {
+    const locationState: {
+      categoryId?: string;
+    } = location.state || {};
     const fetchData = async () => {
-      const entry = await getEntryById(id);
+      const entry = await getEntryById(locationState.categoryId || '');
       setTopics(entry?.fields?.topics);
       setCategory(entry);
     };
 
-    if (id) {
+    if (slug && locationState.categoryId) {
       fetchData();
     }
-  }, [id]);
+  }, [slug, location]);
 
   const generatedProps = {
     category,

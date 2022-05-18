@@ -21,8 +21,10 @@ const HelpAndSupport = (): JSX.Element => {
     fetchData();
   }, []);
 
-  const handleCategoryClick = (categoryId: string) => {
-    history.push(BUYER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY(categoryId));
+  const handleCategoryClick = (categoryId: string, slug: string) => {
+    history.push(BUYER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY(slug), {
+      categoryId,
+    });
   };
 
   const generatedProps = {

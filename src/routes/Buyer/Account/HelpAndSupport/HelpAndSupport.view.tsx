@@ -83,7 +83,8 @@ const HelpAndSupportView = (props: HelpAndSupportGeneratedProps) => {
               xs={12}
               onClick={() =>
                 props.handleCategoryClick(
-                  category?.fields?.referenceCategoryId?.sys?.id
+                  category?.fields?.referenceCategoryId?.sys?.id,
+                  category?.fields?.slug
                 )
               }
             >

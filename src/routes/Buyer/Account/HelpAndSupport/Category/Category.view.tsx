@@ -69,7 +69,9 @@ const CategoryView = (props: CategoryGeneratedProps) => {
           .map((topic: any) => (
             <SubCategory
               key={`category_topic-${topic?.sys?.id}`}
-              onClick={() => props.handleTopicClick(topic?.sys?.id)}
+              onClick={() =>
+                props.handleTopicClick(topic?.sys?.id, topic?.fields?.slug)
+              }
             >
               {topic?.fields?.title && (
                 <Typography weight="500">{topic?.fields?.title}</Typography>

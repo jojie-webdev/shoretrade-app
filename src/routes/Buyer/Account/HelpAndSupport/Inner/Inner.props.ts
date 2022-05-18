@@ -3,4 +3,5 @@ export interface InnerGeneratedProps {
   category: any;
   convertedElements: any;
   categoryId: string;
+  categorySlug: string;
 }
