@@ -21,7 +21,6 @@ import {
 
 const InnerView = (props: InnerGeneratedProps) => {
   const theme = useTheme();
-
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
@@ -57,7 +56,6 @@ const InnerView = (props: InnerGeneratedProps) => {
           ]}
         />
       </div>
-
       {props?.topic?.fields?.title && (
         <Typography className="inner_page__title" variant="title4" weight="500">
           {props?.topic?.fields?.title}
