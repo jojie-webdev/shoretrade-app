@@ -445,3 +445,43 @@ export const SFMOption = styled.div`
   border-radius: 12px;
   display: flex;
 `;
+
+export const TopSection = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  @media ${BREAKPOINTS['sm']} {
+    display: grid;
+    grid-row-gap: 10px;
+  }
+`;
+
+export const ChangeMarketSector = styled.div<{
+  isSeller: boolean;
+}>`
+  margin-top: 12px;
+  margin-left: 50px;
+  @media ${BREAKPOINTS['sm']} {
+    margin-left: 0;
+  }
+  padding: 8px;
+  border-radius: 12px;
+  background: ${({ theme }) =>
+    theme.appType === 'seller' ? theme.grey.shade9 : theme.grey.noshade};
+  box-shadow: 0px 4px 12px rgba(41, 43, 50, 0.04);
+  ${({ theme }) =>
+    theme.appType !== 'seller' ? `border: 1px solid ${theme.grey.shade3};` : ''}
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 150px;
+  min-width: 85px;
+
+  p {
+    text-align: center;
+  }
+
+  .change-btn:hover {
+    cursor: pointer;
+  }
+`;

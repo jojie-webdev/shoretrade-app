@@ -26,6 +26,7 @@ import AddImage from 'components/module/AddImage';
 import CategoryImageView from 'components/module/CategoryImage';
 import DatePickerDropdown from 'components/module/DatePickerDropdown';
 import LocationSearch from 'components/module/LocationSearch';
+import MarketSectorIcon from 'components/module/MarketSectorIcon';
 import MarketSectorItem from 'components/module/MarketSectorItem';
 import StepDetails from 'components/module/StepDetails';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -96,6 +97,7 @@ import {
   ButtonContainer,
   SellerSummaryContainer,
   TopContainer,
+  TopSection,
   LogInLinkContainer,
   LogInLinkPrefix,
   LogInLinkAction,
@@ -107,6 +109,7 @@ import {
   StyledTouchable,
   ButtonsContainer,
   DownloadApplicationFormButton,
+  ChangeMarketSector,
   SFMOption,
   TabsContainer,
 } from './Register.style';
@@ -160,6 +163,7 @@ const StepForm = ({
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   // const MAX_STEP = isSeller ? 9 : 7;
   const MAX_STEP = 7;
 
@@ -1301,6 +1305,7 @@ const StepForm = ({
                         registrationDetails.categoryMarketSector
                       }
                       previousStep={() => previousStep && previousStep()}
+                      step={step}
                     />
                   )}
                 </>
@@ -1512,6 +1517,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
   const isSeller = theme.appType === 'seller';
   const steps = isSeller ? SELLER_STEPS : BUYER_STEPS;
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const marketSectors = isSeller ? SELLER_VARIATIONS : BUYER_VARIATIONS;
 
   const renderRef = useRef<HTMLDivElement | null>(null);
 
@@ -1825,35 +1831,60 @@ const RegisterView = (props: RegisterGeneratedProps) => {
                 variant="overline"
                 color="shade6"
               >{`STEP ${step} / ${MAX_STEP}`}</StepCount>
-              <TitleContainer>
-                {!isSmallScreen && (
-                  <Touchable dark onPress={() => previousStep()}>
-                    <BackIcon
-                      width={16}
-                      height={16}
-                      fill={theme.brand.primary}
-                    />
-                  </Touchable>
+              <TopSection>
+                <div className="left">
+                  <TitleContainer>
+                    {!isSmallScreen && (
+                      <Touchable dark onPress={() => previousStep()}>
+                        <BackIcon
+                          width={16}
+                          height={16}
+                          fill={theme.brand.primary}
+                        />
+                      </Touchable>
+                    )}
+                    <Title
+                      variant="title5"
+                      weight="500"
+                      customFont={theme.isSFM ? 'Canela' : undefined}
+                    >
+                      {steps[step - 1].title}
+                    </Title>
+                  </TitleContainer>
+                  {!isSeller && BUYER_STEP_SUBTITLE[step] && (
+                    <Typography
+                      variant="label"
+                      color="shade6"
+                      weight="400"
+                      style={{ marginLeft: isSmallScreen ? 0 : 35 }}
+                    >
+                      {BUYER_STEP_SUBTITLE[step]}
+                    </Typography>
+                  )}
+                </div>
+                {step === 4 && (
+                  <div className="right">
+                    <ChangeMarketSector isSeller={isSeller}>
+                      <MarketSectorIcon
+                        variant={registrationDetails.categoryMarketSector}
+                        width={40}
+                      />
+                      <Typography
+                        variant="label"
+                        color={isSeller ? 'noshade' : 'shade9'}
+                      >
+                        {
+                          marketSectors.find(
+                            (sector) =>
+                              sector.key ===
+                              registrationDetails.categoryMarketSector
+                          )?.label
+                        }
+                      </Typography>
+                    </ChangeMarketSector>
+                  </div>
                 )}
-                <Title
-                  variant="title5"
-                  weight="500"
-                  customFont={theme.isSFM ? 'Canela' : undefined}
-                >
-                  {steps[step - 1].title}
-                </Title>
-              </TitleContainer>
-
-              {!isSeller && BUYER_STEP_SUBTITLE[step] && (
-                <Typography
-                  variant="label"
-                  color="shade6"
-                  weight="400"
-                  style={{ marginLeft: isSmallScreen ? 0 : 35 }}
-                >
-                  {BUYER_STEP_SUBTITLE[step]}
-                </Typography>
-              )}
+              </TopSection>
 
               {isSeller && SELLER_STEP_SUBTITLE[step] && (
                 <Typography
@@ -1867,7 +1898,6 @@ const RegisterView = (props: RegisterGeneratedProps) => {
               )}
             </TopContainer>
           )}
-
           {props.isGotoDetails && (
             <>
               <TitleContainer>
@@ -1897,7 +1927,6 @@ const RegisterView = (props: RegisterGeneratedProps) => {
               </TitleContainer>
             </>
           )}
-
           {renderCurrentStep()}
         </RenderContainer>
       </AuthContainer>

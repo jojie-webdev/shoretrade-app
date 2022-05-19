@@ -30,6 +30,7 @@ const YourPlanView = ({
   currentPlan,
   selectedPlan,
   additionalSubscriptionHandler,
+  step,
 }: YourPlanGeneratedProps) => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
@@ -49,47 +50,52 @@ const YourPlanView = ({
 
   return (
     <Container>
-      <TopSection>
-        <div className="left">
-          <Typography
-            variant="title4"
-            color={theme.appType === 'seller' ? 'noshade' : 'shade9'}
-          >
-            {highlight}
-          </Typography>
-          <FlexContainer>
-            <Typography variant="label" color="shade6" weight="400">
-              then
-            </Typography>
+      {!isSeller && step !== 4 && (
+        <TopSection>
+          <div className="left">
             <Typography
-              variant="label"
+              variant="title4"
               color={theme.appType === 'seller' ? 'noshade' : 'shade9'}
-              weight="400"
             >
-              &nbsp;${currentPlan?.price}*
+              {highlight}
             </Typography>
-            <Typography variant="label" color="shade6" weight="400">
-              &nbsp;/ month
+            <FlexContainer>
+              <Typography variant="label" color="shade6" weight="400">
+                then
+              </Typography>
+              <Typography
+                variant="label"
+                color={theme.appType === 'seller' ? 'noshade' : 'shade9'}
+                weight="400"
+              >
+                &nbsp;${currentPlan?.price}*
+              </Typography>
+              <Typography variant="label" color="shade6" weight="400">
+                &nbsp;/ month
+              </Typography>
+            </FlexContainer>
+            <Typography variant="caption" color="shade6" weight="400">
+              *Price based on your Market Sector
             </Typography>
-          </FlexContainer>
-          <Typography variant="caption" color="shade6" weight="400">
-            *Price based on your Market Sector
-          </Typography>
-        </div>
+          </div>
 
-        <div className="right">
-          <ChangeMarketSector isSeller={isSeller}>
-            <MarketSectorIcon variant={currentMarketSector} width={40} />
-            <Typography variant="label" color={isSeller ? 'noshade' : 'shade9'}>
-              {
-                marketSectors.find(
-                  (sector) => sector.key === currentMarketSector
-                )?.label
-              }
-            </Typography>
-          </ChangeMarketSector>
-        </div>
-      </TopSection>
+          <div className="right">
+            <ChangeMarketSector isSeller={isSeller}>
+              <MarketSectorIcon variant={currentMarketSector} width={40} />
+              <Typography
+                variant="label"
+                color={isSeller ? 'noshade' : 'shade9'}
+              >
+                {
+                  marketSectors.find(
+                    (sector) => sector.key === currentMarketSector
+                  )?.label
+                }
+              </Typography>
+            </ChangeMarketSector>
+          </div>
+        </TopSection>
+      )}
 
       <PlanFeatures
         selectedPlan={selectedPlan}

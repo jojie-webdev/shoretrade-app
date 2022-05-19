@@ -5,6 +5,7 @@ export interface YourPlanrops {
   previousStep: () => void;
   selectedPlan?: string;
   additionalSubscriptionHandler: (value: boolean) => void;
+  step?: number;
 }
 
 export interface YourPlanGeneratedProps {
@@ -13,4 +14,5 @@ export interface YourPlanGeneratedProps {
   currentPlan?: GetSubscriptionPlansResponseData;
   selectedPlan?: string;
   additionalSubscriptionHandler: (value: boolean) => void;
+  step?: number;
 }
