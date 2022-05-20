@@ -5,16 +5,18 @@ import Button from 'components/base/Button';
 import { FileAlt, Prawn } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Loading from 'components/module/Loading';
-import { BUYER_ACCOUNT_ROUTES } from 'consts';
+import { BUYER_ACCOUNT_ROUTES, API } from 'consts';
 import moment from 'moment';
 import { Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
-import theme from 'utils/SFMTheme';
 import { toPrice } from 'utils/String/toPrice';
+import { useTheme } from 'utils/Theme';
+import { toTemporaryTokenV2 } from 'utils/toTemporaryTokenV2';
 
 import { BalanceHistoryGeneratedProps } from './BalanceHistory.props';
 import {
   Container,
+  Downloadable,
   EmptyStateContainer,
   Transx,
   TransxLeft,
@@ -26,7 +28,9 @@ const BalanceHistoryView = ({
   transactions,
   redirectFrom,
   isPlanView,
+  token,
 }: BalanceHistoryGeneratedProps) => {
+  const theme = useTheme();
   const history = useHistory();
   const getTransactionLabel = (
     desc: string
@@ -152,10 +156,35 @@ const BalanceHistoryView = ({
           const { title, subtitle } = getTransactionLabel(
             transaction.description
           );
+
+          const isCreditCardTopUp = transaction.description.includes(
+            'Credit card'
+          );
           return (
             <Transx key={idx}>
               <TransxLeft>
-                <FileAlt fill={theme.grey.shade6} />
+                <Downloadable
+                  enabled={isCreditCardTopUp}
+                  onClick={(e) => {
+                    window.open(
+                      `${API.URL}/v2/${
+                        theme.isSFM ? 'sfm-blue/' : ''
+                      }company/cc-invoice/${
+                        transaction.refNumber
+                      }?token=${toTemporaryTokenV2(token)}`,
+                      '_blank'
+                    );
+                    e.stopPropagation();
+                  }}
+                >
+                  <FileAlt
+                    fill={
+                      isCreditCardTopUp
+                        ? theme.brand.primary
+                        : theme.grey.shade6
+                    }
+                  />
+                </Downloadable>
                 <div className="text">
                   <Typography variant="body" color="shade9">
                     {title}

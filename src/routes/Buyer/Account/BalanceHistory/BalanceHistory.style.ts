@@ -47,3 +47,7 @@ export const TransxRight = styled.div`
     text-align: right;
   }
 `;
+
+export const Downloadable = styled.div<{ enabled?: boolean }>`
+  cursor: ${({ enabled }) => (enabled ? 'pointer' : 'default')};
+`;

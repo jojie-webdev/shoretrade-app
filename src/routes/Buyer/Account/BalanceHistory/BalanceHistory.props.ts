@@ -8,4 +8,5 @@ export interface BalanceHistoryGeneratedProps {
     label: string;
     link: string;
   };
+  token: string;
 }

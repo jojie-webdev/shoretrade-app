@@ -24,6 +24,7 @@ const BalanceHistory = (props: { isPlanView?: boolean }): JSX.Element => {
   const currentCompany = GetDefaultCompany();
   const companyId = currentCompany?.id || '';
 
+  const token = useSelector((state: Store) => state.auth.token) || '';
   const transactions = useSelector(
     (state: Store) => state.getTransactionHistory.data?.data.transactions
   );
@@ -55,6 +56,7 @@ const BalanceHistory = (props: { isPlanView?: boolean }): JSX.Element => {
       link: BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
     },
     isPlanView,
+    token,
   };
   return <BalanceHistoryView {...generatedProps} />;
 };

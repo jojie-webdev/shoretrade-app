@@ -10,6 +10,7 @@ export type GetTransactionHistoryResponseItem = {
   adjustmentAmount: number;
   balance: number;
   createdAt: string;
+  refNumber: number;
 };
 
 export type GetTransactionHistoryPayload = GenericResponse<{
