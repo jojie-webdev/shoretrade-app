@@ -84,6 +84,10 @@ export const SELLER_ACCOUNT_ROUTES = {
     `${SELLER_ROUTES.ACCOUNT}/assistants/${assitantId}`,
   BANK_DETAILS: `${SELLER_ROUTES.ACCOUNT}/bank-details`,
   HELP_AND_SUPPORT: `${SELLER_ROUTES.ACCOUNT}/help-and-support`,
+  HELP_AND_SUPPORT_CATEGORY: (slug = ':slug') =>
+    `${SELLER_ROUTES.ACCOUNT}/help-and-support/category/${slug}`,
+  HELP_AND_SUPPORT_CATEGORY_TOPIC: (slug = ':slug', topicSlug = ':topicSlug') =>
+    `${SELLER_ROUTES.ACCOUNT}/help-and-support/category/${slug}/topic/${topicSlug}`,
   ACCOUNT_COMPLETION: `${SELLER_ROUTES.ACCOUNT}/account-completion`,
   LICENSES: `${SELLER_ROUTES.ACCOUNT}/licenses`,
   ADD_LICENSE: `${SELLER_ROUTES.ACCOUNT}/licenses/add-license`,

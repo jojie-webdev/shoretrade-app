@@ -27,6 +27,8 @@ import PlanPaymentMethod from './PlanPaymentMethod';
 import ShippingAddresses from './ShippingAddresses';
 import SubscriptionPlan from './SubscriptionPlan';
 import YourDetails from './YourDetails';
+import Category from './HelpAndSupport/Category';
+import Inner from './HelpAndSupport/Inner';
 
 const ROUTES: Routes = {
   LANDING: {
@@ -80,6 +82,14 @@ const ROUTES: Routes = {
   HELP_AND_SUPPORT: {
     path: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT,
     children: <HelpAndSupport />,
+  },
+  HELP_AND_SUPPORT_CATEGORY: {
+    path: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY(),
+    children: <Category />,
+  },
+  HELP_AND_SUPPORT_CATEGORY_TOPIC: {
+    path: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY_TOPIC(),
+    children: <Inner />,
   },
   CREATE_ADDRESS: {
     path: SELLER_ACCOUNT_ROUTES.CREATE_ADDRESS,

@@ -11,8 +11,10 @@ const documentToReactComponents = (document: any) => {
   const options = {
     renderNode: {
       // eslint-disable-next-line react/display-name
-      [BLOCKS.EMBEDDED_ENTRY]: (node: any) =>
-        convert(node?.data?.target?.fields?.description, options),
+      [BLOCKS.EMBEDDED_ENTRY]: (node: any) => {
+        console.log(node);
+        return <>{convert(node?.data?.target?.fields?.description, options)}</>;
+      },
       // [BLOCKS.DOCUMENT]: (node: any) => convert(node, options),
       // eslint-disable-next-line react/display-name
       [BLOCKS.PARAGRAPH]: (node: any, children: any) => {
