@@ -121,11 +121,14 @@ const SubscriptionPlan = () => {
       )) ||
     [];
 
+  const currentMarketSector = marketSector ? marketSector.sectorAlias : '';
+
   const params: SubscriptionPlanGeneratedProps = {
     ...activePlanToProps(plans, activePlan),
     planStatus,
     planInterval,
     isDeactivated,
+    currentMarketSector,
     cancelSubscription,
     updateSubscription,
     renewSubscription,

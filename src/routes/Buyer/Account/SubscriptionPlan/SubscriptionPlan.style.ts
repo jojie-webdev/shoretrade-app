@@ -1,3 +1,4 @@
+import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div``;
@@ -40,6 +41,24 @@ export const SubscriptionContainer = styled.div`
     border-radius: 12px;
     padding: 24px;
   }
+
+  @media ${BREAKPOINTS.sm} {
+    .payment-section {
+      margin: 24px 10px;
+    }
+  }
+
+  @media ${BREAKPOINTS.md} {
+    .payment-section {
+      margin: 24px 10px;
+    }
+  }
+
+  @media ${BREAKPOINTS.lg} {
+    .payment-section {
+      margin: 24px 8px;
+    }
+  }
 `;
 
 export const PaymentMethodSection = styled.div`
@@ -80,6 +99,7 @@ export const BillingSection = styled.div`
 `;
 
 export const PlanSection = styled.div`
+  margin-bottom: 24px;
   .plan-rate {
     display: flex;
     margin: 24px 0;
@@ -95,4 +115,24 @@ export const PlanSection = styled.div`
 
 export const FlexContainer = styled.div`
   display: flex;
+`;
+
+export const PlanTitleContainer = styled.div`
+  display: flex;
+  margin-bottom: 24px;
+`;
+
+export const PlanContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+`;
+
+export const AdditionalSubSection = styled.div`
+  .cancel-subscription {
+    margin-top: 24px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 `;

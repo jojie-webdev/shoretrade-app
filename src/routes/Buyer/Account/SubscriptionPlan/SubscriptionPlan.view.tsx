@@ -5,6 +5,7 @@ import Breadcrumbs from 'components/base/Breadcrumbs';
 import { Calendar, Mastercard } from 'components/base/SVG';
 import TwoWayToggle from 'components/base/TwoWayToggle';
 import Typography from 'components/base/Typography';
+import AdditionalPlanFeatures from 'components/module/AdditionalPlanFeatures';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import CreditCardLogo from 'components/module/CreditCardLogo';
 import PlanFeatures from 'components/module/PlanFeatures';
@@ -30,6 +31,9 @@ import {
   PlanSection,
   SubscriptionContainer,
   ToggleContainer,
+  PlanContainer,
+  AdditionalSubSection,
+  PlanTitleContainer,
 } from './SubscriptionPlan.style';
 
 export const SubscriptionPlanView = ({
@@ -39,9 +43,12 @@ export const SubscriptionPlanView = ({
   cardBrand,
   cardNumberMasked,
   isSaasSubscribed,
+  subscriptionType,
   planStatus,
   planInterval,
   isDeactivated,
+  features,
+  currentMarketSector,
   cancelSubscription,
   updateSubscription,
   renewSubscription,
@@ -64,6 +71,10 @@ export const SubscriptionPlanView = ({
       link: location.pathname,
     },
   };
+  const reverseMarketPlace = features.find(
+    (feature) => feature.alias === 'REVERSED_MARKETPLACE'
+  );
+  const selectedPlan = subscriptionType === 'STANDARD' ? 'Standard' : 'Premium';
 
   useEffect(() => {
     setIsMonthly(planInterval !== 'ANNUAL');
@@ -104,39 +115,11 @@ export const SubscriptionPlanView = ({
         />
       </BreadcrumbsContainer>
 
-      <DicountContainer>
-        <div className="discount">
-          <Typography weight="400">10% OFF</Typography>
-        </div>
-      </DicountContainer>
-
-      <ToggleContainer>
-        <Typography variant="label" weight="400" style={{ marginRight: '8px' }}>
-          Base
-        </Typography>
-
-        <TwoWayToggle
-          checked={isMonthly}
-          onClick={() => {
-            setIsMonthly(!isMonthly);
-            setShowToggleModal(true);
-          }}
-        />
-
-        <Typography variant="label" weight="400" style={{ marginLeft: '8px' }}>
-          Premium
-        </Typography>
-      </ToggleContainer>
-
       <SubscriptionContainer>
-        <Row
-          gutterWidth={20}
-          justify="center"
-          style={{ width: isMobile ? '100%' : isSmallDesktop ? '85%' : '65%' }}
-        >
+        <Row gutterWidth={20} justify="center" style={{ width: '100%' }}>
           {!showYourPlanOnly && (
-            <Col xs={12} sm={6}>
-              <PaymentMethodSection className="section">
+            <Col md={12} lg={4}>
+              <PaymentMethodSection className="section payment-section">
                 <Typography variant="body" weight="400">
                   Your Payment Method
                 </Typography>
@@ -167,7 +150,7 @@ export const SubscriptionPlanView = ({
                 </Link>
               </PaymentMethodSection>
 
-              <BillingSection className="section">
+              <BillingSection className="section payment-section">
                 <Typography variant="body" weight="400">
                   Next Billing Date
                 </Typography>
@@ -217,72 +200,176 @@ export const SubscriptionPlanView = ({
             </Col>
           )}
 
-          <Col xs={12} sm={6}>
-            <PlanSection className="section">
-              <FlexContainer>
-                <Typography variant="body" weight="400">
-                  Your Plan
-                </Typography>
-                {!!yourPlanBadgeText && (
-                  <Badge
-                    badgeColor={theme.brand.primary}
-                    borderRadius="8px"
-                    style={{ marginLeft: '8px' }}
-                  >
-                    <Typography
-                      variant="overline"
-                      color="noshade"
-                      style={{ lineHeight: 'normal' }}
-                    >
-                      {yourPlanBadgeText}
-                    </Typography>
-                  </Badge>
-                )}
-              </FlexContainer>
+          <Col md={12} lg={8}>
+            <PlanContainer>
+              <Row gutterWidth={20} style={{ width: '100%' }}>
+                <Col md={12} xl={6}>
+                  <PlanSection className="section">
+                    <PlanTitleContainer>
+                      <Typography variant="body" weight="900">
+                        Basic Plan
+                      </Typography>
 
-              <Typography
-                variant="label"
-                weight="400"
-                color="shade7"
-                style={{ marginTop: '8px' }}
-              >
-                Gain access to renowned Seafood Sellers to purchase products for
-                your business.
-              </Typography>
+                      {subscriptionType === 'STANDARD' && (
+                        <Badge
+                          badgeColor={theme.brand.primary}
+                          borderRadius="8px"
+                          style={{ marginLeft: '8px' }}
+                        >
+                          <Typography
+                            variant="overline"
+                            color="noshade"
+                            style={{ lineHeight: 'normal' }}
+                          >
+                            subscribed
+                          </Typography>
+                        </Badge>
+                      )}
+                    </PlanTitleContainer>
 
-              <div className="plan-rate">
-                <Typography variant="title3" weight="400">
-                  {price}
-                </Typography>
-                <Typography variant="label" weight="400" color="shade6">
-                  &nbsp;/ {isMonthly ? 'Month' : 'Year'}
-                </Typography>
-              </div>
+                    <PlanFeatures
+                      selectedPlan="Standard"
+                      currentMarketSector={currentMarketSector}
+                    />
 
-              <PlanFeatures />
+                    {!!yourPlanButtonText && isSaasSubscribed && (
+                      <div
+                        className="cancel-subscription"
+                        onClick={() =>
+                          isForRenewal
+                            ? showYourPlanOnly
+                              ? history.push(
+                                  BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD
+                                )
+                              : setShowRenewModal(true)
+                            : setShowCancelModal(true)
+                        }
+                      >
+                        <Typography
+                          variant="label"
+                          color="primary"
+                          weight="400"
+                          style={{ textDecoration: 'underline' }}
+                        >
+                          {yourPlanButtonText}
+                        </Typography>
+                      </div>
+                    )}
+                  </PlanSection>
+                </Col>
+                <Col md={12} xl={6}>
+                  <PlanSection className="section">
+                    <PlanTitleContainer>
+                      <Typography variant="body" weight="900">
+                        Premium Plan
+                      </Typography>
+                      {subscriptionType !== 'STANDARD' && (
+                        <Badge
+                          badgeColor={theme.brand.primary}
+                          borderRadius="8px"
+                          style={{ marginLeft: '8px' }}
+                        >
+                          <Typography
+                            variant="overline"
+                            color="noshade"
+                            style={{ lineHeight: 'normal' }}
+                          >
+                            subscribed
+                          </Typography>
+                        </Badge>
+                      )}
+                    </PlanTitleContainer>
 
-              {!!yourPlanButtonText && isSaasSubscribed && (
-                <div
-                  className="cancel-subscription"
-                  onClick={() =>
-                    isForRenewal
-                      ? showYourPlanOnly
-                        ? history.push(BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD)
-                        : setShowRenewModal(true)
-                      : setShowCancelModal(true)
-                  }
-                >
-                  <Typography
-                    variant="label"
-                    color="primary"
-                    weight="400"
-                    style={{ textDecoration: 'underline' }}
-                  >
-                    {yourPlanButtonText}
-                  </Typography>
-                </div>
-              )}
-            </PlanSection>
+                    <PlanFeatures
+                      selectedPlan="Premium"
+                      currentMarketSector={currentMarketSector}
+                    />
+
+                    {!!yourPlanButtonText && isSaasSubscribed && (
+                      <div
+                        className="cancel-subscription"
+                        onClick={() =>
+                          isForRenewal
+                            ? showYourPlanOnly
+                              ? history.push(
+                                  BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD
+                                )
+                              : setShowRenewModal(true)
+                            : setShowCancelModal(true)
+                        }
+                      >
+                        <Typography
+                          variant="label"
+                          color="primary"
+                          weight="400"
+                          style={{ textDecoration: 'underline' }}
+                        >
+                          {yourPlanButtonText}
+                        </Typography>
+                      </div>
+                    )}
+                  </PlanSection>
+                </Col>
+              </Row>
+            </PlanContainer>
+            <PlanContainer>
+              <Row gutterWidth={20} style={{ width: '100%' }}>
+                <Col md={12}>
+                  <AdditionalSubSection className="section">
+                    <PlanTitleContainer>
+                      <Typography variant="body" weight="900">
+                        Reverse Marketplace $49.9
+                      </Typography>
+                      {reverseMarketPlace && (
+                        <Badge
+                          badgeColor={theme.brand.primary}
+                          borderRadius="8px"
+                          style={{ marginLeft: '8px' }}
+                        >
+                          <Typography
+                            variant="overline"
+                            color="noshade"
+                            style={{ lineHeight: 'normal' }}
+                          >
+                            subscribed
+                          </Typography>
+                        </Badge>
+                      )}
+                    </PlanTitleContainer>
+
+                    <AdditionalPlanFeatures
+                      selectedPlan={selectedPlan}
+                      currentMarketSector={currentMarketSector}
+                    />
+
+                    {/* // NEEDED LATER FOR MARKET PLACE CANCEL SUBSCRIPTION TASK
+                    {!!yourPlanButtonText && isSaasSubscribed && (
+                      <div
+                        className="cancel-subscription"
+                        onClick={() =>
+                          isForRenewal
+                            ? showYourPlanOnly
+                              ? history.push(
+                                  BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD
+                                )
+                              : setShowRenewModal(true)
+                            : setShowCancelModal(true)
+                        }
+                      >
+                        <Typography
+                          variant="label"
+                          color="primary"
+                          weight="400"
+                          style={{ textDecoration: 'underline' }}
+                        >
+                          {yourPlanButtonText}
+                        </Typography>
+                      </div>
+                    )} */}
+                  </AdditionalSubSection>
+                </Col>
+              </Row>
+            </PlanContainer>
           </Col>
         </Row>
       </SubscriptionContainer>

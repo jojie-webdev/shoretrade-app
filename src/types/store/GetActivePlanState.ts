@@ -1,4 +1,5 @@
 import { GenericResponse } from 'types/GenericResponse';
+import { SubscriptionPlanFeature } from 'types/store/GetSubscriptionPlansState';
 
 export type GetActivePlanMeta = {
   companyId?: string;
@@ -16,6 +17,7 @@ export type ActivePlanPaymentMethodCard = {
 export type GetActivePlanResponseData = {
   countdown: number;
   ends_at: string;
+  features: SubscriptionPlanFeature[];
   id: string;
   is_free_trial: boolean;
   paid_at?: string;
@@ -32,6 +34,7 @@ export type GetActivePlanResponseData = {
   subscription_preference: {
     saasInterval: string;
     isSaasSubscribed: boolean;
+    type: string;
   };
 };
 
