@@ -48,6 +48,10 @@ const MarketRequestsLanding = (): JSX.Element => {
     (d) => moment().diff(moment(d.marketRequest.createdAt), 'days') < 7
   );
 
+  const activePlan = useSelector(
+    (store: Store) => store.getActivePlan.data?.data
+  );
+
   const onClickItem = (row: Result) => {
     if (row.offers > 0) {
       history.push(BUYER_MARKET_REQUEST_ROUTES.MARKET_REQUEST_DETAILS(row.id));
@@ -79,6 +83,7 @@ const MarketRequestsLanding = (): JSX.Element => {
   }, [deleteMarketRequest]);
 
   const generatedProps: MarketRequestsLandingGeneratedProps = {
+    features: activePlan?.features || [],
     currentPath: location.pathname,
     marketRequests: getMarketRequestLandingData(
       buyerRequests.data?.data?.marketRequests.filter(

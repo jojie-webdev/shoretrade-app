@@ -12,8 +12,16 @@ import LoadingView from 'components/module/Loading';
 import OfferTag from 'components/module/OfferTag';
 import TermsAndCondition from 'components/module/TermsAndCondition';
 import { BUYER_MARKET_REQUEST_ROUTES } from 'consts/routes';
-import { Row, Col, Visible, Hidden } from 'react-grid-system';
+import {
+  Row,
+  Col,
+  Visible,
+  Hidden,
+  ScreenClassRender,
+} from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
+import MarketRequestDesktopImg from 'res/images/buyer-market-request-desktop.png';
+import MarketRequestMobileImg from 'res/images/buyer-market-request-mobile.png';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import useLocalStorage from 'utils/Hooks/useLocalStorage';
 import { sizeToString } from 'utils/Listing';
@@ -292,6 +300,7 @@ const MarketRequestsLandingView = (
 ) => {
   const history = useHistory();
   const {
+    features,
     marketRequests,
     onClickItem,
     onDelete,
@@ -305,6 +314,10 @@ const MarketRequestsLandingView = (
   const [isAcceptClicked, setIsAcceptClicked] = useLocalStorage(
     'isTermsAndConAccepted',
     false
+  );
+
+  const reverseMarketPlace = features.find(
+    (feature) => feature.alias === 'REVERSED_MARKETPLACE'
   );
 
   if (pendingDeleteMarketRequest || loading) {
@@ -439,17 +452,31 @@ const MarketRequestsLandingView = (
   //   );
   // };
 
+  if (!reverseMarketPlace) {
+    return (
+      <ScreenClassRender
+        render={(screenClass: string) =>
+          ['xs', 'sm', 'md'].includes(screenClass) ? (
+            <img src={MarketRequestMobileImg} width="100%" />
+          ) : (
+            <img src={MarketRequestDesktopImg} width="100%" />
+          )
+        }
+      />
+    );
+  }
+
   return (
     <MarketRequestsContainer>
       {/* <ConfirmationModal
-        isOpen={showRequestSentModal}
-        onClickClose={() => onConfirmSentRequest()}
-        title="Market Request Sent"
-        action={() => onConfirmSentRequest()}
-        actionText="View Requests"
-        hideCancel={true}
-        description={<SentRequestDescription />}
-      /> */}
+    isOpen={showRequestSentModal}
+    onClickClose={() => onConfirmSentRequest()}
+    title="Market Request Sent"
+    action={() => onConfirmSentRequest()}
+    actionText="View Requests"
+    hideCancel={true}
+    description={<SentRequestDescription />}
+  /> */}
       <ConfirmationModal
         isOpen={itemToDelete.value !== null}
         title="Delete Market Request"
