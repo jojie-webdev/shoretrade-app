@@ -232,9 +232,11 @@ export const SubscriptionPlanView = ({
                       currentMarketSector={currentMarketSector}
                     />
 
-                    {!!yourPlanButtonText && isSaasSubscribed && (
+                    {!!yourPlanButtonText &&
+                    subscriptionType === 'STANDARD' &&
+                    isSaasSubscribed ? (
                       <div
-                        className="cancel-subscription"
+                        className="subscription-action"
                         onClick={() =>
                           isForRenewal
                             ? showYourPlanOnly
@@ -252,6 +254,20 @@ export const SubscriptionPlanView = ({
                           style={{ textDecoration: 'underline' }}
                         >
                           {yourPlanButtonText}
+                        </Typography>
+                      </div>
+                    ) : (
+                      <div
+                        className="subscription-action"
+                        onClick={() => setShowToggleModal(true)}
+                      >
+                        <Typography
+                          variant="label"
+                          color="primary"
+                          weight="400"
+                          style={{ textDecoration: 'underline' }}
+                        >
+                          Update Subscription
                         </Typography>
                       </div>
                     )}
@@ -285,9 +301,11 @@ export const SubscriptionPlanView = ({
                       currentMarketSector={currentMarketSector}
                     />
 
-                    {!!yourPlanButtonText && isSaasSubscribed && (
+                    {!!yourPlanButtonText &&
+                    subscriptionType !== 'STANDARD' &&
+                    isSaasSubscribed ? (
                       <div
-                        className="cancel-subscription"
+                        className="subscription-action"
                         onClick={() =>
                           isForRenewal
                             ? showYourPlanOnly
@@ -305,6 +323,20 @@ export const SubscriptionPlanView = ({
                           style={{ textDecoration: 'underline' }}
                         >
                           {yourPlanButtonText}
+                        </Typography>
+                      </div>
+                    ) : (
+                      <div
+                        className="subscription-action"
+                        onClick={() => setShowToggleModal(true)}
+                      >
+                        <Typography
+                          variant="label"
+                          color="primary"
+                          weight="400"
+                          style={{ textDecoration: 'underline' }}
+                        >
+                          Update Subscription
                         </Typography>
                       </div>
                     )}
@@ -345,7 +377,7 @@ export const SubscriptionPlanView = ({
                     {/* // NEEDED LATER FOR MARKET PLACE CANCEL SUBSCRIPTION TASK
                     {!!yourPlanButtonText && isSaasSubscribed && (
                       <div
-                        className="cancel-subscription"
+                        className="subscription-action"
                         onClick={() =>
                           isForRenewal
                             ? showYourPlanOnly
@@ -375,7 +407,9 @@ export const SubscriptionPlanView = ({
       </SubscriptionContainer>
       <ConfirmationModal
         isOpen={showToggleModal}
-        title={`Change to ${plan.toLowerCase()} billing?`}
+        title={`Change to ${
+          selectedPlan === 'Standard' ? 'premium' : 'basic'
+        } billing?`}
         actionText="Confirm new plan"
         onClickClose={() => {
           setShowToggleModal(false);

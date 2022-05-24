@@ -105,7 +105,7 @@ export const PlanSection = styled.div`
     margin: 24px 0;
   }
 
-  .cancel-subscription {
+  .subscription-action {
     margin-top: 24px;
     &:hover {
       cursor: pointer;
