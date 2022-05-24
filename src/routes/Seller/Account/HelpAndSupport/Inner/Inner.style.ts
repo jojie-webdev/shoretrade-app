@@ -68,8 +68,7 @@ export const Account = styled(Typography)`
 
 export const Contents = styled.div`
   color: ${({ theme }) => theme.grey.shade7};
-  i {
-    font-weight: 700;
+  b {
     color: ${({ theme }) => theme.grey.noshade};
   }
   @media ${BREAKPOINTS.homeDesktop} {

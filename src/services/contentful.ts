@@ -1,5 +1,5 @@
 import { API } from 'consts';
-import { createClient, Entry } from 'contentful';
+import { createClient, Entry, EntryCollection } from 'contentful';
 
 const contentfulClient = createClient({
   space: API.CONTENTFUL_SPACE_ID,
@@ -10,6 +10,14 @@ const contentfulClient = createClient({
 
 export const getEntryById = async (id: string) => {
   const entry = (await contentfulClient.getEntry(id)) as Entry<any>;
-
   return entry;
+};
+
+/**
+ * Using the entry Id of assumed topicId
+ * get the caterory id and slug with the topic slug as well
+ * @param id
+ */
+export const getEntryHyperLink = async (id: string) => {
+  const entry = (await contentfulClient.getEntry(id)) as Entry<any>;
 };

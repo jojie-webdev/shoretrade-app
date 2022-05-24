@@ -16,18 +16,25 @@ const Inner = (): JSX.Element => {
   const [category, setCategory] = useState({});
   const [content, setContent] = useState<any>({});
 
-  const convertedElements = useMemo(() => {
-    if (content?.fields) {
-      const rawElements = content?.fields?.html;
-      return rawElements ? documentToReactComponents(rawElements) : undefined;
-    }
-    return null;
-  }, [content]);
-
   const locationState: {
     categoryId?: string;
     topicId?: string;
   } = location.state || {};
+
+  const convertedElements = useMemo(() => {
+    if (content?.fields) {
+      const rawElements = content?.fields?.html;
+      return rawElements
+        ? documentToReactComponents(rawElements, {
+            slug,
+            topicSlug,
+            topicId: locationState.topicId,
+            categoryId: locationState.categoryId,
+          })
+        : undefined;
+    }
+    return null;
+  }, [content]);
 
   useEffect(() => {
     const locationState: {

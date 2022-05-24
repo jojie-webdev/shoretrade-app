@@ -1,27 +1,75 @@
 import React, { Fragment } from 'react';
 
 import { documentToReactComponents as convert } from '@contentful/rich-text-react-renderer';
-import { BLOCKS } from '@contentful/rich-text-types';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import { Link } from 'react-router-dom';
+import { getEntryById } from 'services/contentful';
 import { v4 as uuid } from 'uuid';
 
-const documentToReactComponents = (document: any) => {
+const documentToReactComponents = (
+  document: any,
+  data?: {
+    slug?: string;
+    categoryId?: string;
+    topicSlug?: string;
+    topicId?: string;
+  }
+) => {
   if (!document) {
     return null;
   }
+
+  const inlineOptions = {
+    renderNode: {
+      // eslint-disable-next-line react/display-name
+      [INLINES.ENTRY_HYPERLINK]: (node: any) => {
+        return (
+          <>
+            <Link
+              to={{
+                pathname: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY_TOPIC(
+                  data?.slug,
+                  data?.topicSlug
+                ),
+                state: { categoryId: data?.categoryId, topicId: data?.topicId },
+              }}
+            >
+              {data?.topicSlug}
+            </Link>
+          </>
+        );
+      },
+    },
+  };
+
   const options = {
     renderNode: {
       // eslint-disable-next-line react/display-name
       [BLOCKS.EMBEDDED_ENTRY]: (node: any) => {
-        console.log(node);
+        if (node?.data?.target?.fields?.image) {
+          return (
+            <>
+              <iframe
+                width="560"
+                height="315"
+                src={node?.data?.target?.fields?.videoLink}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </>
+          );
+        }
         return <>{convert(node?.data?.target?.fields?.description, options)}</>;
       },
-      // [BLOCKS.DOCUMENT]: (node: any) => convert(node, options),
       // eslint-disable-next-line react/display-name
       [BLOCKS.PARAGRAPH]: (node: any, children: any) => {
         return (
           <p>
             {node.content.map((i: any, idx: number) => (
-              <span key={idx}>{convert(i)}</span>
+              <span key={idx}>{convert(i, inlineOptions)}</span>
             ))}
           </p>
         );
