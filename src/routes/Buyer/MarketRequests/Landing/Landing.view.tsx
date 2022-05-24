@@ -389,7 +389,21 @@ const MarketRequestsLandingView = (
     </Hidden>
   );
 
-  if (!isAcceptClicked) {
+  if (!reverseMarketPlace) {
+    return (
+      <ScreenClassRender
+        render={(screenClass: string) =>
+          ['xs', 'sm', 'md'].includes(screenClass) ? (
+            <img src={MarketRequestMobileImg} width="100%" />
+          ) : (
+            <img src={MarketRequestDesktopImg} width="100%" />
+          )
+        }
+      />
+    );
+  }
+
+  if (reverseMarketPlace && !isAcceptClicked) {
     return (
       <TermsAndCondition
         appType="buyer"
@@ -451,20 +465,6 @@ const MarketRequestsLandingView = (
   //     </div>
   //   );
   // };
-
-  if (!reverseMarketPlace) {
-    return (
-      <ScreenClassRender
-        render={(screenClass: string) =>
-          ['xs', 'sm', 'md'].includes(screenClass) ? (
-            <img src={MarketRequestMobileImg} width="100%" />
-          ) : (
-            <img src={MarketRequestDesktopImg} width="100%" />
-          )
-        }
-      />
-    );
-  }
 
   return (
     <MarketRequestsContainer>
