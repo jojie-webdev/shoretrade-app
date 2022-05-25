@@ -68,8 +68,28 @@ export const Account = styled(Typography)`
 `;
 
 export const Contents = styled.div`
+  color: ${({ theme }) => theme.grey.shade7};
   .entry-link {
     color: ${({ theme }) => theme.brand.primary};
+    text-decoration: underline;
+    font-weight: 500;
+  }
+
+  .media-container {
+    display: flex;
+    justify-content: center;
+    padding: 24px;
+    width: 100%;
+  }
+
+  .video-iframe {
+    width: 100%;
+    max-width: 671px;
+    height: 425px;
+  }
+
+  b {
+    color: ${({ theme }) => theme.grey.noshade};
   }
   @media ${BREAKPOINTS.homeDesktop} {
     padding: 32px 0;
@@ -77,6 +97,9 @@ export const Contents = styled.div`
 
   @media ${BREAKPOINTS.nonDesktop} {
     padding: 24px 0;
+    .media-container {
+      padding: 0;
+    }
   }
 
   @media ${BREAKPOINTS.nonDesktop} {

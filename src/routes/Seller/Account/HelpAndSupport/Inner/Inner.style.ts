@@ -73,6 +73,20 @@ export const Contents = styled.div`
     text-decoration: underline;
     font-weight: 500;
   }
+
+  .media-container {
+    display: flex;
+    justify-content: center;
+    padding: 24px;
+    width: 100%;
+  }
+
+  .video-iframe {
+    width: 100%;
+    max-width: 671px;
+    height: 425px;
+  }
+
   b {
     color: ${({ theme }) => theme.grey.noshade};
   }
@@ -82,6 +96,9 @@ export const Contents = styled.div`
 
   @media ${BREAKPOINTS.nonDesktop} {
     padding: 24px 0;
+    .media-container {
+      padding: 0;
+    }
   }
 
   @media ${BREAKPOINTS.nonDesktop} {
