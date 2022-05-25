@@ -166,15 +166,17 @@ const BalanceHistoryView = ({
                 <Downloadable
                   enabled={isCreditCardTopUp}
                   onClick={(e) => {
-                    window.open(
-                      `${API.URL}/v2/${
-                        theme.isSFM ? 'sfm-blue/' : ''
-                      }company/cc-invoice/${
-                        transaction.refNumber
-                      }?token=${toTemporaryTokenV2(token)}`,
-                      '_blank'
-                    );
-                    e.stopPropagation();
+                    if (isCreditCardTopUp) {
+                      window.open(
+                        `${API.URL}/v2/${
+                          theme.isSFM ? 'sfm-blue/' : ''
+                        }company/cc-invoice/${
+                          transaction.refNumber
+                        }?token=${toTemporaryTokenV2(token)}`,
+                        '_blank'
+                      );
+                      e.stopPropagation();
+                    }
                   }}
                 >
                   <FileAlt
