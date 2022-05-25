@@ -6,6 +6,7 @@ import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { Link } from 'react-router-dom';
 import { getEntryById } from 'services/contentful';
 import { v4 as uuid } from 'uuid';
+import { FlexContainer } from 'routes/Buyer/Listings/Listings.styles';
 
 const documentToReactComponents = (
   document: any,
@@ -48,19 +49,40 @@ const documentToReactComponents = (
       // eslint-disable-next-line react/display-name
       [BLOCKS.EMBEDDED_ENTRY]: (node: any) => {
         if (node?.data?.target?.fields?.image) {
-          return (
-            <>
-              <iframe
-                width="560"
-                height="315"
-                src={node?.data?.target?.fields?.videoLink}
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </>
-          );
+          console.log(node?.data?.target?.fields?.image);
+          if (node?.data?.target?.fields?.videoLink) {
+            return (
+              <>
+                <iframe
+                  width="560"
+                  height="315"
+                  src={node?.data?.target?.fields?.videoLink}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </>
+            );
+          }
+
+          if (node?.data?.target?.fields?.image?.fields?.file?.url) {
+            return (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  padding: 24,
+                  width: '100%',
+                }}
+              >
+                <img
+                  style={{ width: '100%', maxWidth: '671px' }}
+                  src={node?.data?.target?.fields?.image?.fields?.file?.url}
+                ></img>
+              </div>
+            );
+          }
         }
         return <>{convert(node?.data?.target?.fields?.description, options)}</>;
       },
