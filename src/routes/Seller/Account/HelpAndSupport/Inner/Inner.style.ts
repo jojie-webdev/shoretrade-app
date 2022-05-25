@@ -68,6 +68,11 @@ export const Account = styled(Typography)`
 
 export const Contents = styled.div`
   color: ${({ theme }) => theme.grey.shade7};
+  .entry-link {
+    color: ${({ theme }) => theme.brand.primary};
+    text-decoration: underline;
+    font-weight: 500;
+  }
   b {
     color: ${({ theme }) => theme.grey.noshade};
   }

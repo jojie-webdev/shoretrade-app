@@ -1,6 +1,7 @@
 import { EnvelopeAlt, Chat } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { Link } from 'react-router-dom';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -67,6 +68,9 @@ export const Account = styled(Typography)`
 `;
 
 export const Contents = styled.div`
+  .entry-link {
+    color: ${({ theme }) => theme.brand.primary};
+  }
   @media ${BREAKPOINTS.homeDesktop} {
     padding: 32px 0;
   }

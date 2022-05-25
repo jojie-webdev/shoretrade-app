@@ -28,13 +28,15 @@ const Category = (): JSX.Element => {
     const locationState: {
       categoryId?: string;
     } = location.state || {};
-    history.push(
-      SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY_TOPIC(slug, topicSlug),
-      {
-        topicId,
-        categoryId: locationState.categoryId,
-      }
-    );
+    if (topicId && locationState.categoryId && topicSlug) {
+      history.push(
+        SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY_TOPIC(slug, topicSlug),
+        {
+          topicId,
+          categoryId: locationState.categoryId,
+        }
+      );
+    }
   };
 
   const handleSearchChange = (e: any) => {

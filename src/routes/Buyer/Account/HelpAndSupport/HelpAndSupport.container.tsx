@@ -15,7 +15,9 @@ const HelpAndSupport = (): JSX.Element => {
   useEffect(() => {
     const fetchData = async () => {
       const entry = await getEntryById(MAIN_PAGE_ID);
-      setMainPage(entry);
+      if (entry) {
+        setMainPage(entry);
+      }
     };
 
     fetchData();

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { getEntryById } from 'services/contentful';
 
 import { MAIN_PAGE_ID } from './HelpAndSupport.contants';
@@ -15,14 +15,16 @@ const HelpAndSupport = (): JSX.Element => {
   useEffect(() => {
     const fetchData = async () => {
       const entry = await getEntryById(MAIN_PAGE_ID);
-      setMainPage(entry);
+      if (entry) {
+        setMainPage(entry);
+      }
     };
 
     fetchData();
   }, []);
 
   const handleCategoryClick = (categoryId: string, slug: string) => {
-    history.push(SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY(slug), {
+    history.replace(SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY(slug), {
       categoryId,
     });
   };

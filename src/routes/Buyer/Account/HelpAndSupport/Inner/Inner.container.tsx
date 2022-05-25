@@ -1,6 +1,7 @@
+import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { getEntryById } from 'services/contentful';
 import documentToReactComponents from 'utils/Contentful/converter';
 
@@ -12,6 +13,7 @@ const Inner = (): JSX.Element => {
     topicSlug: string;
   }>();
   const location = useLocation();
+  const history = useHistory();
   const [topic, setTopic] = useState<any>({});
   const [category, setCategory] = useState({});
   const [content, setContent] = useState<any>({});
@@ -36,10 +38,12 @@ const Inner = (): JSX.Element => {
     } = location.state || {};
     const fetchData = async () => {
       const categoryEntry = await getEntryById(locationState.categoryId || '');
-      setCategory(categoryEntry);
+      if (categoryEntry) {
+        setCategory(categoryEntry);
+      }
     };
 
-    if (slug) {
+    if (slug && locationState.categoryId) {
       fetchData();
     }
   }, [slug, location]);
@@ -57,6 +61,17 @@ const Inner = (): JSX.Element => {
       fetchData();
     }
   }, [topicSlug, location]);
+
+  useEffect(() => {
+    const locationState: {
+      categoryId?: string;
+      topicId?: string;
+    } = location.state || {};
+    if (!locationState.categoryId || !locationState.topicId) {
+      // go back to main categories page
+      history.replace(BUYER_ACCOUNT_ROUTES.HELP_AND_SUPPORT);
+    }
+  }, [location]);
 
   useEffect(() => {
     const fetchData = async () => {

@@ -25,18 +25,20 @@ const documentToReactComponents = (
     renderNode: {
       // eslint-disable-next-line react/display-name
       [INLINES.ENTRY_HYPERLINK]: (node: any) => {
+        console.log(node);
+        const value = node?.content[0]?.value;
+        const entryId = node?.data?.target?.sys?.id;
         return (
           <>
             <Link
+              className="entry-link"
               to={{
-                pathname: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY_TOPIC(
-                  data?.slug,
-                  data?.topicSlug
+                pathname: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY_TOPIC_RESOLVER(
+                  entryId
                 ),
-                state: { categoryId: data?.categoryId, topicId: data?.topicId },
               }}
             >
-              {data?.topicSlug}
+              {value}
             </Link>
           </>
         );

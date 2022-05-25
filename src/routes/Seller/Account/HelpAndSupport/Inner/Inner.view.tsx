@@ -46,7 +46,7 @@ const InnerView = (props: InnerGeneratedProps) => {
               link: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY(
                 props.categorySlug
               ),
-              state: { categoryId: props.categoryId },
+              state: { categoryId: props?.category?.sys?.id },
             },
             {
               label: props?.topic?.fields?.title,

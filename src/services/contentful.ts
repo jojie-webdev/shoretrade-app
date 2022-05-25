@@ -9,15 +9,21 @@ const contentfulClient = createClient({
 });
 
 export const getEntryById = async (id: string) => {
-  const entry = (await contentfulClient.getEntry(id)) as Entry<any>;
-  return entry;
+  if (id) {
+    const entry = (await contentfulClient.getEntry(id)) as Entry<any>;
+    return entry;
+  }
 };
 
-/**
- * Using the entry Id of assumed topicId
- * get the caterory id and slug with the topic slug as well
- * @param id
- */
-export const getEntryHyperLink = async (id: string) => {
-  const entry = (await contentfulClient.getEntry(id)) as Entry<any>;
+export const getEntriesByContentType = (
+  content_type: string,
+  additionalParams = {}
+): Promise<any> => {
+  return contentfulClient
+    .getEntries({
+      ...additionalParams,
+      content_type,
+      include: 2,
+    })
+    .then((res) => res);
 };
