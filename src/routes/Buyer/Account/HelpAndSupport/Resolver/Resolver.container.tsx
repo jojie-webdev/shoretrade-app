@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { useHistory, useParams } from 'react-router-dom';
 import { getEntriesByContentType } from 'services/contentful';
 
@@ -18,7 +18,7 @@ const Resolver = (): JSX.Element => {
 
       if (topic) {
         history.push(
-          SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_TOPIC(topic?.fields?.slug),
+          BUYER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_TOPIC(topic?.fields?.slug),
           {
             topicId: topic?.sys.id,
           }

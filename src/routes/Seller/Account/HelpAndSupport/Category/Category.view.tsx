@@ -9,7 +9,8 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
 
-import { PAGE_SIZE } from './Category.contants';
+import { SHORETRADE_TEL } from '../HelpAndSupport.constants';
+import { PAGE_SIZE } from './Category.constants';
 import { CategoryGeneratedProps } from './Category.props';
 import {
   Account,
@@ -22,6 +23,7 @@ import {
   ChatWrapper,
   Text1,
   Content,
+  Content2,
 } from './Category.style';
 
 const CategoryView = (props: CategoryGeneratedProps) => {
@@ -31,7 +33,12 @@ const CategoryView = (props: CategoryGeneratedProps) => {
 
   return (
     <Container className="category">
-      <Account className="category__account" variant="title5" weight="700">
+      <Account
+        className="category__account"
+        variant="title5"
+        weight="700"
+        color="noshade"
+      >
         Account
       </Account>
 
@@ -126,34 +133,28 @@ const CategoryView = (props: CategoryGeneratedProps) => {
       </Text1>
 
       <div className="category__contact">
-        <Content>
+        <Content onClick={() => props.handleEmailUsClick()}>
           <EnvelopeAltWrapper fill={theme.grey.shade6} />
           <div style={{ marginLeft: 14 }}>
             <Typography color="noshade" variant="body" weight="500">
               Email us
             </Typography>
-            <Typography variant="caption" weight="500" color="shade6">
-              Fill out the form, and we will get back to you
-            </Typography>
           </div>
           <div style={{ marginLeft: 'auto' }}>
             <ChevronRight fill={theme.brand.primary} height={14} width={24} />
           </div>
         </Content>
-        <Content>
+        <Content2 href={SHORETRADE_TEL}>
           <ChatWrapper fill={theme.grey.shade6} />
           <div style={{ marginLeft: 14 }}>
             <Typography color="noshade" variant="body" weight="500">
               Chat with us
             </Typography>
-            <Typography variant="caption" weight="500" color="shade6">
-              Connect with our live specialists
-            </Typography>
           </div>
           <div style={{ marginLeft: 'auto' }}>
             <ChevronRight fill={theme.brand.primary} height={14} width={24} />
           </div>
-        </Content>
+        </Content2>
       </div>
     </Container>
   );

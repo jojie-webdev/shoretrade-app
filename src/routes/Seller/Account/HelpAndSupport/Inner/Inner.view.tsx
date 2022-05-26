@@ -3,11 +3,11 @@ import React from 'react';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import { ChevronRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
 
+import { SHORETRADE_TEL } from '../HelpAndSupport.constants';
 import { InnerGeneratedProps } from './Inner.props';
 import {
   Container,
@@ -17,6 +17,7 @@ import {
   Content,
   EnvelopeAltWrapper,
   ChatWrapper,
+  Content2,
 } from './Inner.style';
 
 const InnerView = (props: InnerGeneratedProps) => {
@@ -25,34 +26,17 @@ const InnerView = (props: InnerGeneratedProps) => {
 
   return (
     <Container className="inner_page">
-      <Account className="inner_page__account" variant="title5" weight="700">
+      <Account
+        className="inner_page__account"
+        variant="title5"
+        weight="700"
+        color="noshade"
+      >
         Account
       </Account>
 
       <div className="inner_page__breadcrumb">
-        <Breadcrumbs
-          color="noshade"
-          sections={[
-            {
-              label: 'Account',
-              link: SELLER_ACCOUNT_ROUTES.LANDING,
-            },
-            {
-              label: 'Help & Support',
-              link: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT,
-            },
-            {
-              label: props?.category?.fields?.title,
-              link: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY(
-                props.categorySlug
-              ),
-              state: { categoryId: props?.category?.sys?.id },
-            },
-            {
-              label: props?.topic?.fields?.title,
-            },
-          ]}
-        />
+        <Breadcrumbs sections={props.breadCrumbsPath} />
       </div>
       {props?.topic?.fields?.title && (
         <Typography
@@ -88,34 +72,28 @@ const InnerView = (props: InnerGeneratedProps) => {
       </Text1>
 
       <div className="inner__contact">
-        <Content>
+        <Content onClick={() => props.handleEmailUsClick()}>
           <EnvelopeAltWrapper fill={theme.grey.shade6} />
           <div style={{ marginLeft: 14 }}>
             <Typography color="noshade" variant="body" weight="500">
               Email us
             </Typography>
-            <Typography variant="caption" weight="500" color="shade6">
-              Fill out the form, and we will get back to you
-            </Typography>
           </div>
           <div style={{ marginLeft: 'auto' }}>
             <ChevronRight fill={theme.brand.primary} height={14} width={24} />
           </div>
         </Content>
-        <Content>
+        <Content2 href={SHORETRADE_TEL}>
           <ChatWrapper fill={theme.grey.shade6} />
           <div style={{ marginLeft: 14 }}>
             <Typography color="noshade" variant="body" weight="500">
               Chat with us
             </Typography>
-            <Typography variant="caption" weight="500" color="shade6">
-              Connect with our live specialists
-            </Typography>
           </div>
           <div style={{ marginLeft: 'auto' }}>
             <ChevronRight fill={theme.brand.primary} height={14} width={24} />
           </div>
-        </Content>
+        </Content2>
       </div>
     </Container>
   );

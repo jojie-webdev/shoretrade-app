@@ -4,4 +4,6 @@ export interface InnerGeneratedProps {
   convertedElements: any;
   categoryId: string;
   categorySlug: string;
+  breadCrumbsPath: any;
+  handleEmailUsClick: () => void;
 }

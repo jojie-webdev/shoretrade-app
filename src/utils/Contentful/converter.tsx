@@ -2,13 +2,13 @@ import React, { Fragment } from 'react';
 
 import { documentToReactComponents as convert } from '@contentful/rich-text-react-renderer';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
-import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { Link } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 
 const documentToReactComponents = (
   document: any,
   data?: {
+    userRoute?: (topicId?: string) => string;
     slug?: string;
     categoryId?: string;
     topicSlug?: string;
@@ -23,7 +23,6 @@ const documentToReactComponents = (
     renderNode: {
       // eslint-disable-next-line react/display-name
       [INLINES.ENTRY_HYPERLINK]: (node: any) => {
-        console.log(node);
         const value = node?.content[0]?.value;
         const entryId = node?.data?.target?.sys?.id;
         return (
@@ -31,9 +30,7 @@ const documentToReactComponents = (
             <Link
               className="entry-link"
               to={{
-                pathname: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY_TOPIC_RESOLVER(
-                  entryId
-                ),
+                pathname: data?.userRoute && data?.userRoute(entryId),
               }}
             >
               {value}
@@ -49,7 +46,6 @@ const documentToReactComponents = (
       // eslint-disable-next-line react/display-name
       [BLOCKS.EMBEDDED_ENTRY]: (node: any) => {
         if (node?.data?.target?.fields?.image) {
-          console.log(node?.data?.target?.fields?.image);
           return (
             <div className="media-container">
               {node?.data?.target?.fields?.videoLink ? (
@@ -75,7 +71,7 @@ const documentToReactComponents = (
       // eslint-disable-next-line react/display-name
       [BLOCKS.PARAGRAPH]: (node: any, children: any) => {
         return (
-          <p>
+          <p className="inner_paragraph">
             {node.content.map((i: any, idx: number) => (
               <span key={idx}>{convert(i, inlineOptions)}</span>
             ))}

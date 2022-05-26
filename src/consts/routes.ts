@@ -88,6 +88,8 @@ export const SELLER_ACCOUNT_ROUTES = {
     `${SELLER_ROUTES.ACCOUNT}/help-and-support/${topicId}`,
   HELP_AND_SUPPORT_CATEGORY: (slug = ':slug') =>
     `${SELLER_ROUTES.ACCOUNT}/help-and-support/category/${slug}`,
+  HELP_AND_SUPPORT_TOPIC: (topicSlug = ':topicSlug') =>
+    `${SELLER_ROUTES.ACCOUNT}/help-and-support/topic/${topicSlug}`,
   HELP_AND_SUPPORT_CATEGORY_TOPIC: (slug = ':slug', topicSlug = ':topicSlug') =>
     `${SELLER_ROUTES.ACCOUNT}/help-and-support/category/${slug}/topic/${topicSlug}`,
   ACCOUNT_COMPLETION: `${SELLER_ROUTES.ACCOUNT}/account-completion`,
@@ -153,6 +155,10 @@ export const BUYER_ACCOUNT_ROUTES = {
   HELP_AND_SUPPORT: `${BUYER_ROUTES.ACCOUNT}/help-and-support`,
   HELP_AND_SUPPORT_CATEGORY: (slug = ':slug') =>
     `${BUYER_ROUTES.ACCOUNT}/help-and-support/category/${slug}`,
+  HELP_AND_SUPPORT_CATEGORY_TOPIC_RESOLVER: (topicId = ':topicId') =>
+    `${BUYER_ROUTES.ACCOUNT}/help-and-support/${topicId}`,
+  HELP_AND_SUPPORT_TOPIC: (topicSlug = ':topicSlug') =>
+    `${BUYER_ROUTES.ACCOUNT}/help-and-support/topic/${topicSlug}`,
   HELP_AND_SUPPORT_CATEGORY_TOPIC: (slug = ':slug', topicSlug = ':topicSlug') =>
     `${BUYER_ROUTES.ACCOUNT}/help-and-support/category/${slug}/topic/${topicSlug}`,
   ADD_ASSISTANT: `${BUYER_ROUTES.ACCOUNT}/assistant/add`,

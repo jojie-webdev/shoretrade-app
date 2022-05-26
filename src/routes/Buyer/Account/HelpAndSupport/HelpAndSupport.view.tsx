@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
-import { Search, ChevronRight } from 'components/base/SVG';
+import { Search, ChevronRight, CloseFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -10,6 +10,7 @@ import { useMediaQuery } from 'react-responsive';
 import fightingFish from 'res/images/fighting-fish.png';
 import { useTheme } from 'utils/Theme';
 
+import { SHORETRADE_TEL } from './HelpAndSupport.constants';
 import { HelpAndSupportGeneratedProps } from './HelpAndSupport.props';
 import {
   Container,
@@ -29,12 +30,39 @@ import {
   Content2,
   Title,
   MobileDescription,
+  SearchResults,
+  ResultWrapper,
+  CloseFilledContainer,
+  Content3,
 } from './HelpAndSupport.style';
 
 const HelpAndSupportView = (props: HelpAndSupportGeneratedProps) => {
   const theme = useTheme();
 
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
+  const highlightPhrase = (words: string, phraseToHighlight: string) => {
+    const parts = words.split(new RegExp(`(${phraseToHighlight})`, 'gi'));
+
+    const wordsWithHighlightedPhrase = (
+      <span>
+        {parts.map((part: string) => (
+          <span
+            key={Math.random()}
+            style={
+              part.toLowerCase() === phraseToHighlight.toLowerCase()
+                ? { fontWeight: 'bolder' }
+                : {}
+            }
+          >
+            {part}
+          </span>
+        ))}{' '}
+      </span>
+    );
+
+    return wordsWithHighlightedPhrase;
+  };
 
   return (
     <Container className="help_and_support">
@@ -65,12 +93,44 @@ const HelpAndSupportView = (props: HelpAndSupportGeneratedProps) => {
           >
             Help &amp; Support
           </HelpAndSupport>
-          <SearchFieldWrapper
-            className="help_and_support__content__search_field"
-            LeftComponent={<Search />}
-            placeholder="Search for anything..."
-            height={isMobile ? '40px' : '56px'}
-          />
+          <div className="help_and_support__search_container">
+            <SearchFieldWrapper
+              value={props.searchKeyword}
+              onChange={(e: any) => props.handleSearchChange(e)}
+              className="help_and_support__content__search_field"
+              LeftComponent={<Search />}
+              placeholder="Search for anything..."
+              height={isMobile ? '40px' : '56px'}
+              RightComponent={
+                props.searchKeyword && (
+                  <CloseFilledContainer
+                    onClick={() => props.handleClearSearchResults()}
+                  >
+                    <CloseFilled
+                      width={16}
+                      height={16}
+                      fill={theme.grey.shade6}
+                    />
+                  </CloseFilledContainer>
+                )
+              }
+            />
+            {props?.topicEntries && (
+              <SearchResults>
+                {props?.topicEntries?.items?.map((item) => (
+                  <ResultWrapper
+                    key={item?.fields?.referenceTopicId?.sys?.id}
+                    variant="label"
+                    onClick={() =>
+                      props.handleTopicClick(item?.sys?.id, item?.fields?.slug)
+                    }
+                  >
+                    {highlightPhrase(item?.fields?.title, props.searchKeyword)}
+                  </ResultWrapper>
+                ))}
+              </SearchResults>
+            )}
+          </div>
         </SearchFieldContainer>
       </Content2>
 
@@ -147,34 +207,28 @@ const HelpAndSupportView = (props: HelpAndSupportGeneratedProps) => {
       </Text1>
 
       <div className="help_and_support__contact">
-        <Content1>
+        <Content1 onClick={() => props.handleEmailUsClick()}>
           <EnvelopeAltWrapper fill={theme.grey.shade6} />
           <div style={{ marginLeft: 14 }}>
             <Typography variant="body" weight="500">
               Email us
             </Typography>
-            <Typography variant="caption" weight="500" color="shade6">
-              Fill out the form, and we will get back to you
-            </Typography>
           </div>
           <div style={{ marginLeft: 'auto' }}>
             <ChevronRight fill={theme.brand.primary} height={14} width={24} />
           </div>
         </Content1>
-        <Content1>
+        <Content3 href={SHORETRADE_TEL}>
           <ChatWrapper fill={theme.grey.shade6} />
           <div style={{ marginLeft: 14 }}>
             <Typography variant="body" weight="500">
               Chat with us
             </Typography>
-            <Typography variant="caption" weight="500" color="shade6">
-              Connect with our live specialists
-            </Typography>
           </div>
           <div style={{ marginLeft: 'auto' }}>
             <ChevronRight fill={theme.brand.primary} height={14} width={24} />
           </div>
-        </Content1>
+        </Content3>
       </div>
     </Container>
   );

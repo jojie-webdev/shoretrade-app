@@ -3,11 +3,11 @@ import React from 'react';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import { ChevronRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
 
+import { SHORETRADE_TEL } from '../HelpAndSupport.constants';
 import { InnerGeneratedProps } from './Inner.props';
 import {
   Container,
@@ -15,6 +15,7 @@ import {
   Contents,
   Text1,
   Content,
+  Content2,
   EnvelopeAltWrapper,
   ChatWrapper,
 } from './Inner.style';
@@ -30,31 +31,7 @@ const InnerView = (props: InnerGeneratedProps) => {
       </Account>
 
       <div className="inner_page__breadcrumb">
-        <Breadcrumbs
-          sections={[
-            {
-              label: 'Account',
-              link: BUYER_ACCOUNT_ROUTES.LANDING,
-              isDone: true,
-            },
-            {
-              label: 'Help & Support',
-              link: BUYER_ACCOUNT_ROUTES.HELP_AND_SUPPORT,
-              isDone: true,
-            },
-            {
-              label: props?.category?.fields?.title,
-              link: BUYER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY(
-                props.categorySlug
-              ),
-              state: { categoryId: props.categoryId },
-              isDone: true,
-            },
-            {
-              label: props?.topic?.fields?.title,
-            },
-          ]}
-        />
+        <Breadcrumbs sections={props.breadCrumbsPath} />
       </div>
       {props?.topic?.fields?.title && (
         <Typography className="inner_page__title" variant="title4" weight="500">
@@ -84,34 +61,28 @@ const InnerView = (props: InnerGeneratedProps) => {
       </Text1>
 
       <div className="inner__contact">
-        <Content>
+        <Content onClick={() => props.handleEmailUsClick()}>
           <EnvelopeAltWrapper fill={theme.grey.shade6} />
           <div style={{ marginLeft: 14 }}>
             <Typography variant="body" weight="500">
               Email us
             </Typography>
-            <Typography variant="caption" weight="500" color="shade6">
-              Fill out the form, and we will get back to you
-            </Typography>
           </div>
           <div style={{ marginLeft: 'auto' }}>
             <ChevronRight fill={theme.brand.primary} height={14} width={24} />
           </div>
         </Content>
-        <Content>
+        <Content2 href={SHORETRADE_TEL}>
           <ChatWrapper fill={theme.grey.shade6} />
           <div style={{ marginLeft: 14 }}>
             <Typography variant="body" weight="500">
               Chat with us
             </Typography>
-            <Typography variant="caption" weight="500" color="shade6">
-              Connect with our live specialists
-            </Typography>
           </div>
           <div style={{ marginLeft: 'auto' }}>
             <ChevronRight fill={theme.brand.primary} height={14} width={24} />
           </div>
-        </Content>
+        </Content2>
       </div>
     </Container>
   );

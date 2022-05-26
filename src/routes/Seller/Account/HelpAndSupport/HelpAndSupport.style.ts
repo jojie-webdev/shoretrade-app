@@ -6,6 +6,10 @@ import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
+  .help_and_support__search_container {
+    position: relative;
+  }
+
   .help_and_support__account {
     @media (min-width: 835px) {
       display: none;
@@ -281,9 +285,9 @@ export const Content1 = styled.div`
   background: ${({ theme }) => theme.grey.shade9};
   box-shadow: 0px 4px 12px rgb(41 43 50 / 4%);
   border-radius: 12px;
+  cursor: pointer;
 
   @media (min-width: 577px) {
-    padding: 9px 24px 9px 16px;
     max-width: 393px;
     width: 100%;
   }
@@ -306,4 +310,43 @@ export const Account = styled(Typography)`
 
 export const Content2 = styled.div`
   position: relative;
+  z-index: 1;
+`;
+
+export const Content3 = styled.a`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 16px 32px 16px 18px;
+  background: ${({ theme }) => theme.grey.shade9};
+  box-shadow: 0px 4px 12px rgb(41 43 50 / 4%);
+  border-radius: 12px;
+  cursor: pointer;
+
+  @media (min-width: 577px) {
+    max-width: 393px;
+    width: 100%;
+  }
+`;
+
+export const SearchResults = styled.div`
+  border-radius: 12px;
+  padding: 14px 16px 0 16px;
+  box-shadow: 0px 6px 12px rgba(41, 43, 50, 0.12);
+  max-height: 112px;
+  width: 100%;
+  background-color: ${({ theme }) => theme.grey.noshade};
+  margin-top: 4px;
+  overflow-y: scroll;
+  position: absolute;
+`;
+
+export const ResultWrapper = styled(Typography)`
+  margin-bottom: 14px;
+  cursor: pointer;
+`;
+
+export const CloseFilledContainer = styled.div`
+  margin-right: 13px;
+  cursor: pointer;
 `;

@@ -7,4 +7,5 @@ export interface CategoryGeneratedProps {
   handleTopicClick: (topicId: string, topicSlug: string) => void;
   searchKeyword: string;
   handleSearchChange: (e: any) => void;
+  handleEmailUsClick: () => void;
 }

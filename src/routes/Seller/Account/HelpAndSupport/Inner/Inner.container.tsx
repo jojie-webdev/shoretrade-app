@@ -1,10 +1,11 @@
-import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import { useLocation, useParams } from 'react-router-dom';
 import { getEntryById } from 'services/contentful';
 import documentToReactComponents from 'utils/Contentful/converter';
 
+import { SHORETRADE_EMAIL } from '../HelpAndSupport.constants';
 import InnerView from './Inner.view';
 
 const Inner = (): JSX.Element => {
@@ -13,10 +14,12 @@ const Inner = (): JSX.Element => {
     topicSlug: string;
   }>();
   const location = useLocation();
-  const history = useHistory();
   const [topic, setTopic] = useState<any>({});
-  const [category, setCategory] = useState({});
+  const [category, setCategory] = useState<any>({});
   const [content, setContent] = useState<any>({});
+
+  const userRoute =
+    SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY_TOPIC_RESOLVER;
 
   const locationState: {
     categoryId?: string;
@@ -28,6 +31,7 @@ const Inner = (): JSX.Element => {
       const rawElements = content?.fields?.html;
       return rawElements
         ? documentToReactComponents(rawElements, {
+            userRoute,
             slug,
             topicSlug,
             topicId: locationState.topicId,
@@ -81,16 +85,36 @@ const Inner = (): JSX.Element => {
     }
   }, [topic]);
 
-  useEffect(() => {
-    const locationState: {
-      categoryId?: string;
-      topicId?: string;
-    } = location.state || {};
-    if (!locationState.categoryId || !locationState.topicId) {
-      // go back to main categories page
-      history.replace(SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT);
+  const handleEmailUsClick = () => {
+    window.open(`mailto:${SHORETRADE_EMAIL}`);
+  };
+
+  const buildBreadCrumbsPath = () => {
+    const path = [
+      {
+        label: 'Account',
+        link: SELLER_ACCOUNT_ROUTES.LANDING,
+      },
+      {
+        label: 'Help & Support',
+        link: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT,
+      },
+      {
+        label: category?.fields?.title,
+        link: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY(slug),
+        state: { categoryId: category?.sys?.id },
+      },
+      {
+        label: topic?.fields?.title,
+      },
+    ];
+
+    if (!slug) {
+      path.splice(2, 1);
     }
-  }, [location]);
+
+    return path;
+  };
 
   const generatedProps = {
     topic,
@@ -98,6 +122,8 @@ const Inner = (): JSX.Element => {
     convertedElements,
     categoryId: locationState.categoryId || '',
     categorySlug: slug,
+    breadCrumbsPath: buildBreadCrumbsPath(),
+    handleEmailUsClick,
   };
 
   return <InnerView {...generatedProps} />;

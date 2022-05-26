@@ -48,11 +48,11 @@ export const Container = styled.div`
 
   .inner_page__title {
     @media ${BREAKPOINTS.homeDesktop} {
-      margin: 16px 0 32px;
+      margin: 16px 0 0;
     }
 
     @media ${BREAKPOINTS.nonDesktop} {
-      margin: 16px 0 24px;
+      margin: 16px 0 0;
     }
 
     @media ${BREAKPOINTS.nonDesktop} {
@@ -123,6 +123,7 @@ export const Content = styled.div`
   background: ${({ theme }) => theme.grey.shade9};
   box-shadow: 0px 4px 12px rgb(41 43 50 / 4%);
   border-radius: 12px;
+  cursor: pointer;
 
   @media (min-width: 577px) {
     max-width: 393px;
@@ -138,4 +139,19 @@ export const EnvelopeAltWrapper = styled(EnvelopeAlt)`
 export const ChatWrapper = styled(Chat)`
   width: 25px;
   height: 24px;
+`;
+
+export const Content2 = styled.a`
+  display: flex;
+  align-items: center;
+  padding: 16px 32px 16px 18px;
+  background: ${({ theme }) => theme.grey.shade9};
+  box-shadow: 0px 4px 12px rgb(41 43 50 / 4%);
+  border-radius: 12px;
+  cursor: pointer;
+
+  @media (min-width: 577px) {
+    max-width: 393px;
+    width: 100%;
+  }
 `;

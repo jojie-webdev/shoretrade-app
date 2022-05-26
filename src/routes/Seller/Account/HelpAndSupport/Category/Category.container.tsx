@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import { BUYER_ACCOUNT_ROUTES, SELLER_ACCOUNT_ROUTES } from 'consts';
+import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
 import { getEntryById } from 'services/contentful';
 
-import { PAGE_SIZE } from './Category.contants';
+import { SHORETRADE_EMAIL } from '../HelpAndSupport.constants';
+import { PAGE_SIZE } from './Category.constants';
 import CategoryView from './Category.view';
 
 const Category = (): JSX.Element => {
@@ -19,6 +20,10 @@ const Category = (): JSX.Element => {
   const [searchKeyword, setSearchKeyword] = useState('');
 
   let totalPages = 0;
+
+  const handleEmailUsClick = () => {
+    window.open(`mailto:${SHORETRADE_EMAIL}`);
+  };
 
   const handlePageChange = (currentPage: number) => {
     setPage(currentPage);
@@ -82,6 +87,7 @@ const Category = (): JSX.Element => {
     handleTopicClick,
     searchKeyword,
     handleSearchChange,
+    handleEmailUsClick,
   };
 
   return <CategoryView {...generatedProps} />;
