@@ -99,7 +99,8 @@ export const BillingSection = styled.div`
 `;
 
 export const PlanSection = styled.div`
-  margin-bottom: 24px;
+  padding-bottom: 24px;
+
   .plan-rate {
     display: flex;
     margin: 24px 0;
@@ -135,4 +136,11 @@ export const AdditionalSubSection = styled.div`
       cursor: pointer;
     }
   }
+`;
+
+export const Footer = styled.div`
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap 8px;
 `;

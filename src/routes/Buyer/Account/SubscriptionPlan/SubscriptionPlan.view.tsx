@@ -34,6 +34,7 @@ import {
   PlanContainer,
   AdditionalSubSection,
   PlanTitleContainer,
+  Footer,
 } from './SubscriptionPlan.style';
 
 export const SubscriptionPlanView = ({
@@ -203,7 +204,7 @@ export const SubscriptionPlanView = ({
           <Col md={12} lg={8}>
             <PlanContainer>
               <Row gutterWidth={20} style={{ width: '100%' }}>
-                <Col md={12} xl={6}>
+                <Col md={12} xl={6} style={{ marginBottom: '24px' }}>
                   <PlanSection className="section">
                     <PlanTitleContainer>
                       <Typography variant="body" weight="900">
@@ -231,6 +232,20 @@ export const SubscriptionPlanView = ({
                       selectedPlan="Standard"
                       currentMarketSector={currentMarketSector}
                     />
+
+                    <Footer>
+                      <Typography variant="caption" weight="regular">
+                        *Minimum 3 month sign up, starting from your account
+                        approval date.
+                      </Typography>
+                      {selectedPlan === 'Standard' && (
+                        <Typography variant="caption" weight="regular">
+                          **The Transaction Value is the total value of the
+                          products in your order excluding any crate fees and
+                          shipping costs.
+                        </Typography>
+                      )}
+                    </Footer>
 
                     {!!yourPlanButtonText &&
                     subscriptionType === 'STANDARD' &&
@@ -273,7 +288,7 @@ export const SubscriptionPlanView = ({
                     )}
                   </PlanSection>
                 </Col>
-                <Col md={12} xl={6}>
+                <Col md={12} xl={6} style={{ marginBottom: '24px' }}>
                   <PlanSection className="section">
                     <PlanTitleContainer>
                       <Typography variant="body" weight="900">
@@ -300,6 +315,13 @@ export const SubscriptionPlanView = ({
                       selectedPlan="Premium"
                       currentMarketSector={currentMarketSector}
                     />
+
+                    <Footer>
+                      <Typography variant="caption" weight="regular">
+                        *Minimum 3 month sign up, starting from your account
+                        approval date.
+                      </Typography>
+                    </Footer>
 
                     {!!yourPlanButtonText &&
                     subscriptionType !== 'STANDARD' &&

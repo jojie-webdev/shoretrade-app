@@ -48,6 +48,6 @@ export const TransxRight = styled.div`
   }
 `;
 
-export const Downloadable = styled.div<{ enabled?: boolean }>`
+export const Downloadable = styled.div<{ enabled: boolean }>`
   cursor: ${({ enabled }) => (enabled ? 'pointer' : 'default')};
 `;

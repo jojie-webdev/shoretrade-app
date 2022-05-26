@@ -123,20 +123,17 @@ const YourPlanView = ({
         currentMarketSector={currentMarketSector}
       />
 
-      {selectedPlan === 'Standard' && (
-        <Footer>
+      <Footer>
+        <Typography variant="caption" weight="regular">
+          *Minimum 3 month sign up, starting from your account approval date.
+        </Typography>
+        {selectedPlan === 'Standard' && (
           <Typography variant="caption" weight="regular">
-            *The Transaction Value is the total value of the products in your
+            **The Transaction Value is the total value of the products in your
             order excluding any crate fees and shipping costs.
           </Typography>
-          {MARKET_GROUP_1.includes(currentMarketSector) && (
-            <Typography variant="caption" weight="regular">
-              *Minimum 3 month sign up, starting from your account approval
-              date.
-            </Typography>
-          )}
-        </Footer>
-      )}
+        )}
+      </Footer>
     </Container>
   );
 };

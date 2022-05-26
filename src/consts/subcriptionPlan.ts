@@ -46,13 +46,13 @@ export const yourPlanFeaturesList = {
       alias: 'FREE_MONTH',
     },
     {
-      name: 'Costs $399/month**',
+      name: 'Costs $399/month*',
       description: 'Automatically debited from your stored credit card.',
       alias: 'COST',
     },
     {
       name: 'Plus Symbol',
-      description: '2% Buying Fee on Tranaction Value*',
+      description: '2% Buying Fee on Tranaction Value**',
       alias: 'PLUS',
     },
     {
@@ -101,7 +101,7 @@ export const yourPlanFeaturesList = {
       alias: 'FREE_MONTH',
     },
     {
-      name: 'Costs $599/month**',
+      name: 'Costs $599/month*',
       description: 'Automatically debited from your stored credit card.',
       alias: 'COST',
     },
@@ -156,14 +156,14 @@ export const yourPlanFeaturesList = {
       alias: 'FREE_MONTH',
     },
     {
-      name: 'Costs $30/month**',
+      name: 'Costs $30/month*',
       description: `That's equivalent to less than $1/day!
       Fees are automatically debited from your stored credit card.`,
       alias: 'COST',
     },
     {
       name: 'Plus Symbol',
-      description: '2% Buying Fee on Tranaction Value*',
+      description: '2% Buying Fee on Tranaction Value**',
       alias: 'PLUS',
     },
     {
@@ -212,7 +212,7 @@ export const yourPlanFeaturesList = {
       alias: 'FREE_MONTH',
     },
     {
-      name: 'Costs $99/month**',
+      name: 'Costs $99/month*',
       description: 'Automatically debited from your stored credit card.',
       alias: 'COST',
     },
