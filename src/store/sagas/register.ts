@@ -56,12 +56,14 @@ function* registerRequest(action: AsyncAction<RegisterMeta, RegisterPayload>) {
             asset: 'company',
           })
         );
-        backPromisesArray.push(
-          call(uploadImageData, {
-            file: license.fileBack,
-            asset: 'company',
-          })
-        );
+        if (license.fileBack) {
+          backPromisesArray.push(
+            call(uploadImageData, {
+              file: license.fileBack,
+              asset: 'company',
+            })
+          );
+        }
       });
 
       const dataArr: {
@@ -78,7 +80,7 @@ function* registerRequest(action: AsyncAction<RegisterMeta, RegisterPayload>) {
       }[] = yield all(backPromisesArray);
 
       sellerLicenses = dataArr.map(({ data }, ndx) => {
-        const { data: backData } = backDataArr![ndx];
+        const { data: backData } = backDataArr[ndx] || {};
         let fileType: 'IMAGE' | 'PDF' | 'DOC' = 'IMAGE';
         const licenseExtension = data.url.substring(
           data.url.lastIndexOf('.') + 1,
@@ -95,7 +97,7 @@ function* registerRequest(action: AsyncAction<RegisterMeta, RegisterPayload>) {
           fileType: fileType,
           url: data.url,
           name: action.meta.licenses![ndx].fileName,
-          url_back: backData.url,
+          url_back: backData?.url,
           file_type_back: fileType,
           state_id: action.meta.licenses![ndx].stateId || '',
           expired_at: action.meta.licenses![ndx].expiredAt || '',
