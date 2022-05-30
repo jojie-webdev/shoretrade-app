@@ -67,7 +67,7 @@ export const Account = styled(Typography)`
 `;
 
 export const Contents = styled.div`
-  color: ${({ theme }) => theme.grey.shade7};
+  color: ${({ theme }) => theme.grey.shade6};
   .entry-link {
     color: ${({ theme }) => theme.brand.primary};
     text-decoration: underline;

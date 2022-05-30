@@ -229,7 +229,7 @@ export const Title = styled(Typography)`
   -webkit-line-clamp: 1; /* number of lines to show */
   line-clamp: 1;
   -webkit-box-orient: vertical;
-  word-break: break-all;
+  word-break: break-word;
 `;
 
 export const Description = styled(Typography)`
@@ -239,7 +239,8 @@ export const Description = styled(Typography)`
   -webkit-line-clamp: 4; /* number of lines to show */
   line-clamp: 4;
   -webkit-box-orient: vertical;
-  word-break: break-all;
+  word-break: break-word;
+  text-align: center;
 `;
 
 export const MobileDescription = styled(Typography)`
@@ -249,13 +250,15 @@ export const MobileDescription = styled(Typography)`
   -webkit-line-clamp: 2; /* number of lines to show */
   line-clamp: 2;
   -webkit-box-orient: vertical;
-  word-break: break-all;
+  word-break: break-word;
+  text-align: center;
 `;
 
 export const DescriptionContent = styled.div`
   width: 100%;
   height: 80px;
   word-wrap: break-word;
+  text-align: center;
 `;
 
 export const Categories = styled(Row)`
