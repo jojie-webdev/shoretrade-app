@@ -52,21 +52,6 @@ const ROUTES: Routes = {
     icon: DashboardSVG,
     nested: true,
   },
-  SELLING: {
-    path: SELLER_ROUTES.SELLING,
-    title: 'Selling',
-    children: <Selling />,
-    icon: Cart,
-    nested: true,
-  },
-  // Add Product
-  ADD_PRODUCT: {
-    path: SELLER_ROUTES.ADD_PRODUCT,
-    title: 'Add a Product',
-    children: <AddProduct />,
-    icon: AddBorder,
-    nested: true,
-  },
   // Market Prices
   MARKET_DATA: {
     path: SELLER_ROUTES.MARKET_DATA,
@@ -83,11 +68,33 @@ const ROUTES: Routes = {
     icon: Bolt,
     nested: true,
   },
+  // Add Product
+  ADD_PRODUCT: {
+    path: SELLER_ROUTES.ADD_PRODUCT,
+    title: 'Add a Product',
+    children: <AddProduct />,
+    icon: AddBorder,
+    nested: true,
+  },
+  SELLING: {
+    path: SELLER_ROUTES.SELLING,
+    title: 'Selling',
+    children: <Selling />,
+    icon: Cart,
+    nested: true,
+  },
   SOLD: {
     path: SELLER_ROUTES.SOLD,
     title: 'Sold',
     children: <Sold />,
     icon: CheckBorder,
+    nested: true,
+  },
+  BARCODE_SCANNER: {
+    path: SELLER_ROUTES.BARCODE_SCANNER,
+    title: 'Barcode Scanner',
+    children: <BarcodeScanner />,
+    icon: BarcodeSVG,
     nested: true,
   },
   // CREATES_MANAGEMENT: {
@@ -102,13 +109,6 @@ const ROUTES: Routes = {
     children: <NotificationsSettings />,
     title: 'Notifications Settings',
     icon: Cog,
-  },
-  BARCODE_SCANNER: {
-    path: SELLER_ROUTES.BARCODE_SCANNER,
-    title: 'Barcode Scanner',
-    children: <BarcodeScanner />,
-    icon: BarcodeSVG,
-    nested: true,
   },
   ACCOUNT: {
     path: SELLER_ROUTES.ACCOUNT,
