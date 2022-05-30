@@ -115,21 +115,36 @@ const HelpAndSupportView = (props: HelpAndSupportGeneratedProps) => {
                 )
               }
             />
-            {props?.topicEntries && (
+            {props.searchKeyword ? (
               <SearchResults>
-                {props?.topicEntries?.items?.map((item) => (
-                  <ResultWrapper
-                    key={item?.fields?.referenceTopicId?.sys?.id}
-                    variant="label"
-                    onClick={() =>
-                      props.handleTopicClick(item?.sys?.id, item?.fields?.slug)
-                    }
-                  >
-                    {highlightPhrase(item?.fields?.title, props.searchKeyword)}
+                {props.searching ? (
+                  <ResultWrapper variant="label">Searching...</ResultWrapper>
+                ) : props?.topicEntries?.items &&
+                  props?.topicEntries?.items?.length > 0 ? (
+                  props?.topicEntries?.items?.map((item) => (
+                    <ResultWrapper
+                      key={item?.fields?.referenceTopicId?.sys?.id}
+                      variant="label"
+                      onClick={() =>
+                        props.handleTopicClick(
+                          item?.sys?.id,
+                          item?.fields?.slug
+                        )
+                      }
+                    >
+                      {highlightPhrase(
+                        item?.fields?.title,
+                        props.searchKeyword
+                      )}
+                    </ResultWrapper>
+                  ))
+                ) : (
+                  <ResultWrapper variant="label">
+                    No result for {props.searchKeyword}
                   </ResultWrapper>
-                ))}
+                )}
               </SearchResults>
-            )}
+            ) : null}
           </div>
         </SearchFieldContainer>
       </Content2>

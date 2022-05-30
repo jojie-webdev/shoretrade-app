@@ -9,4 +9,5 @@ export interface HelpAndSupportGeneratedProps {
   handleTopicClick: (topicId: string, topicSlug: string) => void;
   handleClearSearchResults: () => void;
   handleEmailUsClick: () => void;
+  searching: boolean;
 }

@@ -14,6 +14,7 @@ const HelpAndSupport = (): JSX.Element => {
   const [mainPage, setMainPage] = useState({});
   const [searchKeyword, setSearchKeyword] = useState('');
   const [topicEntries, setTopicEntries] = useState<EntryCollection<any>>();
+  const [searching, setSearching] = useState(false);
 
   const history = useHistory();
   const theme = useTheme();
@@ -25,6 +26,7 @@ const HelpAndSupport = (): JSX.Element => {
     );
 
     setTopicEntries(newTopicEntries);
+    setSearching(false);
   };
 
   useEffect(() => {
@@ -37,6 +39,12 @@ const HelpAndSupport = (): JSX.Element => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (searchKeyword) {
+      setSearching(true);
+    }
+  }, [searchKeyword]);
 
   useDebounce(
     () => {
@@ -83,6 +91,7 @@ const HelpAndSupport = (): JSX.Element => {
     handleTopicClick,
     handleClearSearchResults,
     handleEmailUsClick,
+    searching,
   };
 
   return <HelpAndSupportView {...generatedProps} />;
