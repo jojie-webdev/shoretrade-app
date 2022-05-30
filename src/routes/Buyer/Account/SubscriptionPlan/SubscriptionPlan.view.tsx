@@ -57,6 +57,7 @@ export const SubscriptionPlanView = ({
   const location = useLocation();
   const history = useHistory();
   const theme = useTheme();
+
   const isMobile = useMediaQuery({ query: BREAKPOINTS.sm });
   const isSmallDesktop = useMediaQuery({
     query: '(min-width: 768px) and (max-width: 1439px)',
@@ -210,7 +211,7 @@ export const SubscriptionPlanView = ({
                       <Typography
                         variant="body"
                         weight="900"
-                        customFont="Media Sans"
+                        customFont={theme.isSFM ? 'Canela' : 'Media Sans'}
                       >
                         Basic Plan
                       </Typography>
@@ -298,7 +299,7 @@ export const SubscriptionPlanView = ({
                       <Typography
                         variant="body"
                         weight="900"
-                        customFont="Media Sans"
+                        customFont={theme.isSFM ? 'Canela' : 'Media Sans'}
                       >
                         Premium Plan
                       </Typography>
@@ -382,7 +383,7 @@ export const SubscriptionPlanView = ({
                       <Typography
                         variant="body"
                         weight="900"
-                        customFont="Media Sans"
+                        customFont={theme.isSFM ? 'Canela' : 'Media Sans'}
                       >
                         Reverse Marketplace $49.9
                       </Typography>
