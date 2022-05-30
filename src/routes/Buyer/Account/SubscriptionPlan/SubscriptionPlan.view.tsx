@@ -207,7 +207,11 @@ export const SubscriptionPlanView = ({
                 <Col md={12} xl={6} style={{ marginBottom: '24px' }}>
                   <PlanSection className="section">
                     <PlanTitleContainer>
-                      <Typography variant="body" weight="900">
+                      <Typography
+                        variant="body"
+                        weight="900"
+                        customFont="Media Sans"
+                      >
                         Basic Plan
                       </Typography>
 
@@ -291,7 +295,11 @@ export const SubscriptionPlanView = ({
                 <Col md={12} xl={6} style={{ marginBottom: '24px' }}>
                   <PlanSection className="section">
                     <PlanTitleContainer>
-                      <Typography variant="body" weight="900">
+                      <Typography
+                        variant="body"
+                        weight="900"
+                        customFont="Media Sans"
+                      >
                         Premium Plan
                       </Typography>
                       {subscriptionType !== 'STANDARD' && (
@@ -371,7 +379,11 @@ export const SubscriptionPlanView = ({
                 <Col md={12}>
                   <AdditionalSubSection className="section">
                     <PlanTitleContainer>
-                      <Typography variant="body" weight="900">
+                      <Typography
+                        variant="body"
+                        weight="900"
+                        customFont="Media Sans"
+                      >
                         Reverse Marketplace $49.9
                       </Typography>
                       {reverseMarketPlace && (

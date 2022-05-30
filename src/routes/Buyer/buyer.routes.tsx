@@ -21,7 +21,7 @@ import {
   useHistory,
   useLocation,
 } from 'react-router-dom';
-import BarcodeScanner from 'routes/Seller/BarcodeScanner';
+import BarcodeScanner from 'routes/Buyer/BarcodeScanner';
 import { Routes, Route as TRoute } from 'types/Routes';
 import { Store } from 'types/store/Store';
 import { Theme } from 'types/Theme';
