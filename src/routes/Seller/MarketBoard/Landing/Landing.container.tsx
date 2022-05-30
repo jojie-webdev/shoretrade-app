@@ -5,8 +5,11 @@ import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
 import moment from 'moment';
 import qs from 'qs';
 import { isEmpty } from 'ramda';
+import { ScreenClassRender } from 'react-grid-system';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
+import MarketRequestDesktopImg from 'res/images/seller-market-request-desktop.png';
+import MarketRequestMobileImg from 'res/images/seller-market-request-mobile.png';
 import {
   getRespectiveValues,
   getSize,
@@ -203,6 +206,10 @@ const MarketBoardLanding = (): JSX.Element => {
     });
   };
 
+  const activePlan = useSelector(
+    (store: Store) => store.getActivePlan.data?.data
+  );
+
   const onClickActiveOffer = (data: GetActiveOffersRequestResponseItem) => {
     history.push(SELLER_MARKET_BOARD_ROUTES.NEGOTIATE, {
       activeOffer: data,
@@ -287,6 +294,24 @@ const MarketBoardLanding = (): JSX.Element => {
     },
     userPending,
   };
+
+  const reverseMarketPlace = activePlan?.features.find(
+    (feature) => feature.alias === 'REVERSED_MARKETPLACE'
+  );
+
+  if (!reverseMarketPlace) {
+    return (
+      <ScreenClassRender
+        render={(screenClass: string) =>
+          ['xs', 'sm', 'md'].includes(screenClass) ? (
+            <img src={MarketRequestMobileImg} width="100%" />
+          ) : (
+            <img src={MarketRequestDesktopImg} width="100%" />
+          )
+        }
+      />
+    );
+  }
 
   if (!isAcceptClicked) {
     return (
