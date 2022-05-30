@@ -21,4 +21,5 @@ export const Container = styled.div`
 export const StyledContent = styled(Typography)`
   max-width: 210px;
   padding: 8px 21px;
+  text-transform: none !important;
 `;
