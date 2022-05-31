@@ -210,6 +210,10 @@ const MarketBoardLanding = (): JSX.Element => {
     (store: Store) => store.getActivePlan.data?.data
   );
 
+  const activePlanLoading = useSelector(
+    (store: Store) => store.getActivePlan.pending
+  );
+
   const onClickActiveOffer = (data: GetActiveOffersRequestResponseItem) => {
     history.push(SELLER_MARKET_BOARD_ROUTES.NEGOTIATE, {
       activeOffer: data,
@@ -299,7 +303,7 @@ const MarketBoardLanding = (): JSX.Element => {
     (feature) => feature.alias === 'REVERSED_MARKETPLACE'
   );
 
-  if (!reverseMarketPlace) {
+  if (!reverseMarketPlace && !activePlanLoading && activePlan?.id) {
     return (
       <ScreenClassRender
         render={(screenClass: string) =>

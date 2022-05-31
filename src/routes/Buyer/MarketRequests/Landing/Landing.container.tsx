@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { BUYER_MARKET_REQUEST_ROUTES } from 'consts/routes';
 import moment from 'moment';
+import { ScreenClassRender } from 'react-grid-system';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import MarketRequestDesktopImg from 'res/images/buyer-market-request-desktop.png';
@@ -15,7 +16,6 @@ import { Store } from 'types/store/Store';
 import { MarketRequestsLandingGeneratedProps, Result } from './Landing.props';
 import { getMarketRequestLandingData } from './Landing.transform';
 import MarketRequestsLandingView from './Landing.view';
-import { ScreenClassRender } from 'react-grid-system';
 
 const MarketRequestsLanding = (): JSX.Element => {
   // MARK:- States / Variables
@@ -53,6 +53,10 @@ const MarketRequestsLanding = (): JSX.Element => {
 
   const activePlan = useSelector(
     (store: Store) => store.getActivePlan.data?.data
+  );
+
+  const activePlanLoading = useSelector(
+    (store: Store) => store.getActivePlan.pending
   );
 
   const onClickItem = (row: Result) => {
@@ -107,7 +111,7 @@ const MarketRequestsLanding = (): JSX.Element => {
     (feature) => feature.alias === 'REVERSED_MARKETPLACE'
   );
 
-  if (!reverseMarketPlace) {
+  if (!reverseMarketPlace && !activePlanLoading && activePlan?.id) {
     return (
       <ScreenClassRender
         render={(screenClass: string) =>
