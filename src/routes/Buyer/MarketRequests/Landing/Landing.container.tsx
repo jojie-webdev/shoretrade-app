@@ -4,6 +4,8 @@ import { BUYER_MARKET_REQUEST_ROUTES } from 'consts/routes';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
+import MarketRequestDesktopImg from 'res/images/buyer-market-request-desktop.png';
+import MarketRequestMobileImg from 'res/images/buyer-market-request-mobile.png';
 import {
   deleteMarketRequestActions,
   getAllMarketRequestActions,
@@ -13,6 +15,7 @@ import { Store } from 'types/store/Store';
 import { MarketRequestsLandingGeneratedProps, Result } from './Landing.props';
 import { getMarketRequestLandingData } from './Landing.transform';
 import MarketRequestsLandingView from './Landing.view';
+import { ScreenClassRender } from 'react-grid-system';
 
 const MarketRequestsLanding = (): JSX.Element => {
   // MARK:- States / Variables
@@ -99,6 +102,24 @@ const MarketRequestsLanding = (): JSX.Element => {
     loading: loading || false,
     activeOffersData,
   };
+
+  const reverseMarketPlace = activePlan?.features.find(
+    (feature) => feature.alias === 'REVERSED_MARKETPLACE'
+  );
+
+  if (!reverseMarketPlace) {
+    return (
+      <ScreenClassRender
+        render={(screenClass: string) =>
+          ['xs', 'sm', 'md'].includes(screenClass) ? (
+            <img src={MarketRequestMobileImg} width="100%" />
+          ) : (
+            <img src={MarketRequestDesktopImg} width="100%" />
+          )
+        }
+      />
+    );
+  }
 
   return <MarketRequestsLandingView {...generatedProps} />;
 };
