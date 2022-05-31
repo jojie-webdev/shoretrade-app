@@ -4,6 +4,7 @@ import {
   Dashboard as DashboardSVG,
   AddBorder,
   Account as AccountSVG,
+  QuestionFilled as QuestionIcon,
   FileCheck,
   Cart,
   CheckBorder,
@@ -43,6 +44,7 @@ import Notifications from './Notifications';
 import Selling from './Selling/selling.routes';
 import Sold from './Sold/sold.routes';
 import Upgrade from './Upgrade';
+import HelpAndSupport from './Account/HelpAndSupport';
 
 const ROUTES: Routes = {
   DASHBOARD: {
@@ -109,6 +111,13 @@ const ROUTES: Routes = {
     children: <NotificationsSettings />,
     title: 'Notifications Settings',
     icon: Cog,
+  },
+  HELP_AND_SUPPORT: {
+    path: SELLER_ROUTES.HELP_AND_SUPPORT,
+    title: 'Help and Support',
+    children: <HelpAndSupport />,
+    icon: QuestionIcon,
+    nested: true,
   },
   ACCOUNT: {
     path: SELLER_ROUTES.ACCOUNT,

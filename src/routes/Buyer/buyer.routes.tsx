@@ -10,6 +10,7 @@ import {
   Listing as ListingIcon,
   Cog as CogIcon,
   Barcode as BarcodeSVG,
+  QuestionFilled as QuestionIcon,
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
@@ -27,6 +28,7 @@ import { Store } from 'types/store/Store';
 import { Theme } from 'types/Theme';
 
 import Account from './Account/accounts.routes';
+import HelpAndSupport from './Account/HelpAndSupport';
 import NotificationsSettings from './Account/NotificationsSettings';
 import Categories from './Categories/categories.routes';
 import CategoriesPreview from './Categories/Preview';
@@ -96,6 +98,13 @@ const ROUTES: Routes = {
     children: <NotificationsSettings />,
     title: 'Notifications Settings',
     icon: CogIcon,
+  },
+  HELP_AND_SUPPORT: {
+    path: BUYER_ROUTES.HELP_AND_SUPPORT,
+    children: <HelpAndSupport />,
+    title: 'Help & Support',
+    icon: QuestionIcon,
+    nested: true,
   },
   ACCOUNT: {
     path: BUYER_ROUTES.ACCOUNT,

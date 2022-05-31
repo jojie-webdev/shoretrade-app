@@ -18,6 +18,7 @@ export const SELLER_ROUTES = {
   VERIFY2FA: `${SELLER_ROOT}/verify2fa`,
   ONBOARDING: `${SELLER_ROOT}/onboarding`,
   // Authenticated Routes
+  HELP_AND_SUPPORT: `${SELLER_ROOT}/help-and-support`,
   ACCOUNT: `${SELLER_ROOT}/account`,
   ADD_PRODUCT: `${SELLER_ROOT}/add-product`,
   DASHBOARD: `${SELLER_ROOT}/dashboard`,
@@ -123,6 +124,7 @@ export const BUYER_ROUTES = {
   MARKET_REQUESTS: `${BUYER_ROOT}/market-requests`,
   FAVOURITES: `${BUYER_ROOT}/favourites`,
   ACCOUNT: `${BUYER_ROOT}/account`,
+  HELP_AND_SUPPORT: `${BUYER_ROOT}/help-and-support`,
   RECENTLY_ADDED: `${BUYER_ROOT}/recently-added`,
   SELLERS: `${BUYER_ROOT}/sellers`,
   FAVOURITE_SELLERS: `${BUYER_ROOT}/favourite-sellers`,
