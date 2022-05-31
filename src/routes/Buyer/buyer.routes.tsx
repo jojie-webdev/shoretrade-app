@@ -10,7 +10,7 @@ import {
   Listing as ListingIcon,
   Cog as CogIcon,
   Barcode as BarcodeSVG,
-  QuestionFilled as QuestionIcon,
+  QuestionCircle as QuestionIcon,
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';

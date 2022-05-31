@@ -4,7 +4,7 @@ import {
   Dashboard as DashboardSVG,
   AddBorder,
   Account as AccountSVG,
-  QuestionFilled as QuestionIcon,
+  QuestionCircle as QuestionIcon,
   FileCheck,
   Cart,
   CheckBorder,

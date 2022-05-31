@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  QuestionCircle,
   Hook,
   Net,
   Home2,
@@ -232,6 +233,9 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background="white">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="QuestionCircle">
+          <QuestionCircle width={30} height={30} />
+        </Wrapper>
         <Wrapper label="Hook">
           <Hook width={30} height={30} />
         </Wrapper>
