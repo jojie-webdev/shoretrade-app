@@ -68,7 +68,12 @@ function* addCardAndPayRequest(
         yield put(addCardAndPayActions.success(data));
       }
     } catch (e) {
-      yield put(addCardAndPayActions.failed(e.response.data.error.message));
+      console.error(e);
+      if (e.message) {
+        yield put(addCardAndPayActions.failed(e.message));
+      } else if (e?.response?.data) {
+        yield put(addCardAndPayActions.failed(e.response.data.error.message));
+      }
     }
   } else {
     yield put(addCardAndPayActions.failed('Token not found'));
