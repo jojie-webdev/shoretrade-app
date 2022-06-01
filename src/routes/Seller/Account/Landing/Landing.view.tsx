@@ -20,7 +20,7 @@ import AccountPicture from 'components/module/AccountPicture';
 import FreeTrialCountdown from 'components/module/FreeTrialCountdown';
 import GradientProgressCircle from 'components/module/GradientProgressCircle';
 import Loading from 'components/module/Loading';
-import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import { SELLER_ACCOUNT_ROUTES, SELLER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { COMPANY_RELATIONSHIPS } from 'consts/companyRelationships';
 import qs from 'qs';
@@ -165,7 +165,7 @@ const AccountLandingView = ({
     {
       iconName: 'cog',
       value: 'Help & Support',
-      path: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT,
+      path: SELLER_ROUTES.HELP_AND_SUPPORT,
     },
   ];
 

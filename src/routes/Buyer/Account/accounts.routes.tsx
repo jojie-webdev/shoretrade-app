@@ -17,10 +17,6 @@ import Card from './Card';
 import ChangePassword from './ChangePassword';
 import EditAddress from './EditAddress';
 import EditAssistant from './EditAssistant';
-import HelpAndSupport from './HelpAndSupport';
-import Category from './HelpAndSupport/Category';
-import Inner from './HelpAndSupport/Inner';
-import Resolver from './HelpAndSupport/Resolver';
 import Landing from './Landing';
 import Assistants from './LinkedAccounts';
 import MarketInterests from './MarketInterests';
@@ -61,26 +57,6 @@ const ROUTES: Routes = {
   CHANGE_PASSWORD: {
     path: BUYER_ACCOUNT_ROUTES.CHANGE_PASSWORD,
     children: <ChangePassword />,
-  },
-  HELP_AND_SUPPORT: {
-    path: BUYER_ACCOUNT_ROUTES.HELP_AND_SUPPORT,
-    children: <HelpAndSupport />,
-  },
-  HELP_AND_SUPPORT_RESOLVER: {
-    path: BUYER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY_TOPIC_RESOLVER(),
-    children: <Resolver />,
-  },
-  HELP_AND_SUPPORT_CATEGORY: {
-    path: BUYER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY(),
-    children: <Category />,
-  },
-  HELP_AND_SUPPORT_TOPIC: {
-    path: BUYER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_TOPIC(),
-    children: <Inner />,
-  },
-  HELP_AND_SUPPORT_CATEGORY_TOPIC: {
-    path: BUYER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY_TOPIC(),
-    children: <Inner />,
   },
   ASSISTANT: {
     path: BUYER_ACCOUNT_ROUTES.ASSISTANT,

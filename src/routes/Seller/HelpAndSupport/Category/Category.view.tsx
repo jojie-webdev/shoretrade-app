@@ -5,7 +5,7 @@ import { Search, ChevronRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import HelpAndSupportFooter from 'components/module/HelpAndSupportFooter';
 import Pagination from 'components/module/Pagination';
-import { BUYER_ACCOUNT_ROUTES, SHORETRADE_EMAIL } from 'consts';
+import { SELLER_ROUTES, SHORETRADE_EMAIL } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
@@ -34,18 +34,23 @@ const CategoryView = (props: CategoryGeneratedProps) => {
 
   return (
     <Container className="category">
-      <Account className="category__account" variant="title5" weight="700">
+      <Account
+        className="category__account"
+        variant="title5"
+        weight="700"
+        color="noshade"
+      >
         Account
       </Account>
 
       <div className="category__breadcrumb">
         <Breadcrumbs
+          color="noshade"
           sections={[
-            { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
+            { label: 'Account', link: SELLER_ROUTES.ACCOUNT },
             {
               label: 'Help & Support',
-              link: BUYER_ACCOUNT_ROUTES.HELP_AND_SUPPORT,
-              isDone: true,
+              link: SELLER_ROUTES.HELP_AND_SUPPORT,
             },
             { label: props.category?.fields?.title },
           ]}
@@ -54,7 +59,11 @@ const CategoryView = (props: CategoryGeneratedProps) => {
 
       <SearchContent>
         {props.category?.fields?.title && (
-          <Typography variant={isMobile ? 'copy' : 'title5'} weight="500">
+          <Typography
+            color="noshade"
+            variant={isMobile ? 'copy' : 'title5'}
+            weight="500"
+          >
             {props.category?.fields?.title}
           </Typography>
         )}
@@ -77,7 +86,9 @@ const CategoryView = (props: CategoryGeneratedProps) => {
               }
             >
               {topic?.fields?.title && (
-                <Typography weight="500">{topic?.fields?.title}</Typography>
+                <Typography color="noshade" weight="500">
+                  {topic?.fields?.title}
+                </Typography>
               )}
               <div style={{ marginLeft: 'auto' }}>
                 <ChevronRight

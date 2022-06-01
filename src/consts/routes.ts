@@ -19,6 +19,14 @@ export const SELLER_ROUTES = {
   ONBOARDING: `${SELLER_ROOT}/onboarding`,
   // Authenticated Routes
   HELP_AND_SUPPORT: `${SELLER_ROOT}/help-and-support`,
+  HELP_AND_SUPPORT_CATEGORY_TOPIC_RESOLVER: (topicId = ':topicId') =>
+    `${SELLER_ROOT}/help-and-support/${topicId}`,
+  HELP_AND_SUPPORT_CATEGORY: (slug = ':slug') =>
+    `${SELLER_ROOT}/help-and-support/category/${slug}`,
+  HELP_AND_SUPPORT_TOPIC: (topicSlug = ':topicSlug') =>
+    `${SELLER_ROOT}/help-and-support/topic/${topicSlug}`,
+  HELP_AND_SUPPORT_CATEGORY_TOPIC: (slug = ':slug', topicSlug = ':topicSlug') =>
+    `${SELLER_ROOT}/help-and-support/category/${slug}/topic/${topicSlug}`,
   ACCOUNT: `${SELLER_ROOT}/account`,
   ADD_PRODUCT: `${SELLER_ROOT}/add-product`,
   DASHBOARD: `${SELLER_ROOT}/dashboard`,
@@ -84,15 +92,6 @@ export const SELLER_ACCOUNT_ROUTES = {
   EDIT_ASSISTANT: (assitantId = ':assistantId') =>
     `${SELLER_ROUTES.ACCOUNT}/assistants/${assitantId}`,
   BANK_DETAILS: `${SELLER_ROUTES.ACCOUNT}/bank-details`,
-  HELP_AND_SUPPORT: `${SELLER_ROUTES.ACCOUNT}/help-and-support`,
-  HELP_AND_SUPPORT_CATEGORY_TOPIC_RESOLVER: (topicId = ':topicId') =>
-    `${SELLER_ROUTES.ACCOUNT}/help-and-support/${topicId}`,
-  HELP_AND_SUPPORT_CATEGORY: (slug = ':slug') =>
-    `${SELLER_ROUTES.ACCOUNT}/help-and-support/category/${slug}`,
-  HELP_AND_SUPPORT_TOPIC: (topicSlug = ':topicSlug') =>
-    `${SELLER_ROUTES.ACCOUNT}/help-and-support/topic/${topicSlug}`,
-  HELP_AND_SUPPORT_CATEGORY_TOPIC: (slug = ':slug', topicSlug = ':topicSlug') =>
-    `${SELLER_ROUTES.ACCOUNT}/help-and-support/category/${slug}/topic/${topicSlug}`,
   ACCOUNT_COMPLETION: `${SELLER_ROUTES.ACCOUNT}/account-completion`,
   LICENSES: `${SELLER_ROUTES.ACCOUNT}/licenses`,
   ADD_LICENSE: `${SELLER_ROUTES.ACCOUNT}/licenses/add-license`,
@@ -125,6 +124,14 @@ export const BUYER_ROUTES = {
   FAVOURITES: `${BUYER_ROOT}/favourites`,
   ACCOUNT: `${BUYER_ROOT}/account`,
   HELP_AND_SUPPORT: `${BUYER_ROOT}/help-and-support`,
+  HELP_AND_SUPPORT_CATEGORY: (slug = ':slug') =>
+    `${BUYER_ROOT}/help-and-support/category/${slug}`,
+  HELP_AND_SUPPORT_CATEGORY_TOPIC_RESOLVER: (topicId = ':topicId') =>
+    `${BUYER_ROOT}/help-and-support/${topicId}`, 
+  HELP_AND_SUPPORT_TOPIC: (topicSlug = ':topicSlug') =>
+    `${BUYER_ROOT}/help-and-support/topic/${topicSlug}`,
+  HELP_AND_SUPPORT_CATEGORY_TOPIC: (slug = ':slug', topicSlug = ':topicSlug') =>
+    `${BUYER_ROOT}/help-and-support/category/${slug}/topic/${topicSlug}`,
   RECENTLY_ADDED: `${BUYER_ROOT}/recently-added`,
   SELLERS: `${BUYER_ROOT}/sellers`,
   FAVOURITE_SELLERS: `${BUYER_ROOT}/favourite-sellers`,
@@ -155,14 +162,6 @@ export const BUYER_ACCOUNT_ROUTES = {
   LINKED_ACCOUNTS: `${BUYER_ROUTES.ACCOUNT}/linked-accounts`,
   CHANGE_PASSWORD: `${BUYER_ROUTES.ACCOUNT}/change-password`,
   HELP_AND_SUPPORT: `${BUYER_ROUTES.ACCOUNT}/help-and-support`,
-  HELP_AND_SUPPORT_CATEGORY: (slug = ':slug') =>
-    `${BUYER_ROUTES.ACCOUNT}/help-and-support/category/${slug}`,
-  HELP_AND_SUPPORT_CATEGORY_TOPIC_RESOLVER: (topicId = ':topicId') =>
-    `${BUYER_ROUTES.ACCOUNT}/help-and-support/${topicId}`,
-  HELP_AND_SUPPORT_TOPIC: (topicSlug = ':topicSlug') =>
-    `${BUYER_ROUTES.ACCOUNT}/help-and-support/topic/${topicSlug}`,
-  HELP_AND_SUPPORT_CATEGORY_TOPIC: (slug = ':slug', topicSlug = ':topicSlug') =>
-    `${BUYER_ROUTES.ACCOUNT}/help-and-support/category/${slug}/topic/${topicSlug}`,
   ADD_ASSISTANT: `${BUYER_ROUTES.ACCOUNT}/assistant/add`,
   EDIT_ASSISTANT: (id = ':id') => `${BUYER_ROUTES.ACCOUNT}/assistant/${id}`,
   ASSISTANT: `${BUYER_ROUTES.ACCOUNT}/assistant`,

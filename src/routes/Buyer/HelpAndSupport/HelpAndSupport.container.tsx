@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { BUYER_ACCOUNT_ROUTES } from 'consts';
+import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { EntryCollection } from 'contentful';
 import { useHistory } from 'react-router-dom';
 import { getEntryById, searchTopicsByKeyword } from 'services/contentful';
@@ -71,13 +71,13 @@ const HelpAndSupport = (): JSX.Element => {
   };
 
   const handleCategoryClick = (categoryId: string, slug: string) => {
-    history.push(BUYER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY(slug), {
+    history.push(BUYER_ROUTES.HELP_AND_SUPPORT_CATEGORY(slug), {
       categoryId,
     });
   };
 
   const handleTopicClick = (topicId: string, topicSlug: string) => {
-    history.push(BUYER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_TOPIC(topicSlug), {
+    history.push(BUYER_ROUTES.HELP_AND_SUPPORT_TOPIC(topicSlug), {
       topicId,
     });
   };

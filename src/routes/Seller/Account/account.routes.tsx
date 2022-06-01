@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import { SELLER_ACCOUNT_ROUTES, SELLER_ROUTES } from 'consts';
 import { useSelector } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
@@ -17,10 +17,6 @@ import CreateAssistant from './CreateAssistant';
 import EditAddress from './EditAddress';
 import EditAssistant from './EditAssistant';
 import EditLicense from './EditLicense';
-import HelpAndSupport from './HelpAndSupport';
-import Category from './HelpAndSupport/Category';
-import Inner from './HelpAndSupport/Inner';
-import Resolver from './HelpAndSupport/Resolver';
 import Landing from './Landing';
 import Licenses from './Licenses';
 import MarketInterests from './MarketInterests';
@@ -79,26 +75,6 @@ const ROUTES: Routes = {
   BANK_DETAILS: {
     path: SELLER_ACCOUNT_ROUTES.BANK_DETAILS,
     children: <BankDetails />,
-  },
-  HELP_AND_SUPPORT: {
-    path: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT,
-    children: <HelpAndSupport />,
-  },
-  HELP_AND_SUPPORT_RESOLVER: {
-    path: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY_TOPIC_RESOLVER(),
-    children: <Resolver />,
-  },
-  HELP_AND_SUPPORT_CATEGORY: {
-    path: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY(),
-    children: <Category />,
-  },
-  HELP_AND_SUPPORT_TOPIC: {
-    path: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_TOPIC(),
-    children: <Inner />,
-  },
-  HELP_AND_SUPPORT_CATEGORY_TOPIC: {
-    path: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY_TOPIC(),
-    children: <Inner />,
   },
   CREATE_ADDRESS: {
     path: SELLER_ACCOUNT_ROUTES.CREATE_ADDRESS,

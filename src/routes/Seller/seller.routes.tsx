@@ -37,6 +37,7 @@ import AddProduct from './AddProduct/addProduct.routes';
 // import CratesManagement from './CratesManagement';
 import BarcodeScanner from './BarcodeScanner';
 import DashboardRoutes from './Dashboard/dashboard.routes';
+import HelpAndSupport from './HelpAndSupport/HelpAndSupport.routes';
 import MarketBoardRoutes from './MarketBoard/market-board.routes';
 import MarketPriceDetail from './MarketPriceDetail';
 import MarketDataRoutes from './MarketPrices/market-data.routes';
@@ -44,7 +45,6 @@ import Notifications from './Notifications';
 import Selling from './Selling/selling.routes';
 import Sold from './Sold/sold.routes';
 import Upgrade from './Upgrade';
-import HelpAndSupport from './Account/HelpAndSupport';
 
 const ROUTES: Routes = {
   DASHBOARD: {

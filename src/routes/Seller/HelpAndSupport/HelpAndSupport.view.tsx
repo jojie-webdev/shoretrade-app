@@ -4,14 +4,14 @@ import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import { Search, ChevronRight, CloseFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import HelpAndSupportFooter from 'components/module/HelpAndSupportFooter';
-import { SELLER_ACCOUNT_ROUTES, SHORETRADE_EMAIL } from 'consts';
+import { SELLER_ROUTES, SHORETRADE_EMAIL } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import fightingFish from 'res/images/fighting-fish.png';
 import { useTheme } from 'utils/Theme';
 
-import { SHORETRADE_TEL } from '../HelpAndSupport/HelpAndSupport.constants';
+import { SHORETRADE_TEL } from './HelpAndSupport.constants';
 import { HelpAndSupportGeneratedProps } from './HelpAndSupport.props';
 import {
   Container,
@@ -78,7 +78,7 @@ const HelpAndSupportView = (props: HelpAndSupportGeneratedProps) => {
       <div className="breadcrumb-container">
         <Breadcrumbs
           sections={[
-            { label: 'Account', link: SELLER_ACCOUNT_ROUTES.LANDING },
+            { label: 'Account', link: SELLER_ROUTES.ACCOUNT },
             { label: 'Help & Support' },
           ]}
         />

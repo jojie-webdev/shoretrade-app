@@ -88,8 +88,11 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   const globalModalType = useSelector((store: Store) => store.globalModal.type);
 
   // MARK:- Variables
-  const isInnerRoute = (path: string) =>
-    location.pathname.search(path.split('/')[2]) > 0;
+  const isInnerRoute = (path: string) => {
+    // only check second layer of path
+    const pathname = location?.pathname?.split('/')[2];
+    return pathname?.includes(path.split('/')[2]);
+  };
 
   const isRouteAccessible = (route: Route) => {
     const isInactive = isAccountDeactivated && route.title !== 'Account';

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { useLocation, useParams } from 'react-router-dom';
 import { getEntryById } from 'services/contentful';
 import documentToReactComponents from 'utils/Contentful/converter';
@@ -18,8 +18,7 @@ const Inner = (): JSX.Element => {
   const [category, setCategory] = useState<any>({});
   const [content, setContent] = useState<any>({});
 
-  const userRoute =
-    SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY_TOPIC_RESOLVER;
+  const userRoute = BUYER_ROUTES.HELP_AND_SUPPORT_CATEGORY_TOPIC_RESOLVER;
 
   const locationState: {
     categoryId?: string;
@@ -85,6 +84,18 @@ const Inner = (): JSX.Element => {
     }
   }, [topic]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const contentEntry = await getEntryById(
+        topic?.fields?.referenceTopicId?.sys?.id || ''
+      );
+      setContent(contentEntry);
+    };
+    if (topic.fields) {
+      fetchData();
+    }
+  }, [topic]);
+
   const handleEmailUsClick = () => {
     window.open(`mailto:${SHORETRADE_EMAIL}`);
   };
@@ -93,15 +104,15 @@ const Inner = (): JSX.Element => {
     const path = [
       {
         label: 'Account',
-        link: SELLER_ACCOUNT_ROUTES.LANDING,
+        link: BUYER_ROUTES.ACCOUNT,
       },
       {
         label: 'Help & Support',
-        link: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT,
+        link: BUYER_ROUTES.HELP_AND_SUPPORT,
       },
       {
         label: category?.fields?.title,
-        link: SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY(slug),
+        link: BUYER_ROUTES.HELP_AND_SUPPORT_CATEGORY(slug),
         state: { categoryId: category?.sys?.id },
       },
       {

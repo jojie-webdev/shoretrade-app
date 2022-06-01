@@ -28,11 +28,11 @@ import { Store } from 'types/store/Store';
 import { Theme } from 'types/Theme';
 
 import Account from './Account/accounts.routes';
-import HelpAndSupport from './Account/HelpAndSupport';
 import NotificationsSettings from './Account/NotificationsSettings';
 import Categories from './Categories/categories.routes';
 import CategoriesPreview from './Categories/Preview';
 import Checkout from './Checkout';
+import HelpAndSupport from './HelpAndSupport/HelpAndSupport.routes';
 import Home from './Home';
 import Favourites from './Home/Favourites';
 import RecentlyAdded from './Home/RecentlyAdded';

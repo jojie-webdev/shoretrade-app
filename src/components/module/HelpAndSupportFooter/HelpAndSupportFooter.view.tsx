@@ -70,7 +70,7 @@ const HelpAndSupportFooter = (
               variant="body"
               weight="500"
             >
-              Chat with us at <b>{contactNo.replace('tel://', '')}</b>
+              Contact Us at <b>{contactNo.replace('tel://', '')}</b>
             </Typography>
           </div>
           <div style={{ marginLeft: 'auto' }}>

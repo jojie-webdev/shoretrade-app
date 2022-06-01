@@ -3,6 +3,8 @@ import React from 'react';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import { ChevronRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import HelpAndSupportFooter from 'components/module/HelpAndSupportFooter';
+import { SHORETRADE_EMAIL } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
@@ -19,8 +21,6 @@ import {
   ChatWrapper,
   Content2,
 } from './Inner.style';
-import HelpAndSupportFooter from 'components/module/HelpAndSupportFooter';
-import { SHORETRADE_EMAIL } from 'consts';
 
 const InnerView = (props: InnerGeneratedProps) => {
   const theme = useTheme();

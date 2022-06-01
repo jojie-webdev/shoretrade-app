@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
 import { getEntryById } from 'services/contentful';
 
@@ -33,15 +33,13 @@ const Category = (): JSX.Element => {
     const locationState: {
       categoryId?: string;
     } = location.state || {};
-    if (topicId && locationState.categoryId && topicSlug) {
-      history.push(
-        SELLER_ACCOUNT_ROUTES.HELP_AND_SUPPORT_CATEGORY_TOPIC(slug, topicSlug),
-        {
-          topicId,
-          categoryId: locationState.categoryId,
-        }
-      );
-    }
+    history.push(
+      BUYER_ROUTES.HELP_AND_SUPPORT_CATEGORY_TOPIC(slug, topicSlug),
+      {
+        topicId,
+        categoryId: locationState.categoryId,
+      }
+    );
   };
 
   const handleSearchChange = (e: any) => {
