@@ -45,7 +45,10 @@ const documentToReactComponents = (
     renderNode: {
       // eslint-disable-next-line react/display-name
       [BLOCKS.EMBEDDED_ENTRY]: (node: any) => {
-        if (node?.data?.target?.fields?.image) {
+        if (
+          node?.data?.target?.fields?.image ||
+          node?.data?.target?.fields?.videoLink
+        ) {
           return (
             <div className="media-container">
               {node?.data?.target?.fields?.videoLink ? (
