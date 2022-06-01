@@ -43,10 +43,10 @@ export const additionalSubscriptionPlan = {
 
   seller: [
     {
-      name: 'Sustainability',
+      name: 'Reversed Marketplace',
       description:
-        'With your Premium subscription, any shortfall in the value of your plan will be donated to the X foundation on your behalf. Supporting the X foundation is one of the many initiatives ShoreTrade takes to protect our oceans and create a more sustainable seafood industry. Learn more about our intiatives on our blog',
-      alias: 'SUSTAINABILITY',
+        "Want to gain even more sales with quick turn around times? See what unique products buyers are after when you connect to the Reverse Marketplace. Buyers make specific requests for seafood products, and if you can provide that product then  make them an offer. By aligning your stock supply to the buyers' needs, your product is sold more efficiently, and less resources are taken from our oceans. Gain an extra sales channel and revolutionize your seafood business with Reverse Marketpalce!",
+      alias: 'MARKETPLACE',
     },
   ],
 };

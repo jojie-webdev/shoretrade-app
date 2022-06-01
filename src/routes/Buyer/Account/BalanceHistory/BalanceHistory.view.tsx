@@ -43,6 +43,7 @@ const BalanceHistoryView = ({
     const isChequeDeposit = desc.includes('Cheque Deposit - ');
     const isBankTransfer = desc.includes('Bank Transfer - ');
     const includesOrderNumber = desc.includes('- Order #');
+
     if (isCreditAdjustment) {
       if (includesOrderNumber) {
         const orderNumber = desc.split('- Order #')[1].split(' ')[0];
@@ -160,11 +161,13 @@ const BalanceHistoryView = ({
           const isCreditCardTopUp = transaction.description.includes(
             'Credit card'
           );
+          const paymentHistoryItem = isPlanView ? true : false;
+
           return (
             <Transx key={idx}>
               <TransxLeft>
                 <Downloadable
-                  enabled={isCreditCardTopUp}
+                  enabled={isCreditCardTopUp || paymentHistoryItem}
                   onClick={(e) => {
                     if (isCreditCardTopUp) {
                       window.open(

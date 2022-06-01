@@ -164,8 +164,8 @@ const StepForm = ({
   const isSeller = theme.appType === 'seller';
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
-  // const MAX_STEP = isSeller ? 9 : 7;
-  const MAX_STEP = 7;
+  const MAX_STEP = isSeller ? 9 : 7;
+  // const MAX_STEP = 7;
 
   const [license, setLicense] = useState<{
     file: File | null;
@@ -310,7 +310,7 @@ const StepForm = ({
   const buttonTextHandler = (step: number) => {
     if (isSeller && step === 4) {
       return 'ADD LICENSE';
-    } else if (step === 6) {
+    } else if ((!isSeller && step === 6) || (isSeller && step === 8)) {
       if (selectedCategoryTypes.length > 0) {
         return 'NEXT';
       }
@@ -837,39 +837,54 @@ const StepForm = ({
               getCardToken();
             }
           } else if (step === 6) {
-            formikProps.onSubmit(values);
+            if (isSeller) {
+              const error = validateCategoryMarketSector({
+                categoryMarketSector: registrationDetails.categoryMarketSector,
+              });
+
+              if (error.categoryMarketSector) {
+                setOtherErrors(error);
+              } else {
+                setOtherErrors({ categoryMarketSector: '' });
+                formikProps.onSubmit(values);
+              }
+            } else formikProps.onSubmit(values);
           } else if (step === 7) {
-            // if (!isSeller) {
-            const error = {
-              ...validateAgreement({
-                agreement: registrationDetails.tncAgreement,
-              }),
-            };
-            if (error.agreement) {
-              setOtherErrors(error);
+            if (!isSeller) {
+              const error = {
+                ...validateAgreement({
+                  agreement: registrationDetails.tncAgreement,
+                }),
+              };
+              if (error.agreement) {
+                setOtherErrors(error);
+              } else {
+                setOtherErrors({ agreement: '' });
+                formikProps.onSubmit(values);
+              }
             } else {
-              setOtherErrors({ agreement: '' });
+              setIsGeneratingCardToken(true);
+              getCardToken();
+            }
+          } else if (step === 8) {
+            if (isSeller) {
               formikProps.onSubmit(values);
             }
-            // } else {
-            //   getCardToken();
-            // }
+          } else if (step === 9) {
+            if (isSeller) {
+              const error = {
+                ...validateAgreement({
+                  agreement: registrationDetails.tncAgreement,
+                }),
+              };
+              if (error.agreement) {
+                setOtherErrors(error);
+              } else {
+                setOtherErrors({ agreement: '' });
+                formikProps.onSubmit(values);
+              }
+            }
           }
-          // else if (step === 8) {
-          //   formikProps.onSubmit(values);
-          // } else if (step === 9) {
-          //   const error = {
-          //     ...validateAgreement({
-          //       agreement: registrationDetails.tncAgreement,
-          //     }),
-          //   };
-          //   if (error.agreement) {
-          //     setOtherErrors(error);
-          //   } else {
-          //     setOtherErrors({ agreement: '' });
-          //     formikProps.onSubmit(values);
-          //   }
-          // }
         }}
       >
         <FormikContainer>
@@ -1347,30 +1362,73 @@ const StepForm = ({
               )}
               {step === 6 && (
                 <>
-                  {
-                    // isSeller ? (
-                    //   <YourPlan
-                    //     currentMarketSector={
-                    //       registrationDetails.categoryMarketSector
-                    //     }
-                    //     previousStep={() => previousStep && previousStep()}
-                    //   />
-                    // ) : (
+                  {isSeller ? (
+                    <YourPlan
+                      additionalSubscriptionHandler={
+                        additionalSubscriptionHandler
+                      }
+                      selectedPlan={registrationDetails.subscriptionType.plan}
+                      currentMarketSector={
+                        registrationDetails.categoryMarketSector
+                      }
+                      previousStep={() => previousStep && previousStep()}
+                      step={step}
+                    />
+                  ) : (
                     categoryPicker()
-                    // )
-                  }
+                  )}
                 </>
               )}
               {step === 7 && (
                 <>
-                  {/* {isSeller ? (
+                  {isSeller ? (
                     <PaymentMethod
                       otherErrors={otherErrors}
                       setOtherErrors={setOtherErrors}
+                      details={registrationDetails}
                     />
                   ) : (
                     summaryUI()
+                  )}
+                  {/* {!isSuccess || !isSeller ? (
+                    summaryUI()
+                  ) : (
+                    <>
+                      <Typography
+                        variant="title5"
+                        color="noshade"
+                        weight="400"
+                        style={{ marginBottom: 32 }}
+                      >
+                        Thanks for signing up! Your account is pending approval
+                      </Typography>
+                      <Typography
+                        variant="body"
+                        color="noshade"
+                        weight="Medium"
+                        style={{ marginBottom: 32 }}
+                      >
+                        We need to check a few things before you can start
+                        selling. We’ll send you and email and notification when
+                        your account is approved. This normally takes less than
+                        24 hours.
+                      </Typography>
+                      <Typography
+                        variant="title5"
+                        color="noshade"
+                        weight="400"
+                        style={{ marginBottom: 32 }}
+                      >
+                        1 Month Free Trial will start when your account is
+                        approved
+                      </Typography>
+                    </>
                   )} */}
+                </>
+              )}
+              {step === 8 && isSeller && categoryPicker()}
+              {step === 9 && (
+                <>
                   {!isSuccess || !isSeller ? (
                     summaryUI()
                   ) : (
@@ -1407,45 +1465,6 @@ const StepForm = ({
                   )}
                 </>
               )}
-              {/* {step === 8 && isSeller && categoryPicker()}
-              {step === 9 && isSeller && (
-                <>
-                  {!isSuccess ? (
-                    summaryUI()
-                  ) : (
-                    <>
-                      <Typography
-                        variant="title5"
-                        color="noshade"
-                        weight="400"
-                        style={{ marginBottom: 32 }}
-                      >
-                        Thanks for signing up! Your account is pending approval
-                      </Typography>
-                      <Typography
-                        variant="body"
-                        color="noshade"
-                        weight="Medium"
-                        style={{ marginBottom: 32 }}
-                      >
-                        We need to check a few things before you can start
-                        selling. We’ll send you and email and notification when
-                        your account is approved. This normally takes less than
-                        24 hours.
-                      </Typography>
-                      <Typography
-                        variant="title5"
-                        color="noshade"
-                        weight="400"
-                        style={{ marginBottom: 32 }}
-                      >
-                        1 Month Free Trial will start when your account is
-                        approved
-                      </Typography>
-                    </>
-                  )}
-                </>
-              )} */}
               <Spacer />
             </Content>
           </Container>
@@ -1522,8 +1541,8 @@ const RegisterView = (props: RegisterGeneratedProps) => {
   const renderRef = useRef<HTMLDivElement | null>(null);
 
   const [step, setStep] = useState(0);
-  // const MAX_STEP = isSeller ? 9 : 7;
-  const MAX_STEP = 7;
+  const MAX_STEP = isSeller ? 9 : 7;
+  // const MAX_STEP = 7;
 
   const summaryHandleStep = (step: number) => {
     setStep(step);
@@ -1531,8 +1550,8 @@ const RegisterView = (props: RegisterGeneratedProps) => {
 
   const nextStep = () => {
     if (isSummaryEdit) {
-      // setStep(isSeller ? 9 : 7);
-      setStep(7);
+      setStep(isSeller ? 9 : 7);
+      // setStep(7);
     } else {
       setStep((s) => (s < MAX_STEP ? ++s : MAX_STEP));
     }
@@ -1714,8 +1733,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
           <StepForm
             {...props}
             formikProps={
-              // isSeller ? paymentMethodFormikProps :
-              summaryFormikProps
+              isSeller ? paymentMethodFormikProps : summaryFormikProps
             }
             step={step}
             fields={[]}
@@ -1723,27 +1741,28 @@ const RegisterView = (props: RegisterGeneratedProps) => {
           />
         </>
       );
-      // } else if (step === 8) {
-      //   return (
-      //     <StepForm
-      //       {...props}
-      //       getCategoryItem={props.getCategoryItem}
-      //       formikProps={userDetailsFormikProps}
-      //       step={step}
-      //       fields={[]}
-      //       summaryHandleStep={summaryHandleStep}
-      //     />
-      //   );
-      // } else if (step === 9) {
-      //   return (
-      //     <StepForm
-      //       {...props}
-      //       formikProps={summaryFormikProps}
-      //       step={step}
-      //       fields={[]}
-      //       summaryHandleStep={summaryHandleStep}
-      //     />
-      //   );
+    } else if (step === 8) {
+      return (
+        <StepForm
+          {...props}
+          getCategoryItem={props.getCategoryItem}
+          formikProps={userDetailsFormikProps}
+          step={step}
+          fields={[]}
+          summaryHandleStep={summaryHandleStep}
+          previousStep={previousStep}
+        />
+      );
+    } else if (step === 9) {
+      return (
+        <StepForm
+          {...props}
+          formikProps={summaryFormikProps}
+          step={step}
+          fields={[]}
+          summaryHandleStep={summaryHandleStep}
+        />
+      );
     } else {
       return (
         <GetStartedWrapper>
@@ -1862,7 +1881,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
                     </Typography>
                   )}
                 </div>
-                {step === 4 && (
+                {isSeller && step === 4 && (
                   <div className="right">
                     <ChangeMarketSector isSeller={isSeller}>
                       <MarketSectorIcon

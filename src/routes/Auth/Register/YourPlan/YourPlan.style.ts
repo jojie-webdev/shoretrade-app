@@ -48,7 +48,7 @@ export const ChangeMarketSector = styled.div<{
 `;
 
 export const AdditionalSubscription = styled.div`
-  margin-top: 32px;
+  margin-top: ${({ theme }) => (theme.appType === 'seller' ? '0' : '32px')};
   margin-bottom: 24px;
   display: flex;
   align-items: center;
@@ -64,4 +64,16 @@ export const Footer = styled.div`
   display: flex;
   flex-direction: column;
   gap 8px;
+`;
+
+export const BenefitsList = styled.ul`
+  margin-top: 32px;
+  margin-left: 32px;
+  display: flex;
+  flex-direction: column;
+  gap 8px;
+
+  li {
+    color: ${({ theme }) => theme.grey.shade6}
+  }
 `;

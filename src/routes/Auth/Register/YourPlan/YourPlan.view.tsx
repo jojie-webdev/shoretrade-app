@@ -22,6 +22,7 @@ import {
   AdditionalSubscription,
   CheckboxContainer,
   Footer,
+  BenefitsList,
 } from './YourPlan.style';
 
 const YourPlanView = ({
@@ -97,11 +98,13 @@ const YourPlanView = ({
         </TopSection>
       )}
 
-      <PlanFeatures
-        selectedPlan={selectedPlan}
-        currentMarketSector={currentMarketSector}
-        highlighthandler={highlighthandler}
-      />
+      {!isSeller && (
+        <PlanFeatures
+          selectedPlan={selectedPlan}
+          currentMarketSector={currentMarketSector}
+          highlighthandler={highlighthandler}
+        />
+      )}
 
       <AdditionalSubscription>
         <CheckboxContainer>
@@ -113,8 +116,13 @@ const YourPlanView = ({
             }}
           />
         </CheckboxContainer>
-        <Typography variant="body">
-          Additonal subscription for $49.99/month
+        <Typography
+          variant="body"
+          color={theme.appType === 'seller' ? 'noshade' : 'shade9'}
+        >
+          {!isSeller
+            ? 'Additonal subscription for $49.99/month'
+            : 'Additonal subscription for $275/month'}
         </Typography>
       </AdditionalSubscription>
 
@@ -123,17 +131,60 @@ const YourPlanView = ({
         currentMarketSector={currentMarketSector}
       />
 
-      <Footer>
-        <Typography variant="caption" weight="regular">
-          *Minimum 3 month sign up, starting from your account approval date.
-        </Typography>
-        {selectedPlan === 'Standard' && (
-          <Typography variant="caption" weight="regular">
-            **The Transaction Value is the total value of the products in your
-            order excluding any crate fees and shipping costs.
+      {!isSeller && (
+        <Footer>
+          <Typography
+            variant="caption"
+            weight="regular"
+            color={theme.appType === 'seller' ? 'shade6' : 'shade7'}
+          >
+            *Minimum 3 month sign up, starting from your account approval date.
           </Typography>
-        )}
-      </Footer>
+          {selectedPlan === 'Standard' && (
+            <Typography
+              variant="caption"
+              weight="regular"
+              color={theme.appType === 'seller' ? 'shade6' : 'shade7'}
+            >
+              **The Transaction Value is the total value of the products in your
+              order excluding any crate fees and shipping costs.
+            </Typography>
+          )}
+        </Footer>
+      )}
+
+      {isSeller && (
+        <BenefitsList>
+          <li>
+            <Typography color="shade6" variant="label">
+              Gain more sales by offering your products directly to individual
+              Buyers.
+            </Typography>
+          </li>
+          <li>
+            <Typography color="shade6" variant="label">
+              Tailor your products based on known demand and reduce your product
+              wastage.
+            </Typography>
+          </li>
+          <li>
+            <Typography color="shade6" variant="label">
+              Make offers and negotiate in real time with Buyers.
+            </Typography>
+          </li>
+          <li>
+            <Typography color="shade6" variant="label">
+              Get notified for new Buyer Requests and snap up the sales.
+            </Typography>
+          </li>
+          <li>
+            <Typography color="shade6" variant="label">
+              While waiting for bites on your existing listings, make offers
+              straight to Buyers that want the product.
+            </Typography>
+          </li>
+        </BenefitsList>
+      )}
     </Container>
   );
 };
