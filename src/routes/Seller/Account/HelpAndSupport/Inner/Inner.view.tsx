@@ -19,6 +19,8 @@ import {
   ChatWrapper,
   Content2,
 } from './Inner.style';
+import HelpAndSupportFooter from 'components/module/HelpAndSupportFooter';
+import { SHORETRADE_EMAIL } from 'consts';
 
 const InnerView = (props: InnerGeneratedProps) => {
   const theme = useTheme();
@@ -51,50 +53,11 @@ const InnerView = (props: InnerGeneratedProps) => {
 
       <Contents>{props.convertedElements}</Contents>
 
-      <Text1>
-        <Typography
-          variant="copy"
-          weight="500"
-          color="noshade"
-          style={{ textAlign: isMobile ? 'left' : 'center' }}
-        >
-          Can’t find an answer?
-        </Typography>
-        {!isMobile && <div style={{ height: 8 }} />}
-        <Typography
-          variant="label"
-          weight="500"
-          color="shade6"
-          style={{ textAlign: isMobile ? 'left' : 'center' }}
-        >
-          Get in touch with our success team
-        </Typography>
-      </Text1>
-
-      <div className="inner__contact">
-        <Content onClick={() => props.handleEmailUsClick()}>
-          <EnvelopeAltWrapper fill={theme.grey.shade6} />
-          <div style={{ marginLeft: 14 }}>
-            <Typography color="noshade" variant="body" weight="500">
-              Email us
-            </Typography>
-          </div>
-          <div style={{ marginLeft: 'auto' }}>
-            <ChevronRight fill={theme.brand.primary} height={14} width={24} />
-          </div>
-        </Content>
-        <Content2 href={SHORETRADE_TEL}>
-          <ChatWrapper fill={theme.grey.shade6} />
-          <div style={{ marginLeft: 14 }}>
-            <Typography color="noshade" variant="body" weight="500">
-              Chat with us
-            </Typography>
-          </div>
-          <div style={{ marginLeft: 'auto' }}>
-            <ChevronRight fill={theme.brand.primary} height={14} width={24} />
-          </div>
-        </Content2>
-      </div>
+      <HelpAndSupportFooter
+        contactNo={SHORETRADE_TEL}
+        email={SHORETRADE_EMAIL}
+        handleEmailClick={props.handleEmailUsClick}
+      />
     </Container>
   );
 };

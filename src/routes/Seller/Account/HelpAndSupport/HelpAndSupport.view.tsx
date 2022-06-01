@@ -3,7 +3,8 @@ import React from 'react';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import { Search, ChevronRight, CloseFilled } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import HelpAndSupportFooter from 'components/module/HelpAndSupportFooter';
+import { SELLER_ACCOUNT_ROUTES, SHORETRADE_EMAIL } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
@@ -22,7 +23,6 @@ import {
   Description,
   DescriptionContent,
   Categories,
-  Text1,
   Content1,
   EnvelopeAltWrapper,
   ChatWrapper,
@@ -204,51 +204,11 @@ const HelpAndSupportView = (props: HelpAndSupportGeneratedProps) => {
           )
         )}
       </Categories>
-
-      <Text1>
-        <Typography
-          variant="copy"
-          weight="500"
-          color="noshade"
-          style={{ textAlign: isMobile ? 'left' : 'center' }}
-        >
-          Can’t find an answer?
-        </Typography>
-        {!isMobile && <div style={{ height: 8 }} />}
-        <Typography
-          variant="label"
-          weight="500"
-          color="shade6"
-          style={{ textAlign: isMobile ? 'left' : 'center' }}
-        >
-          Get in touch with our success team
-        </Typography>
-      </Text1>
-
-      <div className="help_and_support__contact">
-        <Content1 onClick={() => props.handleEmailUsClick()}>
-          <EnvelopeAltWrapper fill={theme.grey.noshade} />
-          <div style={{ marginLeft: 14 }}>
-            <Typography color="noshade" variant="body" weight="500">
-              Email us
-            </Typography>
-          </div>
-          <div style={{ marginLeft: 'auto' }}>
-            <ChevronRight fill={theme.brand.primary} height={14} width={24} />
-          </div>
-        </Content1>
-        <Content3 href={SHORETRADE_TEL}>
-          <ChatWrapper fill={theme.grey.noshade} />
-          <div style={{ marginLeft: 14 }}>
-            <Typography color="noshade" variant="body" weight="500">
-              Chat with us
-            </Typography>
-          </div>
-          <div style={{ marginLeft: 'auto' }}>
-            <ChevronRight fill={theme.brand.primary} height={14} width={24} />
-          </div>
-        </Content3>
-      </div>
+      <HelpAndSupportFooter
+        contactNo={SHORETRADE_TEL}
+        email={SHORETRADE_EMAIL}
+        handleEmailClick={props.handleEmailUsClick}
+      />
     </Container>
   );
 };

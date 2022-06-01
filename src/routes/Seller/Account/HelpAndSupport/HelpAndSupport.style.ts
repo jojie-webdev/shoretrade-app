@@ -116,20 +116,6 @@ export const Container = styled.div`
     }
   }
 
-  .help_and_support__contact {
-    display: flex;
-    gap: 20px;
-    margin-top: 24px;
-    justify-content: center;
-
-    @media (max-width: 576px) {
-      display: grid;
-      gap: 8px;
-      margin-top: 8px;
-      justify-content: normal;
-    }
-  }
-
   @media ${BREAKPOINTS['sm']} {
     padding-bottom: 24px;
   }
