@@ -18,7 +18,7 @@ import AccountPicture from 'components/module/AccountPicture';
 import FreeTrialCountdown from 'components/module/FreeTrialCountdown';
 import GradientProgressCircle from 'components/module/GradientProgressCircle';
 import Loading from 'components/module/Loading';
-import { BUYER_ACCOUNT_ROUTES } from 'consts';
+import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import qs from 'qs';
 import { isEmpty } from 'ramda';
@@ -130,7 +130,7 @@ const LandingView = (props: LandingGeneratedProps) => {
     {
       iconName: 'cog',
       value: 'Help & Support',
-      path: BUYER_ACCOUNT_ROUTES.HELP_AND_SUPPORT,
+      path: BUYER_ROUTES.HELP_AND_SUPPORT,
     },
   ];
 
