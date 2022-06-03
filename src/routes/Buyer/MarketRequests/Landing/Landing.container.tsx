@@ -5,8 +5,8 @@ import moment from 'moment';
 import { ScreenClassRender } from 'react-grid-system';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import MarketRequestDesktopImg from 'res/images/buyer-market-request-desktop.png';
-import MarketRequestMobileImg from 'res/images/buyer-market-request-mobile.png';
+import MarketRequestDesktopImg from 'res/images/st-buyer-market-request-desktop.png';
+import MarketRequestMobileImg from 'res/images/st-buyer-market-request-mobile.png';
 import {
   deleteMarketRequestActions,
   getAllMarketRequestActions,

@@ -20,8 +20,8 @@ import {
   ScreenClassRender,
 } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
-import MarketRequestDesktopImg from 'res/images/buyer-market-request-desktop.png';
-import MarketRequestMobileImg from 'res/images/buyer-market-request-mobile.png';
+import MarketRequestDesktopImg from 'res/images/st-buyer-market-request-desktop.png';
+import MarketRequestMobileImg from 'res/images/st-buyer-market-request-mobile.png';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import useLocalStorage from 'utils/Hooks/useLocalStorage';
 import { sizeToString } from 'utils/Listing';
