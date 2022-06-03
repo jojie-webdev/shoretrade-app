@@ -438,6 +438,10 @@ export const DownloadApplicationFormButton = styled(Button)`
   padding: 16px;
 `;
 
+export const TotalPrice = styled(Typography)`
+  margin-top: 25px;
+`;
+
 export const SFMOption = styled.div`
   background: ${({ theme }) => theme.grey.noshade};
   margin-top: 8px;

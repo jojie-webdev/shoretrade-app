@@ -14,7 +14,9 @@ const YourPlan = (props: YourPlanrops): JSX.Element => {
     (store: Store) => store.getSubscriptionPlans.data?.data || []
   );
   const currentPlan = plans.find(
-    (plan) => plan.alias === `STANDARD_${props.currentMarketSector}`
+    (plan) =>
+      plan.alias ===
+      `${props.selectedPlan?.toLocaleUpperCase()}_${props.currentMarketSector}`
   );
 
   useEffect(() => {

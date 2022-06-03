@@ -112,6 +112,7 @@ import {
   ChangeMarketSector,
   SFMOption,
   TabsContainer,
+  TotalPrice,
 } from './Register.style';
 import {
   addressToPlaceData,
@@ -159,6 +160,7 @@ const StepForm = ({
   handleDownloadApplicationForm,
   onRemoveSelectedCategory,
   states,
+  plans,
 }: StepFormProps) => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
@@ -335,6 +337,23 @@ const StepForm = ({
       },
     });
   };
+
+  const currentPlan = plans.find(
+    (plan) =>
+      plan.alias ===
+      `${registrationDetails.subscriptionType.plan.toUpperCase()}_${
+        registrationDetails.categoryMarketSector
+      }`
+  );
+
+  const reverseMarketPlacePrice = registrationDetails.subscriptionType
+    .reverseMarketPlace
+    ? isSeller
+      ? 275
+      : 49.99
+    : 0;
+  const planPrice =
+    currentPlan && parseInt(currentPlan.price) + reverseMarketPlacePrice;
 
   const additionalSubscriptionHandler = (hasAddOn: boolean) => {
     updateRegistrationDetails({
@@ -1352,11 +1371,26 @@ const StepForm = ({
                       )}
                     </MarketSectorContainer>
                   ) : (
-                    <PaymentMethod
-                      otherErrors={otherErrors}
-                      setOtherErrors={setOtherErrors}
-                      details={registrationDetails}
-                    />
+                    <>
+                      <TotalPrice
+                        variant="title5"
+                        color={
+                          theme.appType === 'seller' ? 'noshade' : 'shade9'
+                        }
+                        weight="400"
+                      >
+                        &nbsp;$
+                        {planPrice?.toFixed(2)}* / month
+                      </TotalPrice>
+                      <Typography variant="caption" color="shade6" weight="400">
+                        *Price based on your Market Sector
+                      </Typography>
+                      <PaymentMethod
+                        otherErrors={otherErrors}
+                        setOtherErrors={setOtherErrors}
+                        details={registrationDetails}
+                      />
+                    </>
                   )}
                 </>
               )}
@@ -1382,11 +1416,26 @@ const StepForm = ({
               {step === 7 && (
                 <>
                   {isSeller ? (
-                    <PaymentMethod
-                      otherErrors={otherErrors}
-                      setOtherErrors={setOtherErrors}
-                      details={registrationDetails}
-                    />
+                    <>
+                      <TotalPrice
+                        variant="title5"
+                        color={
+                          theme.appType === 'seller' ? 'noshade' : 'shade9'
+                        }
+                        weight="400"
+                      >
+                        &nbsp;$
+                        {planPrice}* / month
+                      </TotalPrice>
+                      <Typography variant="caption" color="shade6" weight="400">
+                        *Price based on your Market Sector
+                      </Typography>
+                      <PaymentMethod
+                        otherErrors={otherErrors}
+                        setOtherErrors={setOtherErrors}
+                        details={registrationDetails}
+                      />
+                    </>
                   ) : (
                     summaryUI()
                   )}

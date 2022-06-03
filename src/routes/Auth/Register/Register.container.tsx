@@ -44,6 +44,10 @@ const Register = (): JSX.Element => {
     (store: Store) => store.getStates.data?.data || []
   );
 
+  const plans = useSelector(
+    (store: Store) => store.getSubscriptionPlans.data?.data || []
+  );
+
   const getStateOptions = () =>
     states.map((s) => ({ value: s.id, label: s.name }));
 
@@ -320,6 +324,7 @@ const Register = (): JSX.Element => {
 
   const generatedProps = {
     // generated props here
+    plans,
     backToLogin,
     registrationDetails,
     updateRegistrationDetails,

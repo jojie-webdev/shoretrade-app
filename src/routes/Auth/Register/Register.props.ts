@@ -7,6 +7,7 @@ import {
   CategoryPayload,
 } from 'types/store/GetCategories';
 import { State } from 'types/store/GetStatesState';
+import { GetSubscriptionPlansResponseData } from 'types/store/GetSubscriptionPlansState';
 
 export interface License {
   file: File | null;
@@ -73,6 +74,7 @@ export interface BankDetails {
 }
 
 export interface RegisterGeneratedProps {
+  plans: GetSubscriptionPlansResponseData[];
   backToLogin: () => void;
   registrationDetails: RegistrationDetails;
   updateRegistrationDetails: Dispatch<Partial<RegistrationDetails>>;
