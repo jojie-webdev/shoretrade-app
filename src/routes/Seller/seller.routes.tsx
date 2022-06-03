@@ -114,7 +114,7 @@ const ROUTES: Routes = {
   },
   HELP_AND_SUPPORT: {
     path: SELLER_ROUTES.HELP_AND_SUPPORT,
-    title: 'Help and Support',
+    title: 'Help & Support',
     children: <HelpAndSupport />,
     icon: QuestionIcon,
     nested: true,
@@ -223,6 +223,12 @@ const SellerRoutes = (): JSX.Element => {
     if (pathname.includes(SELLER_ROUTES.MARKET_BOARD)) {
       return {
         pageTitle: 'Market Board',
+      };
+    }
+
+    if (pathname.includes(SELLER_ROUTES.HELP_AND_SUPPORT)) {
+      return {
+        pageTitle: 'Help & Support',
       };
     }
 

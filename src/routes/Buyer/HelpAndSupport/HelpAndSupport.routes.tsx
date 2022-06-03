@@ -14,10 +14,12 @@ const ROUTES: Routes = {
   HELP_AND_SUPPORT: {
     path: BUYER_ROUTES.HELP_AND_SUPPORT,
     children: <HelpAndSupport />,
+    title: 'Help & Support',
     icon: QuestionIcon,
   },
   HELP_AND_SUPPORT_CATEGORY: {
     path: BUYER_ROUTES.HELP_AND_SUPPORT_CATEGORY(),
+    title: '',
     children: <Category />,
   },
   HELP_AND_SUPPORT_CATEGORY_TOPIC: {
@@ -26,6 +28,7 @@ const ROUTES: Routes = {
   },
   HELP_AND_SUPPORT_TOPIC: {
     path: BUYER_ROUTES.HELP_AND_SUPPORT_TOPIC(),
+    title: '',
     children: <Inner />,
   },
   HELP_AND_SUPPORT_RESOLVER: {

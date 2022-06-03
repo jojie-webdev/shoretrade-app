@@ -227,6 +227,12 @@ const BuyerRoutes = (): JSX.Element => {
       };
     }
 
+    if (pathname.includes(BUYER_ROUTES.HELP_AND_SUPPORT)) {
+      return {
+        pageTitle: 'Help & Support',
+      };
+    }
+
     if (
       pathname.includes('/buyer/categories/') &&
       pathname.replace('/buyer/categories/', '').length > 0
