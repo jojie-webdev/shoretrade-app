@@ -50,7 +50,6 @@ export const PaymentMethodSection = styled.div`
       border-radius: 8px;
       display: flex;
       align-items: center;
-      background: ${({ theme }) => theme.grey.noshade};
       padding: 0 8px;
       margin-right: 4px;
     }
@@ -90,4 +89,24 @@ export const PlanSection = styled.div`
 
 export const FlexContainer = styled.div`
   display: flex;
+`;
+
+export const PlanTitleContainer = styled.div`
+  display: flex;
+  margin-bottom: 24px;
+`;
+
+export const AdditionalSubSection = styled.div`
+  .cancel-subscription {
+    margin-top: 24px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+`;
+
+export const PlanContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 24px;
 `;

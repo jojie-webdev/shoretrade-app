@@ -25,6 +25,8 @@ export const activePlanToProps = (
     monthlyPrice: monthlyPlan?.price || '0',
     nextBillingDate,
     cardBrand,
+    subscriptionType: activePlan?.subscription_preference.type || 'STANDARD',
+    features: activePlan?.features || [],
     cardNumberMasked: toMaskedCardNumber(
       cardBrand,
       defaultPaymentMethod?.lastFour || ''
