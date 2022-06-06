@@ -96,9 +96,23 @@ export const Contents = styled.div`
     height: 425px;
   }
 
-  b {
-    color: ${({ theme }) => theme.grey.noshade};
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: ${({ theme }) => theme.grey.shade9};
+
+    b {
+      font-weight: 500;
+    }
   }
+
+  h2 {
+    font-size: 20px;
+  }
+
   @media ${BREAKPOINTS.homeDesktop} {
     padding: 32px 0;
   }

@@ -46,6 +46,7 @@ const InnerView = (props: InnerGeneratedProps) => {
           className="inner_page__title"
           variant="title4"
           weight="500"
+          component="h2"
         >
           {props?.topic?.fields?.title}
         </Typography>

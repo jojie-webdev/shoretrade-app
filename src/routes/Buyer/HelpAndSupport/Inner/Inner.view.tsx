@@ -36,7 +36,12 @@ const InnerView = (props: InnerGeneratedProps) => {
         <Breadcrumbs sections={props.breadCrumbsPath} />
       </div>
       {props?.topic?.fields?.title && (
-        <Typography className="inner_page__title" variant="title4" weight="500">
+        <Typography
+          component="h1"
+          className="inner_page__title"
+          variant="title4"
+          weight="500"
+        >
           {props?.topic?.fields?.title}
         </Typography>
       )}
