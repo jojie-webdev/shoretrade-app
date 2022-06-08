@@ -210,6 +210,10 @@ const MarketBoardLanding = (): JSX.Element => {
     (store: Store) => store.getActivePlan.data?.data
   );
 
+  const activePlanError = useSelector(
+    (store: Store) => store.getActivePlan.error
+  );
+
   const activePlanLoading = useSelector(
     (store: Store) => store.getActivePlan.pending
   );
@@ -303,7 +307,7 @@ const MarketBoardLanding = (): JSX.Element => {
     (feature) => feature.alias === 'REVERSED_MARKETPLACE'
   );
 
-  if (!reverseMarketPlace && !activePlanLoading && activePlan?.id) {
+  if (!reverseMarketPlace && !activePlanLoading && activePlanError) {
     return (
       <ScreenClassRender
         render={(screenClass: string) =>
