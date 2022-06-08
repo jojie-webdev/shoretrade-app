@@ -4,13 +4,7 @@ import { AsyncAction } from 'types/Action';
 import { LoginPayload } from 'types/store/LoginState';
 import { Store } from 'types/store/Store';
 
-import {
-  logoutActions,
-  authActions,
-  cartActions,
-  editableListingActions,
-  subscriptionActions,
-} from '../actions';
+import { logoutActions } from '../actions';
 
 function* logoutRequest(action: AsyncAction<string, LoginPayload>) {
   const state: Store = yield select();
@@ -22,20 +16,14 @@ function* logoutRequest(action: AsyncAction<string, LoginPayload>) {
     } catch (e) {
       yield put(logoutActions.failed(e.message));
     }
-  }
-}
 
-function* logoutFinished(action: AsyncAction<string, LoginPayload>) {
-  yield put(authActions.clear());
-  yield put(cartActions.clear());
-  yield put(editableListingActions.clear());
-  yield put(subscriptionActions.clear());
+    // NOTE: redux state will be cleared after logout
+    // See src/store/reducers/index.ts (createRootReducer)
+  }
 }
 
 function* logoutWatcher() {
   yield takeLatest(logoutActions.REQUEST, logoutRequest);
-  yield takeLatest(logoutActions.SUCCESS, logoutFinished);
-  yield takeLatest(logoutActions.FAILED, logoutFinished);
 }
 
 export default logoutWatcher;

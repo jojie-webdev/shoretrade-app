@@ -1,6 +1,7 @@
 import { connectRouter } from 'connected-react-router';
 import { History } from 'history';
 import { combineReducers } from 'redux';
+import { logoutActions } from 'store/actions';
 import getAccountCompletion from 'store/reducers/getAccountCompletion';
 
 /* PLOP_INJECT_IMPORT */
@@ -130,7 +131,7 @@ import upgradeSubscription from './upgradeSubscription';
 import uploadBulk from './uploadBulk';
 import verify from './verify';
 
-export default (routeHistory: History) =>
+const createAppReducer = (routeHistory: History) =>
   combineReducers(
     Object.fromEntries(
       Object.entries({
@@ -264,3 +265,15 @@ export default (routeHistory: History) =>
       }).sort()
     )
   );
+
+const createRootReducer = (history: History) => {
+  const appReducer = createAppReducer(history);
+  return (state: any, action: any) => {
+    if ([logoutActions.SUCCESS, logoutActions.FAILED].includes(action.type)) {
+      return appReducer(undefined, action);
+    }
+    return appReducer(state, action);
+  };
+};
+
+export default createRootReducer;

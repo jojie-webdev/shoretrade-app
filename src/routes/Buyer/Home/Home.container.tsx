@@ -50,7 +50,7 @@ const Home = (): JSX.Element => {
   );
   const subscription = useSelector((store: Store) => store.subscription);
 
-  const loadingHomePage = buyerHomePageData.pending === null; // || subscription.status === null;
+  const loadingHomePage = buyerHomePageData.pending !== false; // || subscription.status === null;
 
   // MARK:- State
   const [currentCompany, setCurrentCompany] = useState<
