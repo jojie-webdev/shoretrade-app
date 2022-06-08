@@ -11,6 +11,7 @@ export type Seller = {
   };
   rating: string | number;
   listings?: Array<any>;
+  listing_count: number;
   isFavourite?: boolean;
 };
 

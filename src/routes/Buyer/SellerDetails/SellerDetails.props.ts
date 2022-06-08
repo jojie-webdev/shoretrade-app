@@ -19,4 +19,5 @@ export interface SellerDetailsGeneratedProps {
   searchValue: string;
   resetSearchValue: () => void;
   loading: boolean;
+  listingCount: number;
 }

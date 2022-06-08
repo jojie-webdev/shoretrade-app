@@ -35,6 +35,10 @@ const SellerDetails = (): JSX.Element => {
       : true;
   });
 
+  const count = useSelector(
+    (state: Store) => state.getSellerById.data?.data.seller.listing_count || 0
+  );
+
   const onLoad = (sellerId: string) => {
     dispatch(getSellerByIdActions.request({ sellerId }));
   };
@@ -101,6 +105,7 @@ const SellerDetails = (): JSX.Element => {
     resetSearchValue,
     loading,
     searchValue,
+    listingCount: count,
   };
 
   return <SellerDetailsView {...generatedProps} />;

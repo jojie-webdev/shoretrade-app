@@ -31,6 +31,7 @@ const SellerDetailsView = (props: SellerDetailsGeneratedProps) => {
     results,
     searchValue,
     loading,
+    listingCount,
   } = props;
 
   return (
@@ -62,8 +63,8 @@ const SellerDetailsView = (props: SellerDetailsGeneratedProps) => {
           </SellerHeader>
           <ListingHeader>
             <Typography variant="overline" color="shade6">
-              <ListingCounter>{results.length}</ListingCounter>
-              Active Listing{results.length > 2 ? 'S' : ''}
+              <ListingCounter>{listingCount}</ListingCounter>
+              Active Listing{listingCount > 2 ? 'S' : ''}
             </Typography>
             <div className="search-container">
               <Search
