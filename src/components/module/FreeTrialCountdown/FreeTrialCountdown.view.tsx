@@ -4,6 +4,7 @@ import ProgressBar from 'components/base/ProgressBar';
 import {
   ShoretradeProBuyerLogo,
   ShoretradeProSellerLogo,
+  SfmLogo,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BUYER_ROUTES, SELLER_ROUTES } from 'consts';
@@ -18,13 +19,23 @@ const FreeTrialCountdown = (props: FreeTrialCountdownProps): JSX.Element => {
   const theme = useTheme();
   const history = useHistory();
   const isBuyer = theme.appType === 'buyer';
-  const Logo = isBuyer ? ShoretradeProBuyerLogo : ShoretradeProSellerLogo;
-  const barColor =
-    daysLeft > 15
-      ? theme.brand.success
-      : daysLeft > 3 && daysLeft <= 15
-      ? theme.brand.alert
-      : theme.brand.error;
+  const STLogo = isBuyer ? ShoretradeProBuyerLogo : ShoretradeProSellerLogo;
+  const SFMLogo = SfmLogo;
+
+  const getProgressBarColor = () => {
+    const progressRate = (daysLeft / 30) * 100;
+    let barColor = theme.brand.alert;
+
+    if (progressRate > 50) {
+      barColor = theme.brand.success;
+    } else if (progressRate < 25) {
+      barColor = theme.brand.error;
+    } else {
+      barColor = theme.brand.alert;
+    }
+
+    return barColor;
+  };
 
   const pushToUpgrade = () => {
     if (isBuyer) {
@@ -36,7 +47,8 @@ const FreeTrialCountdown = (props: FreeTrialCountdownProps): JSX.Element => {
 
   return (
     <Container {...props} onClick={() => daysLeft === 0 && pushToUpgrade()}>
-      {!small && <Logo width={82} />}
+      {!small && !theme.isSFM ? <STLogo width={82} /> : <SFMLogo width={82} />}
+
       <div>
         <Typography
           weight="400"
@@ -51,7 +63,7 @@ const FreeTrialCountdown = (props: FreeTrialCountdownProps): JSX.Element => {
         </Typography>
         <ProgressBar
           progress={(daysLeft / 30) * 100}
-          color={barColor}
+          color={getProgressBarColor()}
           height={4}
         />
       </div>
