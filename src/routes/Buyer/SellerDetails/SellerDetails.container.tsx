@@ -77,15 +77,6 @@ const SellerDetails = (): JSX.Element => {
     }
   };
 
-  const getSeller = async (id: string) => {
-    dispatch(getSellerByIdActions.request({ sellerId: id }));
-  };
-
-  useEffect(() => {
-    if (id) getSeller(id);
-    // eslint-disable-next-line
-  }, [id]);
-
   useEffect(() => {
     setIsFavorite(seller?.isFavourite);
   }, [seller]);

@@ -17,13 +17,20 @@ export function* getSellerByIdRequest(
     if (!state.auth.token) {
       throw new Error('Token not found');
     }
-    const { data } = yield call(
+    const { data: preloadData } = yield call(
       getSellerByCompanyId,
-      action.meta,
+      { ...action.meta, preload: true },
       state.auth.token
     );
 
-    if (data) {
+    if (preloadData) {
+      yield put(getSellerByIdActions.success({ ...preloadData }));
+
+      const { data } = yield call(
+        getSellerByCompanyId,
+        action.meta,
+        state.auth.token
+      );
       yield put(getSellerByIdActions.success({ ...data }));
     }
   } catch (e) {

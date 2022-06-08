@@ -16,6 +16,7 @@ export type Seller = {
 
 export type GetSellerByIdMeta = {
   sellerId: string;
+  preload?: boolean;
 };
 
 export type GetSellerByIdPayload = GenericResponse<{

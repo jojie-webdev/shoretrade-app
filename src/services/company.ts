@@ -211,12 +211,12 @@ export const getBuyerHomepage = (
 };
 
 export const getSellerByCompanyId = (
-  data: GetSellerByIdMeta,
+  { sellerId, ...data }: GetSellerByIdMeta,
   token: string
 ) => {
   return axios({
     method: 'get',
-    url: `${COMPANY_URL}/get-seller/${data.sellerId}`,
+    url: `${COMPANY_URL}/get-seller/${sellerId}?${qs.stringify(data)}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
