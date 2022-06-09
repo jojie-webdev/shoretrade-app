@@ -12,11 +12,11 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { Form, Formik, useFormikContext } from 'formik';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
+import { useHistory } from 'react-router-dom';
 import { createUpdateReducer } from 'utils/Hooks';
 import { cardExpiryInputFilter } from 'utils/InputFilters/cardExpiryInputFilter';
 import { cardNumberInputFilter } from 'utils/InputFilters/cardNumberInputFilter';
 import { useTheme } from 'utils/Theme';
-import { useHistory } from 'react-router-dom';
 
 import { PlanPaymentMethodGeneratedProps } from './PlanPaymentMethod.props';
 import {
@@ -37,13 +37,17 @@ const PlanPaymentMethodView = ({
   isPaymentLoading,
   payPlanAmountDue,
   setSelectedCardId,
+  onRemoveCard,
+  defaultCard,
 }: PlanPaymentMethodGeneratedProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const history = useHistory();
 
   const [isDefault, setIsDefault] = useState(false);
-  const [mobileActiveTab, setMobileActiveTab] = useState('Add');
+  const [mobileActiveTab, setMobileActiveTab] = useState(
+    amountDue !== 0 ? 'Add' : 'Existing'
+  );
   const [otherErrors, setOtherErrors] = useReducer(
     createUpdateReducer<Record<string, string>>(),
     {}
@@ -95,7 +99,9 @@ const PlanPaymentMethodView = ({
                     selectedOption={mobileActiveTab}
                     onClickControl={(value) => {
                       setSelectedCardId('');
-                      setMobileActiveTab(value);
+                      if (amountDue !== 0) {
+                        setMobileActiveTab(value);
+                      }
                     }}
                   />
                 </Col>
@@ -103,7 +109,7 @@ const PlanPaymentMethodView = ({
             )}
 
             <Row gutterWidth={96}>
-              {(!isMobile || (isMobile && !showExistingTab)) && (
+              {(!isMobile || (isMobile && !showExistingTab)) && amountDue && (
                 <Col xs={12} sm={6}>
                   <Typography variant="copy" style={{ marginBottom: 24 }}>
                     Pay the amount due: <b>{amountDue}</b>
@@ -255,7 +261,7 @@ const PlanPaymentMethodView = ({
 
               {((!isMobile && hasCards) || (isMobile && showExistingTab)) && (
                 <Col xs={12} sm={6}>
-                  {isMobile ? (
+                  {isMobile && amountDue ? (
                     <Typography variant="copy" style={{ marginBottom: 24 }}>
                       Pay the amount due: <b>{amountDue}</b>
                     </Typography>
@@ -266,6 +272,9 @@ const PlanPaymentMethodView = ({
                   )}
                   {cards.map((card) => (
                     <CreditCardInteraction
+                      onRemove={() => onRemoveCard(card)}
+                      isDefault={defaultCard === card.id}
+                      hideDetailBtn
                       key={card.id}
                       {...card}
                       type="radio"
@@ -293,7 +302,7 @@ const PlanPaymentMethodView = ({
               )}
             </Row>
 
-            {isMobile && (
+            {isMobile && amountDue !== 0 && (
               <ButtonMobileContainer>
                 <Button
                   text="PAY USING CREDIT CARD"

@@ -1,8 +1,10 @@
 import React from 'react';
 
+import Button from 'components/base/Button';
 import CreditCard from 'components/base/CreditCard';
-import { ChevronRight } from 'components/base/SVG';
+import { ChevronRight, TrashCan } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import { useTheme } from 'utils/Theme';
 
 import { InteractionCreditCardProps } from './InteractionCreditCard.props';
 import {
@@ -14,6 +16,7 @@ import {
 const InteractionCreditCard = (
   props: InteractionCreditCardProps
 ): JSX.Element => {
+  const theme = useTheme();
   return (
     <CustomInteractions
       {...props}
@@ -23,7 +26,18 @@ const InteractionCreditCard = (
             <Typography variant="caption" color="shade6">
               Default
             </Typography>
-            <ChevronRight width={8} height={12} />
+            {!props.hideDetailBtn && <ChevronRight width={8} height={12} />}
+          </RightComponent>
+        ) : props.onRemove ? (
+          <RightComponent>
+            <Button
+              onClick={(e) => {
+                props.onRemove && props.onRemove();
+                e.preventDefault();
+              }}
+              size="sm"
+              icon={<TrashCan fill={theme.grey.noshade} />}
+            ></Button>
           </RightComponent>
         ) : null
       }

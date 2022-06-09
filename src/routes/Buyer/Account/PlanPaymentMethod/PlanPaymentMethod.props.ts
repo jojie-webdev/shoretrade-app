@@ -8,18 +8,22 @@ export type NewCardDetails = {
   isDefault: boolean;
 };
 
+export type Card = {
+  brand: string;
+  expMonth: number;
+  expYear: number;
+  id: string;
+  lastFour: string;
+  name: string;
+};
+
 export interface PlanPaymentMethodGeneratedProps {
   payPlanAmountDue: (newCardDetails: NewCardDetails) => void;
-  cards: {
-    brand: string;
-    expMonth: number;
-    expYear: number;
-    id: string;
-    lastFour: string;
-    name: string;
-  }[];
-  amountDue: string;
+  cards: Card[];
+  amountDue: string | number;
   selectedCardId: string;
   isPaymentLoading: boolean;
   setSelectedCardId: Dispatch<SetStateAction<string>>;
+  defaultCard: string;
+  onRemoveCard: (card: Card) => void;
 }

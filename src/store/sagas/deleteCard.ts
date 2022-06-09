@@ -41,7 +41,7 @@ function* deleteCardSuccess(
   if (companyId) {
     yield put(getPaymentMethodsActions.request({ companyId }));
   }
-  yield put(push(`${BUYER_ACCOUNT_ROUTES.BANK_DETAILS}`));
+  // yield put(push(`${BUYER_ACCOUNT_ROUTES.BANK_DETAILS}`));
 }
 
 function* deleteCardWatcher() {

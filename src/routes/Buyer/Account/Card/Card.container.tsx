@@ -1,5 +1,6 @@
 import React, { useState, useReducer, useEffect } from 'react';
 
+import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import moment from 'moment';
 import pathOr from 'ramda/es/pathOr';
 import { useDispatch, useSelector } from 'react-redux';
@@ -60,6 +61,10 @@ const Card = (): JSX.Element => {
   const isLoading = pendingAddCard || pendingUpdateDefaultCard;
   const isRemoving =
     useSelector((state: Store) => state.deleteCard.pending) || false;
+
+  const deleteStatus =
+    useSelector((state: Store) => state.deleteCard.data?.status) || false;
+
   const addCardResult = useSelector((state: Store) => state.addCardToken);
 
   const updateDefaultCardResult = useSelector(
@@ -80,6 +85,13 @@ const Card = (): JSX.Element => {
     if (updateDefaultCardResult.data && submitted) history.goBack();
     // eslint-disable-next-line
   }, [updateDefaultCardResult]);
+
+  useEffect(() => {
+    if (deleteStatus === 200 && isExisting) {
+      history.push(BUYER_ACCOUNT_ROUTES.BANK_DETAILS);
+    }
+    // eslint-disable-next-line
+  }, [deleteStatus]);
 
   const onAddCard = (formCardDetails: CardDetails) => {
     if (!isLoading) {

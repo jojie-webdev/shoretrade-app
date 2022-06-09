@@ -5,6 +5,7 @@ import _ from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
+  deleteCardActions,
   getMarketInterestsActions,
   getPaymentMethodsActions,
   getSubscriptionPlansActions,
@@ -16,6 +17,7 @@ import { createUpdateReducer } from 'utils/Hooks';
 import { toPrice } from 'utils/String';
 
 import {
+  Card,
   NewCardDetails,
   PlanPaymentMethodGeneratedProps,
 } from './PlanPaymentMethod.props';
@@ -25,6 +27,7 @@ const PlanPaymentMethod = (): JSX.Element => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [selectedCardId, setSelectedCardId] = useState('');
+  const currentCompany = GetDefaultCompany();
 
   // SELECTORS
 
@@ -54,6 +57,28 @@ const PlanPaymentMethod = (): JSX.Element => {
       (state: Store) => state.getPaymentMethods.data?.data.data?.cards
     ) || [];
 
+  const defaultCard =
+    useSelector(
+      (state: Store) => state.getPaymentMethods.data?.data.data?.defaultCard
+    ) || null;
+
+  const isRemoving =
+    useSelector((state: Store) => state.deleteCard.pending) || false;
+
+  const deleteCardStatus =
+    useSelector((state: Store) => state.deleteCard.data?.status) || false;
+
+  const onRemoveCard = (card: Card) => {
+    if (!isRemoving) {
+      dispatch(
+        deleteCardActions.request({
+          companyId: currentCompany?.id || '',
+          card: card?.id || '',
+        })
+      );
+    }
+  };
+
   // USE EFFECTS
 
   useEffect(() => {
@@ -68,7 +93,7 @@ const PlanPaymentMethod = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    if (isPaymentSuccess) {
+    if (!deleteCardStatus && isPaymentSuccess) {
       history.push(BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN);
     }
   }, [isPaymentSuccess]);
@@ -99,11 +124,13 @@ const PlanPaymentMethod = (): JSX.Element => {
 
   const generatedProps: PlanPaymentMethodGeneratedProps = {
     cards,
-    amountDue: toPrice(activePlan?.price || monthlyPlan?.price || '0'),
+    amountDue: toPrice(activePlan?.price || monthlyPlan?.price || 0),
     selectedCardId,
     isPaymentLoading,
     payPlanAmountDue,
     setSelectedCardId,
+    defaultCard: defaultCard ? defaultCard : '',
+    onRemoveCard,
   };
 
   return <PlanPaymentMethodView {...generatedProps} />;

@@ -8,5 +8,7 @@ export interface InteractionCreditCardProps extends InteractionsProps {
   lastFour: string;
   name: string;
   isDefault?: boolean;
+  hideDetailBtn?: boolean;
   onClick: () => void;
+  onRemove?: () => void;
 }
