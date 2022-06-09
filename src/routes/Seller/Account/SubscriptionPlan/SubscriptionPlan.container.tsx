@@ -120,6 +120,7 @@ const SubscriptionPlan = () => {
   const params: SubscriptionPlanGeneratedProps = {
     ...activePlanToProps(plans, activePlan),
     planStatus,
+    company,
     planInterval,
     currentMarketSector,
     cancelSubscription,

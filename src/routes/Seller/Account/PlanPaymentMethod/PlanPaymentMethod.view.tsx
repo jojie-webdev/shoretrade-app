@@ -10,8 +10,10 @@ import FormikTextField from 'components/module/FormikTextField';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Form, Formik, useFormikContext } from 'formik';
+import qs from 'qs';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
+import { useHistory } from 'react-router-dom';
 import { createUpdateReducer } from 'utils/Hooks';
 import { cardExpiryInputFilter } from 'utils/InputFilters/cardExpiryInputFilter';
 import { cardNumberInputFilter } from 'utils/InputFilters/cardNumberInputFilter';
@@ -35,8 +37,13 @@ const PlanPaymentMethodView = ({
   selectedCardId,
   payPlanAmountDue,
   setSelectedCardId,
+  defaultCard,
+  isPaymentLoading,
+  onRemoveCard,
+  companyId,
 }: PlanPaymentMethodGeneratedProps) => {
   const theme = useTheme();
+  const history = useHistory();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   const [isDefault, setIsDefault] = useState(false);
@@ -275,7 +282,10 @@ const PlanPaymentMethodView = ({
                   )}
                   {cards.map((card) => (
                     <CreditCardInteraction
+                      onRemove={() => onRemoveCard(card)}
                       key={card.id}
+                      hideDetailBtn
+                      isDefault={defaultCard === card.id}
                       {...card}
                       type="radio"
                       pressed={selectedCardId === card.id}
@@ -287,6 +297,23 @@ const PlanPaymentMethodView = ({
                       }
                     />
                   ))}
+                  <Button
+                    style={{ marginTop: '12px' }}
+                    text="Add Card"
+                    variant="primary"
+                    type="button"
+                    onClick={() => {
+                      history.push(
+                        `${SELLER_ACCOUNT_ROUTES.CREDIT_CARD}${qs.stringify(
+                          { companyId },
+                          { addQueryPrefix: true }
+                        )}`,
+                        {
+                          card: {},
+                        }
+                      );
+                    }}
+                  />
                 </Col>
               )}
             </Row>

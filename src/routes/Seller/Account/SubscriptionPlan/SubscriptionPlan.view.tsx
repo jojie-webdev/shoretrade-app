@@ -16,6 +16,7 @@ import PlanFeatures from 'components/module/PlanFeatures';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
+import qs from 'qs';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
@@ -53,6 +54,7 @@ export const SubscriptionPlanView = ({
   cancelSubscription,
   updateSubscription,
   renewSubscription,
+  company,
 }: SubscriptionPlanGeneratedProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS.sm });
@@ -151,7 +153,10 @@ export const SubscriptionPlanView = ({
 
               <Link
                 className="see-payment-methods"
-                to={SELLER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD}
+                to={`${SELLER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD}${qs.stringify(
+                  { companyId: company?.id },
+                  { addQueryPrefix: true }
+                )}`}
               >
                 <Typography
                   variant="label"

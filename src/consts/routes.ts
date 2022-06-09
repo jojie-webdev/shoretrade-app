@@ -101,6 +101,8 @@ export const SELLER_ACCOUNT_ROUTES = {
   SUBSCRIPTION_PLAN: `${SELLER_ROUTES.ACCOUNT}/subscription-plan`,
   PAYMENT_HISTORY: `${SELLER_ROUTES.ACCOUNT}/payment-history`,
   PLAN_PAYMENT_METHOD: `${SELLER_ROUTES.ACCOUNT}/subscription-plan/payment-method`,
+  CREDIT_CARD: `${SELLER_ROUTES.ACCOUNT}/bank-details/credit-card`,
+  ADD_CREDIT: `${SELLER_ROUTES.ACCOUNT}/bank-details/add-credit`,
 };
 
 export const BUYER_ROUTES = {

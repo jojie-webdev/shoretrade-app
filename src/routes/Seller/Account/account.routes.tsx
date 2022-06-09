@@ -26,6 +26,8 @@ import PlanPaymentMethod from './PlanPaymentMethod';
 import ShippingAddresses from './ShippingAddresses';
 import SubscriptionPlan from './SubscriptionPlan';
 import YourDetails from './YourDetails';
+import Card from './Card';
+import AddCredit from './AddCredit';
 
 const ROUTES: Routes = {
   LANDING: {
@@ -79,6 +81,14 @@ const ROUTES: Routes = {
   CREATE_ADDRESS: {
     path: SELLER_ACCOUNT_ROUTES.CREATE_ADDRESS,
     children: <CreateAddress />,
+  },
+  CREDIT_CARD: {
+    path: SELLER_ACCOUNT_ROUTES.CREDIT_CARD,
+    children: <Card />,
+  },
+  ADD_CREDIT: {
+    path: SELLER_ACCOUNT_ROUTES.ADD_CREDIT,
+    children: <AddCredit />,
   },
   ACCOUNT_COMPLETION: {
     path: SELLER_ACCOUNT_ROUTES.ACCOUNT_COMPLETION,

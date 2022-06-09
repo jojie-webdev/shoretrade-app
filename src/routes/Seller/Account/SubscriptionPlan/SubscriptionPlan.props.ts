@@ -1,4 +1,5 @@
 import { SubscriptionPlanFeature } from 'types/store/GetSubscriptionPlansState';
+import { UserCompany } from 'types/store/GetUserState';
 
 export interface SubscriptionPlanTransformOutputProps {
   annualPrice: string;
@@ -14,6 +15,7 @@ export interface SubscriptionPlanGeneratedProps
   extends SubscriptionPlanTransformOutputProps {
   planStatus: string;
   planInterval: string;
+  company?: UserCompany;
   currentMarketSector: string;
   cancelSubscription: (interval: 'MONTHLY' | 'ANNUAL') => void;
   updateSubscription: (interval: 'MONTHLY' | 'ANNUAL') => void;

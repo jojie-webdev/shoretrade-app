@@ -101,7 +101,10 @@ const AccountLandingView = ({
     {
       iconName: 'dashboardOutline',
       value: 'Your Plan',
-      path: SELLER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
+      path: `${SELLER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN}${qs.stringify(
+        { companyId: currentCompany?.id },
+        { addQueryPrefix: true }
+      )}`,
     },
     {
       iconName: 'fileAlt',

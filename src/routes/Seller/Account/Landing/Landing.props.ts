@@ -15,3 +15,5 @@ export interface AccountLandingGeneratedProps {
   accountCompletion?: GetAccountCompletionRequestData;
   activePlan?: GetActivePlanResponseData;
 }
+
+export type QueryParams = { companyId: string };
