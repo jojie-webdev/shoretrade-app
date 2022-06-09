@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import {
   Home2,
@@ -18,10 +18,11 @@ import { yourPlanFeaturesList } from 'consts/subcriptionPlan';
 import { Col, Row } from 'react-grid-system';
 import { useTheme } from 'utils/Theme';
 
-import { PlanFeaturesProps } from './PlanFeatures.props';
-import { Container } from './PlanFeatures.style';
+// import { useTheme } from 'utils/Theme';
+import { InclusionsListGeneratedProps } from './InclusionsList.props';
+import { Container } from './InclusionsList.style';
 
-const PlanFeatures = (props: PlanFeaturesProps): JSX.Element => {
+const InclusionsListView = (props: InclusionsListGeneratedProps) => {
   const { selectedPlan, currentMarketSector } = props;
   const theme = useTheme();
 
@@ -58,13 +59,12 @@ const PlanFeatures = (props: PlanFeaturesProps): JSX.Element => {
   };
 
   type planFeatureListType = typeof yourPlanFeaturesList;
+  const marketSector =
+    currentMarketSector && MARKET_GROUP_1.includes(currentMarketSector)
+      ? 'group_1'
+      : 'group_2';
 
   const buyerPlanHandler = () => {
-    const marketSector =
-      currentMarketSector && MARKET_GROUP_1.includes(currentMarketSector)
-        ? 'group_1'
-        : 'group_2';
-
     return theme.appType && selectedPlan && marketSector
       ? `${theme.appType}_${selectedPlan?.toLocaleLowerCase()}_${marketSector}`
       : 'buyer_standard_group_1';
@@ -73,34 +73,43 @@ const PlanFeatures = (props: PlanFeaturesProps): JSX.Element => {
   const planFeatureList =
     theme.appType === 'buyer' ? buyerPlanHandler() : theme.appType;
 
+  const skippedFeatures =
+    marketSector === 'group_1'
+      ? ['COST', 'PLUS', 'LINKED_ACCOUNTS']
+      : ['COST', 'PLUS', 'BUYING_ADDRESSES', 'LINKED_ACCOUNTS'];
+
   return (
     <Container isSeller={theme.appType === 'seller'}>
       {yourPlanFeaturesList[planFeatureList as keyof planFeatureListType].map(
-        (feat: any) => (
-          <Row key={feat.alias} gutterWidth={16}>
-            <Col xs="content">
-              <div className="icon-holder">{getIcon(feat.alias)}</div>
-            </Col>
-            <Col>
-              <Typography
-                variant="body"
-                color={theme.appType === 'seller' ? 'noshade' : 'shade9'}
-              >
-                {feat.name}
-              </Typography>
-              <Typography
-                variant="label"
-                color={theme.appType === 'seller' ? 'shade6' : 'shade7'}
-                weight="400"
-              >
-                {feat.description}
-              </Typography>
-            </Col>
-          </Row>
-        )
+        (feat: any) => {
+          if (skippedFeatures.includes(feat.alias)) return;
+
+          return (
+            <Row key={feat.alias} gutterWidth={16}>
+              <Col xs="content">
+                <div className="icon-holder">{getIcon(feat.alias)}</div>
+              </Col>
+              <Col>
+                <Typography
+                  variant="body"
+                  color={theme.appType === 'seller' ? 'noshade' : 'shade9'}
+                >
+                  {feat.name}
+                </Typography>
+                <Typography
+                  variant="label"
+                  color={theme.appType === 'seller' ? 'shade6' : 'shade7'}
+                  weight="400"
+                >
+                  {feat.description}
+                </Typography>
+              </Col>
+            </Row>
+          );
+        }
       )}
     </Container>
   );
 };
 
-export default React.memo(PlanFeatures);
+export default InclusionsListView;

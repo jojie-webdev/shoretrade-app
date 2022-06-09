@@ -40,6 +40,7 @@ export const SubscriptionContainer = styled.div`
     background: ${({ theme }) => theme.grey.noshade};
     border-radius: 12px;
     padding: 24px;
+    width: 100%;
   }
 
   @media ${BREAKPOINTS.sm} {
@@ -98,13 +99,37 @@ export const BillingSection = styled.div`
   }
 `;
 
-export const PlanSection = styled.div`
-  padding-bottom: 24px;
+export const FlexContainer = styled.div`
+  display: flex;
+`;
 
-  .plan-rate {
-    display: flex;
-    margin: 24px 0;
-  }
+export const PlanTitleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+`;
+
+export const PlanContainer = styled.div`
+  display: flex;
+  justify-content: center;
+
+  margin-bottom: 24px;
+  background: ${({ theme }) => theme.grey.noshade};
+  border-radius: 12px;
+`;
+
+export const PlanSection = styled.div`
+  display: flex;
+  gap: 24px;
+`;
+
+export const Subscription = styled.div`
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e5e8f5;
+  border-radius: 12px;
+  padding: 24px;
+  width: 50%;
 
   .subscription-action {
     margin-top: 24px;
@@ -112,21 +137,6 @@ export const PlanSection = styled.div`
       cursor: pointer;
     }
   }
-`;
-
-export const FlexContainer = styled.div`
-  display: flex;
-`;
-
-export const PlanTitleContainer = styled.div`
-  display: flex;
-  margin-bottom: 24px;
-`;
-
-export const PlanContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 24px;
 `;
 
 export const AdditionalSubSection = styled.div`
@@ -139,8 +149,45 @@ export const AdditionalSubSection = styled.div`
 `;
 
 export const Footer = styled.div`
-  margin-top: 32px;
   display: flex;
   flex-direction: column;
   gap 8px;
+`;
+
+export const PlanPriceContainer = styled.div`
+  margin: 8px;
+`;
+
+export const PlanPrice = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+`;
+
+export const IncusionSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0 24px;
+  padding-bottom: 24px;
+  margin-top: 8px;
+`;
+
+export const ReverseMarketplace = styled.div`
+  display: flex;
+  padding-bottom: 24px;
+`;
+
+export const SpecialInclusionsContainer = styled.div`
+  margin-top: 8px;
+  position: relative;
+`;
+
+export const TooltipWrapper = styled.span`
+  .tooltip-container {
+    margin: 4px;
+  }
+`;
+
+export const FooterNote = styled.div`
+  margin-bottom: 16px;
 `;

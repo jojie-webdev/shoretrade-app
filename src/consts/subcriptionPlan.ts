@@ -107,7 +107,7 @@ export const yourPlanFeaturesList = {
     },
     {
       name: 'No Addtional Fees',
-      description: '',
+      description: 'No additional fees!',
       alias: 'PLUS',
     },
     {
@@ -218,7 +218,7 @@ export const yourPlanFeaturesList = {
     },
     {
       name: 'No Addtional Fees',
-      description: '',
+      description: 'No additional fees!',
       alias: 'PLUS',
     },
     {

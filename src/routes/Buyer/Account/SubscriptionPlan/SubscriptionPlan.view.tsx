@@ -3,14 +3,21 @@ import React, { useEffect, useState } from 'react';
 import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import { Calendar, Mastercard } from 'components/base/SVG';
+import { DollarSign } from 'components/base/SVG';
 import TwoWayToggle from 'components/base/TwoWayToggle';
 import Typography from 'components/base/Typography';
-import AdditionalPlanFeatures from 'components/module/AdditionalPlanFeatures';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import CreditCardLogo from 'components/module/CreditCardLogo';
+import IconTooltip from 'components/module/IconTooltip';
 import PlanFeatures from 'components/module/PlanFeatures';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { MARKET_GROUP_1 } from 'consts/markets';
+import {
+  REVERSE_MARKETPLACE_PRICE,
+  BUYER_BASE_PRICE,
+  BUYER_PREMIUM_PRICE,
+} from 'consts/prices';
 import _ from 'lodash';
 import moment from 'moment';
 import { Col, Row } from 'react-grid-system';
@@ -20,6 +27,8 @@ import { toPrice } from 'utils/String';
 import { getButtonTextByStatus } from 'utils/SubscriptionPlan/getButtonTextByStatus';
 import { useTheme } from 'utils/Theme';
 
+import InclusionsList from './InclusionsList/InclusionsList.view';
+import SpecialInclusionsList from './SpecialInclusionsList/SpecialInclusionsList.view';
 import { SubscriptionPlanGeneratedProps } from './SubscriptionPlan.props';
 import {
   BillingSection,
@@ -30,11 +39,16 @@ import {
   PaymentMethodSection,
   PlanSection,
   SubscriptionContainer,
-  ToggleContainer,
   PlanContainer,
   AdditionalSubSection,
   PlanTitleContainer,
-  Footer,
+  Subscription,
+  PlanPrice,
+  IncusionSection,
+  ReverseMarketplace,
+  SpecialInclusionsContainer,
+  TooltipWrapper,
+  FooterNote,
 } from './SubscriptionPlan.style';
 
 export const SubscriptionPlanView = ({
@@ -67,6 +81,7 @@ export const SubscriptionPlanView = ({
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [showRenewModal, setShowRenewModal] = useState(false);
   const price = toPrice(isMonthly ? monthlyPrice : annualPrice);
+
   const redirectState = {
     from: {
       label: 'Plan',
@@ -76,25 +91,36 @@ export const SubscriptionPlanView = ({
   const reverseMarketPlace = features.find(
     (feature) => feature.alias === 'REVERSED_MARKETPLACE'
   );
+
+  const reverseMarketPlacePrice = reverseMarketPlace
+    ? theme.appType === 'seller'
+      ? REVERSE_MARKETPLACE_PRICE.SELLER
+      : REVERSE_MARKETPLACE_PRICE.BUYER
+    : 0;
+  const planPrice = isMonthly ? monthlyPrice : annualPrice;
+  const nextBillingAmount = parseInt(planPrice) + reverseMarketPlacePrice;
+
   const selectedPlan = subscriptionType === 'STANDARD' ? 'Standard' : 'Premium';
+
+  const basePrice = BUYER_BASE_PRICE.find(
+    (item) => item.market === currentMarketSector.toUpperCase()
+  )?.price;
+  const premiumPrice = BUYER_PREMIUM_PRICE.find(
+    (item) => item.market === currentMarketSector.toUpperCase()
+  )?.price;
+
+  console.log('currentMarketSector', currentMarketSector);
+  console.log('basicPlanPriceKey', basePrice);
 
   useEffect(() => {
     setIsMonthly(planInterval !== 'ANNUAL');
   }, [planInterval]);
 
   const interval = isMonthly ? 'MONTHLY' : 'ANNUAL';
-  const plan = isMonthly ? 'Base' : 'Premium';
   const isForRenewal =
     ['CANCELLED', 'OVERDUE', 'UNSUBSCRIBED'].includes(planStatus) ||
     isDeactivated;
 
-  const yourPlanBadgeText = isForRenewal
-    ? planStatus === 'OVERDUE'
-      ? 'OVERDUE'
-      : 'CANCELLED'
-    : !isSaasSubscribed
-    ? 'CANCELLED'
-    : null;
   const isOverdueBadgeVisible = [
     'UNSUCCESSFUL',
     'LATE',
@@ -182,6 +208,19 @@ export const SubscriptionPlanView = ({
                   )}
                 </div>
 
+                <Typography variant="body" weight="400">
+                  Next Billing Amount
+                </Typography>
+                <div className="billing-date">
+                  <DollarSign fill={theme.grey.shade7} width={16} height={20} />
+                  <Typography
+                    variant="body"
+                    style={{ marginLeft: '6px', lineHeight: 'normal' }}
+                  >
+                    <b>{nextBillingAmount.toFixed(2)}</b>
+                  </Typography>
+                </div>
+
                 <Link
                   className="see-payment-history"
                   to={{
@@ -205,52 +244,47 @@ export const SubscriptionPlanView = ({
           <Col md={12} lg={8}>
             <PlanContainer>
               <Row gutterWidth={20} style={{ width: '100%' }}>
-                <Col md={12} xl={6} style={{ marginBottom: '24px' }}>
-                  <PlanSection className="section">
+                <PlanSection className="section">
+                  <Subscription>
                     <PlanTitleContainer>
                       <Typography
-                        variant="body"
+                        variant="title6"
                         weight="900"
                         customFont={theme.isSFM ? 'Canela' : 'Media Sans'}
                       >
                         Basic Plan
                       </Typography>
-
-                      {subscriptionType === 'STANDARD' && (
-                        <Badge
-                          badgeColor={theme.brand.primary}
-                          borderRadius="8px"
-                          style={{ marginLeft: '8px' }}
-                        >
-                          <Typography
-                            variant="overline"
-                            color="noshade"
-                            style={{ lineHeight: 'normal' }}
-                          >
-                            subscribed
-                          </Typography>
-                        </Badge>
-                      )}
-                    </PlanTitleContainer>
-
-                    <PlanFeatures
-                      selectedPlan="Standard"
-                      currentMarketSector={currentMarketSector}
-                    />
-
-                    <Footer>
-                      <Typography variant="caption" weight="regular">
-                        *Minimum 3 month sign up, starting from your account
-                        approval date.
-                      </Typography>
-                      {selectedPlan === 'Standard' && (
-                        <Typography variant="caption" weight="regular">
-                          **The Transaction Value is the total value of the
-                          products in your order excluding any crate fees and
-                          shipping costs.
+                      <PlanPrice>
+                        <Typography variant="title6" weight="400">
+                          {basePrice ? toPrice(basePrice) : 0}
                         </Typography>
-                      )}
-                    </Footer>
+                        <Typography variant="label" weight="400" color="shade6">
+                          /Month
+                        </Typography>
+                      </PlanPrice>
+                      <SpecialInclusionsContainer>
+                        <Typography
+                          variant="label"
+                          color={
+                            theme.appType === 'seller' ? 'shade6' : 'shade7'
+                          }
+                          weight="400"
+                        >
+                          2% buying fee on transaction value*
+                          <TooltipWrapper>
+                            <IconTooltip
+                              variant="info"
+                              iconSize={12}
+                              content="The Transaction Value is the total value of the products in your order excluding any crate fees and shipping costs."
+                            />
+                          </TooltipWrapper>
+                        </Typography>
+                        <SpecialInclusionsList
+                          selectedPlan="Standard"
+                          currentMarketSector={currentMarketSector}
+                        />
+                      </SpecialInclusionsContainer>
+                    </PlanTitleContainer>
 
                     {!!yourPlanButtonText &&
                     subscriptionType === 'STANDARD' &&
@@ -291,46 +325,42 @@ export const SubscriptionPlanView = ({
                         </Typography>
                       </div>
                     )}
-                  </PlanSection>
-                </Col>
-                <Col md={12} xl={6} style={{ marginBottom: '24px' }}>
-                  <PlanSection className="section">
+                  </Subscription>
+                  <Subscription>
                     <PlanTitleContainer>
                       <Typography
-                        variant="body"
+                        variant="title6"
                         weight="900"
                         customFont={theme.isSFM ? 'Canela' : 'Media Sans'}
                       >
                         Premium Plan
                       </Typography>
-                      {subscriptionType !== 'STANDARD' && (
-                        <Badge
-                          badgeColor={theme.brand.primary}
-                          borderRadius="8px"
-                          style={{ marginLeft: '8px' }}
+                      <PlanPrice>
+                        <Typography variant="title6" weight="400">
+                          {premiumPrice ? toPrice(premiumPrice) : 0}
+                        </Typography>
+                        <Typography variant="label" weight="400" color="shade6">
+                          /Month
+                        </Typography>
+                      </PlanPrice>
+
+                      <SpecialInclusionsContainer>
+                        <Typography
+                          variant="label"
+                          color={
+                            theme.appType === 'seller' ? 'shade6' : 'shade7'
+                          }
+                          weight="400"
                         >
-                          <Typography
-                            variant="overline"
-                            color="noshade"
-                            style={{ lineHeight: 'normal' }}
-                          >
-                            subscribed
-                          </Typography>
-                        </Badge>
-                      )}
+                          No additional fees!
+                        </Typography>
+
+                        <SpecialInclusionsList
+                          selectedPlan="Premium"
+                          currentMarketSector={currentMarketSector}
+                        />
+                      </SpecialInclusionsContainer>
                     </PlanTitleContainer>
-
-                    <PlanFeatures
-                      selectedPlan="Premium"
-                      currentMarketSector={currentMarketSector}
-                    />
-
-                    <Footer>
-                      <Typography variant="caption" weight="regular">
-                        *Minimum 3 month sign up, starting from your account
-                        approval date.
-                      </Typography>
-                    </Footer>
 
                     {!!yourPlanButtonText &&
                     subscriptionType !== 'STANDARD' &&
@@ -371,8 +401,71 @@ export const SubscriptionPlanView = ({
                         </Typography>
                       </div>
                     )}
-                  </PlanSection>
-                </Col>
+                  </Subscription>
+                </PlanSection>
+                <IncusionSection>
+                  <Typography
+                    variant="title6"
+                    weight="900"
+                    customFont={theme.isSFM ? 'Canela' : 'Media Sans'}
+                  >
+                    What included in Basic and Premiun plan
+                  </Typography>
+                  <InclusionsList
+                    selectedPlan={selectedPlan}
+                    currentMarketSector={currentMarketSector}
+                  />
+                  <FooterNote>
+                    <Typography
+                      variant="label"
+                      color={theme.appType === 'seller' ? 'shade6' : 'shade7'}
+                      weight="400"
+                    >
+                      *Minimum 3 month sign up, starting from your account
+                      approval date.
+                    </Typography>
+                  </FooterNote>
+
+                  {!!yourPlanButtonText &&
+                  subscriptionType === 'STANDARD' &&
+                  isSaasSubscribed ? (
+                    <div
+                      className="subscription-action"
+                      onClick={() =>
+                        isForRenewal
+                          ? showYourPlanOnly
+                            ? history.push(
+                                BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD
+                              )
+                            : setShowRenewModal(true)
+                          : setShowCancelModal(true)
+                      }
+                    >
+                      <Typography
+                        variant="label"
+                        color="primary"
+                        weight="400"
+                        style={{ textDecoration: 'underline' }}
+                      >
+                        {yourPlanButtonText}
+                      </Typography>
+                    </div>
+                  ) : (
+                    <div
+                      className="subscription-action"
+                      onClick={() => setShowToggleModal(true)}
+                    >
+                      <Typography
+                        variant="label"
+                        color="primary"
+                        weight="400"
+                        style={{ textDecoration: 'underline' }}
+                      >
+                        Cancel Subscription
+                      </Typography>
+                    </div>
+                  )}
+                </IncusionSection>
               </Row>
             </PlanContainer>
             <PlanContainer>
@@ -381,35 +474,44 @@ export const SubscriptionPlanView = ({
                   <AdditionalSubSection className="section">
                     <PlanTitleContainer>
                       <Typography
-                        variant="body"
+                        variant="title6"
                         weight="900"
                         customFont={theme.isSFM ? 'Canela' : 'Media Sans'}
                       >
-                        Reverse Marketplace $49.9
+                        Reverse Marketplace
                       </Typography>
-                      {reverseMarketPlace && (
-                        <Badge
-                          badgeColor={theme.brand.primary}
-                          borderRadius="8px"
-                          style={{ marginLeft: '8px' }}
-                        >
-                          <Typography
-                            variant="overline"
-                            color="noshade"
-                            style={{ lineHeight: 'normal' }}
-                          >
-                            subscribed
-                          </Typography>
-                        </Badge>
-                      )}
+                      <PlanPrice>
+                        <Typography variant="title6" weight="400">
+                          {theme.appType === 'seller'
+                            ? REVERSE_MARKETPLACE_PRICE.SELLER
+                            : REVERSE_MARKETPLACE_PRICE.BUYER}
+                        </Typography>
+                        <Typography variant="label" weight="400" color="shade6">
+                          /Month
+                        </Typography>
+                      </PlanPrice>
                     </PlanTitleContainer>
+                    <ReverseMarketplace>
+                      <Typography
+                        variant="label"
+                        color={theme.appType === 'seller' ? 'shade6' : 'shade7'}
+                        weight="400"
+                      >
+                        The Reverse Marketplace puts you in control of the
+                        seafood supply. Instead of buying from a listing,
+                        request tailored products from the sellers on SFMblue.
+                        Recieve multiple offers on your request, negotiate
+                        prices, accept offers and get your custom products
+                        delivered straight to your door. Creating specific
+                        requests means more seafood ends up in our bellies
+                        instead of the bin, with less resoucrces taken from our
+                        oceans. Join the Reverse Market Place and become part of
+                        a sustainability initiative that is revolutionizing the
+                        seafood industry!
+                      </Typography>
+                    </ReverseMarketplace>
 
-                    <AdditionalPlanFeatures
-                      selectedPlan={selectedPlan}
-                      currentMarketSector={currentMarketSector}
-                    />
-
-                    {/* // NEEDED LATER FOR MARKET PLACE CANCEL SUBSCRIPTION TASK
+                    {/* // NEEDED LATER FOR MARKET PLACE CANCEL SUBSCRIPTION TASK */}
                     {!!yourPlanButtonText && isSaasSubscribed && (
                       <div
                         className="subscription-action"
@@ -432,7 +534,7 @@ export const SubscriptionPlanView = ({
                           {yourPlanButtonText}
                         </Typography>
                       </div>
-                    )} */}
+                    )}
                   </AdditionalSubSection>
                 </Col>
               </Row>
