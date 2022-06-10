@@ -8,7 +8,7 @@ import { DollarSign } from 'components/base/SVG';
 import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
 import FormikTextField from 'components/module/FormikTextField';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { BUYER_ACCOUNT_ROUTES } from 'consts/routes';
+import { SELLER_ACCOUNT_ROUTES } from 'consts/routes';
 import { Formik } from 'formik';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
@@ -50,10 +50,10 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
       <div className="breadcrumb-container">
         <Breadcrumbs
           sections={[
-            { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
+            { label: 'Account', link: SELLER_ACCOUNT_ROUTES.LANDING },
             {
               label: 'Balance & Payments',
-              link: BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
+              link: SELLER_ACCOUNT_ROUTES.BANK_DETAILS,
             },
             { label: 'Add Credit' },
           ]}
@@ -126,7 +126,7 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
                   text="Add a Card"
                   loading={isPending}
                   onClick={() => {
-                    history.push(`${BUYER_ACCOUNT_ROUTES.CREDIT_CARD}`, {
+                    history.push(`${SELLER_ACCOUNT_ROUTES.CREDIT_CARD}`, {
                       card: {},
                     });
                   }}
@@ -168,7 +168,7 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
               text="Add a Card"
               loading={isPending}
               onClick={() => {
-                history.push(`${BUYER_ACCOUNT_ROUTES.CREDIT_CARD}`, {
+                history.push(`${SELLER_ACCOUNT_ROUTES.CREDIT_CARD}`, {
                   card: {},
                 });
               }}

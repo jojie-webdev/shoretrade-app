@@ -6,7 +6,7 @@ import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import { Visa, Mastercard, Amex } from 'components/base/SVG';
 import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
-import { BUYER_ACCOUNT_ROUTES } from 'consts';
+import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Formik } from 'formik';
 import { useMediaQuery } from 'react-responsive';
@@ -42,10 +42,10 @@ const CardView = (props: CardGeneratedProps) => {
       <div className="breadcrumb-container">
         <Breadcrumbs
           sections={[
-            { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
+            { label: 'Account', link: SELLER_ACCOUNT_ROUTES.LANDING },
             {
               label: 'Balance & Payments',
-              link: BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
+              link: SELLER_ACCOUNT_ROUTES.BANK_DETAILS,
             },
             { label: isExisting ? 'Update Card' : 'Add Card' },
           ]}

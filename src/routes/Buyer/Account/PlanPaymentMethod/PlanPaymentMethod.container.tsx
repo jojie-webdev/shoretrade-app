@@ -124,7 +124,10 @@ const PlanPaymentMethod = (): JSX.Element => {
 
   const generatedProps: PlanPaymentMethodGeneratedProps = {
     cards,
-    amountDue: toPrice(activePlan?.price || monthlyPlan?.price || 0),
+    amountDue:
+      activePlan?.price || monthlyPlan?.price
+        ? toPrice(activePlan?.price || monthlyPlan?.price || 0)
+        : undefined,
     selectedCardId,
     isPaymentLoading,
     payPlanAmountDue,

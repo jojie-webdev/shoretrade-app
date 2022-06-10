@@ -20,7 +20,7 @@ export type Card = {
 export interface PlanPaymentMethodGeneratedProps {
   payPlanAmountDue: (newCardDetails: NewCardDetails) => void;
   cards: Card[];
-  amountDue: string | number;
+  amountDue?: string;
   selectedCardId: string;
   isPaymentLoading: boolean;
   setSelectedCardId: Dispatch<SetStateAction<string>>;

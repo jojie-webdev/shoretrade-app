@@ -46,7 +46,7 @@ const PlanPaymentMethodView = ({
 
   const [isDefault, setIsDefault] = useState(false);
   const [mobileActiveTab, setMobileActiveTab] = useState(
-    amountDue !== 0 ? 'Add' : 'Existing'
+    amountDue !== undefined ? 'Add' : 'Existing'
   );
   const [otherErrors, setOtherErrors] = useReducer(
     createUpdateReducer<Record<string, string>>(),
@@ -99,7 +99,7 @@ const PlanPaymentMethodView = ({
                     selectedOption={mobileActiveTab}
                     onClickControl={(value) => {
                       setSelectedCardId('');
-                      if (amountDue !== 0) {
+                      if (!amountDue) {
                         setMobileActiveTab(value);
                       }
                     }}
@@ -302,7 +302,7 @@ const PlanPaymentMethodView = ({
               )}
             </Row>
 
-            {isMobile && amountDue !== 0 && (
+            {isMobile && amountDue && (
               <ButtonMobileContainer>
                 <Button
                   text="PAY USING CREDIT CARD"

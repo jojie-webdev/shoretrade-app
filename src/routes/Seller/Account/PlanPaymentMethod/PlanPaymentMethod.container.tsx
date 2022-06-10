@@ -83,8 +83,8 @@ const PlanPaymentMethod = (): JSX.Element => {
   }, [companyId]);
 
   const generatedProps: PlanPaymentMethodGeneratedProps = {
-    cards,
-    amountDue: toPrice(activePlan?.price || ''),
+    cards: activePlan?.payment_methods.cards || [],
+    amountDue: activePlan?.price ? toPrice(activePlan?.price || 0) : undefined,
     selectedCardId,
     payPlanAmountDue,
     setSelectedCardId,
