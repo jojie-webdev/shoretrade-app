@@ -62,6 +62,7 @@ const CategoryImage = ({
             fill={fill}
           />
         );
+      case 'F033E2B1-5FD4-4FB2-8A26-A3CD89BCA71D':
       case '3AE0F9A5-15C2-4EFE-9A75-1956762019A9':
         return (
           <CtgFish
