@@ -1501,15 +1501,6 @@ const StepForm = ({
                         your account is approved. This normally takes less than
                         24 hours.
                       </Typography>
-                      <Typography
-                        variant="title5"
-                        color="noshade"
-                        weight="400"
-                        style={{ marginBottom: 32 }}
-                      >
-                        1 Month Free Trial will start when your account is
-                        approved
-                      </Typography>
                     </>
                   )}
                 </>

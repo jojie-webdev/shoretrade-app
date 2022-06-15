@@ -31,6 +31,7 @@ export interface HomeGeneratedProps {
   sellers: SellerResults[];
   loadingHomePage: boolean;
   activePlan?: GetActivePlanResponseData;
+  currentMarketSector: string;
 }
 
 export interface HomeData {

@@ -21,3 +21,7 @@ export const BUYER_PREMIUM_PRICE = [
   { market: 'PROCESSOR', price: 599 },
 ];
 
+export const FREE_TRIAL_PERIOD = {
+  MARKET_GROUP_1: { base: 30, premium: 60 },
+  MARKET_GROUP_2: { base: 15, premium: 30 },
+};

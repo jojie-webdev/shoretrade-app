@@ -19,6 +19,8 @@ import { SellerCardProps } from 'components/module/SellerCard/SellerCard.props';
 import SubscriptionAlert from 'components/module/SubscriptionAlert';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { MARKET_GROUP_1 } from 'consts/markets';
+import { FREE_TRIAL_PERIOD } from 'consts/prices';
 import partialRight from 'ramda/es/partialRight';
 import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
@@ -100,6 +102,7 @@ const HomeView = (props: HomeGeneratedProps) => {
     loadingHomePage,
     isPendingAccount,
     activePlan,
+    currentMarketSector,
   } = props;
 
   const hideCarouselArrowArea = useMediaQuery({
@@ -110,10 +113,23 @@ const HomeView = (props: HomeGeneratedProps) => {
     query: BREAKPOINTS['md'],
   });
 
+  const selectedMarketGroup = MARKET_GROUP_1.includes(currentMarketSector)
+    ? 'MARKET_GROUP_1'
+    : 'MARKET_GROUP_2';
+
+  const subscriptionType = activePlan?.subscription_preference.type;
+  const freeTrialPeriod =
+    subscriptionType === 'PREMIUM'
+      ? FREE_TRIAL_PERIOD[selectedMarketGroup].premium
+      : FREE_TRIAL_PERIOD[selectedMarketGroup].base;
+
   return (
     <ViewContainer>
       {activePlan?.is_free_trial && (
-        <FreeTrialCountdown daysLeft={activePlan.countdown || 0} />
+        <FreeTrialCountdown
+          freeTrialPeriod={freeTrialPeriod || 30}
+          daysLeft={activePlan.countdown || 0}
+        />
       )}
 
       {!activePlan?.is_free_trial && (

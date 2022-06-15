@@ -6,6 +6,7 @@ import {
   Calendar,
   Mastercard,
   ShoretradeProSellerLogo,
+  DollarSign,
 } from 'components/base/SVG';
 import TwoWayToggle from 'components/base/TwoWayToggle';
 import Typography from 'components/base/Typography';
@@ -15,6 +16,7 @@ import CreditCardLogo from 'components/module/CreditCardLogo';
 import PlanFeatures from 'components/module/PlanFeatures';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { REVERSE_MARKETPLACE_PRICE } from 'consts/prices';
 import moment from 'moment';
 import qs from 'qs';
 import { Col, Row } from 'react-grid-system';
@@ -66,6 +68,14 @@ export const SubscriptionPlanView = ({
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [showRenewModal, setShowRenewModal] = useState(false);
   const price = toPrice(isMonthly ? monthlyPrice : annualPrice);
+
+  const getNextBillingAmount = () => {
+    const reverseMarketPlacePrice = reverseMarketPlace
+      ? REVERSE_MARKETPLACE_PRICE.SELLER
+      : 0;
+
+    return price ? parseInt(price) + reverseMarketPlacePrice : 0;
+  };
 
   useEffect(() => {
     setIsMonthly(planInterval !== 'ANNUAL');
@@ -182,6 +192,19 @@ export const SubscriptionPlanView = ({
                   style={{ marginLeft: '6px' }}
                 >
                   <b>{nextBillingDate}</b>
+                </Typography>
+              </div>
+
+              <Typography variant="body" weight="400">
+                Next Billing Amount
+              </Typography>
+              <div className="billing-date">
+                <DollarSign fill={theme.grey.shade7} width={16} height={20} />
+                <Typography
+                  variant="body"
+                  style={{ marginLeft: '6px', lineHeight: 'normal' }}
+                >
+                  <b>{getNextBillingAmount().toFixed(2)}</b>
                 </Typography>
               </div>
 

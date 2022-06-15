@@ -17,4 +17,5 @@ export interface LandingGeneratedProps {
   permission: boolean;
   accountCompletion?: GetAccountCompletionRequestData;
   activePlan?: GetActivePlanResponseData;
+  currentMarketSector: string;
 }

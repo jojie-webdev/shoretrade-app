@@ -15,15 +15,15 @@ import { FreeTrialCountdownProps } from './FreeTrialCountdown.props';
 import { Container } from './FreeTrialCountdown.style';
 
 const FreeTrialCountdown = (props: FreeTrialCountdownProps): JSX.Element => {
-  const { daysLeft, small = false } = props;
+  const { daysLeft, small = false, freeTrialPeriod } = props;
   const theme = useTheme();
   const history = useHistory();
   const isBuyer = theme.appType === 'buyer';
   const STLogo = isBuyer ? ShoretradeProBuyerLogo : ShoretradeProSellerLogo;
   const SFMLogo = SfmLogo;
+  const progressRate = (daysLeft / freeTrialPeriod) * 100;
 
   const getProgressBarColor = () => {
-    const progressRate = (daysLeft / 30) * 100;
     let barColor = theme.brand.alert;
 
     if (progressRate > 50) {
@@ -47,7 +47,7 @@ const FreeTrialCountdown = (props: FreeTrialCountdownProps): JSX.Element => {
 
   return (
     <Container {...props} onClick={() => daysLeft === 0 && pushToUpgrade()}>
-      {!small && !theme.isSFM ? <STLogo width={82} /> : <SFMLogo width={82} />}
+      {!small && (theme.isSFM ? <SFMLogo width={82} /> : <STLogo width={82} />)}
 
       <div>
         <Typography
@@ -62,7 +62,7 @@ const FreeTrialCountdown = (props: FreeTrialCountdownProps): JSX.Element => {
             : 'Free Trial Expired'}
         </Typography>
         <ProgressBar
-          progress={(daysLeft / 30) * 100}
+          progress={progressRate}
           color={getProgressBarColor()}
           height={4}
         />

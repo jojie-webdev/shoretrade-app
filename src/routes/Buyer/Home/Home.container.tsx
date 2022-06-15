@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
+import { getMarketInterestsActions } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
@@ -13,6 +14,7 @@ import HomeView from './Home.view';
 import HomeViewOld from './Home.view.old';
 
 const Home = (): JSX.Element => {
+  const dispatch = useDispatch();
   const isOld = useHomeOld();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -57,6 +59,16 @@ const Home = (): JSX.Element => {
     UserCompany | undefined
   >();
 
+  const marketSector = useSelector(
+    (state: Store) => state.getMarketInterests.data?.data.sectorAlias
+  );
+
+  useEffect(() => {
+    if (company) {
+      dispatch(getMarketInterestsActions.request({ companyId: company.id }));
+    }
+  }, [company]);
+
   // MARK:- Methods
   const getCreditState = (): CreditState => {
     if (Number(currentCompany?.credit || 0) === 0) {
@@ -84,6 +96,7 @@ const Home = (): JSX.Element => {
   // MARK:- Bottom Variables
   const creditBalance = currentCompany?.credit || '0';
   const creditState: CreditState = getCreditState();
+  const currentMarketSector = marketSector ? marketSector : '';
 
   const generatedProps: HomeGeneratedProps = {
     isPendingAccount,
@@ -100,6 +113,7 @@ const Home = (): JSX.Element => {
     sellers,
     loadingHomePage,
     activePlan,
+    currentMarketSector,
   };
 
   return isOld ? (

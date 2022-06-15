@@ -20,6 +20,8 @@ import GradientProgressCircle from 'components/module/GradientProgressCircle';
 import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { MARKET_GROUP_1 } from 'consts/markets';
+import { FREE_TRIAL_PERIOD } from 'consts/prices';
 import qs from 'qs';
 import { isEmpty } from 'ramda';
 import { Col, Row } from 'react-grid-system';
@@ -52,6 +54,7 @@ const LandingView = (props: LandingGeneratedProps) => {
     permission,
     accountCompletion,
     activePlan,
+    currentMarketSector,
   } = props;
 
   const getIcon = (iconName: string) => {
@@ -145,6 +148,16 @@ const LandingView = (props: LandingGeneratedProps) => {
     };
   });
 
+  const selectedMarketGroup = MARKET_GROUP_1.includes(currentMarketSector)
+    ? 'MARKET_GROUP_1'
+    : 'MARKET_GROUP_2';
+
+  const subscriptionType = activePlan?.subscription_preference.type;
+  const freeTrialPeriod =
+    subscriptionType === 'PREMIUM'
+      ? FREE_TRIAL_PERIOD[selectedMarketGroup].premium
+      : FREE_TRIAL_PERIOD[selectedMarketGroup].base;
+
   return (
     <Container>
       <Row>
@@ -190,7 +203,11 @@ const LandingView = (props: LandingGeneratedProps) => {
           </UserInfoContainer>
 
           {activePlan?.is_free_trial && (
-            <FreeTrialCountdown daysLeft={activePlan.countdown} small={true} />
+            <FreeTrialCountdown
+              freeTrialPeriod={freeTrialPeriod || 30}
+              daysLeft={activePlan.countdown}
+              small={true}
+            />
           )}
         </Col>
 

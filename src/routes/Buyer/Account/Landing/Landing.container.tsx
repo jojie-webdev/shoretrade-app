@@ -9,7 +9,9 @@ import {
   updateUserActions,
   logoutActions,
   getAccountCompletionActions,
+  getMarketInterestsActions,
 } from 'store/actions';
+import { GetDefaultCompany } from 'store/selectors/buyer';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
 import { isPermitted } from 'utils/isPermitted';
@@ -19,6 +21,7 @@ import LandingView from './Landing.view';
 
 const Landing = (): JSX.Element => {
   const dispatch = useDispatch();
+  const company = GetDefaultCompany();
 
   const [currentCompany, setCurrentCompany] = useState<
     UserCompany | undefined
@@ -48,6 +51,10 @@ const Landing = (): JSX.Element => {
 
   const updatingImage =
     useSelector((state: Store) => state.updateUser.pending) || false;
+
+  const marketSector = useSelector(
+    (state: Store) => state.getMarketInterests.data?.data.sectorAlias
+  );
 
   const updateImage = (image: File) => {
     dispatch(
@@ -79,6 +86,12 @@ const Landing = (): JSX.Element => {
   }, [loadingUser]);
 
   useEffect(() => {
+    if (company) {
+      dispatch(getMarketInterestsActions.request({ companyId: company.id }));
+    }
+  }, [company]);
+
+  useEffect(() => {
     if (currentCompany?.id) {
       dispatch(
         getAccountCompletionActions.request({
@@ -88,6 +101,8 @@ const Landing = (): JSX.Element => {
     }
     // eslint-disable-next-line
   }, [currentCompany]);
+
+  const currentMarketSector = marketSector ? marketSector : 'none';
 
   const generatedProps: LandingGeneratedProps = {
     credit: currentCompany?.credit,
@@ -103,6 +118,7 @@ const Landing = (): JSX.Element => {
     permission,
     accountCompletion,
     activePlan,
+    currentMarketSector,
   };
   return <LandingView {...generatedProps} />;
 };

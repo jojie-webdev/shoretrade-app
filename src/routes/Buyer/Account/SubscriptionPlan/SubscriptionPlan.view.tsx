@@ -2,17 +2,14 @@ import React, { useEffect, useState } from 'react';
 
 import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs';
-import { Calendar, Mastercard } from 'components/base/SVG';
-import { DollarSign } from 'components/base/SVG';
+import { Calendar, Mastercard, DollarSign } from 'components/base/SVG';
 import TwoWayToggle from 'components/base/TwoWayToggle';
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import CreditCardLogo from 'components/module/CreditCardLogo';
 import IconTooltip from 'components/module/IconTooltip';
-import PlanFeatures from 'components/module/PlanFeatures';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { MARKET_GROUP_1 } from 'consts/markets';
 import {
   REVERSE_MARKETPLACE_PRICE,
   BUYER_BASE_PRICE,
@@ -88,17 +85,6 @@ export const SubscriptionPlanView = ({
       link: location.pathname,
     },
   };
-  const reverseMarketPlace = features.find(
-    (feature) => feature.alias === 'REVERSED_MARKETPLACE'
-  );
-
-  const reverseMarketPlacePrice = reverseMarketPlace
-    ? theme.appType === 'seller'
-      ? REVERSE_MARKETPLACE_PRICE.SELLER
-      : REVERSE_MARKETPLACE_PRICE.BUYER
-    : 0;
-  const planPrice = isMonthly ? monthlyPrice : annualPrice;
-  const nextBillingAmount = parseInt(planPrice) + reverseMarketPlacePrice;
 
   const selectedPlan = subscriptionType === 'STANDARD' ? 'Standard' : 'Premium';
 
@@ -109,8 +95,19 @@ export const SubscriptionPlanView = ({
     (item) => item.market === currentMarketSector.toUpperCase()
   )?.price;
 
-  console.log('currentMarketSector', currentMarketSector);
-  console.log('basicPlanPriceKey', basePrice);
+  const planPrice = subscriptionType === 'STANDARD' ? basePrice : premiumPrice;
+
+  const reverseMarketPlace = features.find(
+    (feature) => feature.alias === 'REVERSED_MARKETPLACE'
+  );
+
+  const getNextBillingAmount = () => {
+    const reverseMarketPlacePrice = reverseMarketPlace
+      ? REVERSE_MARKETPLACE_PRICE.BUYER
+      : 0;
+
+    return planPrice ? planPrice + reverseMarketPlacePrice : 0;
+  };
 
   useEffect(() => {
     setIsMonthly(planInterval !== 'ANNUAL');
@@ -217,7 +214,7 @@ export const SubscriptionPlanView = ({
                     variant="body"
                     style={{ marginLeft: '6px', lineHeight: 'normal' }}
                   >
-                    <b>{nextBillingAmount.toFixed(2)}</b>
+                    <b>{getNextBillingAmount().toFixed(2)}</b>
                   </Typography>
                 </div>
 
@@ -482,6 +479,7 @@ export const SubscriptionPlanView = ({
                       </Typography>
                       <PlanPrice>
                         <Typography variant="title6" weight="400">
+                          $
                           {theme.appType === 'seller'
                             ? REVERSE_MARKETPLACE_PRICE.SELLER
                             : REVERSE_MARKETPLACE_PRICE.BUYER}
