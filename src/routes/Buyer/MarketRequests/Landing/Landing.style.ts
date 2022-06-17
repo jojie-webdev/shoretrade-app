@@ -1,8 +1,8 @@
 import Alert from 'components/base/Alert';
 import Interactions from 'components/base/Interactions';
-import TypographyView from 'components/base/Typography';
+import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
@@ -116,13 +116,13 @@ export const MarketRequestItemContainer = styled.div`
   }
 `;
 
-export const SubText = styled(TypographyView)`
+export const SubText = styled(Typography)`
   font-family: 'Basis Grotesque Pro';
   font-weight: 400;
   color: ${(props) => `${props.theme.grey.shade7}`};
 `;
 
-export const BadgeText = styled(TypographyView)<{ empty?: boolean }>`
+export const BadgeText = styled(Typography)<{ empty?: boolean }>`
   font-size: ${pxToRem(9)};
   text-align: center;
   color: ${({ theme, empty }) =>
@@ -201,6 +201,101 @@ export const BadgesContainer = styled.div`
 
     .sub-group {
       margin-bottom: 10px;
+    }
+  }
+`;
+
+export const SubscriptionPayment = styled(Typography)`
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+`;
+
+export const Container1 = styled.div`
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media ${BREAKPOINTS['sm']} {
+    gap: 8px;
+  }
+`;
+
+export const Pro = styled(Typography)`
+  padding: 3px 4px;
+  background-color: ${({ theme }) => theme.brand.primary};
+  border-radius: 4px;
+  font-weight: 900;
+  font-family: 'Media Sans';
+  line-height: normal;
+`;
+
+export const LogoContainer = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+`;
+
+export const Title1 = styled(Typography)`
+  font-family: 'Media Sans';
+  margin: 24px 0 12px;
+
+  @media ${BREAKPOINTS['sm']} {
+    text-align: center;
+    margin-bottom: 0;
+  }
+`;
+
+export const DescriptionWrapper = styled.div`
+  max-width: 310px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+  @media ${BREAKPOINTS['md']} {
+    width: 214px;
+  }
+`;
+
+export const Description = styled(Typography)`
+  @media ${BREAKPOINTS['sm']} {
+    text-align: center;
+  }
+`;
+
+export const LandingDefaultContainer = styled.div`
+  max-width: 972px;
+  margin: auto;
+`;
+
+export const FirstDescription = styled(Typography)`
+  @media ${BREAKPOINTS['sm']} {
+    text-align: center;
+  }
+`;
+
+export const ImageContainer = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  max-width: 235px;
+`;
+
+export const SwiperWrapper = styled(Swiper)`
+  .swiper-pagination-bullet {
+    margin: 0 2px;
+    @media ${BREAKPOINTS['sm']} {
+      background: ${({ theme }) =>
+        theme.appType === 'buyer' ? theme.grey.shade10 : theme.grey.noshade};
+    }
+  }
+
+  .swiper-pagination-bullet-active {
+    background: ${({ theme }) => theme.brand.primary};
+    @media ${BREAKPOINTS['sm']} {
+      background: ${({ theme }) => theme.brand.primary};
     }
   }
 `;

@@ -5,15 +5,16 @@ import moment from 'moment';
 import { ScreenClassRender } from 'react-grid-system';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import MarketRequestDesktopImg from 'res/images/st-buyer-market-request-desktop.png';
-import MarketRequestMobileImg from 'res/images/st-buyer-market-request-mobile.png';
 import {
   deleteMarketRequestActions,
   getAllMarketRequestActions,
 } from 'store/actions';
 import { Store } from 'types/store/Store';
+import { useTheme } from 'utils/SFMTheme';
 
+import LandingDefaultView from './Landing.default.view';
 import { MarketRequestsLandingGeneratedProps, Result } from './Landing.props';
+import LandingSFMView from './Landing.sfm.view';
 import { getMarketRequestLandingData } from './Landing.transform';
 import MarketRequestsLandingView from './Landing.view';
 
@@ -22,6 +23,7 @@ const MarketRequestsLanding = (): JSX.Element => {
   const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
+  const theme = useTheme();
 
   const [itemToDelete, setItemToDelete] = useState<{ value: null | string }>({
     value: null,
@@ -111,18 +113,12 @@ const MarketRequestsLanding = (): JSX.Element => {
     (feature) => feature.alias === 'REVERSED_MARKETPLACE'
   );
 
+  if (theme.isSFM) {
+    return <LandingSFMView />;
+  }
+
   if (!reverseMarketPlace && !activePlanLoading && activePlan?.id) {
-    return (
-      <ScreenClassRender
-        render={(screenClass: string) =>
-          ['xs', 'sm', 'md'].includes(screenClass) ? (
-            <img src={MarketRequestMobileImg} width="100%" />
-          ) : (
-            <img src={MarketRequestDesktopImg} width="100%" />
-          )
-        }
-      />
-    );
+    return <LandingDefaultView />;
   }
 
   return <MarketRequestsLandingView {...generatedProps} />;

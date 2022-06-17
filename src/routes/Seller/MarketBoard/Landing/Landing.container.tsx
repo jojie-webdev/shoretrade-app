@@ -8,8 +8,6 @@ import { isEmpty } from 'ramda';
 import { ScreenClassRender } from 'react-grid-system';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import MarketRequestDesktopImg from 'res/images/seller-market-request-desktop.png';
-import MarketRequestMobileImg from 'res/images/seller-market-request-mobile.png';
 import {
   getRespectiveValues,
   getSize,
@@ -26,13 +24,17 @@ import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersS
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { Store } from 'types/store/Store';
 import useLocalStorage from 'utils/Hooks/useLocalStorage';
+import { useTheme } from 'utils/SFMTheme';
 
+import LandingDefaultView from './Landing.default.view';
 import { TabOptions } from './Landing.props';
+import LandingSFMView from './Landing.sfm.view';
 import MarketBoardLandingView from './Landing.view';
 
 const MarketBoardLanding = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const theme = useTheme();
 
   const [activeOffersData, setActiveOffersData] = useState<
     GetActiveOffersRequestResponseItem[]
@@ -307,18 +309,12 @@ const MarketBoardLanding = (): JSX.Element => {
     (feature) => feature.alias === 'REVERSED_MARKETPLACE'
   );
 
+  if (theme.isSFM) {
+    return <LandingSFMView />;
+  }
+
   if (!reverseMarketPlace && !activePlanLoading && activePlanError) {
-    return (
-      <ScreenClassRender
-        render={(screenClass: string) =>
-          ['xs', 'sm', 'md'].includes(screenClass) ? (
-            <img src={MarketRequestMobileImg} width="100%" />
-          ) : (
-            <img src={MarketRequestDesktopImg} width="100%" />
-          )
-        }
-      />
-    );
+    return <LandingDefaultView />;
   }
 
   if (!isAcceptClicked) {

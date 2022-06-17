@@ -20,8 +20,6 @@ import {
   ScreenClassRender,
 } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
-import MarketRequestDesktopImg from 'res/images/st-buyer-market-request-desktop.png';
-import MarketRequestMobileImg from 'res/images/st-buyer-market-request-mobile.png';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import useLocalStorage from 'utils/Hooks/useLocalStorage';
 import { sizeToString } from 'utils/Listing';
@@ -388,20 +386,6 @@ const MarketRequestsLandingView = (
       )}
     </Hidden>
   );
-
-  if (!reverseMarketPlace) {
-    return (
-      <ScreenClassRender
-        render={(screenClass: string) =>
-          ['xs', 'sm', 'md'].includes(screenClass) ? (
-            <img src={MarketRequestMobileImg} width="100%" />
-          ) : (
-            <img src={MarketRequestDesktopImg} width="100%" />
-          )
-        }
-      />
-    );
-  }
 
   if (reverseMarketPlace && !isAcceptClicked) {
     return (
