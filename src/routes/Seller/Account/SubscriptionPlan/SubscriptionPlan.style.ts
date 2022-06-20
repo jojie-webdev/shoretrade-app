@@ -93,7 +93,8 @@ export const FlexContainer = styled.div`
 
 export const PlanTitleContainer = styled.div`
   display: flex;
-  margin-bottom: 24px;
+  flex-direction: column;
+  margin-bottom: 12px;
 `;
 
 export const AdditionalSubSection = styled.div`
@@ -109,4 +110,25 @@ export const PlanContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 24px;
+`;
+
+export const IncusionSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 24px;
+  margin-bottom: 20px;
+  background: ${({ theme }) => theme.grey.shade9};
+  border-radius: 12px;
+  padding: 24px;
+`;
+
+export const ReverseMarketplace = styled.div`
+  display: flex;
+  padding-bottom: 24px;
+`;
+
+export const PlanPrice = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
 `;

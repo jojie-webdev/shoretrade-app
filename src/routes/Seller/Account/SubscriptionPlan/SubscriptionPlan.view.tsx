@@ -26,6 +26,7 @@ import { toPrice } from 'utils/String';
 import { getButtonTextByStatus } from 'utils/SubscriptionPlan/getButtonTextByStatus';
 import { useTheme } from 'utils/Theme';
 
+import InclusionsList from './InclusionsList/InclusionsList.view';
 import { SubscriptionPlanGeneratedProps } from './SubscriptionPlan.props';
 import {
   BillingSection,
@@ -40,6 +41,9 @@ import {
   AdditionalSubSection,
   PlanTitleContainer,
   PlanContainer,
+  IncusionSection,
+  ReverseMarketplace,
+  PlanPrice,
 } from './SubscriptionPlan.style';
 
 export const SubscriptionPlanView = ({
@@ -229,43 +233,114 @@ export const SubscriptionPlanView = ({
             <PlanContainer>
               <Row gutterWidth={20} style={{ width: '100%' }}>
                 <Col md={12}>
+                  <IncusionSection>
+                    <Typography
+                      variant="title6"
+                      weight="400"
+                      customFont={theme.isSFM ? 'Canela' : 'Media Sans'}
+                      color={theme.appType === 'seller' ? 'noshade' : 'shade9'}
+                    >
+                      What's included in your subscription
+                    </Typography>
+                    <InclusionsList
+                      selectedPlan={selectedPlan}
+                      currentMarketSector={currentMarketSector}
+                    />
+                    <div>
+                      <Typography
+                        variant="label"
+                        color="primary"
+                        weight="400"
+                        style={{
+                          textDecoration: 'underline',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        Cancel Subscription
+                      </Typography>
+                    </div>
+                  </IncusionSection>
+
                   <AdditionalSubSection className="section">
                     <PlanTitleContainer>
                       <Typography
-                        variant="label"
-                        weight="400"
+                        variant="title6"
+                        weight="900"
                         customFont={theme.isSFM ? 'Canela' : 'Media Sans'}
                         color={
                           theme.appType === 'seller' ? 'noshade' : 'shade9'
                         }
                       >
-                        Reverse Marketplace $
-                        {REVERSE_MARKETPLACE_PRICE.SELLER.toFixed(2)}
+                        Reverse Marketplace
                       </Typography>
-                      {reverseMarketPlace && (
-                        <Badge
-                          badgeColor={theme.brand.primary}
-                          borderRadius="8px"
-                          style={{ marginLeft: '8px' }}
+                      <PlanPrice>
+                        <Typography
+                          variant="title5"
+                          weight="400"
+                          color={
+                            theme.appType === 'seller' ? 'noshade' : 'shade9'
+                          }
                         >
-                          <Typography
-                            variant="overline"
-                            color="noshade"
-                            style={{ lineHeight: 'normal' }}
-                          >
-                            subscribed
-                          </Typography>
-                        </Badge>
-                      )}
+                          $
+                          {theme.appType === 'seller' &&
+                            REVERSE_MARKETPLACE_PRICE.SELLER.toFixed(2)}
+                        </Typography>
+                        <Typography variant="label" weight="400" color="shade6">
+                          /Month
+                        </Typography>
+                      </PlanPrice>
                     </PlanTitleContainer>
+                    <ReverseMarketplace>
+                      <Typography
+                        variant="label"
+                        color={theme.appType === 'seller' ? 'shade6' : 'shade7'}
+                        weight="400"
+                      >
+                        Want to gain even more sales with quick turn around
+                        times? See what unique products buyers are after when
+                        you connect to the Reverse Marketplace. Buyers make
+                        specific requests for seafood products, and if you can
+                        provide that product then make them an offer. By
+                        aligning your stock supply to the buyers' needs, your
+                        product is sold more efficiently, and less resources are
+                        taken from our oceans. Gain an extra sales channel and
+                        revolutionize your seafood business with Reverse
+                        Marketpalce!
+                      </Typography>
+                    </ReverseMarketplace>
 
-                    <AdditionalPlanFeatures
-                      selectedPlan={selectedPlan}
-                      currentMarketSector={currentMarketSector}
-                    />
+                    {reverseMarketPlace ? (
+                      <div>
+                        <Typography
+                          variant="label"
+                          color="primary"
+                          weight="400"
+                          style={{
+                            textDecoration: 'underline',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          Cancel Subscription
+                        </Typography>
+                      </div>
+                    ) : (
+                      <div>
+                        <Typography
+                          variant="label"
+                          color="primary"
+                          weight="400"
+                          style={{
+                            textDecoration: 'underline',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          Update Subscription
+                        </Typography>
+                      </div>
+                    )}
 
-                    {/* // NEEDED LATER FOR MARKET PLACE CANCEL SUBSCRIPTION TASK
-                    {!!yourPlanButtonText && isSaasSubscribed && (
+                    {/* // NEEDED LATER FOR MARKET PLACE CANCEL SUBSCRIPTION TASK */}
+                    {/* {!!yourPlanButtonText && isSaasSubscribed && (
                       <div
                         className="subscription-action"
                         onClick={() =>

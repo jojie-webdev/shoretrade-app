@@ -480,9 +480,8 @@ export const SubscriptionPlanView = ({
                       <PlanPrice>
                         <Typography variant="title6" weight="400">
                           $
-                          {theme.appType === 'seller'
-                            ? REVERSE_MARKETPLACE_PRICE.SELLER
-                            : REVERSE_MARKETPLACE_PRICE.BUYER}
+                          {theme.appType !== 'seller' &&
+                            REVERSE_MARKETPLACE_PRICE.BUYER.toFixed(2)}
                         </Typography>
                         <Typography variant="label" weight="400" color="shade6">
                           /Month
