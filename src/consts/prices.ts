@@ -1,6 +1,6 @@
 export const REVERSE_MARKETPLACE_PRICE = {
   BUYER: 49.99,
-  SELLER: 275.0,
+  SELLER: 279.0,
 };
 
 export const BUYER_BASE_PRICE = [

@@ -6,6 +6,7 @@ import AdditionalPlanFeatures from 'components/module/AdditionalPlanFeatures';
 import MarketSectorIcon from 'components/module/MarketSectorIcon';
 import PlanFeatures from 'components/module/PlanFeatures';
 import { MARKET_GROUP_1 } from 'consts/markets';
+import { REVERSE_MARKETPLACE_PRICE } from 'consts/prices';
 import { Col } from 'react-grid-system';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSubscriptionPlansActions } from 'store/actions';
@@ -31,13 +32,14 @@ const YourPlanView = ({
   currentPlan,
   selectedPlan,
   additionalSubscriptionHandler,
+  hasReverseMarketPlace,
   step,
 }: YourPlanGeneratedProps) => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
   const marketSectors = isSeller ? SELLER_VARIATIONS : BUYER_VARIATIONS;
 
-  const [additionalSubs, setadditionalSubs] = useState(false);
+  const [additionalSubs, setadditionalSubs] = useState(hasReverseMarketPlace);
 
   const setAdditionalSubscription = (hasAddOn: boolean) => {
     setadditionalSubs(hasAddOn);
@@ -109,8 +111,7 @@ const YourPlanView = ({
       <AdditionalSubscription>
         <CheckboxContainer>
           <Checkbox
-            checked={additionalSubs}
-            allowTransparency
+            checked={hasReverseMarketPlace}
             onClick={() => {
               setAdditionalSubscription(!additionalSubs);
             }}
@@ -121,8 +122,12 @@ const YourPlanView = ({
           color={theme.appType === 'seller' ? 'noshade' : 'shade9'}
         >
           {!isSeller
-            ? 'Additonal subscription for $49.99/month'
-            : 'Additonal subscription for $275/month'}
+            ? `Additonal subscription for ${REVERSE_MARKETPLACE_PRICE.BUYER.toFixed(
+                2
+              )}/month`
+            : `Additonal subscription for ${REVERSE_MARKETPLACE_PRICE.SELLER.toFixed(
+                2
+              )}/month`}
         </Typography>
       </AdditionalSubscription>
 
