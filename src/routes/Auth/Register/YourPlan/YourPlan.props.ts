@@ -6,6 +6,7 @@ export interface YourPlanrops {
   selectedPlan?: string;
   additionalSubscriptionHandler: (value: boolean) => void;
   step?: number;
+  hasReverseMarketPlace?: boolean;
 }
 
 export interface YourPlanGeneratedProps {
@@ -15,4 +16,5 @@ export interface YourPlanGeneratedProps {
   selectedPlan?: string;
   additionalSubscriptionHandler: (value: boolean) => void;
   step?: number;
+  hasReverseMarketPlace?: boolean;
 }

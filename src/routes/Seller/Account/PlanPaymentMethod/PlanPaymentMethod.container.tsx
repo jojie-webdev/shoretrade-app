@@ -1,11 +1,17 @@
 import React, { useEffect, useReducer, useState } from 'react';
 
+import { REVERSE_MARKETPLACE_PRICE } from 'consts/prices';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { deleteCardActions, getPaymentMethodsActions, paySubscriptionActions } from 'store/actions';
+import {
+  deleteCardActions,
+  getPaymentMethodsActions,
+  paySubscriptionActions,
+} from 'store/actions';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer, useCompany } from 'utils/Hooks';
 import { toPrice } from 'utils/String';
+import { useTheme } from 'utils/Theme';
 
 import {
   Card,
@@ -19,6 +25,8 @@ const PlanPaymentMethod = (): JSX.Element => {
   const history = useHistory();
   const [companyId] = useCompany();
   const [selectedCardId, setSelectedCardId] = useState('');
+  const theme = useTheme();
+  const isSeller = theme.appType === 'seller';
 
   const isPaymentLoading =
     useSelector((store: Store) => store.paySubscription.pending) || false;
@@ -46,6 +54,18 @@ const PlanPaymentMethod = (): JSX.Element => {
 
   const deleteCardStatus =
     useSelector((state: Store) => state.deleteCard.data?.status) || false;
+
+  const hasReverseMarketPlace = activePlan?.features.find(
+    (feature) => feature.alias === 'REVERSED_MARKETPLACE'
+  );
+
+  const sellerAmountDue = hasReverseMarketPlace
+    ? toPrice(REVERSE_MARKETPLACE_PRICE.SELLER)
+    : '0';
+
+  const buyerAmountDue = activePlan?.price
+    ? toPrice(activePlan?.price || 0)
+    : undefined;
 
   const payPlanAmountDue = (newCardDetails: NewCardDetails) => {
     if (selectedCardId) {
@@ -84,7 +104,7 @@ const PlanPaymentMethod = (): JSX.Element => {
 
   const generatedProps: PlanPaymentMethodGeneratedProps = {
     cards: activePlan?.payment_methods.cards || [],
-    amountDue: activePlan?.price ? toPrice(activePlan?.price || 0) : undefined,
+    amountDue: isSeller ? sellerAmountDue : buyerAmountDue,
     selectedCardId,
     payPlanAmountDue,
     setSelectedCardId,

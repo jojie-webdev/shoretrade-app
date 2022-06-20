@@ -30,6 +30,7 @@ import MarketSectorIcon from 'components/module/MarketSectorIcon';
 import MarketSectorItem from 'components/module/MarketSectorItem';
 import StepDetails from 'components/module/StepDetails';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { REVERSE_MARKETPLACE_PRICE } from 'consts/prices';
 import { Formik, FormikProps } from 'formik';
 import moment from 'moment';
 import { isEmpty } from 'ramda';
@@ -165,8 +166,10 @@ const StepForm = ({
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const hasReverseMarketPlace =
+    registrationDetails.subscriptionType.reverseMarketPlace;
 
-  const MAX_STEP = isSeller ? 9 : 7;
+  const MAX_STEP = !isSeller ? 7 : hasReverseMarketPlace ? 9 : 8;
   // const MAX_STEP = 7;
 
   const [license, setLicense] = useState<{
@@ -312,7 +315,11 @@ const StepForm = ({
   const buttonTextHandler = (step: number) => {
     if (isSeller && step === 4) {
       return 'ADD LICENSE';
-    } else if ((!isSeller && step === 6) || (isSeller && step === 8)) {
+    } else if (
+      (!isSeller && step === 6) ||
+      (isSeller && hasReverseMarketPlace && step === 8) ||
+      (isSeller && step === 7 && !hasReverseMarketPlace)
+    ) {
       if (selectedCategoryTypes.length > 0) {
         return 'NEXT';
       }
@@ -352,6 +359,7 @@ const StepForm = ({
       ? 275
       : 49.99
     : 0;
+
   const planPrice =
     currentPlan && parseInt(currentPlan.price) + reverseMarketPlacePrice;
 
@@ -882,12 +890,30 @@ const StepForm = ({
                 formikProps.onSubmit(values);
               }
             } else {
-              setIsGeneratingCardToken(true);
-              getCardToken();
+              if (hasReverseMarketPlace) {
+                setIsGeneratingCardToken(true);
+                getCardToken();
+              } else {
+                formikProps.onSubmit(values);
+              }
             }
           } else if (step === 8) {
             if (isSeller) {
-              formikProps.onSubmit(values);
+              if (hasReverseMarketPlace) {
+                formikProps.onSubmit(values);
+              } else {
+                const error = {
+                  ...validateAgreement({
+                    agreement: registrationDetails.tncAgreement,
+                  }),
+                };
+                if (error.agreement) {
+                  setOtherErrors(error);
+                } else {
+                  setOtherErrors({ agreement: '' });
+                  formikProps.onSubmit(values);
+                }
+              }
             }
           } else if (step === 9) {
             if (isSeller) {
@@ -1338,6 +1364,7 @@ const StepForm = ({
                       currentMarketSector={
                         registrationDetails.categoryMarketSector
                       }
+                      hasReverseMarketPlace={hasReverseMarketPlace}
                       previousStep={() => previousStep && previousStep()}
                       step={step}
                     />
@@ -1405,6 +1432,7 @@ const StepForm = ({
                       currentMarketSector={
                         registrationDetails.categoryMarketSector
                       }
+                      hasReverseMarketPlace={hasReverseMarketPlace}
                       previousStep={() => previousStep && previousStep()}
                       step={step}
                     />
@@ -1417,24 +1445,35 @@ const StepForm = ({
                 <>
                   {isSeller ? (
                     <>
-                      <TotalPrice
-                        variant="title5"
-                        color={
-                          theme.appType === 'seller' ? 'noshade' : 'shade9'
-                        }
-                        weight="400"
-                      >
-                        &nbsp;$
-                        {planPrice}* / month
-                      </TotalPrice>
-                      <Typography variant="caption" color="shade6" weight="400">
-                        *Price based on your Market Sector
-                      </Typography>
-                      <PaymentMethod
-                        otherErrors={otherErrors}
-                        setOtherErrors={setOtherErrors}
-                        details={registrationDetails}
-                      />
+                      {hasReverseMarketPlace ? (
+                        <>
+                          <TotalPrice
+                            variant="title5"
+                            color={
+                              theme.appType === 'seller' ? 'noshade' : 'shade9'
+                            }
+                            weight="400"
+                          >
+                            &nbsp;$
+                            {REVERSE_MARKETPLACE_PRICE.SELLER.toFixed(2)} /
+                            month
+                          </TotalPrice>
+                          <Typography
+                            variant="caption"
+                            color="shade6"
+                            weight="400"
+                          >
+                            *Price based on your Market Sector
+                          </Typography>
+                          <PaymentMethod
+                            otherErrors={otherErrors}
+                            setOtherErrors={setOtherErrors}
+                            details={registrationDetails}
+                          />
+                        </>
+                      ) : (
+                        categoryPicker()
+                      )}
                     </>
                   ) : (
                     summaryUI()
@@ -1475,7 +1514,39 @@ const StepForm = ({
                   )} */}
                 </>
               )}
-              {step === 8 && isSeller && categoryPicker()}
+              {step === 8 && isSeller && (
+                <>
+                  {!isSuccess ? (
+                    <>
+                      {isSeller && hasReverseMarketPlace
+                        ? categoryPicker()
+                        : summaryUI()}
+                    </>
+                  ) : (
+                    <>
+                      <Typography
+                        variant="title5"
+                        color="noshade"
+                        weight="400"
+                        style={{ marginBottom: 32 }}
+                      >
+                        Thanks for signing up! Your account is pending approval
+                      </Typography>
+                      <Typography
+                        variant="body"
+                        color="noshade"
+                        weight="Medium"
+                        style={{ marginBottom: 32 }}
+                      >
+                        We need to check a few things before you can start
+                        selling. We’ll send you and email and notification when
+                        your account is approved. This normally takes less than
+                        24 hours.
+                      </Typography>
+                    </>
+                  )}
+                </>
+              )}
               {step === 9 && (
                 <>
                   {!isSuccess || !isSeller ? (
@@ -1577,11 +1648,13 @@ const RegisterView = (props: RegisterGeneratedProps) => {
   const steps = isSeller ? SELLER_STEPS : BUYER_STEPS;
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const marketSectors = isSeller ? SELLER_VARIATIONS : BUYER_VARIATIONS;
+  const hasReverseMarketPlace =
+    registrationDetails.subscriptionType.reverseMarketPlace;
 
   const renderRef = useRef<HTMLDivElement | null>(null);
 
   const [step, setStep] = useState(0);
-  const MAX_STEP = isSeller ? 9 : 7;
+  const MAX_STEP = !isSeller ? 7 : hasReverseMarketPlace ? 9 : 8;
   // const MAX_STEP = 7;
 
   const summaryHandleStep = (step: number) => {
@@ -1770,15 +1843,27 @@ const RegisterView = (props: RegisterGeneratedProps) => {
     } else if (step === 7) {
       return (
         <>
-          <StepForm
-            {...props}
-            formikProps={
-              isSeller ? paymentMethodFormikProps : summaryFormikProps
-            }
-            step={step}
-            fields={[]}
-            summaryHandleStep={summaryHandleStep}
-          />
+          {isSeller ? (
+            <StepForm
+              {...props}
+              formikProps={
+                hasReverseMarketPlace
+                  ? paymentMethodFormikProps
+                  : userDetailsFormikProps
+              }
+              step={step}
+              fields={[]}
+              summaryHandleStep={summaryHandleStep}
+            />
+          ) : (
+            <StepForm
+              {...props}
+              formikProps={summaryFormikProps}
+              step={step}
+              fields={[]}
+              summaryHandleStep={summaryHandleStep}
+            />
+          )}
         </>
       );
     } else if (step === 8) {
@@ -1786,7 +1871,9 @@ const RegisterView = (props: RegisterGeneratedProps) => {
         <StepForm
           {...props}
           getCategoryItem={props.getCategoryItem}
-          formikProps={userDetailsFormikProps}
+          formikProps={
+            hasReverseMarketPlace ? userDetailsFormikProps : summaryFormikProps
+          }
           step={step}
           fields={[]}
           summaryHandleStep={summaryHandleStep}
@@ -1829,23 +1916,25 @@ const RegisterView = (props: RegisterGeneratedProps) => {
             </LogInLinkContainer>
           </SignUpHeader>
           <GetStartedTitle variant="title5">
-            Signing up is <b>free</b> and <b>complete</b> with {MAX_STEP - 2}{' '}
-            simple steps
+            Signing up is <b>free</b> and <b>complete</b> with{' '}
+            {isSeller ? MAX_STEP : MAX_STEP - 2} simple steps
           </GetStartedTitle>
 
           {steps
-            .filter(
-              (i) => i.title !== 'Summary' && i.title !== 'Choose Your Plan'
-            )
-            .map((step, index) => (
-              <StepDetails
-                key={step.title}
-                step={index + 1}
-                title={step.title}
-                description={step.description}
-                style={{ marginTop: index === 0 ? 24 : 32 }}
-              />
-            ))}
+            .filter((i) => {
+              return i.title !== 'Summary' && i.title !== 'Choose Your Plan';
+            })
+            .map((step, index) => {
+              return (
+                <StepDetails
+                  key={step.title}
+                  step={index + 1}
+                  title={step.title}
+                  description={step.description}
+                  style={{ marginTop: index === 0 ? 24 : 32 }}
+                />
+              );
+            })}
           {!isSmallScreen ? (
             <GetStartedButton text="GET STARTED" onClick={() => nextStep()} />
           ) : (
@@ -1907,7 +1996,9 @@ const RegisterView = (props: RegisterGeneratedProps) => {
                       weight="500"
                       customFont={theme.isSFM ? 'Canela' : undefined}
                     >
-                      {steps[step - 1].title}
+                      {isSeller && !hasReverseMarketPlace && step >= 7
+                        ? steps[step].title
+                        : steps[step - 1].title}
                     </Title>
                   </TitleContainer>
                   {!isSeller && BUYER_STEP_SUBTITLE[step] && (

@@ -69,12 +69,16 @@ export const SubscriptionPlanView = ({
   const [showRenewModal, setShowRenewModal] = useState(false);
   const price = toPrice(isMonthly ? monthlyPrice : annualPrice);
 
+  const reverseMarketPlace = features.find(
+    (feature) => feature.alias === 'REVERSED_MARKETPLACE'
+  );
+
   const getNextBillingAmount = () => {
     const reverseMarketPlacePrice = reverseMarketPlace
       ? REVERSE_MARKETPLACE_PRICE.SELLER
       : 0;
 
-    return price ? parseInt(price) + reverseMarketPlacePrice : 0;
+    return reverseMarketPlacePrice;
   };
 
   useEffect(() => {
@@ -83,10 +87,6 @@ export const SubscriptionPlanView = ({
 
   const ifForRenewal = ['CANCELLED', 'OVERDUE'].includes(planStatus);
   const interval = isMonthly ? 'MONTHLY' : 'ANNUAL';
-
-  const reverseMarketPlace = features.find(
-    (feature) => feature.alias === 'REVERSED_MARKETPLACE'
-  );
 
   const selectedPlan = subscriptionType === 'STANDARD' ? 'Standard' : 'Premium';
 
@@ -195,7 +195,7 @@ export const SubscriptionPlanView = ({
                 </Typography>
               </div>
 
-              <Typography variant="body" weight="400">
+              <Typography variant="body" weight="400" color="noshade">
                 Next Billing Amount
               </Typography>
               <div className="billing-date">
@@ -203,6 +203,7 @@ export const SubscriptionPlanView = ({
                 <Typography
                   variant="body"
                   style={{ marginLeft: '6px', lineHeight: 'normal' }}
+                  color="noshade"
                 >
                   <b>{getNextBillingAmount().toFixed(2)}</b>
                 </Typography>
@@ -238,7 +239,8 @@ export const SubscriptionPlanView = ({
                           theme.appType === 'seller' ? 'noshade' : 'shade9'
                         }
                       >
-                        Reverse Marketplace $49.9
+                        Reverse Marketplace $
+                        {REVERSE_MARKETPLACE_PRICE.SELLER.toFixed(2)}
                       </Typography>
                       {reverseMarketPlace && (
                         <Badge
