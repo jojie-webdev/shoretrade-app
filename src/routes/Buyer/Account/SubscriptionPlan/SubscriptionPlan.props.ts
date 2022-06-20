@@ -4,10 +4,11 @@ export interface SubscriptionPlanTransformOutputProps {
   annualPrice: string;
   monthlyPrice: string;
   nextBillingDate: string | null;
+  cancellationPeriod: string | null;
   cardBrand: string;
   cardNumberMasked: string | null;
   isSaasSubscribed: boolean;
-  subscriptionType: string;
+  subscriptionType: 'PREMIUM' | 'STANDARD';
   features: SubscriptionPlanFeature[];
 }
 
@@ -17,7 +18,10 @@ export interface SubscriptionPlanGeneratedProps
   planInterval: string;
   isDeactivated: boolean;
   currentMarketSector: string;
-  cancelSubscription: (interval: 'MONTHLY' | 'ANNUAL') => void;
-  updateSubscription: (interval: 'MONTHLY' | 'ANNUAL') => void;
+  cancelSubscription: () => void;
+  updateSubscription: (
+    interval: 'MONTHLY' | 'ANNUAL',
+    type: 'PREMIUM' | 'STANDARD'
+  ) => void;
   renewSubscription: (interval: 'MONTHLY' | 'ANNUAL') => void;
 }

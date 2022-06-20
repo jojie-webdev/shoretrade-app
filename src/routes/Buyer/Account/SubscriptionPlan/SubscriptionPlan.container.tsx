@@ -39,6 +39,9 @@ const SubscriptionPlan = () => {
   const planStatus =
     useSelector((store: Store) => store.subscription.status) || '';
 
+  const isFreeTrial =
+    useSelector((store: Store) => store.subscription.isFreeTrial) || '';
+
   const planInterval =
     useSelector((store: Store) => store.subscription.interval) || '';
 
@@ -79,23 +82,30 @@ const SubscriptionPlan = () => {
 
   // METHODS
 
-  const cancelSubscription = (interval: 'MONTHLY' | 'ANNUAL') => {
-    if (company?.id) {
+  const cancelSubscription = () => {
+    if (company?.id && activePlan?.plan_alias) {
       dispatch(
         cancelSubscriptionPlanActions.request({
           companyId: company?.id,
-          saasInterval: interval,
+          subscriptionAlias: activePlan?.plan_alias,
         })
       );
     }
   };
 
-  const updateSubscription = (interval: 'MONTHLY' | 'ANNUAL') => {
+  const updateSubscription = (
+    interval: 'MONTHLY' | 'ANNUAL',
+    type: 'PREMIUM' | 'STANDARD'
+  ) => {
     if (company?.id) {
       dispatch(
         updateSubscriptionPlanActions.request({
           companyId: company?.id,
-          saasInterval: interval,
+          saasType: type,
+          existingCard:
+            activePlan?.payment_methods.cards.find(
+              (card) => card.id === activePlan.payment_methods.defaultCard
+            )?.id || '',
         })
       );
     }
@@ -106,7 +116,7 @@ const SubscriptionPlan = () => {
       dispatch(
         renewSubscriptionPlanActions.request({
           companyId: company.id,
-          saasInterval: interval,
+          saasType: interval,
         })
       );
     }

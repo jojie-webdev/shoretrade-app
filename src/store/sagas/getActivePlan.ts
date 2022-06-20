@@ -52,7 +52,7 @@ function* getActivePlanSuccess(
     yield put(
       subscriptionActions.update({
         status: planStatus,
-        interval: plan.subscription_preference.saasInterval,
+        interval: plan.subscription_preference.saasType,
         isFreeTrial: plan.is_free_trial,
         isAccountDeactivated:
           isCompanyDeactivated ||

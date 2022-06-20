@@ -2,7 +2,7 @@ import { GenericResponse } from 'types/GenericResponse';
 
 export type UpgradeSubscriptionMeta = {
   companyId: string;
-  saasInterval: string;
+  saasType: string;
 };
 
 // TODO: Update response value

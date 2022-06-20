@@ -69,7 +69,7 @@ const Upgrade = (): JSX.Element => {
       dispatch(
         upgradeSubscriptionActions.request({
           companyId: company.id,
-          saasInterval: interval,
+          saasType: interval,
         })
       );
     }

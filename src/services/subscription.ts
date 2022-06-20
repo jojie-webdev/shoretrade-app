@@ -35,7 +35,7 @@ export const getActivePlan = (
 export const updatePlan = (
   param: {
     companyId: string;
-    saasInterval?: string;
+    saasType?: string;
     isSaasSubscribed?: boolean;
   },
   token: string
@@ -43,6 +43,25 @@ export const updatePlan = (
   return axios({
     method: 'patch',
     url: `${URL}/company/update-preference`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: param,
+  }).catch((e) => {
+    return Promise.reject(e.response.data);
+  });
+};
+
+export const cancelPlan = (
+  param: {
+    companyId: string;
+    subscriptionAlias: string;
+  },
+  token: string
+) => {
+  return axios({
+    method: 'patch',
+    url: `${URL}/company/cancel-subscription`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

@@ -1,5 +1,5 @@
 import { put, call, takeLatest, select } from 'redux-saga/effects';
-import { updatePlan } from 'services/subscription';
+import { cancelPlan } from 'services/subscription';
 import { AsyncAction } from 'types/Action';
 import {
   CancelSubscriptionPlanMeta,
@@ -20,7 +20,7 @@ function* cancelSubscriptionPlanRequest(
     };
 
     try {
-      const { data } = yield call(updatePlan, params, state.auth.token);
+      const { data } = yield call(cancelPlan, params, state.auth.token);
       yield put(cancelSubscriptionPlanActions.success(data));
     } catch (e) {
       yield put(cancelSubscriptionPlanActions.failed(e.message));

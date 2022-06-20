@@ -17,7 +17,7 @@ export interface SubscriptionPlanGeneratedProps
   planInterval: string;
   company?: UserCompany;
   currentMarketSector: string;
-  cancelSubscription: (interval: 'MONTHLY' | 'ANNUAL') => void;
+  cancelSubscription: () => void;
   updateSubscription: (interval: 'MONTHLY' | 'ANNUAL') => void;
   renewSubscription: (interval: 'MONTHLY' | 'ANNUAL') => void;
 }

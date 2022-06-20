@@ -18,6 +18,11 @@ export const activePlanToProps = (
       ? moment(activePlan.starts_at).utc().format('D MMMM YYYY')
       : moment(activePlan?.ends_at).utc().format('D MMMM YYYY')
     : null;
+
+  const daysUntilEnd = moment(moment(activePlan?.ends_at).utc())
+    .utc()
+    .diff(moment().utc(), 'day');
+
   const defaultPaymentMethod = activePlan?.payment_methods.cards.find(
     (card) => card.id === activePlan.payment_methods.defaultCard
   );
@@ -27,6 +32,7 @@ export const activePlanToProps = (
     annualPrice: annualPlan?.price || '0',
     monthlyPrice: monthlyPlan?.price || '0',
     nextBillingDate,
+    cancellationPeriod: `in ${daysUntilEnd} days`,
     cardBrand,
     subscriptionType: activePlan?.subscription_preference.type || 'STANDARD',
     features: activePlan?.features || [],

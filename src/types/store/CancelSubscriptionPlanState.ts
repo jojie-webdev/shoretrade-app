@@ -2,7 +2,7 @@ import { GenericResponse } from 'types/GenericResponse';
 
 export type CancelSubscriptionPlanMeta = {
   companyId: string;
-  saasInterval: string;
+  subscriptionAlias: string;
 };
 
 export type CancelSubscriptionPlanPayload = GenericResponse;

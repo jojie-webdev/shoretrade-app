@@ -73,12 +73,12 @@ const SubscriptionPlan = () => {
 
   // METHODS
 
-  const cancelSubscription = (interval: 'MONTHLY' | 'ANNUAL') => {
-    if (company?.id) {
+  const cancelSubscription = () => {
+    if (company?.id && activePlan?.plan_alias) {
       dispatch(
         cancelSubscriptionPlanActions.request({
           companyId: company?.id,
-          saasInterval: interval,
+          subscriptionAlias: activePlan?.plan_alias,
         })
       );
     }
@@ -89,7 +89,11 @@ const SubscriptionPlan = () => {
       dispatch(
         updateSubscriptionPlanActions.request({
           companyId: company?.id,
-          saasInterval: interval,
+          saasType: interval,
+          existingCard:
+            activePlan?.payment_methods.cards.find(
+              (card) => card.id === activePlan.payment_methods.defaultCard
+            )?.id || '',
         })
       );
     }
@@ -100,7 +104,7 @@ const SubscriptionPlan = () => {
       dispatch(
         renewSubscriptionPlanActions.request({
           companyId: company.id,
-          saasInterval: interval,
+          saasType: interval,
         })
       );
     }

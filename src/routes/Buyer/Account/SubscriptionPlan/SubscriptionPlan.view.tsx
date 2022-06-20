@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
+import Alert from 'components/base/Alert';
 import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs';
+import Button from 'components/base/Button';
 import { Calendar, Mastercard, DollarSign } from 'components/base/SVG';
 import TwoWayToggle from 'components/base/TwoWayToggle';
 import Typography from 'components/base/Typography';
@@ -46,6 +48,8 @@ import {
   SpecialInclusionsContainer,
   TooltipWrapper,
   FooterNote,
+  AlertsContainer,
+  ExpiryAlertContentContainer,
 } from './SubscriptionPlan.style';
 
 export const SubscriptionPlanView = ({
@@ -61,6 +65,7 @@ export const SubscriptionPlanView = ({
   isDeactivated,
   features,
   currentMarketSector,
+  cancellationPeriod,
   cancelSubscription,
   updateSubscription,
   renewSubscription,
@@ -74,7 +79,8 @@ export const SubscriptionPlanView = ({
     query: '(min-width: 768px) and (max-width: 1439px)',
   });
   const [isMonthly, setIsMonthly] = useState(true);
-  const [showToggleModal, setShowToggleModal] = useState(false);
+  const [showProToggleModal, setShowProToggleModal] = useState(false);
+  const [showBaseToggleModal, setShowBaseToggleModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [showRenewModal, setShowRenewModal] = useState(false);
   const price = toPrice(isMonthly ? monthlyPrice : annualPrice);
@@ -139,7 +145,28 @@ export const SubscriptionPlanView = ({
           ]}
         />
       </BreadcrumbsContainer>
-
+      <AlertsContainer>
+        <Alert
+          fullWidth
+          header={`Account Cancellation ${cancellationPeriod}`}
+          content={
+            <ExpiryAlertContentContainer>
+              <Typography variant="caption" color="shade7">
+                Your account will be deactivated on your next payment date and
+                you will not be able to access any data in your account.
+              </Typography>
+              <div className="actions">
+                <Button
+                  onClick={() => setShowRenewModal(true)}
+                  text="Renew"
+                  size="sm"
+                />
+              </div>
+            </ExpiryAlertContentContainer>
+          }
+          variant="error"
+        />
+      </AlertsContainer>
       <SubscriptionContainer>
         <Row gutterWidth={20} justify="center" style={{ width: '100%' }}>
           {!showYourPlanOnly && (
@@ -259,67 +286,23 @@ export const SubscriptionPlanView = ({
                           /Month
                         </Typography>
                       </PlanPrice>
-                      <SpecialInclusionsContainer>
-                        <Typography
-                          variant="label"
-                          color={
-                            theme.appType === 'seller' ? 'shade6' : 'shade7'
-                          }
-                          weight="400"
-                        >
-                          2% buying fee on transaction value*
-                          <TooltipWrapper>
-                            <IconTooltip
-                              variant="info"
-                              iconSize={12}
-                              content="The Transaction Value is the total value of the products in your order excluding any crate fees and shipping costs."
-                            />
-                          </TooltipWrapper>
-                        </Typography>
-                        <SpecialInclusionsList
-                          selectedPlan="Standard"
-                          currentMarketSector={currentMarketSector}
-                        />
-                      </SpecialInclusionsContainer>
                     </PlanTitleContainer>
 
                     {!!yourPlanButtonText &&
                     subscriptionType === 'STANDARD' &&
                     isSaasSubscribed ? (
-                      <div
-                        className="subscription-action"
-                        onClick={() =>
-                          isForRenewal
-                            ? showYourPlanOnly
-                              ? history.push(
-                                  BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD
-                                )
-                              : setShowRenewModal(true)
-                            : setShowCancelModal(true)
-                        }
-                      >
-                        <Typography
-                          variant="label"
-                          color="primary"
-                          weight="400"
-                          style={{ textDecoration: 'underline' }}
-                        >
-                          {yourPlanButtonText}
+                      <div>
+                        <Typography variant="body" color="primary" weight="500">
+                          Your current plan
                         </Typography>
                       </div>
                     ) : (
-                      <div
-                        className="subscription-action"
-                        onClick={() => setShowToggleModal(true)}
-                      >
-                        <Typography
-                          variant="label"
-                          color="primary"
-                          weight="400"
-                          style={{ textDecoration: 'underline' }}
-                        >
-                          Update Subscription
-                        </Typography>
+                      <div className="subscription-action">
+                        <Button
+                          onClick={() => setShowBaseToggleModal(true)}
+                          variant="primary"
+                          text="Downgrade"
+                        />
                       </div>
                     )}
                   </Subscription>
@@ -330,139 +313,37 @@ export const SubscriptionPlanView = ({
                         weight="900"
                         customFont={theme.isSFM ? 'Canela' : 'Media Sans'}
                       >
-                        Premium Plan
+                        Pro Plan
                       </Typography>
                       <PlanPrice>
-                        <Typography variant="title6" weight="400">
+                        <Typography variant="title5" color="shade9">
                           {premiumPrice ? toPrice(premiumPrice) : 0}
                         </Typography>
                         <Typography variant="label" weight="400" color="shade6">
                           /Month
                         </Typography>
                       </PlanPrice>
-
-                      <SpecialInclusionsContainer>
-                        <Typography
-                          variant="label"
-                          color={
-                            theme.appType === 'seller' ? 'shade6' : 'shade7'
-                          }
-                          weight="400"
-                        >
-                          No additional fees!
-                        </Typography>
-
-                        <SpecialInclusionsList
-                          selectedPlan="Premium"
-                          currentMarketSector={currentMarketSector}
-                        />
-                      </SpecialInclusionsContainer>
                     </PlanTitleContainer>
 
                     {!!yourPlanButtonText &&
                     subscriptionType !== 'STANDARD' &&
                     isSaasSubscribed ? (
-                      <div
-                        className="subscription-action"
-                        onClick={() =>
-                          isForRenewal
-                            ? showYourPlanOnly
-                              ? history.push(
-                                  BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD
-                                )
-                              : setShowRenewModal(true)
-                            : setShowCancelModal(true)
-                        }
-                      >
-                        <Typography
-                          variant="label"
-                          color="primary"
-                          weight="400"
-                          style={{ textDecoration: 'underline' }}
-                        >
-                          {yourPlanButtonText}
+                      <div>
+                        <Typography variant="body" color="primary" weight="500">
+                          Your current plan
                         </Typography>
                       </div>
                     ) : (
-                      <div
-                        className="subscription-action"
-                        onClick={() => setShowToggleModal(true)}
-                      >
-                        <Typography
-                          variant="label"
-                          color="primary"
-                          weight="400"
-                          style={{ textDecoration: 'underline' }}
-                        >
-                          Update Subscription
-                        </Typography>
+                      <div className="subscription-action">
+                        <Button
+                          onClick={() => setShowProToggleModal(true)}
+                          variant="primary"
+                          text="Upgrade"
+                        />
                       </div>
                     )}
                   </Subscription>
                 </PlanSection>
-                <IncusionSection>
-                  <Typography
-                    variant="title6"
-                    weight="900"
-                    customFont={theme.isSFM ? 'Canela' : 'Media Sans'}
-                  >
-                    What included in Basic and Premiun plan
-                  </Typography>
-                  <InclusionsList
-                    selectedPlan={selectedPlan}
-                    currentMarketSector={currentMarketSector}
-                  />
-                  <FooterNote>
-                    <Typography
-                      variant="label"
-                      color={theme.appType === 'seller' ? 'shade6' : 'shade7'}
-                      weight="400"
-                    >
-                      *Minimum 3 month sign up, starting from your account
-                      approval date.
-                    </Typography>
-                  </FooterNote>
-
-                  {!!yourPlanButtonText &&
-                  subscriptionType === 'STANDARD' &&
-                  isSaasSubscribed ? (
-                    <div
-                      className="subscription-action"
-                      onClick={() =>
-                        isForRenewal
-                          ? showYourPlanOnly
-                            ? history.push(
-                                BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD
-                              )
-                            : setShowRenewModal(true)
-                          : setShowCancelModal(true)
-                      }
-                    >
-                      <Typography
-                        variant="label"
-                        color="primary"
-                        weight="400"
-                        style={{ textDecoration: 'underline' }}
-                      >
-                        {yourPlanButtonText}
-                      </Typography>
-                    </div>
-                  ) : (
-                    <div
-                      className="subscription-action"
-                      onClick={() => setShowToggleModal(true)}
-                    >
-                      <Typography
-                        variant="label"
-                        color="primary"
-                        weight="400"
-                        style={{ textDecoration: 'underline' }}
-                      >
-                        Cancel Subscription
-                      </Typography>
-                    </div>
-                  )}
-                </IncusionSection>
               </Row>
             </PlanContainer>
             <PlanContainer>
@@ -536,60 +417,184 @@ export const SubscriptionPlanView = ({
                 </Col>
               </Row>
             </PlanContainer>
+            <PlanContainer>
+              <IncusionSection>
+                <Typography
+                  variant="title6"
+                  weight="900"
+                  customFont={theme.isSFM ? 'Canela' : 'Media Sans'}
+                >
+                  What included with Base and Pro plans
+                </Typography>
+                <InclusionsList
+                  selectedPlan={selectedPlan}
+                  currentMarketSector={currentMarketSector}
+                />
+                <FooterNote>
+                  <Typography
+                    variant="label"
+                    color={theme.appType === 'seller' ? 'shade6' : 'shade7'}
+                    weight="400"
+                  >
+                    *Minimum 3 month sign up, starting from your account
+                    approval date.
+                  </Typography>
+                </FooterNote>
+
+                {!!yourPlanButtonText &&
+                subscriptionType === 'STANDARD' &&
+                isSaasSubscribed ? (
+                  <div
+                    className="subscription-action"
+                    onClick={() =>
+                      isForRenewal
+                        ? showYourPlanOnly
+                          ? history.push(
+                              BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD
+                            )
+                          : setShowRenewModal(true)
+                        : setShowCancelModal(true)
+                    }
+                  >
+                    <Typography
+                      variant="label"
+                      color="primary"
+                      weight="400"
+                      style={{ textDecoration: 'underline' }}
+                    >
+                      {yourPlanButtonText}
+                    </Typography>
+                  </div>
+                ) : (
+                  <div
+                    className="cancel-subscription"
+                    onClick={() => setShowProToggleModal(true)}
+                  >
+                    <Typography
+                      variant="label"
+                      color="primary"
+                      weight="400"
+                      style={{ textDecoration: 'underline' }}
+                    >
+                      Cancel Subscription
+                    </Typography>
+                  </div>
+                )}
+              </IncusionSection>
+            </PlanContainer>
           </Col>
         </Row>
       </SubscriptionContainer>
       <ConfirmationModal
-        isOpen={showToggleModal}
-        title={`Change to ${
-          selectedPlan === 'Standard' ? 'premium' : 'basic'
-        } billing?`}
-        actionText="Confirm new plan"
+        isOpen={showProToggleModal}
+        title="Upgrade to the Pro model and unlock more features!"
+        actionText={`Upgrade (${'$11'})`} // todo get upgrade cost
         onClickClose={() => {
-          setShowToggleModal(false);
-          setIsMonthly(!isMonthly);
+          setShowProToggleModal(false);
+          // setIsMonthly(!isMonthly);
         }}
         action={() => {
-          updateSubscription(interval);
-          setShowToggleModal(false);
+          updateSubscription(
+            interval,
+            selectedPlan === 'Standard' ? 'PREMIUM' : 'STANDARD'
+          );
+          setShowProToggleModal(false);
         }}
         style={{ width: '686px' }}
       >
-        <Typography color="shade7">Your new plan will be:</Typography>
+        <Typography color="shade6">
+          The ongoing monthly cost will be:
+          <Typography variant="body" component="span">
+            &nbsp;{price}
+          </Typography>
+          <Typography
+            component="span"
+            variant="caption"
+            weight="500"
+            color="shade6"
+          >
+            /Month
+          </Typography>
+        </Typography>
+
+        <Typography variant="body" weight="500" color="shade6">
+          Pay the amount below to unlock the Pro model now.
+        </Typography>
         <div style={{ display: 'flex', margin: '8px 0' }}>
           <Typography variant="title3" weight="400">
             {price}
           </Typography>
-          <Typography variant="label" weight="400" color="shade6">
-            &nbsp;/ {isMonthly ? 'Month' : 'Year'}
-          </Typography>
         </div>
         <div style={{ display: 'flex' }}>
-          <Typography variant="body" weight="400" color="shade7">
-            You will be charged
+          <Typography variant="body" color="shade6">
+            This is a pro rata cost to have the Premium features for the
+            remainder of your current payment period. All future costs will be
+            <Typography component="span" color="shade9">
+              &nbsp;{price}
+            </Typography>
+            <Typography variant="caption" component="span" color="shade6">
+              &nbsp;/{isMonthly ? 'Month' : 'Year'}
+            </Typography>
           </Typography>
-          <Typography variant="body" weight="700">
-            &nbsp;{price}
+        </div>
+      </ConfirmationModal>
+
+      <ConfirmationModal
+        isOpen={showBaseToggleModal}
+        title="Are you sure you want to switch plans?"
+        actionText="Back" // todo get upgrade cost
+        cancelText="Confirm"
+        onClickClose={() => {
+          // setShowBaseToggleModal(false);
+          // setIsMonthly(!isMonthly);
+          updateSubscription(
+            interval,
+            selectedPlan === 'Standard' ? 'PREMIUM' : 'STANDARD'
+          );
+          setShowBaseToggleModal(false);
+        }}
+        action={() => {
+          setShowBaseToggleModal(false);
+        }}
+        style={{ width: '686px' }}
+      >
+        <Typography color="shade6">
+          The ongoing monthly cost will be:
+          <Typography variant="body" component="span">
+            &nbsp;{basePrice ? toPrice(basePrice) : 0}
           </Typography>
-          <Typography variant="body" weight="400" color="shade7">
-            &nbsp;on
+          <Typography
+            component="span"
+            variant="caption"
+            weight="500"
+            color="shade6"
+          >
+            /Month
           </Typography>
-          <Typography variant="body" weight="700">
-            &nbsp;{nextBillingDate}
+        </Typography>
+        <Typography variant="body" weight="500" color="shade6">
+          effective from the next payment period. .
+        </Typography>
+        <div style={{ display: 'flex', marginTop: 24 }}>
+          <Typography variant="body" color="shade6">
+            By pressing Confirm, you will have the Pro features until the end of
+            this payment period and will be downgraded as of the{' '}
+            {`22nd of 
+            February.`}
           </Typography>
         </div>
       </ConfirmationModal>
 
       <ConfirmationModal
         isOpen={showCancelModal}
-        title="Cancel Subscription"
-        description="Are you sure you want to cancel your ShoreTrade account? Your account will be deactivated until you contact info@shoretrade.com to renew your subscription. You will not be able to access any data that is within your account."
-        actionText="Continue Subscription"
+        title="Are you sure you want to cancel your ShoreTrade account?"
+        description="Your account will be deactivated on your next payment date and you will not be able to access any data in your account."
+        actionText="No"
         cancelText="Cancel Subscription"
         onClickClose={() => setShowCancelModal(false)}
         action={() => setShowCancelModal(false)}
         cancel={() => {
-          cancelSubscription(interval);
+          cancelSubscription();
           setShowCancelModal(false);
         }}
         style={{ width: '686px' }}
@@ -598,7 +603,20 @@ export const SubscriptionPlanView = ({
       <ConfirmationModal
         isOpen={showRenewModal}
         title="Renew your subscription"
-        description="To gain access to your account, you will need to renew your subscription. Press Renew Subscription to confirm your payment details and payment frequency. The relevant amount will be debited from your nominated card and once successfully received, your account will be reactivated."
+        description={
+          <>
+            <Typography variant="body" color="shade6">
+              To gain access to your account, you will need to renew your
+              subscription.{' '}
+            </Typography>
+            <Typography variant="body" color="shade6">
+              Press Renew Subscription to confirm your payment details and
+              payment frequency. The relevant amount will be debited from your
+              nominated card and once successfully received, your account will
+              be reactivated.
+            </Typography>
+          </>
+        }
         actionText="Renew Subscription"
         cancelText="Cancel"
         onClickClose={() => setShowRenewModal(false)}

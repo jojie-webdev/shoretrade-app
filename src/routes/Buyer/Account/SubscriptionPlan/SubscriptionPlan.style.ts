@@ -3,6 +3,18 @@ import styled from 'utils/styled';
 
 export const Container = styled.div``;
 
+export const AlertsContainer = styled.div`
+  display: flex;
+  margin-bottom: 32px;
+  width: 100%;
+`;
+
+export const ExpiryAlertContentContainer = styled.div`
+  .actions {
+    margin-top: 14px;
+  }
+`;
+
 export const BreadcrumbsContainer = styled.div`
   margin-bottom: 40px;
 `;
@@ -34,7 +46,6 @@ export const ToggleContainer = styled.div`
 
 export const SubscriptionContainer = styled.div`
   display: flex;
-  justify-content: center;
 
   .section {
     background: ${({ theme }) => theme.grey.noshade};
@@ -170,6 +181,12 @@ export const IncusionSection = styled.div`
   padding: 0 24px;
   padding-bottom: 24px;
   margin-top: 8px;
+
+  .subscription-action {
+    margin-top: 24px;
+    &:hover {
+      cursor: pointer;
+    }
 `;
 
 export const ReverseMarketplace = styled.div`

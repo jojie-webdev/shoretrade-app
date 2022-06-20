@@ -419,7 +419,7 @@ export const SubscriptionPlanView = ({
         onClickClose={() => setShowCancelModal(false)}
         action={() => setShowCancelModal(false)}
         cancel={() => {
-          cancelSubscription(interval);
+          cancelSubscription();
           setShowCancelModal(false);
         }}
         style={{ width: '686px' }}

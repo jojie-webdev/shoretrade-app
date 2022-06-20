@@ -2,7 +2,8 @@ import { GenericResponse } from 'types/GenericResponse';
 
 export type UpdateSubscriptionPlanMeta = {
   companyId: string;
-  saasInterval: string;
+  saasType: string;
+  existingCard: string;
 };
 
 // TODO: Update response value

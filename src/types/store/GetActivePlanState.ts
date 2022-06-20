@@ -32,11 +32,16 @@ export type GetActivePlanResponseData = {
   recurring_interval: string;
   starts_at: string;
   subscription_preference: {
-    saasInterval: string;
+    saasType: string;
     isSaasSubscribed: boolean;
-    type: string;
+    type: SubscriptionType;
   };
 };
+
+export enum SubscriptionType {
+  PREMIUM = 'PREMIUM',
+  STANDARD = 'STANDARD',
+}
 
 // TODO: Update response value
 export type GetActivePlanPayload = GenericResponse<GetActivePlanResponseData>;

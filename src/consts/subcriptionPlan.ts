@@ -37,7 +37,43 @@ export const yourPlanFeaturesList = {
   //     alias: 'INSIGHT',
   //   },
   // ],
-
+  buyer: [
+    {
+      name: 'Access the SFM Blue platform',
+      description: 'and make purchases with no fees for:',
+      alias: 'ACCESS',
+    },
+    {
+      name: 'View Direct Sale',
+      description:
+        'Purchase products directly from Fisheries, Processors and other market sectors of the Seafood Industry',
+      alias: 'DIRECT_SALES',
+    },
+    {
+      name: 'View Pre-Auction Listing',
+      description:
+        'See & Buy Listings before they go to Auction at Sydney FIsh Market',
+      alias: 'PRE_AUCTION',
+    },
+    {
+      name: 'View Aquafuture Listings',
+      description:
+        'Buy products before they are caught  and secure your supply',
+      alias: 'AQUAFUTURE',
+    },
+    {
+      name: 'Multiple Delivery Options',
+      description:
+        'Choose an available shipping method for your order from Road Freight, Pick up from a depot or the Seller, and even Air Freight!',
+      alias: 'DELIVERY',
+    },
+    {
+      name: 'Create profiles for team members ',
+      description:
+        'Create profiles for team members in your organisation under your company.',
+      alias: 'LINKED_ACCOUNTS',
+    },
+  ],
   buyer_standard_group_1: [
     {
       name: '1 Month Free',
