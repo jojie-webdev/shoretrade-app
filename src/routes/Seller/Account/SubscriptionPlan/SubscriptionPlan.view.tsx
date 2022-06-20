@@ -271,7 +271,8 @@ export const SubscriptionPlanView = ({
                           theme.appType === 'seller' ? 'noshade' : 'shade9'
                         }
                       >
-                        Reverse Marketplace
+                        Reverse Marketplace $
+                        {REVERSE_MARKETPLACE_PRICE.SELLER.toFixed(2)}
                       </Typography>
                       <PlanPrice>
                         <Typography

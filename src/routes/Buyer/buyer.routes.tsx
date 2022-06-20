@@ -221,7 +221,7 @@ const BuyerRoutes = (): JSX.Element => {
       };
     }
 
-    if (pathname === '/buyer/categories' && locationState?.ref === 'home') {
+    if (pathname === '/buyer/help-' && locationState?.ref === 'home') {
       return {
         onBack: history.goBack,
       };
