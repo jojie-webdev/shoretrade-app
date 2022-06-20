@@ -15,7 +15,10 @@ import { Col, Hidden, Row, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { SwiperSlide } from 'swiper/react';
 
-import { EXPLANATIONS, MONTHLY_SUBSCRIPTION_PRICE } from './Landing.constants';
+import {
+  EXPLANATIONS,
+  DEFAULT_MONTHLY_SUBSCRIPTION_PRICE,
+} from './Landing.constants';
 import {
   Container1,
   Description,
@@ -30,7 +33,7 @@ import {
   Title1,
 } from './Landing.style';
 
-const LandingDefaultView = () => {
+const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
@@ -60,7 +63,7 @@ const LandingDefaultView = () => {
         >
           $
           <Typography variant="title5" color="noshade">
-            {MONTHLY_SUBSCRIPTION_PRICE}
+            {DEFAULT_MONTHLY_SUBSCRIPTION_PRICE}
           </Typography>
           <Typography variant="caption" color="shade6">
             /month
@@ -71,6 +74,7 @@ const LandingDefaultView = () => {
           textVariant="label"
           textWeight="400"
           text="See plans"
+          onClick={() => props.handleSeePlansClick()}
         />
       </Container1>
 

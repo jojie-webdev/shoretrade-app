@@ -55,24 +55,6 @@ const BarcodeScannerDefaultView = () => {
           Download the “SFMBlue or ShoreTrade” Buyer App to scan &amp; mark your
           orders as completed
         </FirstDescription>
-
-        <SubscriptionPayment
-          variant="caption"
-          color="shade7"
-          style={{ display: 'inline-flex' }}
-        >
-          $
-          <Typography variant="title5">{MONTHLY_SUBSCRIPTION_PRICE}</Typography>
-          <Typography variant="caption" color="shade7">
-            /month
-          </Typography>
-        </SubscriptionPayment>
-        <Button
-          padding={isMobile ? '10px 16px' : '14px 24px'}
-          textVariant="label"
-          textWeight="400"
-          text="See plans"
-        />
       </Container1>
 
       <Visible xs>

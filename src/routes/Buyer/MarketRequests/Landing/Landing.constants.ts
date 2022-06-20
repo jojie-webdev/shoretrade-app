@@ -1,4 +1,5 @@
-export const MONTHLY_SUBSCRIPTION_PRICE = '276.00';
+export const DEFAULT_MONTHLY_SUBSCRIPTION_PRICE = '100.00';
+export const SFM_MONTHLY_SUBSCRIPTION_PRICE = '276.00';
 export const EXPLANATIONS = [
   {
     heading: 'Request any Product',

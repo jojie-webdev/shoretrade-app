@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-import { BUYER_MARKET_REQUEST_ROUTES } from 'consts/routes';
+import {
+  BUYER_ACCOUNT_ROUTES,
+  BUYER_MARKET_REQUEST_ROUTES,
+} from 'consts/routes';
 import moment from 'moment';
 import { ScreenClassRender } from 'react-grid-system';
 import { useSelector, useDispatch } from 'react-redux';
@@ -77,6 +80,10 @@ const MarketRequestsLanding = (): JSX.Element => {
     }
   };
 
+  const handleSeePlansClick = () => {
+    history.push(BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN);
+  };
+
   useEffect(() => {
     dispatch(getAllMarketRequestActions.request({}));
     // eslint-disable-next-line
@@ -109,16 +116,24 @@ const MarketRequestsLanding = (): JSX.Element => {
     activeOffersData,
   };
 
+  const sfmViewProps = {
+    handleSeePlansClick,
+  };
+
+  const defaultViewProps = {
+    handleSeePlansClick,
+  };
+
   const reverseMarketPlace = activePlan?.features.find(
     (feature) => feature.alias === 'REVERSED_MARKETPLACE'
   );
 
   if (theme.isSFM) {
-    return <LandingSFMView />;
+    return <LandingSFMView {...sfmViewProps} />;
   }
 
   if (!reverseMarketPlace && !activePlanLoading && activePlan?.id) {
-    return <LandingDefaultView />;
+    return <LandingDefaultView {...defaultViewProps} />;
   }
 
   return <MarketRequestsLandingView {...generatedProps} />;

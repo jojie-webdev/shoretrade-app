@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
 import TermsAndCondition from 'components/module/TermsAndCondition';
-import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
+import {
+  SELLER_ACCOUNT_ROUTES,
+  SELLER_MARKET_BOARD_ROUTES,
+} from 'consts/routes';
 import moment from 'moment';
 import qs from 'qs';
 import { isEmpty } from 'ramda';
@@ -274,6 +277,10 @@ const MarketBoardLanding = (): JSX.Element => {
     setBuyerRequestFilter([]);
   };
 
+  const handleSeePlansClick = () => {
+    history.push(SELLER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN);
+  };
+
   const generatedProps = {
     marketRequests,
     sellingRequests: marketRequestsData.interests,
@@ -305,16 +312,24 @@ const MarketBoardLanding = (): JSX.Element => {
     userPending,
   };
 
+  const sfmViewProps = {
+    handleSeePlansClick,
+  };
+
+  const defaultViewProps = {
+    handleSeePlansClick,
+  };
+
   const reverseMarketPlace = activePlan?.features.find(
     (feature) => feature.alias === 'REVERSED_MARKETPLACE'
   );
 
   if (theme.isSFM) {
-    return <LandingSFMView />;
+    return <LandingSFMView {...sfmViewProps} />;
   }
 
   if (!reverseMarketPlace && !activePlanLoading && activePlanError) {
-    return <LandingDefaultView />;
+    return <LandingDefaultView {...defaultViewProps} />;
   }
 
   if (!isAcceptClicked) {
