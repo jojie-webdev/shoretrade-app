@@ -26,7 +26,6 @@ import { toPrice } from 'utils/String';
 import { getButtonTextByStatus } from 'utils/SubscriptionPlan/getButtonTextByStatus';
 import { useTheme } from 'utils/Theme';
 
-import InclusionsList from './InclusionsList/InclusionsList.view';
 import { SubscriptionPlanGeneratedProps } from './SubscriptionPlan.props';
 import {
   BillingSection,
@@ -233,34 +232,6 @@ export const SubscriptionPlanView = ({
             <PlanContainer>
               <Row gutterWidth={20} style={{ width: '100%' }}>
                 <Col md={12}>
-                  <IncusionSection>
-                    <Typography
-                      variant="title6"
-                      weight="400"
-                      customFont={theme.isSFM ? 'Canela' : 'Media Sans'}
-                      color={theme.appType === 'seller' ? 'noshade' : 'shade9'}
-                    >
-                      What's included in your subscription
-                    </Typography>
-                    <InclusionsList
-                      selectedPlan={selectedPlan}
-                      currentMarketSector={currentMarketSector}
-                    />
-                    <div>
-                      <Typography
-                        variant="label"
-                        color="primary"
-                        weight="400"
-                        style={{
-                          textDecoration: 'underline',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        Cancel Subscription
-                      </Typography>
-                    </div>
-                  </IncusionSection>
-
                   <AdditionalSubSection className="section">
                     <PlanTitleContainer>
                       <Typography
@@ -271,8 +242,7 @@ export const SubscriptionPlanView = ({
                           theme.appType === 'seller' ? 'noshade' : 'shade9'
                         }
                       >
-                        Reverse Marketplace $
-                        {REVERSE_MARKETPLACE_PRICE.SELLER.toFixed(2)}
+                        Reverse Marketplace
                       </Typography>
                       <PlanPrice>
                         <Typography
