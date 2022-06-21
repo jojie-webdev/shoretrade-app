@@ -233,7 +233,6 @@ const PlanPaymentMethodView = ({
                         <Checkbox
                           label="Set as default card"
                           name="isDefault"
-                          typographyProps={{ color: 'noshade' }}
                           checked={formik.values.isDefault}
                           onClick={() => {
                             formik.setFieldValue(
