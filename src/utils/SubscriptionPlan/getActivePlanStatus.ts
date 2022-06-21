@@ -7,7 +7,8 @@ export const getActivePlanStatus = (
   const startsAt = moment(activePlan.starts_at).utc();
   const endsAt = moment(activePlan.ends_at).utc();
   const paymentDelay = moment.utc().diff(startsAt, 'days');
-  const isSubscribed = activePlan.subscription_preference.isSaasSubscribed;
+  const isSubscribed =
+    activePlan.subscription_preference?.isSaasSubscribed || false;
   const isFreeTrial = activePlan.is_free_trial;
   const isPaid = !!activePlan.paid_at;
 

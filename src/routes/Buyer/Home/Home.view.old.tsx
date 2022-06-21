@@ -117,7 +117,7 @@ const HomeView = (props: HomeGeneratedProps) => {
     ? 'MARKET_GROUP_1'
     : 'MARKET_GROUP_2';
 
-  const subscriptionType = activePlan?.subscription_preference.type;
+  const subscriptionType = activePlan?.subscription_preference?.type;
   const freeTrialPeriod =
     subscriptionType === 'PREMIUM'
       ? FREE_TRIAL_PERIOD[selectedMarketGroup].premium
