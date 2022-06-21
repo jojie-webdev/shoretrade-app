@@ -26,8 +26,8 @@ const InclusionsListView = (props: InclusionsListGeneratedProps) => {
   const { selectedPlan, currentMarketSector } = props;
   const theme = useTheme();
 
-  const getIcon = (featureName: string) => {
-    switch (featureName) {
+  const getIcon = (alias: string) => {
+    switch (alias) {
       case 'FREE_MONTH':
         return <Anchor width={14} height={14} fill={theme.brand.primary} />;
       case 'LISTINGS':
@@ -51,7 +51,7 @@ const InclusionsListView = (props: InclusionsListGeneratedProps) => {
         return <Truck width={14} height={14} fill={theme.brand.primary} />;
       case 'BUYING_ADDRESSES':
         return <Home2 width={14} height={14} fill={theme.brand.primary} />;
-      case 'LINKED_ACCOUNTS':
+      case 'PROFILE':
         return <Account width={14} height={14} fill={theme.brand.primary} />;
       case 'MARKETPLACE':
         return <Net width={14} height={14} fill={theme.brand.primary} />;
@@ -66,8 +66,8 @@ const InclusionsListView = (props: InclusionsListGeneratedProps) => {
 
   const buyerPlanHandler = () => {
     return theme.appType && selectedPlan && marketSector
-      ? `${theme.appType}_${selectedPlan?.toLocaleLowerCase()}_${marketSector}`
-      : 'buyer_standard_group_1';
+      ? `${theme.appType}`
+      : '';
   };
 
   const planFeatureList =
@@ -80,34 +80,40 @@ const InclusionsListView = (props: InclusionsListGeneratedProps) => {
 
   return (
     <Container isSeller={theme.appType === 'seller'}>
-      {yourPlanFeaturesList[planFeatureList as keyof planFeatureListType].map(
-        (feat: any) => {
-          if (skippedFeatures.includes(feat.alias)) return;
+      {yourPlanFeaturesList[planFeatureList as keyof planFeatureListType] &&
+        yourPlanFeaturesList[planFeatureList as keyof planFeatureListType].map(
+          (feat: any) => {
+            if (skippedFeatures.includes(feat.alias)) return;
 
-          return (
-            <Row key={feat.alias} gutterWidth={16}>
-              <Col xs="content">
-                <div className="icon-holder">{getIcon(feat.alias)}</div>
-              </Col>
-              <Col>
-                <Typography
-                  variant="body"
-                  color={theme.appType === 'seller' ? 'noshade' : 'shade9'}
-                >
-                  {feat.name}
-                </Typography>
-                <Typography
-                  variant="label"
-                  color={theme.appType === 'seller' ? 'shade6' : 'shade7'}
-                  weight="400"
-                >
-                  {feat.description}
-                </Typography>
-              </Col>
-            </Row>
-          );
-        }
-      )}
+            return (
+              <Row
+                dir="column"
+                key={feat.alias}
+                style={{ marginBottom: 16 }}
+                gutterWidth={16}
+              >
+                <Col xs="content">
+                  <div className="icon-holder">{getIcon(feat.alias)}</div>
+                </Col>
+                <Col>
+                  <Typography 
+                    variant="body"
+                    color={theme.appType === 'seller' ? 'noshade' : 'shade9'}
+                  >
+                    {feat.title}
+                  </Typography>
+                  <Typography
+                    variant="label"
+                    color={theme.appType === 'seller' ? 'shade6' : 'shade7'}
+                    weight="400"
+                  >
+                    {feat.description}
+                  </Typography>
+                </Col>
+              </Row>
+            );
+          }
+        )}
     </Container>
   );
 };

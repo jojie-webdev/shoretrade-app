@@ -122,8 +122,6 @@ export const PlanTitleContainer = styled.div`
 
 export const PlanContainer = styled.div`
   display: flex;
-  justify-content: center;
-
   margin-bottom: 24px;
   background: ${({ theme }) => theme.grey.noshade};
   border-radius: 12px;

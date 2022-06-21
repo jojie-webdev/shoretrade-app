@@ -34,7 +34,8 @@ export const activePlanToProps = (
     nextBillingDate,
     cancellationPeriod: `in ${daysUntilEnd} days`,
     cardBrand,
-    subscriptionType: activePlan?.subscription_preference.type || 'STANDARD',
+    // subscriptionType: activePlan?.subscription_preference.type || 'STANDARD',
+    subscriptionType: 'PREMIUM',
     features: activePlan?.features || [],
     cardNumberMasked: defaultPaymentMethod
       ? toMaskedCardNumber(cardBrand, defaultPaymentMethod?.lastFour)

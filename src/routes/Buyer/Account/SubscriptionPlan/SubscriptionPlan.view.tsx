@@ -17,6 +17,7 @@ import {
   BUYER_BASE_PRICE,
   BUYER_PREMIUM_PRICE,
 } from 'consts/prices';
+import { basePlanItems, proPlanItems } from 'consts/subcriptionPlan';
 import _ from 'lodash';
 import moment from 'moment';
 import { Col, Row } from 'react-grid-system';
@@ -51,6 +52,8 @@ import {
   AlertsContainer,
   ExpiryAlertContentContainer,
 } from './SubscriptionPlan.style';
+import { BenefitsList } from './InclusionsList/InclusionsList.style';
+import { Tag } from 'routes/Seller/Selling/Selling.style';
 
 export const SubscriptionPlanView = ({
   annualPrice,
@@ -92,7 +95,7 @@ export const SubscriptionPlanView = ({
     },
   };
 
-  const selectedPlan = subscriptionType === 'STANDARD' ? 'Standard' : 'Premium';
+  const selectedPlan = subscriptionType === 'STANDARD' ? 'Base' : 'Pro';
 
   const basePrice = BUYER_BASE_PRICE.find(
     (item) => item.market === currentMarketSector.toUpperCase()
@@ -276,7 +279,7 @@ export const SubscriptionPlanView = ({
                         weight="900"
                         customFont={theme.isSFM ? 'Canela' : 'Media Sans'}
                       >
-                        Basic Plan
+                        Base
                       </Typography>
                       <PlanPrice>
                         <Typography variant="title6" weight="400">
@@ -286,6 +289,17 @@ export const SubscriptionPlanView = ({
                           /Month
                         </Typography>
                       </PlanPrice>
+                      <div>
+                        <BenefitsList>
+                          {basePlanItems.map((i, index) => (
+                            <li key={index}>
+                              <Typography variant="body" color="shade9">
+                                {i}
+                              </Typography>
+                            </li>
+                          ))}
+                        </BenefitsList>
+                      </div>
                     </PlanTitleContainer>
 
                     {!!yourPlanButtonText &&
@@ -313,7 +327,7 @@ export const SubscriptionPlanView = ({
                         weight="900"
                         customFont={theme.isSFM ? 'Canela' : 'Media Sans'}
                       >
-                        Pro Plan
+                        Pro
                       </Typography>
                       <PlanPrice>
                         <Typography variant="title5" color="shade9">
@@ -323,6 +337,17 @@ export const SubscriptionPlanView = ({
                           /Month
                         </Typography>
                       </PlanPrice>
+                      <div>
+                        <BenefitsList>
+                          {proPlanItems.map((i, index) => (
+                            <li key={index}>
+                              <Typography variant="body" color="shade9">
+                                {i}
+                              </Typography>
+                            </li>
+                          ))}
+                        </BenefitsList>
+                      </div>
                     </PlanTitleContainer>
 
                     {!!yourPlanButtonText &&
@@ -359,14 +384,34 @@ export const SubscriptionPlanView = ({
                         Reverse Marketplace
                       </Typography>
                       <PlanPrice>
-                        <Typography variant="title6" weight="400">
-                          $
-                          {theme.appType !== 'seller' &&
-                            REVERSE_MARKETPLACE_PRICE.BUYER.toFixed(2)}
-                        </Typography>
-                        <Typography variant="label" weight="400" color="shade6">
-                          /Month
-                        </Typography>
+                        {selectedPlan === 'Base' ? (
+                          <>
+                            <Typography variant="title6" weight="400">
+                              $
+                              {theme.appType !== 'seller' &&
+                                REVERSE_MARKETPLACE_PRICE.BUYER.toFixed(2)}
+                            </Typography>
+                            <Typography
+                              variant="label"
+                              weight="400"
+                              color="shade6"
+                            >
+                              /Month
+                            </Typography>
+                          </>
+                        ) : (
+                          <>
+                            <Tag background={theme.brand.success}>
+                              <Typography
+                                variant="caption"
+                                color="noshade"
+                                weight="500"
+                              >
+                                Included
+                              </Typography>
+                            </Tag>
+                          </>
+                        )}
                       </PlanPrice>
                     </PlanTitleContainer>
                     <ReverseMarketplace>
@@ -424,7 +469,8 @@ export const SubscriptionPlanView = ({
                   weight="900"
                   customFont={theme.isSFM ? 'Canela' : 'Media Sans'}
                 >
-                  What included with Base and Pro plans
+                  {subscriptionType === 'STANDARD' ? 'Base ' : 'Pro '} Plan
+                  Inclusions
                 </Typography>
                 <InclusionsList
                   selectedPlan={selectedPlan}
@@ -496,7 +542,7 @@ export const SubscriptionPlanView = ({
         action={() => {
           updateSubscription(
             interval,
-            selectedPlan === 'Standard' ? 'PREMIUM' : 'STANDARD'
+            selectedPlan === 'Base' ? 'PREMIUM' : 'STANDARD'
           );
           setShowProToggleModal(false);
         }}
@@ -527,8 +573,8 @@ export const SubscriptionPlanView = ({
         </div>
         <div style={{ display: 'flex' }}>
           <Typography variant="body" color="shade6">
-            This is a pro rata cost to have the Premium features for the
-            remainder of your current payment period. All future costs will be
+            This is a pro rata cost to have the Pro features for the remainder
+            of your current payment period. All future costs will be
             <Typography component="span" color="shade9">
               &nbsp;{price}
             </Typography>
@@ -549,7 +595,7 @@ export const SubscriptionPlanView = ({
           // setIsMonthly(!isMonthly);
           updateSubscription(
             interval,
-            selectedPlan === 'Standard' ? 'PREMIUM' : 'STANDARD'
+            selectedPlan === 'Base' ? 'PREMIUM' : 'STANDARD'
           );
           setShowBaseToggleModal(false);
         }}
