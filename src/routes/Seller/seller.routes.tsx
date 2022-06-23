@@ -73,7 +73,7 @@ const ROUTES: Routes = {
   // Add Product
   ADD_PRODUCT: {
     path: SELLER_ROUTES.ADD_PRODUCT,
-    title: 'Add a Product',
+    title: 'Add a Listing',
     children: <AddProduct />,
     icon: AddBorder,
     nested: true,
@@ -211,6 +211,7 @@ const SellerRoutes = (): JSX.Element => {
 
       return {
         shouldIncludePadding: false,
+        pageTitle: 'Add a Listing',
       };
     }
 
@@ -229,12 +230,6 @@ const SellerRoutes = (): JSX.Element => {
     if (pathname.includes(SELLER_ROUTES.HELP_AND_SUPPORT)) {
       return {
         pageTitle: 'Help & Support',
-      };
-    }
-
-    if (pathname.includes(SELLER_ROUTES.ADD_PRODUCT)) {
-      return {
-        pageTitle: 'Add Listing',
       };
     }
 

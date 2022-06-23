@@ -358,7 +358,7 @@ const Review = ({
             className="button"
           />
           <Button
-            text={isExisting ? 'Update Listing' : 'Add Listing'}
+            text={isExisting ? 'Update Listing' : 'Add a Listing'}
             loading={pendingSave}
             onClick={() => {
               if (!isValidData) {
@@ -391,7 +391,7 @@ const Review = ({
         />
         <Button
           takeFullWidth
-          text={isExisting ? 'Update Listing' : 'Add Listing'}
+          text={isExisting ? 'Update Listing' : 'Add a Listing'}
           loading={pendingSave}
           onClick={() => {
             if (!isValidData) {
