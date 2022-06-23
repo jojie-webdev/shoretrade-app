@@ -63,9 +63,9 @@ export const BUYER_STEPS = [
       'Let us know more about your business by selecting your market sector.',
   },
   {
-    title: 'Choose Your Plan',
+    title: 'See Plan Options Below',
     description:
-      'Review the benefits of the base and premium subscription models below.',
+      'Review the benefits of the base and pro subscription models below, based on your selected monthly purchasing value $0 - $10,000.',
   },
   {
     title: 'Payment Method',
@@ -220,3 +220,13 @@ export const BUYER_PAYMENT_METHOD_DETAILS = [
       'Apply for our Buy Now Pay Later trading account to fast track your business and help with cashflow. ShorePay is a financing tool built by industry for industry.',
   },
 ];
+
+export const PLAN_NAME = {
+  BASE: 'Standard',
+  PRO: 'Premium',
+};
+
+export const PLAN_PRICE = {
+  BASE: { price: 59.99, reverseMarket: 59.99, priceWithReverse: 119.98 },
+  PRO: { price: 499 },
+};

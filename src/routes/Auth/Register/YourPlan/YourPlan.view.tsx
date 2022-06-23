@@ -108,35 +108,39 @@ const YourPlanView = ({
         />
       )}
 
-      <AdditionalSubscription>
-        <CheckboxContainer>
-          <Checkbox
-            checked={hasReverseMarketPlace}
-            onClick={() => {
-              setAdditionalSubscription(!additionalSubs);
-            }}
-          />
-        </CheckboxContainer>
-        <Typography
-          variant="body"
-          color={theme.appType === 'seller' ? 'noshade' : 'shade9'}
-        >
-          {!isSeller
-            ? `Additonal subscription for ${REVERSE_MARKETPLACE_PRICE.BUYER.toFixed(
-                2
-              )}/month`
-            : `Additonal subscription for ${REVERSE_MARKETPLACE_PRICE.SELLER.toFixed(
-                2
-              )}/month`}
-        </Typography>
-      </AdditionalSubscription>
+      {isSeller && (
+        <AdditionalSubscription>
+          <CheckboxContainer>
+            <Checkbox
+              checked={hasReverseMarketPlace}
+              onClick={() => {
+                setAdditionalSubscription(!additionalSubs);
+              }}
+            />
+          </CheckboxContainer>
+          <Typography
+            variant="body"
+            color={theme.appType === 'seller' ? 'noshade' : 'shade9'}
+          >
+            {!isSeller
+              ? `Additonal subscription for ${REVERSE_MARKETPLACE_PRICE.BUYER.toFixed(
+                  2
+                )}/month`
+              : `Additonal subscription for ${REVERSE_MARKETPLACE_PRICE.SELLER.toFixed(
+                  2
+                )}/month`}
+          </Typography>
+        </AdditionalSubscription>
+      )}
 
-      <AdditionalPlanFeatures
-        selectedPlan={selectedPlan}
-        currentMarketSector={currentMarketSector}
-      />
+      {isSeller && (
+        <AdditionalPlanFeatures
+          selectedPlan={selectedPlan}
+          currentMarketSector={currentMarketSector}
+        />
+      )}
 
-      {!isSeller && (
+      {/* {!isSeller && (
         <Footer>
           <Typography
             variant="caption"
@@ -156,7 +160,7 @@ const YourPlanView = ({
             </Typography>
           )}
         </Footer>
-      )}
+      )} */}
 
       {isSeller && (
         <BenefitsList>

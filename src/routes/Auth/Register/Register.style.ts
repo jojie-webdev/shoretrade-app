@@ -489,3 +489,57 @@ export const ChangeMarketSector = styled.div<{
     cursor: pointer;
   }
 `;
+
+export const PaymentPriceConatiner = styled.div`
+  border: ${({ theme }) => `2px solid ${theme.brand.secondary}`};
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border-radius: 12px;
+  margin-top: 24px;
+  gap: 8px;
+`;
+
+export const PaymentPriceRow = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const TotalPriceRow = styled.div`
+  justify-content: flex-end;
+`;
+
+export const PlanPriceConatiner = styled.div`
+  border: ${({ theme }) => `2px solid ${theme.brand.secondary}`};
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border-radius: 12px;
+  margin-top: 24px;
+  gap: 8px;
+`;
+
+export const PlanTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+export const PlanPrice = styled.div`
+  display: flex;
+`;
+
+export const ReverseMarketPlaceContainer = styled.div`
+  border: ${({ theme }) => `2px solid ${theme.grey.shade3}`};
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border-radius: 12px;
+  gap: 8px;
+`;
+export const ReverseCheckboxWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;

@@ -31,6 +31,70 @@ export const yourPlanFeaturesList = {
         'Choose an available shipping method for your order from Road Freight, Pick up from a depot or the Seller, and even Air Freight!',
     },
   ],
+  buyer_base: [
+    {
+      title: 'Create up to 2 team profiles',
+      alias: 'PROFILE',
+      description:
+        'Create profiles for team members in your organisation under your company.',
+    },
+    {
+      title: 'View Direct Sale',
+      alias: 'DIRECT_SALES',
+      description:
+        'Purchase products directly from Fisheries, Processors and other market sectors of the Seafood Industry',
+    },
+    {
+      title: 'View Pre-Auction Listing',
+      alias: 'PRE_AUCTION',
+      description:
+        'See & Buy Listings before they go to Auction at Sydney FIsh Market',
+    },
+    {
+      title: 'View Aquafuture Listings',
+      alias: 'AQUAFUTURE',
+      description:
+        'Buy products before they are caught  and secure your supply',
+    },
+    {
+      title: 'Multiple Delivery Options',
+      alias: 'DELIVERY',
+      description:
+        'Choose an available shipping method for your order from Road Freight, Pick up from a depot or the Seller, and even Air Freight!',
+    },
+  ],
+  buyer_pro: [
+    {
+      title: 'Create unlimited team profiles',
+      alias: 'PROFILE',
+      description:
+        'Create profiles for team members in your organisation under your company.',
+    },
+    {
+      title: 'View Direct Sale',
+      alias: 'DIRECT_SALES',
+      description:
+        'Purchase products directly from Fisheries, Processors and other market sectors of the Seafood Industry',
+    },
+    {
+      title: 'View Pre-Auction Listing',
+      alias: 'PRE_AUCTION',
+      description:
+        'See & Buy Listings before they go to Auction at Sydney FIsh Market',
+    },
+    {
+      title: 'View Aquafuture Listings',
+      alias: 'AQUAFUTURE',
+      description:
+        'Buy products before they are caught  and secure your supply',
+    },
+    {
+      title: 'Multiple Delivery Options',
+      alias: 'DELIVERY',
+      description:
+        'Choose an available shipping method for your order from Road Freight, Pick up from a depot or the Seller, and even Air Freight!',
+    },
+  ],
 
   buyer_standard_group_1: [
     {

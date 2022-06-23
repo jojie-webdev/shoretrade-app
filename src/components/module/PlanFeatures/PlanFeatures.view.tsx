@@ -9,7 +9,7 @@ import {
   CreditCardOutline,
   TagAlt,
   Truck,
-  Fan,
+  ListOutline,
   Anchor,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
@@ -41,11 +41,13 @@ const PlanFeatures = (props: PlanFeaturesProps): JSX.Element => {
       case 'PLUS':
         return <TagAlt width={14} height={14} fill={theme.brand.primary} />;
       case 'DIRECT_SALES':
-        return <Fishes width={14} height={14} fill={theme.brand.primary} />;
-      case 'PRE_AUCTION':
         return <Union width={14} height={14} fill={theme.brand.primary} />;
+      case 'PRE_AUCTION':
+        return (
+          <ListOutline width={14} height={14} fill={theme.brand.primary} />
+        );
       case 'AQUAFUTURE':
-        return <Fan width={14} height={14} fill={theme.brand.primary} />;
+        return <Fishes width={14} height={14} fill={theme.brand.primary} />;
       case 'DELIVERY':
         return <Truck width={14} height={14} fill={theme.brand.primary} />;
       case 'BUYING_ADDRESSES':
@@ -54,20 +56,17 @@ const PlanFeatures = (props: PlanFeaturesProps): JSX.Element => {
         return <Account width={14} height={14} fill={theme.brand.primary} />;
       case 'MARKETPLACE':
         return <Net width={14} height={14} fill={theme.brand.primary} />;
+      case 'PROFILE':
+        return <Account width={14} height={14} fill={theme.brand.primary} />;
     }
   };
 
   type planFeatureListType = typeof yourPlanFeaturesList;
 
   const buyerPlanHandler = () => {
-    const marketSector =
-      currentMarketSector && MARKET_GROUP_1.includes(currentMarketSector)
-        ? 'group_1'
-        : 'group_2';
-
-    return theme.appType && selectedPlan && marketSector
-      ? `${theme.appType}_${selectedPlan?.toLocaleLowerCase()}_${marketSector}`
-      : 'buyer_standard_group_1';
+    return selectedPlan === 'Standard'
+      ? `${theme.appType}_base`
+      : `${theme.appType}_pro`;
   };
 
   const planFeatureList =
@@ -86,7 +85,7 @@ const PlanFeatures = (props: PlanFeaturesProps): JSX.Element => {
                 variant="body"
                 color={theme.appType === 'seller' ? 'noshade' : 'shade9'}
               >
-                {feat.name}
+                {feat.title}
               </Typography>
               <Typography
                 variant="label"
