@@ -248,6 +248,8 @@ const BuyerRoutes = (): JSX.Element => {
     if (companyPlan) {
       if (companyPlan.activePlans.length < 1) {
         setShowRenewModal(true);
+      } else {
+        setShowRenewModal(false);
       }
     }
   }, [companyPlan]);

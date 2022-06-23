@@ -7,7 +7,7 @@ import {
   UpdateSubscriptionPlanPayload,
 } from 'types/store/UpdateSubscriptionPlanState';
 
-import { updateSubscriptionPlanActions } from '../actions';
+import { getCompanyPlanActions, updateSubscriptionPlanActions } from '../actions';
 
 function* updateSubscriptionPlanRequest(
   action: AsyncAction<UpdateSubscriptionPlanMeta, UpdateSubscriptionPlanPayload>
@@ -25,10 +25,24 @@ function* updateSubscriptionPlanRequest(
   }
 }
 
+function* updateSubscriptionPlanSuccess(
+  action: AsyncAction<UpdateSubscriptionPlanMeta, UpdateSubscriptionPlanPayload>
+) {
+  yield put(
+    getCompanyPlanActions.request({
+      companyId: action.meta.companyId,
+    })
+  );
+}
+
 function* updateSubscriptionPlanWatcher() {
   yield takeLatest(
     updateSubscriptionPlanActions.REQUEST,
     updateSubscriptionPlanRequest
+  );
+  yield takeLatest(
+    updateSubscriptionPlanActions.SUCCESS,
+    updateSubscriptionPlanSuccess
   );
 }
 
