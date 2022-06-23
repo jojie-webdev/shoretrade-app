@@ -1,5 +1,5 @@
-import { GetActivePlanResponseData } from 'types/store/GetActivePlanState';
+import { GetCompanyPlanResponseData } from 'types/store/GetCompanyPlanState';
 
 export interface SubscriptionAlertProps {
-  activePlan?: GetActivePlanResponseData;
+  companyPlan: GetCompanyPlanResponseData;
 }

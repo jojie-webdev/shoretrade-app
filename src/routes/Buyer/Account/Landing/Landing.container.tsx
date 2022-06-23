@@ -37,8 +37,8 @@ const Landing = (): JSX.Element => {
   const accountCompletion = useSelector(
     (store: Store) => store.getAccountCompletion.data?.data
   );
-  const activePlan = useSelector(
-    (store: Store) => store.getActivePlan.data?.data
+  const companyPlan = useSelector(
+    (store: Store) => store.getCompanyPlan.data?.data
   );
 
   const isPendingAccount =
@@ -117,7 +117,7 @@ const Landing = (): JSX.Element => {
     logout,
     permission,
     accountCompletion,
-    activePlan,
+    companyPlan,
     currentMarketSector,
   };
   return <LandingView {...generatedProps} />;

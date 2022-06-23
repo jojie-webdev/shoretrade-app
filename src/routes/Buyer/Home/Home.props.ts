@@ -1,5 +1,5 @@
-import { GetActivePlanResponseData } from 'types/store/GetActivePlanState';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
+import { GetCompanyPlanResponseData } from 'types/store/GetCompanyPlanState';
 
 export type CategoryResults = {
   id: string;
@@ -30,7 +30,7 @@ export interface HomeGeneratedProps {
   favouriteSellers: SellerResults[];
   sellers: SellerResults[];
   loadingHomePage: boolean;
-  activePlan?: GetActivePlanResponseData;
+  companyPlan?: GetCompanyPlanResponseData;
   currentMarketSector: string;
 }
 

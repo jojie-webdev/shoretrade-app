@@ -1,3 +1,8 @@
+import {
+  CompanyPlan,
+  CompanyPlanName,
+  Subscription,
+} from 'types/store/GetCompanyPlanState';
 import { SubscriptionPlanFeature } from 'types/store/GetSubscriptionPlansState';
 
 export interface SubscriptionPlanTransformOutputProps {
@@ -8,20 +13,24 @@ export interface SubscriptionPlanTransformOutputProps {
   cardBrand: string;
   cardNumberMasked: string | null;
   isSaasSubscribed: boolean;
-  subscriptionType: 'PREMIUM' | 'STANDARD';
+  subscriptionType: CompanyPlanName;
   features: SubscriptionPlanFeature[];
+  hasCancelled?: Subscription;
+  planStatus: string;
+  nextBillingAmount: number;
+  reverseMarketPrice: number;
+  proPlanDetails?: CompanyPlan;
+  basePlanDetails?: CompanyPlan;
+  noActivePlan: boolean;
 }
 
 export interface SubscriptionPlanGeneratedProps
   extends SubscriptionPlanTransformOutputProps {
-  planStatus: string;
   planInterval: string;
   isDeactivated: boolean;
   currentMarketSector: string;
   cancelSubscription: () => void;
-  updateSubscription: (
-    interval: 'MONTHLY' | 'ANNUAL',
-    type: 'PREMIUM' | 'STANDARD'
-  ) => void;
-  renewSubscription: (interval: 'MONTHLY' | 'ANNUAL') => void;
+  companyPlanError: string | undefined;
+  updateSubscription: (subscriptionId: string) => void;
+  renewSubscription: () => void;
 }

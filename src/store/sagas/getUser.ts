@@ -18,6 +18,7 @@ import {
   socketActions,
   getCartActions,
   getActivePlanActions,
+  getCompanyPlanActions,
 } from '../actions';
 
 function* getUserRequest(action: AsyncAction<GetUserMeta, GetUserPayload>) {
@@ -40,7 +41,7 @@ function* getUserSuccess(action: AsyncAction<GetUserMeta, GetUserPayload>) {
   const companyId: string = pathOr('', ['0', 'id'], companies);
 
   if (state.auth.type === 'buyer') {
-    yield put(getActivePlanActions.request({ companyId }));
+    yield put(getCompanyPlanActions.request({ companyId }));
     yield put(getPaymentModeActions.request({}));
 
     if (companyId) {

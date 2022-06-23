@@ -2,7 +2,10 @@ import { GenericResponse } from 'types/GenericResponse';
 
 export type UpgradeSubscriptionMeta = {
   companyId: string;
-  saasType: string;
+  subscriptionPlanId?: string;
+  payment: {
+    existingCard: string;
+  };
 };
 
 // TODO: Update response value

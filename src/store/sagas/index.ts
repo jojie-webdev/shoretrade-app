@@ -43,6 +43,7 @@ import getBuyerOrders from './getBuyerOrders';
 import getBuyerSearchFilterData from './getBuyerSearchFilterData';
 import getBuyerSearchFilters from './getBuyerSearchFilters';
 import getCart from './getCart';
+import getCompanyPlan from './getCompanyPlan';
 import getCoopUsers from './getCoopUsers';
 import getCrates from './getCrates';
 import getCustomFormData from './getCustomFormData';
@@ -128,6 +129,7 @@ const sagas = [
   getBuyerSearchFilters,
   updatePreferences,
   getActivePlan,
+  getCompanyPlan,
   getSubscriptionPlans,
   getAllBuyerOrders,
   getAllSellerOrders,

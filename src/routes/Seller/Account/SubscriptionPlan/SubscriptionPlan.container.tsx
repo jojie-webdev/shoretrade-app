@@ -86,16 +86,7 @@ const SubscriptionPlan = () => {
 
   const updateSubscription = (interval: 'MONTHLY' | 'ANNUAL') => {
     if (company?.id) {
-      dispatch(
-        updateSubscriptionPlanActions.request({
-          companyId: company?.id,
-          saasType: interval,
-          existingCard:
-            activePlan?.payment_methods.cards.find(
-              (card) => card.id === activePlan.payment_methods.defaultCard
-            )?.id || '',
-        })
-      );
+      //TODO
     }
   };
 
@@ -104,7 +95,6 @@ const SubscriptionPlan = () => {
       dispatch(
         renewSubscriptionPlanActions.request({
           companyId: company.id,
-          saasType: interval,
         })
       );
     }

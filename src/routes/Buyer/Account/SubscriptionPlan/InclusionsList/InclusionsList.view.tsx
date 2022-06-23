@@ -26,6 +26,8 @@ const InclusionsListView = (props: InclusionsListGeneratedProps) => {
   const { selectedPlan, currentMarketSector } = props;
   const theme = useTheme();
 
+  const planAlias = selectedPlan === 'Base' ? 'Standard' : 'Premium';
+
   const getIcon = (alias: string) => {
     switch (alias) {
       case 'FREE_MONTH':
@@ -66,8 +68,8 @@ const InclusionsListView = (props: InclusionsListGeneratedProps) => {
 
   const buyerPlanHandler = () => {
     return theme.appType && selectedPlan && marketSector
-      ? `${theme.appType}`
-      : '';
+      ? `${theme.appType}_${planAlias?.toLocaleLowerCase()}_${marketSector}`
+      : 'buyer_standard_group_1';
   };
 
   const planFeatureList =
@@ -96,7 +98,7 @@ const InclusionsListView = (props: InclusionsListGeneratedProps) => {
                   <div className="icon-holder">{getIcon(feat.alias)}</div>
                 </Col>
                 <Col>
-                  <Typography 
+                  <Typography
                     variant="body"
                     color={theme.appType === 'seller' ? 'noshade' : 'shade9'}
                   >

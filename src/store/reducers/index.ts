@@ -52,6 +52,7 @@ import getBuyerOrdersTransit from './getBuyerOrdersTransit';
 import getBuyerSearchFilterData from './getBuyerSearchFilterData';
 import getBuyerSearchFilters from './getBuyerSearchFilters';
 import getCart from './getCart';
+import getCompanyPlan from './getCompanyPlan';
 import getCoopUsers from './getCoopUsers';
 import getCrates from './getCrates';
 import getCustomFormData from './getCustomFormData';
@@ -262,6 +263,7 @@ const createAppReducer = (routeHistory: History) =>
         getNotificationsSettings,
         editableMarketRequest,
         updateNotificationSettings,
+        getCompanyPlan,
       }).sort()
     )
   );

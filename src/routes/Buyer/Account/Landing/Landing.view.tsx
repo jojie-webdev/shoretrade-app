@@ -53,7 +53,7 @@ const LandingView = (props: LandingGeneratedProps) => {
     updatingImage,
     permission,
     accountCompletion,
-    activePlan,
+    companyPlan,
     currentMarketSector,
   } = props;
 
@@ -152,7 +152,8 @@ const LandingView = (props: LandingGeneratedProps) => {
     ? 'MARKET_GROUP_1'
     : 'MARKET_GROUP_2';
 
-  const subscriptionType = activePlan?.subscription_preference.type;
+  const subscriptionType =
+    companyPlan?.activePlans[0]?.company?.subscription_preference.type;
   const freeTrialPeriod =
     subscriptionType === 'PREMIUM'
       ? FREE_TRIAL_PERIOD[selectedMarketGroup].premium
@@ -202,10 +203,10 @@ const LandingView = (props: LandingGeneratedProps) => {
             </div>
           </UserInfoContainer>
 
-          {activePlan?.is_free_trial && (
+          {companyPlan?.is_free_trial && (
             <FreeTrialCountdown
               freeTrialPeriod={freeTrialPeriod || 30}
-              daysLeft={activePlan.countdown}
+              daysLeft={companyPlan.countdown}
               small={true}
             />
           )}

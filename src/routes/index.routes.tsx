@@ -9,7 +9,7 @@ import {
   useHistory,
   useLocation,
 } from 'react-router-dom';
-import { getActivePlanActions } from 'store/actions';
+import { getActivePlanActions, getCompanyPlanActions } from 'store/actions';
 import getUserActions from 'store/actions/getUser';
 import { Routes } from 'types/Routes';
 import { Store } from 'types/store/Store';
@@ -175,7 +175,7 @@ const RoutesComponent = (): JSX.Element => {
   useEffect(() => {
     if (verifyUserData) {
       dispatch(
-        getActivePlanActions.request({
+        getCompanyPlanActions.request({
           companyId: verifyUserData.companies[0].id,
         })
       );

@@ -1,15 +1,19 @@
 import moment from 'moment';
-import { GetActivePlanResponseData } from 'types/store/GetActivePlanState';
-import { CompanyPlan } from 'types/store/GetCompanyPlanState';
+import { GetCompanyPlanResponseData } from 'types/store/GetCompanyPlanState';
 
-export const getActivePlanStatus = (activePlan: CompanyPlan): string => {
-  const startsAt = moment(activePlan.subscription.starts_at).utc();
-  const endsAt = moment(activePlan.subscription.ends_at).utc();
+export const getCompanyPlanStatus = (
+  companyPlan: GetCompanyPlanResponseData
+): string => {
+  const activeSubscription = companyPlan?.activePlans.find((ac) =>
+    ['BASE', 'PRO'].includes(ac.plan.name.toUpperCase())
+  );
+  const startsAt = moment(activeSubscription?.subscription.starts_at).utc();
+  const endsAt = moment(activeSubscription?.subscription.ends_at).utc();
   const paymentDelay = moment.utc().diff(startsAt, 'days');
-  const isFreeTrial = activePlan.alias.includes('FREE');
-  const isPaid = !!activePlan.subscription.paid_at;
+  const isFreeTrial = activeSubscription?.plan.alias.includes('FREE');
+  const isPaid = !!activeSubscription?.subscription.paid_at;
 
-  if (activePlan) {
+  if (companyPlan) {
     if (isFreeTrial || isPaid) {
       return 'ACTIVE';
     } else {

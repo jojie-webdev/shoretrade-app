@@ -1,5 +1,5 @@
 import { GetAccountCompletionRequestData } from 'types/store/GetAccountCompletionState';
-import { GetActivePlanResponseData } from 'types/store/GetActivePlanState';
+import { GetCompanyPlanResponseData } from 'types/store/GetCompanyPlanState';
 import { UserCompany } from 'types/store/GetUserState';
 
 export interface LandingGeneratedProps {
@@ -16,6 +16,6 @@ export interface LandingGeneratedProps {
   logout: () => void;
   permission: boolean;
   accountCompletion?: GetAccountCompletionRequestData;
-  activePlan?: GetActivePlanResponseData;
+  companyPlan?: GetCompanyPlanResponseData;
   currentMarketSector: string;
 }

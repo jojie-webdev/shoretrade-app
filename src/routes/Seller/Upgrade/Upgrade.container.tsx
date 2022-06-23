@@ -66,12 +66,7 @@ const Upgrade = (): JSX.Element => {
 
   const upgradeSubscription = (interval: 'MONTHLY' | 'ANNUAL') => {
     if (company?.id) {
-      dispatch(
-        upgradeSubscriptionActions.request({
-          companyId: company.id,
-          saasType: interval,
-        })
-      );
+      //TODO
     }
   };
 

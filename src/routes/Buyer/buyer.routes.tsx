@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   Search as SearchIcon,
@@ -12,7 +12,9 @@ import {
   Barcode as BarcodeSVG,
   QuestionCircle as QuestionIcon,
 } from 'components/base/SVG';
+import Typography from 'components/base/Typography';
 import DashboardLayout from 'components/layout/Dashboard';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -23,6 +25,14 @@ import {
   useLocation,
 } from 'react-router-dom';
 import BarcodeScanner from 'routes/Buyer/BarcodeScanner';
+import {
+  getPaymentMethodsActions,
+  getSubscriptionPlansActions,
+  logoutActions,
+  subscriptionActions,
+  updateSubscriptionPlanActions,
+} from 'store/actions';
+import paySubscription from 'store/reducers/paySubscription';
 import { Routes, Route as TRoute } from 'types/Routes';
 import { Store } from 'types/store/Store';
 import { Theme } from 'types/Theme';
@@ -181,6 +191,7 @@ const BuyerRoutes = (): JSX.Element => {
   const history = useHistory();
   const location = useLocation();
   const dispatch = useDispatch();
+  const [showRenewModal, setShowRenewModal] = useState(false);
   const { pathname } = location;
   interface ILocationState {
     ref?: string;
@@ -189,6 +200,14 @@ const BuyerRoutes = (): JSX.Element => {
 
   const locationState: ILocationState | any = location?.state || {};
 
+  const user = useSelector((store: Store) => store.getUser.data?.data.user);
+  const company = user?.companies[0];
+
+  const defaultCardId =
+    useSelector(
+      (state: Store) => state.getPaymentMethods.data?.data.data?.defaultCard
+    ) || '';
+
   const firstName =
     useSelector((state: Store) => state.getUser.data?.data.user.firstName) ||
     '';
@@ -196,9 +215,62 @@ const BuyerRoutes = (): JSX.Element => {
   const isFreeTrial = useSelector(
     (store: Store) => store.subscription.isFreeTrial
   );
+
+  const companyPlan = useSelector(
+    (store: Store) => store.getCompanyPlan?.data?.data
+  );
+
+  const subscriptionPlans = useSelector(
+    (store: Store) => store.getSubscriptionPlans?.data?.data
+  );
+
   const isAccountDeactivated = useSelector(
     (store: Store) => store.subscription.isAccountDeactivated
   );
+
+  const getPaymentMethods = () => {
+    if (company?.id) {
+      dispatch(getPaymentMethodsActions.request({ companyId: company?.id }));
+    }
+  };
+
+  useEffect(() => {
+    dispatch(getSubscriptionPlansActions.request({}));
+  }, []);
+
+  useEffect(() => {
+    if (company) {
+      getPaymentMethods();
+    }
+  }, [company]);
+
+  useEffect(() => {
+    if (companyPlan) {
+      if (companyPlan.activePlans.length < 1) {
+        setShowRenewModal(true);
+      }
+    }
+  }, [companyPlan]);
+
+  useEffect(() => {
+    console.log(subscriptionPlans);
+  }, [subscriptionPlans]);
+
+  const handleRenew = () => {
+    if (company?.id && defaultCardId) {
+      dispatch(
+        updateSubscriptionPlanActions.request({
+          companyId: company?.id,
+          payment: {
+            existingCard: defaultCardId,
+          },
+          subscriptionPlanId: subscriptionPlans?.find((plan) =>
+            plan.name.toUpperCase().includes('BASE')
+          )?.id,
+        })
+      );
+    }
+  };
 
   const getThemeOverride = (): {
     background?: string;
@@ -290,6 +362,37 @@ const BuyerRoutes = (): JSX.Element => {
       routes={ROUTES_ARRAY.filter((routes) => !routes.hideFromSidebar)}
       {...getThemeOverride()}
     >
+      <ConfirmationModal
+        isOpen={showRenewModal}
+        title="Renew your subscription"
+        description={
+          <>
+            <Typography variant="body" color="shade6">
+              To gain access to your account, you will need to renew your
+              subscription.{' '}
+            </Typography>
+            <Typography variant="body" color="shade6">
+              Press Renew Subscription to confirm your payment details and
+              payment frequency. The relevant amount will be debited from your
+              nominated card and once successfully received, your account will
+              be reactivated.
+            </Typography>
+          </>
+        }
+        actionText="Renew Subscription"
+        cancelText="Logout"
+        onClickClose={() => {
+          dispatch(logoutActions.request());
+          setShowRenewModal(false);
+        }}
+        action={() => {
+          handleRenew();
+        }}
+        cancel={() => {
+          dispatch(logoutActions.request());
+        }}
+        style={{ width: '686px' }}
+      />
       <Switch>
         {ROUTES_ARRAY.filter(
           (r) =>

@@ -36,6 +36,10 @@ const Upgrade = (): JSX.Element => {
     (store: Store) => store.upgradeSubscription.data?.data
   );
 
+  const companyPlan = useSelector(
+    (store: Store) => store.getCompanyPlan.data?.data
+  );
+
   const upgrading =
     useSelector((store: Store) => store.upgradeSubscription.pending) || false;
 
@@ -59,12 +63,15 @@ const Upgrade = (): JSX.Element => {
 
   // METHODS
 
-  const upgradeSubscription = (interval: 'MONTHLY' | 'ANNUAL') => {
-    if (company?.id) {
+  const upgradeSubscription = () => {
+    if (company?.id && companyPlan) {
       dispatch(
         upgradeSubscriptionActions.request({
+          subscriptionPlanId: companyPlan?.changePlan.id,
           companyId: company.id,
-          saasType: interval,
+          payment: {
+            existingCard: companyPlan.nextBillingData.defaultCard,
+          },
         })
       );
     }

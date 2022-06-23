@@ -158,6 +158,10 @@ import {
   GetBuyerSearchFiltersPayload,
 } from './GetBuyerSearchFiltersState';
 import { GetCartMeta, GetCartPayload } from './GetCartState';
+import {
+  GetCompanyPlanMeta,
+  GetCompanyPlanPayload,
+} from './GetCompanyPlanState';
 import { GetCoopUsersMeta, GetCoopUsersPayload } from './GetCoopUsersState';
 import {
   GetCustomFormDataMeta,
@@ -364,6 +368,7 @@ export interface Store {
     UpdatePreferencesPayload
   >;
   getActivePlan: AsyncState<GetActivePlanMeta, GetActivePlanPayload>;
+  getCompanyPlan: AsyncState<GetCompanyPlanMeta, GetCompanyPlanPayload>;
   getSubscriptionPlans: AsyncState<
     GetSubscriptionPlansMeta,
     GetSubscriptionPlansPayload

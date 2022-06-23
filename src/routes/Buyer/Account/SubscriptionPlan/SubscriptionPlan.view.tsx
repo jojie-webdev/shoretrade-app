@@ -23,10 +23,13 @@ import moment from 'moment';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Tag } from 'routes/Seller/Selling/Selling.style';
+import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
 import { toPrice } from 'utils/String';
 import { getButtonTextByStatus } from 'utils/SubscriptionPlan/getButtonTextByStatus';
 import { useTheme } from 'utils/Theme';
 
+import { BenefitsList } from './InclusionsList/InclusionsList.style';
 import InclusionsList from './InclusionsList/InclusionsList.view';
 import SpecialInclusionsList from './SpecialInclusionsList/SpecialInclusionsList.view';
 import { SubscriptionPlanGeneratedProps } from './SubscriptionPlan.props';
@@ -52,8 +55,6 @@ import {
   AlertsContainer,
   ExpiryAlertContentContainer,
 } from './SubscriptionPlan.style';
-import { BenefitsList } from './InclusionsList/InclusionsList.style';
-import { Tag } from 'routes/Seller/Selling/Selling.style';
 
 export const SubscriptionPlanView = ({
   annualPrice,
@@ -72,6 +73,12 @@ export const SubscriptionPlanView = ({
   cancelSubscription,
   updateSubscription,
   renewSubscription,
+  hasCancelled,
+  nextBillingAmount,
+  proPlanDetails,
+  basePlanDetails,
+  reverseMarketPrice,
+  noActivePlan,
 }: SubscriptionPlanGeneratedProps) => {
   const location = useLocation();
   const history = useHistory();
@@ -84,8 +91,12 @@ export const SubscriptionPlanView = ({
   const [isMonthly, setIsMonthly] = useState(true);
   const [showProToggleModal, setShowProToggleModal] = useState(false);
   const [showBaseToggleModal, setShowBaseToggleModal] = useState(false);
+  const [
+    showReverseMarketPlaceToggleModal,
+    setShowReverseMarketPlaceToggleModal,
+  ] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
-  const [showRenewModal, setShowRenewModal] = useState(false);
+  const [showRenewModal, setShowRenewModal] = useState(noActivePlan);
   const price = toPrice(isMonthly ? monthlyPrice : annualPrice);
 
   const redirectState = {
@@ -95,28 +106,20 @@ export const SubscriptionPlanView = ({
     },
   };
 
-  const selectedPlan = subscriptionType === 'STANDARD' ? 'Base' : 'Pro';
-
-  const basePrice = BUYER_BASE_PRICE.find(
-    (item) => item.market === currentMarketSector.toUpperCase()
-  )?.price;
-  const premiumPrice = BUYER_PREMIUM_PRICE.find(
-    (item) => item.market === currentMarketSector.toUpperCase()
-  )?.price;
-
-  const planPrice = subscriptionType === 'STANDARD' ? basePrice : premiumPrice;
+  const selectedPlan =
+    subscriptionType === CompanyPlanName.BASE ? 'Base' : 'Pro';
+  const basePrice = basePlanDetails ? basePlanDetails.price : 0;
+  const proPrice = proPlanDetails ? proPlanDetails.price : 0;
+  const planPrice =
+    subscriptionType === CompanyPlanName.BASE ? basePrice : proPrice;
 
   const reverseMarketPlace = features.find(
     (feature) => feature.alias === 'REVERSED_MARKETPLACE'
   );
 
-  const getNextBillingAmount = () => {
-    const reverseMarketPlacePrice = reverseMarketPlace
-      ? REVERSE_MARKETPLACE_PRICE.BUYER
-      : 0;
-
-    return planPrice ? planPrice + reverseMarketPlacePrice : 0;
-  };
+  const YourCurrentPlanButton = () => (
+    <Button text="Current Plan" variant="outline" />
+  );
 
   useEffect(() => {
     setIsMonthly(planInterval !== 'ANNUAL');
@@ -149,26 +152,28 @@ export const SubscriptionPlanView = ({
         />
       </BreadcrumbsContainer>
       <AlertsContainer>
-        <Alert
-          fullWidth
-          header={`Account Cancellation ${cancellationPeriod}`}
-          content={
-            <ExpiryAlertContentContainer>
-              <Typography variant="caption" color="shade7">
-                Your account will be deactivated on your next payment date and
-                you will not be able to access any data in your account.
-              </Typography>
-              <div className="actions">
-                <Button
-                  onClick={() => setShowRenewModal(true)}
-                  text="Renew"
-                  size="sm"
-                />
-              </div>
-            </ExpiryAlertContentContainer>
-          }
-          variant="error"
-        />
+        {hasCancelled && hasCancelled?.is_unsubscribed && (
+          <Alert
+            fullWidth
+            header={`Account Cancellation ${cancellationPeriod}`}
+            content={
+              <ExpiryAlertContentContainer>
+                <Typography variant="caption" color="shade7">
+                  Your account will be deactivated on your next payment date and
+                  you will not be able to access any data in your account.
+                </Typography>
+                <div className="actions">
+                  <Button
+                    onClick={() => setShowRenewModal(true)}
+                    text="Renew"
+                    size="sm"
+                  />
+                </div>
+              </ExpiryAlertContentContainer>
+            }
+            variant="error"
+          />
+        )}
       </AlertsContainer>
       <SubscriptionContainer>
         <Row gutterWidth={20} justify="center" style={{ width: '100%' }}>
@@ -244,7 +249,7 @@ export const SubscriptionPlanView = ({
                     variant="body"
                     style={{ marginLeft: '6px', lineHeight: 'normal' }}
                   >
-                    <b>{getNextBillingAmount().toFixed(2)}</b>
+                    <b>{nextBillingAmount}</b>
                   </Typography>
                 </div>
 
@@ -302,13 +307,9 @@ export const SubscriptionPlanView = ({
                       </div>
                     </PlanTitleContainer>
 
-                    {!!yourPlanButtonText &&
-                    subscriptionType === 'STANDARD' &&
-                    isSaasSubscribed ? (
+                    {subscriptionType === CompanyPlanName.BASE ? (
                       <div>
-                        <Typography variant="body" color="primary" weight="500">
-                          Your current plan
-                        </Typography>
+                        <YourCurrentPlanButton />
                       </div>
                     ) : (
                       <div className="subscription-action">
@@ -331,7 +332,7 @@ export const SubscriptionPlanView = ({
                       </Typography>
                       <PlanPrice>
                         <Typography variant="title5" color="shade9">
-                          {premiumPrice ? toPrice(premiumPrice) : 0}
+                          {proPrice ? toPrice(proPrice) : 0}
                         </Typography>
                         <Typography variant="label" weight="400" color="shade6">
                           /Month
@@ -350,13 +351,9 @@ export const SubscriptionPlanView = ({
                       </div>
                     </PlanTitleContainer>
 
-                    {!!yourPlanButtonText &&
-                    subscriptionType !== 'STANDARD' &&
-                    isSaasSubscribed ? (
+                    {subscriptionType !== CompanyPlanName.BASE ? (
                       <div>
-                        <Typography variant="body" color="primary" weight="500">
-                          Your current plan
-                        </Typography>
+                        <YourCurrentPlanButton />
                       </div>
                     ) : (
                       <div className="subscription-action">
@@ -389,7 +386,7 @@ export const SubscriptionPlanView = ({
                             <Typography variant="title6" weight="400">
                               $
                               {theme.appType !== 'seller' &&
-                                REVERSE_MARKETPLACE_PRICE.BUYER.toFixed(2)}
+                                reverseMarketPrice.toFixed(2)}
                             </Typography>
                             <Typography
                               variant="label"
@@ -435,29 +432,41 @@ export const SubscriptionPlanView = ({
                     </ReverseMarketplace>
 
                     {/* // NEEDED LATER FOR MARKET PLACE CANCEL SUBSCRIPTION TASK */}
-                    {!!yourPlanButtonText && isSaasSubscribed && (
-                      <div
-                        className="subscription-action"
-                        onClick={() =>
-                          isForRenewal
-                            ? showYourPlanOnly
-                              ? history.push(
-                                  BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD
-                                )
-                              : setShowRenewModal(true)
-                            : setShowCancelModal(true)
-                        }
-                      >
-                        <Typography
-                          variant="label"
-                          color="primary"
-                          weight="400"
-                          style={{ textDecoration: 'underline' }}
+                    {!!yourPlanButtonText &&
+                      isSaasSubscribed &&
+                      (subscriptionType !== CompanyPlanName.BASE ? (
+                        <div
+                          className="subscription-action"
+                          onClick={() =>
+                            isForRenewal
+                              ? showYourPlanOnly
+                                ? history.push(
+                                    BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD
+                                  )
+                                : setShowRenewModal(true)
+                              : setShowCancelModal(true)
+                          }
                         >
-                          {yourPlanButtonText}
-                        </Typography>
-                      </div>
-                    )}
+                          <Typography
+                            variant="label"
+                            color="primary"
+                            weight="400"
+                            style={{ textDecoration: 'underline' }}
+                          >
+                            {yourPlanButtonText}
+                          </Typography>
+                        </div>
+                      ) : (
+                        <div className="subscription-action">
+                          <Button
+                            onClick={() =>
+                              setShowReverseMarketPlaceToggleModal(true)
+                            }
+                            variant="primary"
+                            text="Subscribe"
+                          />
+                        </div>
+                      ))}
                   </AdditionalSubSection>
                 </Col>
               </Row>
@@ -469,8 +478,10 @@ export const SubscriptionPlanView = ({
                   weight="900"
                   customFont={theme.isSFM ? 'Canela' : 'Media Sans'}
                 >
-                  {subscriptionType === 'STANDARD' ? 'Base ' : 'Pro '} Plan
-                  Inclusions
+                  {subscriptionType === CompanyPlanName.BASE
+                    ? CompanyPlanName.BASE
+                    : CompanyPlanName.PRO}{' '}
+                  Plan Inclusions
                 </Typography>
                 <InclusionsList
                   selectedPlan={selectedPlan}
@@ -488,7 +499,7 @@ export const SubscriptionPlanView = ({
                 </FooterNote>
 
                 {!!yourPlanButtonText &&
-                subscriptionType === 'STANDARD' &&
+                subscriptionType === CompanyPlanName.BASE &&
                 isSaasSubscribed ? (
                   <div
                     className="subscription-action"
@@ -540,10 +551,9 @@ export const SubscriptionPlanView = ({
           // setIsMonthly(!isMonthly);
         }}
         action={() => {
-          updateSubscription(
-            interval,
-            selectedPlan === 'Base' ? 'PREMIUM' : 'STANDARD'
-          );
+          if (proPlanDetails?.id) {
+            updateSubscription(proPlanDetails.id);
+          }
           setShowProToggleModal(false);
         }}
         style={{ width: '686px' }}
@@ -551,7 +561,7 @@ export const SubscriptionPlanView = ({
         <Typography color="shade6">
           The ongoing monthly cost will be:
           <Typography variant="body" component="span">
-            &nbsp;{price}
+            &nbsp;{proPrice}
           </Typography>
           <Typography
             component="span"
@@ -593,10 +603,9 @@ export const SubscriptionPlanView = ({
         onClickClose={() => {
           // setShowBaseToggleModal(false);
           // setIsMonthly(!isMonthly);
-          updateSubscription(
-            interval,
-            selectedPlan === 'Base' ? 'PREMIUM' : 'STANDARD'
-          );
+          if (basePlanDetails?.id) {
+            updateSubscription(basePlanDetails.id);
+          }
           setShowBaseToggleModal(false);
         }}
         action={() => {
@@ -645,34 +654,54 @@ export const SubscriptionPlanView = ({
         }}
         style={{ width: '686px' }}
       />
-
       <ConfirmationModal
-        isOpen={showRenewModal}
-        title="Renew your subscription"
-        description={
-          <>
-            <Typography variant="body" color="shade6">
-              To gain access to your account, you will need to renew your
-              subscription.{' '}
-            </Typography>
-            <Typography variant="body" color="shade6">
-              Press Renew Subscription to confirm your payment details and
-              payment frequency. The relevant amount will be debited from your
-              nominated card and once successfully received, your account will
-              be reactivated.
-            </Typography>
-          </>
-        }
-        actionText="Renew Subscription"
-        cancelText="Cancel"
-        onClickClose={() => setShowRenewModal(false)}
-        action={() => {
-          renewSubscription(interval);
-          setShowRenewModal(false);
+        isOpen={showReverseMarketPlaceToggleModal}
+        title="Add Reverse Marketplace package"
+        actionText="No"
+        cancelText="Cancel Subscription"
+        onClickClose={() => setShowReverseMarketPlaceToggleModal(false)}
+        action={() => setShowReverseMarketPlaceToggleModal(false)}
+        cancel={() => {
+          cancelSubscription();
+          setShowReverseMarketPlaceToggleModal(false);
         }}
-        cancel={() => setShowRenewModal(false)}
         style={{ width: '686px' }}
-      />
+      >
+        <Typography color="shade6">
+          The ongoing monthly cost will be:
+          <Typography variant="body" component="span">
+            &nbsp;{basePrice ? toPrice(basePrice) : 0}
+          </Typography>
+          <Typography
+            component="span"
+            variant="caption"
+            weight="500"
+            color="shade6"
+          >
+            /Month
+          </Typography>
+        </Typography>
+        <Typography variant="body" weight="500" color="shade6">
+          Pay the amount below to unlock the Pro model now.
+        </Typography>
+        <div style={{ display: 'flex', marginTop: 24 }}>
+          <Typography variant="body" color="shade6">
+            This is a pro rata cost to have the Premium features for the
+            remainder of your current payment period. All future costs will be
+            <Typography variant="body" component="span">
+              &nbsp;{basePrice ? toPrice(basePrice) : 0}
+            </Typography>
+            <Typography
+              component="span"
+              variant="caption"
+              weight="500"
+              color="shade6"
+            >
+              /Month
+            </Typography>
+          </Typography>
+        </div>
+      </ConfirmationModal>
     </Container>
   );
 };

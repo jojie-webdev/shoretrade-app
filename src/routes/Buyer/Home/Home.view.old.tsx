@@ -21,11 +21,13 @@ import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { MARKET_GROUP_1 } from 'consts/markets';
 import { FREE_TRIAL_PERIOD } from 'consts/prices';
+import moment from 'moment';
 import partialRight from 'ramda/es/partialRight';
 import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
+import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
 import theme, { useTheme } from 'utils/Theme';
 
 import {
@@ -101,7 +103,7 @@ const HomeView = (props: HomeGeneratedProps) => {
     sellers,
     loadingHomePage,
     isPendingAccount,
-    activePlan,
+    companyPlan,
     currentMarketSector,
   } = props;
 
@@ -117,24 +119,31 @@ const HomeView = (props: HomeGeneratedProps) => {
     ? 'MARKET_GROUP_1'
     : 'MARKET_GROUP_2';
 
-  const subscriptionType = activePlan?.subscription_preference?.type;
-  const freeTrialPeriod =
-    subscriptionType === 'PREMIUM'
-      ? FREE_TRIAL_PERIOD[selectedMarketGroup].premium
-      : FREE_TRIAL_PERIOD[selectedMarketGroup].base;
+  const activeSubscription = companyPlan?.activePlans.find((ac) =>
+    ['BASE', 'PRO'].includes(ac.plan.name.toUpperCase())
+  );
 
+  const freeTrialSubscription = companyPlan?.activePlans.find((ac) =>
+    ac.plan.name.includes('FREE')
+  );
+  // const freeTrialPeriod =
+  //   subscriptionType === 'PREMIUM'
+  //     ? FREE_TRIAL_PERIOD[selectedMarketGroup].premium
+  //     : FREE_TRIAL_PERIOD[selectedMarketGroup].base;
+
+  const freeTrialPeriod = 0;
   return (
     <ViewContainer>
-      {activePlan?.is_free_trial && (
+      {freeTrialSubscription && (
         <FreeTrialCountdown
           freeTrialPeriod={freeTrialPeriod || 30}
-          daysLeft={activePlan.countdown || 0}
+          daysLeft={0}
         />
       )}
 
-      {!activePlan?.is_free_trial && (
+      {!freeTrialSubscription && companyPlan && (
         <div className="wrapper">
-          <SubscriptionAlert activePlan={activePlan} />
+          <SubscriptionAlert companyPlan={companyPlan} />
         </div>
       )}
 

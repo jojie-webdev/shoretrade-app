@@ -47,8 +47,8 @@ const Home = (): JSX.Element => {
   const featured: string[] =
     (isMobile ? bannerData?.app : bannerData?.web) || [];
 
-  const activePlan = useSelector(
-    (store: Store) => store.getActivePlan.data?.data
+  const companyPlan = useSelector(
+    (store: Store) => store.getCompanyPlan.data?.data
   );
   const subscription = useSelector((store: Store) => store.subscription);
 
@@ -112,7 +112,7 @@ const Home = (): JSX.Element => {
     favouriteSellers,
     sellers,
     loadingHomePage,
-    activePlan,
+    companyPlan,
     currentMarketSector,
   };
 

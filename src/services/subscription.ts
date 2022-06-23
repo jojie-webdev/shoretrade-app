@@ -32,17 +32,34 @@ export const getActivePlan = (
   });
 };
 
+export const getCompanyPlan = (
+  { companyId }: GetActivePlanMeta,
+  token: string
+) => {
+  return axios({
+    method: 'get',
+    url: `${URL}/company/plan/${companyId}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).catch((e) => {
+    return Promise.reject(e.response.data);
+  });
+};
+
 export const updatePlan = (
   param: {
     companyId: string;
-    saasType?: string;
-    isSaasSubscribed?: boolean;
+    subscriptionPlanId?: string;
+    payment: {
+      existingCard: string;
+    };
   },
   token: string
 ) => {
   return axios({
-    method: 'patch',
-    url: `${URL}/company/update-preference`,
+    method: 'post',
+    url: `${URL}/company/subscribe`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

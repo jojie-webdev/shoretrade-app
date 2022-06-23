@@ -6,18 +6,24 @@ import { BUYER_ACCOUNT_ROUTES, SELLER_ACCOUNT_ROUTES } from 'consts';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 import { getActivePlanStatus } from 'utils/SubscriptionPlan/getActivePlanStatus';
+import { getCompanyPlanStatus } from 'utils/SubscriptionPlan/getCompanyPlanStatus';
 import { useTheme } from 'utils/Theme';
 
 import { SubscriptionAlertProps } from './SubscriptionAlert.props';
 
 const SubscriptionAlert = ({
-  activePlan,
+  companyPlan,
 }: SubscriptionAlertProps): JSX.Element => {
   const theme = useTheme();
   const history = useHistory();
 
-  const status = activePlan && getActivePlanStatus(activePlan);
-  const daysUntilOverdue = moment(activePlan?.starts_at || '')
+  const activeSubscription = companyPlan?.activePlans.find((ac) =>
+    ['BASE', 'PRO'].includes(ac.plan.name.toUpperCase())
+  );
+  const status = companyPlan && getCompanyPlanStatus(companyPlan);
+  const daysUntilOverdue = moment(
+    activeSubscription?.subscription.starts_at || ''
+  )
     .add(5, 'days')
     .diff(moment.utc(), 'days');
   const isLate = status === 'LATE';

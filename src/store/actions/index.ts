@@ -8,6 +8,7 @@ export { default as cancelSubscriptionPlanActions } from './cancelSubscriptionPl
 export { default as getBuyerSearchFiltersActions } from './getBuyerSearchFilters';
 export { default as updatePreferencesActions } from './updatePreferences';
 export { default as getActivePlanActions } from './getActivePlan';
+export { default as getCompanyPlanActions } from './getCompanyPlan';
 export { default as getSubscriptionPlansActions } from './getSubscriptionPlans';
 export { default as getAllBuyerOrdersActions } from './getAllBuyerOrders';
 export { default as getSellerOrdersPendingActions } from './getSellerOrdersPending';

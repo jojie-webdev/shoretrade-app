@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import _ from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,7 +14,7 @@ import {
 import { Store } from 'types/store/Store';
 
 import { SubscriptionPlanGeneratedProps } from './SubscriptionPlan.props';
-import { activePlanToProps } from './SubscriptionPlan.transform';
+import { companyPlanToProps } from './SubscriptionPlan.transform';
 import { SubscriptionPlanView } from './SubscriptionPlan.view';
 
 const SubscriptionPlan = () => {
@@ -32,10 +32,13 @@ const SubscriptionPlan = () => {
     (store: Store) => store.getSubscriptionPlans.data?.data
   );
 
-  const activePlan = useSelector(
-    (store: Store) => store.getActivePlan.data?.data
+  const companyPlan = useSelector(
+    (store: Store) => store.getCompanyPlan.data?.data
   );
 
+  const companyPlanError = useSelector(
+    (store: Store) => store.getCompanyPlan.error
+  );
   const planStatus =
     useSelector((store: Store) => store.subscription.status) || '';
 
@@ -83,40 +86,41 @@ const SubscriptionPlan = () => {
   // METHODS
 
   const cancelSubscription = () => {
-    if (company?.id && activePlan?.plan_alias) {
+    if (company?.id && companyPlan?.plan_alias) {
       dispatch(
         cancelSubscriptionPlanActions.request({
           companyId: company?.id,
-          subscriptionAlias: activePlan?.plan_alias,
+          subscriptionAlias: companyPlan?.plan_alias,
         })
       );
     }
   };
 
-  const updateSubscription = (
-    interval: 'MONTHLY' | 'ANNUAL',
-    type: 'PREMIUM' | 'STANDARD'
-  ) => {
-    if (company?.id) {
+  const updateSubscription = (subscriptionId?: string) => {
+    if (company?.id && companyPlan?.nextBillingData.defaultCard) {
       dispatch(
         updateSubscriptionPlanActions.request({
           companyId: company?.id,
-          saasType: type,
-          existingCard:
-            activePlan?.payment_methods.cards.find(
-              (card) => card.id === activePlan.payment_methods.defaultCard
-            )?.id || '',
+          payment: {
+            existingCard: companyPlan.nextBillingData.defaultCard,
+          },
+          subscriptionPlanId: subscriptionId,
         })
       );
     }
   };
 
-  const renewSubscription = (interval: 'MONTHLY' | 'ANNUAL') => {
+  /**
+   * For now use base as default
+   */
+  const renewSubscription = () => {
     if (company?.id) {
       dispatch(
-        renewSubscriptionPlanActions.request({
+        updateSubscriptionPlanActions.request({
           companyId: company.id,
-          saasType: interval,
+          payment: {
+            existingCard: '',
+          },
         })
       );
     }
@@ -134,8 +138,8 @@ const SubscriptionPlan = () => {
   const currentMarketSector = marketSector ? marketSector.sectorAlias : '';
 
   const params: SubscriptionPlanGeneratedProps = {
-    ...activePlanToProps(plans, activePlan),
-    planStatus,
+    ...companyPlanToProps(plans, companyPlan),
+    companyPlanError,
     planInterval,
     isDeactivated,
     currentMarketSector,

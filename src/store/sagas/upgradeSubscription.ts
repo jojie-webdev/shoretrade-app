@@ -17,7 +17,6 @@ function* upgradeSubscriptionRequest(
     try {
       const params = {
         ...action.meta,
-        isSaasSubscribed: true,
       };
 
       const { data } = yield call(updatePlan, params, state.auth.token);

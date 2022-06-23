@@ -38,39 +38,40 @@ function* getActivePlanRequest(
 function* getActivePlanSuccess(
   action: AsyncAction<GetActivePlanMeta, GetActivePlanPayload>
 ) {
-  const state: Store = yield select();
-  const isCompanyDeactivated =
-    state.getUser.data?.data.user.companies[0].status === 'DEACTIVATED';
+  // TODO CLEANUp
+  // const state: Store = yield select();
+  // const isCompanyDeactivated =
+  //   state.getUser.data?.data.user.companies[0].status === 'DEACTIVATED';
 
-  if (action.payload.data) {
-    const plan = action.payload.data;
-    const planStatus = getActivePlanStatus(plan);
-    const isPaid = !!action.payload.data.paid_at;
-    const endsAt = moment(plan.ends_at).utc();
-    const planEnded = moment().utc().isSameOrAfter(endsAt);
+  // if (action.payload.data) {
+  //   const plan = action.payload.data;
+  //   const planStatus = getActivePlanStatus(plan);
+  //   const isPaid = !!action.payload.data.paid_at;
+  //   const endsAt = moment(plan.ends_at).utc();
+  //   const planEnded = moment().utc().isSameOrAfter(endsAt);
 
-    yield put(
-      subscriptionActions.update({
-        status: planStatus,
-        interval: plan.subscription_preference.saasType,
-        isFreeTrial: plan.is_free_trial,
-        isAccountDeactivated:
-          isCompanyDeactivated ||
-          planStatus === 'OVERDUE' ||
-          (planStatus === 'CANCELLED' && planEnded) ||
-          (planStatus === 'CANCELLED' && !isPaid),
-      })
-    );
-  } else {
-    yield put(
-      subscriptionActions.update({
-        status: 'UNSUBSCRIBED',
-        interval: null,
-        isFreeTrial: false,
-        isAccountDeactivated: isCompanyDeactivated,
-      })
-    );
-  }
+  //   yield put(
+  //     subscriptionActions.update({
+  //       status: planStatus,
+  //       interval: plan.subscription_preference.saasType,
+  //       isFreeTrial: plan.is_free_trial,
+  //       isAccountDeactivated:
+  //         isCompanyDeactivated ||
+  //         planStatus === 'OVERDUE' ||
+  //         (planStatus === 'CANCELLED' && planEnded) ||
+  //         (planStatus === 'CANCELLED' && !isPaid),
+  //     })
+  //   );
+  // } else {
+  //   yield put(
+  //     subscriptionActions.update({
+  //       status: 'UNSUBSCRIBED',
+  //       interval: null,
+  //       isFreeTrial: false,
+  //       isAccountDeactivated: isCompanyDeactivated,
+  //     })
+  //   );
+  // }
 }
 
 function* getActivePlanWatcher() {
