@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import moment from 'moment';
 import {
+  CompanyPlan,
   CompanyPlanAlias,
   CompanyPlanName,
   GetCompanyPlanResponseData,
@@ -32,14 +33,20 @@ export const companyPlanToProps = (
   );
   const cardBrand = _.snakeCase(defaultPaymentMethod?.brand || '');
 
-  const getPlanDetails = (name: CompanyPlanName) => {
-    if (companyPlan?.changePlan.name === name) {
+  const getPlanDetails = (name?: CompanyPlanName): CompanyPlan | undefined => {
+    if (name && companyPlan?.changePlan.name === name) {
       return companyPlan.changePlan;
     }
 
-    if (companyPlan?.activePlans) {
+    if (companyPlan?.activePlans && name) {
       return companyPlan.activePlans.find((plan) => plan.plan.name === name)
         ?.plan;
+    }
+
+    if (companyPlan?.activePlans) {
+      return companyPlan.activePlans.find((ac) =>
+        [CompanyPlanName.BASE, CompanyPlanName.PRO].includes(ac.plan.name)
+      )?.plan;
     }
   };
 
@@ -68,12 +75,10 @@ export const companyPlanToProps = (
     nextBillingAmount: companyPlan?.nextBillingData.price || 0,
     proPlanDetails: getPlanDetails(CompanyPlanName.PRO),
     basePlanDetails: getPlanDetails(CompanyPlanName.BASE),
-    reverseMarketPrice:
-      Number(
-        companyPlan?.addOns.filter(
-          (a) => a.alias === 'FEATURE_REVERSED_MARKETPLACE'
-        )[0].price
-      ) || 0,
+    reverseMarketDetails: companyPlan?.addOns.filter(
+      (a) => a.alias === 'FEATURE_REVERSED_MARKETPLACE'
+    )[0],
     noActivePlan: companyPlan ? companyPlan.activePlans.length > 0 : true,
+    currentPlanDetails: getPlanDetails(),
   };
 };

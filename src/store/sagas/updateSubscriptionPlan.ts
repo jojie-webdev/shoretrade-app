@@ -7,7 +7,10 @@ import {
   UpdateSubscriptionPlanPayload,
 } from 'types/store/UpdateSubscriptionPlanState';
 
-import { getCompanyPlanActions, updateSubscriptionPlanActions } from '../actions';
+import {
+  getCompanyPlanActions,
+  updateSubscriptionPlanActions,
+} from '../actions';
 
 function* updateSubscriptionPlanRequest(
   action: AsyncAction<UpdateSubscriptionPlanMeta, UpdateSubscriptionPlanPayload>

@@ -75,12 +75,13 @@ const SubscriptionPlan = () => {
 
   const cancelSubscription = () => {
     if (company?.id && activePlan?.plan_alias) {
-      dispatch(
-        cancelSubscriptionPlanActions.request({
-          companyId: company?.id,
-          subscriptionAlias: activePlan?.plan_alias,
-        })
-      );
+      // TODO
+      // dispatch(
+      //   cancelSubscriptionPlanActions.request({
+      //     companyId: company?.id,
+      //     subscriptionAlias: activePlan?.plan_alias,
+      //   })
+      // );
     }
   };
 

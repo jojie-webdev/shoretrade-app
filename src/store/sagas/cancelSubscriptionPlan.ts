@@ -7,20 +7,18 @@ import {
 } from 'types/store/CancelSubscriptionPlanState';
 import { Store } from 'types/store/Store';
 
-import { cancelSubscriptionPlanActions } from '../actions';
+import {
+  cancelSubscriptionPlanActions,
+  getCompanyPlanActions,
+} from '../actions';
 
 function* cancelSubscriptionPlanRequest(
   action: AsyncAction<CancelSubscriptionPlanMeta, CancelSubscriptionPlanPayload>
 ) {
   const state: Store = yield select();
   if (state.auth.token) {
-    const params = {
-      ...action.meta,
-      isSaasSubscribed: false,
-    };
-
     try {
-      const { data } = yield call(cancelPlan, params, state.auth.token);
+      const { data } = yield call(cancelPlan, action.meta, state.auth.token);
       yield put(cancelSubscriptionPlanActions.success(data));
     } catch (e) {
       yield put(cancelSubscriptionPlanActions.failed(e.message));
@@ -30,10 +28,25 @@ function* cancelSubscriptionPlanRequest(
   }
 }
 
+function* cancelSubscriptionPlanSuccess(
+  action: AsyncAction<CancelSubscriptionPlanMeta, CancelSubscriptionPlanMeta>
+) {
+  yield put(
+    getCompanyPlanActions.request({
+      companyId: action.meta.companyId,
+    })
+  );
+}
+
 function* cancelSubscriptionPlanWatcher() {
   yield takeLatest(
     cancelSubscriptionPlanActions.REQUEST,
     cancelSubscriptionPlanRequest
+  );
+
+  yield takeLatest(
+    cancelSubscriptionPlanActions.SUCCESS,
+    cancelSubscriptionPlanSuccess
   );
 }
 

@@ -1,4 +1,5 @@
 import {
+  AddOn,
   CompanyPlan,
   CompanyPlanName,
   Subscription,
@@ -18,9 +19,10 @@ export interface SubscriptionPlanTransformOutputProps {
   hasCancelled?: Subscription;
   planStatus: string;
   nextBillingAmount: number;
-  reverseMarketPrice: number;
+  reverseMarketDetails?: AddOn;
   proPlanDetails?: CompanyPlan;
   basePlanDetails?: CompanyPlan;
+  currentPlanDetails?: CompanyPlan;
   noActivePlan: boolean;
 }
 
@@ -29,7 +31,8 @@ export interface SubscriptionPlanGeneratedProps
   planInterval: string;
   isDeactivated: boolean;
   currentMarketSector: string;
-  cancelSubscription: () => void;
+  loading: boolean;
+  cancelSubscription: (subscriptionPlanId: string) => void;
   companyPlanError: string | undefined;
   updateSubscription: (subscriptionId: string) => void;
   renewSubscription: () => void;

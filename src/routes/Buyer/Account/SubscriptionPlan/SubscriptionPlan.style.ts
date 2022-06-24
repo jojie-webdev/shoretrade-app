@@ -96,17 +96,32 @@ export const PaymentMethodSection = styled.div`
   }
 `;
 
+export const BadgesContainer = styled.div`
+  display: flex;
+
+  > div {
+    flex: 0 1 auto;
+  }
+`;
+
 export const BillingSection = styled.div`
   margin-bottom: 20px;
+  .billing-item {
+    margin-bottom: 24px;
+  }
 
   .billing-date {
     display: flex;
-    margin-bottom: 24px;
+    margin-bottom: 8px;
     margin-top: 8px;
 
     svg {
       align-self: center;
     }
+  }
+
+  .section-footer {
+    margin-top: 18px;
   }
 `;
 
@@ -125,6 +140,13 @@ export const PlanContainer = styled.div`
   margin-bottom: 24px;
   background: ${({ theme }) => theme.grey.noshade};
   border-radius: 12px;
+
+  .cancel-subscription {
+    margin-top: 24px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 `;
 
 export const PlanSection = styled.div`

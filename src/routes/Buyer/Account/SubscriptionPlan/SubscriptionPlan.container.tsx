@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import _ from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,6 +20,7 @@ import { SubscriptionPlanView } from './SubscriptionPlan.view';
 const SubscriptionPlan = () => {
   const dispatch = useDispatch();
   const user = useSelector((store: Store) => store.getUser.data?.data.user);
+  const [loading, setLoading] = useState(false);
   const company = user?.companies[0];
 
   // SELECTORS
@@ -34,6 +35,10 @@ const SubscriptionPlan = () => {
 
   const companyPlan = useSelector(
     (store: Store) => store.getCompanyPlan.data?.data
+  );
+
+  const companyPlanLoading = useSelector(
+    (store: Store) => store.getCompanyPlan.pending
   );
 
   const companyPlanError = useSelector(
@@ -73,6 +78,14 @@ const SubscriptionPlan = () => {
   }, [company]);
 
   useEffect(() => {
+    if (!companyPlan?.activePlans || companyPlanLoading) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [companyPlan, companyPlanLoading]);
+
+  useEffect(() => {
     dispatch(getSubscriptionPlansActions.request({}));
     dispatch(paySubscriptionActions.clear());
   }, []);
@@ -85,12 +98,12 @@ const SubscriptionPlan = () => {
 
   // METHODS
 
-  const cancelSubscription = () => {
-    if (company?.id && companyPlan?.plan_alias) {
+  const cancelSubscription = (subscriptionPlanId: string) => {
+    if (company?.id && subscriptionPlanId) {
       dispatch(
         cancelSubscriptionPlanActions.request({
           companyId: company?.id,
-          subscriptionAlias: companyPlan?.plan_alias,
+          subscriptionPlanId,
         })
       );
     }
@@ -143,6 +156,7 @@ const SubscriptionPlan = () => {
     planInterval,
     isDeactivated,
     currentMarketSector,
+    loading,
     cancelSubscription,
     updateSubscription,
     renewSubscription,

@@ -91,7 +91,6 @@ export const SubscriptionPlanView = ({
   const ifForRenewal = ['CANCELLED', 'OVERDUE'].includes(planStatus);
   const interval = isMonthly ? 'MONTHLY' : 'ANNUAL';
 
-  const selectedPlan = subscriptionType === 'STANDARD' ? 'Standard' : 'Premium';
 
   return (
     <Container>

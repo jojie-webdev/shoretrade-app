@@ -10,6 +10,7 @@ import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import CreditCardLogo from 'components/module/CreditCardLogo';
 import IconTooltip from 'components/module/IconTooltip';
+import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import {
@@ -54,6 +55,7 @@ import {
   FooterNote,
   AlertsContainer,
   ExpiryAlertContentContainer,
+  BadgesContainer,
 } from './SubscriptionPlan.style';
 
 export const SubscriptionPlanView = ({
@@ -77,8 +79,10 @@ export const SubscriptionPlanView = ({
   nextBillingAmount,
   proPlanDetails,
   basePlanDetails,
-  reverseMarketPrice,
+  reverseMarketDetails,
+  currentPlanDetails,
   noActivePlan,
+  loading,
 }: SubscriptionPlanGeneratedProps) => {
   const location = useLocation();
   const history = useHistory();
@@ -106,29 +110,23 @@ export const SubscriptionPlanView = ({
     },
   };
 
-  const selectedPlan =
-    subscriptionType === CompanyPlanName.BASE ? 'Base' : 'Pro';
   const basePrice = basePlanDetails ? basePlanDetails.price : 0;
   const proPrice = proPlanDetails ? proPlanDetails.price : 0;
-  const planPrice =
-    subscriptionType === CompanyPlanName.BASE ? basePrice : proPrice;
+  const reverseMarketPrice = reverseMarketDetails
+    ? Number(reverseMarketDetails.price)
+    : 0;
 
-  const reverseMarketPlace = features.find(
-    (feature) => feature.alias === 'REVERSED_MARKETPLACE'
-  );
-
-  const YourCurrentPlanButton = () => (
-    <Button text="Current Plan" variant="outline" />
+  const YourCurrentPlanIndicator = () => (
+    <Typography variant="label" weight="400" color="primary">
+      Current Plan
+    </Typography>
   );
 
   useEffect(() => {
     setIsMonthly(planInterval !== 'ANNUAL');
   }, [planInterval]);
 
-  const interval = isMonthly ? 'MONTHLY' : 'ANNUAL';
-  const isForRenewal =
-    ['CANCELLED', 'OVERDUE', 'UNSUBSCRIBED'].includes(planStatus) ||
-    isDeactivated;
+  const isForRenewal = hasCancelled;
 
   const isOverdueBadgeVisible = [
     'UNSUCCESSFUL',
@@ -138,6 +136,10 @@ export const SubscriptionPlanView = ({
   ].includes(planStatus);
   const yourPlanButtonText = getButtonTextByStatus(planStatus);
   const showYourPlanOnly = !cardNumberMasked && !nextBillingDate;
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Container>
@@ -152,7 +154,7 @@ export const SubscriptionPlanView = ({
         />
       </BreadcrumbsContainer>
       <AlertsContainer>
-        {hasCancelled && hasCancelled?.is_unsubscribed && (
+        {hasCancelled && (
           <Alert
             fullWidth
             header={`Account Cancellation ${cancellationPeriod}`}
@@ -211,64 +213,86 @@ export const SubscriptionPlanView = ({
               </PaymentMethodSection>
 
               <BillingSection className="section payment-section">
-                <Typography variant="body" weight="400">
-                  Next Billing Date
-                </Typography>
-
-                <div className="billing-date">
-                  <Calendar fill={theme.grey.shade7} />
-                  <Typography
-                    variant="body"
-                    style={{ marginLeft: '6px', lineHeight: 'normal' }}
-                  >
-                    <b>{nextBillingDate}</b>
+                <div className="billing-item">
+                  <Typography variant="body" weight="400">
+                    Next Billing Date
                   </Typography>
-                  {isOverdueBadgeVisible && (
-                    <Badge
-                      badgeColor={theme.brand.error}
-                      borderRadius="8px"
-                      style={{ marginLeft: '8px' }}
+                  <div className="billing-date">
+                    <Calendar fill={theme.grey.shade7} />
+                    <Typography
+                      variant="body"
+                      style={{ marginLeft: '6px', lineHeight: 'normal' }}
+                    >
+                      <b>{nextBillingDate}</b>
+                    </Typography>
+                  </div>
+                </div>
+                <div className="billing-item">
+                  <Typography variant="body" weight="400">
+                    Next Billing Amount
+                  </Typography>
+                  <div className="billing-date">
+                    <DollarSign
+                      fill={theme.grey.shade7}
+                      width={16}
+                      height={20}
+                    />
+                    <Typography
+                      variant="body"
+                      style={{ marginLeft: '6px', lineHeight: 'normal' }}
+                    >
+                      <b>{nextBillingAmount}</b>
+                    </Typography>
+                  </div>
+                  <BadgesContainer>
+                    {isForRenewal && currentPlanDetails && (
+                      <Badge
+                        badgeColor={theme.product?.error}
+                        borderRadius="4px"
+                      >
+                        <Typography
+                          variant="overline"
+                          color="noshade"
+                          style={{ lineHeight: 'unset' }}
+                        >
+                          Cancelling
+                        </Typography>
+                      </Badge>
+                    )}
+                    {isOverdueBadgeVisible && (
+                      <Badge
+                        badgeColor={theme.brand.error}
+                        borderRadius="4px"
+                        style={{ marginLeft: '8px' }}
+                      >
+                        <Typography
+                          variant="overline"
+                          color="noshade"
+                          style={{ lineHeight: 'unset' }}
+                        >
+                          OVERDUE
+                        </Typography>
+                      </Badge>
+                    )}
+                  </BadgesContainer>
+                  <div className="section-footer">
+                    <Link
+                      to={{
+                        pathname: BUYER_ACCOUNT_ROUTES.PAYMENT_HISTORY,
+                        state: redirectState,
+                      }}
                     >
                       <Typography
-                        variant="overline"
-                        color="noshade"
-                        style={{ lineHeight: 'unset' }}
+                        variant="label"
+                        color="primary"
+                        weight="400"
+                        style={{ textDecoration: 'underline' }}
                       >
-                        OVERDUE
+                        See Payment History
                       </Typography>
-                    </Badge>
-                  )}
+                    </Link>
+                  </div>
                 </div>
-
-                <Typography variant="body" weight="400">
-                  Next Billing Amount
-                </Typography>
-                <div className="billing-date">
-                  <DollarSign fill={theme.grey.shade7} width={16} height={20} />
-                  <Typography
-                    variant="body"
-                    style={{ marginLeft: '6px', lineHeight: 'normal' }}
-                  >
-                    <b>{nextBillingAmount}</b>
-                  </Typography>
-                </div>
-
-                <Link
-                  className="see-payment-history"
-                  to={{
-                    pathname: BUYER_ACCOUNT_ROUTES.PAYMENT_HISTORY,
-                    state: redirectState,
-                  }}
-                >
-                  <Typography
-                    variant="label"
-                    color="primary"
-                    weight="400"
-                    style={{ textDecoration: 'underline' }}
-                  >
-                    See Payment History
-                  </Typography>
-                </Link>
               </BillingSection>
             </Col>
           )}
@@ -309,7 +333,7 @@ export const SubscriptionPlanView = ({
 
                     {subscriptionType === CompanyPlanName.BASE ? (
                       <div>
-                        <YourCurrentPlanButton />
+                        <YourCurrentPlanIndicator />
                       </div>
                     ) : (
                       <div className="subscription-action">
@@ -353,11 +377,12 @@ export const SubscriptionPlanView = ({
 
                     {subscriptionType !== CompanyPlanName.BASE ? (
                       <div>
-                        <YourCurrentPlanButton />
+                        <YourCurrentPlanIndicator />
                       </div>
                     ) : (
                       <div className="subscription-action">
                         <Button
+                          disabled={hasCancelled !== undefined}
                           onClick={() => setShowProToggleModal(true)}
                           variant="primary"
                           text="Upgrade"
@@ -381,7 +406,7 @@ export const SubscriptionPlanView = ({
                         Reverse Marketplace
                       </Typography>
                       <PlanPrice>
-                        {selectedPlan === 'Base' ? (
+                        {currentPlanDetails?.name === CompanyPlanName.BASE ? (
                           <>
                             <Typography variant="title6" weight="400">
                               $
@@ -484,7 +509,7 @@ export const SubscriptionPlanView = ({
                   Plan Inclusions
                 </Typography>
                 <InclusionsList
-                  selectedPlan={selectedPlan}
+                  selectedPlan={currentPlanDetails?.name}
                   currentMarketSector={currentMarketSector}
                 />
                 <FooterNote>
@@ -525,7 +550,7 @@ export const SubscriptionPlanView = ({
                 ) : (
                   <div
                     className="cancel-subscription"
-                    onClick={() => setShowProToggleModal(true)}
+                    onClick={() => setShowCancelModal(true)}
                   >
                     <Typography
                       variant="label"
@@ -649,7 +674,9 @@ export const SubscriptionPlanView = ({
         onClickClose={() => setShowCancelModal(false)}
         action={() => setShowCancelModal(false)}
         cancel={() => {
-          cancelSubscription();
+          if (currentPlanDetails) {
+            cancelSubscription(currentPlanDetails.id);
+          }
           setShowCancelModal(false);
         }}
         style={{ width: '686px' }}
@@ -662,8 +689,10 @@ export const SubscriptionPlanView = ({
         onClickClose={() => setShowReverseMarketPlaceToggleModal(false)}
         action={() => setShowReverseMarketPlaceToggleModal(false)}
         cancel={() => {
-          cancelSubscription();
-          setShowReverseMarketPlaceToggleModal(false);
+          if (reverseMarketDetails) {
+            cancelSubscription(reverseMarketDetails?.id);
+            setShowReverseMarketPlaceToggleModal(false);
+          }
         }}
         style={{ width: '686px' }}
       >

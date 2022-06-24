@@ -72,13 +72,13 @@ export const updatePlan = (
 export const cancelPlan = (
   param: {
     companyId: string;
-    subscriptionAlias: string;
+    subscriptionPlanId: string;
   },
   token: string
 ) => {
   return axios({
     method: 'patch',
-    url: `${URL}/company/cancel-subscription`,
+    url: `${URL}/company/unsubscribe`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
