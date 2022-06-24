@@ -25,7 +25,10 @@ import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Tag } from 'routes/Seller/Selling/Selling.style';
-import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
+import {
+  CompanyPlanAlias,
+  CompanyPlanName,
+} from 'types/store/GetCompanyPlanState';
 import { toPrice } from 'utils/String';
 import { getButtonTextByStatus } from 'utils/SubscriptionPlan/getButtonTextByStatus';
 import { useTheme } from 'utils/Theme';
@@ -83,6 +86,7 @@ export const SubscriptionPlanView = ({
   currentPlanDetails,
   noActivePlan,
   loading,
+  currentReverseMarketDetails,
 }: SubscriptionPlanGeneratedProps) => {
   const location = useLocation();
   const history = useHistory();
@@ -115,6 +119,8 @@ export const SubscriptionPlanView = ({
   const reverseMarketPrice = reverseMarketDetails
     ? Number(reverseMarketDetails.price)
     : 0;
+
+  console.log(currentReverseMarketDetails);
 
   const YourCurrentPlanIndicator = () => (
     <Typography variant="label" weight="400" color="primary">
@@ -406,7 +412,8 @@ export const SubscriptionPlanView = ({
                         Reverse Marketplace
                       </Typography>
                       <PlanPrice>
-                        {currentPlanDetails?.name === CompanyPlanName.BASE ? (
+                        {currentPlanDetails?.plan.name ===
+                        CompanyPlanName.BASE ? (
                           <>
                             <Typography variant="title6" weight="400">
                               $
@@ -457,41 +464,40 @@ export const SubscriptionPlanView = ({
                     </ReverseMarketplace>
 
                     {/* // NEEDED LATER FOR MARKET PLACE CANCEL SUBSCRIPTION TASK */}
-                    {!!yourPlanButtonText &&
-                      isSaasSubscribed &&
-                      (subscriptionType !== CompanyPlanName.BASE ? (
-                        <div
-                          className="subscription-action"
-                          onClick={() =>
-                            isForRenewal
-                              ? showYourPlanOnly
-                                ? history.push(
-                                    BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD
-                                  )
-                                : setShowRenewModal(true)
-                              : setShowCancelModal(true)
-                          }
+                    {currentReverseMarketDetails?.subscription?.paid_at ||
+                    currentPlanDetails?.plan.name === CompanyPlanName.PRO ? (
+                      <div
+                        className="subscription-action"
+                        onClick={() =>
+                          isForRenewal
+                            ? showYourPlanOnly
+                              ? history.push(
+                                  BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD
+                                )
+                              : setShowRenewModal(true)
+                            : setShowCancelModal(true)
+                        }
+                      >
+                        <Typography
+                          variant="label"
+                          color="primary"
+                          weight="400"
+                          style={{ textDecoration: 'underline' }}
                         >
-                          <Typography
-                            variant="label"
-                            color="primary"
-                            weight="400"
-                            style={{ textDecoration: 'underline' }}
-                          >
-                            {yourPlanButtonText}
-                          </Typography>
-                        </div>
-                      ) : (
-                        <div className="subscription-action">
-                          <Button
-                            onClick={() =>
-                              setShowReverseMarketPlaceToggleModal(true)
-                            }
-                            variant="primary"
-                            text="Subscribe"
-                          />
-                        </div>
-                      ))}
+                          {yourPlanButtonText}
+                        </Typography>
+                      </div>
+                    ) : (
+                      <div className="subscription-action">
+                        <Button
+                          onClick={() =>
+                            setShowReverseMarketPlaceToggleModal(true)
+                          }
+                          variant="primary"
+                          text="Subscribe"
+                        />
+                      </div>
+                    )}
                   </AdditionalSubSection>
                 </Col>
               </Row>
@@ -509,7 +515,7 @@ export const SubscriptionPlanView = ({
                   Plan Inclusions
                 </Typography>
                 <InclusionsList
-                  selectedPlan={currentPlanDetails?.name}
+                  selectedPlan={currentPlanDetails?.plan.name}
                   currentMarketSector={currentMarketSector}
                 />
                 <FooterNote>
@@ -675,7 +681,7 @@ export const SubscriptionPlanView = ({
         action={() => setShowCancelModal(false)}
         cancel={() => {
           if (currentPlanDetails) {
-            cancelSubscription(currentPlanDetails.id);
+            cancelSubscription(currentPlanDetails.plan.id);
           }
           setShowCancelModal(false);
         }}
@@ -684,13 +690,12 @@ export const SubscriptionPlanView = ({
       <ConfirmationModal
         isOpen={showReverseMarketPlaceToggleModal}
         title="Add Reverse Marketplace package"
-        actionText="No"
-        cancelText="Cancel Subscription"
+        actionText="Confirm"
+        hideCancel
         onClickClose={() => setShowReverseMarketPlaceToggleModal(false)}
-        action={() => setShowReverseMarketPlaceToggleModal(false)}
-        cancel={() => {
+        action={() => {
           if (reverseMarketDetails) {
-            cancelSubscription(reverseMarketDetails?.id);
+            updateSubscription(reverseMarketDetails?.id);
             setShowReverseMarketPlaceToggleModal(false);
           }
         }}
@@ -699,7 +704,11 @@ export const SubscriptionPlanView = ({
         <Typography color="shade6">
           The ongoing monthly cost will be:
           <Typography variant="body" component="span">
-            &nbsp;{basePrice ? toPrice(basePrice) : 0}
+            {/* TODO PRO RATA */}
+            &nbsp;
+            {reverseMarketPrice && basePrice
+              ? toPrice(reverseMarketPrice + basePrice)
+              : 0}
           </Typography>
           <Typography
             component="span"
@@ -718,7 +727,10 @@ export const SubscriptionPlanView = ({
             This is a pro rata cost to have the Premium features for the
             remainder of your current payment period. All future costs will be
             <Typography variant="body" component="span">
-              &nbsp;{basePrice ? toPrice(basePrice) : 0}
+              &nbsp;{' '}
+              {reverseMarketPrice && basePrice
+                ? toPrice(reverseMarketPrice + basePrice)
+                : 0}
             </Typography>
             <Typography
               component="span"

@@ -1,4 +1,5 @@
 import {
+  ActivePlan,
   AddOn,
   CompanyPlan,
   CompanyPlanName,
@@ -22,8 +23,9 @@ export interface SubscriptionPlanTransformOutputProps {
   reverseMarketDetails?: AddOn;
   proPlanDetails?: CompanyPlan;
   basePlanDetails?: CompanyPlan;
-  currentPlanDetails?: CompanyPlan;
+  currentPlanDetails?: ActivePlan;
   noActivePlan: boolean;
+  currentReverseMarketDetails?: ActivePlan;
 }
 
 export interface SubscriptionPlanGeneratedProps

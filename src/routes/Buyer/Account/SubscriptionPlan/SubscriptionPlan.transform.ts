@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import moment from 'moment';
 import {
+  ActivePlan,
   CompanyPlan,
   CompanyPlanAlias,
   CompanyPlanName,
@@ -39,14 +40,25 @@ export const companyPlanToProps = (
     }
 
     if (companyPlan?.activePlans && name) {
-      return companyPlan.activePlans.find((plan) => plan.plan.name === name)
-        ?.plan;
+      return companyPlan.activePlans.find((ac) => ac.plan.name === name)?.plan;
     }
 
     if (companyPlan?.activePlans) {
       return companyPlan.activePlans.find((ac) =>
         [CompanyPlanName.BASE, CompanyPlanName.PRO].includes(ac.plan.name)
       )?.plan;
+    }
+  };
+
+  const getActivePlan = (name?: CompanyPlanName): ActivePlan | undefined => {
+    if (companyPlan?.activePlans && name) {
+      return companyPlan.activePlans.find((ac) => ac.plan.name === name);
+    }
+
+    if (companyPlan?.activePlans) {
+      return companyPlan.activePlans.find((ac) =>
+        [CompanyPlanName.BASE, CompanyPlanName.PRO].includes(ac.plan.name)
+      );
     }
   };
 
@@ -79,6 +91,7 @@ export const companyPlanToProps = (
       (a) => a.alias === 'FEATURE_REVERSED_MARKETPLACE'
     )[0],
     noActivePlan: companyPlan ? companyPlan.activePlans.length > 0 : true,
-    currentPlanDetails: getPlanDetails(),
+    currentPlanDetails: getActivePlan(),
+    currentReverseMarketDetails: getActivePlan(CompanyPlanName.REVERSE_MARKET),
   };
 };
