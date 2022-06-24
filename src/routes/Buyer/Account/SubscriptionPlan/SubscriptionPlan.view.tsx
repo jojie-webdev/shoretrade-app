@@ -659,14 +659,16 @@ export const SubscriptionPlanView = ({
           </Typography>
         </Typography>
         <Typography variant="body" weight="500" color="shade6">
-          effective from the next payment period. .
+          effective from the next payment period.
         </Typography>
         <div style={{ display: 'flex', marginTop: 24 }}>
           <Typography variant="body" color="shade6">
             By pressing Confirm, you will have the Pro features until the end of
             this payment period and will be downgraded as of the{' '}
-            {`22nd of 
-            February.`}
+            {moment(currentPlanDetails?.subscription.ends_at).format(
+              'Qo of MMMM'
+            )}
+            .
           </Typography>
         </div>
       </ConfirmationModal>
