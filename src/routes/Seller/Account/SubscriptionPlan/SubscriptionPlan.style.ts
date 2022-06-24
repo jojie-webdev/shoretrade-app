@@ -52,6 +52,7 @@ export const PaymentMethodSection = styled.div`
       align-items: center;
       padding: 0 8px;
       margin-right: 4px;
+      background: #fff;
     }
   }
 

@@ -63,7 +63,7 @@ const PlanPaymentMethodView = ({
           sections={[
             { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
             {
-              label: 'Plan',
+              label: 'Your Plan',
               link: BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
             },
             {

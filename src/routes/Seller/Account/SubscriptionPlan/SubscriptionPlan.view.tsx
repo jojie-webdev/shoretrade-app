@@ -99,7 +99,7 @@ export const SubscriptionPlanView = ({
           sections={[
             { label: 'Account', link: SELLER_ACCOUNT_ROUTES.LANDING },
             {
-              label: 'Plan',
+              label: 'Your Plan',
               link: SELLER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
             },
           ]}
@@ -156,7 +156,7 @@ export const SubscriptionPlanView = ({
 
               <div className="card-info">
                 <div className="card-icon">
-                  <CreditCardLogo type={cardBrand} />
+                  <CreditCardLogo type={cardBrand ? cardBrand : 'visa'} />
                 </div>
                 <Typography variant="body" color="noshade">
                   <b>{cardNumberMasked}</b>

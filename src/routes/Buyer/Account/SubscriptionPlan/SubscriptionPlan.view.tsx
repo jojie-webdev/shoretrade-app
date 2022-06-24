@@ -109,7 +109,7 @@ export const SubscriptionPlanView = ({
 
   const redirectState = {
     from: {
-      label: 'Plan',
+      label: 'Your Plan',
       link: location.pathname,
     },
   };
@@ -154,7 +154,7 @@ export const SubscriptionPlanView = ({
           sections={[
             { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
             {
-              label: 'Plan',
+              label: 'Your Plan',
             },
           ]}
         />
@@ -194,7 +194,7 @@ export const SubscriptionPlanView = ({
 
                 <div className="card-info">
                   <div className="card-icon">
-                    <CreditCardLogo type={cardBrand} />
+                    <CreditCardLogo type={cardBrand ? cardBrand : 'visa'} />
                   </div>
                   <Typography variant="body">
                     <b>{cardNumberMasked}</b>

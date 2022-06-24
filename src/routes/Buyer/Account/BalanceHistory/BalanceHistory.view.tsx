@@ -124,7 +124,7 @@ const BalanceHistoryView = ({
           sections={[
             { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
             {
-              label: isPlanView ? 'Plan' : 'Balance & Payments',
+              label: isPlanView ? 'Your Plan' : 'Balance & Payments',
               link: isPlanView
                 ? BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN
                 : BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
