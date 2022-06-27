@@ -55,9 +55,10 @@ export interface RegistrationDetails {
 
   selectedMarketSector: string;
 
-  subscriptionType: {
+  subscriptionPreference: {
     plan: string;
-    reverseMarketPlace?: boolean;
+    addOns: string[];
+    transactionValue: string;
   };
 
   tncAgreement: boolean;

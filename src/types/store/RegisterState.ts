@@ -37,9 +37,10 @@ export type RegisterMeta = {
   marketSelling?: CategoryPayload[];
   marketBuying?: CategoryPayload[];
   cardToken: string;
-  subscriptionType: {
+  subscriptionPreference: {
     plan: string;
-    reverseMarketPlace?: boolean;
+    addOns: string[];
+    transactionValue?: string;
   };
 };
 
@@ -83,9 +84,10 @@ export type RegisterRequestData = {
   marketSelling?: CategoryPayload[];
   marketBuying?: CategoryPayload[];
   cardToken: string;
-  subscriptionType: {
+  subscriptionPreference: {
     plan: string;
-    reverseMarketPlace?: boolean;
+    addOns: string[];
+    transactionValue?: string;
   };
 };
 

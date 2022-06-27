@@ -539,8 +539,16 @@ export const ReverseMarketPlaceContainer = styled.div`
   border-radius: 12px;
   gap: 8px;
 `;
+
 export const ReverseCheckboxWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
+`;
+
+export const PlansWrapper = styled.div`
+  .disbledPlan {
+    pointer-events: none;
+    opacity: 0.4;
+  }
 `;

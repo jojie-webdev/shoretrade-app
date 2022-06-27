@@ -222,11 +222,18 @@ export const BUYER_PAYMENT_METHOD_DETAILS = [
 ];
 
 export const PLAN_NAME = {
-  BASE: 'Standard',
-  PRO: 'Premium',
+  BASE: 'BASE',
+  PRO: 'PRO',
 };
 
 export const PLAN_PRICE = {
   BASE: { price: 59.99, reverseMarket: 59.99, priceWithReverse: 119.98 },
   PRO: { price: 499 },
 };
+
+export const TRANSACTION_VALUES = [
+  'Less than $7,500',
+  'Between $7,500 and $15,000',
+  'Between $15,000 and $22,500',
+  'More than $22,500',
+];

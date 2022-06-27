@@ -129,9 +129,9 @@ function* registerRequest(action: AsyncAction<RegisterMeta, RegisterPayload>) {
           marketSelling: data.marketSelling,
           sellerLicenses,
           cardToken: data.cardToken,
-          subscriptionType: {
-            plan: data.subscriptionType.plan,
-            reverseMarketPlace: data.subscriptionType.reverseMarketPlace,
+          subscriptionPreference: {
+            plan: data.subscriptionPreference.plan,
+            addOns: data.subscriptionPreference.addOns,
           },
         };
       }
@@ -156,9 +156,10 @@ function* registerRequest(action: AsyncAction<RegisterMeta, RegisterPayload>) {
         marketSector: data.marketSector,
         marketBuying: data.marketBuying,
         cardToken: data.cardToken,
-        subscriptionType: {
-          plan: data.subscriptionType.plan,
-          reverseMarketPlace: data.subscriptionType.reverseMarketPlace,
+        subscriptionPreference: {
+          plan: data.subscriptionPreference.plan,
+          addOns: data.subscriptionPreference.addOns,
+          transactionValue: data.subscriptionPreference.transactionValue,
         },
       };
     };

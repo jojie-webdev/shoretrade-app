@@ -188,9 +188,10 @@ const Register = (): JSX.Element => {
       accountNumber: '',
 
       selectedMarketSector: '',
-      subscriptionType: {
-        plan: 'Standard',
-        reverseMarketPlace: false,
+      subscriptionPreference: {
+        plan: 'BASE',
+        addOns: [],
+        transactionValue: 'Less than $7,500',
       },
 
       tncAgreement: false,
@@ -239,9 +240,9 @@ const Register = (): JSX.Element => {
           marketSelling: selectedCategoryTypes,
           licenses: details.licenses,
           cardToken: details.cardToken,
-          subscriptionType: {
-            plan: details.subscriptionType.plan,
-            reverseMarketPlace: details.subscriptionType.reverseMarketPlace,
+          subscriptionPreference: {
+            plan: details.subscriptionPreference.plan,
+            addOns: [...details.subscriptionPreference.addOns],
           },
         })
       );
@@ -275,9 +276,10 @@ const Register = (): JSX.Element => {
           marketSector: details.categoryMarketSector,
           marketBuying: selectedCategoryTypes,
           cardToken: details.cardToken,
-          subscriptionType: {
-            plan: details.subscriptionType.plan,
-            reverseMarketPlace: details.subscriptionType.reverseMarketPlace,
+          subscriptionPreference: {
+            plan: details.subscriptionPreference.plan,
+            addOns: [...details.subscriptionPreference.addOns],
+            transactionValue: details.subscriptionPreference.transactionValue,
           },
         })
       );

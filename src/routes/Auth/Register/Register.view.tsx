@@ -66,6 +66,7 @@ import {
   SELLER_STEP_SUBTITLE,
   PLAN_NAME,
   PLAN_PRICE,
+  TRANSACTION_VALUES,
 } from './Register.constants';
 import { RegisterGeneratedProps, StepFormProps } from './Register.props';
 import {
@@ -125,6 +126,7 @@ import {
   ReverseMarketPlaceContainer,
   ReverseCheckboxWrapper,
   PlanPriceConatiner,
+  PlansWrapper,
 } from './Register.style';
 import {
   addressToPlaceData,
@@ -177,8 +179,9 @@ const StepForm = ({
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
-  const hasReverseMarketPlace =
-    registrationDetails.subscriptionType.reverseMarketPlace;
+  const hasReverseMarketPlace = registrationDetails.subscriptionPreference.addOns.includes(
+    'FEATURE_REVERSED_MARKETPLACE'
+  );
 
   const MAX_STEP = !isSeller ? 7 : hasReverseMarketPlace ? 9 : 8;
   // const MAX_STEP = 7;
@@ -343,32 +346,70 @@ const StepForm = ({
   };
 
   const [selectedPlan, setSelectedPlan] = useState(
-    registrationDetails.subscriptionType.plan
+    registrationDetails.subscriptionPreference.plan
   );
   const [reverseMarketPlace, setReverseMarketPlace] = useState(
-    hasReverseMarketPlace
+    registrationDetails.subscriptionPreference.addOns
+  );
+
+  const [transactionValue, setTransactionValue] = useState(
+    registrationDetails.subscriptionPreference.transactionValue
   );
 
   const selectedPlanHandler = (value: string) => {
     updateRegistrationDetails({
-      subscriptionType: {
-        ...registrationDetails.subscriptionType,
+      subscriptionPreference: {
+        ...registrationDetails.subscriptionPreference,
         plan: value,
       },
     });
     setSelectedPlan(value);
   };
 
+  const transactionValueHandler = (value: string) => {
+    if (
+      value === 'Between $15,000 and $22,500' ||
+      value === 'More than $22,500'
+    ) {
+      updateRegistrationDetails({
+        subscriptionPreference: {
+          ...registrationDetails.subscriptionPreference,
+          plan: 'PRO',
+          addOns: [
+            ...registrationDetails.subscriptionPreference.addOns,
+            'FEATURE_REVERSED_MARKETPLACE',
+          ],
+          transactionValue: value,
+        },
+      });
+      setSelectedPlan('PRO');
+      setReverseMarketPlace(['FEATURE_REVERSED_MARKETPLACE']);
+    } else {
+      updateRegistrationDetails({
+        subscriptionPreference: {
+          ...registrationDetails.subscriptionPreference,
+          plan: 'BASE',
+          addOns: [],
+          transactionValue: value,
+        },
+      });
+      setSelectedPlan('BASE');
+      setReverseMarketPlace([]);
+    }
+    setTransactionValue(value);
+  };
+
   const currentPlan = plans.find(
     (plan) =>
       plan.alias ===
-      `${registrationDetails.subscriptionType.plan.toUpperCase()}_${
+      `${registrationDetails.subscriptionPreference.plan.toUpperCase()}_${
         registrationDetails.categoryMarketSector
       }`
   );
 
-  const reverseMarketPlacePrice = registrationDetails.subscriptionType
-    .reverseMarketPlace
+  const reverseMarketPlacePrice = registrationDetails.subscriptionPreference.addOns.includes(
+    'FEATURE_REVERSED_MARKETPLACE'
+  )
     ? isSeller
       ? 279
       : 49.99
@@ -380,38 +421,49 @@ const StepForm = ({
   useEffect(() => {
     if (
       !isSeller &&
-      registrationDetails.subscriptionType.plan === PLAN_NAME.PRO
+      registrationDetails.subscriptionPreference.plan === PLAN_NAME.PRO
     ) {
       updateRegistrationDetails({
-        subscriptionType: {
-          ...registrationDetails.subscriptionType,
-          reverseMarketPlace: true,
+        subscriptionPreference: {
+          ...registrationDetails.subscriptionPreference,
+          addOns: ['FEATURE_REVERSED_MARKETPLACE'],
         },
       });
-      setReverseMarketPlace(false);
+      setReverseMarketPlace([
+        ...reverseMarketPlace,
+        'FEATURE_REVERSED_MARKETPLACE',
+      ]);
     }
     if (
       !isSeller &&
-      registrationDetails.subscriptionType.plan === PLAN_NAME.BASE
+      registrationDetails.subscriptionPreference.plan === PLAN_NAME.BASE
     ) {
       updateRegistrationDetails({
-        subscriptionType: {
-          ...registrationDetails.subscriptionType,
-          reverseMarketPlace: reverseMarketPlace,
+        subscriptionPreference: {
+          ...registrationDetails.subscriptionPreference,
+          addOns: [...reverseMarketPlace],
         },
       });
     }
-  }, [registrationDetails.subscriptionType.plan]);
+  }, [registrationDetails.subscriptionPreference.plan]);
 
   const additionalSubscriptionHandler = (hasAddOn: boolean) => {
-    if (registrationDetails.subscriptionType.plan === PLAN_NAME.BASE) {
+    const addOns: string[] = hasAddOn
+      ? [
+          ...registrationDetails.subscriptionPreference.addOns,
+          'FEATURE_REVERSED_MARKETPLACE',
+        ]
+      : registrationDetails.subscriptionPreference.addOns.filter(
+          (item) => item !== 'FEATURE_REVERSED_MARKETPLACE'
+        );
+    if (registrationDetails.subscriptionPreference.plan === PLAN_NAME.BASE) {
       updateRegistrationDetails({
-        subscriptionType: {
-          ...registrationDetails.subscriptionType,
-          reverseMarketPlace: hasAddOn,
+        subscriptionPreference: {
+          ...registrationDetails.subscriptionPreference,
+          addOns: addOns,
         },
       });
-      setReverseMarketPlace(hasAddOn);
+      setReverseMarketPlace(addOns);
     }
   };
 
@@ -1159,93 +1211,74 @@ const StepForm = ({
                 </>
               )}
               {step === 3 && !isSeller && (
-                <MarketSectorContainer>
-                  {BUYER_VARIATIONS.map((variant) => (
-                    <MarketSectorItemContainer key={variant.key}>
-                      <MarketSectorItem
-                        variant={variant.key}
-                        selected={
-                          registrationDetails.categoryMarketSector ===
-                          variant.key
-                        }
-                        onPress={() => {
-                          updateRegistrationDetails({
-                            categoryMarketSector: variant.key,
-                          });
-                        }}
-                      />
-                    </MarketSectorItemContainer>
-                  ))}
-                  {(otherErrors.categoryMarketSector || '').length > 0 && (
-                    <Error variant="caption" color="error">
-                      {otherErrors.categoryMarketSector}
-                    </Error>
-                  )}
-                </MarketSectorContainer>
+                <>
+                  <MarketSectorContainer>
+                    {BUYER_VARIATIONS.map((variant) => (
+                      <MarketSectorItemContainer key={variant.key}>
+                        <MarketSectorItem
+                          variant={variant.key}
+                          selected={
+                            registrationDetails.categoryMarketSector ===
+                            variant.key
+                          }
+                          onPress={() => {
+                            updateRegistrationDetails({
+                              categoryMarketSector: variant.key,
+                            });
+                          }}
+                        />
+                      </MarketSectorItemContainer>
+                    ))}
+                    {(otherErrors.categoryMarketSector || '').length > 0 && (
+                      <Error variant="caption" color="error">
+                        {otherErrors.categoryMarketSector}
+                      </Error>
+                    )}
+                  </MarketSectorContainer>
+                  <Typography weight="500" variant="body">
+                    Confirm your monthly purchasing value
+                  </Typography>
+                  <Select
+                    options={TRANSACTION_VALUES}
+                    value={
+                      registrationDetails.subscriptionPreference
+                        .transactionValue
+                    }
+                    onChange={(e) => transactionValueHandler(e.value)}
+                    size="large"
+                    grey
+                    border="none"
+                  />
+                </>
               )}
               {step === 4 && (
                 <>
                   {!isSeller && (
-                    <>
-                      <PlanPriceConatiner>
-                        <PlanTitle>
-                          <Typography weight="500" variant="title6">
-                            Base
-                          </Typography>
-                          <Radio
-                            checked={selectedPlan === PLAN_NAME.BASE}
-                            onClick={() => selectedPlanHandler(PLAN_NAME.BASE)}
-                          />
-                        </PlanTitle>
-                        <PlanPrice>
-                          <Typography variant="title5">
-                            ${PLAN_PRICE.BASE.price}
-                          </Typography>
-                          <Typography
-                            variant="label"
-                            color="shade6"
-                            weight="300"
-                          >
-                            /month
-                          </Typography>
-                        </PlanPrice>
-                        <ul>
-                          <li>
-                            <Typography variant="body">
-                              2% Buying Fee on Transcation Value
-                            </Typography>
-                          </li>
-                          <li>
-                            <Typography variant="body">
-                              Create up to 2 linked accounts
-                            </Typography>
-                          </li>
-                        </ul>
-
-                        <ReverseMarketPlaceContainer>
+                    <PlansWrapper>
+                      <div
+                        className={
+                          transactionValue === 'Between $15,000 and $22,500' ||
+                          transactionValue === 'More than $22,500'
+                            ? 'disbledPlan'
+                            : ''
+                        }
+                      >
+                        <PlanPriceConatiner>
                           <PlanTitle>
-                            <Typography weight="500" variant="body">
-                              Reverse Marketplace
+                            <Typography weight="500" variant="title6">
+                              Base
                             </Typography>
-                            <ReverseCheckboxWrapper>
-                              <Typography weight="400" variant="label">
-                                Add
-                              </Typography>
-                              <Checkbox
-                                borderColor={theme.grey.shade5}
-                                checked={reverseMarketPlace}
-                                onClick={() =>
-                                  additionalSubscriptionHandler(
-                                    !reverseMarketPlace
-                                  )
-                                }
-                                size={20}
-                              />
-                            </ReverseCheckboxWrapper>
+                            <Radio
+                              checked={selectedPlan === PLAN_NAME.BASE}
+                              onClick={() => {
+                                selectedPlanHandler(PLAN_NAME.BASE);
+                                setReverseMarketPlace([]);
+                              }}
+                            />
                           </PlanTitle>
                           <PlanPrice>
-                            <Typography variant="title6">
-                              + ${PLAN_PRICE.BASE.reverseMarket}
+                            <Typography variant="title5">
+                              ${PLAN_PRICE.BASE.price}
                             </Typography>
                             <Typography
                               variant="label"
@@ -1255,16 +1288,72 @@ const StepForm = ({
                               /month
                             </Typography>
                           </PlanPrice>
-                          <Typography
-                            variant="label"
-                            color="primary"
-                            weight="500"
-                            style={{ textDecoration: 'underline' }}
-                          >
-                            Explore the benefits
-                          </Typography>
-                        </ReverseMarketPlaceContainer>
-                      </PlanPriceConatiner>
+                          <ul>
+                            <li>
+                              <Typography variant="body">
+                                2% Buying Fee on Transcation Value
+                              </Typography>
+                            </li>
+                            <li>
+                              <Typography variant="body">
+                                Create up to 2 linked accounts
+                              </Typography>
+                            </li>
+                          </ul>
+
+                          <ReverseMarketPlaceContainer>
+                            <PlanTitle>
+                              <Typography weight="500" variant="body">
+                                Reverse Marketplace
+                              </Typography>
+                              <ReverseCheckboxWrapper>
+                                <Typography weight="400" variant="label">
+                                  Add
+                                </Typography>
+                                <Checkbox
+                                  borderColor={theme.grey.shade5}
+                                  checked={
+                                    registrationDetails.subscriptionPreference
+                                      .plan === PLAN_NAME.PRO
+                                      ? false
+                                      : reverseMarketPlace.includes(
+                                          'FEATURE_REVERSED_MARKETPLACE'
+                                        )
+                                  }
+                                  onClick={() =>
+                                    additionalSubscriptionHandler(
+                                      !reverseMarketPlace.includes(
+                                        'FEATURE_REVERSED_MARKETPLACE'
+                                      )
+                                    )
+                                  }
+                                  size={20}
+                                />
+                              </ReverseCheckboxWrapper>
+                            </PlanTitle>
+                            <PlanPrice>
+                              <Typography variant="title6">
+                                + ${PLAN_PRICE.BASE.reverseMarket}
+                              </Typography>
+                              <Typography
+                                variant="label"
+                                color="shade6"
+                                weight="300"
+                              >
+                                /month
+                              </Typography>
+                            </PlanPrice>
+                            <Typography
+                              variant="label"
+                              color="primary"
+                              weight="500"
+                              style={{ textDecoration: 'underline' }}
+                            >
+                              Explore the benefits
+                            </Typography>
+                          </ReverseMarketPlaceContainer>
+                        </PlanPriceConatiner>
+                      </div>
 
                       <PlanPriceConatiner>
                         <PlanTitle>
@@ -1347,7 +1436,7 @@ const StepForm = ({
                           }
                         />
                       </TabsContainer> */}
-                    </>
+                    </PlansWrapper>
                   )}
                   {isSeller ? (
                     <>
@@ -1553,7 +1642,9 @@ const StepForm = ({
                       additionalSubscriptionHandler={
                         additionalSubscriptionHandler
                       }
-                      selectedPlan={registrationDetails.subscriptionType.plan}
+                      selectedPlan={
+                        registrationDetails.subscriptionPreference.plan
+                      }
                       currentMarketSector={
                         registrationDetails.categoryMarketSector
                       }
@@ -1595,7 +1686,7 @@ const StepForm = ({
                       <PaymentPriceConatiner>
                         <PaymentPriceRow>
                           <Typography variant="label">
-                            {registrationDetails.subscriptionType.plan ===
+                            {registrationDetails.subscriptionPreference.plan ===
                             PLAN_NAME.BASE
                               ? 'Base '
                               : 'Pro '}
@@ -1603,16 +1694,17 @@ const StepForm = ({
                           </Typography>
                           <Typography variant="label">
                             $
-                            {registrationDetails.subscriptionType.plan ===
+                            {registrationDetails.subscriptionPreference.plan ===
                             PLAN_NAME.PRO
                               ? PLAN_PRICE.PRO.price.toFixed(2)
                               : PLAN_PRICE.BASE.price.toFixed(2)}
                             *
                           </Typography>
                         </PaymentPriceRow>
-                        {registrationDetails.subscriptionType
-                          .reverseMarketPlace &&
-                          registrationDetails.subscriptionType.plan ===
+                        {registrationDetails.subscriptionPreference.addOns.includes(
+                          'FEATURE_REVERSED_MARKETPLACE'
+                        ) &&
+                          registrationDetails.subscriptionPreference.plan ===
                             PLAN_NAME.BASE && (
                             <PaymentPriceRow>
                               <Typography variant="label">
@@ -1630,10 +1722,11 @@ const StepForm = ({
                           <TotalPriceRow>
                             <Typography variant="title5">
                               $
-                              {registrationDetails.subscriptionType.plan ===
-                              PLAN_NAME.BASE
-                                ? registrationDetails.subscriptionType
-                                    .reverseMarketPlace
+                              {registrationDetails.subscriptionPreference
+                                .plan === PLAN_NAME.BASE
+                                ? registrationDetails.subscriptionPreference.addOns.includes(
+                                    'FEATURE_REVERSED_MARKETPLACE'
+                                  )
                                   ? PLAN_PRICE.BASE.priceWithReverse.toFixed(2)
                                   : PLAN_PRICE.BASE.price.toFixed(2)
                                 : PLAN_PRICE.PRO.price.toFixed(2)}
@@ -1668,7 +1761,9 @@ const StepForm = ({
                       additionalSubscriptionHandler={
                         additionalSubscriptionHandler
                       }
-                      selectedPlan={registrationDetails.subscriptionType.plan}
+                      selectedPlan={
+                        registrationDetails.subscriptionPreference.plan
+                      }
                       currentMarketSector={
                         registrationDetails.categoryMarketSector
                       }
@@ -1888,8 +1983,9 @@ const RegisterView = (props: RegisterGeneratedProps) => {
   const steps = isSeller ? SELLER_STEPS : BUYER_STEPS;
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const marketSectors = isSeller ? SELLER_VARIATIONS : BUYER_VARIATIONS;
-  const hasReverseMarketPlace =
-    registrationDetails.subscriptionType.reverseMarketPlace;
+  const hasReverseMarketPlace = registrationDetails.subscriptionPreference.addOns.includes(
+    'FEATURE_REVERSED_MARKETPLACE'
+  );
 
   const renderRef = useRef<HTMLDivElement | null>(null);
 
