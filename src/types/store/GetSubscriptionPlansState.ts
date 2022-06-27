@@ -1,4 +1,5 @@
 import { GenericResponse } from 'types/GenericResponse';
+import { CompanyPlanAlias, CompanyPlanName } from './GetCompanyPlanState';
 
 export type GetSubscriptionPlansMeta = {
   // TODO: Add request values
@@ -12,8 +13,8 @@ export type SubscriptionPlanFeature = {
 
 export type GetSubscriptionPlansResponseData = {
   id: string;
-  alias: string;
-  name: string;
+  alias: CompanyPlanAlias;
+  name: CompanyPlanName;
   price: string;
   recurring_interval: string;
   features: SubscriptionPlanFeature[];

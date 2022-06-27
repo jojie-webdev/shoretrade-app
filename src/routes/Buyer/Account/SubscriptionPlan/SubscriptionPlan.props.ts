@@ -5,7 +5,10 @@ import {
   CompanyPlanName,
   Subscription,
 } from 'types/store/GetCompanyPlanState';
-import { SubscriptionPlanFeature } from 'types/store/GetSubscriptionPlansState';
+import {
+  GetSubscriptionPlansResponseData,
+  SubscriptionPlanFeature,
+} from 'types/store/GetSubscriptionPlansState';
 
 export interface SubscriptionPlanTransformOutputProps {
   annualPrice: string;
@@ -21,8 +24,8 @@ export interface SubscriptionPlanTransformOutputProps {
   planStatus: string;
   nextBillingAmount: number;
   reverseMarketDetails?: AddOn;
-  proPlanDetails?: CompanyPlan;
-  basePlanDetails?: CompanyPlan;
+  proPlanDetails?: GetSubscriptionPlansResponseData;
+  basePlanDetails?: GetSubscriptionPlansResponseData;
   currentPlanDetails?: ActivePlan;
   noActivePlan: boolean;
   currentReverseMarketDetails?: ActivePlan;

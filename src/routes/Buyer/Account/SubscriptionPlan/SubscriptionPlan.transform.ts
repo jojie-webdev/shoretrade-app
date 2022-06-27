@@ -34,20 +34,11 @@ export const companyPlanToProps = (
   );
   const cardBrand = _.snakeCase(defaultPaymentMethod?.brand || '');
 
-  const getPlanDetails = (name?: CompanyPlanName): CompanyPlan | undefined => {
-    if (name && companyPlan?.changePlan.name === name) {
-      return companyPlan.changePlan;
-    }
-
-    if (companyPlan?.activePlans && name) {
-      return companyPlan.activePlans.find((ac) => ac.plan.name === name)?.plan;
-    }
-
-    if (companyPlan?.activePlans) {
-      return companyPlan.activePlans.find((ac) =>
-        [CompanyPlanName.BASE, CompanyPlanName.PRO].includes(ac.plan.name)
-      )?.plan;
-    }
+  const getPlanDetails = (
+    alias: CompanyPlanAlias
+  ): GetSubscriptionPlansResponseData | undefined => {
+    console.log(plans.find((p) => p.alias === alias));
+    return plans.find((p) => p.alias === alias);
   };
 
   const getActivePlan = (name?: CompanyPlanName): ActivePlan | undefined => {
@@ -85,8 +76,8 @@ export const companyPlanToProps = (
     hasCancelled: companyPlan?.flags?.hasCancelled,
     planStatus: '',
     nextBillingAmount: companyPlan?.nextBillingData.price || 0,
-    proPlanDetails: getPlanDetails(CompanyPlanName.PRO),
-    basePlanDetails: getPlanDetails(CompanyPlanName.BASE),
+    proPlanDetails: getPlanDetails(CompanyPlanAlias.PREMIUM),
+    basePlanDetails: getPlanDetails(CompanyPlanAlias.STANDARD),
     reverseMarketDetails: companyPlan?.addOns.filter(
       (a) => a.alias === 'FEATURE_REVERSED_MARKETPLACE'
     )[0],

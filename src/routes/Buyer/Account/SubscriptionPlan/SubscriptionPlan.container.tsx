@@ -141,17 +141,10 @@ const SubscriptionPlan = () => {
 
   // VARIABLES
 
-  const plans =
-    (marketSector &&
-      subscriptionPlans?.filter((plan) =>
-        plan.alias.includes(_.snakeCase(marketSector?.sector).toUpperCase())
-      )) ||
-    [];
-
   const currentMarketSector = marketSector ? marketSector.sectorAlias : '';
 
   const params: SubscriptionPlanGeneratedProps = {
-    ...companyPlanToProps(plans, companyPlan),
+    ...companyPlanToProps(subscriptionPlans || [], companyPlan),
     companyPlanError,
     planInterval,
     isDeactivated,

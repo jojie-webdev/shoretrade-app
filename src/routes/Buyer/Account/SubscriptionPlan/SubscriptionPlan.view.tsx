@@ -120,8 +120,6 @@ export const SubscriptionPlanView = ({
     ? Number(reverseMarketDetails.price)
     : 0;
 
-  console.log(currentReverseMarketDetails);
-
   const YourCurrentPlanIndicator = () => (
     <Typography variant="label" weight="400" color="primary">
       Current Plan
@@ -468,15 +466,7 @@ export const SubscriptionPlanView = ({
                     currentPlanDetails?.plan.name === CompanyPlanName.PRO ? (
                       <div
                         className="subscription-action"
-                        onClick={() =>
-                          isForRenewal
-                            ? showYourPlanOnly
-                              ? history.push(
-                                  BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD
-                                )
-                              : setShowRenewModal(true)
-                            : setShowCancelModal(true)
-                        }
+                        onClick={() => setShowCancelModal(true)}
                       >
                         <Typography
                           variant="label"
@@ -484,7 +474,7 @@ export const SubscriptionPlanView = ({
                           weight="400"
                           style={{ textDecoration: 'underline' }}
                         >
-                          {yourPlanButtonText}
+                          Cancel Subscription
                         </Typography>
                       </div>
                     ) : (
