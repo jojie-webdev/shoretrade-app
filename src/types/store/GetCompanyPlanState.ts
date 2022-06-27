@@ -128,6 +128,14 @@ export type NextBillingCard = {
   lastFour: string;
 };
 
+export type PlanFlags = {
+  hasCancelledPlan: boolean;
+  hasDowngraded: boolean;
+  hasCancelledReversedMarketplace: boolean;
+  hasPendingPayment: boolean;
+  hasUpcomingReversedMarketPlace: boolean;
+};
+
 export type GetCompanyPlanResponseData = {
   countdown: number;
   ends_at: string;
@@ -154,9 +162,7 @@ export type GetCompanyPlanResponseData = {
     defaultCard: string;
   };
   addOns: AddOn[];
-  flags?: {
-    hasCancelled?: Subscription;
-  };
+  flags: PlanFlags;
   changePlan: ChangePlan;
 };
 

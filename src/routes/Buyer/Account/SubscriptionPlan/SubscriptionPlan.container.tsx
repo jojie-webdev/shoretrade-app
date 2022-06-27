@@ -109,6 +109,16 @@ const SubscriptionPlan = () => {
     }
   };
 
+  const downgradeSubscription = () => {
+    if (company?.id) {
+      dispatch(
+        cancelSubscriptionPlanActions.request({
+          companyId: company?.id,
+        })
+      );
+    }
+  };
+
   const updateSubscription = (subscriptionId?: string) => {
     if (company?.id && companyPlan?.nextBillingData.defaultCard) {
       dispatch(
@@ -126,11 +136,12 @@ const SubscriptionPlan = () => {
   /**
    * For now use base as default
    */
-  const renewSubscription = () => {
+  const renewSubscription = (subscriptionPlanId: string) => {
     if (company?.id) {
       dispatch(
         updateSubscriptionPlanActions.request({
           companyId: company.id,
+          subscriptionPlanId,
           payment: {
             existingCard: '',
           },
@@ -147,12 +158,14 @@ const SubscriptionPlan = () => {
     ...companyPlanToProps(subscriptionPlans || [], companyPlan),
     companyPlanError,
     planInterval,
+    flags: companyPlan?.flags,
     isDeactivated,
     currentMarketSector,
     loading,
     cancelSubscription,
     updateSubscription,
     renewSubscription,
+    downgradeSubscription,
   };
 
   return <SubscriptionPlanView {...params} />;

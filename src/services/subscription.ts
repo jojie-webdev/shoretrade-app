@@ -72,7 +72,7 @@ export const updatePlan = (
 export const cancelPlan = (
   param: {
     companyId: string;
-    subscriptionPlanId: string;
+    subscriptionPlanId?: string;
   },
   token: string
 ) => {

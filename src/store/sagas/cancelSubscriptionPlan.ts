@@ -1,3 +1,4 @@
+import { P } from 'components/base/Typography/Typography.style';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { cancelPlan } from 'services/subscription';
 import { AsyncAction } from 'types/Action';
@@ -5,6 +6,7 @@ import {
   CancelSubscriptionPlanMeta,
   CancelSubscriptionPlanPayload,
 } from 'types/store/CancelSubscriptionPlanState';
+import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
 import { Store } from 'types/store/Store';
 
 import {
@@ -29,13 +31,21 @@ function* cancelSubscriptionPlanRequest(
 }
 
 function* cancelSubscriptionPlanSuccess(
-  action: AsyncAction<CancelSubscriptionPlanMeta, CancelSubscriptionPlanMeta>
+  action: AsyncAction<CancelSubscriptionPlanMeta, CancelSubscriptionPlanPayload>
 ) {
-  yield put(
-    getCompanyPlanActions.request({
-      companyId: action.meta.companyId,
-    })
-  );
+  const state: Store = yield select();
+  if (state.auth.token) {
+    const currentPlan = state.getCompanyPlan.data?.data.activePlans.find((ac) =>
+      [CompanyPlanName.PRO, CompanyPlanName.BASE].includes(ac.plan.name)
+    );
+    if (currentPlan) {
+      yield put(
+        getCompanyPlanActions.request({
+          companyId: currentPlan.company.id,
+        })
+      );
+    }
+  }
 }
 
 function* cancelSubscriptionPlanWatcher() {

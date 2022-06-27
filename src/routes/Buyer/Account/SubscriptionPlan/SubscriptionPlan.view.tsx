@@ -5,19 +5,12 @@ import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import { Calendar, Mastercard, DollarSign } from 'components/base/SVG';
-import TwoWayToggle from 'components/base/TwoWayToggle';
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import CreditCardLogo from 'components/module/CreditCardLogo';
-import IconTooltip from 'components/module/IconTooltip';
 import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import {
-  REVERSE_MARKETPLACE_PRICE,
-  BUYER_BASE_PRICE,
-  BUYER_PREMIUM_PRICE,
-} from 'consts/prices';
 import { basePlanItems, proPlanItems } from 'consts/subcriptionPlan';
 import _ from 'lodash';
 import moment from 'moment';
@@ -35,7 +28,6 @@ import { useTheme } from 'utils/Theme';
 
 import { BenefitsList } from './InclusionsList/InclusionsList.style';
 import InclusionsList from './InclusionsList/InclusionsList.view';
-import SpecialInclusionsList from './SpecialInclusionsList/SpecialInclusionsList.view';
 import { SubscriptionPlanGeneratedProps } from './SubscriptionPlan.props';
 import {
   BillingSection,
@@ -77,16 +69,16 @@ export const SubscriptionPlanView = ({
   cancellationPeriod,
   cancelSubscription,
   updateSubscription,
+  downgradeSubscription,
   renewSubscription,
-  hasCancelled,
   nextBillingAmount,
   proPlanDetails,
   basePlanDetails,
   reverseMarketDetails,
   currentPlanDetails,
-  noActivePlan,
   loading,
   currentReverseMarketDetails,
+  flags,
   proRata,
 }: SubscriptionPlanGeneratedProps) => {
   const location = useLocation();
@@ -105,8 +97,6 @@ export const SubscriptionPlanView = ({
     setShowReverseMarketPlaceToggleModal,
   ] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
-  const [showRenewModal, setShowRenewModal] = useState(noActivePlan);
-  const price = toPrice(isMonthly ? monthlyPrice : annualPrice);
 
   const redirectState = {
     from: {
@@ -131,7 +121,7 @@ export const SubscriptionPlanView = ({
     setIsMonthly(planInterval !== 'ANNUAL');
   }, [planInterval]);
 
-  const isForRenewal = hasCancelled;
+  const isForRenewal = flags?.hasCancelledPlan;
 
   const isOverdueBadgeVisible = [
     'UNSUCCESSFUL',
@@ -159,7 +149,7 @@ export const SubscriptionPlanView = ({
         />
       </BreadcrumbsContainer>
       <AlertsContainer>
-        {hasCancelled && (
+        {flags?.hasCancelledPlan && !flags?.hasDowngraded && (
           <Alert
             fullWidth
             header={`Account Cancellation ${cancellationPeriod}`}
@@ -171,7 +161,11 @@ export const SubscriptionPlanView = ({
                 </Typography>
                 <div className="actions">
                   <Button
-                    onClick={() => setShowRenewModal(true)}
+                    onClick={() => {
+                      if (currentPlanDetails) {
+                        renewSubscription(currentPlanDetails?.plan.id);
+                      }
+                    }}
                     text="Renew"
                     size="sm"
                   />
@@ -179,6 +173,20 @@ export const SubscriptionPlanView = ({
               </ExpiryAlertContentContainer>
             }
             variant="error"
+          />
+        )}
+        {flags?.hasDowngraded && (
+          <Alert
+            fullWidth
+            header={`Account Downgrade ${cancellationPeriod}`}
+            content={
+              <ExpiryAlertContentContainer>
+                <Typography variant="caption" color="shade7">
+                  Your account will be downgraded on your next payment date.
+                </Typography>
+              </ExpiryAlertContentContainer>
+            }
+            variant="warning"
           />
         )}
       </AlertsContainer>
@@ -232,71 +240,81 @@ export const SubscriptionPlanView = ({
                     </Typography>
                   </div>
                 </div>
-                <div className="billing-item">
-                  <Typography variant="body" weight="400">
-                    Next Billing Amount
-                  </Typography>
-                  <div className="billing-date">
-                    <DollarSign
-                      fill={theme.grey.shade7}
-                      width={16}
-                      height={20}
-                    />
-                    <Typography
-                      variant="body"
-                      style={{ marginLeft: '6px', lineHeight: 'normal' }}
-                    >
-                      <b>{nextBillingAmount}</b>
+                {!flags?.hasCancelledPlan && (
+                  <div className="billing-item">
+                    <Typography variant="body" weight="400">
+                      Next Billing Amount
                     </Typography>
+                    <div className="billing-date">
+                      <DollarSign
+                        fill={theme.grey.shade7}
+                        width={16}
+                        height={20}
+                      />
+                      <Typography
+                        variant="body"
+                        style={{ marginLeft: '6px', lineHeight: 'normal' }}
+                      >
+                        <b>{nextBillingAmount}</b>
+                      </Typography>
+                    </div>
                   </div>
-                  <BadgesContainer>
-                    {isForRenewal && currentPlanDetails && (
-                      <Badge
-                        badgeColor={theme.product?.error}
-                        borderRadius="4px"
+                )}
+                <BadgesContainer>
+                  {isForRenewal && currentPlanDetails && !flags?.hasDowngraded && (
+                    <Badge badgeColor={theme.product?.error} borderRadius="4px">
+                      <Typography
+                        variant="overline"
+                        color="noshade"
+                        style={{ lineHeight: 'unset' }}
                       >
-                        <Typography
-                          variant="overline"
-                          color="noshade"
-                          style={{ lineHeight: 'unset' }}
-                        >
-                          Cancelling
-                        </Typography>
-                      </Badge>
-                    )}
-                    {isOverdueBadgeVisible && (
-                      <Badge
-                        badgeColor={theme.brand.error}
-                        borderRadius="4px"
-                        style={{ marginLeft: '8px' }}
+                        Cancelling
+                      </Typography>
+                    </Badge>
+                  )}
+                  {currentPlanDetails && flags?.hasDowngraded && (
+                    <Badge badgeColor={theme.brand.warning} borderRadius="4px">
+                      <Typography
+                        variant="overline"
+                        color="noshade"
+                        style={{ lineHeight: 'unset' }}
                       >
-                        <Typography
-                          variant="overline"
-                          color="noshade"
-                          style={{ lineHeight: 'unset' }}
-                        >
-                          OVERDUE
-                        </Typography>
-                      </Badge>
-                    )}
-                  </BadgesContainer>
-                  <div className="section-footer">
-                    <Link
-                      to={{
-                        pathname: BUYER_ACCOUNT_ROUTES.PAYMENT_HISTORY,
-                        state: redirectState,
-                      }}
+                        Downgrading
+                      </Typography>
+                    </Badge>
+                  )}
+                  {isOverdueBadgeVisible && (
+                    <Badge
+                      badgeColor={theme.brand.error}
+                      borderRadius="4px"
+                      style={{ marginLeft: '8px' }}
                     >
                       <Typography
-                        variant="label"
-                        color="primary"
-                        weight="400"
-                        style={{ textDecoration: 'underline' }}
+                        variant="overline"
+                        color="noshade"
+                        style={{ lineHeight: 'unset' }}
                       >
-                        See Payment History
+                        OVERDUE
                       </Typography>
-                    </Link>
-                  </div>
+                    </Badge>
+                  )}
+                </BadgesContainer>
+                <div className="section-footer">
+                  <Link
+                    to={{
+                      pathname: BUYER_ACCOUNT_ROUTES.PAYMENT_HISTORY,
+                      state: redirectState,
+                    }}
+                  >
+                    <Typography
+                      variant="label"
+                      color="primary"
+                      weight="400"
+                      style={{ textDecoration: 'underline' }}
+                    >
+                      See Payment History
+                    </Typography>
+                  </Link>
                 </div>
               </BillingSection>
             </Col>
@@ -343,6 +361,7 @@ export const SubscriptionPlanView = ({
                     ) : (
                       <div className="subscription-action">
                         <Button
+                          disabled={flags?.hasDowngraded}
                           onClick={() => setShowBaseToggleModal(true)}
                           variant="primary"
                           text="Downgrade"
@@ -387,7 +406,7 @@ export const SubscriptionPlanView = ({
                     ) : (
                       <div className="subscription-action">
                         <Button
-                          disabled={hasCancelled !== undefined}
+                          disabled={flags?.hasCancelledPlan !== undefined}
                           onClick={() => setShowProToggleModal(true)}
                           variant="primary"
                           text="Upgrade"
@@ -465,19 +484,23 @@ export const SubscriptionPlanView = ({
                     {/* // NEEDED LATER FOR MARKET PLACE CANCEL SUBSCRIPTION TASK */}
                     {currentReverseMarketDetails?.subscription?.paid_at ||
                     currentPlanDetails?.plan.name === CompanyPlanName.PRO ? (
-                      <div
-                        className="subscription-action"
-                        onClick={() => setShowCancelModal(true)}
-                      >
-                        <Typography
-                          variant="label"
-                          color="primary"
-                          weight="400"
-                          style={{ textDecoration: 'underline' }}
-                        >
-                          Cancel Subscription
-                        </Typography>
-                      </div>
+                      <>
+                        {!flags?.hasDowngraded && (
+                          <div
+                            className="subscription-action"
+                            onClick={() => setShowCancelModal(true)}
+                          >
+                            <Typography
+                              variant="label"
+                              color="primary"
+                              weight="400"
+                              style={{ textDecoration: 'underline' }}
+                            >
+                              Cancel Subscription
+                            </Typography>
+                          </div>
+                        )}
+                      </>
                     ) : (
                       <div className="subscription-action">
                         <Button
@@ -520,30 +543,29 @@ export const SubscriptionPlanView = ({
                   </Typography>
                 </FooterNote>
 
-                {!!yourPlanButtonText &&
-                subscriptionType === CompanyPlanName.BASE &&
-                isSaasSubscribed ? (
-                  <div
-                    className="subscription-action"
-                    onClick={() =>
-                      isForRenewal
-                        ? showYourPlanOnly
-                          ? history.push(
-                              BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD
-                            )
-                          : setShowRenewModal(true)
-                        : setShowCancelModal(true)
-                    }
-                  >
-                    <Typography
-                      variant="label"
-                      color="primary"
-                      weight="400"
-                      style={{ textDecoration: 'underline' }}
-                    >
-                      {yourPlanButtonText}
-                    </Typography>
-                  </div>
+                {flags?.hasCancelledPlan ? (
+                  // <div
+                  //   className="subscription-action"
+                  //   onClick={() =>
+                  //     isForRenewal
+                  //       ? showYourPlanOnly
+                  //         ? history.push(
+                  //             BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD
+                  //           )
+                  //         : setShowRenewModal(true)
+                  //       : setShowCancelModal(true)
+                  //   }
+                  // >
+                  //   <Typography
+                  //     variant="label"
+                  //     color="primary"
+                  //     weight="400"
+                  //     style={{ textDecoration: 'underline' }}
+                  //   >
+                  //     {yourPlanButtonText}
+                  //   </Typography>
+                  // </div>
+                  <></>
                 ) : (
                   <div
                     className="cancel-subscription"
@@ -626,7 +648,7 @@ export const SubscriptionPlanView = ({
           // setShowBaseToggleModal(false);
           // setIsMonthly(!isMonthly);
           if (basePlanDetails?.id) {
-            updateSubscription(basePlanDetails.id);
+            downgradeSubscription();
           }
           setShowBaseToggleModal(false);
         }}

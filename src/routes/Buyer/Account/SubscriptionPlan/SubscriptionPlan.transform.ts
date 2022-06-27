@@ -58,7 +58,7 @@ export const companyPlanToProps = (
     annualPrice: annualPlan?.price || '0',
     monthlyPrice: monthlyPlan?.price || '0',
     nextBillingDate,
-    cancellationPeriod: companyPlan?.flags?.hasCancelled?.is_unsubscribed
+    cancellationPeriod: companyPlan?.flags?.hasCancelledPlan
       ? `in ${daysUntilEnd} days`
       : '',
     cardBrand,
@@ -74,7 +74,6 @@ export const companyPlanToProps = (
       ? companyPlan.activePlans[0]?.company.subscription_preference
           .isSaasSubscribed
       : true,
-    hasCancelled: companyPlan?.flags?.hasCancelled,
     planStatus: '',
     nextBillingAmount: companyPlan?.nextBillingData.price || 0,
     proPlanDetails: getPlanDetails(CompanyPlanAlias.PREMIUM),

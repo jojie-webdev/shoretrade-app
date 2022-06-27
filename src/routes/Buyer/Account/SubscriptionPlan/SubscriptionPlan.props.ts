@@ -3,6 +3,7 @@ import {
   AddOn,
   CompanyPlan,
   CompanyPlanName,
+  PlanFlags,
   Subscription,
 } from 'types/store/GetCompanyPlanState';
 import {
@@ -20,7 +21,6 @@ export interface SubscriptionPlanTransformOutputProps {
   isSaasSubscribed: boolean;
   subscriptionType: CompanyPlanName;
   features: SubscriptionPlanFeature[];
-  hasCancelled?: Subscription;
   planStatus: string;
   nextBillingAmount: number;
   reverseMarketDetails?: AddOn;
@@ -37,9 +37,11 @@ export interface SubscriptionPlanGeneratedProps
   planInterval: string;
   isDeactivated: boolean;
   currentMarketSector: string;
+  flags?: PlanFlags;
   loading: boolean;
   cancelSubscription: (subscriptionPlanId: string) => void;
   companyPlanError: string | undefined;
-  updateSubscription: (subscriptionId: string) => void;
-  renewSubscription: () => void;
+  updateSubscription: (subscriptionId?: string) => void;
+  renewSubscription: (subscriptionPlanId: string) => void;
+  downgradeSubscription: () => void;
 }
