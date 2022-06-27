@@ -48,6 +48,11 @@ export type CompanyPlan = {
   subscription: Subscription;
 };
 
+export type ChangePlan = {
+  remaining_price: number;
+  consumed_price: number;
+} & CompanyPlan;
+
 export type SubscriptionPreference = {
   type: string;
   saasInterval?: string;
@@ -152,7 +157,7 @@ export type GetCompanyPlanResponseData = {
   flags?: {
     hasCancelled?: Subscription;
   };
-  changePlan: CompanyPlan;
+  changePlan: ChangePlan;
 };
 
 export enum SubscriptionType {

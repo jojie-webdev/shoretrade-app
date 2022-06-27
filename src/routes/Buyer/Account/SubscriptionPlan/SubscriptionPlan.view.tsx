@@ -87,6 +87,7 @@ export const SubscriptionPlanView = ({
   noActivePlan,
   loading,
   currentReverseMarketDetails,
+  proRata,
 }: SubscriptionPlanGeneratedProps) => {
   const location = useLocation();
   const history = useHistory();
@@ -566,7 +567,7 @@ export const SubscriptionPlanView = ({
       <ConfirmationModal
         isOpen={showProToggleModal}
         title="Upgrade to the Pro model and unlock more features!"
-        actionText={`Upgrade (${'$11'})`} // todo get upgrade cost
+        actionText={`Upgrade ($${proRata})`} // todo get upgrade cost
         onClickClose={() => {
           setShowProToggleModal(false);
           // setIsMonthly(!isMonthly);
@@ -582,7 +583,7 @@ export const SubscriptionPlanView = ({
         <Typography color="shade6">
           The ongoing monthly cost will be:
           <Typography variant="body" component="span">
-            &nbsp;{proPrice}
+            &nbsp;${proPrice}
           </Typography>
           <Typography
             component="span"
@@ -598,8 +599,8 @@ export const SubscriptionPlanView = ({
           Pay the amount below to unlock the Pro model now.
         </Typography>
         <div style={{ display: 'flex', margin: '8px 0' }}>
-          <Typography variant="title3" weight="400">
-            {price}
+          <Typography variant="title5" weight="500">
+            ${proRata}
           </Typography>
         </div>
         <div style={{ display: 'flex' }}>
@@ -607,7 +608,7 @@ export const SubscriptionPlanView = ({
             This is a pro rata cost to have the Pro features for the remainder
             of your current payment period. All future costs will be
             <Typography component="span" color="shade9">
-              &nbsp;{price}
+              &nbsp;${proPrice}
             </Typography>
             <Typography variant="caption" component="span" color="shade6">
               &nbsp;/{isMonthly ? 'Month' : 'Year'}

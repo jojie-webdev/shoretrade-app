@@ -9,6 +9,7 @@ import {
 } from 'types/store/GetCompanyPlanState';
 import { GetSubscriptionPlansResponseData } from 'types/store/GetSubscriptionPlansState';
 import { toMaskedCardNumber } from 'utils/String/maskedCardNumber';
+import { proRata } from 'utils/SubscriptionPlan/proRata';
 
 import { SubscriptionPlanTransformOutputProps } from './SubscriptionPlan.props';
 
@@ -84,5 +85,8 @@ export const companyPlanToProps = (
     noActivePlan: companyPlan ? companyPlan.activePlans.length > 0 : true,
     currentPlanDetails: getActivePlan(),
     currentReverseMarketDetails: getActivePlan(CompanyPlanName.REVERSE_MARKET),
+    proRata: companyPlan?.changePlan
+      ? proRata(companyPlan.changePlan)
+      : undefined,
   };
 };
