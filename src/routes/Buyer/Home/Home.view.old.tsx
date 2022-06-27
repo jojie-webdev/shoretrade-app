@@ -20,7 +20,6 @@ import SubscriptionAlert from 'components/module/SubscriptionAlert';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { MARKET_GROUP_1 } from 'consts/markets';
-import { FREE_TRIAL_PERIOD } from 'consts/prices';
 import moment from 'moment';
 import partialRight from 'ramda/es/partialRight';
 import { Col } from 'react-grid-system';
@@ -115,29 +114,30 @@ const HomeView = (props: HomeGeneratedProps) => {
     query: BREAKPOINTS['md'],
   });
 
-  const selectedMarketGroup = MARKET_GROUP_1.includes(currentMarketSector)
-    ? 'MARKET_GROUP_1'
-    : 'MARKET_GROUP_2';
-
-  const activeSubscription = companyPlan?.activePlans.find((ac) =>
-    ['BASE', 'PRO'].includes(ac.plan.name.toUpperCase())
+  const currentPlan = companyPlan?.activePlans.find((ac) =>
+    [CompanyPlanName.PRO, CompanyPlanName.BASE].includes(ac.plan.name)
   );
 
-  const freeTrialSubscription = companyPlan?.activePlans.find((ac) =>
-    ac.plan.name.includes('FREE')
-  );
-  // const freeTrialPeriod =
-  //   subscriptionType === 'PREMIUM'
-  //     ? FREE_TRIAL_PERIOD[selectedMarketGroup].premium
-  //     : FREE_TRIAL_PERIOD[selectedMarketGroup].base;
+  const freeTrialSubscription = currentPlan?.plan.alias.includes('FREE');
 
-  const freeTrialPeriod = 0;
+  const endDate = currentPlan
+    ? currentPlan.subscription.ends_at
+    : moment().startOf('day');
+
+  const startDate = currentPlan
+    ? currentPlan.subscription.starts_at
+    : moment().startOf('day');
+
+  const currentDate = moment().startOf('day');
+  const freeTrialPeriod = moment(endDate).diff(startDate, 'days');
+  const daysLeft = moment(endDate).diff(currentDate, 'days');
+
   return (
     <ViewContainer>
       {freeTrialSubscription && (
         <FreeTrialCountdown
-          freeTrialPeriod={freeTrialPeriod || 30}
-          daysLeft={0}
+          freeTrialPeriod={freeTrialPeriod}
+          daysLeft={daysLeft}
         />
       )}
 

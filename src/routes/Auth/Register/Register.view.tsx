@@ -928,7 +928,18 @@ const StepForm = ({
               formikProps.onSubmit(values);
             }
           } else if (step === 3) {
-            formikProps.onSubmit(values);
+            if (!isSeller) {
+              const error = validateCategoryMarketSector({
+                categoryMarketSector: registrationDetails.categoryMarketSector,
+              });
+
+              if (error.categoryMarketSector) {
+                setOtherErrors(error);
+              } else {
+                setOtherErrors({ categoryMarketSector: '' });
+                formikProps.onSubmit(values);
+              }
+            } else formikProps.onSubmit(values);
           } else if (step === 4) {
             if (!isSeller) {
               const error = validateCategoryMarketSector({

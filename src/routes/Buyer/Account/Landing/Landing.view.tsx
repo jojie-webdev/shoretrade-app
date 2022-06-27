@@ -20,13 +20,13 @@ import GradientProgressCircle from 'components/module/GradientProgressCircle';
 import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { MARKET_GROUP_1 } from 'consts/markets';
-import { FREE_TRIAL_PERIOD } from 'consts/prices';
+import moment from 'moment';
 import qs from 'qs';
 import { isEmpty } from 'ramda';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
+import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
 import { useTheme } from 'utils/Theme';
 
 import { LandingGeneratedProps } from './Landing.props';
@@ -148,16 +148,23 @@ const LandingView = (props: LandingGeneratedProps) => {
     };
   });
 
-  const selectedMarketGroup = MARKET_GROUP_1.includes(currentMarketSector)
-    ? 'MARKET_GROUP_1'
-    : 'MARKET_GROUP_2';
+  const currentPlan = companyPlan?.activePlans.find((ac) =>
+    [CompanyPlanName.PRO, CompanyPlanName.BASE].includes(ac.plan.name)
+  );
 
-  const subscriptionType =
-    companyPlan?.activePlans[0]?.company?.subscription_preference.type;
-  const freeTrialPeriod =
-    subscriptionType === 'PREMIUM'
-      ? FREE_TRIAL_PERIOD[selectedMarketGroup].premium
-      : FREE_TRIAL_PERIOD[selectedMarketGroup].base;
+  const freeTrialSubscription = currentPlan?.plan.alias.includes('FREE');
+
+  const endDate = currentPlan
+    ? currentPlan.subscription.ends_at
+    : moment().startOf('day');
+
+  const startDate = currentPlan
+    ? currentPlan.subscription.starts_at
+    : moment().startOf('day');
+
+  const currentDate = moment().startOf('day');
+  const freeTrialPeriod = moment(endDate).diff(startDate, 'days');
+  const daysLeft = moment(endDate).diff(currentDate, 'days');
 
   return (
     <Container>
@@ -203,10 +210,10 @@ const LandingView = (props: LandingGeneratedProps) => {
             </div>
           </UserInfoContainer>
 
-          {companyPlan?.is_free_trial && (
+          {freeTrialSubscription && (
             <FreeTrialCountdown
-              freeTrialPeriod={freeTrialPeriod || 30}
-              daysLeft={companyPlan.countdown}
+              freeTrialPeriod={freeTrialPeriod}
+              daysLeft={daysLeft}
               small={true}
             />
           )}

@@ -353,10 +353,11 @@ export const yourPlanFeaturesList = {
 export const basePlanItems = [
   '2% Buying Fee on Transaction Value',
   'Create up to 2 linked accounts',
-];
+]
 
 export const proPlanItems = [
   'No Buying Fees',
   'Unlimited Profiles',
   'Reverse Marketplace included',
 ];
+
