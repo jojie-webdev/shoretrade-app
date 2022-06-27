@@ -123,10 +123,10 @@ const YourPlanView = ({
             color={theme.appType === 'seller' ? 'noshade' : 'shade9'}
           >
             {!isSeller
-              ? `Additonal subscription for ${REVERSE_MARKETPLACE_PRICE.BUYER.toFixed(
+              ? `Additional subscription for $${REVERSE_MARKETPLACE_PRICE.BUYER.toFixed(
                   2
                 )}/month`
-              : `Additonal subscription for ${REVERSE_MARKETPLACE_PRICE.SELLER.toFixed(
+              : `Additional subscription for $${REVERSE_MARKETPLACE_PRICE.SELLER.toFixed(
                   2
                 )}/month`}
           </Typography>
