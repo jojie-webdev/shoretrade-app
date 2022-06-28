@@ -38,11 +38,20 @@ export const companyPlanToProps = (
   const getPlanDetails = (
     alias: CompanyPlanAlias
   ): GetSubscriptionPlansResponseData | undefined => {
-    console.log(plans.find((p) => p.alias === alias));
     return plans.find((p) => p.alias === alias);
   };
 
   const getActivePlan = (name?: CompanyPlanName): ActivePlan | undefined => {
+    //edge case for marketplace
+    if (companyPlan?.activePlans && name === CompanyPlanName.REVERSE_MARKET) {
+      return companyPlan?.activePlans.find((ac) =>
+        [
+          CompanyPlanAlias.FEATURE_REVERSED_MARKETPLACE,
+          CompanyPlanAlias.FREE_BASE_WITH_REVERSED_MARKETPLACE,
+          CompanyPlanAlias.PREMIUM,
+        ].includes(ac.plan.alias)
+      );
+    }
     if (companyPlan?.activePlans && name) {
       return companyPlan.activePlans.find((ac) => ac.plan.name === name);
     }

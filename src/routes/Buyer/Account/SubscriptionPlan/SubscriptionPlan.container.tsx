@@ -134,9 +134,26 @@ const SubscriptionPlan = () => {
   };
 
   /**
+   * Applicable for downgrade only
+   */
+  const revertSubscription = (subscriptionId?: string) => {
+    if (company?.id && companyPlan?.nextBillingData.defaultCard) {
+      dispatch(
+        updateSubscriptionPlanActions.request({
+          companyId: company?.id,
+          payment: {
+            existingCard: companyPlan.nextBillingData.defaultCard,
+          },
+          subscriptionPlanId: subscriptionId,
+        })
+      );
+    }
+  };
+
+  /**
    * For now use base as default
    */
-  const renewSubscription = (subscriptionPlanId: string) => {
+  const renewSubscription = (subscriptionPlanId?: string) => {
     if (company?.id) {
       dispatch(
         updateSubscriptionPlanActions.request({
@@ -165,6 +182,7 @@ const SubscriptionPlan = () => {
     cancelSubscription,
     updateSubscription,
     renewSubscription,
+    revertSubscription,
     downgradeSubscription,
   };
 

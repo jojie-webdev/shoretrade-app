@@ -43,5 +43,6 @@ export interface SubscriptionPlanGeneratedProps
   companyPlanError: string | undefined;
   updateSubscription: (subscriptionId?: string) => void;
   renewSubscription: (subscriptionPlanId: string) => void;
+  revertSubscription: (subscriptionPlanId?: string) => void;
   downgradeSubscription: () => void;
 }

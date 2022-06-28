@@ -71,6 +71,7 @@ export const SubscriptionPlanView = ({
   updateSubscription,
   downgradeSubscription,
   renewSubscription,
+  revertSubscription,
   nextBillingAmount,
   proPlanDetails,
   basePlanDetails,
@@ -359,14 +360,28 @@ export const SubscriptionPlanView = ({
                         <YourCurrentPlanIndicator />
                       </div>
                     ) : (
-                      <div className="subscription-action">
-                        <Button
-                          disabled={flags?.hasDowngraded}
-                          onClick={() => setShowBaseToggleModal(true)}
-                          variant="primary"
-                          text="Downgrade"
-                        />
-                      </div>
+                      <>
+                        {flags?.hasDowngraded ? (
+                          <div className="subscription-action">
+                            <Button
+                              onClick={() =>
+                                revertSubscription(proPlanDetails?.id)
+                              }
+                              variant="primary"
+                              text="Revert Subscription"
+                            />
+                          </div>
+                        ) : (
+                          <div className="subscription-action">
+                            <Button
+                              disabled={flags?.hasDowngraded}
+                              onClick={() => setShowBaseToggleModal(true)}
+                              variant="primary"
+                              text="Downgrade"
+                            />
+                          </div>
+                        )}
+                      </>
                     )}
                   </Subscription>
                   <Subscription>
@@ -679,7 +694,7 @@ export const SubscriptionPlanView = ({
             By pressing Confirm, you will have the Pro features until the end of
             this payment period and will be downgraded as of the{' '}
             {moment(currentPlanDetails?.subscription.ends_at).format(
-              'Qo of MMMM'
+              'DDDo of MMMM'
             )}
             .
           </Typography>
@@ -721,8 +736,11 @@ export const SubscriptionPlanView = ({
           <Typography variant="body" component="span">
             {/* TODO PRO RATA */}
             &nbsp;
-            {reverseMarketPrice && basePrice
-              ? toPrice(reverseMarketPrice + basePrice)
+            {reverseMarketDetails && currentPlanDetails
+              ? toPrice(
+                  reverseMarketDetails.remaining_price +
+                    currentPlanDetails.plan.price
+                )
               : 0}
           </Typography>
           <Typography
@@ -735,16 +753,24 @@ export const SubscriptionPlanView = ({
           </Typography>
         </Typography>
         <Typography variant="body" weight="500" color="shade6">
-          Pay the amount below to unlock the Pro model now.
+          Pay the amount below to unlock your access now.
         </Typography>
-        <div style={{ display: 'flex', marginTop: 24 }}>
+        <div style={{ display: 'flex', margin: '8px 0' }}>
+          <Typography variant="title5" weight="500">
+            {reverseMarketDetails
+              ? toPrice(reverseMarketDetails.remaining_price)
+              : 0}
+          </Typography>
+        </div>
+        <div style={{ display: 'flex', marginTop: 12 }}>
           <Typography variant="body" color="shade6">
-            This is a pro rata cost to have the Premium features for the
-            remainder of your current payment period. All future costs will be
+            This is a pro rata cost to have Reverse Marketplace access for the
+            remainder of your current payment period. Your total future monthly
+            cost will be
             <Typography variant="body" component="span">
-              &nbsp;{' '}
-              {reverseMarketPrice && basePrice
-                ? toPrice(reverseMarketPrice + basePrice)
+              &nbsp;
+              {reverseMarketPrice && currentPlanDetails
+                ? toPrice(reverseMarketPrice + currentPlanDetails.plan.price)
                 : 0}
             </Typography>
             <Typography
