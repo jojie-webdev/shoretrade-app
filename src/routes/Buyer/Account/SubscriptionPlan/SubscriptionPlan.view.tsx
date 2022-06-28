@@ -500,7 +500,7 @@ export const SubscriptionPlanView = ({
                     {currentReverseMarketDetails?.subscription?.paid_at ||
                     currentPlanDetails?.plan.name === CompanyPlanName.PRO ? (
                       <>
-                        {!flags?.hasDowngraded && (
+                        {!flags?.hasDowngraded && !flags?.hasCancelledPlan && (
                           <div
                             className="subscription-action"
                             onClick={() => setShowCancelModal(true)}
@@ -694,7 +694,7 @@ export const SubscriptionPlanView = ({
             By pressing Confirm, you will have the Pro features until the end of
             this payment period and will be downgraded as of the{' '}
             {moment(currentPlanDetails?.subscription.ends_at).format(
-              'DDDo of MMMM'
+              'Do of MMMM'
             )}
             .
           </Typography>
