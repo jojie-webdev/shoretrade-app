@@ -107,7 +107,7 @@ const PlanPaymentMethodView = ({
             )}
 
             <Row gutterWidth={96}>
-              {(!isMobile || (isMobile && !showExistingTab)) && amountDue && (
+              {!isMobile && Number(amountDue) && (
                 <Col xs={12} sm={6}>
                   <Typography
                     variant="copy"
