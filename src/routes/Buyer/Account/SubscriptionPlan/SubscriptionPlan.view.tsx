@@ -642,17 +642,17 @@ export const SubscriptionPlanView = ({
       <ConfirmationModal
         isOpen={showBaseToggleModal}
         title="Are you sure you want to switch plans?"
-        actionText="Back" // todo get upgrade cost
-        cancelText="Confirm"
+        actionText="Confirm"
+        hideCancel
         onClickClose={() => {
+          setShowBaseToggleModal(false);
+        }}
+        action={() => {
           // setShowBaseToggleModal(false);
           // setIsMonthly(!isMonthly);
           if (basePlanDetails?.id) {
             downgradeSubscription();
           }
-          setShowBaseToggleModal(false);
-        }}
-        action={() => {
           setShowBaseToggleModal(false);
         }}
         style={{ width: '686px' }}
