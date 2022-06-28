@@ -2354,28 +2354,6 @@ const RegisterView = (props: RegisterGeneratedProps) => {
                     </Typography>
                   )}
                 </div>
-                {isSeller && step === 4 && (
-                  <div className="right">
-                    <ChangeMarketSector isSeller={isSeller}>
-                      <MarketSectorIcon
-                        variant={registrationDetails.categoryMarketSector}
-                        width={40}
-                      />
-                      <Typography
-                        variant="label"
-                        color={isSeller ? 'noshade' : 'shade9'}
-                      >
-                        {
-                          marketSectors.find(
-                            (sector) =>
-                              sector.key ===
-                              registrationDetails.categoryMarketSector
-                          )?.label
-                        }
-                      </Typography>
-                    </ChangeMarketSector>
-                  </div>
-                )}
               </TopSection>
 
               {isSeller && SELLER_STEP_SUBTITLE[step] && (
