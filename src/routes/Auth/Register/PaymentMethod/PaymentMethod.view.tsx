@@ -3,12 +3,14 @@ import React from 'react';
 import Select from 'components/base/Select';
 import { Amex, Mastercard, Visa } from 'components/base/SVG';
 import FormikTextField from 'components/module/FormikTextField';
+import COUNTRY_STATES from 'consts/countryStates';
 import { connect } from 'formik';
 import { Row, Col } from 'react-grid-system';
 import { cardExpiryInputFilter } from 'utils/InputFilters/cardExpiryInputFilter';
 import { cardNumberInputFilter } from 'utils/InputFilters/cardNumberInputFilter';
 import { useTheme } from 'utils/Theme';
 
+import { AUSTRALIA_COUNTRY_CODE } from './PaymentMethod.constants';
 import { PaymentMethodProps } from './PaymentMethod.props';
 import {
   Container,
@@ -17,14 +19,14 @@ import {
   FormContainer,
   FormikRow,
 } from './PaymentMethod.style';
-import COUNTRY_STATES from 'consts/countryStates';
 
 export const PaymentMethod = connect((props: PaymentMethodProps) => {
   const { details, formik, otherErrors, setOtherErrors } = props;
   const theme = useTheme();
 
   const states = COUNTRY_STATES.filter(
-    ({ countryCode }) => countryCode == details.address?.countryCode || 'AU'
+    ({ countryCode }) =>
+      countryCode.toLowerCase() === AUSTRALIA_COUNTRY_CODE.toLowerCase()
   );
 
   const initialState = states.find(

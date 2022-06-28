@@ -1804,13 +1804,6 @@ const StepForm = ({
                             {REVERSE_MARKETPLACE_PRICE.SELLER.toFixed(2)} /
                             month
                           </TotalPrice>
-                          <Typography
-                            variant="caption"
-                            color="shade6"
-                            weight="400"
-                          >
-                            *Price based on your Market Sector
-                          </Typography>
                           <PaymentMethod
                             otherErrors={otherErrors}
                             setOtherErrors={setOtherErrors}
