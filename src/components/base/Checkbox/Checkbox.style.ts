@@ -84,7 +84,7 @@ export const Label = styled(Typography)`
       if (disabled) return theme.grey.shade7;
       const isSeller = theme.appType !== 'buyer';
       if (theme.isSFM) {
-        return theme.grey.noshade;
+        return isSeller ? theme.grey.noshade : SpecialColors.blue;
       }
       return isSeller ? '#ffffff' : theme.grey.shade9;
     }
