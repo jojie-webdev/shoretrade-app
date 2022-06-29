@@ -1752,9 +1752,6 @@ const StepForm = ({
                             </Typography>
                           </TotalPriceRow>
                         </PaymentPriceRow>
-                        <Typography variant="caption" color="shade6">
-                          *Price based on your Market Sector
-                        </Typography>
                       </PaymentPriceConatiner>
                       <PaymentMethod
                         otherErrors={otherErrors}
