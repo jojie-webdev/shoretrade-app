@@ -33,8 +33,6 @@ import {
   BillingSection,
   BreadcrumbsContainer,
   Container,
-  DicountContainer,
-  FlexContainer,
   PaymentMethodSection,
   PlanSection,
   SubscriptionContainer,
@@ -45,8 +43,6 @@ import {
   PlanPrice,
   IncusionSection,
   ReverseMarketplace,
-  SpecialInclusionsContainer,
-  TooltipWrapper,
   FooterNote,
   AlertsContainer,
   ExpiryAlertContentContainer,
@@ -54,17 +50,12 @@ import {
 } from './SubscriptionPlan.style';
 
 export const SubscriptionPlanView = ({
-  annualPrice,
-  monthlyPrice,
   nextBillingDate,
   cardBrand,
   cardNumberMasked,
-  isSaasSubscribed,
   subscriptionType,
   planStatus,
   planInterval,
-  isDeactivated,
-  features,
   currentMarketSector,
   cancellationPeriod,
   cancelSubscription,
@@ -83,7 +74,6 @@ export const SubscriptionPlanView = ({
   proRata,
 }: SubscriptionPlanGeneratedProps) => {
   const location = useLocation();
-  const history = useHistory();
   const theme = useTheme();
 
   const isMobile = useMediaQuery({ query: BREAKPOINTS.sm });
@@ -130,7 +120,6 @@ export const SubscriptionPlanView = ({
     'OVERDUE',
     'UNSUBSCRIBED',
   ].includes(planStatus);
-  const yourPlanButtonText = getButtonTextByStatus(planStatus);
   const showYourPlanOnly = !cardNumberMasked && !nextBillingDate;
 
   if (loading) {
@@ -732,16 +721,10 @@ export const SubscriptionPlanView = ({
         style={{ width: '686px' }}
       >
         <Typography color="shade6">
-          The ongoing monthly cost will be:
+          The ongoing monthly cost will be and additional:
           <Typography variant="body" component="span">
-            {/* TODO PRO RATA */}
             &nbsp;
-            {reverseMarketDetails && currentPlanDetails
-              ? toPrice(
-                  reverseMarketDetails.remaining_price +
-                    currentPlanDetails.plan.price
-                )
-              : 0}
+            {currentPlanDetails ? toPrice(currentPlanDetails.plan.price) : 0}
           </Typography>
           <Typography
             component="span"
