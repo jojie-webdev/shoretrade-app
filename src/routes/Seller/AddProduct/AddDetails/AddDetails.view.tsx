@@ -2,7 +2,7 @@ import React, { useState, useEffect, useReducer, useMemo } from 'react';
 
 // import Alert from 'components/base/Alert';
 import Button from 'components/base/Button';
-import { Label } from 'components/base/Checkbox/Checkbox.style';
+import { Label2 } from 'components/base/Checkbox/Checkbox.style';
 import Checkbox from 'components/base/Checkbox/Checkbox.view';
 import Interactions from 'components/base/Interactions';
 import Radio from 'components/base/Radio';
@@ -962,18 +962,18 @@ const AddDetails = ({
                   }}
                   checked={mandatorySFM.isChecked}
                 />
-                <Label variant="label">
+                <Label2 variant="label">
                   This product coincides with the{' '}
                   <a
                     href="https://shoretrade-prod-assets.s3.ap-southeast-2.amazonaws.com/Seafood_Handling_Guidelines.pdf"
-                    style={{ textDecoration: 'underline', cursor: 'pointer' }}
+                    style={{ textDecoration: 'underline', cursor: 'pointer', color: theme.grey.noshade }}
                     // eslint-disable-next-line react/jsx-no-target-blank
                     target="_blank"
                   >
                     SFM Quality Assurance
                   </a>{' '}
                   documents.
-                </Label>
+                </Label2>
               </>
             }
           />

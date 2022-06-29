@@ -92,6 +92,21 @@ export const Label = styled(Typography)`
   }};
 `;
 
+export const Label2 = styled(Typography)`
+  margin-left: 8px;
+  color: ${({ color, disabled, theme }) => {
+    if (!color) {
+      if (disabled) return theme.grey.shade7;
+      const isSeller = theme.appType !== 'buyer';
+      if (theme.isSFM) {
+        return theme.grey.shade6;
+      }
+      return isSeller ? theme.grey.shade6 : theme.grey.shade9;
+    }
+    return 'inherit';
+  }};
+`;
+
 export const Error = styled(Typography)`
   margin-top: 4px;
 `;
