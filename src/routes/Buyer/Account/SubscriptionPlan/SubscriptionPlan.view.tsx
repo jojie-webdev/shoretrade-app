@@ -487,25 +487,8 @@ export const SubscriptionPlanView = ({
 
                     {/* // NEEDED LATER FOR MARKET PLACE CANCEL SUBSCRIPTION TASK */}
                     {currentReverseMarketDetails?.subscription?.paid_at ||
-                    currentPlanDetails?.plan.name === CompanyPlanName.PRO ? (
-                      <>
-                        {!flags?.hasDowngraded && !flags?.hasCancelledPlan && (
-                          <div
-                            className="subscription-action"
-                            onClick={() => setShowCancelModal(true)}
-                          >
-                            <Typography
-                              variant="label"
-                              color="primary"
-                              weight="400"
-                              style={{ textDecoration: 'underline' }}
-                            >
-                              Cancel Subscription
-                            </Typography>
-                          </div>
-                        )}
-                      </>
-                    ) : (
+                    currentPlanDetails?.plan.name ===
+                      CompanyPlanName.PRO ? null : (
                       <div className="subscription-action">
                         <Button
                           onClick={() =>
