@@ -60,7 +60,7 @@ export const CheckboxContainer = styled.div`
 `;
 
 export const Footer = styled.div`
-  margin-top: 32px;
+  margin-top: 24px;
   display: flex;
   flex-direction: column;
   gap 8px;

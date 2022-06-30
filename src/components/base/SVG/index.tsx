@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+export { default as Plus } from './Plus';
 export { default as QuestionCircle } from './QuestionCircle';
 export { default as Hook } from './Hook';
 export { default as Net } from './Net';

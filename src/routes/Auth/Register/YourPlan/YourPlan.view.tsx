@@ -99,14 +99,14 @@ const YourPlanView = ({
           </div>
         </TopSection>
       )}
-
+{/* 
       {!isSeller && (
         <PlanFeatures
           selectedPlan={selectedPlan}
           currentMarketSector={currentMarketSector}
           highlighthandler={highlighthandler}
         />
-      )}
+      )} */}
 
       {isSeller && (
         <AdditionalSubscription>
@@ -140,27 +140,25 @@ const YourPlanView = ({
         />
       )}
 
-      {/* {!isSeller && (
+      {!isSeller && (
         <Footer>
           <Typography
-            variant="caption"
-            weight="regular"
-            color={theme.appType === 'seller' ? 'shade6' : 'shade7'}
+            variant="label"
+            weight="400"
+            color={theme.appType === 'seller' ? 'shade6' : 'shade9'}
           >
             *Minimum 3 month sign up, starting from your account approval date.
           </Typography>
-          {selectedPlan === 'Standard' && (
-            <Typography
-              variant="caption"
-              weight="regular"
-              color={theme.appType === 'seller' ? 'shade6' : 'shade7'}
-            >
-              **The Transaction Value is the total value of the products in your
+          <Typography
+            variant="label"
+            weight="400"
+            color={theme.appType === 'seller' ? 'shade6' : 'shade9'}
+          >
+            **The Transaction Value is the total value of the products in your
               order excluding any crate fees and shipping costs.
-            </Typography>
-          )}
+          </Typography>
         </Footer>
-      )} */}
+      )}
 
       {isSeller && (
         <BenefitsList>

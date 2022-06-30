@@ -45,11 +45,11 @@ export const TitleContainer = styled.div`
 `;
 
 export const RenderContainer = styled.div<{ step?: number }>`
-  margin-top: 60px;
-  height: 100vh;
-  max-height: 100vh;
-  overflow: auto;
-  padding-right: 2em;
+margin-top: 60px;
+height: 100vh;
+max-height: 100vh;
+overflow: auto;
+padding-right: 1em;
 
   @media ${BREAKPOINTS['sm']} {
     margin-top: 0px;
@@ -130,7 +130,7 @@ export const FormikContainer = styled(Form)`
   padding-bottom: 64px;
   overflow-x: hidden;
   overflow-y: auto;
-  padding-left: 35px;
+  padding-left: 4px;
 
   .select-container {
     margin-top: 24px;
@@ -449,6 +449,7 @@ export const SFMOption = styled.div`
   padding: 16px 24px;
   border-radius: 12px;
   display: flex;
+  justify-content: space-between;
 `;
 
 export const TopSection = styled.div`
@@ -515,7 +516,7 @@ export const PlanPriceConatiner = styled.div`
   border: ${({ theme }) => `2px solid ${theme.brand.secondary}`};
   display: flex;
   flex-direction: column;
-  padding: 16px;
+  padding: 10px;
   border-radius: 12px;
   margin-top: 24px;
   gap: 8px;
@@ -529,13 +530,14 @@ export const PlanTitle = styled.div`
 
 export const PlanPrice = styled.div`
   display: flex;
+  justify-content: flex-start;
 `;
 
-export const ReverseMarketPlaceContainer = styled.div`
+export const PlanSectionContainer = styled.div`
   border: ${({ theme }) => `2px solid ${theme.grey.shade3}`};
   display: flex;
   flex-direction: column;
-  padding: 16px;
+  padding: 10px;
   border-radius: 12px;
   gap: 8px;
 `;
@@ -543,12 +545,31 @@ export const ReverseMarketPlaceContainer = styled.div`
 export const ReverseCheckboxWrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
 `;
 
 export const PlansWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+
   .disbledPlan {
     pointer-events: none;
     opacity: 0.4;
   }
+
+  @media ${BREAKPOINTS['sm']} {
+    flex-direction: column;
+  }
+`;
+
+export const IncludedTag = styled.div`
+  display: flex;
+`;
+
+export const ReverseMarketTitle = styled.div`
+ display: flex;
+ gap: 4px;
+ margin-left: -7px;
+ margin-right: -10px;
 `;

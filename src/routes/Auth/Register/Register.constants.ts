@@ -58,12 +58,22 @@ export const BUYER_STEPS = [
       'Provide your business details so we know where to send your purchases.',
   },
   {
+    title: 'Sydney Fish Market',
+    description:
+      'Let us know more about your business by selecting your market sector.',
+  },
+  {
     title: 'Market Sector',
     description:
       'Let us know more about your business by selecting your market sector.',
   },
   {
-    title: 'See Plan Options Below',
+    title: 'I’m looking for',
+    description:
+      'Let us know which seafood products you commonly purchase so we can optimise your experience.',
+  },
+  {
+    title: 'Choose your plan',
     description:
       'Review the benefits of the base and pro subscription models below, based on your selected monthly purchasing value $0 - $10,000.',
   },
@@ -71,11 +81,6 @@ export const BUYER_STEPS = [
     title: 'Payment Method',
     description:
       'ShoreTrade offers multiple payment options, including the ability to apply for ShorePay; our Buy Now Pay Later financing option.',
-  },
-  {
-    title: 'I’m looking for',
-    description:
-      'Let us know which seafood products you commonly purchase so we can optimise your experience.',
   },
   {
     title: 'Summary',
