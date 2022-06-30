@@ -43,12 +43,14 @@ import {
   IncusionSection,
   ReverseMarketplace,
   PlanPrice,
+  BadgesContainer,
 } from './SubscriptionPlan.style';
 
 export const SubscriptionPlanView = ({
   annualPrice,
   monthlyPrice,
   nextBillingDate,
+  nextBillingAmount,
   cardBrand,
   cardNumberMasked,
   planStatus,
@@ -58,8 +60,12 @@ export const SubscriptionPlanView = ({
   currentMarketSector,
   cancelSubscription,
   updateSubscription,
+  reverseMarketDetails,
   renewSubscription,
+  currentPlanDetails,
+  currentReverseMarketDetails,
   company,
+  flags,
 }: SubscriptionPlanGeneratedProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS.sm });
@@ -69,6 +75,10 @@ export const SubscriptionPlanView = ({
   const [isMonthly, setIsMonthly] = useState(true);
   const [showToggleModal, setShowToggleModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
+  const [
+    showCancelReverseMarketModal,
+    setShowCancelReverseMarketModal,
+  ] = useState(false);
   const [showRenewModal, setShowRenewModal] = useState(false);
   const price = toPrice(isMonthly ? monthlyPrice : annualPrice);
 
@@ -90,7 +100,6 @@ export const SubscriptionPlanView = ({
 
   const ifForRenewal = ['CANCELLED', 'OVERDUE'].includes(planStatus);
   const interval = isMonthly ? 'MONTHLY' : 'ANNUAL';
-
 
   return (
     <Container>
@@ -196,34 +205,49 @@ export const SubscriptionPlanView = ({
                   <b>{nextBillingDate}</b>
                 </Typography>
               </div>
-
-              <Typography variant="body" weight="400" color="noshade">
-                Next Billing Amount
-              </Typography>
-              <div className="billing-date">
-                <DollarSign fill={theme.grey.shade7} width={16} height={20} />
-                <Typography
-                  variant="body"
-                  style={{ marginLeft: '6px', lineHeight: 'normal' }}
-                  color="noshade"
-                >
-                  <b>{getNextBillingAmount().toFixed(2)}</b>
+              <div className="billing-item">
+                <Typography variant="body" weight="400" color="noshade">
+                  Next Billing Amount
                 </Typography>
+                <div className="billing-date">
+                  <DollarSign fill={theme.grey.shade7} width={16} height={20} />
+                  <Typography
+                    variant="body"
+                    style={{ marginLeft: '6px', lineHeight: 'normal' }}
+                    color="noshade"
+                  >
+                    <b>{nextBillingAmount}</b>
+                  </Typography>
+                </div>
               </div>
-
-              <Link
-                className="see-payment-history"
-                to={SELLER_ACCOUNT_ROUTES.PAYMENT_HISTORY}
-              >
-                <Typography
-                  variant="label"
-                  color="primary"
-                  weight="400"
-                  style={{ textDecoration: 'underline' }}
+              <BadgesContainer>
+                {flags?.hasCancelledReversedMarketplace && (
+                  <Badge badgeColor={theme.product?.error} borderRadius="4px">
+                    <Typography
+                      variant="overline"
+                      color="noshade"
+                      style={{ lineHeight: 'unset' }}
+                    >
+                      Cancelling
+                    </Typography>
+                  </Badge>
+                )}
+              </BadgesContainer>
+              <div className="section-footer">
+                <Link
+                  className="see-payment-history"
+                  to={SELLER_ACCOUNT_ROUTES.PAYMENT_HISTORY}
                 >
-                  See Payment History
-                </Typography>
-              </Link>
+                  <Typography
+                    variant="label"
+                    color="primary"
+                    weight="400"
+                    style={{ textDecoration: 'underline' }}
+                  >
+                    See Payment History
+                  </Typography>
+                </Link>
+              </div>
             </BillingSection>
           </Col>
 
@@ -253,7 +277,7 @@ export const SubscriptionPlanView = ({
                         >
                           $
                           {theme.appType === 'seller' &&
-                            REVERSE_MARKETPLACE_PRICE.SELLER.toFixed(2)}
+                            reverseMarketDetails?.price}
                         </Typography>
                         <Typography variant="label" weight="400" color="shade6">
                           /Month
@@ -279,8 +303,12 @@ export const SubscriptionPlanView = ({
                       </Typography>
                     </ReverseMarketplace>
 
-                    {reverseMarketPlace ? (
-                      <div>
+                    {currentReverseMarketDetails &&
+                    !flags?.hasCancelledReversedMarketplace ? (
+                      <div
+                        className="cancel-subscription"
+                        onClick={() => setShowCancelReverseMarketModal(true)}
+                      >
                         <Typography
                           variant="label"
                           color="primary"
@@ -294,19 +322,7 @@ export const SubscriptionPlanView = ({
                         </Typography>
                       </div>
                     ) : (
-                      <div>
-                        <Typography
-                          variant="label"
-                          color="primary"
-                          weight="400"
-                          style={{
-                            textDecoration: 'underline',
-                            cursor: 'pointer',
-                          }}
-                        >
-                          Update Subscription
-                        </Typography>
-                      </div>
+                      <></>
                     )}
 
                     {/* // NEEDED LATER FOR MARKET PLACE CANCEL SUBSCRIPTION TASK */}
@@ -387,12 +403,36 @@ export const SubscriptionPlanView = ({
         cancelText="Cancel Subscription"
         onClickClose={() => setShowCancelModal(false)}
         action={() => setShowCancelModal(false)}
-        cancel={() => {
-          cancelSubscription();
-          setShowCancelModal(false);
-        }}
         style={{ width: '686px' }}
       />
+
+      <ConfirmationModal
+        isOpen={showCancelReverseMarketModal}
+        title="Are you sure you want to cancel your Reverse Marketplace Access?"
+        actionText="No"
+        cancelText="Cancel Subscription"
+        cancel={() => {
+          if (currentReverseMarketDetails?.plan.id) {
+            cancelSubscription(currentReverseMarketDetails?.plan.id);
+            setShowCancelReverseMarketModal(false);
+          }
+          setShowCancelModal(false);
+        }}
+        onClickClose={() => {
+          setShowCancelReverseMarketModal(false);
+        }}
+        action={() => {
+          setShowCancelReverseMarketModal(false);
+          // setIsMonthly(!isMonthly);
+        }}
+        style={{ width: '686px' }}
+      >
+        <div>
+          <Typography color="shade6">
+            Your access will be revoked after your payment period ends.
+          </Typography>
+        </div>
+      </ConfirmationModal>
 
       <ConfirmationModal
         isOpen={showRenewModal}

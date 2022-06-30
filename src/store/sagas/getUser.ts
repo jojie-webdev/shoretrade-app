@@ -20,7 +20,6 @@ import {
   getActivePlanActions,
   getCompanyPlanActions,
 } from '../actions';
-
 function* getUserRequest(action: AsyncAction<GetUserMeta, GetUserPayload>) {
   const state: Store = yield select();
   if (state.auth.token) {
@@ -41,10 +40,9 @@ function* getUserSuccess(action: AsyncAction<GetUserMeta, GetUserPayload>) {
   const companyId: string = pathOr('', ['0', 'id'], companies);
 
   if (state.auth.type === 'buyer') {
-    yield put(getCompanyPlanActions.request({ companyId }));
     yield put(getPaymentModeActions.request({}));
-
     if (companyId) {
+      yield put(getCompanyPlanActions.request({ companyId }));
       if (
         (state.getAddresses.data?.data.addresses || []).length === 0 ||
         state.getAddresses.request?.companyId !== companyId
@@ -74,6 +72,7 @@ function* getUserSuccess(action: AsyncAction<GetUserMeta, GetUserPayload>) {
     }
   } else {
     if (companyId) {
+      yield put(getCompanyPlanActions.request({ companyId }));
       if (
         (state.getAddresses.data?.data.addresses || []).length === 0 ||
         state.getAddresses.request?.companyId !== companyId

@@ -1,14 +1,32 @@
-import { SubscriptionPlanFeature } from 'types/store/GetSubscriptionPlansState';
+import {
+  ActivePlan,
+  AddOn,
+  CompanyPlanName,
+  GetCompanyPlanResponseData,
+  PlanFlags,
+} from 'types/store/GetCompanyPlanState';
+import {
+  GetSubscriptionPlansResponseData,
+  SubscriptionPlanFeature,
+} from 'types/store/GetSubscriptionPlansState';
 import { UserCompany } from 'types/store/GetUserState';
 
 export interface SubscriptionPlanTransformOutputProps {
   annualPrice: string;
   monthlyPrice: string;
-  nextBillingDate: string;
+  nextBillingDate: string | null;
+  cancellationPeriod: string | null;
   cardBrand: string;
-  cardNumberMasked: string;
-  subscriptionType: string;
+  cardNumberMasked: string | null;
+  isSaasSubscribed: boolean;
+  subscriptionType: CompanyPlanName;
   features: SubscriptionPlanFeature[];
+  planStatus: string;
+  nextBillingAmount: number;
+  reverseMarketDetails?: GetSubscriptionPlansResponseData;
+  currentPlanDetails?: ActivePlan;
+  noActivePlan: boolean;
+  currentReverseMarketDetails?: ActivePlan;
 }
 
 export interface SubscriptionPlanGeneratedProps
@@ -16,8 +34,9 @@ export interface SubscriptionPlanGeneratedProps
   planStatus: string;
   planInterval: string;
   company?: UserCompany;
+  flags?: PlanFlags;
   currentMarketSector: string;
-  cancelSubscription: () => void;
-  updateSubscription: (interval: 'MONTHLY' | 'ANNUAL') => void;
-  renewSubscription: (interval: 'MONTHLY' | 'ANNUAL') => void;
+  updateSubscription: (subscriptionId?: string) => void;
+  renewSubscription: (subscriptionPlanId: string) => void;
+  cancelSubscription: (subscriptionPlanId: string) => void;
 }

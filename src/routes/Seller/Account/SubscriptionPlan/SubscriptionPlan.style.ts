@@ -63,14 +63,24 @@ export const PaymentMethodSection = styled.div`
   }
 `;
 
-export const BillingSection = styled.div`
+export const BillingSection = styled.div` {
   margin-bottom: 20px;
+  .billing-item {
+    margin-bottom: 24px;
+  }
 
   .billing-date {
     display: flex;
-    margin-bottom: 24px;
+    margin-bottom: 8px;
     margin-top: 8px;
-    align-items: center;
+
+    svg {
+      align-self: center;
+    }
+  }
+
+  .section-footer {
+    margin-top: 18px;
   }
 `;
 
@@ -111,6 +121,13 @@ export const PlanContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 24px;
+
+  .cancel-subscription {
+    margin-top: 24px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 `;
 
 export const IncusionSection = styled.div`
@@ -126,10 +143,25 @@ export const IncusionSection = styled.div`
 export const ReverseMarketplace = styled.div`
   display: flex;
   padding-bottom: 24px;
+
+  .cancel-subscription {
+    margin-top: 24px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 `;
 
 export const PlanPrice = styled.div`
   display: flex;
   align-items: center;
   margin-top: 8px;
+`;
+
+export const BadgesContainer = styled.div`
+  display: flex;
+
+  > div {
+    flex: 0 1 auto;
+  }
 `;
