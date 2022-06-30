@@ -704,7 +704,7 @@ export const SubscriptionPlanView = ({
         style={{ width: '686px' }}
       >
         <Typography color="shade6">
-          The ongoing monthly cost will be and additional:
+          The ongoing monthly cost will be an additional:
           <Typography variant="body" component="span">
             &nbsp;
             {currentPlanDetails ? toPrice(currentPlanDetails.plan.price) : 0}
