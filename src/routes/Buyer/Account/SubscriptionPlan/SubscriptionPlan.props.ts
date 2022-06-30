@@ -30,6 +30,7 @@ export interface SubscriptionPlanTransformOutputProps {
   noActivePlan: boolean;
   currentReverseMarketDetails?: ActivePlan;
   proRata?: number;
+  latePayment?: boolean;
 }
 
 export interface SubscriptionPlanGeneratedProps

@@ -45,7 +45,7 @@ import {
   ReverseMarketplace,
   FooterNote,
   AlertsContainer,
-  ExpiryAlertContentContainer,
+  AlertContentContainer,
   BadgesContainer,
 } from './SubscriptionPlan.style';
 
@@ -72,6 +72,7 @@ export const SubscriptionPlanView = ({
   currentReverseMarketDetails,
   flags,
   proRata,
+  latePayment,
 }: SubscriptionPlanGeneratedProps) => {
   const location = useLocation();
   const theme = useTheme();
@@ -144,7 +145,7 @@ export const SubscriptionPlanView = ({
             fullWidth
             header={`Account Cancellation ${cancellationPeriod}`}
             content={
-              <ExpiryAlertContentContainer>
+              <AlertContentContainer>
                 <Typography variant="caption" color="shade7">
                   Your account will be deactivated on your next payment date and
                   you will not be able to access any data in your account.
@@ -160,7 +161,7 @@ export const SubscriptionPlanView = ({
                     size="sm"
                   />
                 </div>
-              </ExpiryAlertContentContainer>
+              </AlertContentContainer>
             }
             variant="error"
           />
@@ -170,13 +171,53 @@ export const SubscriptionPlanView = ({
             fullWidth
             header={`Account Downgrade ${cancellationPeriod}`}
             content={
-              <ExpiryAlertContentContainer>
+              <AlertContentContainer>
                 <Typography variant="caption" color="shade7">
                   Your account will be downgraded on your next payment date.
                 </Typography>
-              </ExpiryAlertContentContainer>
+              </AlertContentContainer>
             }
             variant="warning"
+          />
+        )}
+        {latePayment && (
+          <Alert
+            fullWidth
+            header="Late Payment"
+            content={
+              <AlertContentContainer>
+                <Typography variant="caption" color="shade7">
+                  Your subscription payment is outstanding. Please make a
+                  one-off payment here within 3 days to keep your account
+                  active.
+                </Typography>
+                <div className="actions">
+                  <Button
+                    onClick={() => {
+                      history.push(BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD);
+                    }}
+                    text="Make Payment"
+                    size="sm"
+                  />
+                </div>
+              </AlertContentContainer>
+            }
+            variant="error"
+          />
+        )}
+        {!currentPlanDetails?.subscription.paid_at && (
+          <Alert
+            fullWidth
+            header="Unsuccessful Payment"
+            content={
+              <AlertContentContainer>
+                <Typography variant="caption" color="shade7">
+                  Your most recent payment was unsuccessful. The payment will be
+                  automatically reattempted tomorrow.
+                </Typography>
+              </AlertContentContainer>
+            }
+            variant="error"
           />
         )}
       </AlertsContainer>

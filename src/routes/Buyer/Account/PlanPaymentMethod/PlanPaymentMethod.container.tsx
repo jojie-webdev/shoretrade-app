@@ -16,6 +16,7 @@ import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
 import { toPrice } from 'utils/String';
 
+import { getActivePlan } from '../SubscriptionPlan/SubscriptionPlan.transform';
 import {
   Card,
   NewCardDetails,
@@ -39,8 +40,8 @@ const PlanPaymentMethod = (): JSX.Element => {
     (store: Store) => store.getSubscriptionPlans.data?.data
   );
 
-  const activePlan = useSelector(
-    (store: Store) => store.getActivePlan.data?.data
+  const companyPlan = useSelector(
+    (store: Store) => store.getCompanyPlan.data?.data
   );
 
   const isPaymentLoading =
@@ -114,20 +115,11 @@ const PlanPaymentMethod = (): JSX.Element => {
 
   // VARIABLES
 
-  const plans =
-    (marketSector &&
-      subscriptionPlans?.filter((plan) =>
-        plan.alias.includes(_.snakeCase(marketSector?.sector).toUpperCase())
-      )) ||
-    [];
-  const monthlyPlan = plans.find((plan) => !plan.alias.includes('YEARLY'));
-
   const generatedProps: PlanPaymentMethodGeneratedProps = {
     cards,
-    amountDue:
-      activePlan?.price || monthlyPlan?.price
-        ? toPrice(activePlan?.price || monthlyPlan?.price || 0)
-        : undefined,
+    amountDue: companyPlan?.flags.hasPendingPayment
+      ? toPrice(getActivePlan(companyPlan)?.plan.price || 0)
+      : undefined,
     selectedCardId,
     isPaymentLoading,
     payPlanAmountDue,

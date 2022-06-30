@@ -5,11 +5,16 @@ export const Container = styled.div``;
 
 export const AlertsContainer = styled.div`
   display: flex;
-  margin-bottom: 32px;
+  flex-direction: column;
+  margin-bottom: 16px;
   width: 100%;
+
+  > div {
+    margin-bottom: 16px;
+  }
 `;
 
-export const ExpiryAlertContentContainer = styled.div`
+export const AlertContentContainer = styled.div`
   .actions {
     margin-top: 14px;
   }

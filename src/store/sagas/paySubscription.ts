@@ -1,6 +1,6 @@
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { createCardToken } from 'services/stripe';
-import { payPlan } from 'services/subscription';
+import { payPlan, updatePlan } from 'services/subscription';
 import { AsyncAction } from 'types/Action';
 import { AddCardTokenMeta } from 'types/store/AddCardTokenState';
 import {
@@ -8,6 +8,7 @@ import {
   PaySubscriptionPayload,
 } from 'types/store/PaySubscriptionState';
 import { Store } from 'types/store/Store';
+import { UpdateSubscriptionPlanMeta } from 'types/store/UpdateSubscriptionPlanState';
 
 import { paySubscriptionActions } from '../actions';
 
@@ -18,13 +19,11 @@ function* paySubscriptionRequest(
   if (state.auth.token) {
     try {
       const newCardDetails = action.meta.cardDetails;
-      const param: {
-        companyId: string;
-        existingCard?: string;
-        cardToken?: string;
-        isDefault?: boolean;
-      } = {
+      const param: UpdateSubscriptionPlanMeta = {
         companyId: action.meta.companyId,
+        payment: {
+          existingCard: '',
+        },
       };
 
       if (!action.meta.existingCard && newCardDetails) {
@@ -38,13 +37,12 @@ function* paySubscriptionRequest(
           name: newCardDetails.cardName,
         });
 
-        param.cardToken = id;
-        param.isDefault = newCardDetails.isDefault;
-      } else {
-        param.existingCard = action.meta.existingCard;
+        param.payment.existingCard = id;
+      } else if (action.meta.existingCard) {
+        param.payment.existingCard = action.meta.existingCard;
       }
 
-      const { data } = yield call(payPlan, param, state.auth.token);
+      const { data } = yield call(updatePlan, param, state.auth.token);
       yield put(paySubscriptionActions.success(data));
     } catch (e) {
       yield put(paySubscriptionActions.failed(e.message));

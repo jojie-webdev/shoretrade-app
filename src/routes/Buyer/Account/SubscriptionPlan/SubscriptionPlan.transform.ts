@@ -13,6 +13,31 @@ import { proRata } from 'utils/SubscriptionPlan/proRata';
 
 import { SubscriptionPlanTransformOutputProps } from './SubscriptionPlan.props';
 
+export const getActivePlan = (
+  companyPlan?: GetCompanyPlanResponseData,
+  name?: CompanyPlanName
+): ActivePlan | undefined => {
+  //edge case for marketplace
+  if (companyPlan?.activePlans && name === CompanyPlanName.REVERSE_MARKET) {
+    return companyPlan?.activePlans.find((ac) =>
+      [
+        CompanyPlanAlias.FEATURE_REVERSED_MARKETPLACE,
+        CompanyPlanAlias.FREE_BASE_WITH_REVERSED_MARKETPLACE,
+        CompanyPlanAlias.PREMIUM,
+      ].includes(ac.plan.alias)
+    );
+  }
+  if (companyPlan?.activePlans && name) {
+    return companyPlan.activePlans.find((ac) => ac.plan.name === name);
+  }
+
+  if (companyPlan?.activePlans) {
+    return companyPlan.activePlans.find((ac) =>
+      [CompanyPlanName.BASE, CompanyPlanName.PRO].includes(ac.plan.name)
+    );
+  }
+};
+
 export const companyPlanToProps = (
   plans: GetSubscriptionPlansResponseData[],
   companyPlan?: GetCompanyPlanResponseData
@@ -41,27 +66,11 @@ export const companyPlanToProps = (
     return plans.find((p) => p.alias === alias);
   };
 
-  const getActivePlan = (name?: CompanyPlanName): ActivePlan | undefined => {
-    //edge case for marketplace
-    if (companyPlan?.activePlans && name === CompanyPlanName.REVERSE_MARKET) {
-      return companyPlan?.activePlans.find((ac) =>
-        [
-          CompanyPlanAlias.FEATURE_REVERSED_MARKETPLACE,
-          CompanyPlanAlias.FREE_BASE_WITH_REVERSED_MARKETPLACE,
-          CompanyPlanAlias.PREMIUM,
-        ].includes(ac.plan.alias)
-      );
-    }
-    if (companyPlan?.activePlans && name) {
-      return companyPlan.activePlans.find((ac) => ac.plan.name === name);
-    }
-
-    if (companyPlan?.activePlans) {
-      return companyPlan.activePlans.find((ac) =>
-        [CompanyPlanName.BASE, CompanyPlanName.PRO].includes(ac.plan.name)
-      );
-    }
-  };
+  const currentPlanDetails = getActivePlan(companyPlan);
+  console.log(currentPlanDetails);
+  console.log(
+    moment().diff(moment(currentPlanDetails?.subscription.starts_at), 'd')
+  );
 
   return {
     annualPrice: annualPlan?.price || '0',
@@ -91,10 +100,18 @@ export const companyPlanToProps = (
       (a) => a.alias === 'FEATURE_REVERSED_MARKETPLACE'
     )[0],
     noActivePlan: companyPlan ? companyPlan.activePlans.length > 0 : true,
-    currentPlanDetails: getActivePlan(),
-    currentReverseMarketDetails: getActivePlan(CompanyPlanName.REVERSE_MARKET),
+    currentPlanDetails,
+    currentReverseMarketDetails: getActivePlan(
+      companyPlan,
+      CompanyPlanName.REVERSE_MARKET
+    ),
     proRata: companyPlan?.changePlan
       ? proRata(companyPlan.changePlan)
       : undefined,
+    latePayment:
+      currentPlanDetails?.subscription.paid_at === null &&
+      moment
+        .utc(moment().utc())
+        .diff(currentPlanDetails?.subscription.starts_at, 'd') > 5,
   };
 };
