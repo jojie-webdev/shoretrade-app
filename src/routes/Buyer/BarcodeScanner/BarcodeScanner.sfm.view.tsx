@@ -25,7 +25,6 @@ import {
   ImageContainer,
   LandingDefaultContainer,
   LogoContainer,
-  Pro,
   SubscriptionPayment,
   SwiperWrapper,
   Title1,
@@ -41,11 +40,10 @@ const BarcodeScannerSFMView = () => {
           <div style={{ marginTop: 7 }}>
             <SfmLogo2 />
           </div>
-          <Pro variant="small">PRO</Pro>
         </LogoContainer>
         <FirstDescription weight="400" color="shade7">
-          Download the “SFMBlue or ShoreTrade” Buyer App to scan &amp; mark your
-          orders as completed
+          Download the “SFMBlue” Buyer App to scan &amp; mark your orders as
+          completed
         </FirstDescription>
       </Container1>
 
@@ -128,9 +126,6 @@ const BarcodeScannerSFMView = () => {
           <Col xs={12} sm={6}>
             <Description>
               <div>
-                <Pro variant="small" style={{ display: 'inline' }}>
-                  PRO
-                </Pro>
                 <Title1
                   variant="title5"
                   weight="700"
@@ -161,9 +156,6 @@ const BarcodeScannerSFMView = () => {
           <Col xs={12} sm={6}>
             <Description>
               <div>
-                <Pro variant="small" style={{ display: 'inline' }}>
-                  PRO
-                </Pro>
                 <Title1
                   variant="title5"
                   weight="700"
@@ -184,9 +176,6 @@ const BarcodeScannerSFMView = () => {
           <Col xs={12} sm={6}>
             <Description>
               <div>
-                <Pro variant="small" style={{ display: 'inline' }}>
-                  PRO
-                </Pro>
                 <Title1
                   variant="title5"
                   weight="700"

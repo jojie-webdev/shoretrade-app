@@ -1,8 +1,6 @@
 import React from 'react';
 
-import Button from 'components/base/Button';
 import {
-  NegotiateBoardBuyer,
   NegotiateCardsBuyer,
   ProductOptionsBuyer,
   ShoretradeLogo,
@@ -13,12 +11,10 @@ import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col, Row, Visible, Hidden } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
+import BuyerReceiveOffersCards from 'res/images/buyer-receive-offers-cards.png';
 import { SwiperSlide } from 'swiper/react';
 
-import {
-  EXPLANATIONS,
-  DEFAULT_MONTHLY_SUBSCRIPTION_PRICE,
-} from './Landing.constants';
+import { EXPLANATIONS } from './Landing.constants';
 import {
   Container1,
   Description,
@@ -27,10 +23,9 @@ import {
   ImageContainer,
   LandingDefaultContainer,
   LogoContainer,
-  Pro,
-  SubscriptionPayment,
   Title1,
   SwiperWrapper,
+  ImageContainer2,
 } from './Landing.style';
 
 const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
@@ -50,32 +45,10 @@ const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
               <ShoretradeLogo />
             </div>
           </Visible>
-          <Pro variant="small">PRO</Pro>
         </LogoContainer>
         <FirstDescription weight="400" color="shade7">
           Can’t find a product? Create a Market Request!
         </FirstDescription>
-
-        <SubscriptionPayment
-          variant="caption"
-          color="shade7"
-          style={{ display: 'inline-flex' }}
-        >
-          $
-          <Typography variant="title5">
-            {DEFAULT_MONTHLY_SUBSCRIPTION_PRICE}
-          </Typography>
-          <Typography variant="caption" color="shade7">
-            /month
-          </Typography>
-        </SubscriptionPayment>
-        <Button
-          padding={isMobile ? '10px 16px' : '14px 24px'}
-          textVariant="label"
-          textWeight="400"
-          text="See plans"
-          onClick={() => props.handleSeePlansClick()}
-        />
       </Container1>
 
       <Visible xs>
@@ -115,7 +88,11 @@ const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
               </div>
             </DescriptionWrapper>
             <ImageContainer>
-              <NegotiateBoardBuyer />
+              <img
+                src={BuyerReceiveOffersCards}
+                alt="buyer-receive-offers-cards.png"
+                style={{ width: '100%', height: '100%' }}
+              />
             </ImageContainer>
           </SwiperSlide>
           <SwiperSlide>
@@ -164,9 +141,6 @@ const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
           <Col sm={6}>
             <DescriptionWrapper>
               <div>
-                <Pro variant="small" style={{ display: 'inline' }}>
-                  PRO
-                </Pro>
                 <Title1 variant="title5" weight="700">
                   {EXPLANATIONS[0].heading}
                 </Title1>
@@ -178,23 +152,26 @@ const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
           </Col>
           <Col sm={6}>
             <div style={{ margin: 'auto' }}>
-              <SummaryBoardBuyer style={{ width: 300 }} />
+              <SummaryBoardBuyer />
             </div>
           </Col>
         </Row>
 
         <Row style={{ padding: '25px 0' }}>
           <Col sm={6}>
-            <div style={{ margin: 'auto' }}>
-              <NegotiateBoardBuyer />
-            </div>
+            <ImageContainer2>
+              <div style={{ maxWidth: 476, maxHeight: 379 }}>
+                <img
+                  src={BuyerReceiveOffersCards}
+                  alt="buyer-receive-offers-cards.png"
+                  style={{ width: '100%' }}
+                />
+              </div>
+            </ImageContainer2>
           </Col>
           <Col sm={6}>
             <DescriptionWrapper>
               <div>
-                <Pro variant="small" style={{ display: 'inline' }}>
-                  PRO
-                </Pro>
                 <Title1 variant="title5" weight="700">
                   {EXPLANATIONS[1].heading}
                 </Title1>
@@ -210,9 +187,6 @@ const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
           <Col sm={6}>
             <DescriptionWrapper>
               <div>
-                <Pro variant="small" style={{ display: 'inline' }}>
-                  PRO
-                </Pro>
                 <Title1 variant="title5" weight="700">
                   {EXPLANATIONS[2].heading}
                 </Title1>
@@ -238,9 +212,6 @@ const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
           <Col sm={6}>
             <DescriptionWrapper>
               <div>
-                <Pro variant="small" style={{ display: 'inline' }}>
-                  PRO
-                </Pro>
                 <Title1 variant="title5" weight="700">
                   {EXPLANATIONS[3].heading}
                 </Title1>

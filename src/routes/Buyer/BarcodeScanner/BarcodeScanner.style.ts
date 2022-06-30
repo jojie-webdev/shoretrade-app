@@ -130,7 +130,6 @@ export const FirstDescription = styled(Typography)`
 export const ImageContainer = styled.div`
   margin-left: auto;
   margin-right: auto;
-  margin-top: 30px;
   max-width: 235px;
 `;
 

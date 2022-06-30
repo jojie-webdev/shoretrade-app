@@ -26,7 +26,6 @@ import {
   ImageContainer,
   LandingDefaultContainer,
   LogoContainer,
-  Pro,
   SubscriptionPayment,
   SwiperWrapper,
   Title1,
@@ -49,11 +48,10 @@ const BarcodeScannerDefaultView = () => {
               <ShoretradeLogo />
             </div>
           </Visible>
-          <Pro variant="small">PRO</Pro>
         </LogoContainer>
         <FirstDescription weight="400" color="shade7">
-          Download the “SFMBlue or ShoreTrade” Buyer App to scan &amp; mark your
-          orders as completed
+          Download the “ShoreTrade” Buyer App to scan &amp; mark your orders as
+          completed
         </FirstDescription>
       </Container1>
 
@@ -122,11 +120,8 @@ const BarcodeScannerDefaultView = () => {
       <Hidden xs>
         <Row style={{ padding: '75px 0' }}>
           <Col xs={12} sm={6}>
-            <Description>
+            <DescriptionWrapper>
               <div>
-                <Pro variant="small" style={{ display: 'inline' }}>
-                  PRO
-                </Pro>
                 <Title1 variant="title5" weight="700">
                   {EXPLANATIONS[0].heading}
                 </Title1>
@@ -134,7 +129,7 @@ const BarcodeScannerDefaultView = () => {
                   {EXPLANATIONS[0].description}
                 </Typography>
               </div>
-            </Description>
+            </DescriptionWrapper>
           </Col>
           <Col xs={12} sm={6}>
             <div style={{ margin: 'auto', height: '100%' }}>
@@ -150,11 +145,8 @@ const BarcodeScannerDefaultView = () => {
             </div>
           </Col>
           <Col xs={12} sm={6}>
-            <Description>
+            <DescriptionWrapper>
               <div>
-                <Pro variant="small" style={{ display: 'inline' }}>
-                  PRO
-                </Pro>
                 <Title1 variant="title5" weight="700">
                   {EXPLANATIONS[1].heading}
                 </Title1>
@@ -162,17 +154,14 @@ const BarcodeScannerDefaultView = () => {
                   {EXPLANATIONS[1].description}
                 </Typography>
               </div>
-            </Description>
+            </DescriptionWrapper>
           </Col>
         </Row>
 
         <Row style={{ padding: '25px 0 0' }}>
           <Col xs={12} sm={6}>
-            <Description>
+            <DescriptionWrapper>
               <div>
-                <Pro variant="small" style={{ display: 'inline' }}>
-                  PRO
-                </Pro>
                 <Title1 variant="title5" weight="700">
                   {EXPLANATIONS[2].heading}
                 </Title1>
@@ -180,7 +169,7 @@ const BarcodeScannerDefaultView = () => {
                   {EXPLANATIONS[2].description}
                 </Typography>
               </div>
-            </Description>
+            </DescriptionWrapper>
           </Col>
           <Col xs={12} sm={6}>
             <div style={{ margin: 'auto', height: '100%' }}>

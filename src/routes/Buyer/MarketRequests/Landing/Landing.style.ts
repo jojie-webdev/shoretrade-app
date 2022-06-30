@@ -280,7 +280,12 @@ export const ImageContainer = styled.div`
   margin-left: auto;
   margin-right: auto;
   margin-top: 30px;
-  max-width: 235px;
+`;
+
+export const ImageContainer2 = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
 `;
 
 export const SwiperWrapper = styled(Swiper)`
