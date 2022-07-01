@@ -132,7 +132,7 @@ import {
   ReverseMarketTitle,
 } from './Register.style';
 import {
-  addressToPlaceData,
+  addressToPlaceData2,
   resErrorToCardFieldError,
 } from './Register.transform';
 import {
@@ -709,7 +709,7 @@ const StepForm = ({
             label="Address"
             value={
               registrationDetails.address !== null
-                ? addressToPlaceData(
+                ? addressToPlaceData2(
                     registrationDetails.address,
                     registrationDetails.unitNumber
                   ).address
