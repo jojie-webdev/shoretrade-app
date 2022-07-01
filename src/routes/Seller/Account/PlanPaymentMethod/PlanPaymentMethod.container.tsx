@@ -103,7 +103,7 @@ const PlanPaymentMethod = (): JSX.Element => {
   }, [companyId]);
 
   const generatedProps: PlanPaymentMethodGeneratedProps = {
-    cards: activePlan?.payment_methods.cards || [],
+    cards: activePlan?.payment_methods.cards || cards || [],
     amountDue: isSeller ? sellerAmountDue : buyerAmountDue,
     selectedCardId,
     payPlanAmountDue,
