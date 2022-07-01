@@ -132,10 +132,12 @@ function MultipleCarousel<D extends { id: string }, CP>(
         }
       >
         {data.map((d) => {
+          if (!d.id) return null;
+
           return (
             <SwiperSlide key={d.id}>
-              <Link to={link(d.id)}>
-                <Component responsive {...transform(d)} />
+              <Link to={link(d.id)} style={{ zIndex: 999 }}>
+                <Component {...transform(d)} />
               </Link>
             </SwiperSlide>
           );

@@ -96,9 +96,11 @@ function MultipleCarousel<D extends { id: string }, CP>(
         breakpoints={breakpoints}
       >
         {data.map((d) => {
+          if (!d.id) return null;
+
           return (
             <SwiperSlide key={d.id}>
-              <Link to={link(d.id)}>
+              <Link to={link(d.id)} style={{ zIndex: 999 }}>
                 <Component {...transform(d)} />
               </Link>
             </SwiperSlide>
