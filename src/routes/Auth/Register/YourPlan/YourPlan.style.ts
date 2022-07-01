@@ -2,7 +2,7 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
-  margin-top: 25px;
+  margin-top: 8px;
 `;
 
 export const TopSection = styled.div`

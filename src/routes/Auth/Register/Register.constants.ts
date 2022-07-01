@@ -58,11 +58,6 @@ export const BUYER_STEPS = [
       'Provide your business details so we know where to send your purchases.',
   },
   {
-    title: 'Sydney Fish Market',
-    description:
-      'Let us know more about your business by selecting your market sector.',
-  },
-  {
     title: 'Market Sector',
     description:
       'Let us know more about your business by selecting your market sector.',

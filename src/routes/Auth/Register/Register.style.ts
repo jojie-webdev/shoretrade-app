@@ -45,11 +45,11 @@ export const TitleContainer = styled.div`
 `;
 
 export const RenderContainer = styled.div<{ step?: number }>`
-margin-top: 60px;
-height: 100vh;
-max-height: 100vh;
-overflow: auto;
-padding-right: 1em;
+  margin-top: 60px;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: auto;
+  padding-right: 1em;
 
   @media ${BREAKPOINTS['sm']} {
     margin-top: 0px;
@@ -247,6 +247,8 @@ export const MarketSectorContainer = styled.div`
 export const MarketSectorItemContainer = styled.div`
   flex: 0 50%;
   margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
 
   @media ${BREAKPOINTS['sm']} {
     flex: 0;
@@ -548,10 +550,15 @@ export const ReverseCheckboxWrapper = styled.div`
   gap: 4px;
 `;
 
-export const PlansWrapper = styled.div`
+export const Plans = styled.div`
   display: flex;
   flex-direction: row;
   gap: 8px;
+`;
+
+export const PlansWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 
   .disbledPlan {
     pointer-events: none;
@@ -568,8 +575,35 @@ export const IncludedTag = styled.div`
 `;
 
 export const ReverseMarketTitle = styled.div`
- display: flex;
- gap: 4px;
- margin-left: -7px;
- margin-right: -10px;
+  display: flex;
+  gap: 4px;
+  margin-left: -7px;
+  margin-right: -10px;
+`;
+
+export const PlusIcon = styled.div`
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const ReverseMarketModal = styled.div`
+  .title {
+    margin-bottom: 24px;
+  }
+
+  .content-container {
+    margin-bottom: 24px;
+
+    .overline {
+      margin-bottom: 8px;
+    }
+  }
+
+  .actions-container {
+    display: flex;
+    flex-direction: row;
+  }
 `;

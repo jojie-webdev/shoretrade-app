@@ -10,18 +10,19 @@ import React, {
 import Alert from 'components/base/Alert';
 import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
-import Plus from 'components/base/SVG/Plus';
 import Checkbox from 'components/base/Checkbox';
 import Interactions from 'components/base/Interactions';
 import Radio from 'components/base/Radio';
 import Select from 'components/base/Select';
 import { CloseFilled, Download, Search } from 'components/base/SVG';
+import Plus from 'components/base/SVG/Plus';
 import Tabs from 'components/base/Tabs';
 import BaseTextField from 'components/base/TextField';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import AuthContainer from 'components/layout/AuthContainer';
 import MobileNav from 'components/layout/MobileNav';
+import Modal from 'components/layout/Modal';
 import AddFile from 'components/module/AddFile';
 import AddImage from 'components/module/AddImage';
 import CategoryImageView from 'components/module/CategoryImage';
@@ -130,6 +131,9 @@ import {
   PlansWrapper,
   IncludedTag,
   ReverseMarketTitle,
+  Plans,
+  ReverseMarketModal,
+  PlusIcon,
 } from './Register.style';
 import {
   addressToPlaceData2,
@@ -186,8 +190,7 @@ const StepForm = ({
     'FEATURE_REVERSED_MARKETPLACE'
   );
 
-  const MAX_STEP = !isSeller ? 8 : hasReverseMarketPlace ? 9 : 8;
-  // const MAX_STEP = 7;
+  const MAX_STEP = !isSeller ? 7 : hasReverseMarketPlace ? 9 : 8;
 
   const [license, setLicense] = useState<{
     file: File | null;
@@ -333,7 +336,7 @@ const StepForm = ({
     if (isSeller && step === 4) {
       return 'ADD LICENSE';
     } else if (
-      (!isSeller && step === 5) ||
+      (!isSeller && step === 4) ||
       (isSeller && hasReverseMarketPlace && step === 8) ||
       (isSeller && step === 7 && !hasReverseMarketPlace)
     ) {
@@ -358,6 +361,8 @@ const StepForm = ({
   const [transactionValue, setTransactionValue] = useState(
     registrationDetails.subscriptionPreference.transactionValue
   );
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const selectedPlanHandler = (value: string) => {
     updateRegistrationDetails({
@@ -417,9 +422,6 @@ const StepForm = ({
       ? 279
       : 49.99
     : 0;
-
-  const planPrice =
-    currentPlan && parseInt(currentPlan.price) + reverseMarketPlacePrice;
 
   useEffect(() => {
     if (
@@ -920,20 +922,17 @@ const StepForm = ({
 
             if (error.address) {
               setOtherErrors({ address: error.address });
+            } else if (
+              !isSeller &&
+              hasSfmNumber &&
+              !registrationDetails.sfmNumber?.trim()
+            ) {
+              setOtherErrors({ sfmNumber: 'Please enter your SFM number' });
             } else {
               setOtherErrors({ address: '' });
               formikProps.onSubmit(values);
             }
           } else if (step === 3) {
-            if (!isSeller) {
-              if (hasSfmNumber && !registrationDetails.sfmNumber?.trim()) {
-                setOtherErrors({ sfmNumber: 'Please enter your SFM number' });
-              } else {
-                setOtherErrors({ sfmNumber: '' });
-                formikProps.onSubmit(values);
-              }
-            } else formikProps.onSubmit(values);
-          } else if (step === 4) {
             if (!isSeller) {
               const error = validateCategoryMarketSector({
                 categoryMarketSector: registrationDetails.categoryMarketSector,
@@ -946,6 +945,8 @@ const StepForm = ({
                 formikProps.onSubmit(values);
               }
             } else formikProps.onSubmit(values);
+          } else if (step === 4) {
+            formikProps.onSubmit(values);
           } else if (step === 5) {
             if (isSeller) {
               const error = validateCategoryMarketSector({
@@ -973,11 +974,23 @@ const StepForm = ({
                 setOtherErrors({ categoryMarketSector: '' });
                 formikProps.onSubmit(values);
               }
-            } else formikProps.onSubmit(values);
-          } else if (step === 7) {
-            if (!isSeller) {
+            } else {
               setIsGeneratingCardToken(true);
               getCardToken();
+            }
+          } else if (step === 7) {
+            if (!isSeller) {
+              const error = {
+                ...validateAgreement({
+                  agreement: registrationDetails.tncAgreement,
+                }),
+              };
+              if (error.agreement) {
+                setOtherErrors(error);
+              } else {
+                setOtherErrors({ agreement: '' });
+                formikProps.onSubmit(values);
+              }
             } else {
               if (hasReverseMarketPlace) {
                 setIsGeneratingCardToken(true);
@@ -1002,18 +1015,6 @@ const StepForm = ({
                   setOtherErrors({ agreement: '' });
                   formikProps.onSubmit(values);
                 }
-              }
-            } else {
-              const error = {
-                ...validateAgreement({
-                  agreement: registrationDetails.tncAgreement,
-                }),
-              };
-              if (error.agreement) {
-                setOtherErrors(error);
-              } else {
-                setOtherErrors({ agreement: '' });
-                formikProps.onSubmit(values);
               }
             }
           } else if (step === 9) {
@@ -1144,10 +1145,6 @@ const StepForm = ({
                       />
                     </>
                   )}
-                </>
-              )}
-              {step === 3 && (
-                <>
                   {!isSeller && showSFMFields && (
                     <>
                       <Typography
@@ -1220,52 +1217,50 @@ const StepForm = ({
                   )}
                 </>
               )}
+              {step === 3 && !isSeller && (
+                <>
+                  <MarketSectorContainer>
+                    {BUYER_VARIATIONS.map((variant) => (
+                      <MarketSectorItemContainer key={variant.key}>
+                        <MarketSectorItem
+                          variant={variant.key}
+                          selected={
+                            registrationDetails.categoryMarketSector ===
+                            variant.key
+                          }
+                          onPress={() => {
+                            updateRegistrationDetails({
+                              categoryMarketSector: variant.key,
+                            });
+                          }}
+                        />
+                      </MarketSectorItemContainer>
+                    ))}
+                    {(otherErrors.categoryMarketSector || '').length > 0 && (
+                      <Error variant="caption" color="error">
+                        {otherErrors.categoryMarketSector}
+                      </Error>
+                    )}
+                  </MarketSectorContainer>
+                  <Typography weight="500" variant="body">
+                    Confirm your monthly purchasing value
+                  </Typography>
+                  <Select
+                    options={TRANSACTION_VALUES}
+                    value={
+                      registrationDetails.subscriptionPreference
+                        .transactionValue
+                    }
+                    onChange={(e) => transactionValueHandler(e.value)}
+                    size="large"
+                    grey
+                    border="none"
+                  />
+                </>
+              )}
               {step === 4 && (
                 <>
-                  {!isSeller && (
-                    <>
-                      <MarketSectorContainer>
-                        {BUYER_VARIATIONS.map((variant) => (
-                          <MarketSectorItemContainer key={variant.key}>
-                            <MarketSectorItem
-                              variant={variant.key}
-                              selected={
-                                registrationDetails.categoryMarketSector ===
-                                variant.key
-                              }
-                              onPress={() => {
-                                updateRegistrationDetails({
-                                  categoryMarketSector: variant.key,
-                                });
-                              }}
-                            />
-                          </MarketSectorItemContainer>
-                        ))}
-                        {(otherErrors.categoryMarketSector || '').length >
-                          0 && (
-                          <Error variant="caption" color="error">
-                            {otherErrors.categoryMarketSector}
-                          </Error>
-                        )}
-                      </MarketSectorContainer>
-                      <Typography weight="500" variant="body">
-                        Confirm your monthly purchasing value
-                      </Typography>
-                      <Select
-                        options={TRANSACTION_VALUES}
-                        value={
-                          registrationDetails.subscriptionPreference
-                            .transactionValue
-                        }
-                        onChange={(e) => transactionValueHandler(e.value)}
-                        size="large"
-                        grey
-                        border="none"
-                      />
-                    </>
-                  )}
-
-                  {isSeller && (
+                  {isSeller ? (
                     <>
                       {/* {activeLicenseIdx !== null ? (*/}
                       <>
@@ -1464,6 +1459,8 @@ const StepForm = ({
                         </TipsContainer>
                       )} */}
                     </>
+                  ) : (
+                    categoryPicker()
                   )}
                 </>
               )}
@@ -1494,7 +1491,292 @@ const StepForm = ({
                       )}
                     </MarketSectorContainer>
                   ) : (
-                    categoryPicker()
+                    <PlansWrapper>
+                      <Plans>
+                        <div
+                          className={
+                            transactionValue ===
+                              'Between $15,000 and $22,500' ||
+                            transactionValue === 'More than $22,500'
+                              ? 'disbledPlan'
+                              : ''
+                          }
+                        >
+                          <PlanPriceConatiner>
+                            <PlanTitle>
+                              <Typography
+                                weight="700"
+                                variant="title6"
+                                customFont={
+                                  theme.isSFM ? 'Canela' : 'Media Sans'
+                                }
+                              >
+                                Base
+                              </Typography>
+                              <Radio
+                                checked={selectedPlan === PLAN_NAME.BASE}
+                                onClick={() => {
+                                  selectedPlanHandler(PLAN_NAME.BASE);
+                                  setReverseMarketPlace([]);
+                                }}
+                              />
+                            </PlanTitle>
+                            <PlanPrice>
+                              <Typography weight="700" variant="copy">
+                                ${PLAN_PRICE.BASE.price}
+                              </Typography>
+                              <Typography
+                                variant="label"
+                                color="shade6"
+                                weight="300"
+                              >
+                                /month
+                              </Typography>
+                            </PlanPrice>
+                            <PlanSectionContainer>
+                              <ReverseMarketTitle>
+                                <PlusIcon>
+                                  <Plus width={14} height={14} />
+                                </PlusIcon>
+                                <Typography weight="500" variant="label">
+                                  Reverse Marketplace
+                                </Typography>
+                              </ReverseMarketTitle>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  justifyContent: 'space-between',
+                                  gap: '8px',
+                                }}
+                              >
+                                <PlanPrice>
+                                  <Typography weight="500" variant="label">
+                                    ${PLAN_PRICE.BASE.reverseMarket}
+                                  </Typography>
+                                  <Typography
+                                    variant="caption"
+                                    color="shade6"
+                                    weight="300"
+                                  >
+                                    /month
+                                  </Typography>
+                                </PlanPrice>
+                                <ReverseCheckboxWrapper>
+                                  <Typography weight="500" variant="label">
+                                    Add
+                                  </Typography>
+                                  <Checkbox
+                                    borderColor={theme.grey.shade5}
+                                    checked={
+                                      registrationDetails.subscriptionPreference
+                                        .plan === PLAN_NAME.PRO
+                                        ? false
+                                        : reverseMarketPlace.includes(
+                                            'FEATURE_REVERSED_MARKETPLACE'
+                                          )
+                                    }
+                                    onClick={() =>
+                                      additionalSubscriptionHandler(
+                                        !reverseMarketPlace.includes(
+                                          'FEATURE_REVERSED_MARKETPLACE'
+                                        )
+                                      )
+                                    }
+                                    size={20}
+                                  />
+                                </ReverseCheckboxWrapper>
+                              </div>
+                              <Typography weight="400" variant="label">
+                                Request Products directly from Sellers
+                              </Typography>
+                              <div
+                                className="benefits"
+                                onClick={() => {
+                                  setIsOpen(true);
+                                }}
+                              >
+                                <Typography
+                                  variant="label"
+                                  color="primary"
+                                  weight="500"
+                                  style={{
+                                    textDecoration: 'underline',
+                                    cursor: 'pointer',
+                                  }}
+                                >
+                                  Explore the benefits
+                                </Typography>
+                              </div>
+                            </PlanSectionContainer>
+                            <PlanSectionContainer>
+                              <ReverseMarketTitle>
+                                <PlusIcon>
+                                  <Plus width={14} height={14} />
+                                </PlusIcon>
+                                <Typography weight="500" variant="label">
+                                  1 Week Free
+                                </Typography>
+                              </ReverseMarketTitle>
+                              <Typography weight="400" variant="label">
+                                Access the SFM Blue platform and make purchases
+                                with no fees for the first week!
+                              </Typography>
+                            </PlanSectionContainer>
+                            <PlanSectionContainer>
+                              <ReverseMarketTitle>
+                                <PlusIcon>
+                                  <Plus width={14} height={14} />
+                                </PlusIcon>
+                                <Typography weight="500" variant="label">
+                                  2% Buying Fee on Transaction Value**
+                                </Typography>
+                              </ReverseMarketTitle>
+                            </PlanSectionContainer>
+                          </PlanPriceConatiner>
+                        </div>
+
+                        <PlanPriceConatiner>
+                          <PlanTitle>
+                            <Typography
+                              weight="700"
+                              variant="title6"
+                              customFont={theme.isSFM ? 'Canela' : 'Media Sans'}
+                            >
+                              Pro
+                            </Typography>
+                            <Radio
+                              checked={selectedPlan === PLAN_NAME.PRO}
+                              onClick={() => {
+                                selectedPlanHandler(PLAN_NAME.PRO);
+                              }}
+                            />
+                          </PlanTitle>
+                          <PlanPrice>
+                            <Typography weight="700" variant="copy">
+                              ${PLAN_PRICE.PRO.price.toFixed(2)}
+                            </Typography>
+                            <Typography
+                              variant="label"
+                              color="shade6"
+                              weight="300"
+                            >
+                              /month
+                            </Typography>
+                          </PlanPrice>
+
+                          <PlanSectionContainer>
+                            <ReverseMarketTitle>
+                              <PlusIcon>
+                                <Plus width={14} height={14} />
+                              </PlusIcon>
+                              <Typography weight="500" variant="label">
+                                Reverse Marketplace
+                              </Typography>
+                            </ReverseMarketTitle>
+                            <IncludedTag>
+                              <Tag background={theme.brand.success}>
+                                <Typography
+                                  variant="caption"
+                                  color="noshade"
+                                  weight="500"
+                                >
+                                  Included
+                                </Typography>
+                              </Tag>
+                            </IncludedTag>
+                            <Typography weight="400" variant="label">
+                              Request Products directly from Sellers
+                            </Typography>
+                            <div
+                              className="benefits"
+                              onClick={() => {
+                                setIsOpen(true);
+                              }}
+                            >
+                              <Typography
+                                variant="label"
+                                color="primary"
+                                weight="500"
+                                style={{
+                                  textDecoration: 'underline',
+                                  cursor: 'pointer',
+                                }}
+                              >
+                                Explore the benefits
+                              </Typography>
+                            </div>
+                          </PlanSectionContainer>
+
+                          <PlanSectionContainer>
+                            <ReverseMarketTitle>
+                              <PlusIcon>
+                                <Plus width={14} height={14} />
+                              </PlusIcon>
+                              <Typography weight="500" variant="label">
+                                1 Month Free
+                              </Typography>
+                            </ReverseMarketTitle>
+                            <Typography weight="400" variant="label">
+                              Access the SFM Blue platform and make purchases
+                              with no fees for one month!
+                            </Typography>
+                          </PlanSectionContainer>
+
+                          <PlanSectionContainer>
+                            <ReverseMarketTitle>
+                              <PlusIcon>
+                                <Plus width={14} height={14} />
+                              </PlusIcon>
+                              <Typography weight="500" variant="label">
+                                No Additional Buying Fees
+                              </Typography>
+                            </ReverseMarketTitle>
+                          </PlanSectionContainer>
+
+                          <PlanSectionContainer>
+                            <ReverseMarketTitle>
+                              <PlusIcon>
+                                <Plus width={14} height={14} />
+                              </PlusIcon>
+                              <Typography weight="500" variant="label">
+                                Access to Buyer Data Reports
+                              </Typography>
+                            </ReverseMarketTitle>
+                            <Typography weight="400" variant="label">
+                              Access to Buyer Data Reports on Product
+                              Seasonality and Upcoming Harvests. Valued at
+                              $100/month
+                            </Typography>
+                          </PlanSectionContainer>
+
+                          <PlanSectionContainer>
+                            <ReverseMarketTitle>
+                              <Plus width={14} height={14} />
+                              <Typography weight="500" variant="label">
+                                Customer Service
+                              </Typography>
+                            </ReverseMarketTitle>
+                            <Typography weight="400" variant="label">
+                              Dedicated Customer Service Representative
+                            </Typography>
+                          </PlanSectionContainer>
+                        </PlanPriceConatiner>
+                      </Plans>
+                      <YourPlan
+                        additionalSubscriptionHandler={
+                          additionalSubscriptionHandler
+                        }
+                        selectedPlan={
+                          registrationDetails.subscriptionPreference.plan
+                        }
+                        currentMarketSector={
+                          registrationDetails.categoryMarketSector
+                        }
+                        hasReverseMarketPlace={hasReverseMarketPlace}
+                        previousStep={() => previousStep && previousStep()}
+                        step={step}
+                      />
+                    </PlansWrapper>
                   )}
                 </>
               )}
@@ -1518,245 +1800,74 @@ const StepForm = ({
                   ) : (
                     <>
                       {!isSeller && (
-                        <PlansWrapper>
-                          <div
-                            className={
-                              transactionValue ===
-                                'Between $15,000 and $22,500' ||
-                              transactionValue === 'More than $22,500'
-                                ? 'disbledPlan'
-                                : ''
-                            }
-                          >
-                            <PlanPriceConatiner>
-                              <PlanTitle>
-                                <Typography
-                                  weight="700"
-                                  variant="title6"
-                                  customFont={
-                                    theme.isSFM ? 'Canela' : 'Media Sans'
-                                  }
-                                >
-                                  Base
-                                </Typography>
-                                <Radio
-                                  checked={selectedPlan === PLAN_NAME.BASE}
-                                  onClick={() => {
-                                    selectedPlanHandler(PLAN_NAME.BASE);
-                                    setReverseMarketPlace([]);
-                                  }}
-                                />
-                              </PlanTitle>
-                              <PlanPrice>
-                                <Typography weight="700" variant="copy">
-                                  ${PLAN_PRICE.BASE.price}
+                        <>
+                          <PaymentPriceConatiner>
+                            <PaymentPriceRow>
+                              <Typography variant="label">
+                                {registrationDetails.subscriptionPreference
+                                  .plan === PLAN_NAME.BASE
+                                  ? 'Base '
+                                  : 'Pro '}
+                                Plan
+                              </Typography>
+                              <Typography variant="label">
+                                $
+                                {registrationDetails.subscriptionPreference
+                                  .plan === PLAN_NAME.PRO
+                                  ? PLAN_PRICE.PRO.price.toFixed(2)
+                                  : PLAN_PRICE.BASE.price.toFixed(2)}
+                                *
+                              </Typography>
+                            </PaymentPriceRow>
+                            {registrationDetails.subscriptionPreference.addOns.includes(
+                              'FEATURE_REVERSED_MARKETPLACE'
+                            ) &&
+                              registrationDetails.subscriptionPreference
+                                .plan === PLAN_NAME.BASE && (
+                                <PaymentPriceRow>
+                                  <Typography variant="label">
+                                    Reverse Marketplace
+                                  </Typography>
+                                  <Typography variant="label">
+                                    ${PLAN_PRICE.BASE.reverseMarket.toFixed(2)}
+                                  </Typography>
+                                </PaymentPriceRow>
+                              )}
+
+                            <PaymentPriceRow>
+                              <Typography variant="label">Total</Typography>
+
+                              <TotalPriceRow>
+                                <Typography variant="title5">
+                                  $
+                                  {registrationDetails.subscriptionPreference
+                                    .plan === PLAN_NAME.BASE
+                                    ? registrationDetails.subscriptionPreference.addOns.includes(
+                                        'FEATURE_REVERSED_MARKETPLACE'
+                                      )
+                                      ? PLAN_PRICE.BASE.priceWithReverse.toFixed(
+                                          2
+                                        )
+                                      : PLAN_PRICE.BASE.price.toFixed(2)
+                                    : PLAN_PRICE.PRO.price.toFixed(2)}
                                 </Typography>
                                 <Typography
                                   variant="label"
                                   color="shade6"
+                                  align="right"
                                   weight="300"
                                 >
                                   /month
                                 </Typography>
-                              </PlanPrice>
-                              <PlanSectionContainer>
-                                <ReverseMarketTitle>
-                                  <Plus width={14} height={14} />
-                                  <Typography weight="500" variant="label">
-                                    Reverse Marketplace
-                                  </Typography>
-                                </ReverseMarketTitle>
-                                <div
-                                  style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    gap: '8px',
-                                  }}
-                                >
-                                  <PlanPrice>
-                                    <Typography weight="500" variant="label">
-                                      ${PLAN_PRICE.BASE.reverseMarket}
-                                    </Typography>
-                                    <Typography
-                                      variant="caption"
-                                      color="shade6"
-                                      weight="300"
-                                    >
-                                      /month
-                                    </Typography>
-                                  </PlanPrice>
-                                  <ReverseCheckboxWrapper>
-                                    <Typography weight="500" variant="label">
-                                      Add
-                                    </Typography>
-                                    <Checkbox
-                                      borderColor={theme.grey.shade5}
-                                      checked={
-                                        registrationDetails
-                                          .subscriptionPreference.plan ===
-                                        PLAN_NAME.PRO
-                                          ? false
-                                          : reverseMarketPlace.includes(
-                                              'FEATURE_REVERSED_MARKETPLACE'
-                                            )
-                                      }
-                                      onClick={() =>
-                                        additionalSubscriptionHandler(
-                                          !reverseMarketPlace.includes(
-                                            'FEATURE_REVERSED_MARKETPLACE'
-                                          )
-                                        )
-                                      }
-                                      size={20}
-                                    />
-                                  </ReverseCheckboxWrapper>
-                                </div>
-                                <Typography weight="400" variant="label">
-                                  Request Products directly from Sellers
-                                </Typography>
-                                <Typography
-                                  variant="label"
-                                  color="primary"
-                                  weight="500"
-                                  style={{ textDecoration: 'underline' }}
-                                >
-                                  Explore the benefits
-                                </Typography>
-                              </PlanSectionContainer>
-                              <PlanSectionContainer>
-                                <ReverseMarketTitle>
-                                  <Plus width={14} height={14} />
-                                  <Typography weight="500" variant="label">
-                                    1 Week Free
-                                  </Typography>
-                                </ReverseMarketTitle>
-                                <Typography weight="400" variant="label">
-                                  Access the SFM Blue platform and make
-                                  purchases with no fees for the first week!
-                                </Typography>
-                              </PlanSectionContainer>
-                              <PlanSectionContainer>
-                                <ReverseMarketTitle>
-                                  <Plus width={14} height={14} />
-                                  <Typography weight="500" variant="label">
-                                    2% Buying Fee on Transaction Value**
-                                  </Typography>
-                                </ReverseMarketTitle>
-                              </PlanSectionContainer>
-                            </PlanPriceConatiner>
-                          </div>
-
-                          <PlanPriceConatiner>
-                            <PlanTitle>
-                              <Typography
-                                weight="700"
-                                variant="title6"
-                                customFont={
-                                  theme.isSFM ? 'Canela' : 'Media Sans'
-                                }
-                              >
-                                Pro
-                              </Typography>
-                              <Radio
-                                checked={selectedPlan === PLAN_NAME.PRO}
-                                onClick={() => {
-                                  selectedPlanHandler(PLAN_NAME.PRO);
-                                }}
-                              />
-                            </PlanTitle>
-                            <PlanPrice>
-                              <Typography weight="700" variant="copy">
-                                ${PLAN_PRICE.PRO.price.toFixed(2)}
-                              </Typography>
-                              <Typography
-                                variant="label"
-                                color="shade6"
-                                weight="300"
-                              >
-                                /month
-                              </Typography>
-                            </PlanPrice>
-
-                            <PlanSectionContainer>
-                              <ReverseMarketTitle>
-                                <Plus width={14} height={14} />
-                                <Typography weight="500" variant="label">
-                                  Reverse Marketplace
-                                </Typography>
-                              </ReverseMarketTitle>
-                              <IncludedTag>
-                                <Tag background={theme.brand.success}>
-                                  <Typography
-                                    variant="caption"
-                                    color="noshade"
-                                    weight="500"
-                                  >
-                                    Included
-                                  </Typography>
-                                </Tag>
-                              </IncludedTag>
-                              <Typography weight="400" variant="label">
-                                Request Products directly from Sellers
-                              </Typography>
-                              <Typography
-                                variant="label"
-                                color="primary"
-                                weight="500"
-                                style={{ textDecoration: 'underline' }}
-                              >
-                                Explore the benefits
-                              </Typography>
-                            </PlanSectionContainer>
-
-                            <PlanSectionContainer>
-                              <ReverseMarketTitle>
-                                <Plus width={14} height={14} />
-                                <Typography weight="500" variant="label">
-                                  1 Month Free
-                                </Typography>
-                              </ReverseMarketTitle>
-                              <Typography weight="400" variant="label">
-                                Access the SFM Blue platform and make purchases
-                                with no fees for one month!
-                              </Typography>
-                            </PlanSectionContainer>
-
-                            <PlanSectionContainer>
-                              <ReverseMarketTitle>
-                                <Plus width={14} height={14} />
-                                <Typography weight="500" variant="label">
-                                  No Additional Buying Fees
-                                </Typography>
-                              </ReverseMarketTitle>
-                            </PlanSectionContainer>
-
-                            <PlanSectionContainer>
-                              <ReverseMarketTitle>
-                                <Plus width={14} height={14} />
-                                <Typography weight="500" variant="label">
-                                  Access to Buyer Data Reports
-                                </Typography>
-                              </ReverseMarketTitle>
-                              <Typography weight="400" variant="label">
-                                Access to Buyer Data Reports on Product
-                                Seasonality and Upcoming Harvests. Valued at
-                                $100/month
-                              </Typography>
-                            </PlanSectionContainer>
-
-                            <PlanSectionContainer>
-                              <ReverseMarketTitle>
-                                <Plus width={14} height={14} />
-                                <Typography weight="500" variant="label">
-                                  Customer Service
-                                </Typography>
-                              </ReverseMarketTitle>
-                              <Typography weight="400" variant="label">
-                                Dedicated Customer Service Representative
-                              </Typography>
-                            </PlanSectionContainer>
-                          </PlanPriceConatiner>
-                        </PlansWrapper>
+                              </TotalPriceRow>
+                            </PaymentPriceRow>
+                          </PaymentPriceConatiner>
+                          <PaymentMethod
+                            otherErrors={otherErrors}
+                            setOtherErrors={setOtherErrors}
+                            details={registrationDetails}
+                          />
+                        </>
                       )}
                     </>
                   )}
@@ -1790,116 +1901,15 @@ const StepForm = ({
                       )}
                     </>
                   ) : (
-                    <>
-                      <PaymentPriceConatiner>
-                        <PaymentPriceRow>
-                          <Typography variant="label">
-                            {registrationDetails.subscriptionPreference.plan ===
-                            PLAN_NAME.BASE
-                              ? 'Base '
-                              : 'Pro '}
-                            Plan
-                          </Typography>
-                          <Typography variant="label">
-                            $
-                            {registrationDetails.subscriptionPreference.plan ===
-                            PLAN_NAME.PRO
-                              ? PLAN_PRICE.PRO.price.toFixed(2)
-                              : PLAN_PRICE.BASE.price.toFixed(2)}
-                            *
-                          </Typography>
-                        </PaymentPriceRow>
-                        {registrationDetails.subscriptionPreference.addOns.includes(
-                          'FEATURE_REVERSED_MARKETPLACE'
-                        ) &&
-                          registrationDetails.subscriptionPreference.plan ===
-                            PLAN_NAME.BASE && (
-                            <PaymentPriceRow>
-                              <Typography variant="label">
-                                Reverse Marketplace
-                              </Typography>
-                              <Typography variant="label">
-                                ${PLAN_PRICE.BASE.reverseMarket.toFixed(2)}
-                              </Typography>
-                            </PaymentPriceRow>
-                          )}
-
-                        <PaymentPriceRow>
-                          <Typography variant="label">Total</Typography>
-
-                          <TotalPriceRow>
-                            <Typography variant="title5">
-                              $
-                              {registrationDetails.subscriptionPreference
-                                .plan === PLAN_NAME.BASE
-                                ? registrationDetails.subscriptionPreference.addOns.includes(
-                                    'FEATURE_REVERSED_MARKETPLACE'
-                                  )
-                                  ? PLAN_PRICE.BASE.priceWithReverse.toFixed(2)
-                                  : PLAN_PRICE.BASE.price.toFixed(2)
-                                : PLAN_PRICE.PRO.price.toFixed(2)}
-                            </Typography>
-                            <Typography
-                              variant="label"
-                              color="shade6"
-                              align="right"
-                              weight="300"
-                            >
-                              /month
-                            </Typography>
-                          </TotalPriceRow>
-                        </PaymentPriceRow>
-                      </PaymentPriceConatiner>
-                      <PaymentMethod
-                        otherErrors={otherErrors}
-                        setOtherErrors={setOtherErrors}
-                        details={registrationDetails}
-                      />
-                    </>
-                  )}
-                  {/* {!isSuccess || !isSeller ? (
                     summaryUI()
-                  ) : (
-                    <>
-                      <Typography
-                        variant="title5"
-                        color="noshade"
-                        weight="400"
-                        style={{ marginBottom: 32 }}
-                      >
-                        Thanks for signing up! Your account is pending approval
-                      </Typography>
-                      <Typography
-                        variant="body"
-                        color="noshade"
-                        weight="Medium"
-                        style={{ marginBottom: 32 }}
-                      >
-                        We need to check a few things before you can start
-                        selling. We’ll send you and email and notification when
-                        your account is approved. This normally takes less than
-                        24 hours.
-                      </Typography>
-                      <Typography
-                        variant="title5"
-                        color="noshade"
-                        weight="400"
-                        style={{ marginBottom: 32 }}
-                      >
-                        1 Month Free Trial will start when your account is
-                        approved
-                      </Typography>
-                    </>
-                  )} */}
+                  )}
                 </>
               )}
               {step === 8 && (
                 <>
                   {!isSuccess ? (
                     <>
-                      {!isSeller
-                        ? summaryUI()
-                        : isSeller && hasReverseMarketPlace
+                      {isSeller && hasReverseMarketPlace
                         ? categoryPicker()
                         : summaryUI()}
                     </>
@@ -1967,7 +1977,7 @@ const StepForm = ({
                   takeFullWidth={isSmallScreen}
                   loading={
                     (isPending && step === MAX_STEP) ||
-                    (step === 7 && isGeneratingCardToken)
+                    (step === 6 && isGeneratingCardToken)
                   }
                   type={step === MAX_STEP ? 'submit' : 'button'}
                   text={buttonTextHandler(step)}
@@ -2010,6 +2020,35 @@ const StepForm = ({
           </ButtonContainer>
         </FormikContainer>
       </Formik>
+      <Modal isOpen={isOpen} onClickClose={() => setIsOpen(false)}>
+        <ReverseMarketModal>
+          <Typography
+            variant="title5"
+            color={isSeller ? 'noshade' : 'shade8'}
+            className="title"
+            altFont
+          >
+            Reverse Marketplace
+          </Typography>
+          <div className="content-container">
+            <Typography
+              variant="body"
+              color={isSeller ? 'noshade' : 'shade8'}
+              weight="Medium"
+            >
+              The Reverse Marketplace puts you in control of the seafood supply.
+              Instead of buying from a listing, request tailored products from
+              the sellers on SFMblue. Receive multiple offers on your request,
+              negotiate prices, accept offers and get your custom products
+              delivered straight to your door. Creating specific requests means
+              more seafood ends up in our bellies instead of the bin, with less
+              resoucrces taken from our oceans. Join the Reverse Market Place
+              and become part of a sustainability initiative that is
+              revolutionizing the seafood industry!
+            </Typography>
+          </div>
+        </ReverseMarketModal>
+      </Modal>
     </>
   );
 };
@@ -2036,8 +2075,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
   const renderRef = useRef<HTMLDivElement | null>(null);
 
   const [step, setStep] = useState(0);
-  const MAX_STEP = !isSeller ? 8 : hasReverseMarketPlace ? 9 : 8;
-  // const MAX_STEP = 7;
+  const MAX_STEP = !isSeller ? 7 : hasReverseMarketPlace ? 9 : 8;
 
   const summaryHandleStep = (step: number) => {
     setStep(step);
@@ -2175,7 +2213,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
         <StepForm
           {...props}
           formikProps={
-            isSeller ? bankDetailsFormikProps : businessDetailsFormikProps
+            isSeller ? bankDetailsFormikProps : userDetailsFormikProps
           }
           step={step}
           fields={isSeller ? BANK_DETAIL_FIELDS : []}
@@ -2186,7 +2224,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
       return (
         <StepForm
           {...props}
-          formikProps={licensesFormikProps}
+          formikProps={isSeller ? licensesFormikProps : userDetailsFormikProps}
           step={step}
           fields={[]}
           summaryHandleStep={summaryHandleStep}
@@ -2211,7 +2249,9 @@ const RegisterView = (props: RegisterGeneratedProps) => {
           <StepForm
             {...props}
             getCategoryItem={props.getCategoryItem}
-            formikProps={userDetailsFormikProps}
+            formikProps={
+              isSeller ? userDetailsFormikProps : paymentMethodFormikProps
+            }
             step={step}
             fields={[]}
             summaryHandleStep={summaryHandleStep}
@@ -2237,7 +2277,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
           ) : (
             <StepForm
               {...props}
-              formikProps={paymentMethodFormikProps}
+              formikProps={summaryFormikProps}
               step={step}
               fields={[]}
               summaryHandleStep={summaryHandleStep}
@@ -2251,11 +2291,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
           {...props}
           getCategoryItem={props.getCategoryItem}
           formikProps={
-            !isSeller
-              ? summaryFormikProps
-              : hasReverseMarketPlace
-              ? userDetailsFormikProps
-              : summaryFormikProps
+            hasReverseMarketPlace ? userDetailsFormikProps : summaryFormikProps
           }
           step={step}
           fields={[]}

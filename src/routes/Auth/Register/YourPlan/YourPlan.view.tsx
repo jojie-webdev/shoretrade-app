@@ -53,7 +53,7 @@ const YourPlanView = ({
 
   return (
     <Container>
-      {!isSeller && step !== 4 && (
+      {!isSeller && step !== 4 && step !== 5 && (
         <TopSection>
           <div className="left">
             <Typography
@@ -99,7 +99,7 @@ const YourPlanView = ({
           </div>
         </TopSection>
       )}
-{/* 
+      {/* 
       {!isSeller && (
         <PlanFeatures
           selectedPlan={selectedPlan}
@@ -155,7 +155,7 @@ const YourPlanView = ({
             color={theme.appType === 'seller' ? 'shade6' : 'shade9'}
           >
             **The Transaction Value is the total value of the products in your
-              order excluding any crate fees and shipping costs.
+            order excluding any crate fees and shipping costs.
           </Typography>
         </Footer>
       )}
