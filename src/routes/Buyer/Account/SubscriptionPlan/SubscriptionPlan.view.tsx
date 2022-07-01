@@ -272,26 +272,24 @@ export const SubscriptionPlanView = ({
                     </Typography>
                   </div>
                 </div>
-                {!flags?.hasCancelledPlan && (
-                  <div className="billing-item">
-                    <Typography variant="body" weight="400">
-                      Next Billing Amount
+                <div className="billing-item">
+                  <Typography variant="body" weight="400">
+                    Next Billing Amount
+                  </Typography>
+                  <div className="billing-date">
+                    <DollarSign
+                      fill={theme.grey.shade7}
+                      width={16}
+                      height={20}
+                    />
+                    <Typography
+                      variant="body"
+                      style={{ marginLeft: '6px', lineHeight: 'normal' }}
+                    >
+                      <b>{nextBillingAmount}</b>
                     </Typography>
-                    <div className="billing-date">
-                      <DollarSign
-                        fill={theme.grey.shade7}
-                        width={16}
-                        height={20}
-                      />
-                      <Typography
-                        variant="body"
-                        style={{ marginLeft: '6px', lineHeight: 'normal' }}
-                      >
-                        <b>{nextBillingAmount}</b>
-                      </Typography>
-                    </div>
                   </div>
-                )}
+                </div>
                 <BadgesContainer>
                   {isForRenewal && currentPlanDetails && !flags?.hasDowngraded && (
                     <Badge badgeColor={theme.product?.error} borderRadius="4px">
