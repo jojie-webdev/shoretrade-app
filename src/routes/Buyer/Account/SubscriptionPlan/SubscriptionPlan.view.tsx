@@ -76,6 +76,7 @@ export const SubscriptionPlanView = ({
 }: SubscriptionPlanGeneratedProps) => {
   const location = useLocation();
   const theme = useTheme();
+  const history = useHistory();
 
   const isMobile = useMediaQuery({ query: BREAKPOINTS.sm });
   const isSmallDesktop = useMediaQuery({
