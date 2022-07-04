@@ -67,10 +67,6 @@ export const companyPlanToProps = (
   };
 
   const currentPlanDetails = getActivePlan(companyPlan);
-  console.log(currentPlanDetails);
-  console.log(
-    moment().diff(moment(currentPlanDetails?.subscription.starts_at), 'd')
-  );
 
   return {
     annualPrice: annualPlan?.price || '0',

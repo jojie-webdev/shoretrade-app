@@ -1,3 +1,5 @@
+import { reverse } from 'dns';
+
 import React, { useEffect, useState } from 'react';
 
 import Alert from 'components/base/Alert';
@@ -100,6 +102,11 @@ export const SubscriptionPlanView = ({
 
   const basePrice = basePlanDetails ? basePlanDetails.price : 0;
   const proPrice = proPlanDetails ? proPlanDetails.price : 0;
+  const currentMainPlanPrice = currentPlanDetails
+    ? currentPlanDetails.plan.name === CompanyPlanName.BASE
+      ? basePlanDetails?.price
+      : proPlanDetails?.price
+    : 0;
   const reverseMarketPrice = reverseMarketDetails
     ? Number(reverseMarketDetails.price)
     : 0;
@@ -747,7 +754,7 @@ export const SubscriptionPlanView = ({
           The ongoing monthly cost will be an additional:
           <Typography variant="body" component="span">
             &nbsp;
-            {currentPlanDetails ? toPrice(currentPlanDetails.plan.price) : 0}
+            {reverseMarketPrice ? toPrice(reverseMarketPrice) : 0}
           </Typography>
           <Typography
             component="span"
@@ -775,8 +782,11 @@ export const SubscriptionPlanView = ({
             cost will be
             <Typography variant="body" component="span">
               &nbsp;
-              {reverseMarketPrice && currentPlanDetails
-                ? toPrice(reverseMarketPrice + currentPlanDetails.plan.price)
+              {reverseMarketPrice &&
+              currentPlanDetails &&
+              basePlanDetails &&
+              proPlanDetails
+                ? toPrice(reverseMarketPrice + Number(currentMainPlanPrice))
                 : 0}
             </Typography>
             <Typography
