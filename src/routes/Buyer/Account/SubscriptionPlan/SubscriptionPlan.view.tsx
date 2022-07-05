@@ -6,7 +6,7 @@ import Alert from 'components/base/Alert';
 import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
-import { Calendar, Mastercard, DollarSign } from 'components/base/SVG';
+import { Calendar, Mastercard, DollarSign, Plus } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import CreditCardLogo from 'components/module/CreditCardLogo';
@@ -19,6 +19,7 @@ import moment from 'moment';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { Link, useHistory, useLocation } from 'react-router-dom';
+import ReactTooltip from 'react-tooltip';
 import { Tag } from 'routes/Seller/Selling/Selling.style';
 import {
   CompanyPlanAlias,
@@ -28,7 +29,10 @@ import { toPrice } from 'utils/String';
 import { getButtonTextByStatus } from 'utils/SubscriptionPlan/getButtonTextByStatus';
 import { useTheme } from 'utils/Theme';
 
-import { BenefitsList } from './InclusionsList/InclusionsList.style';
+import {
+  BenefitsList,
+  BenefitsItem,
+} from './InclusionsList/InclusionsList.style';
 import InclusionsList from './InclusionsList/InclusionsList.view';
 import { SubscriptionPlanGeneratedProps } from './SubscriptionPlan.props';
 import {
@@ -49,6 +53,9 @@ import {
   AlertsContainer,
   AlertContentContainer,
   BadgesContainer,
+  CurrentPlanIndicator,
+  PlusIconWrapper,
+  PlanTitleWrapper,
 } from './SubscriptionPlan.style';
 
 export const SubscriptionPlanView = ({
@@ -112,9 +119,11 @@ export const SubscriptionPlanView = ({
     : 0;
 
   const YourCurrentPlanIndicator = () => (
-    <Typography variant="label" weight="400" color="primary">
-      Current Plan
-    </Typography>
+    <CurrentPlanIndicator>
+      <Typography variant="label" weight="500" color="primary">
+        Current Plan
+      </Typography>
+    </CurrentPlanIndicator>
   );
 
   useEffect(() => {
@@ -363,15 +372,45 @@ export const SubscriptionPlanView = ({
                 <PlanSection className="section">
                   <Subscription>
                     <PlanTitleContainer>
-                      <Typography
-                        variant="title6"
-                        weight="900"
-                        customFont={theme.isSFM ? 'Canela' : 'Media Sans'}
-                      >
-                        Base
-                      </Typography>
+                      <PlanTitleWrapper>
+                        <Typography
+                          variant="title6"
+                          weight="900"
+                          customFont={theme.isSFM ? 'Canela' : 'Media Sans'}
+                        >
+                          Base
+                        </Typography>
+                        {subscriptionType === CompanyPlanName.BASE ? (
+                          <div>
+                            <YourCurrentPlanIndicator />
+                          </div>
+                        ) : (
+                          <>
+                            {flags?.hasDowngraded ? (
+                              <div className="subscription-action">
+                                <Button
+                                  onClick={() =>
+                                    revertSubscription(proPlanDetails?.id)
+                                  }
+                                  variant="primary"
+                                  text="Revert Subscription"
+                                />
+                              </div>
+                            ) : (
+                              <div className="subscription-action">
+                                <Button
+                                  disabled={flags?.hasDowngraded}
+                                  onClick={() => setShowBaseToggleModal(true)}
+                                  variant="primary"
+                                  text="Downgrade"
+                                />
+                              </div>
+                            )}
+                          </>
+                        )}
+                      </PlanTitleWrapper>
                       <PlanPrice>
-                        <Typography variant="title6" weight="400">
+                        <Typography variant="title5" weight="500">
                           {basePrice ? toPrice(basePrice) : 0}
                         </Typography>
                         <Typography variant="label" weight="400" color="shade6">
@@ -380,57 +419,87 @@ export const SubscriptionPlanView = ({
                       </PlanPrice>
                       <div>
                         <BenefitsList>
-                          {basePlanItems.map((i, index) => (
-                            <li key={index}>
-                              <Typography variant="body" color="shade9">
-                                {i}
-                              </Typography>
-                            </li>
-                          ))}
+                          {basePlanItems.map((i, index) => {
+                            if (index === 0) {
+                              return (
+                                <>
+                                  <BenefitsItem
+                                    key={index}
+                                    data-tip
+                                    data-for="transactValueTip"
+                                  >
+                                    <PlusIconWrapper>
+                                      <Plus width={14} height={14} />
+                                    </PlusIconWrapper>
+                                    <Typography variant="body" color="shade9">
+                                      {i}
+                                    </Typography>
+                                  </BenefitsItem>
+                                  <ReactTooltip
+                                    id="transactValueTip"
+                                    place="top"
+                                    effect="solid"
+                                    backgroundColor={theme.grey.shade9}
+                                  >
+                                    <div
+                                      style={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                      }}
+                                    >
+                                      The Transaction Value is the total value
+                                      <br />
+                                      of the products in your order excluding
+                                      <br />
+                                      any crate fees and shipping costs.
+                                    </div>
+                                  </ReactTooltip>
+                                </>
+                              );
+                            }
+                            return (
+                              <BenefitsItem key={index}>
+                                <PlusIconWrapper>
+                                  <Plus width={14} height={14} />
+                                </PlusIconWrapper>
+                                <Typography variant="body" color="shade9">
+                                  {i}
+                                </Typography>
+                              </BenefitsItem>
+                            );
+                          })}
                         </BenefitsList>
                       </div>
                     </PlanTitleContainer>
-
-                    {subscriptionType === CompanyPlanName.BASE ? (
-                      <div>
-                        <YourCurrentPlanIndicator />
-                      </div>
-                    ) : (
-                      <>
-                        {flags?.hasDowngraded ? (
-                          <div className="subscription-action">
-                            <Button
-                              onClick={() =>
-                                revertSubscription(proPlanDetails?.id)
-                              }
-                              variant="primary"
-                              text="Revert Subscription"
-                            />
+                  </Subscription>
+                  <Subscription>
+                    <PlanTitleContainer>
+                      <PlanTitleWrapper>
+                        <Typography
+                          variant="title6"
+                          weight="900"
+                          customFont={theme.isSFM ? 'Canela' : 'Media Sans'}
+                        >
+                          Pro
+                        </Typography>
+                        {subscriptionType !== CompanyPlanName.BASE ? (
+                          <div>
+                            <YourCurrentPlanIndicator />
                           </div>
                         ) : (
                           <div className="subscription-action">
                             <Button
-                              disabled={flags?.hasDowngraded}
-                              onClick={() => setShowBaseToggleModal(true)}
+                              disabled={flags?.hasCancelledPlan !== undefined}
+                              onClick={() => setShowProToggleModal(true)}
                               variant="primary"
-                              text="Downgrade"
+                              text="Upgrade"
+                              size="sm"
                             />
                           </div>
                         )}
-                      </>
-                    )}
-                  </Subscription>
-                  <Subscription>
-                    <PlanTitleContainer>
-                      <Typography
-                        variant="title6"
-                        weight="900"
-                        customFont={theme.isSFM ? 'Canela' : 'Media Sans'}
-                      >
-                        Pro
-                      </Typography>
+                      </PlanTitleWrapper>
                       <PlanPrice>
-                        <Typography variant="title5" color="shade9">
+                        <Typography variant="title5" weight="500">
                           {proPrice ? toPrice(proPrice) : 0}
                         </Typography>
                         <Typography variant="label" weight="400" color="shade6">
@@ -440,30 +509,18 @@ export const SubscriptionPlanView = ({
                       <div>
                         <BenefitsList>
                           {proPlanItems.map((i, index) => (
-                            <li key={index}>
+                            <BenefitsItem key={index}>
+                              <PlusIconWrapper>
+                                <Plus width={14} height={14} />
+                              </PlusIconWrapper>
                               <Typography variant="body" color="shade9">
                                 {i}
                               </Typography>
-                            </li>
+                            </BenefitsItem>
                           ))}
                         </BenefitsList>
                       </div>
                     </PlanTitleContainer>
-
-                    {subscriptionType !== CompanyPlanName.BASE ? (
-                      <div>
-                        <YourCurrentPlanIndicator />
-                      </div>
-                    ) : (
-                      <div className="subscription-action">
-                        <Button
-                          disabled={flags?.hasCancelledPlan !== undefined}
-                          onClick={() => setShowProToggleModal(true)}
-                          variant="primary"
-                          text="Upgrade"
-                        />
-                      </div>
-                    )}
                   </Subscription>
                 </PlanSection>
               </Row>

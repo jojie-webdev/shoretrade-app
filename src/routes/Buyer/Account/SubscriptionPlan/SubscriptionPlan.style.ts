@@ -137,7 +137,6 @@ export const FlexContainer = styled.div`
 export const PlanTitleContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 12px;
 `;
 
 export const PlanContainer = styled.div`
@@ -168,7 +167,6 @@ export const Subscription = styled.div`
   width: 50%;
 
   .subscription-action {
-    margin-top: 24px;
     &:hover {
       cursor: pointer;
     }
@@ -232,4 +230,21 @@ export const TooltipWrapper = styled.span`
 
 export const FooterNote = styled.div`
   margin-bottom: 16px;
+`;
+
+export const CurrentPlanIndicator = styled.div`
+  border: 1px solid ${({ theme }) => theme.brand.primary};
+  display: inline-flex;
+  padding: 6px 10px;
+  border-radius: 12px;
+`;
+
+export const PlusIconWrapper = styled.div`
+  width: 14px;
+  height: 14px;
+`;
+
+export const PlanTitleWrapper = styled.div`
+  display: fex;
+  justify-content: space-between;
 `;

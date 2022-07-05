@@ -22,4 +22,19 @@ export const Container = styled.div<{
 
 export const BenefitsList = styled.ul`
   padding-left: 1em;
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  margin-bottom: 0;
+`;
+
+export const BenefitsItem = styled.li`
+  border: 1px solid ${({ theme }) => theme.grey.shade3};
+  display: flex;
+  gap: 4px;
+  border-radius: 12px;
+  padding: 8px;
 `;

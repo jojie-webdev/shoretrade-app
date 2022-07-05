@@ -194,8 +194,8 @@ export const SELLER_VARIATIONS = [
 export const BUYER_STEP_SUBTITLE: { [key: number]: string } = {
   2: 'By providing us with your business details, we will automatically generate invoices for you and deliver purchases to your door.',
   3: 'Please, let us know your industry so we can provide you with more tailored information.',
-  4: 'Review the benefits of the base and premium subscription models below.',
-  6: 'These selections will result in your ShoreTrade experience being more personalised through customised search results and new product notifications. They can also be amended at any time within your account.',
+  4: 'These selections will result in your ShoreTrade experience being more personalised through customised search results and new product notifications. They can also be amended at any time within your account.',
+  5: 'Review the benefits of the base and pro subscription models below.',
 };
 
 export const SELLER_STEP_SUBTITLE: { [key: number]: string } = {
