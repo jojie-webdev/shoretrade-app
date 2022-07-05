@@ -555,17 +555,32 @@ export const SubscriptionPlanView = ({
                             </Typography>
                           </>
                         ) : (
-                          <>
-                            <Tag background={theme.brand.success}>
-                              <Typography
-                                variant="caption"
-                                color="noshade"
-                                weight="500"
+                          <div style={{ marginBottom: 12 }}>
+                            {!flags?.hasDowngraded ? (
+                              <Tag background={theme.brand.success}>
+                                <Typography
+                                  variant="caption"
+                                  color="noshade"
+                                  weight="500"
+                                >
+                                  Included
+                                </Typography>
+                              </Tag>
+                            ) : (
+                              <Badge
+                                badgeColor={theme.brand.warning}
+                                borderRadius="4px"
                               >
-                                Included
-                              </Typography>
-                            </Tag>
-                          </>
+                                <Typography
+                                  variant="overline"
+                                  color="noshade"
+                                  style={{ lineHeight: 'unset' }}
+                                >
+                                  Downgrading
+                                </Typography>
+                              </Badge>
+                            )}
+                          </div>
                         )}
                       </PlanPrice>
                     </PlanTitleContainer>
