@@ -8,6 +8,7 @@ import {
   GetCompanyPlanResponseData,
 } from 'types/store/GetCompanyPlanState';
 import { GetSubscriptionPlansResponseData } from 'types/store/GetSubscriptionPlansState';
+import { toPrice } from 'utils/String';
 import { toMaskedCardNumber } from 'utils/String/maskedCardNumber';
 import { proRata } from 'utils/SubscriptionPlan/proRata';
 
@@ -101,9 +102,9 @@ export const companyPlanToProps = (
       companyPlan,
       CompanyPlanName.REVERSE_MARKET
     ),
-    proRata: companyPlan?.changePlan
-      ? proRata(companyPlan.changePlan)
-      : undefined,
+    proRataPrice: companyPlan?.changePlan
+      ? toPrice(proRata(companyPlan.changePlan))
+      : '$0',
     latePayment:
       currentPlanDetails?.subscription.paid_at === null &&
       moment

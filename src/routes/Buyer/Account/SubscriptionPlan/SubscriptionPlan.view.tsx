@@ -80,7 +80,7 @@ export const SubscriptionPlanView = ({
   loading,
   currentReverseMarketDetails,
   flags,
-  proRata,
+  proRataPrice,
   latePayment,
 }: SubscriptionPlanGeneratedProps) => {
   const location = useLocation();
@@ -108,7 +108,7 @@ export const SubscriptionPlanView = ({
   };
 
   const basePrice = basePlanDetails ? basePlanDetails.price : 0;
-  const proPrice = proPlanDetails ? proPlanDetails.price : 0;
+  const proPrice = proPlanDetails ? toPrice(proPlanDetails.price) : '$0';
   const currentMainPlanPrice = currentPlanDetails
     ? currentPlanDetails.plan.name === CompanyPlanName.BASE
       ? basePlanDetails?.price
@@ -482,14 +482,21 @@ export const SubscriptionPlanView = ({
                         >
                           Pro
                         </Typography>
-                        {subscriptionType !== CompanyPlanName.BASE ? (
+                        {currentPlanDetails?.plan.name !==
+                        CompanyPlanName.BASE ? (
                           <div>
                             <YourCurrentPlanIndicator />
                           </div>
                         ) : (
                           <div className="subscription-action">
                             <Button
-                              disabled={flags?.hasCancelledPlan !== undefined}
+                              disabled={
+                                flags
+                                  ? flags.hasCancelledPlan
+                                    ? true
+                                    : false
+                                  : false
+                              }
                               onClick={() => setShowProToggleModal(true)}
                               variant="primary"
                               text="Upgrade"
@@ -500,7 +507,7 @@ export const SubscriptionPlanView = ({
                       </PlanTitleWrapper>
                       <PlanPrice>
                         <Typography variant="title5" weight="500">
-                          {proPrice ? toPrice(proPrice) : 0}
+                          {proPrice}
                         </Typography>
                         <Typography variant="label" weight="400" color="shade6">
                           /Month
@@ -695,7 +702,7 @@ export const SubscriptionPlanView = ({
       <ConfirmationModal
         isOpen={showProToggleModal}
         title="Upgrade to the Pro model and unlock more features!"
-        actionText={`Upgrade ($${proRata})`} // todo get upgrade cost
+        actionText={`Upgrade (${proRataPrice})`} // todo get upgrade cost
         onClickClose={() => {
           setShowProToggleModal(false);
           // setIsMonthly(!isMonthly);
@@ -711,7 +718,7 @@ export const SubscriptionPlanView = ({
         <Typography color="shade6">
           The ongoing monthly cost will be:
           <Typography variant="body" component="span">
-            &nbsp;${proPrice}
+            &nbsp;{proPrice}
           </Typography>
           <Typography
             component="span"
@@ -728,7 +735,7 @@ export const SubscriptionPlanView = ({
         </Typography>
         <div style={{ display: 'flex', margin: '8px 0' }}>
           <Typography variant="title5" weight="500">
-            ${proRata}
+            {proRataPrice}
           </Typography>
         </div>
         <div style={{ display: 'flex' }}>
@@ -736,7 +743,7 @@ export const SubscriptionPlanView = ({
             This is a pro rata cost to have the Pro features for the remainder
             of your current payment period. All future costs will be
             <Typography component="span" color="shade9">
-              &nbsp;${proPrice}
+              &nbsp;{proPrice}
             </Typography>
             <Typography variant="caption" component="span" color="shade6">
               &nbsp;/{isMonthly ? 'Month' : 'Year'}
