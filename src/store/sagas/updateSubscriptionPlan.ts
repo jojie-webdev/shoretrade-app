@@ -35,7 +35,11 @@ function* updateSubscriptionPlanSuccess(
   const state: Store = yield select();
   if (state.auth.token) {
     const currentPlan = state.getCompanyPlan.data?.data.activePlans.find((ac) =>
-      [CompanyPlanName.PRO, CompanyPlanName.BASE].includes(ac.plan.name)
+      [
+        CompanyPlanName.PRO,
+        CompanyPlanName.BASE,
+        CompanyPlanName.REVERSE_MARKET,
+      ].includes(ac.plan.name)
     );
     if (currentPlan) {
       yield put(

@@ -15,7 +15,7 @@ export interface SubscriptionPlanTransformOutputProps {
   annualPrice: string;
   monthlyPrice: string;
   nextBillingDate: string | null;
-  cancellationPeriod: string | null;
+  cancellationReversePeriodReverseMarket: string | null;
   cardBrand: string;
   cardNumberMasked: string | null;
   isSaasSubscribed: boolean;
@@ -23,7 +23,8 @@ export interface SubscriptionPlanTransformOutputProps {
   features: SubscriptionPlanFeature[];
   planStatus: string;
   nextBillingAmount: number;
-  reverseMarketDetails?: GetSubscriptionPlansResponseData;
+  reverseMarketPlanDetails?: GetSubscriptionPlansResponseData;
+  reverseMarketAddOnDetails?: AddOn;
   currentPlanDetails?: ActivePlan;
   noActivePlan: boolean;
   currentReverseMarketDetails?: ActivePlan;

@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react';
 
+import Alert from 'components/base/Alert';
 import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs';
+import Button from 'components/base/Button';
 import {
   Calendar,
   Mastercard,
   ShoretradeProSellerLogo,
   DollarSign,
 } from 'components/base/SVG';
-import TwoWayToggle from 'components/base/TwoWayToggle';
 import Typography from 'components/base/Typography';
 import AdditionalPlanFeatures from 'components/module/AdditionalPlanFeatures';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import CreditCardLogo from 'components/module/CreditCardLogo';
-import PlanFeatures from 'components/module/PlanFeatures';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { REVERSE_MARKETPLACE_PRICE } from 'consts/prices';
-import moment from 'moment';
 import qs from 'qs';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
@@ -44,6 +42,8 @@ import {
   ReverseMarketplace,
   PlanPrice,
   BadgesContainer,
+  AlertsContainer,
+  AlertContentContainer,
 } from './SubscriptionPlan.style';
 
 export const SubscriptionPlanView = ({
@@ -60,12 +60,14 @@ export const SubscriptionPlanView = ({
   currentMarketSector,
   cancelSubscription,
   updateSubscription,
-  reverseMarketDetails,
+  reverseMarketAddOnDetails,
+  reverseMarketPlanDetails,
   renewSubscription,
   currentPlanDetails,
   currentReverseMarketDetails,
   company,
   flags,
+  cancellationReversePeriodReverseMarket,
 }: SubscriptionPlanGeneratedProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS.sm });
@@ -76,23 +78,19 @@ export const SubscriptionPlanView = ({
   const [showToggleModal, setShowToggleModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [
+    showReverseMarketPlaceToggleModal,
+    setShowReverseMarketPlaceToggleModal,
+  ] = useState(false);
+  const [
     showCancelReverseMarketModal,
     setShowCancelReverseMarketModal,
   ] = useState(false);
   const [showRenewModal, setShowRenewModal] = useState(false);
   const price = toPrice(isMonthly ? monthlyPrice : annualPrice);
 
-  const reverseMarketPlace = features.find(
-    (feature) => feature.alias === 'REVERSED_MARKETPLACE'
-  );
-
-  const getNextBillingAmount = () => {
-    const reverseMarketPlacePrice = reverseMarketPlace
-      ? REVERSE_MARKETPLACE_PRICE.SELLER
-      : 0;
-
-    return reverseMarketPlacePrice;
-  };
+  const reverseMarketPrice = reverseMarketPlanDetails
+    ? Number(reverseMarketPlanDetails.price)
+    : 0;
 
   useEffect(() => {
     setIsMonthly(planInterval !== 'ANNUAL');
@@ -114,7 +112,16 @@ export const SubscriptionPlanView = ({
           ]}
         />
       </BreadcrumbsContainer>
-
+      <AlertsContainer>
+        {flags?.hasCancelledReversedMarketplace && (
+          <Alert
+            variant="error"
+            fullWidth={true}
+            content={<></>}
+            header={`Reverse Marketplace Cancellation ${cancellationReversePeriodReverseMarket}`}
+          />
+        )}
+      </AlertsContainer>
       {/* <DicountContainer>
         <div className="discount">
           <Typography
@@ -277,7 +284,7 @@ export const SubscriptionPlanView = ({
                         >
                           $
                           {theme.appType === 'seller' &&
-                            reverseMarketDetails?.price}
+                            reverseMarketPlanDetails?.price}
                         </Typography>
                         <Typography variant="label" weight="400" color="shade6">
                           /Month
@@ -295,11 +302,11 @@ export const SubscriptionPlanView = ({
                         you connect to the Reverse Marketplace. Buyers make
                         specific requests for seafood products, and if you can
                         provide that product then make them an offer. By
-                        aligning your stock supply to the buyers' needs, your
+                      aligning your stock supply to the buyers' needs, your
                         product is sold more efficiently, and less resources are
                         taken from our oceans. Gain an extra sales channel and
                         revolutionize your seafood business with Reverse
-                        Marketpalce!
+                        Marketplace!
                       </Typography>
                     </ReverseMarketplace>
 
@@ -309,20 +316,38 @@ export const SubscriptionPlanView = ({
                         className="cancel-subscription"
                         onClick={() => setShowCancelReverseMarketModal(true)}
                       >
-                        <Typography
-                          variant="label"
-                          color="primary"
-                          weight="400"
-                          style={{
-                            textDecoration: 'underline',
-                            cursor: 'pointer',
-                          }}
-                        >
-                          Cancel Subscription
-                        </Typography>
+                        <Button
+                          onClick={() => true}
+                          variant="primary"
+                          text="Remove Subscription"
+                        />
                       </div>
                     ) : (
-                      <></>
+                      <>
+                        <div className="subscription-action">
+                          {flags?.hasCancelledReversedMarketplace ? (
+                            <Button
+                              onClick={() => {
+                                if (currentReverseMarketDetails) {
+                                  renewSubscription(
+                                    currentReverseMarketDetails.plan.id
+                                  );
+                                }
+                              }}
+                              variant="primary"
+                              text="Renew Subscription"
+                            />
+                          ) : (
+                            <Button
+                              onClick={() =>
+                                setShowReverseMarketPlaceToggleModal(true)
+                              }
+                              variant="primary"
+                              text="Subscribe"
+                            />
+                          )}
+                        </div>
+                      </>
                     )}
 
                     {/* // NEEDED LATER FOR MARKET PLACE CANCEL SUBSCRIPTION TASK */}
@@ -448,6 +473,65 @@ export const SubscriptionPlanView = ({
         cancel={() => setShowRenewModal(false)}
         style={{ width: '686px' }}
       />
+      <ConfirmationModal
+        isOpen={showReverseMarketPlaceToggleModal}
+        title="Add Reverse Marketplace package"
+        actionText="Confirm"
+        hideCancel
+        onClickClose={() => setShowReverseMarketPlaceToggleModal(false)}
+        action={() => {
+          if (reverseMarketAddOnDetails) {
+            updateSubscription(reverseMarketAddOnDetails?.id);
+            setShowReverseMarketPlaceToggleModal(false);
+          }
+        }}
+        style={{ width: '686px' }}
+      >
+        <Typography color="shade6">
+          The ongoing monthly cost will be an additional:
+          <Typography variant="body" component="span" color="noshade">
+            &nbsp;
+            {reverseMarketPrice ? toPrice(reverseMarketPrice) : 0}
+          </Typography>
+          <Typography
+            component="span"
+            variant="caption"
+            weight="500"
+            color="noshade"
+          >
+            /Month
+          </Typography>
+        </Typography>
+        <Typography variant="body" weight="500" color="shade6">
+          Pay the amount below to unlock your access now.
+        </Typography>
+        <div style={{ display: 'flex', margin: '8px 0' }}>
+          <Typography variant="title5" weight="500" color="noshade">
+            {reverseMarketAddOnDetails
+              ? toPrice(reverseMarketAddOnDetails.remaining_price)
+              : 0}
+          </Typography>
+        </div>
+        <div style={{ display: 'flex', marginTop: 12 }}>
+          <Typography variant="body" color="shade6">
+            This is a pro rata cost to have Reverse Marketplace access for the
+            remainder of your current payment period. Your total future monthly
+            cost will be
+            <Typography variant="body" component="span" color="noshade">
+              &nbsp;
+              {reverseMarketPrice ? toPrice(reverseMarketPrice) : 0}
+            </Typography>
+            <Typography
+              component="span"
+              variant="caption"
+              weight="500"
+              color="noshade"
+            >
+              /Month
+            </Typography>
+          </Typography>
+        </div>
+      </ConfirmationModal>
     </Container>
   );
 };

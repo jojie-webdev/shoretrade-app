@@ -69,12 +69,27 @@ export const companyPlanToProps = (
 
   const currentPlanDetails = getActivePlan(companyPlan);
 
+  const currentReverseMarketDetails = getActivePlan(
+    companyPlan,
+    CompanyPlanName.REVERSE_MARKET
+  );
+
+  const daysUntilEndReverseMarketPlace = moment(
+    moment(currentReverseMarketDetails?.subscription.ends_at).utc()
+  )
+    .utc()
+    .diff(moment().utc(), 'day');
+
   return {
     annualPrice: annualPlan?.price || '0',
     monthlyPrice: monthlyPlan?.price || '0',
     nextBillingDate,
     cancellationPeriod: companyPlan?.flags?.hasCancelledPlan
       ? `in ${daysUntilEnd} days`
+      : '',
+    cancellationReversePeriodReverseMarket: companyPlan?.flags
+      ?.hasCancelledReversedMarketplace
+      ? `in ${daysUntilEndReverseMarketPlace} days`
       : '',
     cardBrand,
     subscriptionType:
@@ -98,10 +113,7 @@ export const companyPlanToProps = (
     )[0],
     noActivePlan: companyPlan ? companyPlan.activePlans.length > 0 : true,
     currentPlanDetails,
-    currentReverseMarketDetails: getActivePlan(
-      companyPlan,
-      CompanyPlanName.REVERSE_MARKET
-    ),
+    currentReverseMarketDetails,
     proRataPrice: companyPlan?.changePlan
       ? toPrice(proRata(companyPlan.changePlan))
       : '$0',

@@ -38,21 +38,29 @@ export const companyPlanToProps = (
   const getActivePlan = (name?: CompanyPlanName): ActivePlan | undefined => {
     if (companyPlan?.activePlans && name === CompanyPlanName.REVERSE_MARKET) {
       return companyPlan?.activePlans.find((ac) =>
-        [
-          CompanyPlanAlias.FEATURE_REVERSED_MARKETPLACE,
-          CompanyPlanAlias.FREE_BASE_WITH_REVERSED_MARKETPLACE,
-          CompanyPlanAlias.PREMIUM,
-        ].includes(ac.plan.alias)
+        [CompanyPlanAlias.FEATURE_REVERSED_MARKETPLACE_SELLER].includes(
+          ac.plan.alias
+        )
       );
     }
   };
+
+  const currentReverseMarketDetails = getActivePlan(
+    CompanyPlanName.REVERSE_MARKET
+  );
+  const daysUntilEndReverseMarketPlace = moment(
+    moment(currentReverseMarketDetails?.subscription.ends_at).utc()
+  )
+    .utc()
+    .diff(moment().utc(), 'day');
 
   return {
     annualPrice: annualPlan?.price || '0',
     monthlyPrice: monthlyPlan?.price || '0',
     nextBillingDate,
-    cancellationPeriod: companyPlan?.flags?.hasCancelledPlan
-      ? `in ${daysUntilEnd} days`
+    cancellationReversePeriodReverseMarket: companyPlan?.flags
+      ?.hasCancelledReversedMarketplace
+      ? `in ${daysUntilEndReverseMarketPlace} days`
       : '',
     cardBrand,
     subscriptionType:
@@ -69,11 +77,14 @@ export const companyPlanToProps = (
       : true,
     planStatus: '',
     nextBillingAmount: companyPlan?.nextBillingData.price || 0,
-    reverseMarketDetails: plans.filter(
+    reverseMarketPlanDetails: plans.filter(
+      (a) => a.alias === CompanyPlanAlias.FEATURE_REVERSED_MARKETPLACE_SELLER
+    )[0],
+    reverseMarketAddOnDetails: companyPlan?.addOns.filter(
       (a) => a.alias === 'FEATURE_REVERSED_MARKETPLACE'
     )[0],
     noActivePlan: companyPlan ? companyPlan.activePlans.length > 0 : true,
     currentPlanDetails: getActivePlan(),
-    currentReverseMarketDetails: getActivePlan(CompanyPlanName.REVERSE_MARKET),
+    currentReverseMarketDetails,
   };
 };

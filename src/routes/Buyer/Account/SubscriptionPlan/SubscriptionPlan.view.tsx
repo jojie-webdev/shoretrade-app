@@ -82,6 +82,7 @@ export const SubscriptionPlanView = ({
   flags,
   proRataPrice,
   latePayment,
+  cancellationReversePeriodReverseMarket,
 }: SubscriptionPlanGeneratedProps) => {
   const location = useLocation();
   const theme = useTheme();
@@ -94,6 +95,10 @@ export const SubscriptionPlanView = ({
   const [isMonthly, setIsMonthly] = useState(true);
   const [showProToggleModal, setShowProToggleModal] = useState(false);
   const [showBaseToggleModal, setShowBaseToggleModal] = useState(false);
+  const [
+    showCancelReverseMarketModal,
+    setShowCancelReverseMarketModal,
+  ] = useState(false);
   const [
     showReverseMarketPlaceToggleModal,
     setShowReverseMarketPlaceToggleModal,
@@ -157,6 +162,14 @@ export const SubscriptionPlanView = ({
         />
       </BreadcrumbsContainer>
       <AlertsContainer>
+        {flags?.hasCancelledReversedMarketplace && (
+          <Alert
+            variant="error"
+            fullWidth={true}
+            content={<></>}
+            header={`Reverse MarketPlace Cancellation ${cancellationReversePeriodReverseMarket}`}
+          />
+        )}
         {flags?.hasCancelledPlan && !flags?.hasDowngraded && (
           <Alert
             fullWidth
@@ -612,9 +625,39 @@ export const SubscriptionPlanView = ({
                     </ReverseMarketplace>
 
                     {/* // NEEDED LATER FOR MARKET PLACE CANCEL SUBSCRIPTION TASK */}
-                    {currentReverseMarketDetails?.subscription?.paid_at ||
-                    currentPlanDetails?.plan.name ===
-                      CompanyPlanName.PRO ? null : (
+                    {currentReverseMarketDetails ||
+                    currentPlanDetails?.plan.name === CompanyPlanName.PRO ? (
+                      <>
+                        {flags?.hasCancelledReversedMarketplace ? (
+                          <div className="subscription-action">
+                            <Button
+                              onClick={() => {
+                                if (currentReverseMarketDetails?.plan.id) {
+                                  renewSubscription(
+                                    currentReverseMarketDetails?.plan.id
+                                  );
+                                }
+                              }}
+                              variant="primary"
+                              text="Renew Subscription"
+                            />
+                          </div>
+                        ) : (
+                          <div
+                            className="cancel-subscription"
+                            onClick={() =>
+                              setShowCancelReverseMarketModal(true)
+                            }
+                          >
+                            <Button
+                              onClick={() => true}
+                              variant="primary"
+                              text="Remove Subscription"
+                            />
+                          </div>
+                        )}
+                      </>
+                    ) : (
                       <div className="subscription-action">
                         <Button
                           onClick={() =>
@@ -876,6 +919,33 @@ export const SubscriptionPlanView = ({
             >
               /Month
             </Typography>
+          </Typography>
+        </div>
+      </ConfirmationModal>
+      <ConfirmationModal
+        isOpen={showCancelReverseMarketModal}
+        title="Are you sure you want to cancel your Reverse Marketplace Access?"
+        actionText="No"
+        cancelText="Cancel Subscription"
+        cancel={() => {
+          if (currentReverseMarketDetails?.plan.id) {
+            cancelSubscription(currentReverseMarketDetails?.plan.id);
+            setShowCancelReverseMarketModal(false);
+          }
+          setShowCancelModal(false);
+        }}
+        onClickClose={() => {
+          setShowCancelReverseMarketModal(false);
+        }}
+        action={() => {
+          setShowCancelReverseMarketModal(false);
+          // setIsMonthly(!isMonthly);
+        }}
+        style={{ width: '686px' }}
+      >
+        <div>
+          <Typography color="shade6">
+            Your access will be revoked after your payment period ends.
           </Typography>
         </div>
       </ConfirmationModal>

@@ -26,6 +26,23 @@ export const ToggleContainer = styled.div`
   margin-bottom: 35px;
 `;
 
+export const AlertsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  width: 100%;
+
+  > div {
+    margin-bottom: 16px;
+  }
+`;
+
+export const AlertContentContainer = styled.div`
+  .actions {
+    margin-top: 14px;
+  }
+`;
+
 export const SubscriptionContainer = styled.div`
   display: flex;
   justify-content: center;

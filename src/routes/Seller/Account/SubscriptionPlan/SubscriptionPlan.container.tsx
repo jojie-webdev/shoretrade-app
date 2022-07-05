@@ -67,12 +67,6 @@ const SubscriptionPlan = () => {
     dispatch(paySubscriptionActions.clear());
   }, []);
 
-  useEffect(() => {
-    if (company?.id && (updateSuccess || cancelSuccess || renewSuccess)) {
-      dispatch(getActivePlanActions.request({ companyId: company.id }));
-    }
-  }, [updateSuccess, cancelSuccess, renewSuccess]);
-
   // METHODS
 
   const cancelSubscription = (subscriptionPlanId: string) => {
@@ -100,9 +94,6 @@ const SubscriptionPlan = () => {
     }
   };
 
-  /**
-   * For now use base as default
-   */
   const renewSubscription = (subscriptionPlanId?: string) => {
     if (company?.id) {
       dispatch(

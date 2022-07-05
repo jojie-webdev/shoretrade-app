@@ -1,4 +1,5 @@
 import { GenericResponse } from 'types/GenericResponse';
+
 import { CompanyPlanAlias, CompanyPlanName } from './GetCompanyPlanState';
 
 export type GetSubscriptionPlansMeta = {

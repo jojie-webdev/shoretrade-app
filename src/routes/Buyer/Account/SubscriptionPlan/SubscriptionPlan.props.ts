@@ -16,6 +16,7 @@ export interface SubscriptionPlanTransformOutputProps {
   monthlyPrice: string;
   nextBillingDate: string | null;
   cancellationPeriod: string | null;
+  cancellationReversePeriodReverseMarket: string | null;
   cardBrand: string;
   cardNumberMasked: string | null;
   isSaasSubscribed: boolean;
