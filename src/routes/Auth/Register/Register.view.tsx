@@ -69,6 +69,8 @@ import {
   PLAN_NAME,
   PLAN_PRICE,
   TRANSACTION_VALUES,
+  SELLER_REVERSE_MARKET_FEAT,
+  BUYER_REVERSE_MARKET_FEAT,
 } from './Register.constants';
 import { RegisterGeneratedProps, StepFormProps } from './Register.props';
 import {
@@ -186,8 +188,11 @@ const StepForm = ({
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const reverseMarketPlaceAlias = isSeller
+    ? SELLER_REVERSE_MARKET_FEAT
+    : BUYER_REVERSE_MARKET_FEAT;
   const hasReverseMarketPlace = registrationDetails.subscriptionPreference.addOns.includes(
-    'FEATURE_REVERSED_MARKETPLACE'
+    reverseMarketPlaceAlias
   );
 
   const MAX_STEP = !isSeller ? 7 : hasReverseMarketPlace ? 9 : 8;
@@ -385,13 +390,13 @@ const StepForm = ({
           plan: 'PRO',
           addOns: [
             ...registrationDetails.subscriptionPreference.addOns,
-            'FEATURE_REVERSED_MARKETPLACE',
+            reverseMarketPlaceAlias,
           ],
           transactionValue: value,
         },
       });
       setSelectedPlan('PRO');
-      setReverseMarketPlace(['FEATURE_REVERSED_MARKETPLACE']);
+      setReverseMarketPlace([reverseMarketPlaceAlias]);
     } else {
       updateRegistrationDetails({
         subscriptionPreference: {
@@ -416,7 +421,7 @@ const StepForm = ({
   );
 
   const reverseMarketPlacePrice = registrationDetails.subscriptionPreference.addOns.includes(
-    'FEATURE_REVERSED_MARKETPLACE'
+    reverseMarketPlaceAlias
   )
     ? isSeller
       ? 279
@@ -431,13 +436,10 @@ const StepForm = ({
       updateRegistrationDetails({
         subscriptionPreference: {
           ...registrationDetails.subscriptionPreference,
-          addOns: ['FEATURE_REVERSED_MARKETPLACE'],
+          addOns: [reverseMarketPlaceAlias],
         },
       });
-      setReverseMarketPlace([
-        ...reverseMarketPlace,
-        'FEATURE_REVERSED_MARKETPLACE',
-      ]);
+      setReverseMarketPlace([...reverseMarketPlace, reverseMarketPlaceAlias]);
     }
     if (
       !isSeller &&
@@ -456,10 +458,10 @@ const StepForm = ({
     const addOns: string[] = hasAddOn
       ? [
           ...registrationDetails.subscriptionPreference.addOns,
-          'FEATURE_REVERSED_MARKETPLACE',
+          reverseMarketPlaceAlias,
         ]
       : registrationDetails.subscriptionPreference.addOns.filter(
-          (item) => item !== 'FEATURE_REVERSED_MARKETPLACE'
+          (item) => item !== reverseMarketPlaceAlias
         );
     if (registrationDetails.subscriptionPreference.plan === PLAN_NAME.BASE) {
       updateRegistrationDetails({
@@ -1572,13 +1574,13 @@ const StepForm = ({
                                         .plan === PLAN_NAME.PRO
                                         ? false
                                         : reverseMarketPlace.includes(
-                                            'FEATURE_REVERSED_MARKETPLACE'
+                                            reverseMarketPlaceAlias
                                           )
                                     }
                                     onClick={() =>
                                       additionalSubscriptionHandler(
                                         !reverseMarketPlace.includes(
-                                          'FEATURE_REVERSED_MARKETPLACE'
+                                          reverseMarketPlaceAlias
                                         )
                                       )
                                     }
@@ -1820,7 +1822,7 @@ const StepForm = ({
                               </Typography>
                             </PaymentPriceRow>
                             {registrationDetails.subscriptionPreference.addOns.includes(
-                              'FEATURE_REVERSED_MARKETPLACE'
+                              reverseMarketPlaceAlias
                             ) &&
                               registrationDetails.subscriptionPreference
                                 .plan === PLAN_NAME.BASE && (
@@ -1843,7 +1845,7 @@ const StepForm = ({
                                   {registrationDetails.subscriptionPreference
                                     .plan === PLAN_NAME.BASE
                                     ? registrationDetails.subscriptionPreference.addOns.includes(
-                                        'FEATURE_REVERSED_MARKETPLACE'
+                                        reverseMarketPlaceAlias
                                       )
                                       ? PLAN_PRICE.BASE.priceWithReverse.toFixed(
                                           2
@@ -2068,8 +2070,11 @@ const RegisterView = (props: RegisterGeneratedProps) => {
   const steps = isSeller ? SELLER_STEPS : BUYER_STEPS;
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const marketSectors = isSeller ? SELLER_VARIATIONS : BUYER_VARIATIONS;
+  const reverseMarketPlaceAlias = isSeller
+    ? SELLER_REVERSE_MARKET_FEAT
+    : BUYER_REVERSE_MARKET_FEAT;
   const hasReverseMarketPlace = registrationDetails.subscriptionPreference.addOns.includes(
-    'FEATURE_REVERSED_MARKETPLACE'
+    reverseMarketPlaceAlias
   );
 
   const renderRef = useRef<HTMLDivElement | null>(null);
