@@ -81,7 +81,7 @@ export const companyPlanToProps = (
       (a) => a.alias === CompanyPlanAlias.FEATURE_REVERSED_MARKETPLACE_SELLER
     )[0],
     reverseMarketAddOnDetails: companyPlan?.addOns.filter(
-      (a) => a.alias === 'FEATURE_REVERSED_MARKETPLACE'
+      (a) => a.alias === CompanyPlanAlias.FEATURE_REVERSED_MARKETPLACE_SELLER
     )[0],
     noActivePlan: companyPlan ? companyPlan.activePlans.length > 0 : true,
     currentPlanDetails: getActivePlan(),
