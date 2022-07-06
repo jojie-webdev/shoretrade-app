@@ -56,7 +56,7 @@ const PlanPaymentMethod = (): JSX.Element => {
     useSelector((state: Store) => state.deleteCard.data?.status) || false;
 
   const hasReverseMarketPlace = activePlan?.features.find(
-    (feature) => feature.alias === 'REVERSED_MARKETPLACE'
+    (feature: { alias: string }) => feature.alias === 'REVERSED_MARKETPLACE'
   );
 
   const sellerAmountDue = hasReverseMarketPlace

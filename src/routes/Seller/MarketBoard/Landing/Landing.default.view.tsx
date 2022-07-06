@@ -55,6 +55,13 @@ const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
         <FirstDescription weight="400" color="shade6">
           Speed up your selling time by making offers on Buyer Requests!
         </FirstDescription>
+        <Button
+          padding={isMobile ? '10px 16px' : '14px 24px'}
+          textVariant="label"
+          textWeight="400"
+          text="See plans"
+          onClick={() => props.handleSeePlansClick()}
+        />
       </Container1>
 
       <Visible xs>

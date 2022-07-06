@@ -4,7 +4,6 @@ import {
   GetActiveOffersRequestResponseItem,
   Offer,
 } from 'types/store/GetActiveOffersState';
-import { SubscriptionPlanFeature } from 'types/store/GetSubscriptionPlansState';
 
 export type Result = {
   id: string;
@@ -26,7 +25,6 @@ export type Result = {
 };
 
 export interface MarketRequestsLandingGeneratedProps {
-  features: SubscriptionPlanFeature[];
   marketRequests: Result[];
   currentPath: string;
   onClickItem: (row: any) => void;
@@ -39,4 +37,5 @@ export interface MarketRequestsLandingGeneratedProps {
   setItemToDelete: Dispatch<SetStateAction<{ value: null | string }>>;
   loading: boolean;
   activeOffersData: GetActiveOffersRequestResponseItem[];
+  reverseMarketPlace: boolean;
 }

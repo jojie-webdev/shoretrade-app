@@ -298,7 +298,6 @@ const MarketRequestsLandingView = (
 ) => {
   const history = useHistory();
   const {
-    features,
     marketRequests,
     onClickItem,
     onDelete,
@@ -307,15 +306,12 @@ const MarketRequestsLandingView = (
     pendingDeleteMarketRequest,
     loading,
     activeOffersData,
+    reverseMarketPlace,
   } = props;
 
   const [isAcceptClicked, setIsAcceptClicked] = useLocalStorage(
     'isTermsAndConAccepted',
     false
-  );
-
-  const reverseMarketPlace = features.find(
-    (feature) => feature.alias === 'REVERSED_MARKETPLACE'
   );
 
   if (pendingDeleteMarketRequest || loading) {

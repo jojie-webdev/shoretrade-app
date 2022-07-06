@@ -42,14 +42,12 @@ function* getActivePlanSuccess(
   // const state: Store = yield select();
   // const isCompanyDeactivated =
   //   state.getUser.data?.data.user.companies[0].status === 'DEACTIVATED';
-
   // if (action.payload.data) {
   //   const plan = action.payload.data;
   //   const planStatus = getActivePlanStatus(plan);
   //   const isPaid = !!action.payload.data.paid_at;
   //   const endsAt = moment(plan.ends_at).utc();
   //   const planEnded = moment().utc().isSameOrAfter(endsAt);
-
   //   yield put(
   //     subscriptionActions.update({
   //       status: planStatus,
@@ -76,7 +74,7 @@ function* getActivePlanSuccess(
 
 function* getActivePlanWatcher() {
   yield takeLatest(getActivePlanActions.REQUEST, getActivePlanRequest);
-  yield takeLatest(getActivePlanActions.SUCCESS, getActivePlanSuccess);
+  // yield takeLatest(getActivePlanActions.SUCCESS, getActivePlanSuccess);
 }
 
 export default getActivePlanWatcher;

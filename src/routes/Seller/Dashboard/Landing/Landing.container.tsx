@@ -12,6 +12,7 @@ import {
   readMarketNotificationActions,
   sellerDashboardActions,
 } from 'store/actions';
+import { GetActivePlanResponseData } from 'types/store/GetActivePlanState';
 import { Store } from 'types/store/Store';
 import getValidDateRangeByFinancialYear from 'utils/Date/getValidDateRangeByFinancialYear';
 

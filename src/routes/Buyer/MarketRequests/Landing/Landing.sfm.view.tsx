@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Button from 'components/base/Button';
 import { SfmLogo2 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -39,6 +40,13 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
         <FirstDescription weight="400" color="shade7">
           Can’t find a product? Create a Market Request!
         </FirstDescription>
+        <Button
+          padding={isMobile ? '10px 16px' : '14px 24px'}
+          textVariant="label"
+          textWeight="400"
+          text="See plans"
+          onClick={() => props.handleSeePlansClick()}
+        />
       </Container1>
 
       <Visible xs>

@@ -50,7 +50,7 @@ const BarcodeScannerDefaultView = () => {
           </Visible>
         </LogoContainer>
         <FirstDescription weight="400" color="shade7">
-          Download the “ShoreTrade” Buyer App to scan &amp; mark your orders as
+          Download the ShoreTrade app to scan &amp; mark your orders as
           completed
         </FirstDescription>
       </Container1>

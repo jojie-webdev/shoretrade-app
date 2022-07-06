@@ -136,6 +136,22 @@ const MarketBoardLanding = (): JSX.Element => {
   );
   const onChangeCurrentTab = (newTab: TabOptions) => setCurrentTab(newTab);
 
+  const activePlans = useSelector(
+    (store: Store) => store.getCompanyPlan.data?.data.activePlans
+  );
+  const isActivePlanLoading = useSelector(
+    (store: Store) => store.getCompanyPlan.pending
+  );
+
+  const reverseMarketPlace =
+    (activePlans &&
+      activePlans?.filter(
+        (i) =>
+          i.plan.features.filter((pf) => pf.name === 'Market Requests').length >
+          0
+      )?.length > 0) ||
+    false;
+
   useEffect(() => {
     // if (currentTab === 'Buyer Requests') {
     //   dispatch(getAllMarketRequestActions.request({}));
@@ -210,18 +226,6 @@ const MarketBoardLanding = (): JSX.Element => {
       buyerRequest: data,
     });
   };
-
-  const activePlan = useSelector(
-    (store: Store) => store.getActivePlan.data?.data
-  );
-
-  const activePlanError = useSelector(
-    (store: Store) => store.getActivePlan.error
-  );
-
-  const activePlanLoading = useSelector(
-    (store: Store) => store.getActivePlan.pending
-  );
 
   const onClickActiveOffer = (data: GetActiveOffersRequestResponseItem) => {
     history.push(SELLER_MARKET_BOARD_ROUTES.NEGOTIATE, {
@@ -320,15 +324,20 @@ const MarketBoardLanding = (): JSX.Element => {
     handleSeePlansClick,
   };
 
-  const reverseMarketPlace = activePlan?.features.find(
-    (feature) => feature.alias === 'REVERSED_MARKETPLACE'
-  );
-
-  if (theme.isSFM) {
+  if (
+    theme.isSFM &&
+    !reverseMarketPlace &&
+    isActivePlanLoading !== null &&
+    isActivePlanLoading === false
+  ) {
     return <LandingSFMView {...sfmViewProps} />;
   }
 
-  if (!reverseMarketPlace && !activePlanLoading && activePlanError) {
+  if (
+    !reverseMarketPlace &&
+    isActivePlanLoading !== null &&
+    isActivePlanLoading === false
+  ) {
     return <LandingDefaultView {...defaultViewProps} />;
   }
 
@@ -356,7 +365,11 @@ const MarketBoardLanding = (): JSX.Element => {
     );
   }
 
-  return <MarketBoardLandingView {...generatedProps} />;
+  if (isActivePlanLoading !== null && isActivePlanLoading === false) {
+    return <MarketBoardLandingView {...generatedProps} />;
+  }
+
+  return <></>;
 };
 
 export default MarketBoardLanding;

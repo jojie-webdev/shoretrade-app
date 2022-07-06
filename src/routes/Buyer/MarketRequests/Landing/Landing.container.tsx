@@ -56,13 +56,22 @@ const MarketRequestsLanding = (): JSX.Element => {
     (d) => moment().diff(moment(d.marketRequest.createdAt), 'days') < 7
   );
 
-  const activePlan = useSelector(
-    (store: Store) => store.getActivePlan.data?.data
+  const activePlans = useSelector(
+    (store: Store) => store.getCompanyPlan.data?.data.activePlans
   );
 
-  const activePlanLoading = useSelector(
-    (store: Store) => store.getActivePlan.pending
+  const isActivePlanLoading = useSelector(
+    (store: Store) => store.getCompanyPlan.pending
   );
+
+  const reverseMarketPlace =
+    (activePlans &&
+      activePlans?.filter(
+        (i) =>
+          i.plan.features.filter((pf) => pf.name === 'Market Requests').length >
+          0
+      )?.length > 0) ||
+    false;
 
   const onClickItem = (row: Result) => {
     if (row.offers > 0) {
@@ -99,7 +108,6 @@ const MarketRequestsLanding = (): JSX.Element => {
   }, [deleteMarketRequest]);
 
   const generatedProps: MarketRequestsLandingGeneratedProps = {
-    features: activePlan?.features || [],
     currentPath: location.pathname,
     marketRequests: getMarketRequestLandingData(
       buyerRequests.data?.data?.marketRequests.filter(
@@ -114,6 +122,7 @@ const MarketRequestsLanding = (): JSX.Element => {
     setItemToDelete,
     loading: loading || false,
     activeOffersData,
+    reverseMarketPlace,
   };
 
   const sfmViewProps = {
@@ -124,19 +133,28 @@ const MarketRequestsLanding = (): JSX.Element => {
     handleSeePlansClick,
   };
 
-  const reverseMarketPlace = activePlan?.features.find(
-    (feature) => feature.alias === 'REVERSED_MARKETPLACE'
-  );
-
-  if (theme.isSFM) {
+  if (
+    theme.isSFM &&
+    !reverseMarketPlace &&
+    isActivePlanLoading !== null &&
+    isActivePlanLoading === false
+  ) {
     return <LandingSFMView {...sfmViewProps} />;
   }
 
-  if (!reverseMarketPlace && !activePlanLoading && activePlan?.id) {
+  if (
+    !reverseMarketPlace &&
+    isActivePlanLoading !== null &&
+    isActivePlanLoading === false
+  ) {
     return <LandingDefaultView {...defaultViewProps} />;
   }
 
-  return <MarketRequestsLandingView {...generatedProps} />;
+  if (isActivePlanLoading !== null && isActivePlanLoading === false) {
+    return <MarketRequestsLandingView {...generatedProps} />;
+  }
+
+  return <></>;
 };
 
 export default MarketRequestsLanding;

@@ -42,8 +42,7 @@ const BarcodeScannerSFMView = () => {
           </div>
         </LogoContainer>
         <FirstDescription weight="400" color="shade7">
-          Download the “SFMBlue” Buyer App to scan &amp; mark your orders as
-          completed
+          Download the SFM Blue app to scan &amp; mark your orders as completed
         </FirstDescription>
       </Container1>
 
