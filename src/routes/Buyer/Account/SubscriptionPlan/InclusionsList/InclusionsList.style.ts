@@ -34,6 +34,7 @@ export const BenefitsList = styled.ul`
 export const BenefitsItem = styled.li`
   border: 1px solid ${({ theme }) => theme.grey.shade3};
   display: flex;
+  flex-direction: column;
   gap: 4px;
   border-radius: 12px;
   padding: 8px;

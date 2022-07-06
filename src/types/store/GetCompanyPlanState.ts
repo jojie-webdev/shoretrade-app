@@ -58,6 +58,7 @@ export type SubscriptionPreference = {
   type: string;
   saasInterval?: string;
   isSaasSubscribed: boolean;
+  transactionValue: string;
 };
 
 export type Subscription = {

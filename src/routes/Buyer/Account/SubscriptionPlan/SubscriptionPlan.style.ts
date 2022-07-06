@@ -171,6 +171,11 @@ export const Subscription = styled.div`
       cursor: pointer;
     }
   }
+
+  .disable-downgrade {
+    pointer-events: none;
+    opacity: 0.4;
+  }
 `;
 
 export const AdditionalSubSection = styled.div`
@@ -242,6 +247,7 @@ export const CurrentPlanIndicator = styled.div`
 export const PlusIconWrapper = styled.div`
   width: 14px;
   height: 14px;
+  margin-right: 4px;
 `;
 
 export const PlanTitleWrapper = styled.div`

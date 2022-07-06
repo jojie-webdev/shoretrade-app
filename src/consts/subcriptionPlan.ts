@@ -350,14 +350,23 @@ export const yourPlanFeaturesList = {
   ],
 };
 
-export const basePlanItems = [
-  '2% Buying Fee on Transaction Value',
-  'Create up to 2 linked accounts',
-]
-
-export const proPlanItems = [
-  'No Buying Fees',
-  'Unlimited Profiles',
-  'Reverse Marketplace included',
+export const BASE_PLAN_ITEMS = [
+  { title: '2% Buying Fee on Transaction Value**', subText: '' },
+];
+export const PRO_PLAN_ITEMS = [
+  { title: 'No Additional Buying Fees', subText: '' },
+  {
+    title: 'Access to Buyer Data Reports',
+    subText:
+      'Access to Buyer Data Reports on Product Seasonality and Upcoming Harvests. Valued at $100/month',
+  },
+  {
+    title: 'Customer Service',
+    subText: 'Dedicated Customer Service Representative',
+  },
 ];
 
+export const PRO_TRANSACTION_VALUES = [
+  'Between $15,000 and $22,500',
+  'More than $22,500',
+];
