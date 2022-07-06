@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import moment from 'moment';
+import moment, { RFC_2822 } from 'moment';
 import {
   ActivePlan,
   CompanyPlan,
@@ -80,6 +80,12 @@ export const companyPlanToProps = (
     .utc()
     .diff(moment().utc(), 'day');
 
+  console.log(
+    moment
+      .utc(moment().utc())
+      .diff(currentPlanDetails?.subscription.starts_at, 'd')
+  );
+
   return {
     annualPrice: annualPlan?.price || '0',
     monthlyPrice: monthlyPlan?.price || '0',
@@ -121,6 +127,7 @@ export const companyPlanToProps = (
       currentPlanDetails?.subscription.paid_at === null &&
       moment
         .utc(moment().utc())
-        .diff(currentPlanDetails?.subscription.starts_at, 'd') > 5,
+        .diff(currentPlanDetails?.subscription.starts_at, 'd') > 2,
+    failedPayment: currentPlanDetails?.subscription.paid_at === null,
   };
 };

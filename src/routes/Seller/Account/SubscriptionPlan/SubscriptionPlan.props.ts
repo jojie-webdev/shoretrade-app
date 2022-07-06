@@ -20,6 +20,7 @@ export interface SubscriptionPlanTransformOutputProps {
   cardNumberMasked: string | null;
   isSaasSubscribed: boolean;
   subscriptionType: CompanyPlanName;
+  defaultCard?: string;
   features: SubscriptionPlanFeature[];
   planStatus: string;
   nextBillingAmount: number;
@@ -28,6 +29,8 @@ export interface SubscriptionPlanTransformOutputProps {
   currentPlanDetails?: ActivePlan;
   noActivePlan: boolean;
   currentReverseMarketDetails?: ActivePlan;
+  failedReverseMarketPayment?: boolean;
+  lateReverseMarketPayment?: boolean;
 }
 
 export interface SubscriptionPlanGeneratedProps

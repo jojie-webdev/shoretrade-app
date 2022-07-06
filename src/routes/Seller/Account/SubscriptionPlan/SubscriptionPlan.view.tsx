@@ -19,7 +19,7 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import qs from 'qs';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { toPrice } from 'utils/String';
 import { getButtonTextByStatus } from 'utils/SubscriptionPlan/getButtonTextByStatus';
 import { useTheme } from 'utils/Theme';
@@ -68,14 +68,19 @@ export const SubscriptionPlanView = ({
   company,
   flags,
   cancellationReversePeriodReverseMarket,
+  lateReverseMarketPayment,
+  defaultCard,
+  failedReverseMarketPayment,
 }: SubscriptionPlanGeneratedProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS.sm });
+  const history = useHistory();
   const isSmallDesktop = useMediaQuery({
     query: '(min-width: 768px) and (max-width: 1439px)',
   });
   const [isMonthly, setIsMonthly] = useState(true);
   const [showToggleModal, setShowToggleModal] = useState(false);
+  const [showEnterCardModal, setShowEnterCardModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [
     showReverseMarketPlaceToggleModal,
@@ -119,6 +124,46 @@ export const SubscriptionPlanView = ({
             fullWidth={true}
             content={<></>}
             header={`Reverse Marketplace Cancellation ${cancellationReversePeriodReverseMarket}`}
+          />
+        )}
+        {lateReverseMarketPayment && (
+          <Alert
+            fullWidth
+            header="Late Payment"
+            content={
+              <AlertContentContainer>
+                <Typography variant="caption" color="shade7">
+                  Your subscription payment is outstanding. Please make a
+                  one-off payment here within 3 days to keep your account
+                  active.
+                </Typography>
+                <div className="actions">
+                  <Button
+                    onClick={() => {
+                      history.push(SELLER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD);
+                    }}
+                    text="Make Payment"
+                    size="sm"
+                  />
+                </div>
+              </AlertContentContainer>
+            }
+            variant="error"
+          />
+        )}
+        {failedReverseMarketPayment && !lateReverseMarketPayment && (
+          <Alert
+            fullWidth
+            header="Unsuccessful Payment"
+            content={
+              <AlertContentContainer>
+                <Typography variant="caption" color="shade7">
+                  Your most recent payment was unsuccessful. The payment will be
+                  automatically reattempted tomorrow.
+                </Typography>
+              </AlertContentContainer>
+            }
+            variant="error"
           />
         )}
       </AlertsContainer>
@@ -302,7 +347,7 @@ export const SubscriptionPlanView = ({
                         you connect to the Reverse Marketplace. Buyers make
                         specific requests for seafood products, and if you can
                         provide that product then make them an offer. By
-                      aligning your stock supply to the buyers' needs, your
+                        aligning your stock supply to the buyers' needs, your
                         product is sold more efficiently, and less resources are
                         taken from our oceans. Gain an extra sales channel and
                         revolutionize your seafood business with Reverse
@@ -339,9 +384,13 @@ export const SubscriptionPlanView = ({
                             />
                           ) : (
                             <Button
-                              onClick={() =>
-                                setShowReverseMarketPlaceToggleModal(true)
-                              }
+                              onClick={() => {
+                                if (defaultCard) {
+                                  setShowReverseMarketPlaceToggleModal(true);
+                                } else {
+                                  setShowEnterCardModal(true);
+                                }
+                              }}
                               variant="primary"
                               text="Subscribe"
                             />
@@ -469,6 +518,25 @@ export const SubscriptionPlanView = ({
         action={() => {
           renewSubscription(interval);
           setShowRenewModal(false);
+        }}
+        cancel={() => setShowRenewModal(false)}
+        style={{ width: '686px' }}
+      />
+      <ConfirmationModal
+        isOpen={showEnterCardModal}
+        title="Credit Card details required"
+        description="Before you are able to subscribe to reverse marketplace, please enter your credit cards and retry."
+        actionText="Enter credit card"
+        hideCancel
+        onClickClose={() => setShowEnterCardModal(false)}
+        action={() => {
+          history.push(
+            `${SELLER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD}${qs.stringify(
+              { companyId: company?.id },
+              { addQueryPrefix: true }
+            )}`
+          );
+          setShowEnterCardModal(false);
         }}
         cancel={() => setShowRenewModal(false)}
         style={{ width: '686px' }}

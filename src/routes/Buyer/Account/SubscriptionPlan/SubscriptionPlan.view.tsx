@@ -82,6 +82,7 @@ export const SubscriptionPlanView = ({
   flags,
   proRataPrice,
   latePayment,
+  failedPayment,
   cancellationReversePeriodReverseMarket,
 }: SubscriptionPlanGeneratedProps) => {
   const location = useLocation();
@@ -235,7 +236,7 @@ export const SubscriptionPlanView = ({
             variant="error"
           />
         )}
-        {!currentPlanDetails?.subscription.paid_at && (
+        {failedPayment && !latePayment && (
           <Alert
             fullWidth
             header="Unsuccessful Payment"

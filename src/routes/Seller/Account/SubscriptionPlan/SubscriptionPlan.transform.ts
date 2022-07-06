@@ -58,6 +58,7 @@ export const companyPlanToProps = (
     annualPrice: annualPlan?.price || '0',
     monthlyPrice: monthlyPlan?.price || '0',
     nextBillingDate,
+    defaultCard: companyPlan?.nextBillingData.defaultCard,
     cancellationReversePeriodReverseMarket: companyPlan?.flags
       ?.hasCancelledReversedMarketplace
       ? `in ${daysUntilEndReverseMarketPlace} days`
@@ -86,5 +87,12 @@ export const companyPlanToProps = (
     noActivePlan: companyPlan ? companyPlan.activePlans.length > 0 : true,
     currentPlanDetails: getActivePlan(),
     currentReverseMarketDetails,
+    failedReverseMarketPayment:
+      currentReverseMarketDetails?.subscription.paid_at === null,
+    lateReverseMarketPayment:
+      currentReverseMarketDetails?.subscription.paid_at === null &&
+      moment
+        .utc(moment().utc())
+        .diff(currentReverseMarketDetails?.subscription.starts_at, 'd') > 2,
   };
 };
