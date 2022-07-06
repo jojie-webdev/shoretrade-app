@@ -7,6 +7,7 @@ import {
   getActivePlanActions,
   getMarketInterestsActions,
   getSubscriptionPlansActions,
+  getUserActions,
   paySubscriptionActions,
   renewSubscriptionPlanActions,
   updateSubscriptionPlanActions,
@@ -66,6 +67,12 @@ const SubscriptionPlan = () => {
     dispatch(getSubscriptionPlansActions.request({}));
     dispatch(paySubscriptionActions.clear());
   }, []);
+
+  useEffect(() => {
+    if (company?.id && (updateSuccess || cancelSuccess || renewSuccess)) {
+      dispatch(getUserActions.request());
+    }
+  }, [updateSuccess, cancelSuccess, renewSuccess]);
 
   // METHODS
 

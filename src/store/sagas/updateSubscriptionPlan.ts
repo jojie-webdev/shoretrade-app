@@ -34,17 +34,10 @@ function* updateSubscriptionPlanSuccess(
 ) {
   const state: Store = yield select();
   if (state.auth.token) {
-    const currentPlan = state.getCompanyPlan.data?.data.activePlans.find((ac) =>
-      [
-        CompanyPlanName.PRO,
-        CompanyPlanName.BASE,
-        CompanyPlanName.REVERSE_MARKET,
-      ].includes(ac.plan.name)
-    );
-    if (currentPlan) {
+    if (action.payload.data) {
       yield put(
         getCompanyPlanActions.request({
-          companyId: currentPlan.company.id,
+          companyId: action.payload.data.company_id,
         })
       );
     }
