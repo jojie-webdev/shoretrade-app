@@ -234,7 +234,7 @@ const BuyerRoutes = (): JSX.Element => {
     if (companyPlan) {
       return companyPlan.flags.hasInactiveSubscription;
     }
-    return true;
+    return false;
   }, [companyPlan]);
 
   useEffect(() => {
