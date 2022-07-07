@@ -9,7 +9,7 @@ import {
 } from 'types/store/AddCartItemState';
 import { Store } from 'types/store/Store';
 
-import { addCartItemActions } from '../actions';
+import { addCartItemActions, getCartActions } from '../actions';
 
 function* addCartItemRequest(
   action: AsyncAction<AddCartItemMeta, AddCartItemPayload>
@@ -30,7 +30,11 @@ function* addCartItemRequest(
 function* addCartItemSuccess(
   action: AsyncAction<AddCartItemMeta, AddCartItemPayload>
 ) {
-  // yield put(push(BUYER_ROUTES.CHECKOUT));
+  const state: Store = yield select();
+  const employeeId = state.getCart.request?.employeeId;
+  if (employeeId) {
+    yield put(getCartActions.request({ employeeId }));
+  }
 }
 
 function* addCartItemWatcher() {
