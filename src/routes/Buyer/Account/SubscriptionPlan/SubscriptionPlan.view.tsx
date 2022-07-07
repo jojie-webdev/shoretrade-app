@@ -520,6 +520,7 @@ export const SubscriptionPlanView = ({
                                           <Typography
                                             variant="body"
                                             color="shade9"
+                                            weight="700"
                                           >
                                             {i.title}
                                           </Typography>
@@ -561,7 +562,11 @@ export const SubscriptionPlanView = ({
                                       <PlusIconWrapper>
                                         <Plus width={14} height={14} />
                                       </PlusIconWrapper>
-                                      <Typography variant="body" color="shade9">
+                                      <Typography
+                                        variant="body"
+                                        color="shade9"
+                                        weight="700"
+                                      >
                                         {i.title}
                                       </Typography>
                                     </div>
@@ -643,7 +648,11 @@ export const SubscriptionPlanView = ({
                                 <PlusIconWrapper>
                                   <Plus width={14} height={14} />
                                 </PlusIconWrapper>
-                                <Typography variant="body" color="shade9">
+                                <Typography
+                                  variant="body"
+                                  color="shade9"
+                                  weight="700"
+                                >
                                   {i.title}
                                 </Typography>
                               </div>
