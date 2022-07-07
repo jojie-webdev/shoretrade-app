@@ -136,6 +136,7 @@ export type PlanFlags = {
   hasCancelledReversedMarketplace: boolean;
   hasPendingPayment: boolean;
   hasUpcomingReversedMarketPlace: boolean;
+  hasInactiveSubscription: boolean;
 };
 
 export type GetCompanyPlanResponseData = {

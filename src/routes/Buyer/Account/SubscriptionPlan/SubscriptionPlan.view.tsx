@@ -182,64 +182,110 @@ export const SubscriptionPlanView = ({
         />
       </BreadcrumbsContainer>
       <AlertsContainer>
-        {flags?.hasCancelledReversedMarketplace && (
-          <Alert
-            variant="error"
-            fullWidth={true}
-            content={<></>}
-            header={`Reverse MarketPlace Cancellation ${cancellationReversePeriodReverseMarket}`}
-          />
+        {!flags?.hasInactiveSubscription && (
+          <>
+            {flags?.hasCancelledReversedMarketplace && (
+              <Alert
+                variant="error"
+                fullWidth={true}
+                content={<></>}
+                header={`Reverse MarketPlace Cancellation ${cancellationReversePeriodReverseMarket}`}
+              />
+            )}
+            {flags?.hasCancelledPlan && !flags?.hasDowngraded && (
+              <Alert
+                fullWidth
+                header={`Account Cancellation ${cancellationPeriod}`}
+                content={
+                  <AlertContentContainer>
+                    <Typography variant="caption" color="shade7">
+                      Your account will be deactivated on your next payment date
+                      and you will not be able to access any data in your
+                      account.
+                    </Typography>
+                    <div className="actions">
+                      <Button
+                        onClick={() => {
+                          if (currentPlanDetails) {
+                            renewSubscription(currentPlanDetails?.plan.id);
+                          }
+                        }}
+                        text="Renew"
+                        size="sm"
+                      />
+                    </div>
+                  </AlertContentContainer>
+                }
+                variant="error"
+              />
+            )}
+            {flags?.hasDowngraded && (
+              <Alert
+                fullWidth
+                header={`Account Downgrade ${cancellationPeriod}`}
+                content={
+                  <AlertContentContainer>
+                    <Typography variant="caption" color="shade7">
+                      Your account will be downgraded on your next payment date.
+                    </Typography>
+                  </AlertContentContainer>
+                }
+                variant="warning"
+              />
+            )}
+            {latePayment && (
+              <Alert
+                fullWidth
+                header="Late Payment"
+                content={
+                  <AlertContentContainer>
+                    <Typography variant="caption" color="shade7">
+                      Your subscription payment is outstanding. Please make a
+                      one-off payment here within 3 days to keep your account
+                      active.
+                    </Typography>
+                    <div className="actions">
+                      <Button
+                        onClick={() => {
+                          history.push(
+                            BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD
+                          );
+                        }}
+                        text="Make Payment"
+                        size="sm"
+                      />
+                    </div>
+                  </AlertContentContainer>
+                }
+                variant="error"
+              />
+            )}
+            {failedPayment && !latePayment && (
+              <Alert
+                fullWidth
+                header="Unsuccessful Payment"
+                content={
+                  <AlertContentContainer>
+                    <Typography variant="caption" color="shade7">
+                      Your most recent payment was unsuccessful. The payment
+                      will be automatically reattempted tomorrow.
+                    </Typography>
+                  </AlertContentContainer>
+                }
+                variant="error"
+              />
+            )}
+          </>
         )}
-        {flags?.hasCancelledPlan && !flags?.hasDowngraded && (
+        {flags?.hasInactiveSubscription && (
           <Alert
             fullWidth
-            header={`Account Cancellation ${cancellationPeriod}`}
-            content={
-              <AlertContentContainer>
-                <Typography variant="caption" color="shade7">
-                  Your account will be deactivated on your next payment date and
-                  you will not be able to access any data in your account.
-                </Typography>
-                <div className="actions">
-                  <Button
-                    onClick={() => {
-                      if (currentPlanDetails) {
-                        renewSubscription(currentPlanDetails?.plan.id);
-                      }
-                    }}
-                    text="Renew"
-                    size="sm"
-                  />
-                </div>
-              </AlertContentContainer>
-            }
-            variant="error"
-          />
-        )}
-        {flags?.hasDowngraded && (
-          <Alert
-            fullWidth
-            header={`Account Downgrade ${cancellationPeriod}`}
-            content={
-              <AlertContentContainer>
-                <Typography variant="caption" color="shade7">
-                  Your account will be downgraded on your next payment date.
-                </Typography>
-              </AlertContentContainer>
-            }
-            variant="warning"
-          />
-        )}
-        {latePayment && (
-          <Alert
-            fullWidth
-            header="Late Payment"
+            header="Inactive Subscription"
             content={
               <AlertContentContainer>
                 <Typography variant="caption" color="shade7">
                   Your subscription payment is outstanding. Please make a
-                  one-off payment here within 3 days to keep your account
-                  active.
+                  one-off payment here to renew your Subscription.
                 </Typography>
                 <div className="actions">
                   <Button
@@ -250,21 +296,6 @@ export const SubscriptionPlanView = ({
                     size="sm"
                   />
                 </div>
-              </AlertContentContainer>
-            }
-            variant="error"
-          />
-        )}
-        {failedPayment && !latePayment && (
-          <Alert
-            fullWidth
-            header="Unsuccessful Payment"
-            content={
-              <AlertContentContainer>
-                <Typography variant="caption" color="shade7">
-                  Your most recent payment was unsuccessful. The payment will be
-                  automatically reattempted tomorrow.
-                </Typography>
               </AlertContentContainer>
             }
             variant="error"

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import {
   Search as SearchIcon,
@@ -224,15 +224,18 @@ const BuyerRoutes = (): JSX.Element => {
     (store: Store) => store.getSubscriptionPlans?.data?.data
   );
 
-  const isAccountDeactivated = useSelector(
-    (store: Store) => store.subscription.isAccountDeactivated
-  );
-
   const getPaymentMethods = () => {
     if (company?.id) {
       dispatch(getPaymentMethodsActions.request({ companyId: company?.id }));
     }
   };
+
+  const hasInactiveSubscription = useMemo(() => {
+    if (companyPlan) {
+      return companyPlan.flags.hasInactiveSubscription;
+    }
+    return true;
+  }, [companyPlan]);
 
   useEffect(() => {
     dispatch(getSubscriptionPlansActions.request({}));
@@ -398,7 +401,7 @@ const BuyerRoutes = (): JSX.Element => {
       <Switch>
         {ROUTES_ARRAY.filter(
           (r) =>
-            (r.title === 'Account' || !isAccountDeactivated) &&
+            (r.title === 'Account' || !hasInactiveSubscription) &&
             (isFreeTrial || (!isFreeTrial && r.title !== 'Upgrade'))
         ).map((r) => (
           <Route key={`${r.path}`} path={`${r.path}`} exact={!r.nested}>
@@ -408,7 +411,7 @@ const BuyerRoutes = (): JSX.Element => {
         <Route>
           <Redirect
             to={
-              isAccountDeactivated
+              hasInactiveSubscription
                 ? BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN
                 : '/buyer/home'
             }
