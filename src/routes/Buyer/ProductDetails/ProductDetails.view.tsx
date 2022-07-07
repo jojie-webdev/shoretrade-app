@@ -342,6 +342,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                         icon={
                           <CheckFilled width={14} fill={theme.grey.noshade} />
                         }
+                        textWeight="400"
+                        textVariant="label"
                         text="Product added to cart!"
                       />
                     ) : (
