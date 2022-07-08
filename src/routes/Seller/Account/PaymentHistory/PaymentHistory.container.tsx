@@ -16,6 +16,7 @@ const PaymentHistory = (): JSX.Element => {
   const transactions = useSelector(
     (state: Store) => state.getTransactionHistory.data?.data.transactions
   );
+  const token = useSelector((state: Store) => state.auth.token) || '';
 
   const getTransactionHistory = () => {
     if (companyId) {
@@ -35,6 +36,7 @@ const PaymentHistory = (): JSX.Element => {
     // generated props here
     transactions: transactions || [],
     isLoading,
+    token,
   };
   return <PaymentHistoryView {...generatedProps} />;
 };

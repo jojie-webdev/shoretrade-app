@@ -3,4 +3,5 @@ import { GetTransactionHistoryResponseItem } from 'types/store/GetTransactionHis
 export interface PaymentHistoryGeneratedProps {
   transactions: GetTransactionHistoryResponseItem[];
   isLoading: boolean;
+  token: string;
 }

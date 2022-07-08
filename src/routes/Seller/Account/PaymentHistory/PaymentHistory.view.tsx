@@ -5,16 +5,18 @@ import Button from 'components/base/Button';
 import { FileAlt, Prawn } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Loading from 'components/module/Loading';
-import { SELLER_ACCOUNT_ROUTES } from 'consts';
+import { SELLER_ACCOUNT_ROUTES, API } from 'consts';
 import moment from 'moment';
 import { Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import theme from 'utils/SFMTheme';
 import { toPrice } from 'utils/String';
+import { toTemporaryTokenV2 } from 'utils/toTemporaryTokenV2';
 
 import { PaymentHistoryGeneratedProps } from './PaymentHistory.props';
 import {
   Container,
+  Downloadable,
   EmptyStateContainer,
   Transx,
   TransxLeft,
@@ -24,6 +26,7 @@ import {
 const PaymentHistoryView = ({
   isLoading,
   transactions,
+  token,
 }: PaymentHistoryGeneratedProps) => {
   const history = useHistory();
 
@@ -61,7 +64,20 @@ const PaymentHistoryView = ({
           return (
             <Transx key={idx}>
               <TransxLeft>
-                <FileAlt fill={theme.grey.shade6} />
+                <Downloadable
+                  enabled
+                  onClick={(e) => {
+                    window.open(
+                      `${API.URL}/v2/subscription/company/invoice/${
+                        transaction.refNumber
+                      }?token=${toTemporaryTokenV2(token)}&invoice=true`,
+                      '_blank'
+                    );
+                    e.stopPropagation();
+                  }}
+                >
+                  <FileAlt fill={theme.grey.shade6} />
+                </Downloadable>
                 <div className="text">
                   <Typography variant="body" color="noshade">
                     {transaction.description}
