@@ -20,21 +20,6 @@ export const companyPlanToProps = (
   const annualPlan = plans.find((plan) => plan.alias.includes('YEARLY'));
   const monthlyPlan = plans.find((plan) => !plan.alias.includes('YEARLY'));
 
-  const nextBillingDate = companyPlan?.nextBillingData?.date
-    ? moment.utc(companyPlan.nextBillingData.date).format('DD MMMM YYYY')
-    : null;
-
-  const daysUntilEnd = moment(
-    moment(companyPlan?.activePlans[0]?.subscription.ends_at).utc()
-  )
-    .utc()
-    .diff(moment().utc(), 'day');
-
-  const defaultPaymentMethod = companyPlan?.nextBillingData?.cards.find(
-    (card) => card.id === companyPlan.nextBillingData?.defaultCard
-  );
-  const cardBrand = _.snakeCase(defaultPaymentMethod?.brand || '');
-
   const getActivePlan = (name?: CompanyPlanName): ActivePlan | undefined => {
     if (companyPlan?.activePlans && name === CompanyPlanName.REVERSE_MARKET) {
       return companyPlan?.activePlans.find((ac) =>
@@ -45,14 +30,51 @@ export const companyPlanToProps = (
     }
   };
 
+  const nextBillingDate = companyPlan?.nextBillingData?.date
+    ? moment.utc(companyPlan.nextBillingData.date).format('DD MMMM YYYY')
+    : null;
+
   const currentReverseMarketDetails = getActivePlan(
     CompanyPlanName.REVERSE_MARKET
   );
+
+  const daysUntilEnd = moment(
+    moment(currentReverseMarketDetails?.subscription.ends_at).utc()
+  )
+    .utc()
+    .diff(moment().utc(), 'day');
+
+  const hoursUntilEnd = moment(
+    moment(currentReverseMarketDetails?.subscription.ends_at).utc()
+  )
+    .utc()
+    .diff(moment().utc(), 'hours');
+
+  const minutesUntilend = moment(
+    moment(currentReverseMarketDetails?.subscription.ends_at).utc()
+  )
+    .utc()
+    .diff(moment().utc(), 'minutes');
+
+  const defaultPaymentMethod = companyPlan?.nextBillingData?.cards.find(
+    (card) => card.id === companyPlan.nextBillingData?.defaultCard
+  );
+  const cardBrand = _.snakeCase(defaultPaymentMethod?.brand || '');
+
   const daysUntilEndReverseMarketPlace = moment(
     moment(currentReverseMarketDetails?.subscription.ends_at).utc()
   )
     .utc()
     .diff(moment().utc(), 'day');
+
+  const getCancellationPeriod = () => {
+    if (daysUntilEnd > 0) {
+      return `in ${daysUntilEnd} days`;
+    } else if (hoursUntilEnd > 0) {
+      return `in ${hoursUntilEnd} hours`;
+    }
+    return `in ${hoursUntilEnd} minutes`;
+  };
 
   return {
     annualPrice: annualPlan?.price || '0',
@@ -61,7 +83,7 @@ export const companyPlanToProps = (
     defaultCard: companyPlan?.nextBillingData.defaultCard,
     cancellationReversePeriodReverseMarket: companyPlan?.flags
       ?.hasCancelledReversedMarketplace
-      ? `in ${daysUntilEndReverseMarketPlace} days`
+      ? getCancellationPeriod()
       : '',
     cardBrand,
     subscriptionType:
