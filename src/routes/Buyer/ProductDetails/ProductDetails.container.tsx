@@ -30,6 +30,7 @@ import ProductDetailsView from './ProductDetails.view';
 
 const ProductDetails = (): JSX.Element => {
   const dispatch = useDispatch();
+  const [showSuccessAddBtn, setShowSuccessAddBtn] = useState(false);
 
   const history = useHistory();
   const { id } = useParams<any>();
@@ -204,6 +205,7 @@ const ProductDetails = (): JSX.Element => {
       setPressedBoxRadio('');
       setWeight('');
       // history.push(BUYER_ROUTES.CHECKOUT); // moved to sagas
+      setShowSuccessAddBtn(true);
     }
   };
 
@@ -427,6 +429,7 @@ const ProductDetails = (): JSX.Element => {
     isPendingAccount,
     isLoadingAddCart,
     addCartItemData,
+    showSuccessAddBtn,
   };
   return <ProductDetailsView {...generatedProps} />;
 };

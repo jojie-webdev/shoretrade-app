@@ -68,6 +68,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     catchRecurrence,
     isLoadingAddCart,
     addCartItemData,
+    showSuccessAddBtn,
   } = props;
 
   const [images, setImages] = useState<string[]>([]);
@@ -336,16 +337,18 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                   </div>
                   <ButtonContainer>
                     {addCartItemData?.data.items ? (
-                      <AddToCartButton
-                        variant="success"
-                        iconPosition="before"
-                        icon={
-                          <CheckFilled width={14} fill={theme.grey.noshade} />
-                        }
-                        textWeight="400"
-                        textVariant="label"
-                        text="Product added to cart!"
-                      />
+                      showSuccessAddBtn && (
+                        <AddToCartButton
+                          variant="success"
+                          iconPosition="before"
+                          icon={
+                            <CheckFilled width={14} fill={theme.grey.noshade} />
+                          }
+                          textWeight="400"
+                          textVariant="label"
+                          text="Product added to cart!"
+                        />
+                      )
                     ) : (
                       <AddToCartButton
                         text={isLoadingAddCart ? '' : 'Add to cart'}

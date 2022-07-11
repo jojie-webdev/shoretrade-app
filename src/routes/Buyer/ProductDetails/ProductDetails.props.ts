@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from 'react';
 
 import { ProductDetailsCard6Props } from 'components/module/ProductDetailsCard6/ProductDetailsCard6.props';
-import { GetListingResponseItem } from 'types/store/GetListingState';
 import { AddCartItemPayload } from 'types/store/AddCartItemState';
+import { GetListingResponseItem } from 'types/store/GetListingState';
 
 export interface ProductSellerRatingProps {
   name: string;
@@ -68,4 +68,5 @@ export interface ProductDetailsGeneratedProps {
     unit: string;
   }[];
   isPendingAccount: boolean;
+  showSuccessAddBtn: boolean;
 }
