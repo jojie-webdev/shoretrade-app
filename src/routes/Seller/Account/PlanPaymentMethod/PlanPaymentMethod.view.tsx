@@ -80,7 +80,7 @@ const PlanPaymentMethodView = ({
           isDefault: false,
         }}
         validate={(values) =>
-          (!isMobile && !selectedCardId) || !showExistingTab
+          (!isMobile && !selectedCardId) || (isMobile && !showExistingTab)
             ? validateCard(values)
             : undefined
         }
@@ -107,7 +107,7 @@ const PlanPaymentMethodView = ({
             )}
 
             <Row gutterWidth={96}>
-              {!isMobile && Number(amountDue) && (
+              {(!isMobile || (isMobile && !showExistingTab)) && amountDue && (
                 <Col xs={12} sm={6}>
                   <Typography
                     variant="copy"

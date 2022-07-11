@@ -8,9 +8,11 @@ import { Routes, Route as TRoute } from 'types/Routes';
 import { Store } from 'types/store/Store';
 
 import AccountCompletion from './AccountCompletion';
+import AddCredit from './AddCredit';
 import AddLicense from './AddLicense';
 import Assistants from './Assistants';
 import BankDetails from './BankDetails';
+import Card from './Card';
 import ChangePassword from './ChangePassword';
 import CreateAddress from './CreateAddress';
 import CreateAssistant from './CreateAssistant';
@@ -26,8 +28,6 @@ import PlanPaymentMethod from './PlanPaymentMethod';
 import ShippingAddresses from './ShippingAddresses';
 import SubscriptionPlan from './SubscriptionPlan';
 import YourDetails from './YourDetails';
-import Card from './Card';
-import AddCredit from './AddCredit';
 
 const ROUTES: Routes = {
   LANDING: {

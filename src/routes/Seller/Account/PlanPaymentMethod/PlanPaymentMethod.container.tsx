@@ -8,6 +8,7 @@ import {
   getPaymentMethodsActions,
   paySubscriptionActions,
 } from 'store/actions';
+import { CompanyPlanAlias } from 'types/store/GetCompanyPlanState';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer, useCompany } from 'utils/Hooks';
 import { toPrice } from 'utils/String';
@@ -40,8 +41,8 @@ const PlanPaymentMethod = (): JSX.Element => {
       (state: Store) => state.getPaymentMethods.data?.data.data?.cards
     ) || [];
 
-  const activePlan = useSelector(
-    (store: Store) => store.getActivePlan.data?.data
+  const companyPlan = useSelector(
+    (store: Store) => store.getCompanyPlan.data?.data
   );
 
   const defaultCard =
@@ -55,17 +56,15 @@ const PlanPaymentMethod = (): JSX.Element => {
   const deleteCardStatus =
     useSelector((state: Store) => state.deleteCard.data?.status) || false;
 
-  const hasReverseMarketPlace = activePlan?.features.find(
-    (feature: { alias: string }) => feature.alias === 'REVERSED_MARKETPLACE'
+  const currentReverseMarketPlan = companyPlan?.activePlans.find(
+    (ac) =>
+      ac.plan.alias === CompanyPlanAlias.FEATURE_REVERSED_MARKETPLACE_SELLER
   );
 
-  const sellerAmountDue = hasReverseMarketPlace
-    ? toPrice(REVERSE_MARKETPLACE_PRICE.SELLER)
-    : '0';
-
-  const buyerAmountDue = activePlan?.price
-    ? toPrice(activePlan?.price || 0)
-    : undefined;
+  const amountDue =
+    currentReverseMarketPlan && companyPlan?.flags.hasPendingPayment
+      ? toPrice(currentReverseMarketPlan.plan.price)
+      : undefined;
 
   const payPlanAmountDue = (newCardDetails: NewCardDetails) => {
     if (selectedCardId) {
@@ -103,8 +102,8 @@ const PlanPaymentMethod = (): JSX.Element => {
   }, [companyId]);
 
   const generatedProps: PlanPaymentMethodGeneratedProps = {
-    cards: activePlan?.payment_methods.cards || cards || [],
-    amountDue: isSeller ? sellerAmountDue : buyerAmountDue,
+    cards: cards || [],
+    amountDue,
     selectedCardId,
     payPlanAmountDue,
     setSelectedCardId,

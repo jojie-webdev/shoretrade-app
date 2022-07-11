@@ -140,7 +140,14 @@ export const SubscriptionPlanView = ({
                 <div className="actions">
                   <Button
                     onClick={() => {
-                      history.push(SELLER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD);
+                      history.push(
+                        `${
+                          SELLER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD
+                        }${qs.stringify(
+                          { companyId: company?.id },
+                          { addQueryPrefix: true }
+                        )}`
+                      );
                     }}
                     text="Make Payment"
                     size="sm"

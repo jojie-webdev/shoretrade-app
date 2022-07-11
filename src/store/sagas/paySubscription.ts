@@ -10,7 +10,7 @@ import {
 import { Store } from 'types/store/Store';
 import { UpdateSubscriptionPlanMeta } from 'types/store/UpdateSubscriptionPlanState';
 
-import { paySubscriptionActions } from '../actions';
+import { getCompanyPlanActions, paySubscriptionActions } from '../actions';
 
 function* paySubscriptionRequest(
   action: AsyncAction<PaySubscriptionMeta, PaySubscriptionPayload>
@@ -52,7 +52,23 @@ function* paySubscriptionRequest(
   }
 }
 
+function* paySubscriptionSuccess(
+  action: AsyncAction<PaySubscriptionMeta, PaySubscriptionPayload>
+) {
+  const state: Store = yield select();
+  if (state.auth.token) {
+    if (action.payload.data) {
+      yield put(
+        getCompanyPlanActions.request({
+          companyId: action.payload.data.company_id,
+        })
+      );
+    }
+  }
+}
+
 function* paySubscriptionWatcher() {
+  yield takeLatest(paySubscriptionActions.SUCCESS, paySubscriptionSuccess);
   yield takeLatest(paySubscriptionActions.REQUEST, paySubscriptionRequest);
 }
 
