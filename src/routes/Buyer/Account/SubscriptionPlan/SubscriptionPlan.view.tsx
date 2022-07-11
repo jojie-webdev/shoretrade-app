@@ -800,18 +800,23 @@ export const SubscriptionPlanView = ({
                             />
                           </div>
                         ) : (
-                          <div
-                            className="cancel-subscription"
-                            onClick={() =>
-                              setShowCancelReverseMarketModal(true)
-                            }
-                          >
-                            <Button
-                              onClick={() => true}
-                              variant="primary"
-                              text="Remove Subscription"
-                            />
-                          </div>
+                          <>
+                            {currentPlanDetails?.plan.name !==
+                              CompanyPlanName.PRO && (
+                              <div
+                                className="cancel-subscription"
+                                onClick={() =>
+                                  setShowCancelReverseMarketModal(true)
+                                }
+                              >
+                                <Button
+                                  onClick={() => true}
+                                  variant="primary"
+                                  text="Remove Subscription"
+                                />
+                              </div>
+                            )}
+                          </>
                         )}
                       </>
                     ) : (
