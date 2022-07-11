@@ -244,6 +244,13 @@ export const CurrentPlanIndicator = styled.div`
   border-radius: 12px;
 `;
 
+export const DowngradeStartsIndicator = styled.div`
+  background: ${({ theme }) => theme.grey.shade3};
+  display: inline-flex;
+  padding: 6px 10px;
+  border-radius: 12px;
+`;
+
 export const PlusIconWrapper = styled.div`
   width: 14px;
   height: 14px;

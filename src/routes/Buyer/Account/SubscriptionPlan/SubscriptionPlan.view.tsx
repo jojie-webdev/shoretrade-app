@@ -60,6 +60,7 @@ import {
   CurrentPlanIndicator,
   PlusIconWrapper,
   PlanTitleWrapper,
+  DowngradeStartsIndicator,
 } from './SubscriptionPlan.style';
 
 export const SubscriptionPlanView = ({
@@ -139,9 +140,13 @@ export const SubscriptionPlanView = ({
     ? currentPlanDetails?.plan.alias.includes('FREE')
     : false;
 
-  const freeTrialExpiryDate = currentPlanDetails
+  const seventhFreeDay = currentPlanDetails
     ? moment(currentPlanDetails?.subscription.created_at).add(7, 'days')
-    : '';
+    : moment();
+
+  const today = moment();
+
+  const remainingFreeTrialDays = seventhFreeDay.diff(today, 'days');
 
   const YourCurrentPlanIndicator = () => (
     <CurrentPlanIndicator>
@@ -464,16 +469,45 @@ export const SubscriptionPlanView = ({
                             ) : (
                               <>
                                 {flags?.hasDowngraded && (
-                                  <div className="subscription-action">
-                                    <Button
-                                      onClick={() =>
-                                        revertSubscription(proPlanDetails?.id)
-                                      }
-                                      variant="primary"
-                                      text="Revert Subscription"
-                                      size="sm"
-                                    />
-                                  </div>
+                                  <DowngradeStartsIndicator>
+                                    <Typography
+                                      variant="label"
+                                      weight="500"
+                                      color="shade6"
+                                    >
+                                      Starts on{' '}
+                                      {moment(nextBillingDate).format('Do MMM')}
+                                    </Typography>
+                                  </DowngradeStartsIndicator>
+                                  // <>
+                                  //   {withinFreeTrial ? (
+                                  //     <DowngradeStartsIndicator>
+                                  //       <Typography
+                                  //         variant="label"
+                                  //         weight="500"
+                                  //         color="shade6"
+                                  //       >
+                                  //         Starts on{' '}
+                                  //         {moment(nextBillingDate).format(
+                                  //           'Do MMM'
+                                  //         )}
+                                  //       </Typography>
+                                  //     </DowngradeStartsIndicator>
+                                  //   ) : (
+                                  //     <div className="subscription-action">
+                                  //       <Button
+                                  //         onClick={() =>
+                                  //           revertSubscription(
+                                  //             proPlanDetails?.id
+                                  //           )
+                                  //         }
+                                  //         variant="primary"
+                                  //         text="Revert Subscription"
+                                  //         size="sm"
+                                  //       />
+                                  //     </div>
+                                  //   )}
+                                  // </>
                                 )}
                                 {subscriptionType === null ? (
                                   <div className="subscription-action">
@@ -491,17 +525,25 @@ export const SubscriptionPlanView = ({
                                     />
                                   </div>
                                 ) : (
-                                  <div className="subscription-action">
-                                    <Button
-                                      disabled={flags?.hasDowngraded}
-                                      onClick={() =>
-                                        setShowDowngradeToggleModal(true)
-                                      }
-                                      variant="primary"
-                                      text="Downgrade"
-                                      size="sm"
-                                    />
-                                  </div>
+                                  <>
+                                    {!flags?.hasDowngraded && (
+                                      <div className="subscription-action">
+                                        <Button
+                                          disabled={flags?.hasDowngraded}
+                                          onClick={() =>
+                                            withinFreeTrial
+                                              ? setShowDowngradeToggleModal(
+                                                  true
+                                                )
+                                              : setShowBaseToggleModal(true)
+                                          }
+                                          variant="primary"
+                                          text="Downgrade"
+                                          size="sm"
+                                        />
+                                      </div>
+                                    )}
+                                  </>
                                 )}
                               </>
                             )}
@@ -658,6 +700,7 @@ export const SubscriptionPlanView = ({
                                   onClick={() => setShowProToggleModal(true)}
                                   variant="primary"
                                   text="Upgrade"
+                                  size="sm"
                                 />
                               </div>
                             )}
@@ -965,8 +1008,14 @@ export const SubscriptionPlanView = ({
         action={() => {
           // setShowBaseToggleModal(false);
           // setIsMonthly(!isMonthly);
-          if (basePlanDetails?.id) {
+
+          if (basePlanDetails?.id && remainingFreeTrialDays > 0) {
             downgradeSubscription();
+          } else {
+            downgradeSubscription();
+            if (basePlanDetails?.id) {
+              updateSubscription(basePlanDetails.id);
+            }
           }
           setShowDowngradeToggleModal(false);
         }}
@@ -975,7 +1024,7 @@ export const SubscriptionPlanView = ({
         <Typography color="shade6">
           You will be charged the ongoing monthly cost of
           <Typography variant="body" component="span">
-            &nbsp;{basePrice ? toPrice(basePrice) : 0}/Month{' '}
+            &nbsp;{basePrice ? toPrice(basePrice) : 0}/month{' '}
           </Typography>
           <Typography
             variant="body"
@@ -986,8 +1035,8 @@ export const SubscriptionPlanView = ({
             on{' '}
           </Typography>
           <Typography variant="body" component="span">
-            {withinFreeTrial
-              ? moment.utc(freeTrialExpiryDate).format('MMMM Do, YYYY')
+            {withinFreeTrial && remainingFreeTrialDays > 0
+              ? moment.utc(seventhFreeDay).format('MMMM Do, YYYY')
               : moment.utc().format('MMMM Do, YYYY')}
           </Typography>
         </Typography>
@@ -1007,19 +1056,20 @@ export const SubscriptionPlanView = ({
               with the first payment on{' '}
             </Typography>
             <Typography variant="body" component="span">
-              {withinFreeTrial
-                ? moment.utc(freeTrialExpiryDate).format('MMMM Do, YYYY')
+              {withinFreeTrial && remainingFreeTrialDays > 0
+                ? moment.utc(seventhFreeDay).format('MMMM Do, YYYY')
                 : moment.utc().format('MMMM Do, YYYY')}
               .
             </Typography>
           </Typography>
         </div>
       </ConfirmationModal>
+
       <ConfirmationModal
         isOpen={showBaseToggleModal}
         title="Are you sure you want to switch plans?"
         actionText="Confirm"
-        hideCancel
+        cancelText="Back"
         onClickClose={() => {
           setShowBaseToggleModal(false);
         }}
@@ -1036,15 +1086,7 @@ export const SubscriptionPlanView = ({
         <Typography color="shade6">
           The ongoing monthly cost will be:
           <Typography variant="body" component="span">
-            &nbsp;{basePrice ? toPrice(basePrice) : 0}
-          </Typography>
-          <Typography
-            component="span"
-            variant="caption"
-            weight="500"
-            color="shade6"
-          >
-            /Month{' '}
+            &nbsp;{basePrice ? toPrice(basePrice) : 0}/month
           </Typography>
           <Typography
             variant="body"
@@ -1052,7 +1094,7 @@ export const SubscriptionPlanView = ({
             color="shade6"
             component="span"
           >
-            effective from the next payment period.
+            &nbsp;effective from the next payment period.
           </Typography>
         </Typography>
 
@@ -1061,9 +1103,9 @@ export const SubscriptionPlanView = ({
             By pressing Confirm, you will have the Pro features until the end of
             this payment period and will be downgraded as of the{' '}
             <Typography variant="body" component="span">
-              {moment(currentPlanDetails?.subscription.ends_at).format(
-                'Do of MMMM'
-              )}
+              {withinFreeTrial && remainingFreeTrialDays > 0
+                ? moment.utc(seventhFreeDay).format('MMMM Do, YYYY')
+                : moment.utc().format('MMMM Do, YYYY')}
             </Typography>
             .
           </Typography>
