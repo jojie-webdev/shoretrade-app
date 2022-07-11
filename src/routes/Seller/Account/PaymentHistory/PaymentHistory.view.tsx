@@ -11,7 +11,6 @@ import { Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import theme from 'utils/SFMTheme';
 import { toPrice } from 'utils/String';
-import { toTemporaryTokenV2 } from 'utils/toTemporaryTokenV2';
 
 import { PaymentHistoryGeneratedProps } from './PaymentHistory.props';
 import {
@@ -68,9 +67,7 @@ const PaymentHistoryView = ({
                   enabled
                   onClick={(e) => {
                     window.open(
-                      `${API.URL}/v2/subscription/company/invoice/${
-                        transaction.refNumber
-                      }?token=${toTemporaryTokenV2(token)}&invoice=true`,
+                      `${API.URL}/v2/subscription/company/invoice/${transaction.refNumber}?token=${token}&invoice=true`,
                       '_blank'
                     );
                     e.stopPropagation();
