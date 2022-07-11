@@ -463,7 +463,7 @@ export const SubscriptionPlanView = ({
                               </div>
                             ) : (
                               <>
-                                {flags?.hasDowngraded ? (
+                                {flags?.hasDowngraded && (
                                   <div className="subscription-action">
                                     <Button
                                       onClick={() =>
@@ -471,6 +471,22 @@ export const SubscriptionPlanView = ({
                                       }
                                       variant="primary"
                                       text="Revert Subscription"
+                                      size="sm"
+                                    />
+                                  </div>
+                                )}
+                                {subscriptionType === null ? (
+                                  <div className="subscription-action">
+                                    <Button
+                                      onClick={() => {
+                                        if (basePlanDetails) {
+                                          updateSubscription(
+                                            basePlanDetails.id
+                                          );
+                                        }
+                                      }}
+                                      variant="primary"
+                                      text="Subscribe"
                                       size="sm"
                                     />
                                   </div>
@@ -609,27 +625,43 @@ export const SubscriptionPlanView = ({
                         >
                           Pro
                         </Typography>
-                        {currentPlanDetails?.plan.name !==
-                        CompanyPlanName.BASE ? (
+                        {currentPlanDetails?.plan.name ===
+                        CompanyPlanName.PRO ? (
                           <div>
                             <YourCurrentPlanIndicator />
                           </div>
                         ) : (
-                          <div className="subscription-action">
-                            <Button
-                              disabled={
-                                flags
-                                  ? flags.hasCancelledPlan
-                                    ? true
-                                    : false
-                                  : false
-                              }
-                              onClick={() => setShowProToggleModal(true)}
-                              variant="primary"
-                              text="Upgrade"
-                              size="sm"
-                            />
-                          </div>
+                          <>
+                            {subscriptionType === null ? (
+                              <div className="subscription-action">
+                                <Button
+                                  onClick={() => {
+                                    if (proPlanDetails) {
+                                      updateSubscription(proPlanDetails.id);
+                                    }
+                                  }}
+                                  variant="primary"
+                                  text="Subscribe"
+                                  size="sm"
+                                />
+                              </div>
+                            ) : (
+                              <div className="subscription-action">
+                                <Button
+                                  disabled={
+                                    flags
+                                      ? flags.hasCancelledPlan
+                                        ? true
+                                        : false
+                                      : false
+                                  }
+                                  onClick={() => setShowProToggleModal(true)}
+                                  variant="primary"
+                                  text="Upgrade"
+                                />
+                              </div>
+                            )}
+                          </>
                         )}
                       </PlanTitleWrapper>
                       <PlanPrice>

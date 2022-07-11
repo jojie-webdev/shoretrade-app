@@ -232,6 +232,9 @@ const BuyerRoutes = (): JSX.Element => {
 
   const hasInactiveSubscription = useMemo(() => {
     if (companyPlan) {
+      if (companyPlan.activePlans.length < 1) {
+        return true;
+      }
       return companyPlan.flags.hasInactiveSubscription;
     }
     return false;
@@ -250,7 +253,12 @@ const BuyerRoutes = (): JSX.Element => {
   useEffect(() => {
     if (companyPlan) {
       if (companyPlan.activePlans.length < 1) {
-        setShowRenewModal(true);
+        if (
+          location.pathname !== BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN &&
+          location.pathname !== BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD
+        ) {
+          setShowRenewModal(true);
+        }
       } else {
         setShowRenewModal(false);
       }
@@ -263,17 +271,19 @@ const BuyerRoutes = (): JSX.Element => {
 
   const handleRenew = () => {
     if (company?.id && defaultCardId) {
-      dispatch(
-        updateSubscriptionPlanActions.request({
-          companyId: company?.id,
-          payment: {
-            existingCard: defaultCardId,
-          },
-          subscriptionPlanId: subscriptionPlans?.find((plan) =>
-            plan.name.toUpperCase().includes('BASE')
-          )?.id,
-        })
-      );
+      history.push(BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN);
+      setShowRenewModal(false);
+      // dispatch(
+      //   updateSubscriptionPlanActions.request({
+      //     companyId: company?.id,
+      //     payment: {
+      //       existingCard: defaultCardId,
+      //     },
+      //     subscriptionPlanId: subscriptionPlans?.find((plan) =>
+      //       plan.name.toUpperCase().includes('BASE')
+      //     )?.id,
+      //   })
+      // );
     }
   };
 
@@ -386,6 +396,7 @@ const BuyerRoutes = (): JSX.Element => {
         }
         actionText="Renew Subscription"
         cancelText="Logout"
+        hideClose
         onClickClose={() => {
           dispatch(logoutActions.request());
           setShowRenewModal(false);

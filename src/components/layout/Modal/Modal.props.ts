@@ -3,5 +3,6 @@ export interface ModalProps {
   isOpen: boolean;
   backgroundColor?: string;
   onClickClose: () => void;
+  hideClose?: boolean;
   style?: any;
 }

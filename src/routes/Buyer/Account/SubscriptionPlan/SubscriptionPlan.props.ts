@@ -20,7 +20,7 @@ export interface SubscriptionPlanTransformOutputProps {
   cardBrand: string;
   cardNumberMasked: string | null;
   isSaasSubscribed: boolean;
-  subscriptionType: CompanyPlanName;
+  subscriptionType: CompanyPlanName | null;
   features: SubscriptionPlanFeature[];
   planStatus: string;
   nextBillingAmount: number;

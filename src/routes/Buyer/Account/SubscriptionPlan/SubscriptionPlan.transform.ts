@@ -134,10 +134,11 @@ export const companyPlanToProps = (
       ? getCancellationPeriodReverseMarket()
       : '',
     cardBrand,
-    subscriptionType:
-      companyPlan?.activePlans.find((ac) =>
-        [CompanyPlanName.BASE, CompanyPlanName.PRO].includes(ac.plan.name)
-      )?.plan.name || CompanyPlanName.BASE,
+    subscriptionType: companyPlan?.activePlans
+      ? companyPlan?.activePlans.find((ac) =>
+          [CompanyPlanName.BASE, CompanyPlanName.PRO].includes(ac.plan.name)
+        )?.plan.name || null
+      : null,
     features: companyPlan?.features || [],
     cardNumberMasked: defaultPaymentMethod
       ? toMaskedCardNumber(cardBrand, defaultPaymentMethod?.lastFour)
