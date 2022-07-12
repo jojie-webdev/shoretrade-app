@@ -589,6 +589,11 @@ export const SubscriptionPlanView = ({
                                             variant="body"
                                             color="shade9"
                                             weight="700"
+                                            customFont={`${
+                                              theme.isSFM
+                                                ? 'Basis Grotesque Pro'
+                                                : ''
+                                            }`}
                                           >
                                             {i.title}
                                           </Typography>
@@ -634,6 +639,11 @@ export const SubscriptionPlanView = ({
                                         variant="body"
                                         color="shade9"
                                         weight="700"
+                                        customFont={`${
+                                          theme.isSFM
+                                            ? 'Basis Grotesque Pro'
+                                            : ''
+                                        }`}
                                       >
                                         {i.title}
                                       </Typography>
@@ -748,6 +758,9 @@ export const SubscriptionPlanView = ({
                                   variant="body"
                                   color="shade9"
                                   weight="700"
+                                  customFont={`${
+                                    theme.isSFM ? 'Basis Grotesque Pro' : ''
+                                  }`}
                                 >
                                   {i.title}
                                 </Typography>

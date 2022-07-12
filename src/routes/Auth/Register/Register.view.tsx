@@ -1810,7 +1810,17 @@ const StepForm = ({
                   ) : (
                     <>
                       {!isSeller && (
-                        <>
+                        <>{ theme.isSFM &&
+                          <Typography
+                            variant="label"
+                            color="shade6"
+                            weight="400"
+                            style={{ marginLeft: isSmallScreen ? 0 : 30 }}
+                          >
+                            FREE to signup! You will only be charged with your
+                            approval at the end of the free period.
+                          </Typography>
+                          }
                           <PaymentPriceConatiner>
                             <PaymentPriceRow>
                               <Typography variant="label">
