@@ -66,6 +66,7 @@ import {
   SELLER_VARIATIONS,
   BUYER_VARIATIONS,
   BUYER_STEP_SUBTITLE,
+  SFM_BUYER_STEP_SUBTITLE,
   SELLER_STEP_SUBTITLE,
   PLAN_NAME,
   PLAN_PRICE,
@@ -137,6 +138,7 @@ import {
   Plans,
   ReverseMarketModal,
   PlusIcon,
+  ReverseMarketTitle2,
 } from './Register.style';
 import {
   addressToPlaceData2,
@@ -1514,7 +1516,7 @@ const StepForm = ({
                                   theme.isSFM ? 'Canela' : 'Media Sans'
                                 }
                               >
-                                Base
+                                Essentials
                               </Typography>
                               <Radio
                                 checked={selectedPlan === PLAN_NAME.BASE}
@@ -1536,6 +1538,24 @@ const StepForm = ({
                                 /month
                               </Typography>
                             </PlanPrice>
+                            <PlanSectionContainer>
+                              <ReverseMarketTitle2>
+                                <PlusIcon>
+                                  <Plus width={14} height={14} />
+                                </PlusIcon>
+                                <Typography
+                                  className="text__with_free"
+                                  weight="500"
+                                  variant="body"
+                                >
+                                  7 Days Free
+                                </Typography>
+                              </ReverseMarketTitle2>
+                              <Typography weight="400" variant="label">
+                                Access the SFM Blue platform and make purchases
+                                with no fees for the first week!
+                              </Typography>
+                            </PlanSectionContainer>
                             <PlanSectionContainer>
                               <ReverseMarketTitle>
                                 <PlusIcon>
@@ -1617,21 +1637,7 @@ const StepForm = ({
                                   <Plus width={14} height={14} />
                                 </PlusIcon>
                                 <Typography weight="500" variant="label">
-                                  1 Week Free
-                                </Typography>
-                              </ReverseMarketTitle>
-                              <Typography weight="400" variant="label">
-                                Access the SFM Blue platform and make purchases
-                                with no fees for the first week!
-                              </Typography>
-                            </PlanSectionContainer>
-                            <PlanSectionContainer>
-                              <ReverseMarketTitle>
-                                <PlusIcon>
-                                  <Plus width={14} height={14} />
-                                </PlusIcon>
-                                <Typography weight="500" variant="label">
-                                  2% Buying Fee on Transaction Value**
+                                  2% Buying Fee on Transaction Value*
                                 </Typography>
                               </ReverseMarketTitle>
                             </PlanSectionContainer>
@@ -1666,7 +1672,24 @@ const StepForm = ({
                               /month
                             </Typography>
                           </PlanPrice>
-
+                          <PlanSectionContainer>
+                            <ReverseMarketTitle2>
+                              <PlusIcon>
+                                <Plus width={14} height={14} />
+                              </PlusIcon>
+                              <Typography
+                                className="text__with_free"
+                                weight="500"
+                                variant="body"
+                              >
+                                30 Days Free
+                              </Typography>
+                            </ReverseMarketTitle2>
+                            <Typography weight="400" variant="label">
+                              Access the SFM Blue platform and make purchases
+                              with no fees for one month!
+                            </Typography>
+                          </PlanSectionContainer>
                           <PlanSectionContainer>
                             <ReverseMarketTitle>
                               <PlusIcon>
@@ -1709,22 +1732,6 @@ const StepForm = ({
                               </Typography>
                             </div>
                           </PlanSectionContainer>
-
-                          <PlanSectionContainer>
-                            <ReverseMarketTitle>
-                              <PlusIcon>
-                                <Plus width={14} height={14} />
-                              </PlusIcon>
-                              <Typography weight="500" variant="label">
-                                1 Month Free
-                              </Typography>
-                            </ReverseMarketTitle>
-                            <Typography weight="400" variant="label">
-                              Access the SFM Blue platform and make purchases
-                              with no fees for one month!
-                            </Typography>
-                          </PlanSectionContainer>
-
                           <PlanSectionContainer>
                             <ReverseMarketTitle>
                               <PlusIcon>
@@ -2073,6 +2080,9 @@ const RegisterView = (props: RegisterGeneratedProps) => {
     : theme.isSFM
     ? SFM_BUYER_STEPS
     : BUYER_STEPS;
+  const stepSubtitle = theme.isSFM
+    ? SFM_BUYER_STEP_SUBTITLE
+    : BUYER_STEP_SUBTITLE;
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const marketSectors = isSeller ? SELLER_VARIATIONS : BUYER_VARIATIONS;
   const reverseMarketPlaceAlias = isSeller
@@ -2430,14 +2440,14 @@ const RegisterView = (props: RegisterGeneratedProps) => {
                         : steps[step - 1].title}
                     </Title>
                   </TitleContainer>
-                  {!isSeller && BUYER_STEP_SUBTITLE[step] && (
+                  {!isSeller && stepSubtitle[step] && (
                     <Typography
                       variant="label"
                       color="shade6"
                       weight="400"
                       style={{ marginLeft: isSmallScreen ? 0 : 35 }}
                     >
-                      {BUYER_STEP_SUBTITLE[step]}
+                      {stepSubtitle[step]}
                     </Typography>
                   )}
                 </div>

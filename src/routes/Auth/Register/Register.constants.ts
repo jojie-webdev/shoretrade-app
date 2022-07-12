@@ -236,6 +236,13 @@ export const BUYER_STEP_SUBTITLE: { [key: number]: string } = {
   5: 'Review the benefits of the base and pro subscription models below.',
 };
 
+export const SFM_BUYER_STEP_SUBTITLE: { [key: number]: string } = {
+  2: 'By providing us with your business details, we will automatically generate invoices for you and deliver purchases to your door.',
+  3: 'Please, let us know your industry so we can provide you with more tailored information.',
+  4: 'These selections will result in your ShoreTrade experience being more personalised through customised search results and new product notifications. They can also be amended at any time within your account.',
+  5: 'FREE to signup! No charges will be made after your free period unless you opt in. Review the benefits of the Essentials and Pro subscriptions below.',
+};
+
 export const SELLER_STEP_SUBTITLE: { [key: number]: string } = {
   2: 'By providing your business details we will automatically generate invoices and can organise shipment of your sales.',
   3: 'Providing your bank details allows us to deposit your sales directly to your nominated account.',

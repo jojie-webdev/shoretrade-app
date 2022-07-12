@@ -147,14 +147,7 @@ const YourPlanView = ({
             weight="400"
             color={theme.appType === 'seller' ? 'shade6' : 'shade9'}
           >
-            *Minimum 3 month sign up, starting from your account approval date.
-          </Typography>
-          <Typography
-            variant="label"
-            weight="400"
-            color={theme.appType === 'seller' ? 'shade6' : 'shade9'}
-          >
-            **The Transaction Value is the total value of the products in your
+            *The Transaction Value is the total value of the products in your
             order excluding any crate fees and shipping costs.
           </Typography>
         </Footer>

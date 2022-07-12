@@ -15,6 +15,11 @@ export const Container = styled.div`
   justify-content: center;
   height: 100%;
 
+  .text__with_free {
+    font-family: 'Graphik Medium';
+    font-size: 20px;
+  }
+
   @media ${BREAKPOINTS['sm']} {
     margin-bottom: 100px;
   }
@@ -579,6 +584,14 @@ export const ReverseMarketTitle = styled.div`
   gap: 4px;
   margin-left: -7px;
   margin-right: -10px;
+`;
+
+export const ReverseMarketTitle2 = styled.div`
+  display: flex;
+  gap: 4px;
+  margin-left: -7px;
+  margin-right: -10px;
+  align-items: center;
 `;
 
 export const PlusIcon = styled.div`
