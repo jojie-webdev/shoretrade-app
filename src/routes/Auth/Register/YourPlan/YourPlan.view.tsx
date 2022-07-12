@@ -24,6 +24,8 @@ import {
   CheckboxContainer,
   Footer,
   BenefitsList,
+  ReverseMarketFreePerks,
+  ReverseMarketPerkItems,
 } from './YourPlan.style';
 
 const YourPlanView = ({
@@ -108,7 +110,7 @@ const YourPlanView = ({
         />
       )} */}
 
-      {isSeller && (
+      {isSeller && !theme.isSFM && (
         <AdditionalSubscription>
           <CheckboxContainer>
             <Checkbox
@@ -131,6 +133,42 @@ const YourPlanView = ({
                 )}/month`}
           </Typography>
         </AdditionalSubscription>
+      )}
+
+      {isSeller && theme.isSFM && (
+        <ReverseMarketFreePerks>
+          <Typography
+            variant="label"
+            weight="400"
+            color={theme.appType === 'seller' ? 'shade6' : 'shade9'}
+          >
+            FREE to signup to sell your products. Get commission on each sale
+            depending on the product type.
+          </Typography>
+          <ReverseMarketPerkItems>
+            <Typography
+              variant="label"
+              weight="400"
+              color={theme.appType === 'seller' ? 'shade6' : 'shade9'}
+            >
+              7% for whole products
+            </Typography>
+            <Typography
+              variant="label"
+              weight="400"
+              color={theme.appType === 'seller' ? 'shade6' : 'shade9'}
+            >
+              4% for processed products
+            </Typography>
+          </ReverseMarketPerkItems>
+          <Typography
+            variant="label"
+            weight="400"
+            color={theme.appType === 'seller' ? 'shade6' : 'shade9'}
+          >
+            Would you like to get access to Reverse Marketplace?
+          </Typography>
+        </ReverseMarketFreePerks>
       )}
 
       {isSeller && (
@@ -184,6 +222,31 @@ const YourPlanView = ({
             </Typography>
           </li>
         </BenefitsList>
+      )}
+
+      {isSeller && theme.isSFM && (
+        <AdditionalSubscription>
+          <CheckboxContainer>
+            <Checkbox
+              checked={hasReverseMarketPlace}
+              onClick={() => {
+                setAdditionalSubscription(!additionalSubs);
+              }}
+            />
+          </CheckboxContainer>
+          <Typography
+            variant="body"
+            color={theme.appType === 'seller' ? 'noshade' : 'shade9'}
+          >
+            {!isSeller
+              ? `Additional subscription for $${REVERSE_MARKETPLACE_PRICE.BUYER.toFixed(
+                  2
+                )}/month`
+              : `Additional subscription for $${REVERSE_MARKETPLACE_PRICE.SELLER.toFixed(
+                  2
+                )}/month`}
+          </Typography>
+        </AdditionalSubscription>
       )}
     </Container>
   );

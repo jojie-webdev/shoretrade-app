@@ -77,3 +77,15 @@ export const BenefitsList = styled.ul`
     color: ${({ theme }) => theme.grey.shade6}
   }
 `;
+
+export const ReverseMarketFreePerks = styled.div`
+  margin-left: 50px;
+  margin-bottom: 16px;
+`;
+export const ReverseMarketPerkItems = styled.div`
+  margin-left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 0;
+`;
