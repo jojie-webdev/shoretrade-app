@@ -84,6 +84,44 @@ export const BUYER_STEPS = [
   },
 ];
 
+export const SFM_BUYER_STEPS = [
+  {
+    title: 'Your Details',
+    description:
+      'Provide your contact details so we can get your account set up and running.',
+  },
+  {
+    title: 'Business Details',
+    description:
+      'Provide your business details so we know where to send your purchases.',
+  },
+  {
+    title: 'Market Sector',
+    description:
+      'Let us know more about your business by selecting your market sector.',
+  },
+  {
+    title: 'I’m looking for',
+    description:
+      'Let us know which seafood products you commonly purchase so we can optimise your experience.',
+  },
+  {
+    title: 'Choose your plan',
+    description:
+      'Review the benefits of the base and pro subscription models below, based on your selected monthly purchasing value $0 - $10,000.',
+  },
+  {
+    title: 'Payment Method',
+    description:
+      'SFMblue offers multiple payment options, including the ability to apply for a credit account; our Buy Now Pay Later financing option.',
+  },
+  {
+    title: 'Summary',
+    description:
+      'Provide your bank details so we can get your account set up and running.',
+  },
+];
+
 interface Field {
   label: string;
   key: string;

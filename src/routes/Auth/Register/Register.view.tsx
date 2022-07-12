@@ -56,6 +56,7 @@ import { Image, CategoryItems } from './Categories.style';
 import { PaymentMethod } from './PaymentMethod/PaymentMethod.view';
 import {
   BUYER_STEPS,
+  SFM_BUYER_STEPS,
   SELLER_STEPS,
   USER_DETAIL_FIELDS,
   BUSINESS_DETAIL_FIELDS,
@@ -2067,7 +2068,11 @@ const RegisterView = (props: RegisterGeneratedProps) => {
 
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
-  const steps = isSeller ? SELLER_STEPS : BUYER_STEPS;
+  const steps = isSeller
+    ? SELLER_STEPS
+    : theme.isSFM
+    ? SFM_BUYER_STEPS
+    : BUYER_STEPS;
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const marketSectors = isSeller ? SELLER_VARIATIONS : BUYER_VARIATIONS;
   const reverseMarketPlaceAlias = isSeller
