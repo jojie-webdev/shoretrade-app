@@ -260,4 +260,9 @@ export const PlusIconWrapper = styled.div`
 export const PlanTitleWrapper = styled.div`
   display: fex;
   justify-content: space-between;
+
+  .disable {
+    // pointer-events: none;
+    opacity: 0.4;
+  }
 `;

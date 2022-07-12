@@ -148,6 +148,11 @@ export const SubscriptionPlanView = ({
 
   const remainingFreeTrialDays = seventhFreeDay.diff(today, 'days');
 
+  const [showFreeTrialPopUp, setShowFreeTrialPopUp] = useState({
+    upgrade: false,
+    downgrade: false,
+  });
+
   const YourCurrentPlanIndicator = () => (
     <CurrentPlanIndicator>
       <Typography variant="label" weight="500" color="primary">
@@ -527,14 +532,19 @@ export const SubscriptionPlanView = ({
                                 ) : (
                                   <>
                                     {!flags?.hasDowngraded && (
-                                      <div className="subscription-action">
+                                      <div
+                                        className={`subscription-action ${
+                                          withinFreeTrial && 'disable'
+                                        }`}
+                                      >
                                         <Button
                                           disabled={flags?.hasDowngraded}
                                           onClick={() =>
                                             withinFreeTrial
-                                              ? setShowDowngradeToggleModal(
-                                                  true
-                                                )
+                                              ? setShowFreeTrialPopUp({
+                                                  ...showFreeTrialPopUp,
+                                                  downgrade: true,
+                                                })
                                               : setShowBaseToggleModal(true)
                                           }
                                           variant="primary"
@@ -688,7 +698,11 @@ export const SubscriptionPlanView = ({
                                 />
                               </div>
                             ) : (
-                              <div className="subscription-action">
+                              <div
+                                className={`subscription-action ${
+                                  withinFreeTrial && 'disable'
+                                }`}
+                              >
                                 <Button
                                   disabled={
                                     flags
@@ -697,7 +711,14 @@ export const SubscriptionPlanView = ({
                                         : false
                                       : false
                                   }
-                                  onClick={() => setShowProToggleModal(true)}
+                                  onClick={() =>
+                                    withinFreeTrial
+                                      ? setShowFreeTrialPopUp({
+                                          ...showFreeTrialPopUp,
+                                          upgrade: true,
+                                        })
+                                      : setShowProToggleModal(true)
+                                  }
                                   variant="primary"
                                   text="Upgrade"
                                   size="sm"
@@ -1216,6 +1237,48 @@ export const SubscriptionPlanView = ({
         <div>
           <Typography color="shade6">
             Your access will be revoked after your payment period ends.
+          </Typography>
+        </div>
+      </ConfirmationModal>
+
+      {/* ==== Free Trial Pop Up Modals */}
+      <ConfirmationModal
+        isOpen={showFreeTrialPopUp.upgrade}
+        title="Can't change subscription during free trial period"
+        actionText="Ok"
+        hideCancel
+        onClickClose={() => {
+          setShowFreeTrialPopUp({ ...showFreeTrialPopUp, upgrade: false });
+        }}
+        action={() => {
+          setShowFreeTrialPopUp({ ...showFreeTrialPopUp, upgrade: false });
+        }}
+        style={{ width: '686px' }}
+      >
+        <div>
+          <Typography color="shade6">
+            You will be able to change your subscription at the end of your free
+            trial.
+          </Typography>
+        </div>
+      </ConfirmationModal>
+      <ConfirmationModal
+        isOpen={showFreeTrialPopUp.downgrade}
+        title="Can't change subscription during free trial period"
+        actionText="Ok"
+        hideCancel
+        onClickClose={() => {
+          setShowFreeTrialPopUp({ ...showFreeTrialPopUp, downgrade: false });
+        }}
+        action={() => {
+          setShowFreeTrialPopUp({ ...showFreeTrialPopUp, downgrade: false });
+        }}
+        style={{ width: '686px' }}
+      >
+        <div>
+          <Typography color="shade6">
+            You will be able to change your subscription at the end of your free
+            trial.
           </Typography>
         </div>
       </ConfirmationModal>
