@@ -102,7 +102,9 @@ const Review = ({
   )}${editableListing.quality ? `, ${editableListing.quality}` : ''}`;
 
   const boxes = editableListing?.boxes
-    ? (editableListing?.boxes || []).length.toString()
+    ? (editableListing?.boxes || [])
+        .reduce((old, box) => old + box.quantity, 0)
+        .toString()
     : '';
 
   const images = (
