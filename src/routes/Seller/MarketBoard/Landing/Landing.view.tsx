@@ -257,7 +257,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
         />
       )}
 
-      {isMobile && <MobileHeader>Market Board</MobileHeader>}
+      {isMobile && <MobileHeader>Reverse Marketplace</MobileHeader>}
 
       <div className="tabs-row">
         <div className="tabs">

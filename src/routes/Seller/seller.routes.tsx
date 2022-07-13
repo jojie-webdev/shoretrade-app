@@ -65,7 +65,7 @@ const ROUTES: Routes = {
   //Market Board
   MARKET_BOARD: {
     path: SELLER_ROUTES.MARKET_BOARD,
-    title: 'Market Board',
+    title: 'Reverse Marketplace',
     children: <MarketBoardRoutes />,
     icon: Bolt,
     nested: true,
@@ -223,7 +223,7 @@ const SellerRoutes = (): JSX.Element => {
 
     if (pathname.includes(SELLER_ROUTES.MARKET_BOARD)) {
       return {
-        pageTitle: 'Market Board',
+        pageTitle: 'Reverse Marketplace',
       };
     }
 

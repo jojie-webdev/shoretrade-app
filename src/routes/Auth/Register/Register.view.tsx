@@ -2123,7 +2123,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
 
   const renderRef = useRef<HTMLDivElement | null>(null);
 
-  const [step, setStep] = useState(6);
+  const [step, setStep] = useState(0);
   const MAX_STEP = !isSeller
     ? 7
     : theme.isSFM
