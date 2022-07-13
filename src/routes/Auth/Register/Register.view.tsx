@@ -1828,7 +1828,7 @@ const StepForm = ({
                   ) : (
                     <>
                       {!isSeller && (
-                        <>{ theme.isSFM &&
+                        <>
                           <Typography
                             variant="label"
                             color="shade6"
@@ -1838,7 +1838,7 @@ const StepForm = ({
                             FREE to signup! You will only be charged with your
                             approval at the end of the free period.
                           </Typography>
-                          }
+
                           <PaymentPriceConatiner>
                             <PaymentPriceRow>
                               <Typography variant="label">
@@ -2123,7 +2123,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
 
   const renderRef = useRef<HTMLDivElement | null>(null);
 
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(6);
   const MAX_STEP = !isSeller
     ? 7
     : theme.isSFM
