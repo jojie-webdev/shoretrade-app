@@ -198,7 +198,13 @@ const StepForm = ({
     reverseMarketPlaceAlias
   );
 
-  const MAX_STEP = !isSeller ? 7 : hasReverseMarketPlace ? 9 : 8;
+  const MAX_STEP = !isSeller
+    ? 7
+    : theme.isSFM
+    ? 6
+    : hasReverseMarketPlace
+    ? 9
+    : 8;
 
   const [license, setLicense] = useState<{
     file: File | null;
@@ -967,7 +973,10 @@ const StepForm = ({
             } else {
               formikProps.onSubmit(values);
             }
-          } else if (step === 6) {
+          } else if (
+            !(theme.appType === 'seller' && theme.isSFM) &&
+            step === 6
+          ) {
             if (isSeller) {
               const error = validateCategoryMarketSector({
                 categoryMarketSector: registrationDetails.categoryMarketSector,
@@ -983,7 +992,10 @@ const StepForm = ({
               setIsGeneratingCardToken(true);
               getCardToken();
             }
-          } else if (step === 7) {
+          } else if (
+            !(theme.appType === 'seller' && theme.isSFM) &&
+            step === 7
+          ) {
             if (!isSeller) {
               const error = {
                 ...validateAgreement({
@@ -1004,7 +1016,10 @@ const StepForm = ({
                 formikProps.onSubmit(values);
               }
             }
-          } else if (step === 8) {
+          } else if (
+            !(theme.appType === 'seller' && theme.isSFM) &&
+            step === 8
+          ) {
             if (isSeller) {
               if (hasReverseMarketPlace) {
                 formikProps.onSubmit(values);
@@ -1022,7 +1037,10 @@ const StepForm = ({
                 }
               }
             }
-          } else if (step === 9) {
+          } else if (
+            step === 9 ||
+            (step === 6 && theme.appType === 'seller' && theme.isSFM)
+          ) {
             if (isSeller) {
               const error = {
                 ...validateAgreement({
@@ -1790,7 +1808,7 @@ const StepForm = ({
                   )}
                 </>
               )}
-              {step === 6 && (
+              {!(theme.appType === 'seller' && theme.isSFM) && step === 6 && (
                 <>
                   {isSeller ? (
                     <YourPlan
@@ -1893,7 +1911,7 @@ const StepForm = ({
                   )}
                 </>
               )}
-              {step === 7 && (
+              {!(theme.appType === 'seller' && theme.isSFM) && step === 7 && (
                 <>
                   {isSeller ? (
                     <>
@@ -1925,7 +1943,7 @@ const StepForm = ({
                   )}
                 </>
               )}
-              {step === 8 && (
+              {!(theme.appType === 'seller' && theme.isSFM) && step === 8 && (
                 <>
                   {!isSuccess ? (
                     <>
@@ -1958,7 +1976,8 @@ const StepForm = ({
                   )}
                 </>
               )}
-              {step === 9 && (
+              {(step === 9 ||
+                (step === 6 && theme.appType === 'seller' && theme.isSFM)) && (
                 <>
                   {!isSuccess || !isSeller ? (
                     summaryUI()
@@ -2105,7 +2124,13 @@ const RegisterView = (props: RegisterGeneratedProps) => {
   const renderRef = useRef<HTMLDivElement | null>(null);
 
   const [step, setStep] = useState(0);
-  const MAX_STEP = !isSeller ? 7 : hasReverseMarketPlace ? 9 : 8;
+  const MAX_STEP = !isSeller
+    ? 7
+    : theme.isSFM
+    ? 6
+    : hasReverseMarketPlace
+    ? 9
+    : 8;
 
   const summaryHandleStep = (step: number) => {
     setStep(step);
@@ -2273,7 +2298,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
           />
         </>
       );
-    } else if (step === 6) {
+    } else if (!(theme.appType === 'seller' && theme.isSFM) && step === 6) {
       return (
         <>
           <StepForm
@@ -2289,7 +2314,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
           />
         </>
       );
-    } else if (step === 7) {
+    } else if (!(theme.appType === 'seller' && theme.isSFM) && step === 7) {
       return (
         <>
           {isSeller ? (
@@ -2315,7 +2340,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
           )}
         </>
       );
-    } else if (step === 8) {
+    } else if (!(theme.appType === 'seller' && theme.isSFM) && step === 8) {
       return (
         <StepForm
           {...props}
@@ -2329,7 +2354,10 @@ const RegisterView = (props: RegisterGeneratedProps) => {
           previousStep={previousStep}
         />
       );
-    } else if (step === 9) {
+    } else if (
+      step === 9 ||
+      (step === 6 && theme.appType === 'seller' && theme.isSFM)
+    ) {
       return (
         <StepForm
           {...props}
@@ -2374,15 +2402,23 @@ const RegisterView = (props: RegisterGeneratedProps) => {
               return i.title !== 'Summary' && i.title !== 'Choose your plan';
             })
             .map((step, index) => {
-              return (
-                <StepDetails
-                  key={step.title}
-                  step={index + 1}
-                  title={step.title}
-                  description={step.description}
-                  style={{ marginTop: index === 0 ? 24 : 32 }}
-                />
-              );
+              if (
+                theme.appType === 'seller' &&
+                theme.isSFM &&
+                (index + 1 === 6 || index + 1 === 7 || index + 1 === 8)
+              ) {
+                return <></>;
+              } else {
+                return (
+                  <StepDetails
+                    key={step.title}
+                    step={index + 1}
+                    title={step.title}
+                    description={step.description}
+                    style={{ marginTop: index === 0 ? 24 : 32 }}
+                  />
+                );
+              }
             })}
           {!isSmallScreen ? (
             <GetStartedButton text="GET STARTED" onClick={() => nextStep()} />
