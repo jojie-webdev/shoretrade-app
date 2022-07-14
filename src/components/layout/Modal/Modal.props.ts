@@ -5,4 +5,6 @@ export interface ModalProps {
   onClickClose: () => void;
   hideClose?: boolean;
   style?: any;
+  switchBtns?: boolean;
+  switchBtnsEffect?: boolean;
 }

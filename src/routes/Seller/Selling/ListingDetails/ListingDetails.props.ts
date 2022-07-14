@@ -65,6 +65,8 @@ export interface ListingProps {
 
 export interface ListingDetailsGeneratedProps {
   listing: ListingProps;
+  showDeleteListingModal?: boolean;
+  onToggleDeleteListingModal?: () => void;
   onRemove?: () => void;
   onEdit?: () => void;
   onCreate?: () => void;

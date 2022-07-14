@@ -15,6 +15,46 @@ export const Wrapper = styled.div<{ isCreatListingSuccess?: boolean }>`
   flex-direction: column;
   justify-content: center;
 
+  .modal_container {
+    border-radius: 24px;
+    width: 686px;
+    background-color: ${({ theme }) => theme.grey.shade10};
+    padding: 56px 45px;
+  }
+
+  .confirmation_modal__cancel_btn > p {
+    text-transform: capitalize;
+    font-size: 15px;
+    letter-spacing: 0px;
+    font-weight: normal;
+  }
+
+  .confirmation_modal__ok_btn > p {
+    text-transform: capitalize;
+    font-size: 15px;
+    letter-spacing: 0px;
+    font-weight: normal;
+  }
+
+  .modal_container__exit_btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 56px;
+    background-color: ${({ theme }) => theme.grey.shade9};
+    right: -24px;
+    top: -30px;
+    border: 2px solid ${({ theme }) => theme.grey.shade8};
+
+    svg {
+      width: 15px;
+      height: 15px;
+
+      path {
+        fill: ${({ theme }) => theme.grey.noshade};
+      }
+    }
+  }
+
   .wrapper {
     width: 100%;
 

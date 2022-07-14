@@ -20,6 +20,8 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
     description,
     cancel,
     hideCancel,
+    switchBtns,
+    switchBtnsEffect,
     ...modalProps
   } = props;
 
@@ -68,23 +70,49 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
           {children && <>{children}</>}
         </div>
         <div className="actions-container">
-          {!hideCancel && (
-            <Button
-              style={{ marginRight: 4, borderRadius: 12 }}
-              variant="outline"
-              text={cancelText || 'Cancel'}
-              onClick={cancel || modalProps.onClickClose}
-            />
+          {!switchBtns ? (
+            <>
+              {!hideCancel && (
+                <Button
+                  className="confirmation_modal__cancel_btn"
+                  style={{ marginRight: 4, borderRadius: 12 }}
+                  variant="outline"
+                  text={cancelText || 'Cancel'}
+                  onClick={cancel || modalProps.onClickClose}
+                />
+              )}
+              <Button
+                className="confirmation_modal__ok_btn"
+                style={{ marginLeft: 8, borderRadius: 12 }}
+                variant="primary"
+                text={actionText || 'OK'}
+                onClick={() => {
+                  action();
+                }}
+              />
+            </>
+          ) : (
+            <>
+              <Button
+                className="confirmation_modal__ok_btn"
+                style={{ marginRight: 4, borderRadius: 12 }}
+                variant={switchBtnsEffect ? 'outline' : 'primary'}
+                text={actionText || 'OK'}
+                onClick={() => {
+                  action();
+                }}
+              />
+              {!hideCancel && (
+                <Button
+                  className="confirmation_modal__cancel_btn"
+                  style={{ marginLeft: 8, borderRadius: 12 }}
+                  variant={switchBtnsEffect ? 'primary' : 'outline'}
+                  text={cancelText || 'Cancel'}
+                  onClick={cancel || modalProps.onClickClose}
+                />
+              )}
+            </>
           )}
-
-          <Button
-            style={{ marginLeft: 8, borderRadius: 12 }}
-            variant="primary"
-            text={actionText || 'OK'}
-            onClick={() => {
-              action();
-            }}
-          />
         </div>
       </Content>
     </Modal>

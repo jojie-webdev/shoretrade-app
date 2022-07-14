@@ -19,6 +19,7 @@ import Typography from 'components/base/Typography';
 import { BoxContainer } from 'components/layout/BoxContainer';
 import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
 import Carousel from 'components/module/Carousel';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 import { SELLER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
@@ -81,7 +82,12 @@ const Actions = (props: ListingDetailsProps) => {
             </div>
 
             <div className="trash-container">
-              <StyledTouchable onPress={() => onRemove()}>
+              <StyledTouchable
+                onPress={() =>
+                  props.onToggleDeleteListingModal &&
+                  props.onToggleDeleteListingModal()
+                }
+              >
                 <TrashCan fill={theme.brand.primary} height={20} width={20} />
               </StyledTouchable>
             </div>
@@ -444,6 +450,22 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
   return (
     <BoxContainer isPreview isCreatListingSuccess={isCreatListingSuccess}>
       <Wrapper isCreatListingSuccess={isCreatListingSuccess}>
+        <ConfirmationModal
+          isOpen={props.showDeleteListingModal || false}
+          title="Are you sure you want to delete this listing?"
+          action={() => {
+            props.onRemove && props.onRemove();
+          }}
+          actionText="Delete Listing"
+          cancelText="Cancel"
+          onClickClose={() => {
+            props.onToggleDeleteListingModal &&
+              props.onToggleDeleteListingModal();
+          }}
+          switchBtns
+          switchBtnsEffect
+        />
+
         {isCreatListingSuccess && (
           <Alert
             fullWidth
