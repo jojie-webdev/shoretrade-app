@@ -1148,7 +1148,9 @@ export const SubscriptionPlanView = ({
 
       <ConfirmationModal
         isOpen={showCancelModal}
-        title="Are you sure you want to cancel your ShoreTrade account?"
+        title={`Are you sure you want to cancel your ${
+          theme.isSFM ? 'SFMblue' : 'ShoreTrade'
+        } account?`}
         description="Your account will be deactivated on your next payment date and you will not be able to access any data in your account."
         actionText="No"
         cancelText="Cancel Subscription"
