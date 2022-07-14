@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import SpinnerLogo from 'components/base/SpinnerLogo';
 import TermsAndCondition from 'components/module/TermsAndCondition';
 import {
   SELLER_ACCOUNT_ROUTES,
@@ -27,6 +28,7 @@ import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersS
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { Store } from 'types/store/Store';
 import useLocalStorage from 'utils/Hooks/useLocalStorage';
+import useTimeout from 'utils/Hooks/useTimeout';
 import { useTheme } from 'utils/SFMTheme';
 
 import LandingDefaultView from './Landing.default.view';
@@ -45,6 +47,7 @@ const MarketBoardLanding = (): JSX.Element => {
   const [activeOffersDataCopy, setActiveOffersDataCopy] = useState<
     GetActiveOffersRequestResponseItem[]
   >([]);
+  const [waitAll, setWaitAll] = useState(true);
 
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
   const userPending =
@@ -151,6 +154,11 @@ const MarketBoardLanding = (): JSX.Element => {
           0
       )?.length > 0) ||
     false;
+
+  const { clear } = useTimeout(() => {
+    setWaitAll(false);
+    clear();
+  }, 2000);
 
   useEffect(() => {
     // if (currentTab === 'Buyer Requests') {
@@ -324,52 +332,43 @@ const MarketBoardLanding = (): JSX.Element => {
     handleSeePlansClick,
   };
 
-  if (
-    theme.isSFM &&
-    !reverseMarketPlace &&
-    isActivePlanLoading !== null &&
-    isActivePlanLoading === false
-  ) {
-    return <LandingSFMView {...sfmViewProps} />;
-  }
+  if (waitAll || isActivePlanLoading === null || isActivePlanLoading) {
+    return <SpinnerLogo style={{ width: '200px', height: '80px' }} />;
+  } else {
+    if (!isAcceptClicked) {
+      return (
+        <TermsAndCondition
+          appType="seller"
+          textWeb1=""
+          textWeb2="Browse Buyer Requests"
+          textMobile1="Browse Buyer Requests"
+          textMobile2=""
+          textMobile3=""
+          cardText1={
+            'View the products Buyers have requested and make offers directly to them.'
+          }
+          cardText2={
+            'Negotiate and accept offers before the Buyer Request closes 7 days after creation or once the quantity requested has been filled.'
+          }
+          cardText3={
+            'Organise shipping for all finalised Buyer Requests. Keep in mind that a Buyer Request is not finalised until the Buyer has processed the payment. Turn on your notifications to ensure you stay up to date.'
+          }
+          isAcceptClicked={isAcceptClicked}
+          setIsAcceptClicked={setIsAcceptClicked}
+        />
+      );
+    }
 
-  if (
-    !reverseMarketPlace &&
-    isActivePlanLoading !== null &&
-    isActivePlanLoading === false
-  ) {
-    return <LandingDefaultView {...defaultViewProps} />;
-  }
+    if (theme.isSFM && !reverseMarketPlace) {
+      return <LandingSFMView {...sfmViewProps} />;
+    }
 
-  if (!isAcceptClicked) {
-    return (
-      <TermsAndCondition
-        appType="seller"
-        textWeb1=""
-        textWeb2="Browse Buyer Requests"
-        textMobile1="Browse Buyer Requests"
-        textMobile2=""
-        textMobile3=""
-        cardText1={
-          'View the products Buyers have requested and make offers directly to them.'
-        }
-        cardText2={
-          'Negotiate and accept offers before the Buyer Request closes 7 days after creation or once the quantity requested has been filled.'
-        }
-        cardText3={
-          'Organise shipping for all finalised Buyer Requests. Keep in mind that a Buyer Request is not finalised until the Buyer has processed the payment. Turn on your notifications to ensure you stay up to date.'
-        }
-        isAcceptClicked={isAcceptClicked}
-        setIsAcceptClicked={setIsAcceptClicked}
-      />
-    );
-  }
+    if (!reverseMarketPlace) {
+      return <LandingDefaultView {...defaultViewProps} />;
+    }
 
-  if (isActivePlanLoading !== null && isActivePlanLoading === false) {
     return <MarketBoardLandingView {...generatedProps} />;
   }
-
-  return <></>;
 };
 
 export default MarketBoardLanding;

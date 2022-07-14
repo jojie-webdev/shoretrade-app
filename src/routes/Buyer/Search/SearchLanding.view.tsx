@@ -108,7 +108,11 @@ const SearchLandingView = (props: SearchLandingGeneratedProps) => {
             variant="primary"
             text="Create a market request"
             onClick={() =>
-              history.push(BUYER_MARKET_REQUEST_ROUTES.CREATE_MARKET_REQUEST)
+              !props.hasMarketRequest
+                ? history.push(BUYER_MARKET_REQUEST_ROUTES.LANDING)
+                : history.push(
+                    BUYER_MARKET_REQUEST_ROUTES.CREATE_MARKET_REQUEST
+                  )
             }
             style={{ margin: '25px 0' }}
           />

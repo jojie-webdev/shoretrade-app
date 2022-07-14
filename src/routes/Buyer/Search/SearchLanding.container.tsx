@@ -18,6 +18,17 @@ const SearchLanding = (): JSX.Element => {
   const [searchTerm, setSearchTerm] = useState('');
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 
+  const activePlans = useSelector(
+    (store: Store) => store.getCompanyPlan.data?.data.activePlans
+  );
+
+  const hasMarketRequest =
+    activePlans &&
+    activePlans?.filter(
+      (i) =>
+        i.plan.features.filter((pf) => pf.name === 'Market Requests').length > 0
+    )?.length > 0;
+
   const recent =
     useSelector((state: Store) => state.history.buyerRecentSearch) || [];
 
@@ -105,6 +116,7 @@ const SearchLanding = (): JSX.Element => {
     onReset,
     saveSearchHistory,
     isTyping,
+    hasMarketRequest,
   };
 
   return <SearchLandingView {...generatedProps} />;

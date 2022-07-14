@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import SpinnerLogo from 'components/base/SpinnerLogo';
 import {
   BUYER_ACCOUNT_ROUTES,
   BUYER_MARKET_REQUEST_ROUTES,
@@ -13,6 +14,7 @@ import {
   getAllMarketRequestActions,
 } from 'store/actions';
 import { Store } from 'types/store/Store';
+import useTimeout from 'utils/Hooks/useTimeout';
 import { useTheme } from 'utils/SFMTheme';
 
 import LandingDefaultView from './Landing.default.view';
@@ -31,6 +33,7 @@ const MarketRequestsLanding = (): JSX.Element => {
   const [itemToDelete, setItemToDelete] = useState<{ value: null | string }>({
     value: null,
   });
+  const [waitAll, setWaitAll] = useState(true);
 
   const deleteMarketRequest = useSelector(
     (store: Store) => store.deleteMarketRequest
@@ -93,6 +96,11 @@ const MarketRequestsLanding = (): JSX.Element => {
     history.push(BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN);
   };
 
+  const { clear } = useTimeout(() => {
+    setWaitAll(false);
+    clear();
+  }, 2000);
+
   useEffect(() => {
     dispatch(getAllMarketRequestActions.request({}));
     // eslint-disable-next-line
@@ -133,28 +141,19 @@ const MarketRequestsLanding = (): JSX.Element => {
     handleSeePlansClick,
   };
 
-  if (
-    theme.isSFM &&
-    !reverseMarketPlace &&
-    isActivePlanLoading !== null &&
-    isActivePlanLoading === false
-  ) {
-    return <LandingSFMView {...sfmViewProps} />;
-  }
+  if (waitAll || isActivePlanLoading === null || isActivePlanLoading) {
+    return <SpinnerLogo style={{ width: '200px', height: '80px' }} />;
+  } else {
+    if (theme.isSFM && !reverseMarketPlace) {
+      return <LandingSFMView {...sfmViewProps} />;
+    }
 
-  if (
-    !reverseMarketPlace &&
-    isActivePlanLoading !== null &&
-    isActivePlanLoading === false
-  ) {
-    return <LandingDefaultView {...defaultViewProps} />;
-  }
+    if (!reverseMarketPlace) {
+      return <LandingDefaultView {...defaultViewProps} />;
+    }
 
-  if (isActivePlanLoading !== null && isActivePlanLoading === false) {
     return <MarketRequestsLandingView {...generatedProps} />;
   }
-
-  return <></>;
 };
 
 export default MarketRequestsLanding;

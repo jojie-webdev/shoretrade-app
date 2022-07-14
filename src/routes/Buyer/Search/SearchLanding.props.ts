@@ -12,4 +12,5 @@ export interface SearchLandingGeneratedProps {
   onReset: () => void;
   saveSearchHistory: (id: string, label: string, count: string) => void;
   isTyping?: boolean;
+  hasMarketRequest?: boolean;
 }
