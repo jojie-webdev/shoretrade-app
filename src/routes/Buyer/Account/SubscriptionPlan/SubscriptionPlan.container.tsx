@@ -25,6 +25,10 @@ const SubscriptionPlan = () => {
 
   // SELECTORS
 
+  const addresses = useSelector(
+    (state: Store) => state.getAddresses.data?.data.addresses
+  );
+
   const marketSector = useSelector(
     (store: Store) => store.getMarketInterests.data?.data
   );
@@ -169,6 +173,10 @@ const SubscriptionPlan = () => {
 
   // VARIABLES
 
+  const isApprovedAccount = addresses
+    ? addresses.some((a) => a.approved === 'APPROVED')
+    : false;
+
   const currentMarketSector = marketSector ? marketSector.sectorAlias : '';
 
   const params: SubscriptionPlanGeneratedProps = {
@@ -179,6 +187,7 @@ const SubscriptionPlan = () => {
     isDeactivated,
     currentMarketSector,
     loading,
+    isApprovedAccount,
     cancelSubscription,
     updateSubscription,
     renewSubscription,

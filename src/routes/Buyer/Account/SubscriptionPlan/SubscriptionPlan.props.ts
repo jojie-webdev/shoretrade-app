@@ -42,6 +42,7 @@ export interface SubscriptionPlanGeneratedProps
   currentMarketSector: string;
   flags?: PlanFlags;
   loading: boolean;
+  isApprovedAccount: boolean;
   cancelSubscription: (subscriptionPlanId: string) => void;
   companyPlanError: string | undefined;
   updateSubscription: (subscriptionId?: string) => void;

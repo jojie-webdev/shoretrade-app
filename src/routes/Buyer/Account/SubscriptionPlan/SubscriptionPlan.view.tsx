@@ -83,6 +83,7 @@ export const SubscriptionPlanView = ({
   reverseMarketDetails,
   currentPlanDetails,
   loading,
+  isApprovedAccount,
   currentReverseMarketDetails,
   flags,
   proRataPrice,
@@ -287,6 +288,21 @@ export const SubscriptionPlanView = ({
             )}
           </>
         )}
+        {!isApprovedAccount && (
+          <Alert
+            fullWidth
+            header="Pending Account Approval"
+            content={
+              <AlertContentContainer>
+                <Typography variant="caption" color="shade7">
+                  Your free period will begin once your account has been
+                  approved.
+                </Typography>
+              </AlertContentContainer>
+            }
+            variant="alert"
+          />
+        )}
         {flags?.hasInactiveSubscription && (
           <Alert
             fullWidth
@@ -352,15 +368,39 @@ export const SubscriptionPlanView = ({
                   <Typography variant="body" weight="400">
                     Next Billing Date
                   </Typography>
-                  <div className="billing-date">
-                    <Calendar fill={theme.grey.shade7} />
+
+                  {isApprovedAccount ? (
+                    <div className="billing-date">
+                      <Calendar
+                        fill={theme.grey.shade7}
+                        width={16}
+                        height={20}
+                      />
+                      <Typography
+                        variant="body"
+                        style={{
+                          marginLeft: '6px',
+                          lineHeight: 'normal',
+                          marginTop: '4px',
+                        }}
+                      >
+                        <b>{nextBillingDate}</b>
+                      </Typography>
+                    </div>
+                  ) : (
                     <Typography
                       variant="body"
-                      style={{ marginLeft: '6px', lineHeight: 'normal' }}
+                      style={{
+                        lineHeight: 'normal',
+                        marginTop: '4px',
+                      }}
                     >
-                      <b>{nextBillingDate}</b>
+                      <b>
+                        Your next billing date will be 30 days from the account
+                        approval date
+                      </b>
                     </Typography>
-                  </div>
+                  )}
                 </div>
                 <div className="billing-item">
                   <Typography variant="body" weight="400">
@@ -374,9 +414,15 @@ export const SubscriptionPlanView = ({
                     />
                     <Typography
                       variant="body"
-                      style={{ marginLeft: '6px', lineHeight: 'normal' }}
+                      style={{
+                        marginLeft: '6px',
+                        lineHeight: 'normal',
+                        marginTop: '4px',
+                      }}
                     >
-                      <b>{nextBillingAmount}</b>
+                      <b>
+                        {isApprovedAccount ? toPrice(nextBillingAmount) : 0}
+                      </b>
                     </Typography>
                   </div>
                 </div>
