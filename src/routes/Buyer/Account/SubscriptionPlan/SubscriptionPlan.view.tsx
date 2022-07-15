@@ -809,32 +809,36 @@ export const SubscriptionPlanView = ({
                             </Typography>
                           </>
                         ) : (
-                          <div style={{ marginBottom: 12 }}>
-                            {!flags?.hasDowngraded ? (
-                              <Tag background={theme.brand.success}>
-                                <Typography
-                                  variant="caption"
-                                  color="noshade"
-                                  weight="500"
-                                >
-                                  Included
-                                </Typography>
-                              </Tag>
-                            ) : (
-                              <Badge
-                                badgeColor={theme.brand.warning}
-                                borderRadius="4px"
-                              >
-                                <Typography
-                                  variant="overline"
-                                  color="noshade"
-                                  style={{ lineHeight: 'unset' }}
-                                >
-                                  Downgrading
-                                </Typography>
-                              </Badge>
+                          <>
+                            {subscriptionType !== null && (
+                              <div style={{ marginBottom: 12 }}>
+                                {!flags?.hasDowngraded ? (
+                                  <Tag background={theme.brand.success}>
+                                    <Typography
+                                      variant="caption"
+                                      color="noshade"
+                                      weight="500"
+                                    >
+                                      Included
+                                    </Typography>
+                                  </Tag>
+                                ) : (
+                                  <Badge
+                                    badgeColor={theme.brand.warning}
+                                    borderRadius="4px"
+                                  >
+                                    <Typography
+                                      variant="overline"
+                                      color="noshade"
+                                      style={{ lineHeight: 'unset' }}
+                                    >
+                                      Downgrading
+                                    </Typography>
+                                  </Badge>
+                                )}
+                              </div>
                             )}
-                          </div>
+                          </>
                         )}
                       </PlanPrice>
                     </PlanTitleContainer>
@@ -897,15 +901,19 @@ export const SubscriptionPlanView = ({
                         )}
                       </>
                     ) : (
-                      <div className="subscription-action">
-                        <Button
-                          onClick={() =>
-                            setShowReverseMarketPlaceToggleModal(true)
-                          }
-                          variant="primary"
-                          text="Subscribe"
-                        />
-                      </div>
+                      <>
+                        {subscriptionType !== null && (
+                          <div className="subscription-action">
+                            <Button
+                              onClick={() =>
+                                setShowReverseMarketPlaceToggleModal(true)
+                              }
+                              variant="primary"
+                              text="Subscribe"
+                            />
+                          </div>
+                        )}
+                      </>
                     )}
                   </AdditionalSubSection>
                 </Col>
@@ -935,30 +943,7 @@ export const SubscriptionPlanView = ({
                   </Typography>
                 </FooterNote>
 
-                {flags?.hasCancelledPlan ? (
-                  // <div
-                  //   className="subscription-action"
-                  //   onClick={() =>
-                  //     isForRenewal
-                  //       ? showYourPlanOnly
-                  //         ? history.push(
-                  //             BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD
-                  //           )
-                  //         : setShowRenewModal(true)
-                  //       : setShowCancelModal(true)
-                  //   }
-                  // >
-                  //   <Typography
-                  //     variant="label"
-                  //     color="primary"
-                  //     weight="400"
-                  //     style={{ textDecoration: 'underline' }}
-                  //   >
-                  //     {yourPlanButtonText}
-                  //   </Typography>
-                  // </div>
-                  <></>
-                ) : (
+                {!flags?.hasCancelledPlan && subscriptionType !== null && (
                   <div
                     className="cancel-subscription"
                     onClick={() => setShowCancelModal(true)}
