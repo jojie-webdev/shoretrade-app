@@ -51,9 +51,6 @@ export const TitleContainer = styled.div`
 
 export const RenderContainer = styled.div<{ step?: number }>`
   margin-top: 60px;
-  height: 100vh;
-  max-height: 100vh;
-  overflow: auto;
   padding-right: 1em;
 
   @media ${BREAKPOINTS['sm']} {
