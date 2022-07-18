@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import SwiperCore, { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -19,6 +19,8 @@ function MultipleCarousel<D extends { id: string }, CP>(
   // eslint-disable-next-line
   const [currentNdx, setCurrentNdx] = useState(0);
   const containerWidthRef = useRef<HTMLDivElement | null>(null);
+
+  const history = useHistory();
 
   const {
     id,
@@ -135,10 +137,15 @@ function MultipleCarousel<D extends { id: string }, CP>(
           if (!d.id) return null;
 
           return (
-            <SwiperSlide key={d.id}>
-              <Link to={link(d.id)} style={{ zIndex: 999 }}>
+            <SwiperSlide
+              key={d.id}
+              onClick={() => {
+                history.push(link(d.id));
+              }}
+            >
+              <div style={{ cursor: 'pointer' }}>
                 <Component {...transform(d)} />
-              </Link>
+              </div>
             </SwiperSlide>
           );
         })}

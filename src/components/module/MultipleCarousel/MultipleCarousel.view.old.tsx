@@ -5,7 +5,7 @@ import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useTheme } from 'utils/Theme';
 
@@ -25,6 +25,8 @@ function MultipleCarousel<D extends { id: string }, CP>(
   const containerWidthRef = useRef<HTMLDivElement | null>(null);
   const isMobile = useMediaQuery({ query: BREAKPOINTS.sm });
   const isTabled = useMediaQuery({ query: BREAKPOINTS.genericTablet });
+
+  const history = useHistory();
 
   const {
     id,
@@ -99,10 +101,15 @@ function MultipleCarousel<D extends { id: string }, CP>(
           if (!d.id) return null;
 
           return (
-            <SwiperSlide key={d.id}>
-              <Link to={link(d.id)} style={{ zIndex: 999 }}>
+            <SwiperSlide
+              key={d.id}
+              onClick={() => {
+                history.push(link(d.id));
+              }}
+            >
+              <div style={{ cursor: 'pointer' }}>
                 <Component {...transform(d)} />
-              </Link>
+              </div>
             </SwiperSlide>
           );
         })}
