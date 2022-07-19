@@ -76,17 +76,15 @@ const ShippingCard = (props: ShippingCardProps): JSX.Element => {
                     <Typography variant="caption">FREE</Typography>
                   </div>
                 )}
-                <Typography
-                  className={
-                    isFreeShipping && o.shipmentMode !== 'AIR'
-                      ? 'line-through-text'
-                      : undefined
-                  }
-                  variant={isMobile ? 'caption' : 'body'}
-                  align="right"
-                >
-                  {`${o.price}`}
-                </Typography>
+                {!isFreeShipping && (
+                  <Typography
+                    variant={isMobile ? 'caption' : 'body'}
+                    align="right"
+                  >
+                    {`${o.price}`}
+                  </Typography>
+                )}
+
                 {selectedPriceId === o.id ? (
                   <CheckFilled
                     width={isMobile ? 14 : 20}
