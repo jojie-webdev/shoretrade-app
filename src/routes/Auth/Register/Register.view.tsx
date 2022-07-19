@@ -33,6 +33,7 @@ import MarketSectorItem from 'components/module/MarketSectorItem';
 import StepDetails from 'components/module/StepDetails';
 import { BREAKPOINTS } from 'consts/breakpoints';
 // import { REVERSE_MARKETPLACE_PRICE } from 'consts/prices';
+import COUNTRY_STATES from 'consts/countryStates';
 import { Formik, FormikProps } from 'formik';
 import moment from 'moment';
 import { isEmpty, pathOr } from 'ramda';
@@ -53,6 +54,11 @@ import { SpecialColors } from 'utils/SFMTheme';
 import { useTheme } from 'utils/Theme';
 
 import { Image, CategoryItems } from './Categories.style';
+import {
+  AUSTRALIA_COUNTRY_CODE,
+  DEFAULT_NEW_ZEALAND_PROVINCES_CODE,
+  NEW_ZEALAND_COUNTRY_CODE,
+} from './FishingLicenses/FishingLicenses';
 import { PaymentMethod } from './PaymentMethod/PaymentMethod.view';
 import {
   BUYER_STEPS,
@@ -197,6 +203,17 @@ const StepForm = ({
   const hasReverseMarketPlace = registrationDetails.subscriptionPreference.addOns.includes(
     reverseMarketPlaceAlias
   );
+  const modifiedStates = COUNTRY_STATES.filter(({ isoCode, countryCode }) => {
+    if (registrationDetails.address?.countryCode === NEW_ZEALAND_COUNTRY_CODE) {
+      if (DEFAULT_NEW_ZEALAND_PROVINCES_CODE.includes(isoCode)) {
+        return (
+          countryCode.toLowerCase() === NEW_ZEALAND_COUNTRY_CODE.toLowerCase()
+        );
+      } else return false;
+    }
+
+    return countryCode.toLowerCase() === AUSTRALIA_COUNTRY_CODE.toLowerCase();
+  });
 
   const MAX_STEP = !isSeller ? 7 : hasReverseMarketPlace ? 9 : 8;
 
@@ -1368,8 +1385,16 @@ const StepForm = ({
                           showCalendarIcon
                         />
                         <Select
-                          label="State"
-                          options={states}
+                          label={
+                            registrationDetails.address?.countryCode ===
+                            NEW_ZEALAND_COUNTRY_CODE
+                              ? 'Province'
+                              : 'State'
+                          }
+                          options={modifiedStates.map((state) => ({
+                            value: state.isoCode,
+                            label: state.name,
+                          }))}
                           value={stateId}
                           onChange={(v) => setStateId(v.value)}
                           borderRadius="4px"
