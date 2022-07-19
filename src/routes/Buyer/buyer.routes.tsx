@@ -266,7 +266,7 @@ const BuyerRoutes = (): JSX.Element => {
   }, [companyPlan]);
 
   useEffect(() => {
-    console.log(subscriptionPlans);
+    // console.log(subscriptionPlans);
   }, [subscriptionPlans]);
 
   const handleRenew = () => {

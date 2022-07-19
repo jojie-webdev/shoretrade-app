@@ -103,6 +103,7 @@ const Landing = (): JSX.Element => {
   }, [currentCompany]);
 
   const currentMarketSector = marketSector ? marketSector : 'none';
+  const isApprovedCompany = companyPlan?.isApprovedCompany || false;
 
   const generatedProps: LandingGeneratedProps = {
     credit: currentCompany?.credit,
@@ -119,6 +120,7 @@ const Landing = (): JSX.Element => {
     accountCompletion,
     companyPlan,
     currentMarketSector,
+    isApprovedCompany,
   };
   return <LandingView {...generatedProps} />;
 };

@@ -97,7 +97,7 @@ const Home = (): JSX.Element => {
   const creditBalance = currentCompany?.credit || '0';
   const creditState: CreditState = getCreditState();
   const currentMarketSector = marketSector ? marketSector : '';
-
+  const isApprovedCompany = companyPlan?.isApprovedCompany || false;
   const generatedProps: HomeGeneratedProps = {
     isPendingAccount,
     // Credit Data
@@ -114,6 +114,7 @@ const Home = (): JSX.Element => {
     loadingHomePage,
     companyPlan,
     currentMarketSector,
+    isApprovedCompany,
   };
 
   return isOld ? (

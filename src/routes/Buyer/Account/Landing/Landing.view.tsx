@@ -55,6 +55,7 @@ const LandingView = (props: LandingGeneratedProps) => {
     accountCompletion,
     companyPlan,
     currentMarketSector,
+    isApprovedCompany,
   } = props;
 
   const getIcon = (iconName: string) => {
@@ -153,7 +154,6 @@ const LandingView = (props: LandingGeneratedProps) => {
   );
 
   const freeTrialSubscription = currentPlan?.plan.alias.includes('FREE');
-
   const endDate = currentPlan
     ? currentPlan.subscription.ends_at
     : moment().startOf('day');
@@ -210,7 +210,7 @@ const LandingView = (props: LandingGeneratedProps) => {
             </div>
           </UserInfoContainer>
 
-          {freeTrialSubscription && (
+          {freeTrialSubscription && isApprovedCompany && (
             <FreeTrialCountdown
               freeTrialPeriod={freeTrialPeriod}
               daysLeft={daysLeft}

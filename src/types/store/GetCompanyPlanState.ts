@@ -144,6 +144,7 @@ export type GetCompanyPlanResponseData = {
   ends_at: string;
   features: SubscriptionPlanFeature[];
   id: string;
+  isApprovedCompany: boolean;
   is_free_trial: boolean;
   paid_at?: string;
   payment_methods: {

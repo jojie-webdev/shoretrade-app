@@ -18,4 +18,5 @@ export interface LandingGeneratedProps {
   accountCompletion?: GetAccountCompletionRequestData;
   companyPlan?: GetCompanyPlanResponseData;
   currentMarketSector: string;
+  isApprovedCompany: boolean;
 }

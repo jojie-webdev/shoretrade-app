@@ -32,6 +32,7 @@ export interface HomeGeneratedProps {
   loadingHomePage: boolean;
   companyPlan?: GetCompanyPlanResponseData;
   currentMarketSector: string;
+  isApprovedCompany: boolean;
 }
 
 export interface HomeData {

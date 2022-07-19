@@ -104,6 +104,7 @@ const HomeView = (props: HomeGeneratedProps) => {
     isPendingAccount,
     companyPlan,
     currentMarketSector,
+    isApprovedCompany,
   } = props;
 
   const hideCarouselArrowArea = useMediaQuery({
@@ -134,7 +135,7 @@ const HomeView = (props: HomeGeneratedProps) => {
 
   return (
     <ViewContainer>
-      {freeTrialSubscription && (
+      {freeTrialSubscription && isApprovedCompany && (
         <FreeTrialCountdown
           freeTrialPeriod={freeTrialPeriod}
           daysLeft={daysLeft}
