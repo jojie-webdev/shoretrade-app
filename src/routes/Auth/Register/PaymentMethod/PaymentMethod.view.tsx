@@ -6,11 +6,16 @@ import FormikTextField from 'components/module/FormikTextField';
 import COUNTRY_STATES from 'consts/countryStates';
 import { connect } from 'formik';
 import { Row, Col } from 'react-grid-system';
+import { PlaceData } from 'types/PlaceData';
 import { cardExpiryInputFilter } from 'utils/InputFilters/cardExpiryInputFilter';
 import { cardNumberInputFilter } from 'utils/InputFilters/cardNumberInputFilter';
 import { useTheme } from 'utils/Theme';
 
-import { AUSTRALIA_COUNTRY_CODE } from './PaymentMethod.constants';
+import {
+  AUSTRALIA_COUNTRY_CODE,
+  DEFAULT_NEW_ZEALAND_PROVINCES_CODE,
+  NEW_ZEALAND_COUNTRY_CODE,
+} from './PaymentMethod.constants';
 import { PaymentMethodProps } from './PaymentMethod.props';
 import {
   Container,
@@ -21,17 +26,42 @@ import {
 } from './PaymentMethod.style';
 
 export const PaymentMethod = connect((props: PaymentMethodProps) => {
-  const { details, formik, otherErrors, setOtherErrors } = props;
+  const {
+    details,
+    formik,
+    otherErrors,
+    setOtherErrors,
+    updateRegistrationDetails,
+  } = props;
   const theme = useTheme();
+  const cardState = formik.initialValues.cardState;
 
-  const states = COUNTRY_STATES.filter(
-    ({ countryCode }) =>
-      countryCode.toLowerCase() === AUSTRALIA_COUNTRY_CODE.toLowerCase()
-  );
+  const states = COUNTRY_STATES.filter(({ isoCode, countryCode }) => {
+    if (details.address?.countryCode === NEW_ZEALAND_COUNTRY_CODE) {
+      if (DEFAULT_NEW_ZEALAND_PROVINCES_CODE.includes(isoCode)) {
+        return (
+          countryCode.toLowerCase() === NEW_ZEALAND_COUNTRY_CODE.toLowerCase()
+        );
+      } else return false;
+    }
 
-  const initialState = states.find(
-    (state) => state.isoCode === formik.initialValues.cardState
-  );
+    return countryCode.toLowerCase() === AUSTRALIA_COUNTRY_CODE.toLowerCase();
+  });
+
+  const initialState = states.find((state) => state.isoCode === cardState);
+
+  if (
+    cardState.length > 3 &&
+    details.address?.countryCode === NEW_ZEALAND_COUNTRY_CODE
+  ) {
+    const stateObj = states.find((state) => state.name.includes(cardState));
+
+    const modifiedAddress: PlaceData = {
+      ...details.address,
+      administrativeAreaLevel1: stateObj?.isoCode || '',
+    };
+    updateRegistrationDetails({ address: modifiedAddress });
+  }
 
   return (
     <Container>
@@ -184,16 +214,24 @@ export const PaymentMethod = connect((props: PaymentMethodProps) => {
           <Col>
             <Select
               borderRadius="12px"
-              label="STATE"
-              placeholder="State"
+              label={
+                details.address?.countryCode === NEW_ZEALAND_COUNTRY_CODE
+                  ? 'PROVINCE'
+                  : 'STATE'
+              }
+              placeholder={
+                details.address?.countryCode === NEW_ZEALAND_COUNTRY_CODE
+                  ? 'province'
+                  : 'State'
+              }
               value={initialState?.name}
               options={states.map((state) => ({
                 value: state.isoCode,
                 label: state.name,
               }))}
-              onChange={(option) =>
-                formik.setFieldValue('cardState', option.value, false)
-              }
+              onChange={(option) => {
+                formik.setFieldValue('cardState', option.value, false);
+              }}
               border={`1px solid ${theme.grey.shade5}`}
             />
           </Col>

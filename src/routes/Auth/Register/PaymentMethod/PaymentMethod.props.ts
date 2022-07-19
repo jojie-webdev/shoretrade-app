@@ -1,3 +1,5 @@
+import { Dispatch } from 'react';
+
 import { RegistrationDetails } from '../Register.props';
 
 export type PaymentMethodProps = {
@@ -5,4 +7,5 @@ export type PaymentMethodProps = {
   formik?: any;
   otherErrors: Record<string, string>;
   setOtherErrors: (error: Record<string, string>) => void;
+  updateRegistrationDetails: Dispatch<Partial<RegistrationDetails>>;
 };

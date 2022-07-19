@@ -1922,6 +1922,9 @@ const StepForm = ({
                             otherErrors={otherErrors}
                             setOtherErrors={setOtherErrors}
                             details={registrationDetails}
+                            updateRegistrationDetails={
+                              updateRegistrationDetails
+                            }
                           />
                         </>
                       )}
@@ -1952,6 +1955,9 @@ const StepForm = ({
                             otherErrors={otherErrors}
                             setOtherErrors={setOtherErrors}
                             details={registrationDetails}
+                            updateRegistrationDetails={
+                              updateRegistrationDetails
+                            }
                           />
                         </>
                       ) : (
@@ -2236,12 +2242,13 @@ const RegisterView = (props: RegisterGeneratedProps) => {
         '',
     },
     validate: validateCard,
+    address: registrationDetails.address,
+    updateRegistrationDetails,
     onSubmit: (values: Record<string, string>) => {
       updateRegistrationDetails(values);
       nextStep();
     },
   };
-
   const summaryFormikProps = {
     initialValues: {},
     onSubmit: (values: Record<string, string>) => {
