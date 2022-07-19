@@ -370,3 +370,23 @@ export const PRO_TRANSACTION_VALUES = [
   'Between $15,000 and $22,500',
   'More than $22,500',
 ];
+
+export const SUBSCRIPTION_NAMES = [
+  { PLAN: 'FREE_BASE', PLAN_NAME: 'Essentials' },
+  { PLAN: 'BASE', PLAN_NAME: 'Essentials' },
+  {
+    PLAN: 'FREE_BASE_WITH_REVERSED_MARKETPLACE',
+    PLAN_NAME: 'Essentials with Reverse Marketplace',
+  },
+  {
+    PLAN: 'FEATURE_REVERSED_MARKETPLACE_SELLER',
+    PLAN_NAME: 'Reverse Marketplace',
+  },
+  { PLAN: 'PRO', PLAN_NAME: 'Pro' },
+  { PLAN: 'FREE_PRO', PLAN_NAME: 'Pro' },
+  {
+    PLAN: 'FEATURE_REVERSED_MARKETPLACE',
+    PLAN_NAME: 'Reverse Marketplace',
+  },
+  { PLAN: 'UNSUBSCRIBED', PLAN_NAME: 'Unsubscribed' },
+];

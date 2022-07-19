@@ -29,6 +29,10 @@ const BalanceHistory = (props: { isPlanView?: boolean }): JSX.Element => {
     (state: Store) => state.getTransactionHistory.data?.data.transactions
   );
 
+  const companyPlan = useSelector(
+    (store: Store) => store.getCompanyPlan.data?.data
+  );
+
   const getTransactionHistory = () => {
     if (companyId) {
       dispatch(getTransactionHistoryActions.request({ companyId }));
@@ -43,8 +47,13 @@ const BalanceHistory = (props: { isPlanView?: boolean }): JSX.Element => {
   const isLoading =
     useSelector((state: Store) => state.getTransactionHistory.pending) || false;
 
+  const subscriptionPlan = companyPlan?.activePlans
+    ? companyPlan.activePlans[0].plan.alias
+    : 'Unsubscribed';
+
   const generatedProps: BalanceHistoryGeneratedProps = {
     // generated props here
+    subscriptionPlan: subscriptionPlan,
     transactions:
       (isPlanView
         ? transactions?.filter((t) => t.description === 'ShoreTrade Plan')

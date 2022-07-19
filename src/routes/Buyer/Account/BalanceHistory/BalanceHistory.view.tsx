@@ -6,6 +6,7 @@ import { FileAlt, Prawn } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES, API } from 'consts';
+import { SUBSCRIPTION_NAMES } from 'consts/subcriptionPlan';
 import moment from 'moment';
 import { Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
@@ -25,6 +26,7 @@ import {
 
 const BalanceHistoryView = ({
   isLoading,
+  subscriptionPlan,
   transactions,
   redirectFrom,
   isPlanView,
@@ -117,6 +119,13 @@ const BalanceHistoryView = ({
       subtitle: '',
     };
   };
+
+  const getSubscriptionPlanName = () => {
+    return SUBSCRIPTION_NAMES.map((sub) => {
+      return sub.PLAN === subscriptionPlan && sub.PLAN_NAME;
+    });
+  };
+
   return (
     <Container>
       <div className="breadcrumb-container">
@@ -192,7 +201,7 @@ const BalanceHistoryView = ({
                 </Downloadable>
                 <div className="text">
                   <Typography variant="body" color="shade9">
-                    {title}
+                    {getSubscriptionPlanName()} Subscription
                   </Typography>
                   {subtitle.length > 0 && (
                     <Typography variant="caption" color="shade9">

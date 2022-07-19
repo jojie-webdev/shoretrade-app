@@ -6,6 +6,7 @@ import { FileAlt, Prawn } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Loading from 'components/module/Loading';
 import { SELLER_ACCOUNT_ROUTES, API } from 'consts';
+import { SUBSCRIPTION_NAMES } from 'consts/subcriptionPlan';
 import moment from 'moment';
 import { Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
@@ -24,10 +25,17 @@ import {
 
 const PaymentHistoryView = ({
   isLoading,
+  subscriptionPlan,
   transactions,
   token,
 }: PaymentHistoryGeneratedProps) => {
   const history = useHistory();
+
+  const getSubscriptionPlanName = () => {
+    return SUBSCRIPTION_NAMES.map((sub) => {
+      return sub.PLAN === subscriptionPlan && sub.PLAN_NAME;
+    });
+  };
 
   return (
     <Container>
@@ -77,7 +85,7 @@ const PaymentHistoryView = ({
                 </Downloadable>
                 <div className="text">
                   <Typography variant="body" color="noshade">
-                    {transaction.description}
+                    {getSubscriptionPlanName()} Subscription
                   </Typography>
                   <Typography variant="caption" color="shade6">
                     {moment(transaction.createdAt).format('DD MMM YYYY')}
