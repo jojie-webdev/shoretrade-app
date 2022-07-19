@@ -142,7 +142,7 @@ const HomeView = (props: HomeGeneratedProps) => {
         />
       )}
 
-      {!freeTrialSubscription && companyPlan && (
+      {!freeTrialSubscription && companyPlan && isApprovedCompany && (
         <div className="wrapper">
           <SubscriptionAlert companyPlan={companyPlan} />
         </div>

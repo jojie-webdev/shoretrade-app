@@ -232,7 +232,7 @@ const BuyerRoutes = (): JSX.Element => {
 
   const hasInactiveSubscription = useMemo(() => {
     if (companyPlan) {
-      if (companyPlan.activePlans.length < 1) {
+      if (companyPlan.activePlans.length < 1 && companyPlan.isApprovedCompany) {
         return true;
       }
       return companyPlan.flags.hasInactiveSubscription;
@@ -252,7 +252,7 @@ const BuyerRoutes = (): JSX.Element => {
 
   useEffect(() => {
     if (companyPlan) {
-      if (companyPlan.activePlans.length < 1) {
+      if (companyPlan.activePlans.length < 1 && companyPlan.isApprovedCompany) {
         if (
           location.pathname !== BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN &&
           location.pathname !== BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD
