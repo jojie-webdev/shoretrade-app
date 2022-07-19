@@ -931,6 +931,13 @@ const StepForm = ({
 
             if (error.address) {
               setOtherErrors({ address: error.address });
+            } else if (isSeller) {
+              if (!values.abn) {
+                setOtherErrors({ abn: 'Please enter your business number' });
+              } else {
+                setOtherErrors({ abn: '' });
+                formikProps.onSubmit(values);
+              }
             } else if (
               !isSeller &&
               hasSfmNumber &&

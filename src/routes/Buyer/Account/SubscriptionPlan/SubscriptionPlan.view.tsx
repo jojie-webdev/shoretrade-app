@@ -396,8 +396,9 @@ export const SubscriptionPlanView = ({
                       }}
                     >
                       <b>
-                        Your next billing date will be 30 days from the account
-                        approval date
+                        Your free trial will begin once your account is
+                        approved. Your next billing date will be after the free
+                        trial ends.
                       </b>
                     </Typography>
                   )}
