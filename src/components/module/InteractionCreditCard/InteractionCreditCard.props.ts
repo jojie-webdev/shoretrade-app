@@ -9,6 +9,8 @@ export interface InteractionCreditCardProps extends InteractionsProps {
   name: string;
   isDefault?: boolean;
   hideDetailBtn?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
   onRemove?: () => void;
+  rightComponent?: JSX.Element;
+  creditCardLabel?: JSX.Element;
 }

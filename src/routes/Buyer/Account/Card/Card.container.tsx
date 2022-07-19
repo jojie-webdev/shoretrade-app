@@ -9,6 +9,8 @@ import {
   addCardTokenActions,
   updateDefaultCardActions,
   deleteCardActions,
+  getUserActions,
+  getCompanyPlanActions,
 } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
@@ -21,9 +23,14 @@ import CardView from './Card.view';
 const Card = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const currentCompany = GetDefaultCompany();
-
   const location = useLocation();
+  const company = GetDefaultCompany();
+
+  const companyFromDeletion = useSelector(
+    (store: Store) => store.deleteCard.data?.data
+  );
+
+  const companyId = company?.id || companyFromDeletion?.companyId || '';
 
   const card: Partial<CardItem> = pathOr({}, ['card'], location.state);
   const isExisting = Boolean(card?.id || false);
@@ -93,6 +100,10 @@ const Card = (): JSX.Element => {
     // eslint-disable-next-line
   }, [deleteStatus]);
 
+  useEffect(() => {
+    dispatch(getUserActions.request());
+  }, [companyId]);
+
   const onAddCard = (formCardDetails: CardDetails) => {
     if (!isLoading) {
       dispatch(
@@ -106,7 +117,7 @@ const Card = (): JSX.Element => {
             cvc: Number(formCardDetails.cvc),
             name: formCardDetails.name,
           },
-          companyId: currentCompany?.id || '',
+          companyId: companyId || '',
           default: formCardDetails.isDefault,
         })
       );
@@ -121,7 +132,7 @@ const Card = (): JSX.Element => {
       if (!card?.isDefault && formCardDetails.isDefault) {
         dispatch(
           updateDefaultCardActions.request({
-            companyId: currentCompany?.id || '',
+            companyId: companyId || '',
             card: card?.id || '',
           })
         );
@@ -136,7 +147,7 @@ const Card = (): JSX.Element => {
     if (isExisting && !isRemoving) {
       dispatch(
         deleteCardActions.request({
-          companyId: currentCompany?.id || '',
+          companyId: companyId || '',
           card: card?.id || '',
         })
       );

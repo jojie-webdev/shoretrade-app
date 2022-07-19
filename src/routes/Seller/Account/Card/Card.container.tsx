@@ -2,6 +2,7 @@ import React, { useState, useReducer, useEffect } from 'react';
 
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import moment from 'moment';
+import qs from 'qs';
 import pathOr from 'ramda/es/pathOr';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -10,8 +11,8 @@ import {
   updateDefaultCardActions,
   deleteCardActions,
 } from 'store/actions';
+import { GetDefaultCompany } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
-import { useCompany } from 'utils/Hooks';
 import { createUpdateReducer } from 'utils/Hooks/createUpdateReducer';
 
 import { CardGeneratedProps, CardDetails, CardItem } from './Card.props';
@@ -20,9 +21,9 @@ import CardView from './Card.view';
 const Card = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [companyId] = useCompany();
-
   const location = useLocation();
+
+  const companyId = GetDefaultCompany()?.id || '';
 
   const card: Partial<CardItem> = pathOr({}, ['card'], location.state);
   const isExisting = Boolean(card?.id || false);

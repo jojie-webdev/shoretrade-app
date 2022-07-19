@@ -3,6 +3,7 @@ import React from 'react';
 import Alert from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
+import { Pen, TrashCan } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -11,6 +12,7 @@ import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { toPrice } from 'utils/String/toPrice';
+import { useTheme } from 'utils/Theme';
 
 import { BalanceGeneratedProps } from './Balance.props';
 import {
@@ -25,6 +27,7 @@ const BalanceView = (props: BalanceGeneratedProps) => {
   const { cards, notifMessage } = props;
   const history = useHistory();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const theme = useTheme();
 
   return (
     <Container>
@@ -104,9 +107,55 @@ const BalanceView = (props: BalanceGeneratedProps) => {
             <LinkCreditCard
               key={card.id}
               {...card}
-              onClick={() => {
-                history.push(`${BUYER_ACCOUNT_ROUTES.CREDIT_CARD}`, { card });
-              }}
+              creditCardLabel={
+                <div style={{ display: 'block', alignItems: 'center' }}>
+                  <Typography
+                    variant="overline"
+                    color="shade6"
+                    style={{ marginRight: 5, marginTop: 0 }}
+                  >
+                    Credit Card
+                  </Typography>
+                  {props.defaultCardId === card.id && (
+                    <Typography
+                      variant="caption"
+                      color={
+                        theme.isSFM || theme.appType === 'buyer'
+                          ? 'primary'
+                          : 'shade6'
+                      }
+                    >
+                      default
+                    </Typography>
+                  )}
+                </div>
+              }
+              rightComponent={
+                <div style={{ display: 'flex' }}>
+                  <Button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      history.push(BUYER_ACCOUNT_ROUTES.CREDIT_CARD, {
+                        card,
+                      });
+                    }}
+                    size="sm"
+                    icon={
+                      <Pen fill={theme.grey.noshade} width={13} height={18} />
+                    }
+                    style={{ padding: '4px 11px', marginRight: 7 }}
+                  ></Button>
+                  <Button
+                    disabled={cards.length === 1}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      props.onRemoveCard(card);
+                    }}
+                    size="sm"
+                    icon={<TrashCan fill={theme.grey.noshade} />}
+                  ></Button>
+                </div>
+              }
             />
           ))}
           {!isMobile && (

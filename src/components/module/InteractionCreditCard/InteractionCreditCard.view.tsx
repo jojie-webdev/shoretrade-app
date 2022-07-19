@@ -17,11 +17,14 @@ const InteractionCreditCard = (
   props: InteractionCreditCardProps
 ): JSX.Element => {
   const theme = useTheme();
+
   return (
     <CustomInteractions
       {...props}
       rightComponent={
-        props.isDefault ? (
+        props.rightComponent ? (
+          props.rightComponent
+        ) : props.isDefault ? (
           <RightComponent>
             <Typography variant="caption" color="shade6">
               Default
@@ -42,9 +45,13 @@ const InteractionCreditCard = (
         ) : null
       }
     >
-      <CardName variant="overline" color="shade6">
-        Credit Card
-      </CardName>
+      {props.rightComponent ? (
+        props.creditCardLabel
+      ) : (
+        <CardName variant="overline" color="shade6">
+          Credit Card
+        </CardName>
+      )}
       <CreditCard
         lastFour={props.lastFour}
         brand={props.brand}

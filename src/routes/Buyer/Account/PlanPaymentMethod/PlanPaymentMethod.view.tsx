@@ -4,7 +4,7 @@ import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
 import SegmentedControls from 'components/base/SegmentedControls';
-import { Amex, Mastercard, Visa } from 'components/base/SVG';
+import { Amex, Mastercard, TrashCan, Visa, Pen } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import FormikTextField from 'components/module/FormikTextField';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
@@ -284,6 +284,59 @@ const PlanPaymentMethodView = ({
                           if (prevState === card.id) return '';
                           else return card.id;
                         })
+                      }
+                      creditCardLabel={
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                          <Typography
+                            variant="overline"
+                            color="shade6"
+                            style={{ marginRight: 5, marginTop: 0 }}
+                          >
+                            Credit Card
+                          </Typography>
+                          {defaultCard === card.id && (
+                            <Typography
+                              variant="caption"
+                              color={
+                                theme.isSFM || theme.appType === 'buyer'
+                                  ? 'primary'
+                                  : 'shade6'
+                              }
+                            >
+                              default
+                            </Typography>
+                          )}
+                        </div>
+                      }
+                      rightComponent={
+                        <div style={{ display: 'flex' }}>
+                          <Button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              history.push(BUYER_ACCOUNT_ROUTES.CREDIT_CARD, {
+                                card,
+                              });
+                            }}
+                            size="sm"
+                            icon={
+                              <Pen
+                                fill={theme.grey.noshade}
+                                width={13}
+                                height={18}
+                              />
+                            }
+                            style={{ padding: '4px 11px', marginRight: 7 }}
+                          ></Button>
+                          <Button
+                            disabled={cards.length === 1}
+                            onClick={(e) => {
+                              onRemoveCard(card);
+                              e.preventDefault();
+                            }}
+                            size="sm"
+                            icon={<TrashCan fill={theme.grey.noshade} />}
+                          ></Button>
+                        </div>
                       }
                     />
                   ))}

@@ -6,10 +6,12 @@ import {
   chargeCardActions,
   addCardTokenActions,
   updateDefaultCardActions,
+  deleteCardActions,
 } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
 
+import { Card } from '../PlanPaymentMethod/PlanPaymentMethod.props';
 import BalanceView from './Balance.view';
 
 const Balance = (): JSX.Element => {
@@ -38,6 +40,20 @@ const Balance = (): JSX.Element => {
     ...card,
     isDefault: card.id === defaultCardId,
   }));
+
+  const isRemoving =
+    useSelector((state: Store) => state.deleteCard.pending) || false;
+
+  const onRemoveCard = (card: Card) => {
+    if (!isRemoving) {
+      dispatch(
+        deleteCardActions.request({
+          companyId: currentCompany?.id || '',
+          card: card?.id || '',
+        })
+      );
+    }
+  };
 
   const addCreditResult = useSelector((state: Store) => state.chargeCard);
   const addCardResult = useSelector((state: Store) => state.addCardToken);
@@ -77,6 +93,8 @@ const Balance = (): JSX.Element => {
     credit: currentCompany?.credit || '',
     cards,
     notifMessage,
+    onRemoveCard,
+    defaultCardId,
   };
   return <BalanceView {...generatedProps} />;
 };
