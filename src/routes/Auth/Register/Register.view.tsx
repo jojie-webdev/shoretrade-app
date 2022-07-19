@@ -35,7 +35,7 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 // import { REVERSE_MARKETPLACE_PRICE } from 'consts/prices';
 import { Formik, FormikProps } from 'formik';
 import moment from 'moment';
-import { isEmpty } from 'ramda';
+import { isEmpty, pathOr } from 'ramda';
 import { useMediaQuery } from 'react-responsive';
 import { Tag } from 'routes/Seller/Selling/Selling.style';
 // import { TipsContainer } from 'routes/Seller/Account/Licenses/Licenses.style';
@@ -2126,7 +2126,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
 
   const nextStep = () => {
     if (isSummaryEdit) {
-      setStep(isSeller ? 9 : 7);
+      setStep(MAX_STEP);
     } else {
       setStep((s) => (s < MAX_STEP ? ++s : MAX_STEP));
     }
@@ -2468,8 +2468,8 @@ const RegisterView = (props: RegisterGeneratedProps) => {
                       customFont={theme.isSFM ? 'Canela' : undefined}
                     >
                       {isSeller && !hasReverseMarketPlace && step >= 7
-                        ? steps[step].title
-                        : steps[step - 1].title}
+                        ? pathOr('', [step, 'title'], steps)
+                        : pathOr('', [step - 1, 'title'], steps)}
                     </Title>
                   </TitleContainer>
                   {!isSeller && stepSubtitle[step] && (
