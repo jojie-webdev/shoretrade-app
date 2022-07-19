@@ -6,7 +6,7 @@ import AdditionalPlanFeatures from 'components/module/AdditionalPlanFeatures';
 import MarketSectorIcon from 'components/module/MarketSectorIcon';
 import PlanFeatures from 'components/module/PlanFeatures';
 import { MARKET_GROUP_1 } from 'consts/markets';
-import { REVERSE_MARKETPLACE_PRICE } from 'consts/prices';
+// import { REVERSE_MARKETPLACE_PRICE } from 'consts/prices';
 import { Col } from 'react-grid-system';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSubscriptionPlansActions } from 'store/actions';
@@ -31,11 +31,12 @@ import {
 const YourPlanView = ({
   currentMarketSector,
   previousStep,
-  currentPlan,
+  // currentPlan,
   selectedPlan,
   additionalSubscriptionHandler,
   hasReverseMarketPlace,
   step,
+  plans,
 }: YourPlanGeneratedProps) => {
   const theme = useTheme();
   const isSeller = theme.appType === 'seller';
@@ -53,9 +54,19 @@ const YourPlanView = ({
     setHighlight(value);
   };
 
+  const buyerRevereseMarketPlaceAddon = plans.find(
+    (data) => data.alias === 'FEATURE_REVERSED_MARKETPLACE'
+  ) || {
+    price: 0,
+  };
+
+  const sellerRevereseMarketPlaceAddon = plans.find(
+    (data) => data.alias === 'FEATURE_REVERSED_MARKETPLACE_SELLER'
+  ) || { price: 0 };
+
   return (
     <Container>
-      {!isSeller && step !== 4 && step !== 5 && (
+      {/* {!isSeller && step !== 4 && step !== 5 && (
         <TopSection>
           <div className="left">
             <Typography
@@ -100,7 +111,7 @@ const YourPlanView = ({
             </ChangeMarketSector>
           </div>
         </TopSection>
-      )}
+      )} */}
       {/* 
       {!isSeller && (
         <PlanFeatures
@@ -125,12 +136,12 @@ const YourPlanView = ({
             color={theme.appType === 'seller' ? 'noshade' : 'shade9'}
           >
             {!isSeller
-              ? `Additional subscription for $${REVERSE_MARKETPLACE_PRICE.BUYER.toFixed(
-                  2
-                )}/month`
-              : `Additional subscription for $${REVERSE_MARKETPLACE_PRICE.SELLER.toFixed(
-                  2
-                )}/month`}
+              ? `Additional subscription for $${(
+                  Number(buyerRevereseMarketPlaceAddon?.price) || 0
+                ).toFixed(2)}/month`
+              : `Additional subscription for $${(
+                  Number(sellerRevereseMarketPlaceAddon?.price) || 0
+                ).toFixed(2)}/month`}
           </Typography>
         </AdditionalSubscription>
       )}
@@ -239,12 +250,12 @@ const YourPlanView = ({
             color={theme.appType === 'seller' ? 'noshade' : 'shade9'}
           >
             {!isSeller
-              ? `Additional subscription for $${REVERSE_MARKETPLACE_PRICE.BUYER.toFixed(
-                  2
-                )}/month`
-              : `Additional subscription for $${REVERSE_MARKETPLACE_PRICE.SELLER.toFixed(
-                  2
-                )}/month`}
+              ? `Additional subscription for $${(
+                  Number(buyerRevereseMarketPlaceAddon?.price) || 0
+                ).toFixed(2)}/month`
+              : `Additional subscription for $${(
+                  Number(sellerRevereseMarketPlaceAddon?.price) || 0
+                ).toFixed(2)}/month`}
           </Typography>
         </AdditionalSubscription>
       )}

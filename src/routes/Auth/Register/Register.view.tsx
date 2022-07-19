@@ -32,7 +32,7 @@ import MarketSectorIcon from 'components/module/MarketSectorIcon';
 import MarketSectorItem from 'components/module/MarketSectorItem';
 import StepDetails from 'components/module/StepDetails';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { REVERSE_MARKETPLACE_PRICE } from 'consts/prices';
+// import { REVERSE_MARKETPLACE_PRICE } from 'consts/prices';
 import { Formik, FormikProps } from 'formik';
 import moment from 'moment';
 import { isEmpty } from 'ramda';
@@ -239,6 +239,10 @@ const StepForm = ({
   const showSFMFields = ['AU', 'NZ'].includes(
     registrationDetails.address?.countryCode || ''
   );
+
+  const sellerRevereseMarketPlaceAddon = plans.find(
+    (data) => data.alias === 'FEATURE_REVERSED_MARKETPLACE_SELLER'
+  ) || { price: 0 };
 
   const CategoryChildren = (result: Category) => (
     <>
@@ -1907,8 +1911,10 @@ const StepForm = ({
                             weight="400"
                           >
                             &nbsp;$
-                            {REVERSE_MARKETPLACE_PRICE.SELLER.toFixed(2)} /
-                            month
+                            {(
+                              Number(sellerRevereseMarketPlaceAddon?.price) || 0
+                            ).toFixed(2)}{' '}
+                            / month
                           </TotalPrice>
                           <PaymentMethod
                             otherErrors={otherErrors}

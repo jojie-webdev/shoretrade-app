@@ -12,9 +12,10 @@ export interface YourPlanrops {
 export interface YourPlanGeneratedProps {
   currentMarketSector: string;
   previousStep: () => void;
-  currentPlan?: GetSubscriptionPlansResponseData;
+  // currentPlan?: GetSubscriptionPlansResponseData;
   selectedPlan?: string;
   additionalSubscriptionHandler: (value: boolean) => void;
   step?: number;
   hasReverseMarketPlace?: boolean;
+  plans: GetSubscriptionPlansResponseData[];
 }

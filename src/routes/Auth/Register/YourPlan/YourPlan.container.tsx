@@ -13,11 +13,11 @@ const YourPlan = (props: YourPlanrops): JSX.Element => {
   const plans = useSelector(
     (store: Store) => store.getSubscriptionPlans.data?.data || []
   );
-  const currentPlan = plans.find(
-    (plan) =>
-      plan.alias ===
-      `${props.selectedPlan?.toLocaleUpperCase()}_${props.currentMarketSector}`
-  );
+  // const currentPlan = plans.find(
+  //   (plan) =>
+  //     plan.alias ===
+  //     `${props.selectedPlan?.toLocaleUpperCase()}_${props.currentMarketSector}`
+  // );
 
   useEffect(() => {
     dispatch(getSubscriptionPlansActions.request({}));
@@ -25,7 +25,8 @@ const YourPlan = (props: YourPlanrops): JSX.Element => {
 
   const generatedProps: YourPlanGeneratedProps = {
     ...props,
-    currentPlan,
+    // currentPlan,
+    plans,
   };
 
   return <YourPlanView {...generatedProps} />;

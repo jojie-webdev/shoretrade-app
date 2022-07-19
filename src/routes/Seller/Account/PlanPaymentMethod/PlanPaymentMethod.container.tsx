@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useState } from 'react';
 
-import { REVERSE_MARKETPLACE_PRICE } from 'consts/prices';
+// import { REVERSE_MARKETPLACE_PRICE } from 'consts/prices';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
