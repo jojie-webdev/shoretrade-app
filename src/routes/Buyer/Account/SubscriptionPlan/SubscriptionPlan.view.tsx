@@ -978,16 +978,6 @@ export const SubscriptionPlanView = ({
                   selectedPlan={currentPlanDetails?.plan.name}
                   currentMarketSector={currentMarketSector}
                 />
-                <FooterNote>
-                  <Typography
-                    variant="label"
-                    color={theme.appType === 'seller' ? 'shade6' : 'shade7'}
-                    weight="400"
-                  >
-                    *Minimum 3 month sign up, starting from your account
-                    approval date.
-                  </Typography>
-                </FooterNote>
 
                 {!flags?.hasCancelledPlan && subscriptionType !== null && (
                   <div
