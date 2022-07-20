@@ -836,14 +836,14 @@ const StepForm = ({
             </>
           )}
 
-          {!isSeller && (
+          {(!isSeller || MAX_STEP === 9) && (
             <CustomInteraction
               label="Payment Method"
               value={`Credit Card ****-${registrationDetails.cardNumber.substring(
                 registrationDetails.cardNumber.length - 5
               )}`}
               onClick={() => {
-                summaryHandleStep(isSeller ? 7 : 5);
+                summaryHandleStep(isSeller ? 7 : 6);
                 setSummaryEdit();
               }}
             />
