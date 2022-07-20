@@ -188,6 +188,10 @@ const BalanceHistoryView = ({
                         '_blank'
                       );
                       e.stopPropagation();
+                    } else {
+                      const urlRed = `${API.URL}/v2/subscription/company/invoice/${transaction.refNumber}?token=${token}&invoice=true`;
+                      window.open(urlRed);
+                      e.stopPropagation();
                     }
                   }}
                 >
