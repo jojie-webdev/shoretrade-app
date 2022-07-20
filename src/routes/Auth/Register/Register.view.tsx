@@ -1922,9 +1922,6 @@ const StepForm = ({
                             otherErrors={otherErrors}
                             setOtherErrors={setOtherErrors}
                             details={registrationDetails}
-                            updateRegistrationDetails={
-                              updateRegistrationDetails
-                            }
                           />
                         </>
                       )}
@@ -1955,9 +1952,6 @@ const StepForm = ({
                             otherErrors={otherErrors}
                             setOtherErrors={setOtherErrors}
                             details={registrationDetails}
-                            updateRegistrationDetails={
-                              updateRegistrationDetails
-                            }
                           />
                         </>
                       ) : (

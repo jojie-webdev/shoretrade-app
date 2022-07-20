@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Select from 'components/base/Select';
 import { Amex, Mastercard, Visa } from 'components/base/SVG';
 import FormikTextField from 'components/module/FormikTextField';
 import COUNTRY_STATES from 'consts/countryStates';
 import { connect } from 'formik';
+import { Option } from 'react-dropdown';
 import { Row, Col } from 'react-grid-system';
 import { PlaceData } from 'types/PlaceData';
 import { cardExpiryInputFilter } from 'utils/InputFilters/cardExpiryInputFilter';
@@ -26,14 +27,10 @@ import {
 } from './PaymentMethod.style';
 
 export const PaymentMethod = connect((props: PaymentMethodProps) => {
-  const {
-    details,
-    formik,
-    otherErrors,
-    setOtherErrors,
-    updateRegistrationDetails,
-  } = props;
+  const { details, formik, otherErrors, setOtherErrors } = props;
   const theme = useTheme();
+  const [selectedState, setSelectedState] = useState<Option>({} as Option);
+
   const cardState = formik.initialValues.cardState;
 
   const states = COUNTRY_STATES.filter(({ isoCode, countryCode }) => {
@@ -49,19 +46,9 @@ export const PaymentMethod = connect((props: PaymentMethodProps) => {
   });
 
   const initialState = states.find((state) => state.isoCode === cardState);
-
-  if (
-    cardState.length > 3 &&
-    details.address?.countryCode === NEW_ZEALAND_COUNTRY_CODE
-  ) {
-    const stateObj = states.find((state) => state.name.includes(cardState));
-
-    const modifiedAddress: PlaceData = {
-      ...details.address,
-      administrativeAreaLevel1: stateObj?.isoCode || '',
-    };
-    updateRegistrationDetails({ address: modifiedAddress });
-  }
+  const selectedInitialState = states.find(
+    (state) => state.isoCode === selectedState.value
+  );
 
   return (
     <Container>
@@ -224,12 +211,13 @@ export const PaymentMethod = connect((props: PaymentMethodProps) => {
                   ? 'province'
                   : 'State'
               }
-              value={initialState?.name}
+              value={selectedInitialState?.name || initialState?.name}
               options={states.map((state) => ({
                 value: state.isoCode,
                 label: state.name,
               }))}
               onChange={(option) => {
+                setSelectedState(option);
                 formik.setFieldValue('cardState', option.value, false);
               }}
               border={`1px solid ${theme.grey.shade5}`}
