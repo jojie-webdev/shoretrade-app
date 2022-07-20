@@ -335,7 +335,7 @@ const MarketBoardLanding = (): JSX.Element => {
   if (waitAll || isActivePlanLoading === null || isActivePlanLoading) {
     return <SpinnerLogo style={{ width: '200px', height: '80px' }} />;
   } else {
-    if (!isAcceptClicked) {
+    if (!isAcceptClicked && reverseMarketPlace) {
       return (
         <TermsAndCondition
           appType="seller"
