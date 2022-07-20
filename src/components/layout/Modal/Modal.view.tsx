@@ -9,7 +9,7 @@ const Modal = (props: ModalProps): JSX.Element => {
   const { isOpen, onClickClose, children, hideClose } = props;
 
   return (
-    <Backdrop isOpen={isOpen}>
+    <Backdrop className="modal_backdrop_color" isOpen={isOpen}>
       <ModalContainer
         className="modal_container"
         backgroundColor={props.backgroundColor}

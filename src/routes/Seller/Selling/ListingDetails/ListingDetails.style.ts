@@ -15,6 +15,10 @@ export const Wrapper = styled.div<{ isCreatListingSuccess?: boolean }>`
   flex-direction: column;
   justify-content: center;
 
+  .modal_backdrop_color {
+    ${({ theme }) => theme.isSFM && 'background-color: rgba(15, 16, 36, 0.9)'};
+  }
+
   .modal_container {
     border-radius: 24px;
     width: 686px;
