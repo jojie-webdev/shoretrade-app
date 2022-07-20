@@ -33,7 +33,7 @@ function* paySubscriptionRequest(
           number: parseInt(newCardDetails.cardNumber.replace(/\s/g, '')),
           exp_month: parseInt(newCardDetails.cardExpiryDate.split('/')[0]),
           exp_year: parseInt(newCardDetails.cardExpiryDate.split('/')[1]),
-          cvc: parseInt(newCardDetails.cardCvc),
+          cvc: newCardDetails.cardCvc,
           name: newCardDetails.cardName,
         });
 

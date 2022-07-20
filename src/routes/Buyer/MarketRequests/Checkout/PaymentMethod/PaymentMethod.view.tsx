@@ -487,7 +487,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
                 number: parseInt(cardNumber.replaceAll(/\s/g, '')),
                 exp_month: parseInt(expiryDate.split('/')[0]),
                 exp_year: parseInt(expiryDate.split('/')[1]),
-                cvc: parseInt(cvc),
+                cvc,
                 name: nameOnCard,
               },
             };

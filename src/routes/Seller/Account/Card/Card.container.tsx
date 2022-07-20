@@ -103,7 +103,7 @@ const Card = (): JSX.Element => {
             exp_year: parseInt(
               moment(formCardDetails.exp.split('/')[1], 'YY').format('YYYY')
             ),
-            cvc: Number(formCardDetails.cvc),
+            cvc: formCardDetails.cvc,
             name: formCardDetails.name,
           },
           companyId: companyId || '',

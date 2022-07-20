@@ -44,7 +44,7 @@ export interface AcceptOffer {
     number: number;
     exp_month: number;
     exp_year: number;
-    cvc: number;
+    cvc: string;
     name: string;
   };
   default?: boolean;

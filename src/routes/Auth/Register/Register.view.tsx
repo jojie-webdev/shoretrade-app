@@ -913,7 +913,7 @@ const StepForm = ({
               number: parseInt(values.cardNumber.replace(/\s/g, '')),
               exp_month: parseInt(values.cardExpiryDate.split('/')[0]),
               exp_year: parseInt(values.cardExpiryDate.split('/')[1]),
-              cvc: parseInt(values.cardCvc),
+              cvc: values.cardCvc,
               name: values.cardName,
               address_line1: values.cardBillingAddress,
               address_city: values.cardCity,

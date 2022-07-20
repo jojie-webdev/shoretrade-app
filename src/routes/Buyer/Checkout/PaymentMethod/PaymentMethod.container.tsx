@@ -90,7 +90,7 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
             exp_year: parseInt(
               moment(values.exp.split('/')[1], 'YY').format('YYYY')
             ),
-            cvc: Number(values.cvc),
+            cvc: values.cvc,
             name: values.name,
           },
           companyId: companyId,
