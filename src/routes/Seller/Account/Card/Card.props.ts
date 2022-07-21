@@ -16,6 +16,7 @@ export interface CardItem extends GetPaymentMethodsResponseItem {
 }
 
 export interface CardPrivateProps {
+  cards: GetPaymentMethodsResponseItem[];
   cardDetails: CardDetails;
   setCardDetails: Dispatch<Partial<CardDetails>>;
   onAddCard: (x: CardDetails) => void;

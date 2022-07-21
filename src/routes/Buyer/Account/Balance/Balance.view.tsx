@@ -133,10 +133,10 @@ const BalanceView = (props: BalanceGeneratedProps) => {
               rightComponent={
                 <div style={{ display: 'flex' }}>
                   <Button
-                    onClick={(e) => {
-                      e.preventDefault();
+                    onClick={() => {
                       history.push(BUYER_ACCOUNT_ROUTES.CREDIT_CARD, {
                         card,
+                        preventGoingBack: true,
                       });
                     }}
                     size="sm"
@@ -147,8 +147,7 @@ const BalanceView = (props: BalanceGeneratedProps) => {
                   ></Button>
                   <Button
                     disabled={cards.length === 1}
-                    onClick={(e) => {
-                      e.preventDefault();
+                    onClick={() => {
                       props.onRemoveCard(card);
                     }}
                     size="sm"

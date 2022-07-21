@@ -11,7 +11,6 @@ import {
   updateDefaultCardActions,
   deleteCardActions,
 } from 'store/actions';
-import { GetDefaultCompany } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks/createUpdateReducer';
 
@@ -22,10 +21,23 @@ const Card = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
   const location = useLocation();
+  const user = useSelector((store: Store) => store.getUser.data?.data.user);
+  const [deleteStatusSuccess, setDeleteStatusSuccess] = useState(false);
 
-  const companyId = GetDefaultCompany()?.id || '';
+  const company = user?.companies[0];
+
+  const companyFromDeletion = useSelector(
+    (store: Store) => store.deleteCard.data?.data
+  );
+
+  const companyId = company?.id || companyFromDeletion?.companyId || '';
 
   const card: Partial<CardItem> = pathOr({}, ['card'], location.state);
+  const preventGoingBack: Partial<boolean> = pathOr(
+    false,
+    ['preventGoingBack'],
+    location.state
+  );
   const isExisting = Boolean(card?.id || false);
 
   const [cardDetails, setCardDetails] = useReducer(
@@ -38,6 +50,11 @@ const Card = (): JSX.Element => {
       isDefault: false,
     }
   );
+
+  const cards =
+    useSelector(
+      (state: Store) => state.getPaymentMethods.data?.data.data?.cards
+    ) || [];
 
   useEffect(() => {
     if (isExisting) {
@@ -87,11 +104,23 @@ const Card = (): JSX.Element => {
   }, [updateDefaultCardResult]);
 
   useEffect(() => {
-    if (deleteStatus === 200 && isExisting) {
+    if (deleteStatusSuccess && isExisting) {
       history.push(SELLER_ACCOUNT_ROUTES.BANK_DETAILS);
     }
     // eslint-disable-next-line
+  }, [deleteStatusSuccess]);
+
+  useEffect(() => {
+    if (deleteStatus === 200) {
+      setDeleteStatusSuccess(true);
+    }
   }, [deleteStatus]);
+
+  useEffect(() => {
+    if (preventGoingBack) {
+      setDeleteStatusSuccess(false);
+    }
+  }, [preventGoingBack]);
 
   const onAddCard = (formCardDetails: CardDetails) => {
     if (!isLoading) {
@@ -144,6 +173,7 @@ const Card = (): JSX.Element => {
   };
 
   const generatedProps: CardGeneratedProps = {
+    cards,
     cardDetails,
     setCardDetails,
     onAddCard,

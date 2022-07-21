@@ -9,10 +9,7 @@ import {
   addCardTokenActions,
   updateDefaultCardActions,
   deleteCardActions,
-  getUserActions,
-  getCompanyPlanActions,
 } from 'store/actions';
-import { GetDefaultCompany } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks/createUpdateReducer';
 
@@ -24,7 +21,10 @@ const Card = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
   const location = useLocation();
-  const company = GetDefaultCompany();
+  const user = useSelector((store: Store) => store.getUser.data?.data.user);
+  const [deleteStatusSuccess, setDeleteStatusSuccess] = useState(false);
+
+  const company = user?.companies[0];
 
   const companyFromDeletion = useSelector(
     (store: Store) => store.deleteCard.data?.data
@@ -33,6 +33,11 @@ const Card = (): JSX.Element => {
   const companyId = company?.id || companyFromDeletion?.companyId || '';
 
   const card: Partial<CardItem> = pathOr({}, ['card'], location.state);
+  const preventGoingBack: Partial<boolean> = pathOr(
+    false,
+    ['preventGoingBack'],
+    location.state
+  );
   const isExisting = Boolean(card?.id || false);
 
   const [cardDetails, setCardDetails] = useReducer(
@@ -45,6 +50,11 @@ const Card = (): JSX.Element => {
       isDefault: false,
     }
   );
+
+  const cards =
+    useSelector(
+      (state: Store) => state.getPaymentMethods.data?.data.data?.cards
+    ) || [];
 
   useEffect(() => {
     if (isExisting) {
@@ -89,20 +99,30 @@ const Card = (): JSX.Element => {
   }, [addCardResult]);
 
   useEffect(() => {
-    if (updateDefaultCardResult.data && submitted) history.goBack();
+    if (updateDefaultCardResult.data && submitted) {
+      history.goBack();
+    }
     // eslint-disable-next-line
   }, [updateDefaultCardResult]);
 
   useEffect(() => {
-    if (deleteStatus === 200 && isExisting) {
+    if (deleteStatusSuccess && isExisting) {
       history.push(BUYER_ACCOUNT_ROUTES.BANK_DETAILS);
     }
     // eslint-disable-next-line
+  }, [deleteStatusSuccess]);
+
+  useEffect(() => {
+    if (deleteStatus === 200) {
+      setDeleteStatusSuccess(true);
+    }
   }, [deleteStatus]);
 
   useEffect(() => {
-    dispatch(getUserActions.request());
-  }, [companyId]);
+    if (preventGoingBack) {
+      setDeleteStatusSuccess(false);
+    }
+  }, [preventGoingBack]);
 
   const onAddCard = (formCardDetails: CardDetails) => {
     if (!isLoading) {
@@ -155,6 +175,7 @@ const Card = (): JSX.Element => {
   };
 
   const generatedProps: CardGeneratedProps = {
+    cards,
     cardDetails,
     setCardDetails,
     onAddCard,

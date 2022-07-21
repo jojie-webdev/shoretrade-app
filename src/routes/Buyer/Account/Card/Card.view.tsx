@@ -24,6 +24,7 @@ import FieldsetCard from './FieldsetCard';
 
 const CardView = (props: CardGeneratedProps) => {
   const {
+    cards,
     cardDetails,
     setCardDetails,
     onAddCard,
@@ -113,7 +114,7 @@ const CardView = (props: CardGeneratedProps) => {
           </div>
           {!isMobile && (
             <ButtonContainer>
-              {isExisting && (
+              {isExisting && cards.length > 1 && (
                 <Button
                   variant="outline"
                   type="button"
@@ -130,7 +131,7 @@ const CardView = (props: CardGeneratedProps) => {
       </Formik>
 
       <MobileFooter>
-        {isExisting && (
+        {isExisting && cards.length > 1 && (
           <Button
             variant="outline"
             type="button"

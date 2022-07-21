@@ -1,6 +1,9 @@
 import { Dispatch } from 'react';
 
 import { AsyncState } from 'types/store/AsyncState';
+import { GetPaymentMethodsResponseItem } from 'types/store/GetPaymentMethodsState';
+
+import { CardItem } from '../Balance/Balance.props';
 
 export interface CardDetails {
   number: string;
@@ -11,6 +14,7 @@ export interface CardDetails {
 }
 
 export interface CardPrivateProps {
+  cards: GetPaymentMethodsResponseItem[];
   cardDetails: CardDetails;
   setCardDetails: Dispatch<Partial<CardDetails>>;
   onAddCard: (x: CardDetails) => void;

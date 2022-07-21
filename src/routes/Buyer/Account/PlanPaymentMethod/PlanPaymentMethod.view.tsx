@@ -315,6 +315,7 @@ const PlanPaymentMethodView = ({
                               e.preventDefault();
                               history.push(BUYER_ACCOUNT_ROUTES.CREDIT_CARD, {
                                 card,
+                                preventGoingBack: true,
                               });
                             }}
                             size="sm"
