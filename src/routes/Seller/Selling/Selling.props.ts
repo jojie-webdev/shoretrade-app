@@ -3,7 +3,6 @@ import { GetListingsBySalesChannelResponseItem } from 'types/store/GetListingsBy
 export interface SellingGeneratedProps {
   listings: GetListingsBySalesChannelResponseItem[];
   counter: CounterProps;
-  pending: boolean;
   goToListingDetails: (id: string) => void;
   showModal: boolean;
   search: string;
@@ -14,6 +13,7 @@ export interface SellingGeneratedProps {
   onChangePage: (page: number) => void;
   showAlertSuccess: boolean;
   listingDetailPreview: GetListingsBySalesChannelResponseItem;
+  listingsLoading: boolean;
 }
 
 export type TagTypes = 'plain' | 'blue';

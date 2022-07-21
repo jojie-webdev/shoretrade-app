@@ -314,7 +314,7 @@ const SellingView = (props: SellingGeneratedProps) => {
   const {
     listings,
     counter,
-    pending,
+    listingsLoading,
     goToListingDetails,
     search,
     onChangeSearch,
@@ -393,7 +393,7 @@ const SellingView = (props: SellingGeneratedProps) => {
                 activeTab={activeTab}
               />
             </Col>
-            {isMobile && !pending && (
+            {isMobile && !listingsLoading && (
               <Col sm={3}>
                 <div style={{ width: '100%', marginTop: '8px' }}>
                   <Typography variant="label" color="shade6">
@@ -430,7 +430,7 @@ const SellingView = (props: SellingGeneratedProps) => {
         )}
         <Row className="row" justify="center">
           <Col>
-            {pending ? (
+            {listingsLoading ? (
               <LoadingView />
             ) : counter[activeTab as keyof CounterProps] > 0 ? (
               listings.map((listing) => (

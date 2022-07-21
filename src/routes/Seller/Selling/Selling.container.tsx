@@ -29,6 +29,9 @@ const Selling = (): JSX.Element => {
   const listingsData = useSelector(
     (state: Store) => state.getListingsBySalesChannel.data?.data
   );
+  const listingsLoading =
+    useSelector((state: Store) => state.getListingsBySalesChannel.pending) ||
+    false;
   const userData = useSelector((state: Store) => state.getUser.data?.data.user);
 
   const listingId = useSelector(
@@ -48,7 +51,6 @@ const Selling = (): JSX.Element => {
   const [showAlert, setShowAlert] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState('allListing');
-  const [isPending, setIsPending] = useState(true);
   const [tabCounts, setTabCounts] = useState<CounterProps>({
     allListing: 0,
     directSale: 0,
@@ -127,7 +129,6 @@ const Selling = (): JSX.Element => {
         aquafuture: Number(listingsData.counter.aquafuture || 0),
         preAuction: Number(listingsData.counter.pre_auction || 0),
       });
-      setIsPending(false);
     }
     // eslint-disable-next-line
   }, [listingsData]);
@@ -148,24 +149,21 @@ const Selling = (): JSX.Element => {
     listings: listingsData?.listings || [],
     listingDetailPreview,
     counter: tabCounts,
-    pending: isPending,
     showModal,
     search: searchFilters[activeTab as keyof TabPageFilterProps],
     page: tabPageFilters[activeTab as keyof TabPageFilterProps],
     activeTab,
     showAlertSuccess: showAlert && isSuccessListing,
+    listingsLoading,
     goToListingDetails,
     onChangeSearch: (value) => {
       updateSearchFilters({ [activeTab]: value });
-      setIsPending(true);
     },
     onChangeTab: (tab) => {
       setActiveTab(tab);
-      setIsPending(true);
     },
     onChangePage: (page) => {
       updateTabPageFilters({ [activeTab]: page });
-      setIsPending(true);
     },
   };
 
