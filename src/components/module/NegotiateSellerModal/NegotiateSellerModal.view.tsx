@@ -92,7 +92,9 @@ const Content = (props: NegotiateSellerModalProps) => {
             Previous offer was
           </Typography>
           <Typography variant="body" weight="400" color={textColor}>
-            {toPrice(latestPrice)}/{unit}
+            {sortedNegotiations.length === 1
+              ? `${toPrice(props.marketOffer.originalOfferPrice)}/${unit}`
+              : `${toPrice(latestPrice)}/${unit}`}
           </Typography>
         </div>
 
