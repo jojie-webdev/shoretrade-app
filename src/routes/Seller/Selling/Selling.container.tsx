@@ -84,6 +84,21 @@ const Selling = (): JSX.Element => {
     history.push(SELLING_ROUTES.LISTING_DETAILS.replace(':listingId', id));
   };
 
+  const refreshData = () => {
+    dispatch(
+      getListingsBySalesChannelActions.request({
+        employeeId: userData?.companies[0].employeeId || '',
+        term: searchFilters[activeTab as keyof TabPageFilterProps],
+        salesChannel:
+          SALES_CHANNELS.find((channel) => channel.value === activeTab)
+            ?.constant || SALES_CHANNELS[0].constant,
+        limit: 10,
+        page: tabPageFilters[activeTab as keyof TabPageFilterProps],
+      })
+    );
+    dispatch(getListingByIdActions.request({ listingId }));
+  };
+
   // MARK:- Effects
   useEffect(() => {
     // On Mount
@@ -105,18 +120,7 @@ const Selling = (): JSX.Element => {
 
   useEffect(() => {
     if (userData) {
-      dispatch(
-        getListingsBySalesChannelActions.request({
-          employeeId: userData?.companies[0].employeeId || '',
-          term: searchFilters[activeTab as keyof TabPageFilterProps],
-          salesChannel:
-            SALES_CHANNELS.find((channel) => channel.value === activeTab)
-              ?.constant || SALES_CHANNELS[0].constant,
-          limit: 10,
-          page: tabPageFilters[activeTab as keyof TabPageFilterProps],
-        })
-      );
-      dispatch(getListingByIdActions.request({ listingId }));
+      refreshData();
     }
     // eslint-disable-next-line
   }, [activeTab, searchFilters, tabPageFilters]);
@@ -160,6 +164,9 @@ const Selling = (): JSX.Element => {
       updateSearchFilters({ [activeTab]: value });
     },
     onChangeTab: (tab) => {
+      if (tab === activeTab) {
+        refreshData();
+      }
       setActiveTab(tab);
     },
     onChangePage: (page) => {
