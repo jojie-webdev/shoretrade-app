@@ -70,7 +70,10 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
 
       {chargeCardResult?.error && (
         <Notification>
-          <Alert variant="error" content="Cannot add Credit at the moment." />
+          <Alert
+            variant="error"
+            content="This credit amount exceeds the limit. Please try again with a smaller value."
+          />
         </Notification>
       )}
 
