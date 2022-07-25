@@ -22,6 +22,7 @@ import { MarketRequestsLandingGeneratedProps, Result } from './Landing.props';
 import LandingSFMView from './Landing.sfm.view';
 import { getMarketRequestLandingData } from './Landing.transform';
 import MarketRequestsLandingView from './Landing.view';
+import LoadingView from 'components/module/Loading';
 
 const MarketRequestsLanding = (): JSX.Element => {
   // MARK:- States / Variables
@@ -142,7 +143,7 @@ const MarketRequestsLanding = (): JSX.Element => {
   };
 
   if (waitAll || isActivePlanLoading === null || isActivePlanLoading) {
-    return <SpinnerLogo style={{ width: '200px', height: '80px' }} />;
+    return <LoadingView />;
   } else {
     if (theme.isSFM && !reverseMarketPlace) {
       return <LandingSFMView {...sfmViewProps} />;
