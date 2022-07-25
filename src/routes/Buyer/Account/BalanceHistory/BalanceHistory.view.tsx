@@ -45,6 +45,17 @@ const BalanceHistoryView = ({
     const isChequeDeposit = desc.includes('Cheque Deposit - ');
     const isBankTransfer = desc.includes('Bank Transfer - ');
     const includesOrderNumber = desc.includes('- Order #');
+    const isPlan = desc.includes('ShoreTrade Plan');
+
+    const getSubscriptionPlanName = () => {
+      return (
+        `${
+          SUBSCRIPTION_NAMES.filter((sub) => {
+            return sub.PLAN === subscriptionPlan && sub.PLAN_NAME;
+          })[0]?.PLAN_NAME
+        } Subscription` || ''
+      );
+    };
 
     if (isCreditAdjustment) {
       if (includesOrderNumber) {
@@ -114,16 +125,17 @@ const BalanceHistoryView = ({
       }
     }
 
+    if (isPlan) {
+      return {
+        title: getSubscriptionPlanName(),
+        subtitle: '',
+      };
+    }
+
     return {
       title: desc,
       subtitle: '',
     };
-  };
-
-  const getSubscriptionPlanName = () => {
-    return SUBSCRIPTION_NAMES.map((sub) => {
-      return sub.PLAN === subscriptionPlan && sub.PLAN_NAME;
-    });
   };
 
   return (
@@ -205,7 +217,7 @@ const BalanceHistoryView = ({
                 </Downloadable>
                 <div className="text">
                   <Typography variant="body" color="shade9">
-                    {getSubscriptionPlanName()} Subscription
+                    {title}
                   </Typography>
                   {subtitle.length > 0 && (
                     <Typography variant="caption" color="shade9">
