@@ -22,7 +22,7 @@ export const Wrapper = styled.div<{ isCreatListingSuccess?: boolean }>`
   .modal_container {
     border-radius: 24px;
     width: 686px;
-    background-color: ${({ theme }) => theme.grey.shade10};
+    background-color: ${({ theme }) => theme.grey.shade9};
     padding: 56px 45px;
   }
 
