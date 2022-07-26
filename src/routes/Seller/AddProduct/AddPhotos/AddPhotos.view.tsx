@@ -110,6 +110,7 @@ const AddPhotos = ({
     setPhotoTypes({
       hasNoSelectedType: true,
     });
+    onUpdateImage(images, existingImages);
   };
 
   return (
