@@ -9,7 +9,7 @@ import {
   Cart,
   CheckBorder,
   Bolt,
-  // Crates,
+  Crates,
   Cog,
   Barcode as BarcodeSVG,
 } from 'components/base/SVG';
@@ -34,8 +34,8 @@ import { useTheme } from 'utils/Theme';
 import SellerAccountRoutes from './Account/account.routes';
 import NotificationsSettings from './Account/NotificationsSettings';
 import AddProduct from './AddProduct/addProduct.routes';
-// import CratesManagement from './CratesManagement';
 import BarcodeScanner from './BarcodeScanner';
+import CratesManagement from './CratesManagement';
 import DashboardRoutes from './Dashboard/dashboard.routes';
 import HelpAndSupport from './HelpAndSupport/HelpAndSupport.routes';
 import MarketBoardRoutes from './MarketBoard/market-board.routes';
@@ -99,13 +99,13 @@ const ROUTES: Routes = {
     icon: BarcodeSVG,
     nested: true,
   },
-  // CREATES_MANAGEMENT: {
-  //   path: SELLER_ROUTES.CREATES_MANAGEMENT,
-  //   title: 'Crates Management',
-  //   children: <CratesManagement />,
-  //   icon: Crates,
-  //   nested: true,
-  // },
+  CREATES_MANAGEMENT: {
+    path: SELLER_ROUTES.CREATES_MANAGEMENT,
+    title: 'Crates Management',
+    children: <CratesManagement />,
+    icon: Crates,
+    nested: true,
+  },
   NOTIFICATIONS_SETTINGS: {
     path: SELLER_ROUTES.NOTIFICATIONS_SETTINGS,
     children: <NotificationsSettings />,
