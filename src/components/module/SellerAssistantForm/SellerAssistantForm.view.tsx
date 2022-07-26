@@ -159,8 +159,8 @@ const SellerAssistantFormView = (props: SellerAssistantFormProps) => {
                   checked={role === 'ASSISTANT'}
                   onClick={() => setRole('ASSISTANT')}
                 >
-                  An Assistant has the same permissions as you, except the
-                  ability to edit your bank account or business details.
+                  An Assistant will have the same permissions as you, except the
+                  ability to edit the Business Details.
                 </Role>
 
                 <Role
