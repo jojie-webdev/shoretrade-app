@@ -512,7 +512,7 @@ export const SubscriptionPlanView = ({
                               weight="900"
                               customFont={theme.isSFM ? 'Canela' : 'Media Sans'}
                             >
-                              Base
+                              Essentials
                             </Typography>
                             {subscriptionType === CompanyPlanName.BASE ? (
                               <div>
@@ -1099,7 +1099,7 @@ export const SubscriptionPlanView = ({
 
         <Typography variant="body" weight="500" color="shade6" component="span">
           {' '}
-          as the Base plan free period is 7 days.
+          as the Essentials plan free period is 7 days.
         </Typography>
 
         <div style={{ display: 'flex', marginTop: 24 }}>
