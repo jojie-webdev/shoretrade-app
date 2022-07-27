@@ -56,7 +56,6 @@ export type TopCategoriesPercentageData = {
   total: number;
   percentageChange: string;
 }[];
-
 export interface DashboardLandingGeneratedProps {
   isCalendarModalOpen: boolean;
   toggleModal: () => void;
@@ -85,4 +84,5 @@ export interface DashboardLandingGeneratedProps {
   salesData: SalesData;
   topCategoriesData: TopCategoriesData;
   activePlan?: GetActivePlanResponseData;
+  companyRelationship: string | undefined;
 }

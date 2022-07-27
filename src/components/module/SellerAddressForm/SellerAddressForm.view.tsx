@@ -9,6 +9,7 @@ import MobileFooter from 'components/layout/MobileFooter';
 import LocationSearch from 'components/module/LocationSearch/LocationSearch.view';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { COMPANY_RELATIONSHIPS } from 'consts/companyRelationships';
 import qs from 'qs';
 import pathOr from 'ramda/es/pathOr';
 import { Row, Col } from 'react-grid-system';
@@ -32,6 +33,8 @@ const SellerAddressForm = (props: SellerAddressFormProps): JSX.Element => {
     setUnitNumber,
     type,
     onDeleteAddress,
+    companyRelationship,
+    userPending,
   } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -118,17 +121,18 @@ const SellerAddressForm = (props: SellerAddressFormProps): JSX.Element => {
         </Col>
       </Row>
 
-      {!isMobile && (
+      {!isMobile && !userPending && (
         <Row nogutter>
           <Button text="Submit" onClick={validate} loading={pending} />
-          {type === 'EDIT' && (
-            <Button
-              className="delete-btn"
-              text="Delete"
-              onClick={onDeleteAddress}
-              loading={pending}
-            />
-          )}
+          {type === 'EDIT' &&
+            companyRelationship !== COMPANY_RELATIONSHIPS.FISHERMAN && (
+              <Button
+                className="delete-btn"
+                text="Delete"
+                onClick={onDeleteAddress}
+                loading={pending}
+              />
+            )}
         </Row>
       )}
 

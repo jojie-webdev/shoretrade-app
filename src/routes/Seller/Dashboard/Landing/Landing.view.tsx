@@ -15,6 +15,7 @@ import MobileHeader from 'components/module/MobileHeader';
 import SubscriptionAlert from 'components/module/SubscriptionAlert';
 import { SELLER_DASHBOARD_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { COMPANY_RELATIONSHIPS } from 'consts/companyRelationships';
 import moment from 'moment';
 import { FocusedInputShape } from 'react-dates';
 import { Row, Col } from 'react-grid-system';
@@ -428,6 +429,7 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
     salesData,
     topCategoriesData,
     activePlan,
+    companyRelationship,
   } = props;
 
   const [startDate, setStartDate] = useState(moment().subtract(7, 'days'));
@@ -491,13 +493,17 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
 
         {hasSalesData && <MonthlySales salesData={salesData} />}
 
-        {topCategoriesData.topCategories.length > 0 && (
-          <TopCategories
-            topCategoriesData={topCategoriesData}
-            linkToCategories={toCategories}
-            linkToCategoryDetails={toCategoryDetails}
-          />
-        )}
+        {!userPending
+          ? topCategoriesData.topCategories.length > 0 &&
+            companyRelationship !== undefined &&
+            companyRelationship !== COMPANY_RELATIONSHIPS.FISHERMAN && (
+              <TopCategories
+                topCategoriesData={topCategoriesData}
+                linkToCategories={toCategories}
+                linkToCategoryDetails={toCategoryDetails}
+              />
+            )
+          : null}
 
         {isCalendarModalOpen && (
           <DatePickerModal

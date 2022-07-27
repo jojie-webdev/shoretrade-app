@@ -7,6 +7,7 @@ import { isEmpty } from 'ramda';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { getAddressesActions, updateAddressActions } from 'store/actions';
+import { GetDefaultCompany } from 'store/selectors/buyer/company';
 import { PlaceData } from 'types/PlaceData';
 import { Store } from 'types/store/Store';
 
@@ -18,6 +19,8 @@ import {
 import EditAddressView from './EditAddress.view';
 
 const EditAddress = (): JSX.Element => {
+  const defaultCompany = GetDefaultCompany();
+
   // MARK:- Store
   const history = useHistory();
   const location = useLocation();
@@ -42,6 +45,14 @@ const EditAddress = (): JSX.Element => {
     ? addressToPlaceData(currentAddress)
     : null;
   const [address, setAddress] = useState<PlaceData | null>(initialAddress);
+
+  const userPending = useSelector((state: Store) => state.getUser.pending);
+  const user = useSelector((state: Store) => state.getUser.data?.data.user);
+  const companyRelationship =
+    (user &&
+      user.companies.find((company) => company.id === defaultCompany?.id)
+        ?.relationship) ||
+    '';
 
   // MARK:- Methods
   const onClickSave = () => {
@@ -141,6 +152,8 @@ const EditAddress = (): JSX.Element => {
     setUnitNumber,
     onDeleteAddress,
     isSuccess: updateAddress.data?.status === 200 && submitted,
+    companyRelationship,
+    userPending,
   };
   return <EditAddressView {...generatedProps} />;
 };
