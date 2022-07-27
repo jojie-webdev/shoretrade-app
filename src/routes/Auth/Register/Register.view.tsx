@@ -192,6 +192,7 @@ const StepForm = ({
   handleDownloadApplicationForm,
   onRemoveSelectedCategory,
   states,
+  licenseStates,
   plans,
 }: StepFormProps) => {
   const theme = useTheme();
@@ -224,6 +225,7 @@ const StepForm = ({
     file: null,
     fileName: '',
   });
+
   const [licenseBack, setLicenseBack] = useState<{
     file: File | null;
     fileName: string;
@@ -238,7 +240,9 @@ const StepForm = ({
   const [activeLicenseIdx, setActiveLicenseIdx] = useState<
     'new' | number | null
   >(null);
+
   const [stateId, setStateId] = useState<string>();
+  const [stateName, setStateName] = useState<string>();
   const [currentCategory, setCurrentCategory] = useState({
     name: '',
     id: '',
@@ -252,6 +256,36 @@ const StepForm = ({
     createUpdateReducer<Record<string, string>>(),
     {}
   );
+
+  const getStateId = (stateID: string) => {
+    const state = licenseStates
+      ? licenseStates.find((state) => state.postal === stateID)
+      : null;
+
+    if (state) {
+      setStateId(state.id);
+    }
+  };
+
+  const getStateName = (stateID: string) => {
+    const stateName = registrationDetails.licenses?.find(
+      (state) => state.stateId
+    );
+    if (stateId) {
+      return licenseStates
+        ? licenseStates?.find((state) => state.postal === stateID)?.postal
+        : '';
+    }
+    return stateName ? stateName : '';
+  };
+
+  useEffect(() => {
+    const selectedStateName = licenseStates
+      ? licenseStates?.find((state) => state.id === stateId)?.name
+      : '';
+
+    setStateName(selectedStateName);
+  }, [stateId]);
 
   const showSFMFields = ['AU', 'NZ'].includes(
     registrationDetails.address?.countryCode || ''
@@ -779,7 +813,11 @@ const StepForm = ({
                 label="Fishing Licenses"
                 value={
                   registrationDetails.licenses.length > 0
-                    ? `${registrationDetails.licenses[0].fileName}...`
+                    ? `${
+                        registrationDetails.licenses.find(
+                          (license) => license.stateId
+                        )?.fileName
+                      }...`
                     : ''
                 }
                 onClick={() => {
@@ -1345,7 +1383,7 @@ const StepForm = ({
                                   });
                                 }
                               }}
-                              file={licenseBack.file}
+                              file={license.file}
                               fileName={license.fileName}
                               onRemoveFile={() =>
                                 setLicenseBack({
@@ -1363,7 +1401,13 @@ const StepForm = ({
                           style={{ marginTop: 16 }}
                         />
                         <BaseTextField
-                          value={license.fileName}
+                          value={
+                            registrationDetails.licenses.length > 0
+                              ? registrationDetails.licenses.find(
+                                  (license) => license.stateId
+                                )?.fileName
+                              : license.fileName
+                          }
                           onChangeText={(v) =>
                             setLicense((prevState) => ({
                               ...prevState,
@@ -1378,7 +1422,17 @@ const StepForm = ({
                         <DatePickerDropdown
                           placeholder="17/01/2025"
                           label="Expiration Date"
-                          date={expirationDate ? moment(expirationDate) : null}
+                          date={
+                            registrationDetails.licenses.length > 0
+                              ? moment(
+                                  registrationDetails.licenses.find(
+                                    (license) => license.stateId
+                                  )?.expiredAt
+                                )
+                              : expirationDate
+                              ? moment(expirationDate)
+                              : null
+                          }
                           onDateChange={(d) =>
                             setExpirationDate(d?.toDate() || null)
                           }
@@ -1395,8 +1449,8 @@ const StepForm = ({
                             value: state.isoCode,
                             label: state.name,
                           }))}
-                          value={stateId}
-                          onChange={(v) => setStateId(v.value)}
+                          value={stateName}
+                          onChange={(v) => getStateId(v.value)}
                           borderRadius="4px"
                           marginTop="16px"
                         />

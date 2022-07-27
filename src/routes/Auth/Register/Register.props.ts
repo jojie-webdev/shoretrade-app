@@ -76,6 +76,7 @@ export interface BankDetails {
 
 export interface RegisterGeneratedProps {
   plans: GetSubscriptionPlansResponseData[];
+  licenseStates?: State[];
   backToLogin: () => void;
   registrationDetails: RegistrationDetails;
   updateRegistrationDetails: Dispatch<Partial<RegistrationDetails>>;

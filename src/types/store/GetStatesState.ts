@@ -1,6 +1,7 @@
 import { GenericResponse } from 'types/GenericResponse';
 
 export interface State {
+  country_code?: string;
   id: string;
   name: string;
   postal: string;
