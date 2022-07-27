@@ -1383,7 +1383,7 @@ const StepForm = ({
                                   });
                                 }
                               }}
-                              file={license.file}
+                              file={licenseBack.file}
                               fileName={license.fileName}
                               onRemoveFile={() =>
                                 setLicenseBack({
