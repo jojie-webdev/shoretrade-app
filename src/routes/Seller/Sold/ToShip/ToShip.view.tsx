@@ -18,6 +18,7 @@ import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
 import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
+import ReactTooltip from 'react-tooltip';
 import ConfirmModal from 'routes/Seller/Sold/Confirm';
 import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
 import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
@@ -232,28 +233,53 @@ export const PendingItem = (props: {
                   loading={isPlacingOrder && placeOrderId === order.orderId}
                 />
               ) : (
-                <Button
-                  className="ship-order"
-                  text={'Ship Order'}
-                  textVariant="caption"
-                  style={{ height: 32 }}
-                  disabled={!allowFullShipment}
-                  size="sm"
-                  onClick={(e) => {
-                    setPlaceOrderId(order.orderId);
-                    updateShippingDateModal({
-                      isOpen: true,
-                      order: generatePlaceOrderPayload({
-                        isPartial: !allowFullShipment,
-                        order,
-                      }),
-                      group: data.groupName || '',
-                      dropOff: data.dropOff || '',
-                    });
-                    e.stopPropagation();
-                  }}
-                  loading={isPlacingOrder && placeOrderId === order.orderId}
-                />
+                <div>
+                  <ReactTooltip
+                    id="disabledToShipBtn"
+                    place="left"
+                    effect="solid"
+                    backgroundColor={theme.grey.shade8}
+                  >
+                    <div
+                      style={{
+                        textAlign: 'center',
+                      }}
+                    >
+                      Please confirm the weight before
+                      <br /> shipping the order
+                    </div>
+                  </ReactTooltip>
+
+                  <div
+                    data-tip
+                    data-for={!allowFullShipment ? 'disabledToShipBtn' : ''}
+                    data-delay-show="100"
+                    style={{ marginLeft: '8px' }}
+                  >
+                    <Button
+                      className="ship-order"
+                      text={'Ship Order'}
+                      textVariant="caption"
+                      style={{ height: 32 }}
+                      disabled={!allowFullShipment}
+                      size="sm"
+                      onClick={(e) => {
+                        setPlaceOrderId(order.orderId);
+                        updateShippingDateModal({
+                          isOpen: true,
+                          order: generatePlaceOrderPayload({
+                            isPartial: !allowFullShipment,
+                            order,
+                          }),
+                          group: data.groupName || '',
+                          dropOff: data.dropOff || '',
+                        });
+                        e.stopPropagation();
+                      }}
+                      loading={isPlacingOrder && placeOrderId === order.orderId}
+                    />
+                  </div>
+                </div>
               )}
             </div>
           </div>
