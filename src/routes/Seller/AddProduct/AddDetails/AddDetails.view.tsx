@@ -339,9 +339,7 @@ const AddDetails = ({
   ]);
 
   const toggleAlwaysAvailable = () => {
-    if (isAquafuture || isAuctionSale) return;
-
-    if (!editableListing?.isAquafuture) {
+    if (!isAquafuture && !isAuctionSale) {
       setCatchDate(null);
       setAlwaysAvailable((prevState) => !prevState);
     } else {
