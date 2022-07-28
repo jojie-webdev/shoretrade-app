@@ -7,6 +7,7 @@ import Typography from 'components/base/Typography';
 import CheckoutCard from 'components/module/CheckoutCard/CheckoutCard.view';
 import Loading from 'components/module/Loading';
 import LoadingOverlay from 'components/module/LoadingOverlay';
+import { XRefreshCreditButton } from 'components/module/RefreshCreditButton';
 import ShippingCard from 'components/module/ShippingCard/ShippingCard.view';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -237,9 +238,7 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
 
                   <div className="balances">
                     <div>
-                      <Typography variant="overline" color="shade6">
-                        CREDIT BALANCE
-                      </Typography>
+                      <XRefreshCreditButton color="shade6" />
                       <Typography
                         variant="title6"
                         weight="bold"

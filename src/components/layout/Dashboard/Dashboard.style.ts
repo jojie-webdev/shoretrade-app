@@ -96,7 +96,8 @@ export const Sidebar = styled.aside<{ openSidebar: boolean }>`
   flex-direction: column;
   justify-content: space-between;
   transition: all 0.1s ease-in-out;
-  overflow: hidden;
+  // Note: Do not hide overflow, Allows tooltip to overflow
+  /* overflow: hidden; */
   z-index: 2222;
 
   .wrapper {

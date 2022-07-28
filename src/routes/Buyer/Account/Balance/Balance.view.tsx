@@ -6,6 +6,7 @@ import Button from 'components/base/Button';
 import { Pen, TrashCan } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
+import { XRefreshCreditButton } from 'components/module/RefreshCreditButton';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { BUYER_ACCOUNT_ROUTES } from 'consts/routes';
 import { Col, Row } from 'react-grid-system';
@@ -58,9 +59,7 @@ const BalanceView = (props: BalanceGeneratedProps) => {
 
           <CreditWrapper>
             {!isMobile && (
-              <Typography variant="overline" color="shade6">
-                Account Balance
-              </Typography>
+              <XRefreshCreditButton color="shade6" label="ACCOUNT BALANCE" />
             )}
 
             <Typography variant={isMobile ? 'title2' : 'title4'} color="shade9">

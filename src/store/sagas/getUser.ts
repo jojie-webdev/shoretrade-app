@@ -1,6 +1,7 @@
 import { lensPath, set, view } from 'ramda';
 import pathOr from 'ramda/es/pathOr';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
+import { syncAASBalance } from 'services/aas';
 import { getUser } from 'services/auth';
 import { AsyncAction, Action } from 'types/Action';
 import {
@@ -48,6 +49,9 @@ function* getUserSuccess(action: AsyncAction<GetUserMeta, GetUserPayload>) {
         state.getAddresses.request?.companyId !== companyId
       ) {
         yield put(getAddressesActions.request({ companyId }));
+
+        // if buyer is at this point, assume he restored session/new login
+        yield call(syncAASBalance, companyId);
       }
 
       // avoids calling request twice

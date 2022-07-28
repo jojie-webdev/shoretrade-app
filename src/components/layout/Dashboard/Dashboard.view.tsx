@@ -18,6 +18,7 @@ import MobileNav from 'components/layout/MobileNav';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import Hamburger from 'components/module/Hamburger';
 import NotificationMenu from 'components/module/NotificationMenu';
+import { XRefreshCreditButton } from 'components/module/RefreshCreditButton';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Container } from 'react-grid-system';
@@ -418,9 +419,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                   history.push(BUYER_ACCOUNT_ROUTES.BANK_DETAILS);
                 }}
               >
-                <Typography color="primary" variant="overline" weight="900">
-                  Credit balance
-                </Typography>
+                <XRefreshCreditButton />
                 <div className="balance-arrow">
                   <Typography
                     color="noshade"
