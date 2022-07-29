@@ -11,5 +11,7 @@ export const syncAASBalance = (companyId: string) => {
   return axios({
     method: 'get',
     url: `${AAS_URL}/sync-balance?companyId=${companyId}`,
+  }).catch((e) => {
+    // Ignore error
   });
 };
