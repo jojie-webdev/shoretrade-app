@@ -252,6 +252,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                       withBackground={false}
                       showFavoriteButton={false}
                       {...sellerRatingProps}
+                      isPendingAccount={isPendingAccount}
                     />
                   ) : null
                 }
@@ -262,6 +263,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                   withBackground={false}
                   showFavoriteButton={true}
                   {...sellerRatingProps}
+                  isPendingAccount={isPendingAccount}
                 />
               ) : (
                 ''

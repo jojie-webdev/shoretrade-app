@@ -30,6 +30,7 @@ const ProductSellerCard = (props: ProductSellerProps): JSX.Element => {
     onFavorite,
     onClickSeller,
     bottomComponent,
+    isPendingAccount,
   } = props;
 
   const [defaultImage, setDefaultImage] = useState(uri);
@@ -64,9 +65,17 @@ const ProductSellerCard = (props: ProductSellerProps): JSX.Element => {
           <Typography variant="overlineSmall" weight="900" color="shade6">
             {location}
           </Typography>
-          <Typography variant="body" weight="bold" color="shade9">
-            {name}
-          </Typography>
+
+          <div
+            style={{
+              marginTop: '4px',
+              filter: `${isPendingAccount ? 'blur(5px)' : ''}`,
+            }}
+          >
+            <Typography variant="body" weight="bold" color="shade9">
+              {name}
+            </Typography>
+          </div>
           {/* <RatingRow>
             <Typography
               className="rating-value"

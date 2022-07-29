@@ -10,4 +10,5 @@ export interface ProductSellerProps {
   fullWidth?: boolean;
   showFavoriteButton: boolean;
   bottomComponent?: React.ReactNode;
+  isPendingAccount?: boolean;
 }

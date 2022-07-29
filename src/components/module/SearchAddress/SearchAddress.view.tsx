@@ -181,7 +181,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
             Minimum Buying Quantity
             <IconTooltip
               variant="info"
-              content="Are the Minimum Order amounts to large for your business? Reduce the toggle here to see listings that have a less than or equal to Minimum Order amount."
+              content="Are the Minimum Order amounts too large for your business? Reduce the toggle here to see listings that have a less than or equal to Minimum Order amount."
             />
           </Label>
           <div className="filters">
