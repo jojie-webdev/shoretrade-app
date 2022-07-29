@@ -10,7 +10,7 @@ import {
 } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
-import { SHORETRADE_HOME } from 'consts';
+import { SFM_BLUE_HOME, SHORETRADE_HOME } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
@@ -82,7 +82,10 @@ const AuthContainerView = (props: AuthContainerProps): JSX.Element => {
                 props.logoContainerMarginBottomHeight
               }
             >
-              <a href={SHORETRADE_HOME} style={{ cursor: 'pointer' }}>
+              <a
+                href={theme.isSFM ? SFM_BLUE_HOME : SHORETRADE_HOME}
+                style={{ cursor: 'pointer' }}
+              >
                 {!theme.isSFM && (
                   <>
                     {!horizontalLogo ? (
