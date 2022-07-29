@@ -63,8 +63,7 @@ const PhoneTextField = (props: PhoneTextFieldProps): JSX.Element => {
 
   const australia = { callingCode: '61', flag: '🇦🇺' };
   const initCountry = callingCode
-    ? CALLING_CODES.find((cc) => cc.callingCode.includes(callingCode)) ||
-      australia
+    ? CALLING_CODES.find((cc) => cc.callingCode === callingCode) || australia
     : australia;
 
   const country = {
