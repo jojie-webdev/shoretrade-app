@@ -1108,30 +1108,33 @@ const StepForm = ({
         <FormikContainer>
           <Container>
             <Content>
-              {fields.map(({ key, type, secured, label, alert, prefix }) => (
-                <Fragment key={key}>
-                  <StyledFormikTextField
-                    name={key}
-                    type={type}
-                    label={label}
-                    secured={secured}
-                    alert={alert}
-                    onChangeText={() => {
-                      if (key === 'email' && otherErrors[key]) {
-                        setOtherErrors({ email: '' });
+              {fields.map(
+                ({ key, type, secured, label, alert, prefix, placeholder }) => (
+                  <Fragment key={key}>
+                    <StyledFormikTextField
+                      name={key}
+                      type={type}
+                      label={label}
+                      secured={secured}
+                      alert={alert}
+                      placeholder={placeholder || ''}
+                      onChangeText={() => {
+                        if (key === 'email' && otherErrors[key]) {
+                          setOtherErrors({ email: '' });
+                        }
+                      }}
+                      LeftComponent={
+                        (prefix || '').length > 0 ? (
+                          <Typography variant="label" color="shade6">
+                            {prefix}
+                          </Typography>
+                        ) : undefined
                       }
-                    }}
-                    LeftComponent={
-                      (prefix || '').length > 0 ? (
-                        <Typography variant="label" color="shade6">
-                          {prefix}
-                        </Typography>
-                      ) : undefined
-                    }
-                    otherError={otherErrors[key]}
-                  />
-                </Fragment>
-              ))}
+                      otherError={otherErrors[key]}
+                    />
+                  </Fragment>
+                )
+              )}
 
               {step === 1 && (
                 <>

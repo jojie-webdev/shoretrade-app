@@ -110,7 +110,15 @@ export interface RegisterGeneratedProps {
   onRemoveSelectedCategory: (name: string) => void;
   states: { value: string; label: string }[];
 }
-
+export interface Field {
+  label: string;
+  key: string;
+  secured?: boolean;
+  alert?: string;
+  type?: string;
+  prefix?: string;
+  placeholder?: string;
+}
 export interface StepFormProps extends RegisterGeneratedProps {
   formikProps: {
     initialValues: Record<string, string>;
@@ -119,13 +127,6 @@ export interface StepFormProps extends RegisterGeneratedProps {
   };
   step: number;
   previousStep?: () => void;
-  fields: {
-    label: string;
-    key: string;
-    secured?: boolean;
-    alert?: string;
-    type?: string;
-    prefix?: string;
-  }[];
+  fields: Field[];
   summaryHandleStep: (step: number) => void;
 }

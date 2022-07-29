@@ -1,3 +1,5 @@
+import { Field } from './Register.props';
+
 export const SELLER_STEPS = [
   {
     title: 'Your Details',
@@ -122,15 +124,6 @@ export const SFM_BUYER_STEPS = [
   },
 ];
 
-interface Field {
-  label: string;
-  key: string;
-  secured?: boolean;
-  alert?: string;
-  type?: string;
-  prefix?: string;
-}
-
 export const USER_DETAIL_FIELDS: Field[] = [
   {
     label: 'First Name',
@@ -166,6 +159,7 @@ export const BUSINESS_DETAIL_FIELDS: Field[] = [
   {
     label: 'Business Number',
     key: 'abn',
+    placeholder: 'ABN or Country Business Number',
   },
 ];
 
