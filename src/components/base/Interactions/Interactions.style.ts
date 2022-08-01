@@ -40,8 +40,10 @@ export const Container = styled.div<InteractionsProps>`
       : 'none !important';
   }};
 
-  ${({ type }) =>
-    type !== 'none'
+  ${({ type, disabled }) =>
+    disabled
+      ? 'cursor: none'
+      : type !== 'none'
       ? `cursor: pointer;
         &:hover {
           opacity: 0.9;

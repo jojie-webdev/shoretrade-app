@@ -37,6 +37,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
     fontColor,
     customIcon,
     showEmptyIndicator,
+    disabled,
   } = props;
 
   const getIcon = () => {
@@ -108,21 +109,23 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
     ) : (
       <div className="right-content">
         {keepIcon && rightComponent}
-        <IconContainer
-          className="interactions-right"
-          iconAlignment={iconAlignment}
-        >
-          <Typography
-            className="right-content-text"
-            variant="overline"
-            weight="bold"
-            color="shade6"
-            style={{ marginRight: '8px' }}
+        {disabled ? null : (
+          <IconContainer
+            className="interactions-right"
+            iconAlignment={iconAlignment}
           >
-            {resultCount}
-          </Typography>
-          {getIcon()}
-        </IconContainer>
+            <Typography
+              className="right-content-text"
+              variant="overline"
+              weight="bold"
+              color="shade6"
+              style={{ marginRight: '8px' }}
+            >
+              {resultCount}
+            </Typography>
+            {getIcon()}
+          </IconContainer>
+        )}
       </div>
     );
 
@@ -161,7 +164,11 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
   }
 
   return (
-    <Container className="interactions" {...props} onClick={onClick}>
+    <Container
+      className="interactions"
+      {...props}
+      onClick={disabled ? undefined : onClick}
+    >
       {label ? (
         <Label variant="overline" color="shade5">
           {label}

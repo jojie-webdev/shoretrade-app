@@ -9,6 +9,7 @@ import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
 import Loading from 'components/module/Loading';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { COMPANY_RELATIONSHIPS } from 'consts/companyRelationships';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
@@ -49,6 +50,7 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
     onClickAddress,
     onClickAddAddress,
     notificationMessage,
+    companyRelationship,
   } = props;
 
   const theme = useTheme();
@@ -117,6 +119,9 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
           return (
             <InteractionCol md={12} key={address.id}>
               <Interactions
+                disabled={
+                  companyRelationship === COMPANY_RELATIONSHIPS.FISHERMAN
+                }
                 onClick={() => onClickAddress(address.id)}
                 leftComponent={AddressText(
                   title,

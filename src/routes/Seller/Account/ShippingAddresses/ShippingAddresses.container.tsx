@@ -9,6 +9,7 @@ import {
   updateAddressActions,
   addAddressActions,
 } from 'store/actions';
+import { GetDefaultCompany } from 'store/selectors/buyer/company';
 import { Store } from 'types/store/Store';
 import { useCompany } from 'utils/Hooks';
 
@@ -20,6 +21,7 @@ const ShippingAddresses = (): JSX.Element => {
   const dispatch = useDispatch();
   const [companyId] = useCompany();
   const getAddress = useSelector((state: Store) => state.getAddresses);
+  const defaultCompany = GetDefaultCompany();
 
   // Mark:- Variables
   const addresses =
@@ -30,6 +32,12 @@ const ShippingAddresses = (): JSX.Element => {
   );
   const addAddressResult = useSelector((state: Store) => state.addAddress);
   const [notificationMessage, setNotificationMessage] = useState('');
+  const user = useSelector((state: Store) => state.getUser.data?.data.user);
+  const companyRelationship =
+    (user &&
+      user.companies.find((company) => company.id === defaultCompany?.id)
+        ?.relationship) ||
+    '';
 
   // Mark:- Methods
   const onClickAddress = (addressId: string) => {
@@ -99,6 +107,7 @@ const ShippingAddresses = (): JSX.Element => {
     notificationMessage,
     onClickAddress,
     onClickAddAddress,
+    companyRelationship,
   };
   return <ShippingAddressesView {...generatedProps} />;
 };

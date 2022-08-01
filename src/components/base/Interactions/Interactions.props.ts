@@ -33,4 +33,5 @@ export interface InteractionsProps {
   customIcon?: React.ReactNode;
   bottomComponent?: React.ReactNode;
   showEmptyIndicator?: boolean;
+  disabled?: boolean;
 }
