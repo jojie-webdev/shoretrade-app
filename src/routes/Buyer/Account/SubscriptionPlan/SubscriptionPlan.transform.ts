@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import moment, { RFC_2822 } from 'moment';
+import moment from 'moment';
 import {
   ActivePlan,
   CompanyPlan,
@@ -63,41 +63,17 @@ export const companyPlanToProps = (
     CompanyPlanName.REVERSE_MARKET
   );
 
-  const daysUntilEndReverseMarketPlace = moment(
-    moment(currentReverseMarketDetails?.subscription.ends_at).utc()
-  )
-    .utc()
-    .diff(moment().utc(), 'day');
-
-  const hoursUntilEndReverseMarketPlace = moment(
-    moment(currentReverseMarketDetails?.subscription.ends_at).utc()
-  )
-    .utc()
-    .diff(moment().utc(), 'hours');
-
-  const minutesUntilEndReverseMarketPlace = moment(
-    moment(currentReverseMarketDetails?.subscription.ends_at).utc()
-  )
-    .utc()
-    .diff(moment().utc(), 'minutes');
-
   const daysUntilEnd = moment(
-    moment(companyPlan?.activePlans[0]?.subscription.ends_at).utc()
-  )
-    .utc()
-    .diff(moment().utc(), 'day');
+    moment(companyPlan?.activePlans[0]?.subscription.ends_at)
+  ).diff(moment(), 'day');
 
   const hoursUntilEnd = moment(
-    moment(companyPlan?.activePlans[0]?.subscription.ends_at).utc()
-  )
-    .utc()
-    .diff(moment().utc(), 'hours');
+    moment(companyPlan?.activePlans[0]?.subscription.ends_at)
+  ).diff(moment(), 'hours');
 
   const minutesUntilend = moment(
-    moment(companyPlan?.activePlans[0]?.subscription.ends_at).utc()
-  )
-    .utc()
-    .diff(moment().utc(), 'minutes');
+    moment(companyPlan?.activePlans[0]?.subscription.ends_at)
+  ).diff(moment(), 'minutes');
 
   const defaultPaymentMethod = companyPlan?.nextBillingData?.cards.find(
     (card) => card.id === companyPlan.nextBillingData?.defaultCard
@@ -113,15 +89,6 @@ export const companyPlanToProps = (
     return `in ${minutesUntilend} minutes`;
   };
 
-  const getCancellationPeriodReverseMarket = () => {
-    if (daysUntilEndReverseMarketPlace > 0) {
-      return `in ${daysUntilEndReverseMarketPlace} days`;
-    } else if (hoursUntilEndReverseMarketPlace > 0) {
-      return `in ${hoursUntilEndReverseMarketPlace} hours`;
-    }
-    return `in ${minutesUntilEndReverseMarketPlace} minutes`;
-  };
-
   return {
     annualPrice: annualPlan?.price || '0',
     monthlyPrice: monthlyPlan?.price || '0',
@@ -131,7 +98,7 @@ export const companyPlanToProps = (
       : '',
     cancellationReversePeriodReverseMarket: companyPlan?.flags
       ?.hasCancelledReversedMarketplace
-      ? getCancellationPeriodReverseMarket()
+      ? getCancellationPeriod()
       : '',
     cardBrand,
     subscriptionType: companyPlan?.activePlans
@@ -162,9 +129,8 @@ export const companyPlanToProps = (
       : '$0',
     latePayment:
       currentPlanDetails?.subscription.paid_at === null &&
-      moment
-        .utc(moment().utc())
-        .diff(currentPlanDetails?.subscription.starts_at, 'd') > 2,
+      moment(moment()).diff(currentPlanDetails?.subscription.starts_at, 'd') >
+        2,
     failedPayment: currentPlanDetails?.subscription.paid_at === null,
   };
 };

@@ -39,22 +39,16 @@ export const companyPlanToProps = (
   );
 
   const daysUntilEnd = moment(
-    moment(currentReverseMarketDetails?.subscription.ends_at).utc()
-  )
-    .utc()
-    .diff(moment().utc(), 'day');
+    moment(currentReverseMarketDetails?.subscription.ends_at)
+  ).diff(moment(), 'day');
 
   const hoursUntilEnd = moment(
-    moment(currentReverseMarketDetails?.subscription.ends_at).utc()
-  )
-    .utc()
-    .diff(moment().utc(), 'hours');
+    moment(currentReverseMarketDetails?.subscription.ends_at)
+  ).diff(moment(), 'hours');
 
   const minutesUntilend = moment(
-    moment(currentReverseMarketDetails?.subscription.ends_at).utc()
-  )
-    .utc()
-    .diff(moment().utc(), 'minutes');
+    moment(currentReverseMarketDetails?.subscription.ends_at)
+  ).diff(moment(), 'minutes');
 
   const defaultPaymentMethod = companyPlan?.nextBillingData?.cards.find(
     (card) => card.id === companyPlan.nextBillingData?.defaultCard
@@ -62,10 +56,8 @@ export const companyPlanToProps = (
   const cardBrand = _.snakeCase(defaultPaymentMethod?.brand || '');
 
   const daysUntilEndReverseMarketPlace = moment(
-    moment(currentReverseMarketDetails?.subscription.ends_at).utc()
-  )
-    .utc()
-    .diff(moment().utc(), 'day');
+    moment(currentReverseMarketDetails?.subscription.ends_at)
+  ).diff(moment(), 'day');
 
   const getCancellationPeriod = () => {
     if (daysUntilEnd > 0) {
@@ -113,8 +105,9 @@ export const companyPlanToProps = (
       currentReverseMarketDetails?.subscription.paid_at === null,
     lateReverseMarketPayment:
       currentReverseMarketDetails?.subscription.paid_at === null &&
-      moment
-        .utc(moment().utc())
-        .diff(currentReverseMarketDetails?.subscription.starts_at, 'd') > 2,
+      moment(moment()).diff(
+        currentReverseMarketDetails?.subscription.starts_at,
+        'd'
+      ) > 2,
   };
 };
