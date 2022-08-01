@@ -82,6 +82,7 @@ const Search = (props: {
 export default function ListingView(props: ListingViewProps) {
   const {
     listings,
+    isPendingAccount,
     handleDownloadCSV,
     isDownloadingCsv,
     isMobile,
@@ -121,7 +122,11 @@ export default function ListingView(props: ListingViewProps) {
 
   const isEmpty = !isPending && !listings.length;
 
-  const columns = COLUMNS[activeTab as keyof CounterProps];
+  const columns = isPendingAccount
+    ? COLUMNS[activeTab as keyof CounterProps].filter(
+        (column) => column.name !== 'Price'
+      )
+    : COLUMNS[activeTab as keyof CounterProps];
 
   const downloadListingCount = isAllSelected
     ? counter[activeTab as keyof CounterProps] - unselectedIds.length

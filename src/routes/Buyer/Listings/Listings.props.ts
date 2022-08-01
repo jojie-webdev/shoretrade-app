@@ -39,6 +39,7 @@ export interface AllListingTableItem {
 
 export interface ListingViewProps {
   listings: GetAllBuyerListingResponseItem[];
+  isPendingAccount?: boolean;
   handleDownloadCSV: () => void;
   isDownloadingCsv: boolean;
   isMobile: boolean;

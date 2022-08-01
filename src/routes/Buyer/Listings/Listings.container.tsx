@@ -123,6 +123,9 @@ export default function ListingContainer() {
   const addresses =
     useSelector((state: Store) => state.getAddresses.data?.data.addresses) ||
     [];
+  const isPendingAccount =
+    addresses !== undefined &&
+    !(addresses || []).some((a) => a.approved === 'APPROVED');
   const currentDefaultAddressId = (
     addresses.find((i) => i.default) || { id: '' }
   ).id;
@@ -184,7 +187,14 @@ export default function ListingContainer() {
       })
     );
     // eslint-disable-next-line
-  }, [activeTab, searchFilters, page, tabSortOrder, pageLimit, currentDefaultAddressId]);
+  }, [
+    activeTab,
+    searchFilters,
+    page,
+    tabSortOrder,
+    pageLimit,
+    currentDefaultAddressId,
+  ]);
 
   useEffect(() => {
     setIsAllSelected(false);
@@ -277,6 +287,7 @@ export default function ListingContainer() {
 
   const listingViewProps: ListingViewProps = {
     listings,
+    isPendingAccount,
     handleDownloadCSV,
     isDownloadingCsv,
     isMobile,
