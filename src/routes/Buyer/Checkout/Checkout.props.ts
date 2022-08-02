@@ -1,4 +1,4 @@
-import { Dispatch } from 'react';
+import { Option } from 'components/module/ShippingCard/ShippingCard.props';
 
 export type OrderItem = {
   cartItemId: string;
@@ -17,6 +17,7 @@ export type OrderItem = {
     id: string;
     priceId: string;
     name: string;
+    nameId: string;
     est: string;
     price: string;
     imageUrl: string;
@@ -40,8 +41,8 @@ export interface CheckoutGeneratedProps {
   placeOrder: () => void;
   selectedShipping: Record<string, any>;
   selectedShippingId: Record<string, string>;
-  setSelectedShippingId: Dispatch<Partial<Record<string, string>>>;
   processingOrder: boolean;
-  removeItem: (id: string) => void;
+  removeItem: (id: string, orderListingKey: string) => void;
   orderError: string;
+  onDeliveryMethodSelection: (option: Option, orderListingKey: string) => void;
 }

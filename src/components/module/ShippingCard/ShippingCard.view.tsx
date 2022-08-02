@@ -13,7 +13,12 @@ import { Container, Rectangle, Spacer } from './ShippingCard.style';
 
 const ShippingCard = (props: ShippingCardProps): JSX.Element => {
   const theme = useTheme();
-  const { options, onPress, selectedPriceId, isFreeShipping = false } = props;
+  const {
+    options,
+    onPress,
+    selectedDeliveryMethod,
+    isFreeShipping = false,
+  } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
@@ -29,8 +34,8 @@ const ShippingCard = (props: ShippingCardProps): JSX.Element => {
         <Rectangle
           key={o.id}
           onClick={() => {
-            if (selectedPriceId !== o.id) {
-              onPress(o.id);
+            if (selectedDeliveryMethod !== o.nameId) {
+              onPress(o.id, o);
             }
           }}
         >
@@ -85,7 +90,7 @@ const ShippingCard = (props: ShippingCardProps): JSX.Element => {
                   </Typography>
                 )}
 
-                {selectedPriceId === o.id ? (
+                {selectedDeliveryMethod === o.nameId ? (
                   <CheckFilled
                     width={isMobile ? 14 : 20}
                     height={isMobile ? 14 : 20}

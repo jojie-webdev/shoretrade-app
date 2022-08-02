@@ -36,8 +36,8 @@ const Orders = (props: CheckoutGeneratedProps) => {
   const {
     groupedOrders,
     selectedShippingId,
-    setSelectedShippingId,
     removeItem,
+    onDeliveryMethodSelection,
   } = props;
 
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -78,7 +78,12 @@ const Orders = (props: CheckoutGeneratedProps) => {
               {item.listings.map((listing) => (
                 <CheckoutCard
                   key={listing.cartItemId}
-                  onRemove={() => removeItem(listing.cartItemId)}
+                  onRemove={() =>
+                    removeItem(
+                      listing.cartItemId,
+                      getOrderListingKey(item.listings[0])
+                    )
+                  }
                   {...listing}
                 />
               ))}
@@ -123,7 +128,7 @@ const Orders = (props: CheckoutGeneratedProps) => {
 
               <ShippingCard
                 isFreeShipping={item.isFreeShipping}
-                selectedPriceId={
+                selectedDeliveryMethod={
                   selectedShippingId[getOrderListingKey(item.listings[0])]
                 }
                 options={item.listings[0].shippingOptions.sort((a, b) => {
@@ -131,11 +136,12 @@ const Orders = (props: CheckoutGeneratedProps) => {
                   if (a.est > b.est) return 1;
                   return 0;
                 })}
-                onPress={(id) =>
-                  setSelectedShippingId({
-                    [getOrderListingKey(item.listings[0])]: id,
-                  })
-                }
+                onPress={(id, o) => {
+                  onDeliveryMethodSelection(
+                    o,
+                    getOrderListingKey(item.listings[0])
+                  );
+                }}
               />
             </Col>
           </ShippingRow>

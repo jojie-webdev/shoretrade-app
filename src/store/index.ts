@@ -30,6 +30,7 @@ const persistConfig = {
     'getHistoricalListings',
     'subscription',
     'getActivePlan',
+    'selectedDeliveryMethod',
   ],
 };
 

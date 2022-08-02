@@ -4,6 +4,7 @@ export type RemoveCartItemMeta = {
   employeeId: string;
   cartId: string;
   transactionRef: string;
+  orderListingKey?: string;
 };
 
 export type RemoveCartItemPayload = {

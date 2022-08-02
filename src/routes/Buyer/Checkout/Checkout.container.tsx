@@ -1,9 +1,11 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 
+import { Option } from 'components/module/ShippingCard/ShippingCard.props';
 import { BUYER_ROUTES, clickAndCollectAddress2 } from 'consts';
 import { ADDITIONAL_INFOS } from 'consts/listingAdditionalInfos';
 import equals from 'ramda/es/equals';
 import groupBy from 'ramda/es/groupBy';
+import omit from 'ramda/es/omit';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { OrderItem } from 'routes/Buyer/Checkout/Checkout.props';
@@ -12,6 +14,7 @@ import {
   orderActions,
   getCartActions,
   removeCartItemActions,
+  selectedDeliveryMethodActions,
 } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import {
@@ -53,6 +56,9 @@ const Checkout = (): JSX.Element => {
     {}
   );
 
+  const selectedDeliveryMethod =
+    useSelector((store: Store) => store.selectedDeliveryMethod) || {};
+
   const addresses =
     useSelector((store: Store) => store.getAddresses.data?.data.addresses) ||
     [];
@@ -73,15 +79,43 @@ const Checkout = (): JSX.Element => {
   useEffect(() => {
     if (!loadingShippingQuotes) {
       const defaultShippingIds = Object.keys(shippingQuotes).reduce(
-        (accumulator, key) => ({
-          ...accumulator,
-          ...(shippingQuotes[key].priceResult.length > 0
-            ? { [key]: shippingQuotes[key].priceResult[0].id }
-            : {}),
-        }),
+        (accumulator, key) => {
+          const priceResult = shippingQuotes[key].priceResult[0];
+
+          const shipmentMode = shipmentModeToString(
+            priceResult.shipmentMode,
+            priceResult.serviceName
+          );
+          const serviceName = serviceNameToString(
+            priceResult.serviceName,
+            priceResult.locationName,
+            cartItems.find((cartItem) => key.includes(cartItem.companyId))
+              ?.companyName || ''
+          );
+          const deliveryMethod =
+            priceResult.serviceName === CLICK_AND_COLLECT_SERVICE
+              ? `${serviceName} ${priceResult.locationName} ${priceResult.carrierName}`
+              : `${shipmentMode} ${serviceName} ${priceResult.carrierName}`;
+
+          return {
+            ...accumulator,
+            ...(shippingQuotes[key].priceResult.length > 0
+              ? { [key]: deliveryMethod }
+              : {}),
+          };
+        },
         {}
       );
-      setSelectedShippingId(defaultShippingIds);
+
+      if (!cartItems || cartItems?.length === 0) {
+        dispatch(selectedDeliveryMethodActions.clear());
+      }
+
+      if (Object.keys(selectedDeliveryMethod).length > 0) {
+        setSelectedShippingId(selectedDeliveryMethod);
+      } else {
+        setSelectedShippingId(defaultShippingIds);
+      }
     }
     // eslint-disable-next-line
   }, [loadingShippingQuotes]);
@@ -90,12 +124,36 @@ const Checkout = (): JSX.Element => {
 
   const cartDataItems = cartData?.items || {};
 
-  const removeItem = (id: string) => {
+  const onDeliveryMethodSelection = (
+    option: Option,
+    orderListingKey: string
+  ) => {
+    dispatch(
+      selectedDeliveryMethodActions.update({
+        [orderListingKey]: option.nameId,
+      })
+    );
+    setSelectedShippingId({
+      [orderListingKey]: option.nameId,
+    });
+  };
+
+  const removeItem = (id: string, orderListingKey: string) => {
+    const modifiedSelectedDeliveryMethod = omit(
+      [orderListingKey],
+      selectedDeliveryMethod
+    );
+
+    dispatch(
+      selectedDeliveryMethodActions.update(modifiedSelectedDeliveryMethod)
+    );
+
     dispatch(
       removeCartItemActions.request({
         employeeId: currentCompany?.employeeId || '',
         cartId: cartData?.id || '',
         transactionRef: id,
+        orderListingKey,
       })
     );
   };
@@ -178,10 +236,15 @@ const Checkout = (): JSX.Element => {
                 id: data.id,
                 priceId: data.priceId,
                 shipmentMode: data.shipmentMode,
+                carrierName: data.carrierName,
                 name:
                   data.serviceName === CLICK_AND_COLLECT_SERVICE
                     ? `${serviceName} ${data.locationName}`
                     : `${shipmentMode} ${serviceName}`,
+                nameId:
+                  data.serviceName === CLICK_AND_COLLECT_SERVICE
+                    ? `${serviceName} ${data.locationName} ${data.carrierName}`
+                    : `${shipmentMode} ${serviceName} ${data.carrierName}`,
                 ...(data.serviceName === CLICK_AND_COLLECT_SERVICE
                   ? { secondName: clickAndCollectAddress2 }
                   : {}),
@@ -218,7 +281,24 @@ const Checkout = (): JSX.Element => {
     (selectedShippingData: Record<string, OrderShipping>, companyId) => {
       const data = shippingQuotes[companyId];
       const selectedPriceData = shippingQuotes[companyId].priceResult.find(
-        (pricing) => pricing.id === selectedShippingId[companyId]
+        (pricing) => {
+          const shipmentMode = shipmentModeToString(
+            pricing.shipmentMode,
+            pricing.serviceName
+          );
+          const serviceName = serviceNameToString(
+            pricing.serviceName,
+            pricing.locationName,
+            cartItems.find((cartItem) => companyId.includes(cartItem.companyId))
+              ?.companyName || ''
+          );
+          const deliveryMethod =
+            pricing.serviceName === CLICK_AND_COLLECT_SERVICE
+              ? `${serviceName} ${pricing.locationName} ${pricing.carrierName}`
+              : `${shipmentMode} ${serviceName} ${pricing.carrierName}`;
+
+          return deliveryMethod === selectedShippingId[companyId];
+        }
       );
       return {
         ...selectedShippingData,
@@ -410,6 +490,7 @@ const Checkout = (): JSX.Element => {
     processingOrder,
     removeItem,
     orderError,
+    onDeliveryMethodSelection,
   };
 
   return <CheckoutView {...generatedProps} />;

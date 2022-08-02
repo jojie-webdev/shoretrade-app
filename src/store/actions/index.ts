@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+export { default as selectedDeliveryMethodActions } from './selectedDeliveryMethod';
 export { default as paySubscriptionActions } from './paySubscription';
 export { default as upgradeSubscriptionActions } from './upgradeSubscription';
 export { default as subscriptionActions } from './subscription';

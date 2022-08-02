@@ -12,6 +12,7 @@ import {
   getUserActions,
   getBuyerHomepageActions,
 } from '../actions';
+import selectedDeliveryMethodActions from './../actions/selectedDeliveryMethod';
 
 function* orderRequest(action: AsyncAction<OrderMeta, OrderPayload>) {
   const state: Store = yield select();
@@ -34,6 +35,7 @@ function* orderSuccess(action: AsyncAction<OrderMeta, OrderPayload>) {
   yield put(cartActions.clear());
   yield put(getUserActions.request());
   yield put(getBuyerHomepageActions.request());
+  yield put(selectedDeliveryMethodActions.clear());
 }
 
 function* orderWatcher() {

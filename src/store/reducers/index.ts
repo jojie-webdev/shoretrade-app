@@ -110,6 +110,7 @@ import resendVerification from './resendVerification';
 import resetPassword from './resetPassword';
 import searchAndCountProductType from './searchAndCountProductType';
 import searchProductType from './searchProductType';
+import selectedDeliveryMethod from './selectedDeliveryMethod';
 import sellerDashboardDate from './sellerDashboardDate';
 import sendDispute from './sendDispute';
 import sendMessage from './sendMessage';
@@ -137,6 +138,7 @@ const createAppReducer = (routeHistory: History) =>
     Object.fromEntries(
       Object.entries({
         /* PLOP_INJECT_INSTANCE */
+        selectedDeliveryMethod,
         paySubscription,
         upgradeSubscription,
         subscription,

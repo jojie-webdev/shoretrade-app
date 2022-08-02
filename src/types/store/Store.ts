@@ -294,6 +294,7 @@ import {
   SearchProductTypeMeta,
   SearchProductTypePayload,
 } from './SearchProductTypeState';
+import { SelectedDeliveryMethodState } from './SelectedDeliveryMethodState';
 import { SendDisputeMeta, SendDisputePayload } from './SendDisputeState';
 import { SendMessageMeta, SendMessagePayload } from './SendMessageState';
 import {
@@ -341,6 +342,7 @@ import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
+  selectedDeliveryMethod: SelectedDeliveryMethodState;
   paySubscription: AsyncState<PaySubscriptionMeta, PaySubscriptionPayload>;
   upgradeSubscription: AsyncState<
     UpgradeSubscriptionMeta,

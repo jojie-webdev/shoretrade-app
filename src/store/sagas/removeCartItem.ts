@@ -1,3 +1,4 @@
+import omit from 'ramda/es/omit';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { removeCartItem } from 'services/cart';
 import { AsyncAction } from 'types/Action';
@@ -8,6 +9,7 @@ import {
 import { Store } from 'types/store/Store';
 
 import { removeCartItemActions, getCartActions } from '../actions';
+import selectedDeliveryMethodActions from './../actions/selectedDeliveryMethod';
 
 function* removeCartItemRequest(
   action: AsyncAction<RemoveCartItemMeta, RemoveCartItemPayload>
@@ -34,8 +36,22 @@ function* removeCartItemSuccess(
 ) {
   const state: Store = yield select();
   const employeeId = state.getCart.request?.employeeId;
+  const orderListingKey = state.removeCartItem.request?.orderListingKey || '';
+  const { selectedDeliveryMethod } = state;
+
   if (employeeId) {
     yield put(getCartActions.request({ employeeId }));
+  }
+
+  if (employeeId && orderListingKey) {
+    const modifiedSelectedDeliveryMethod = omit(
+      [orderListingKey],
+      selectedDeliveryMethod
+    );
+
+    yield put(
+      selectedDeliveryMethodActions.update(modifiedSelectedDeliveryMethod)
+    );
   }
 }
 
