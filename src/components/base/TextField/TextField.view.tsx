@@ -4,6 +4,7 @@ import Alert from 'components/base/Alert';
 import { Eye, EyeOff } from 'components/base/SVG';
 import Touchable from 'components/base/Touchable';
 import Typography from 'components/base/Typography';
+import IconTooltip from 'components/module/IconTooltip';
 import { useTheme } from 'utils/Theme';
 
 import { TextFieldProps } from './TextField.props';
@@ -16,6 +17,7 @@ import {
   VisibilityContainer,
   Error,
   Prefix,
+  FieldTopContainer,
 } from './TextField.style';
 
 const TextField = (props: TextFieldProps): JSX.Element => {
@@ -48,6 +50,7 @@ const TextField = (props: TextFieldProps): JSX.Element => {
     inputType,
     maxLength,
     suffix,
+    tooltipText,
     rightComponentDirection,
   } = props;
 
@@ -158,9 +161,14 @@ const TextField = (props: TextFieldProps): JSX.Element => {
 
   return (
     <Container className={className} style={style}>
-      <Typography variant={variant || 'overline'} color={color || 'shade6'}>
-        {label}
-      </Typography>
+      <FieldTopContainer>
+        <Typography variant={variant || 'overline'} color={color || 'shade6'}>
+          {label}
+        </Typography>
+        {tooltipText && (
+          <IconTooltip margin={0} content={tooltipText} variant="info" />
+        )}
+      </FieldTopContainer>
       <FieldContainer
         className="text_field__field_container"
         error={(error || '').length > 0}

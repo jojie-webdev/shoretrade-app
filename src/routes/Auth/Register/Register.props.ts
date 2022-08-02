@@ -118,6 +118,7 @@ export interface Field {
   type?: string;
   prefix?: string;
   placeholder?: string;
+  tooltipText?: string;
 }
 export interface StepFormProps extends RegisterGeneratedProps {
   formikProps: {

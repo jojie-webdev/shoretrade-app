@@ -1,9 +1,9 @@
 import Typography from 'components/base/Typography';
 import styled from 'utils/styled';
 
-export const Container = styled.div`
+export const Container = styled.div<{ margin?: number }>`
   display: inline-block;
-  margin: 16px;
+  margin: ${({ margin }) => (margin !== undefined ? margin : 16)}px;
 
   .icon-label-wrapper {
     display: flex;

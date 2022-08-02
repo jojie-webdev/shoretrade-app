@@ -1109,7 +1109,16 @@ const StepForm = ({
           <Container>
             <Content>
               {fields.map(
-                ({ key, type, secured, label, alert, prefix, placeholder }) => (
+                ({
+                  key,
+                  type,
+                  secured,
+                  label,
+                  alert,
+                  prefix,
+                  placeholder,
+                  tooltipText,
+                }) => (
                   <Fragment key={key}>
                     <StyledFormikTextField
                       name={key}
@@ -1117,6 +1126,7 @@ const StepForm = ({
                       label={label}
                       secured={secured}
                       alert={alert}
+                      tooltipText={tooltipText}
                       placeholder={placeholder || ''}
                       onChangeText={() => {
                         if (key === 'email' && otherErrors[key]) {

@@ -27,4 +27,5 @@ export interface TextFieldProps
     | 'search';
   borderRadius?: string;
   maxLength?: number;
+  tooltipText?: string;
 }

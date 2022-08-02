@@ -9,6 +9,7 @@ export interface IconTooltipProps {
   placement?: 'bottom' | 'top' | 'right' | 'left';
   placementOffset?: string;
   iconFill?: string;
+  margin?: number;
   label?: string | React.ReactNode;
   labelColor?: keyof Theme['brand'] | keyof Theme['grey'];
 }

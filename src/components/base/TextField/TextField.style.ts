@@ -78,7 +78,7 @@ export const LeftComponentContainer = styled.div<{ disabled?: boolean }>`
   ${(props) => props.disabled && `background-color: ${props.theme.grey.shade3}`}
 `;
 
-export const RightComponentContainer = styled.div<{ direction?: string}>`
+export const RightComponentContainer = styled.div<{ direction?: string }>`
   display: flex;
   height: 100%;
   flex-direction: ${(props) => props.direction || 'column'};
@@ -104,4 +104,10 @@ export const Prefix = styled.span`
   padding-left: 12px;
   color: ${(props) => props.theme.grey.shade8};
   ${fontStyle};
+`;
+
+export const FieldTopContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: end;
 `;

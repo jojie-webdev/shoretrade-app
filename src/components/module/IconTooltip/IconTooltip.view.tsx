@@ -26,6 +26,7 @@ const IconTooltip = (props: IconTooltipProps): JSX.Element => {
     iconFill,
     label,
     labelColor,
+    margin,
   } = props;
   let Icon: React.FC<SVGProps> = InfoFilled;
   let IconFill = '';
@@ -50,7 +51,7 @@ const IconTooltip = (props: IconTooltipProps): JSX.Element => {
   }
 
   return (
-    <Container className="tooltip-container">
+    <Container margin={margin} className="tooltip-container">
       <div
         className="icon-label-wrapper"
         data-tip

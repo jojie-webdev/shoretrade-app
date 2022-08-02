@@ -143,6 +143,8 @@ export const USER_DETAIL_FIELDS: Field[] = [
     label: 'Password',
     key: 'password',
     secured: true,
+    tooltipText:
+      'Password must be a minimum of 8 characters including 1 Uppercase letter, 1 Number, and 1 special character.',
   },
   {
     label: 'Confirm Password',
