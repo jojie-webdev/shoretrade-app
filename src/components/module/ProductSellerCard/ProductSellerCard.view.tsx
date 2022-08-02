@@ -64,8 +64,9 @@ const ProductSellerCard = (props: ProductSellerProps): JSX.Element => {
         </AvatarContainer>
 
         <FlexShrinked
-          onClick={() => onClickSeller && onClickSeller()}
+          onClick={() => onClickSeller && !isPendingAccount && onClickSeller()}
           showCursor={!!onClickSeller}
+          style={{ pointerEvents: isPendingAccount ? 'none' : 'auto' }}
         >
           <Typography variant="overlineSmall" weight="900" color="shade6">
             {location}
