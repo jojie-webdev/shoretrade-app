@@ -92,9 +92,9 @@ const DetailsView = (props: DetailsProps) => {
             dark
             onPress={() => {
               window.open(
-                `${API.URL}/${
-                  API.VERSION
-                }/order/packing-list/${orderRefNumber}?token=${token}&status=${
+                `${API.PDF_URL || API.URL}/${API.VERSION}/${
+                  theme.isSFM ? 'sfm-blue/' : ''
+                }order/packing-list/${orderRefNumber}?token=${token}&status=${
                   statusOptions[status] || ''
                 }&state=${toAddressState}`,
                 '_blank'
@@ -116,7 +116,9 @@ const DetailsView = (props: DetailsProps) => {
             dark
             onPress={() => {
               window.open(
-                `${API.URL}/${API.VERSION}/order/invoice/${orderRefNumber}?token=${token}`,
+                `${API.PDF_URL || API.URL}/${API.VERSION}/${
+                  theme.isSFM ? 'sfm-blue/' : ''
+                }order/invoice/${orderRefNumber}?token=${token}`,
                 '_blank'
               );
             }}
@@ -136,9 +138,9 @@ const DetailsView = (props: DetailsProps) => {
             dark
             onPress={() => {
               window.open(
-                `${API.URL}/${
-                  API.VERSION
-                }/order/order-summary/${orderRefNumber}?token=${token}&status=${
+                `${API.PDF_URL || API.URL}/${API.VERSION}/${
+                  theme.isSFM ? 'sfm-blue/' : ''
+                }order/order-summary/${orderRefNumber}?token=${token}&status=${
                   statusOptions[status] || ''
                 }&state=${toAddressState}`,
                 '_blank'
@@ -160,9 +162,9 @@ const DetailsView = (props: DetailsProps) => {
             dark
             onPress={() => {
               window.open(
-                `${API.URL}/${
-                  API.VERSION
-                }/order/pdf-label/${orderRefNumber}?token=${token}&status=${
+                `${API.PDF_URL || API.URL}/${API.VERSION}/${
+                  theme.isSFM ? 'sfm-blue/' : ''
+                }order/pdf-label/${orderRefNumber}?token=${token}&status=${
                   statusOptions[status] || ''
                 }&state=${toAddressState}`,
                 '_blank'

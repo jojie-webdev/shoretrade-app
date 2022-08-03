@@ -74,8 +74,13 @@ const PaymentHistoryView = ({
                 <Downloadable
                   enabled
                   onClick={(e) => {
+                    //TODO: tb created: sfm blue pdf
                     window.open(
-                      `${API.URL}/v2/subscription/company/invoice/${transaction.refNumber}?token=${token}&invoice=true`,
+                      `${
+                        API.PDF_URL || API.URL
+                      }/v2/subscription/company/invoice/${
+                        transaction.refNumber
+                      }?token=${token}&invoice=true`,
                       '_blank'
                     );
                     e.stopPropagation();

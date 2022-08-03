@@ -119,7 +119,11 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                 <StyledTouchable
                   onPress={() => {
                     window.open(
-                      `${API.URL}/${API.VERSION}/order/invoice/${props.data.orderRefNumber}?token=${props.token}`,
+                      `${API.PDF_URL || API.URL}/${API.VERSION}/${
+                        theme.isSFM ? 'sfm-blue/' : ''
+                      }order/invoice/${props.data.orderRefNumber}?token=${
+                        props.token
+                      }`,
                       '_blank'
                     );
                   }}

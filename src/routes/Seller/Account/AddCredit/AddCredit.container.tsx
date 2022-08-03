@@ -78,9 +78,11 @@ const AddCredit = (): JSX.Element => {
 
   const downloadInvoice = (amount: string) => {
     if (Number(amount) > 0) {
+      //TODO: tb created: sfm-blue pdf url, same issue with buyer
       window.open(
-        `${API.URL}/${API.VERSION}/company/bank-transfer/Invoice?amount=${amount}&token=${token}`,
-
+        `${API.PDF_URL || API.URL}/${
+          API.VERSION
+        }/company/bank-transfer/Invoice?amount=${amount}&token=${token}`,
         '_blank'
       );
     }

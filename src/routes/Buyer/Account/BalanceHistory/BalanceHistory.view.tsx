@@ -192,7 +192,7 @@ const BalanceHistoryView = ({
                   onClick={(e) => {
                     if (isCreditCardTopUp) {
                       window.open(
-                        `${API.URL}/v2/${
+                        `${API.PDF_URL || API.URL}/v2/${
                           theme.isSFM ? 'sfm-blue/' : ''
                         }company/cc-invoice/${
                           transaction.refNumber
@@ -201,7 +201,12 @@ const BalanceHistoryView = ({
                       );
                       e.stopPropagation();
                     } else {
-                      const urlRed = `${API.URL}/v2/subscription/company/invoice/${transaction.refNumber}?token=${token}&invoice=true`;
+                      //TODO: this is ST pdf url but the content is for SFM pdf
+                      const urlRed = `${
+                        API.PDF_URL || API.URL
+                      }/v2/subscription/company/invoice/${
+                        transaction.refNumber
+                      }?token=${token}&invoice=true`;
                       window.open(urlRed);
                       e.stopPropagation();
                     }

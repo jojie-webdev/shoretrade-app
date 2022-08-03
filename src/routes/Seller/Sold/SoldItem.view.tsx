@@ -462,7 +462,15 @@ const SoldItem = (props: {
                                 }
                                 onClick={(e) => {
                                   window.open(
-                                    `${API.URL}/${API.VERSION}/order/packing-list/${v.orderRefNumber}?token=${props.token}&state=${toAddressState}&status=${props.status}`,
+                                    `${API.PDF_URL || API.URL}/${API.VERSION}/${
+                                      theme.isSFM ? 'sfm-blue/' : ''
+                                    }order/packing-list/${
+                                      v.orderRefNumber
+                                    }?token=${
+                                      props.token
+                                    }&state=${toAddressState}&status=${
+                                      props.status
+                                    }`,
                                     '_blank'
                                   );
                                   e.stopPropagation();
@@ -483,7 +491,11 @@ const SoldItem = (props: {
                                 }
                                 onClick={(e) => {
                                   window.open(
-                                    `${API.URL}/${API.VERSION}/order/invoice/${v.orderRefNumber}?token=${props.token}`,
+                                    `${API.PDF_URL || API.URL}/${API.VERSION}/${
+                                      theme.isSFM ? 'sfm-blue/' : ''
+                                    }order/invoice/${v.orderRefNumber}?token=${
+                                      props.token
+                                    }`,
                                     '_blank'
                                   );
                                   e.stopPropagation();
@@ -504,7 +516,15 @@ const SoldItem = (props: {
                                 }
                                 onClick={(e) => {
                                   window.open(
-                                    `${API.URL}/${API.VERSION}/order/order-summary/${v.orderRefNumber}?token=${props.token}&state=${toAddressState}&status=${props.status}`,
+                                    `${API.PDF_URL || API.URL}/${API.VERSION}/${
+                                      theme.isSFM ? 'sfm-blue/' : ''
+                                    }order/order-summary/${
+                                      v.orderRefNumber
+                                    }?token=${
+                                      props.token
+                                    }&state=${toAddressState}&status=${
+                                      props.status
+                                    }`,
                                     '_blank'
                                   );
                                   e.stopPropagation();
@@ -525,7 +545,15 @@ const SoldItem = (props: {
                                 }
                                 onClick={(e) => {
                                   window.open(
-                                    `${API.URL}/${API.VERSION}/order/pdf-label/${v.orderRefNumber}?token=${props.token}&state=${toAddressState}&status=${props.status}`,
+                                    `${API.PDF_URL || API.URL}/${API.VERSION}/${
+                                      theme.isSFM ? 'sfm-blue/' : ''
+                                    }order/pdf-label/${
+                                      v.orderRefNumber
+                                    }?token=${
+                                      props.token
+                                    }&state=${toAddressState}&status=${
+                                      props.status
+                                    }`,
                                     '_blank'
                                   );
                                   e.stopPropagation();
