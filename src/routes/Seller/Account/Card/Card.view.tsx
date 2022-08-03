@@ -9,7 +9,9 @@ import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
 import { SELLER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Formik } from 'formik';
+import qs from 'qs';
 import { useMediaQuery } from 'react-responsive';
+import { useHistory } from 'react-router';
 
 import { CardGeneratedProps, CardDetails } from './Card.props';
 import {
@@ -34,23 +36,39 @@ const CardView = (props: CardGeneratedProps) => {
     onRemoveCard,
     isRemoving,
     addCardResult,
+    companyId,
   } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const formRef = useRef();
+  const history = useHistory();
+
+  const breadcrumbSections = (() => {
+    let sections = [];
+
+    const creditCardLink = `${
+      SELLER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD
+    }${qs.stringify({ companyId }, { addQueryPrefix: true })}`;
+
+    sections = [
+      { label: 'Account', link: SELLER_ACCOUNT_ROUTES.LANDING },
+      {
+        label: 'Your Plan',
+        link: SELLER_ACCOUNT_ROUTES.BANK_DETAILS,
+      },
+      {
+        label: 'Credit Card',
+        onClick: () => history.push(creditCardLink),
+      },
+      { label: isExisting ? 'Update Card' : 'Add Card' },
+    ];
+
+    return sections;
+  })();
 
   return (
     <Container>
       <div className="breadcrumb-container">
-        <Breadcrumbs
-          sections={[
-            { label: 'Account', link: SELLER_ACCOUNT_ROUTES.LANDING },
-            {
-              label: 'Balance & Payments',
-              link: SELLER_ACCOUNT_ROUTES.BANK_DETAILS,
-            },
-            { label: isExisting ? 'Update Card' : 'Add Card' },
-          ]}
-        />
+        <Breadcrumbs sections={breadcrumbSections} />
       </div>
 
       {addCardResult?.error && (

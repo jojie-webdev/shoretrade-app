@@ -33,6 +33,7 @@ const Card = (): JSX.Element => {
   const companyId = company?.id || companyFromDeletion?.companyId || '';
 
   const card: Partial<CardItem> = pathOr({}, ['card'], location.state);
+  const from: Partial<string> = pathOr('', ['from'], location.state);
   const preventGoingBack: Partial<boolean> = pathOr(
     false,
     ['preventGoingBack'],
@@ -185,6 +186,7 @@ const Card = (): JSX.Element => {
     onRemoveCard,
     isRemoving,
     addCardResult,
+    from,
   };
 
   return <CardView {...generatedProps} />;

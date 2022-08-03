@@ -136,6 +136,7 @@ const BalanceView = (props: BalanceGeneratedProps) => {
                       history.push(BUYER_ACCOUNT_ROUTES.CREDIT_CARD, {
                         card,
                         preventGoingBack: true,
+                        from: BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
                       });
                     }}
                     size="sm"
@@ -163,6 +164,7 @@ const BalanceView = (props: BalanceGeneratedProps) => {
               onClick={() => {
                 history.push(`${BUYER_ACCOUNT_ROUTES.CREDIT_CARD}`, {
                   card: {},
+                  from: BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
                 });
               }}
             />

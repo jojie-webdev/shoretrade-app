@@ -34,23 +34,43 @@ const CardView = (props: CardGeneratedProps) => {
     onRemoveCard,
     isRemoving,
     addCardResult,
+    from,
   } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const formRef = useRef();
 
+  const breadcrumbsSection = (() => {
+    let sections = [
+      { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
+      {
+        label: 'Your Plan',
+        link: BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
+      },
+      {
+        label: 'Credit Card',
+        link: BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD,
+      },
+      { label: isExisting ? 'Update Card' : 'Add Card' },
+    ];
+
+    if (from === BUYER_ACCOUNT_ROUTES.BANK_DETAILS) {
+      sections = [
+        { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
+        {
+          label: 'Balance & Payments',
+          link: BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
+        },
+        { label: isExisting ? 'Update Card' : 'Add Card' },
+      ];
+    }
+
+    return sections;
+  })();
+
   return (
     <Container>
       <div className="breadcrumb-container">
-        <Breadcrumbs
-          sections={[
-            { label: 'Account', link: BUYER_ACCOUNT_ROUTES.LANDING },
-            {
-              label: 'Balance & Payments',
-              link: BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
-            },
-            { label: isExisting ? 'Update Card' : 'Add Card' },
-          ]}
-        />
+        <Breadcrumbs sections={breadcrumbsSection} />
       </div>
 
       {addCardResult?.error && (

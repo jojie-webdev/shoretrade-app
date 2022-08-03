@@ -24,6 +24,7 @@ export interface CardPrivateProps {
   isRemoving: boolean;
   isExisting: boolean;
   addCardResult?: AsyncState;
+  from?: string;
 }
 
 export interface CardGeneratedProps extends CardPrivateProps {}

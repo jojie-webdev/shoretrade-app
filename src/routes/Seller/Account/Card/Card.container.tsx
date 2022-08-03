@@ -183,6 +183,7 @@ const Card = (): JSX.Element => {
     onRemoveCard,
     isRemoving,
     addCardResult,
+    companyId,
   };
 
   return <CardView {...generatedProps} />;
