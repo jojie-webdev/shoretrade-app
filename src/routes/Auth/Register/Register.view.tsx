@@ -216,7 +216,8 @@ const StepForm = ({
     return countryCode.toLowerCase() === AUSTRALIA_COUNTRY_CODE.toLowerCase();
   });
 
-  const MAX_STEP = !isSeller ? 7 : hasReverseMarketPlace ? 9 : 8;
+  // const MAX_STEP = !isSeller ? 7 : hasReverseMarketPlace ? 9 : 8;
+  const MAX_STEP = 7;
 
   const [license, setLicense] = useState<{
     file: File | null;
@@ -400,8 +401,9 @@ const StepForm = ({
       return 'ADD LICENSE';
     } else if (
       (!isSeller && step === 4) ||
-      (isSeller && hasReverseMarketPlace && step === 8) ||
-      (isSeller && step === 7 && !hasReverseMarketPlace)
+      (isSeller && step === 6)
+      // (isSeller && hasReverseMarketPlace && step === 8) ||
+      // (isSeller && step === 7 && !hasReverseMarketPlace)
     ) {
       if (selectedCategoryTypes.length > 0) {
         return 'NEXT';
@@ -874,7 +876,7 @@ const StepForm = ({
             </>
           )}
 
-          {(!isSeller || MAX_STEP === 9) && (
+          {/* {(!isSeller || MAX_STEP === 9) && (
             <CustomInteraction
               label="Payment Method"
               value={`Credit Card ****-${registrationDetails.cardNumber.substring(
@@ -885,13 +887,14 @@ const StepForm = ({
                 setSummaryEdit();
               }}
             />
-          )}
+          )} */}
 
           <CustomInteraction
             label={isSeller ? 'Selling Products' : 'Buying Products'}
             arrayValue={selectedCategoryTypes}
             onClick={() => {
-              summaryHandleStep(isSeller ? 8 : 6);
+              // summaryHandleStep(isSeller ? 8 : 6);
+              summaryHandleStep(6);
               setSummaryEdit();
             }}
           />
@@ -1063,33 +1066,12 @@ const StepForm = ({
                 formikProps.onSubmit(values);
               }
             } else {
-              if (hasReverseMarketPlace) {
-                setIsGeneratingCardToken(true);
-                getCardToken();
-              } else {
-                formikProps.onSubmit(values);
-              }
-            }
-          } else if (step === 8) {
-            if (isSeller) {
-              if (hasReverseMarketPlace) {
-                formikProps.onSubmit(values);
-              } else {
-                const error = {
-                  ...validateAgreement({
-                    agreement: registrationDetails.tncAgreement,
-                  }),
-                };
-                if (error.agreement) {
-                  setOtherErrors(error);
-                } else {
-                  setOtherErrors({ agreement: '' });
-                  formikProps.onSubmit(values);
-                }
-              }
-            }
-          } else if (step === 9) {
-            if (isSeller) {
+              // if (hasReverseMarketPlace) {
+              //   setIsGeneratingCardToken(true);
+              //   getCardToken();
+              // } else {
+              //   formikProps.onSubmit(values);
+              // }
               const error = {
                 ...validateAgreement({
                   agreement: registrationDetails.tncAgreement,
@@ -1102,6 +1084,38 @@ const StepForm = ({
                 formikProps.onSubmit(values);
               }
             }
+          } else if (step === 8) {
+            // if (isSeller) {
+            //   if (hasReverseMarketPlace) {
+            //     formikProps.onSubmit(values);
+            //   } else {
+            //     const error = {
+            //       ...validateAgreement({
+            //         agreement: registrationDetails.tncAgreement,
+            //       }),
+            //     };
+            //     if (error.agreement) {
+            //       setOtherErrors(error);
+            //     } else {
+            //       setOtherErrors({ agreement: '' });
+            //       formikProps.onSubmit(values);
+            //     }
+            //   }
+            // }
+          } else if (step === 9) {
+            // if (isSeller) {
+            //   const error = {
+            //     ...validateAgreement({
+            //       agreement: registrationDetails.tncAgreement,
+            //     }),
+            //   };
+            //   if (error.agreement) {
+            //     setOtherErrors(error);
+            //   } else {
+            //     setOtherErrors({ agreement: '' });
+            //     formikProps.onSubmit(values);
+            //   }
+            // }
           }
         }}
       >
@@ -1896,20 +1910,21 @@ const StepForm = ({
               {step === 6 && (
                 <>
                   {isSeller ? (
-                    <YourPlan
-                      additionalSubscriptionHandler={
-                        additionalSubscriptionHandler
-                      }
-                      selectedPlan={
-                        registrationDetails.subscriptionPreference.plan
-                      }
-                      currentMarketSector={
-                        registrationDetails.categoryMarketSector
-                      }
-                      hasReverseMarketPlace={hasReverseMarketPlace}
-                      previousStep={() => previousStep && previousStep()}
-                      step={step}
-                    />
+                    // <YourPlan
+                    //   additionalSubscriptionHandler={
+                    //     additionalSubscriptionHandler
+                    //   }
+                    //   selectedPlan={
+                    //     registrationDetails.subscriptionPreference.plan
+                    //   }
+                    //   currentMarketSector={
+                    //     registrationDetails.categoryMarketSector
+                    //   }
+                    //   hasReverseMarketPlace={hasReverseMarketPlace}
+                    //   previousStep={() => previousStep && previousStep()}
+                    //   step={step}
+                    // />
+                    categoryPicker()
                   ) : (
                     <>
                       {!isSeller && (
@@ -1998,36 +2013,35 @@ const StepForm = ({
               )}
               {step === 7 && (
                 <>
-                  {isSeller ? (
-                    <>
-                      {hasReverseMarketPlace ? (
-                        <>
-                          <TotalPrice
-                            variant="title5"
-                            color={
-                              theme.appType === 'seller' ? 'noshade' : 'shade9'
-                            }
-                            weight="400"
-                          >
-                            &nbsp;$
-                            {(
-                              Number(sellerRevereseMarketPlaceAddon?.price) || 0
-                            ).toFixed(2)}{' '}
-                            / month
-                          </TotalPrice>
-                          <PaymentMethod
-                            otherErrors={otherErrors}
-                            setOtherErrors={setOtherErrors}
-                            details={registrationDetails}
-                          />
-                        </>
-                      ) : (
-                        categoryPicker()
-                      )}
-                    </>
-                  ) : (
-                    summaryUI()
-                  )}
+                  {isSeller
+                    ? // <>
+                      //   {hasReverseMarketPlace ? (
+                      //     <>
+                      //       <TotalPrice
+                      //         variant="title5"
+                      //         color={
+                      //           theme.appType === 'seller' ? 'noshade' : 'shade9'
+                      //         }
+                      //         weight="400"
+                      //       >
+                      //         &nbsp;$
+                      //         {(
+                      //           Number(sellerRevereseMarketPlaceAddon?.price) || 0
+                      //         ).toFixed(2)}{' '}
+                      //         / month
+                      //       </TotalPrice>
+                      //       <PaymentMethod
+                      //         otherErrors={otherErrors}
+                      //         setOtherErrors={setOtherErrors}
+                      //         details={registrationDetails}
+                      //       />
+                      //     </>
+                      //   ) : (
+                      //     categoryPicker()
+                      //   )}
+                      // </>
+                      summaryUI()
+                    : summaryUI()}
                 </>
               )}
               {step === 8 && (
@@ -2210,7 +2224,8 @@ const RegisterView = (props: RegisterGeneratedProps) => {
   const renderRef = useRef<HTMLDivElement | null>(null);
 
   const [step, setStep] = useState(0);
-  const MAX_STEP = !isSeller ? 7 : hasReverseMarketPlace ? 9 : 8;
+  // const MAX_STEP = !isSeller ? 7 : hasReverseMarketPlace ? 9 : 8;
+  const MAX_STEP = 7;
 
   const summaryHandleStep = (step: number) => {
     setStep(step);
@@ -2400,12 +2415,17 @@ const RegisterView = (props: RegisterGeneratedProps) => {
         <>
           {isSeller ? (
             <StepForm
+              // {...props}
+              // formikProps={
+              //   hasReverseMarketPlace
+              //     ? paymentMethodFormikProps
+              //     : userDetailsFormikProps
+              // }
+              // step={step}
+              // fields={[]}
+              // summaryHandleStep={summaryHandleStep}
               {...props}
-              formikProps={
-                hasReverseMarketPlace
-                  ? paymentMethodFormikProps
-                  : userDetailsFormikProps
-              }
+              formikProps={summaryFormikProps}
               step={step}
               fields={[]}
               summaryHandleStep={summaryHandleStep}
@@ -2472,8 +2492,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
           </SignUpHeader>
           <GetStartedTitle variant="title5">
             Signing up is <b>free</b> and <b>complete</b> with{' '}
-            {isSeller ? (theme.isSFM ? MAX_STEP - 2 : MAX_STEP) : MAX_STEP - 2}{' '}
-            simple steps
+            {isSeller ? MAX_STEP - 1 : MAX_STEP - 2} simple steps
           </GetStartedTitle>
 
           {steps
