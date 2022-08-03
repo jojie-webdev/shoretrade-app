@@ -674,7 +674,7 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
 
   return (
     <Container>
-      <ConfirmationModal
+      {/* <ConfirmationModal
         isOpen={props.showOfferSentModal}
         onClickClose={() => props.onConfirmSentOffer()}
         title="Offer submitted"
@@ -692,7 +692,7 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
             </Typography>
           </>
         }
-      />
+      /> */}
       <ConfirmationModal
         isOpen={props.showOfferAcceptSentModal}
         onClickClose={() => props.onConfirmSentOffer()}
