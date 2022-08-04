@@ -41,13 +41,13 @@ const ProductSellerCard = (props: ProductSellerProps): JSX.Element => {
       withBackground={props.withBackground}
       fullWidth={props.fullWidth}
     >
-      <Row
-        style={{
-          marginTop: '4px',
-          filter: `${isPendingAccount ? 'blur(4px)' : ''}`,
-        }}
-      >
-        <AvatarContainer>
+      <Row>
+        <AvatarContainer
+          style={{
+            marginTop: '4px',
+            filter: `${isPendingAccount ? 'blur(4px)' : ''}`,
+          }}
+        >
           {(defaultImage || '').length > 0 ? (
             <AvatarPreview
               src={defaultImage}
@@ -72,9 +72,16 @@ const ProductSellerCard = (props: ProductSellerProps): JSX.Element => {
             {location}
           </Typography>
 
-          <Typography variant="body" weight="bold" color="shade9">
-            {name}
-          </Typography>
+          <div
+            style={{
+              marginTop: '4px',
+              filter: `${isPendingAccount ? 'blur(4px)' : ''}`,
+            }}
+          >
+            <Typography variant="body" weight="bold" color="shade9">
+              {name}
+            </Typography>
+          </div>
 
           {/* <RatingRow>
             <Typography
