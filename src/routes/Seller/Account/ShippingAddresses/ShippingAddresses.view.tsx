@@ -50,6 +50,7 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
     onClickAddress,
     onClickAddAddress,
     notificationMessage,
+    errorMessage,
     companyRelationship,
   } = props;
 
@@ -71,10 +72,20 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
         />
       </div>
 
-      {notificationMessage ? (
+      {(notificationMessage || '').length > 0 ? (
         <Alert
           content={notificationMessage}
           variant="success"
+          alignText="center"
+          fullWidth
+          style={{ marginBottom: 16 }}
+        />
+      ) : null}
+
+      {(errorMessage || '').length > 0 ? (
+        <Alert
+          content={errorMessage}
+          variant="error"
           alignText="center"
           fullWidth
           style={{ marginBottom: 16 }}

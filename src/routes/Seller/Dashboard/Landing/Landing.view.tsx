@@ -495,8 +495,7 @@ const DashboardView = (props: DashboardLandingGeneratedProps) => {
 
         {!userPending
           ? topCategoriesData.topCategories.length > 0 &&
-            companyRelationship !== undefined &&
-            companyRelationship !== COMPANY_RELATIONSHIPS.FISHERMAN && (
+            companyRelationship !== undefined && (
               <TopCategories
                 topCategoriesData={topCategoriesData}
                 linkToCategories={toCategories}

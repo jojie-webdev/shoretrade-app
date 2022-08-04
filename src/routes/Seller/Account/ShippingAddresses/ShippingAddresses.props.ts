@@ -6,6 +6,7 @@ export interface ShippingAddressesGeneratedProps {
   onClickAddress: (addressId: string) => void;
   onClickAddAddress: () => void;
   notificationMessage: string;
+  errorMessage: string;
   companyRelationship?: string;
 }
 

@@ -32,6 +32,7 @@ const ShippingAddresses = (): JSX.Element => {
   );
   const addAddressResult = useSelector((state: Store) => state.addAddress);
   const [notificationMessage, setNotificationMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
   const companyRelationship =
     (user &&
@@ -49,12 +50,17 @@ const ShippingAddresses = (): JSX.Element => {
   };
 
   const onClickAddAddress = () => {
-    const route = `${SELLER_ACCOUNT_ROUTES.CREATE_ADDRESS}${qs.stringify(
-      { companyId },
-      { addQueryPrefix: true }
-    )}`;
+    if (companyRelationship === 'SECONDARY') {
+      // Block
+      setErrorMessage('Only the Primary Account Holder can add a new address');
+    } else {
+      const route = `${SELLER_ACCOUNT_ROUTES.CREATE_ADDRESS}${qs.stringify(
+        { companyId },
+        { addQueryPrefix: true }
+      )}`;
 
-    dispatch(push(route));
+      dispatch(push(route));
+    }
   };
 
   // Mark:- Effects
@@ -105,6 +111,7 @@ const ShippingAddresses = (): JSX.Element => {
     addresses,
     pending,
     notificationMessage,
+    errorMessage,
     onClickAddress,
     onClickAddAddress,
     companyRelationship,
