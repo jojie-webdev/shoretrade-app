@@ -84,5 +84,4 @@ export interface DashboardLandingGeneratedProps {
   salesData: SalesData;
   topCategoriesData: TopCategoriesData;
   activePlan?: GetActivePlanResponseData;
-  companyRelationship: string | undefined;
 }

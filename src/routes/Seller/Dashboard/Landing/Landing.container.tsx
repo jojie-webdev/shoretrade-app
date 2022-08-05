@@ -12,7 +12,6 @@ import {
   readMarketNotificationActions,
   sellerDashboardActions,
 } from 'store/actions';
-import { GetDefaultCompany } from 'store/selectors/buyer/company';
 import { GetActivePlanResponseData } from 'types/store/GetActivePlanState';
 import { Store } from 'types/store/Store';
 import getValidDateRangeByFinancialYear from 'utils/Date/getValidDateRangeByFinancialYear';
@@ -25,18 +24,12 @@ const fiscalYearDateRange = getValidDateRangeByFinancialYear();
 
 //TODO: refactor other dashboard data since dateRange is on redux
 const Dashboard = (): JSX.Element => {
-  const defaultCompany = GetDefaultCompany();
   const dispatch = useDispatch();
   const history = useHistory();
 
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
 
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
-  const companyRelationship =
-    user &&
-    user.companies.find((company) => company.id === defaultCompany?.id)
-      ?.relationship;
-
   const userPending =
     user !== undefined &&
     !(user.companies || []).some((a) =>
@@ -252,7 +245,6 @@ const Dashboard = (): JSX.Element => {
     salesData,
     topCategoriesData,
     activePlan,
-    companyRelationship,
   };
   return <DashboardView {...generatedProps} />;
 };
