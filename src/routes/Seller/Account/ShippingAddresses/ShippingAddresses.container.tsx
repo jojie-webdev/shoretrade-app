@@ -39,7 +39,6 @@ const ShippingAddresses = (): JSX.Element => {
       user.companies.find((company) => company.id === defaultCompany?.id)
         ?.relationship) ||
     '';
-
   // Mark:- Methods
   const onClickAddress = (addressId: string) => {
     const route = `${SELLER_ACCOUNT_ROUTES.EDIT_ADDRESS}${qs.stringify(

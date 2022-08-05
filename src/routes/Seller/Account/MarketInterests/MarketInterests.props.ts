@@ -33,12 +33,10 @@ export interface MarketInterestsGeneratedProps {
   >;
   setCategories: Dispatch<SetStateAction<Category[]>>;
   setInnerCategories: Dispatch<SetStateAction<Listing[]>>;
-
   selling: MarketInterestItem[];
   categories: Category[];
   innerCategories: Listing[];
   loadingInnerCategories: boolean;
-
   onPressCategory: (id: string) => void;
   onPressInnerCategory: (listing: {
     id: string;
@@ -46,6 +44,6 @@ export interface MarketInterestsGeneratedProps {
     categoryId: string;
   }) => void;
   onSave: () => void;
-
   isSaving: boolean;
+  companyRelationship?: string;
 }

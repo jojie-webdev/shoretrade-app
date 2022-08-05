@@ -126,7 +126,6 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
             : address.streetName;
 
           const addressString = `${address.suburb}, ${address.state}, ${address.postcode}`;
-
           return (
             <InteractionCol md={12} key={address.id}>
               <Interactions
@@ -149,17 +148,34 @@ const ShippingAddressesView = (props: ShippingAddressesGeneratedProps) => {
         })}
       </Row>
 
+      {companyRelationship === COMPANY_RELATIONSHIPS.FISHERMAN && (
+        <Alert
+          variant="infoAlert"
+          fullWidth
+          content="Only the Primary Account Holder can add new addresses."
+          style={{
+            marginBottom: 16,
+            marginTop: 16,
+          }}
+        />
+      )}
+
       {!isMobile && (
         <Row className="btn-add-address">
           <Col>
-            <Button text="Add a new address" onClick={onClickAddAddress} />
+            <Button
+              text="Add a new address"
+              onClick={onClickAddAddress}
+              disabled={companyRelationship === COMPANY_RELATIONSHIPS.FISHERMAN}
+            />
           </Col>
         </Row>
       )}
 
       <MobileFooter>
         <Button
-          text="Add a new address"
+          disabled={companyRelationship === COMPANY_RELATIONSHIPS.FISHERMAN}
+          text="Add a new addresssss"
           takeFullWidth
           onClick={onClickAddAddress}
         />

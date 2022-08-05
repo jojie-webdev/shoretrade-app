@@ -13,6 +13,7 @@ import {
 import { Category } from 'types/store/GetCategories';
 import { Store } from 'types/store/Store';
 import { useCompany } from 'utils/Hooks';
+import { GetDefaultCompany } from 'store/selectors/buyer';
 
 const MarketInterests = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -45,7 +46,13 @@ const MarketInterests = (): JSX.Element => {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
-
+  const defaultCompany = GetDefaultCompany();
+  const user = useSelector((state: Store) => state.getUser.data?.data.user);
+  const companyRelationship =
+    (user &&
+      user.companies.find((company) => company.id === defaultCompany?.id)
+        ?.relationship) ||
+    '';
   useEffect(() => {
     if (!isInner) {
       if (timer) {
@@ -186,6 +193,7 @@ const MarketInterests = (): JSX.Element => {
     onSave,
 
     isSaving: updateMarketInterests?.pending || false,
+    companyRelationship,
   };
   return <MarketInterestsView {...generatedProps} />;
 };

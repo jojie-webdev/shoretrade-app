@@ -23,6 +23,7 @@ import {
 } from 'routes/Seller/Account/MarketInterests/MarketInterests.style';
 import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
+import { COMPANY_RELATIONSHIPS } from 'consts/companyRelationships';
 
 const MarketInterestsView = ({
   isInner,
@@ -34,7 +35,7 @@ const MarketInterestsView = ({
   setSearchTerm,
   selectedCategories,
   setSelectedCategories,
-
+  companyRelationship,
   categories,
   innerCategories,
   loadingInnerCategories,
@@ -119,15 +120,18 @@ const MarketInterestsView = ({
 
       <Row nogutter style={{ margin: '16px 0' }}>
         <Col />
-        {!isEmpty(innerCategories) && !isMobile && (isInner || searchTerm) && (
-          <Col xs="content">
-            <Button
-              disabled={props.isSaving}
-              onClick={props.onSave}
-              text="Save"
-            />
-          </Col>
-        )}
+        {!isEmpty(innerCategories) &&
+          !isMobile &&
+          (isInner || searchTerm) &&
+          companyRelationship !== COMPANY_RELATIONSHIPS.FISHERMAN && (
+            <Col xs="content">
+              <Button
+                disabled={props.isSaving}
+                onClick={props.onSave}
+                text="Save"
+              />
+            </Col>
+          )}
       </Row>
 
       {!isInner &&
@@ -185,6 +189,7 @@ const MarketInterestsView = ({
           key={c.id}
           type="checkbox"
           pressed={selectedCategories.some((v) => v.id === c.id)}
+          disabled={companyRelationship === COMPANY_RELATIONSHIPS.FISHERMAN}
           onClick={() =>
             props.onPressInnerCategory({
               id: c.id,
@@ -202,14 +207,16 @@ const MarketInterestsView = ({
           }
         />
       ))}
-      <MobileFooter>
-        <Button
-          disabled={isEmpty(innerCategories) || props.isSaving}
-          onClick={props.onSave}
-          text="Save"
-          takeFullWidth
-        />
-      </MobileFooter>
+      {companyRelationship !== COMPANY_RELATIONSHIPS.FISHERMAN && (
+        <MobileFooter>
+          <Button
+            disabled={isEmpty(innerCategories) || props.isSaving}
+            onClick={props.onSave}
+            text="Save"
+            takeFullWidth
+          />
+        </MobileFooter>
+      )}
 
       {props.isSaving && <LoadingOverlay />}
     </Container>
