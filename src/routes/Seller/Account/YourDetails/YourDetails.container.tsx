@@ -39,6 +39,10 @@ const YourDetails = (): JSX.Element => {
     businessName: '',
     abn: '',
   });
+  const [
+    toggleBusinessNumberMessage,
+    setToggleBusinessNumberMessage,
+  ] = useState(false);
 
   // MARK:- Effects
   useEffect(() => {
@@ -72,6 +76,10 @@ const YourDetails = (): JSX.Element => {
     }
     // eslint-disable-next-line
   }, [getUser]);
+
+  const onBusinessNumberClick = () => {
+    setToggleBusinessNumberMessage(true);
+  };
 
   // MARK:- Methods
   const onClickSave = (updateUserForm: UpdateUserForm) => {
@@ -128,6 +136,8 @@ const YourDetails = (): JSX.Element => {
       getUser.data?.data.user.companies.find(
         (company) => company.id === companyId
       )?.relationship || '',
+    toggleBusinessNumberMessage,
+    onBusinessNumberClick,
   };
   return <YourDetailsView {...generatedProps} />;
 };

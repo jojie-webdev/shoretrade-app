@@ -33,6 +33,14 @@ const BankDetails = (): JSX.Element => {
     bsb: '',
     accountNumber: '',
   });
+  const [
+    toggleBusinessDetailsMessage,
+    setToggleBusinessDetailsMessage,
+  ] = useState(false);
+
+  const onBusinessDetailsClick = () => {
+    setToggleBusinessDetailsMessage(true);
+  };
 
   // MARK:- Methods
   const onClickSave = (details: TBankDetails) => {
@@ -104,6 +112,8 @@ const BankDetails = (): JSX.Element => {
     companyRelationship:
       user?.companies.find((company) => company.id === companyId)
         ?.relationship || '',
+    toggleBusinessDetailsMessage,
+    onBusinessDetailsClick,
   };
 
   return <BankDetailsView {...generatedProps} />;

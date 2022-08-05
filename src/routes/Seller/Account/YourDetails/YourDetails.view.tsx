@@ -14,6 +14,7 @@ import { Formik, Form } from 'formik';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 
+import { BUSINESS_NUMBER_MESSAGE } from './YourDetails.constants';
 import { YourDetailsGeneratedProps } from './YourDetails.props';
 import { Container, InputRow } from './YourDetails.style';
 import { validate } from './YourDetails.validation';
@@ -106,11 +107,19 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
               />
             </Col>
             <Col md={12} xl={4} className="input-col">
-              <FormikTextField
-                label="Business number (optional)"
-                name="abn"
-                disabled={isNotAdmin}
-              />
+              <div onClick={() => props.onBusinessNumberClick()}>
+                <FormikTextField
+                  className="txtfld__business_number"
+                  label="Business number (optional)"
+                  name="abn"
+                  disabled={true}
+                  otherError={
+                    props.toggleBusinessNumberMessage
+                      ? BUSINESS_NUMBER_MESSAGE
+                      : ''
+                  }
+                />
+              </div>
             </Col>
           </InputRow>
 

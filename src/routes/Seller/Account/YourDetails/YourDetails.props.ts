@@ -10,6 +10,8 @@ export interface YourDetailsGeneratedProps {
   callingCode: string;
   setCallingCode: Dispatch<SetStateAction<string>>;
   companyRelationship: string;
+  toggleBusinessNumberMessage: boolean;
+  onBusinessNumberClick: () => void;
 }
 
 export interface UserDetails {

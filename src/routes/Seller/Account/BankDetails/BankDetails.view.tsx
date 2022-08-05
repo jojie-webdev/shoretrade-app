@@ -13,6 +13,7 @@ import { Formik, Form } from 'formik';
 import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 
+import { BUSINESS_DETAILS_MESSAGE } from './BankDetails.constants';
 import { BankDetailsGeneratedProps } from './BankDetails.props';
 import { Container, TextFieldRow, StyledAlert } from './BankDetails.style';
 import { isValid } from './BankDetails.validation';
@@ -93,30 +94,48 @@ const BankDetailsView = (props: BankDetailsGeneratedProps) => {
         <Form>
           <TextFieldRow>
             <Col md={12} xl={4} className="textfield-col">
-              <FormikTextField
-                label="Account name"
-                name="accountName"
-                disabled={isNotAdmin}
-              />
+              <div onClick={() => props.onBusinessDetailsClick()}>
+                <FormikTextField
+                  className="txtfld__business_details"
+                  label="Account name"
+                  name="accountName"
+                  disabled={true}
+                />
+              </div>
             </Col>
             <Col md={12} xl={4} className="textfield-col">
-              <FormikTextField
-                label="BSB"
-                name="bsb"
-                maxLength={6}
-                disabled={isNotAdmin}
-              />
+              <div onClick={() => props.onBusinessDetailsClick()}>
+                <FormikTextField
+                  className="txtfld__business_details"
+                  label="BSB"
+                  name="bsb"
+                  maxLength={6}
+                  disabled={true}
+                />
+              </div>
             </Col>
             <Col xl={4} />
             <Col md={12} xl={4} className="textfield-col">
-              <FormikTextField
-                label="Account number"
-                name="accountNumber"
-                maxLength={10}
-                disabled={isNotAdmin}
-              />
+              <div onClick={() => props.onBusinessDetailsClick()}>
+                <FormikTextField
+                  className="txtfld__business_details"
+                  label="Account number"
+                  name="accountNumber"
+                  maxLength={10}
+                  disabled={true}
+                />
+              </div>
             </Col>
           </TextFieldRow>
+          {props.toggleBusinessDetailsMessage && (
+            <Typography
+              color="error"
+              variant="caption"
+              style={{ marginBottom: 10 }}
+            >
+              {BUSINESS_DETAILS_MESSAGE}
+            </Typography>
+          )}
           {!isMobile && (
             <Button
               text="Save"

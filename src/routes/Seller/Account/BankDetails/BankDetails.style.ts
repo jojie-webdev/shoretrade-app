@@ -11,6 +11,12 @@ export const Container = styled.div`
   .breadcrumb-container {
     margin-bottom: 40px;
   }
+
+  .txtfld__business_details
+    > .text_field__field_container
+    > .text_field__field_container__input {
+    cursor: pointer;
+  }
 `;
 
 export const TextFieldRow = styled(Row)`

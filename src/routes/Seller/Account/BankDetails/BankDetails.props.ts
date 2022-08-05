@@ -6,6 +6,8 @@ export interface BankDetailsGeneratedProps {
   onClickSave: (details: BankDetails) => void;
   bankDetails: BankDetails;
   companyRelationship: string;
+  toggleBusinessDetailsMessage: boolean;
+  onBusinessDetailsClick: () => void;
 }
 
 export type BankDetails = {
