@@ -2013,35 +2013,62 @@ const StepForm = ({
               )}
               {step === 7 && (
                 <>
-                  {isSeller
-                    ? // <>
-                      //   {hasReverseMarketPlace ? (
-                      //     <>
-                      //       <TotalPrice
-                      //         variant="title5"
-                      //         color={
-                      //           theme.appType === 'seller' ? 'noshade' : 'shade9'
-                      //         }
-                      //         weight="400"
-                      //       >
-                      //         &nbsp;$
-                      //         {(
-                      //           Number(sellerRevereseMarketPlaceAddon?.price) || 0
-                      //         ).toFixed(2)}{' '}
-                      //         / month
-                      //       </TotalPrice>
-                      //       <PaymentMethod
-                      //         otherErrors={otherErrors}
-                      //         setOtherErrors={setOtherErrors}
-                      //         details={registrationDetails}
-                      //       />
-                      //     </>
-                      //   ) : (
-                      //     categoryPicker()
-                      //   )}
-                      // </>
+                  {isSeller ? (
+                    // <>
+                    //   {hasReverseMarketPlace ? (
+                    //     <>
+                    //       <TotalPrice
+                    //         variant="title5"
+                    //         color={
+                    //           theme.appType === 'seller' ? 'noshade' : 'shade9'
+                    //         }
+                    //         weight="400"
+                    //       >
+                    //         &nbsp;$
+                    //         {(
+                    //           Number(sellerRevereseMarketPlaceAddon?.price) || 0
+                    //         ).toFixed(2)}{' '}
+                    //         / month
+                    //       </TotalPrice>
+                    //       <PaymentMethod
+                    //         otherErrors={otherErrors}
+                    //         setOtherErrors={setOtherErrors}
+                    //         details={registrationDetails}
+                    //       />
+                    //     </>
+                    //   ) : (
+                    //     categoryPicker()
+                    //   )}
+                    // </>
+                    isSuccess ? (
+                      <>
+                        <Typography
+                          variant="title5"
+                          color="noshade"
+                          weight="400"
+                          style={{ marginBottom: 32 }}
+                        >
+                          Thanks for signing up! Your account is pending
+                          approval
+                        </Typography>
+                        <Typography
+                          variant="body"
+                          color="noshade"
+                          weight="Medium"
+                          style={{ marginBottom: 32 }}
+                        >
+                          We need to check a few things before you can start
+                          selling. We’ll send you and email and notification
+                          when your account is approved. This normally takes
+                          less than 24 hours.
+                        </Typography>
+                      </>
+                    ) : (
                       summaryUI()
-                    : summaryUI()}
+                    )
+                  ) : (
+                    summaryUI()
+                  )}
                 </>
               )}
               {step === 8 && (
