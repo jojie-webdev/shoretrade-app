@@ -139,6 +139,7 @@ const AccountLandingView = ({
         { companyId: currentCompany?.id },
         { addQueryPrefix: true }
       )}`,
+      hideFrom: [COMPANY_RELATIONSHIPS.FISHERMAN],
     },
     {
       iconName: 'anchor',
