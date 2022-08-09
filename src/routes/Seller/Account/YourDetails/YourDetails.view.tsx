@@ -13,6 +13,7 @@ import { COMPANY_RELATIONSHIPS } from 'consts/companyRelationships';
 import { Formik, Form } from 'formik';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
+import { useTheme } from 'utils/Theme';
 
 import { BUSINESS_NUMBER_MESSAGE } from './YourDetails.constants';
 import { YourDetailsGeneratedProps } from './YourDetails.props';
@@ -34,6 +35,7 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const isNotAdmin = companyRelationship !== COMPANY_RELATIONSHIPS.ADMIN;
   const formRef = useRef();
+  const theme = useTheme();
 
   if (loadingUser && !userDetails.firstName) {
     return <Loading />;
@@ -107,16 +109,22 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
               />
             </Col>
             <Col md={12} xl={4} className="input-col">
-              <div onClick={() => props.onBusinessNumberClick()}>
+              <div
+                onClick={() =>
+                  theme.isSFM ? props.onBusinessNumberClick() : undefined
+                }
+              >
                 <FormikTextField
                   className="txtfld__business_number"
                   label="Business number (optional)"
                   name="abn"
-                  disabled={true}
+                  disabled={theme.isSFM ? true : isNotAdmin}
                   otherError={
-                    props.toggleBusinessNumberMessage
-                      ? BUSINESS_NUMBER_MESSAGE
-                      : ''
+                    theme.isSFM
+                      ? props.toggleBusinessNumberMessage
+                        ? BUSINESS_NUMBER_MESSAGE
+                        : ''
+                      : undefined
                   }
                 />
               </div>

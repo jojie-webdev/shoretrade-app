@@ -12,6 +12,7 @@ import { COMPANY_RELATIONSHIPS } from 'consts/companyRelationships';
 import { Formik, Form } from 'formik';
 import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
+import { useTheme } from 'utils/Theme';
 
 import { BUSINESS_DETAILS_MESSAGE } from './BankDetails.constants';
 import { BankDetailsGeneratedProps } from './BankDetails.props';
@@ -31,6 +32,7 @@ const BankDetailsView = (props: BankDetailsGeneratedProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const isNotAdmin = companyRelationship !== COMPANY_RELATIONSHIPS.ADMIN;
   const formRef = useRef();
+  const theme = useTheme();
 
   if (loading) {
     return <Loading />;
@@ -94,35 +96,47 @@ const BankDetailsView = (props: BankDetailsGeneratedProps) => {
         <Form>
           <TextFieldRow>
             <Col md={12} xl={4} className="textfield-col">
-              <div onClick={() => props.onBusinessDetailsClick()}>
+              <div
+                onClick={() =>
+                  theme.isSFM ? props.onBusinessDetailsClick() : undefined
+                }
+              >
                 <FormikTextField
                   className="txtfld__business_details"
                   label="Account name"
                   name="accountName"
-                  disabled={true}
+                  disabled={theme.isSFM ? true : isNotAdmin}
                 />
               </div>
             </Col>
             <Col md={12} xl={4} className="textfield-col">
-              <div onClick={() => props.onBusinessDetailsClick()}>
+              <div
+                onClick={() =>
+                  theme.isSFM ? props.onBusinessDetailsClick() : undefined
+                }
+              >
                 <FormikTextField
                   className="txtfld__business_details"
                   label="BSB"
                   name="bsb"
                   maxLength={6}
-                  disabled={true}
+                  disabled={theme.isSFM ? true : isNotAdmin}
                 />
               </div>
             </Col>
             <Col xl={4} />
             <Col md={12} xl={4} className="textfield-col">
-              <div onClick={() => props.onBusinessDetailsClick()}>
+              <div
+                onClick={() =>
+                  theme.isSFM ? props.onBusinessDetailsClick() : undefined
+                }
+              >
                 <FormikTextField
                   className="txtfld__business_details"
                   label="Account number"
                   name="accountNumber"
                   maxLength={10}
-                  disabled={true}
+                  disabled={theme.isSFM ? true : isNotAdmin}
                 />
               </div>
             </Col>
@@ -141,7 +155,7 @@ const BankDetailsView = (props: BankDetailsGeneratedProps) => {
               text="Save"
               type="submit"
               loading={submitting}
-              disabled={isNotAdmin}
+              disabled={theme.isSFM ? true : isNotAdmin}
             />
           )}
         </Form>
@@ -158,7 +172,7 @@ const BankDetailsView = (props: BankDetailsGeneratedProps) => {
           }}
           loading={submitting}
           takeFullWidth
-          disabled={isNotAdmin}
+          disabled={theme.isSFM ? true : isNotAdmin}
         />
       </MobileFooter>
     </Container>

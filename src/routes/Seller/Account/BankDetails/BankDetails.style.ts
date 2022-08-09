@@ -15,7 +15,7 @@ export const Container = styled.div`
   .txtfld__business_details
     > .text_field__field_container
     > .text_field__field_container__input {
-    cursor: pointer;
+    cursor: ${({ theme }) => (theme.isSFM ? 'pointer' : 'auto')};
   }
 `;
 
