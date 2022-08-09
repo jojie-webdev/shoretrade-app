@@ -10,6 +10,7 @@ import {
 import { GetSubscriptionPlansResponseData } from 'types/store/GetSubscriptionPlansState';
 import { toPrice } from 'utils/String';
 import { toMaskedCardNumber } from 'utils/String/maskedCardNumber';
+import { getCancellationPeriod } from 'utils/SubscriptionPlan/getCancellationPeriod';
 import { proRata } from 'utils/SubscriptionPlan/proRata';
 
 import { SubscriptionPlanTransformOutputProps } from './SubscriptionPlan.props';
@@ -64,15 +65,15 @@ export const companyPlanToProps = (
   );
 
   const daysUntilEnd = moment(
-    moment(companyPlan?.activePlans[0]?.subscription.ends_at)
-  ).diff(moment(), 'day');
+    moment(currentPlanDetails?.subscription.ends_at)
+  ).diff(moment().startOf('D'), 'day');
 
   const hoursUntilEnd = moment(
-    moment(companyPlan?.activePlans[0]?.subscription.ends_at)
+    moment(currentPlanDetails?.subscription.ends_at)
   ).diff(moment(), 'hours');
 
   const minutesUntilend = moment(
-    moment(companyPlan?.activePlans[0]?.subscription.ends_at)
+    moment(currentPlanDetails?.subscription.ends_at)
   ).diff(moment(), 'minutes');
 
   const defaultPaymentMethod = companyPlan?.nextBillingData?.cards.find(
@@ -80,25 +81,16 @@ export const companyPlanToProps = (
   );
   const cardBrand = _.snakeCase(defaultPaymentMethod?.brand || '');
 
-  const getCancellationPeriod = () => {
-    if (daysUntilEnd > 0) {
-      return `in ${daysUntilEnd} days`;
-    } else if (hoursUntilEnd > 0) {
-      return `in ${hoursUntilEnd} hours`;
-    }
-    return `in ${minutesUntilend} minutes`;
-  };
-
   return {
     annualPrice: annualPlan?.price || '0',
     monthlyPrice: monthlyPlan?.price || '0',
     nextBillingDate,
     cancellationPeriod: companyPlan?.flags?.hasCancelledPlan
-      ? getCancellationPeriod()
+      ? getCancellationPeriod(currentPlanDetails?.subscription.ends_at)
       : '',
     cancellationReversePeriodReverseMarket: companyPlan?.flags
       ?.hasCancelledReversedMarketplace
-      ? getCancellationPeriod()
+      ? getCancellationPeriod(currentPlanDetails?.subscription.ends_at)
       : '',
     cardBrand,
     subscriptionType: companyPlan?.activePlans
