@@ -44,7 +44,7 @@ import {
 } from './PaymentMethod.style';
 
 const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
-  const { cards, isLoading } = props;
+  const { cards, isLoading, onRefresh } = props;
 
   const theme = useTheme();
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
@@ -462,6 +462,10 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
           setShowConfirmationModal(false);
         }}
         action={() => {
+          if (onRefresh) {
+            onRefresh();
+          }
+
           setShowConfirmationModal(false);
 
           const processCheckoutWithExistingCard = () => {

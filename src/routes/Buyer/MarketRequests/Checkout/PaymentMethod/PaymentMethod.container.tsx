@@ -7,6 +7,7 @@ import {
   CardDetails,
   PaymentMethodPublicProps,
 } from 'routes/Buyer/Checkout/PaymentMethod/PaymentMethod.props';
+import { syncAASBalance } from 'services/aas';
 import {
   getPaymentMethodsActions,
   marketRequestAcceptOfferActions,
@@ -69,8 +70,17 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
     dispatch(marketRequestAcceptOfferActions.clear());
   };
 
+  const onRefresh = async () => {
+    try {
+      await syncAASBalance(companyId);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     if (companyId) {
+      onRefresh();
       dispatch(getPaymentMethodsActions.request({ companyId }));
     }
     // eslint-disable-next-line
@@ -89,6 +99,7 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
     showPaymentSuccessModal: acceptOffer.data?.status === 200,
     onConfirmSentOffer,
     onCloseConfirmedModal,
+    onRefresh,
     ...props,
   };
   return <PaymentMethodView {...generatedProps} />;

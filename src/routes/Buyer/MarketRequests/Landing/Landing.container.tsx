@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import SpinnerLogo from 'components/base/SpinnerLogo';
+import LoadingView from 'components/module/Loading';
 import {
   BUYER_ACCOUNT_ROUTES,
   BUYER_MARKET_REQUEST_ROUTES,
@@ -22,7 +23,6 @@ import { MarketRequestsLandingGeneratedProps, Result } from './Landing.props';
 import LandingSFMView from './Landing.sfm.view';
 import { getMarketRequestLandingData } from './Landing.transform';
 import MarketRequestsLandingView from './Landing.view';
-import LoadingView from 'components/module/Loading';
 
 const MarketRequestsLanding = (): JSX.Element => {
   // MARK:- States / Variables

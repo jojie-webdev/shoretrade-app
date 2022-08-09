@@ -9,6 +9,7 @@ import omit from 'ramda/es/omit';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { OrderItem } from 'routes/Buyer/Checkout/Checkout.props';
+import { syncAASBalance } from 'services/aas';
 import {
   getShippingQuoteActions,
   orderActions,
@@ -406,6 +407,14 @@ const Checkout = (): JSX.Element => {
     }) => getOrderListingKey(listing)
   );
 
+  const onRefresh = async () => {
+    try {
+      await syncAASBalance(currentCompany?.id || '');
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     if (cartItems.length > 0) {
       if (currentAddress) {
@@ -467,6 +476,7 @@ const Checkout = (): JSX.Element => {
 
   useEffect(() => {
     if (currentCompany) {
+      onRefresh();
       dispatch(
         getCartActions.request({
           employeeId: currentCompany?.employeeId || '',
@@ -491,6 +501,7 @@ const Checkout = (): JSX.Element => {
     removeItem,
     orderError,
     onDeliveryMethodSelection,
+    onRefresh,
   };
 
   return <CheckoutView {...generatedProps} />;

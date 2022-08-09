@@ -127,6 +127,9 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
 
   useEffect(() => {
     if (companyId) {
+      if (props.onRefresh) {
+        props.onRefresh();
+      }
       dispatch(getPaymentMethodsActions.request({ companyId }));
     }
     // eslint-disable-next-line
@@ -143,6 +146,7 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
     onAddCard,
     onExistingCard,
     addCardAndPayError,
+    onRefresh: props.onRefresh,
     ...props,
   };
   return <PaymentMethodView {...generatedProps} />;

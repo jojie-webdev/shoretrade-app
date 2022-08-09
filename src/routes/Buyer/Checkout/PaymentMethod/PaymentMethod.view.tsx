@@ -148,7 +148,7 @@ const CardFields = (props: { formik?: any }) => {
 const ConnectedCardFields = connect(CardFields);
 
 const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
-  const { cards, cardDetails, setCardDetails, isLoading } = props;
+  const { cards, cardDetails, setCardDetails, isLoading, onRefresh } = props;
   const theme = useTheme();
 
   const formRef = useRef<FormikProps<CardDetails>>(null);
@@ -523,6 +523,9 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
         }}
         action={() => {
           setShowConfirmationModal(false);
+          if (onRefresh) {
+            onRefresh();
+          }
 
           if (paymentMethod === 'account') {
             props.placeOrder();

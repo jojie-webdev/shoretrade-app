@@ -45,4 +45,5 @@ export interface CheckoutGeneratedProps {
   removeItem: (id: string, orderListingKey: string) => void;
   orderError: string;
   onDeliveryMethodSelection: (option: Option, orderListingKey: string) => void;
+  onRefresh: () => void;
 }

@@ -16,6 +16,7 @@ export interface PaymentMethodPublicProps {
   orderError: string;
   placeOrder: () => void;
   onBack: () => void;
+  onRefresh?: () => void;
 }
 
 export interface PaymentMethodGeneratedProps extends PaymentMethodPublicProps {

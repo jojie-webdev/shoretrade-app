@@ -26,6 +26,7 @@ import { createdAtToExpiry } from 'utils/MarketRequest';
 import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
 import { parseImageUrl } from 'utils/parseImageURL';
 import { toPrice } from 'utils/String';
+import { formatOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
 import theme from 'utils/Theme';
 
 import Check from '../../../../components/base/SVG/Check';
@@ -49,7 +50,6 @@ import {
   HeaderContainer,
   AlertsContainer,
 } from './OfferDetails.style';
-import { formatOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
 
 const OfferDetailsView = (props: OfferDetailsProps) => {
   const {

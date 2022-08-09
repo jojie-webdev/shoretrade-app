@@ -6,12 +6,14 @@ import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDetails/RequestDetails.props';
+import { syncAASBalance } from 'services/aas';
 import {
   deleteMarketRequestActions,
   getActiveOffersActions,
   getMarketRequestBuyerFiltersActions,
   deleteMarketRequestOfferActions,
 } from 'store/actions';
+import { GetDefaultCompany } from 'store/selectors/buyer';
 import { Offer } from 'types/store/GetActiveOffersState';
 import { Store } from 'types/store/Store';
 
@@ -45,6 +47,8 @@ const MarketRequestDetail = (): JSX.Element => {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<any[]>([]);
   const [showPaymentMethod, setShowPaymentMethod] = useState(false);
+
+  const defaultCompany = GetDefaultCompany();
 
   const goTolist = () => {
     history.push(BUYER_MARKET_REQUEST_ROUTES.MARKET_REQUEST_DETAILS(id));
@@ -162,7 +166,19 @@ const MarketRequestDetail = (): JSX.Element => {
     );
   };
 
+  const onRefresh = async () => {
+    try {
+      await syncAASBalance(defaultCompany?.id || '');
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
+    if (defaultCompany) {
+      onRefresh();
+    }
+
     dispatch(
       getActiveOffersActions.request({
         queryParams: {

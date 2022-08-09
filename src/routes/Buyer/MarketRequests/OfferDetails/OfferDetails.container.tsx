@@ -7,6 +7,7 @@ import moment from 'moment';
 import { sortBy } from 'ramda';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { syncAASBalance } from 'services/aas';
 import {
   deleteMarketRequestActions,
   getActiveOffersActions,
@@ -15,6 +16,7 @@ import {
 } from 'store/actions';
 import marketRequestNegotiateOfferActions from 'store/actions/marketRequestNegotiation';
 import marketRequestOfferConfirmActions from 'store/actions/marketRequestOfferConfirm';
+import { GetDefaultCompany } from 'store/selectors/buyer';
 import {
   Negotiations,
   Offer,
@@ -49,6 +51,8 @@ const OfferDetails = (): JSX.Element => {
   const [showPaymentMethod, setShowPaymentMethod] = useState(false);
   const [closeOnAccept, setCloseOnAccept] = useState(false);
   const [showOfferSentModal, setShowOfferSentModal] = useState(false);
+
+  const defaultCompany = GetDefaultCompany();
 
   const pendingConfirmOffer = useSelector(
     (state: Store) => state.marketRequestOfferConfirm.pending
@@ -138,6 +142,14 @@ const OfferDetails = (): JSX.Element => {
     setNegotiating(true);
   };
 
+  const onRefresh = async () => {
+    try {
+      await syncAASBalance(defaultCompany?.id || '');
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const handlePayNow = () => {
     handleAcceptOffer();
   };
@@ -182,6 +194,10 @@ const OfferDetails = (): JSX.Element => {
   };
 
   useEffect(() => {
+    if (defaultCompany) {
+      onRefresh();
+    }
+
     if (id && !activeOffers.data) {
       dispatch(
         getActiveOffersActions.request({
