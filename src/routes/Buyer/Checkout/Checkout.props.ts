@@ -46,4 +46,5 @@ export interface CheckoutGeneratedProps {
   orderError: string;
   onDeliveryMethodSelection: (option: Option, orderListingKey: string) => void;
   onRefresh: () => void;
+  transactionValueFeePercent: number;
 }

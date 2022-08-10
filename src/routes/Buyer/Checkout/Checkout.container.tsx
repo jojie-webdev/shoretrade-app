@@ -3,6 +3,7 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { Option } from 'components/module/ShippingCard/ShippingCard.props';
 import { BUYER_ROUTES, clickAndCollectAddress2 } from 'consts';
 import { ADDITIONAL_INFOS } from 'consts/listingAdditionalInfos';
+import { pathOr } from 'ramda';
 import equals from 'ramda/es/equals';
 import groupBy from 'ramda/es/groupBy';
 import omit from 'ramda/es/omit';
@@ -159,6 +160,19 @@ const Checkout = (): JSX.Element => {
     );
   };
 
+  const companyPlan = useSelector(
+    (store: Store) => store.getCompanyPlan.data?.data
+  );
+
+  const activeBaseSubscription = (
+    companyPlan?.activePlans || []
+  ).find(({ plan }) => ['BASE', 'PRO'].includes(plan.name.toUpperCase()));
+  const transactionValueFeePercent = +pathOr(
+    0,
+    ['plan', 'transaction_value_fee_percentage'],
+    activeBaseSubscription
+  );
+
   const cartItems: GetCartDataItem[] = Object.keys(cartDataItems).map(
     (key) => ({
       ...cartDataItems[key],
@@ -179,7 +193,9 @@ const Checkout = (): JSX.Element => {
         title: 'Order Summary',
         uri: cartItem.listing.image,
         name: cartItem.listing.type,
-        price: cartItem.subTotal.toFixed(2),
+        price: Number(
+          +cartItem.subTotal * (1 + transactionValueFeePercent / 100)
+        ).toFixed(2),
         tags: additionalInfos
           .map((info) => ({
             label: info,
@@ -502,6 +518,7 @@ const Checkout = (): JSX.Element => {
     orderError,
     onDeliveryMethodSelection,
     onRefresh,
+    transactionValueFeePercent,
   };
 
   return <CheckoutView {...generatedProps} />;

@@ -209,8 +209,21 @@ export const orderItemToOrderItemData = ({
 export const transformOrder = (
   orderItem: GetSellerOrdersResponseItem
 ): OrderItem => {
+  const applyTransactionFee = (price: number | string) => {
+    return Number(
+      (
+        +price *
+        (1 + (orderItem.transactionValueFeePercentage || 0) / 100)
+      ).toFixed(2)
+    );
+  };
+
+  const totalLineItem = orderItem.orderLineItem.reduce((sum, lineItem) => {
+    return sum + applyTransactionFee(lineItem.price);
+  }, 0);
+
   const totalPrice = toPrice(
-    Number(orderItem.totalPrice) +
+    Number(totalLineItem) +
       orderItem.shippingCost +
       Number(orderItem?.totalCrateFee || 0)
   );
@@ -241,7 +254,7 @@ export const transformOrder = (
           uri: lineItem.listing.images[0],
           name: lineItem.listing.typeName,
           scanHistory: lineItem.scanHistory,
-          price: toPrice(lineItem.price),
+          price: toPrice(applyTransactionFee(lineItem.price)),
           tags: additionalInfos
             .map((info) => ({
               label: info,
@@ -280,7 +293,9 @@ export const transformOrder = (
           vendor: orderItem.sellerCompanyName,
           cBorderRadius: '0',
           cBorderWidth: '0',
-          pricePerUnit: toPrice(lineItem.listing.pricePerKilo),
+          pricePerUnit: toPrice(
+            applyTransactionFee(lineItem.listing.pricePerKilo)
+          ),
         };
       }),
       shippingOption: getShipmentOptionString(

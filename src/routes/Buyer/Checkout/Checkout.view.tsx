@@ -165,6 +165,7 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
     loadingCart,
     selectedShippingId,
     orderError,
+    transactionValueFeePercent,
   } = props;
 
   const [showPaymentMethod, setShowPaymentMethod] = useState(false);
@@ -323,6 +324,12 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
             </>
           )}
         </>
+      )}
+      {transactionValueFeePercent > 0 && (
+        <Typography color="shade9" variant="caption">
+          {`An additional ${transactionValueFeePercent}% transaction fee is charged
+        on the product under the Essentials Subscription.`}
+        </Typography>
       )}
     </Container>
   );
