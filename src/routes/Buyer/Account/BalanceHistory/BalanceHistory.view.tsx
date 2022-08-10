@@ -9,10 +9,9 @@ import { BUYER_ACCOUNT_ROUTES, API } from 'consts';
 import { SUBSCRIPTION_NAMES } from 'consts/subcriptionPlan';
 import moment from 'moment';
 import { Col } from 'react-grid-system';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
-import { toTemporaryTokenV2 } from 'utils/toTemporaryTokenV2';
 
 import { BalanceHistoryGeneratedProps } from './BalanceHistory.props';
 import {
@@ -31,9 +30,11 @@ const BalanceHistoryView = ({
   redirectFrom,
   isPlanView,
   token,
+  onFileIconClick,
 }: BalanceHistoryGeneratedProps) => {
   const theme = useTheme();
   const history = useHistory();
+  const location = useLocation();
   const getTransactionLabel = (
     desc: string
   ): {
@@ -189,28 +190,17 @@ const BalanceHistoryView = ({
               <TransxLeft>
                 <Downloadable
                   enabled={isCreditCardTopUp || paymentHistoryItem}
-                  onClick={(e) => {
-                    if (isCreditCardTopUp) {
-                      window.open(
-                        `${API.PDF_URL || API.URL}/v2/${
-                          theme.isSFM ? 'sfm-blue/' : ''
-                        }company/cc-invoice/${
-                          transaction.refNumber
-                        }?token=${toTemporaryTokenV2(token)}`,
-                        '_blank'
-                      );
-                      e.stopPropagation();
-                    } else {
-                      //TODO: this is ST pdf url but the content is for SFM pdf
-                      const urlRed = `${
-                        API.PDF_URL || API.URL
-                      }/v2/subscription/company/invoice/${
-                        transaction.refNumber
-                      }?token=${token}&invoice=true`;
-                      window.open(urlRed);
-                      e.stopPropagation();
-                    }
-                  }}
+                  onClick={(e) =>
+                    //TODO: this is ST pdf url but the content is for SFM pdf
+                    location.pathname ===
+                      BUYER_ACCOUNT_ROUTES.PAYMENT_HISTORY || isCreditCardTopUp
+                      ? onFileIconClick(
+                          isCreditCardTopUp,
+                          transaction.refNumber,
+                          e
+                        )
+                      : undefined
+                  }
                 >
                   <FileAlt
                     fill={

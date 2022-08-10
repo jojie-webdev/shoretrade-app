@@ -10,4 +10,9 @@ export interface BalanceHistoryGeneratedProps {
     link: string;
   };
   token: string;
+  onFileIconClick: (
+    isCreditCardTopUp: boolean,
+    refNumber: number,
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => void;
 }
