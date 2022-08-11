@@ -91,7 +91,7 @@ const ChooseAccount = ({
               <Interactions
                 key={option.value}
                 onClick={() => {
-                  onSelectAccount(selected);
+                  onSelectAccount(option.value);
                 }}
               >
                 <AccountsView {...option} />
