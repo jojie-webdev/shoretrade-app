@@ -11,6 +11,7 @@ import {
   Cog as CogIcon,
   Barcode as BarcodeSVG,
   QuestionCircle as QuestionIcon,
+  Crates,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import DashboardLayout from 'components/layout/Dashboard';
@@ -56,6 +57,7 @@ import ProductDetails from './ProductDetails';
 import Search from './Search';
 import SellerDetails from './SellerDetails';
 import Upgrade from './Upgrade';
+import CratesManagement from './CratesManagement';
 
 const ROUTES: Routes = {
   HOME: {
@@ -101,6 +103,13 @@ const ROUTES: Routes = {
     title: 'Barcode Scanner',
     children: <BarcodeScanner />,
     icon: BarcodeSVG,
+    nested: true,
+  },
+  CREATES_MANAGEMENT: {
+    path: BUYER_ROUTES.CRATES_MANAGEMENT,
+    title: 'Crates Management',
+    children: <CratesManagement />,
+    icon: Crates,
     nested: true,
   },
   NOTIFICATIONS_SETTINGS: {

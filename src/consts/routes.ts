@@ -129,7 +129,7 @@ export const BUYER_ROUTES = {
   HELP_AND_SUPPORT_CATEGORY: (slug = ':slug') =>
     `${BUYER_ROOT}/help-and-support/category/${slug}`,
   HELP_AND_SUPPORT_CATEGORY_TOPIC_RESOLVER: (topicId = ':topicId') =>
-    `${BUYER_ROOT}/help-and-support/${topicId}`, 
+    `${BUYER_ROOT}/help-and-support/${topicId}`,
   HELP_AND_SUPPORT_TOPIC: (topicSlug = ':topicSlug') =>
     `${BUYER_ROOT}/help-and-support/topic/${topicSlug}`,
   HELP_AND_SUPPORT_CATEGORY_TOPIC: (slug = ':slug', topicSlug = ':topicSlug') =>
@@ -142,6 +142,7 @@ export const BUYER_ROUTES = {
   NOTIFICATIONS: `${BUYER_ROOT}/notifications`,
   NOTIFICATIONS_SETTINGS: `${BUYER_ROOT}/notifications-settings`,
   BARCODE_SCANNER: `${BUYER_ROOT}/barcode-scanner`,
+  CRATES_MANAGEMENT: `${BUYER_ROOT}/crates-management`,
   UPGRADE: `${BUYER_ROOT}/upgrade`,
 };
 
