@@ -2058,7 +2058,7 @@ const StepForm = ({
                           style={{ marginBottom: 32 }}
                         >
                           We need to check a few things before you can start
-                          selling. We’ll send you and email and notification
+                          selling. We’ll send you an email and notification
                           when your account is approved. This normally takes
                           less than 24 hours.
                         </Typography>
@@ -2096,7 +2096,7 @@ const StepForm = ({
                         style={{ marginBottom: 32 }}
                       >
                         We need to check a few things before you can start
-                        selling. We’ll send you and email and notification when
+                        selling. We’ll send you an email and notification when
                         your account is approved. This normally takes less than
                         24 hours.
                       </Typography>
@@ -2125,7 +2125,7 @@ const StepForm = ({
                         style={{ marginBottom: 32 }}
                       >
                         We need to check a few things before you can start
-                        selling. We’ll send you and email and notification when
+                        selling. We’ll send you an email and notification when
                         your account is approved. This normally takes less than
                         24 hours.
                       </Typography>
