@@ -29,6 +29,7 @@ const Select = ({
   customMenu,
   customOpenMenu,
   labelTooltip,
+  labelMarginTop,
   ...props
 }: SelectProps): JSX.Element => {
   const theme = useTheme();
@@ -52,10 +53,11 @@ const Select = ({
       ) : null}
       <div id={`${label}-dropdown`}>
         <StyledDropdown
+          labelMarginTop={labelMarginTop}
           border={border}
           borderRadius={borderRadius}
           background={background}
-          marginTop={marginTop}
+          marginTop={labelMarginTop}
           hiddenMenu={isMulti}
           {...props}
           unbordered={props.unbordered}

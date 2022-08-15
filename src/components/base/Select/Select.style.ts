@@ -21,7 +21,8 @@ const font = `
     font-weight: 500;`;
 
 export const StyledDropdown = styled(Dropdown)<DropdownProps>`
-  margin-top: ${({ marginTop }) => (marginTop ? marginTop : '8px')} !important;
+  margin-top: ${({ marginTop, labelMarginTop }) =>
+    labelMarginTop || marginTop ? marginTop : '8px'} !important;
   .${PREFIX}Container {
     height: ${({ height }) => (height ? height : '48px')};
     background: ${({ theme, disabled, dark, grey }) =>

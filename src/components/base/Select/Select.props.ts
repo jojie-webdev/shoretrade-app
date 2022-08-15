@@ -18,6 +18,7 @@ export interface SelectProps extends ReactDropdownProps {
   customMenu?: React.ReactNode;
   customOpenMenu?: () => void;
   labelTooltip?: React.ReactNode;
+  labelMarginTop?: string;
 }
 
 export interface DropdownProps {
@@ -32,6 +33,7 @@ export interface DropdownProps {
   height?: string;
   padding?: string;
   hiddenMenu?: boolean;
+  labelMarginTop?: string;
 }
 
 export interface OptionsType {

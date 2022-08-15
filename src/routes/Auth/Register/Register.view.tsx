@@ -1480,6 +1480,7 @@ const StepForm = ({
                           onChange={(v) => getStateId(v.value)}
                           borderRadius="4px"
                           marginTop="16px"
+                          labelMarginTop="0px"
                         />
                       </>
                       {/*}) : (
@@ -2057,10 +2058,12 @@ const StepForm = ({
                           weight="Medium"
                           style={{ marginBottom: 32 }}
                         >
-                          We need to check a few things before you can start
-                          selling. We’ll send you an email and notification
-                          when your account is approved. This normally takes
-                          less than 24 hours.
+                          {theme.isSFM
+                            ? `We’re currently reviewing your account details before you can begin selling on SFMblue. Our customer service team will be in touch shortly and will advise you once your account has been approved.`
+                            : `We need to check a few things before you can start
+                            selling. We’ll send you and email and notification
+                            when your account is approved. This normally takes
+                            less than 24 hours.`}
                         </Typography>
                       </>
                     ) : (
@@ -2095,10 +2098,12 @@ const StepForm = ({
                         weight="Medium"
                         style={{ marginBottom: 32 }}
                       >
-                        We need to check a few things before you can start
-                        selling. We’ll send you an email and notification when
-                        your account is approved. This normally takes less than
-                        24 hours.
+                        {theme.isSFM
+                          ? `We’re currently reviewing your account details before you can begin selling on SFMblue. Our customer service team will be in touch shortly and will advise you once your account has been approved.`
+                          : `We need to check a few things before you can start
+                            selling. We’ll send you and email and notification
+                            when your account is approved. This normally takes
+                            less than 24 hours.`}
                       </Typography>
                     </>
                   )}
@@ -2518,7 +2523,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
             </LogInLinkContainer>
           </SignUpHeader>
           <GetStartedTitle variant="title5">
-            Signing up is <b>free</b> and <b>complete</b> with{' '}
+            Signing up is <b>free</b> and <b>complete</b> in{' '}
             {isSeller ? MAX_STEP - 1 : MAX_STEP - 2} simple steps
           </GetStartedTitle>
 

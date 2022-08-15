@@ -175,16 +175,16 @@ const bankDetailsConstraints = {
   },
   bsb: {
     presence: {
-      message: '^Please enter your bsb',
+      message: '^Please enter your BSB',
       allowEmpty: false,
     },
     length: {
       maximum: 6,
-      tooLong: '^Invalid bsb',
+      tooLong: '^Invalid BSB',
     },
     format: {
       pattern: /^\d{6}$/,
-      message: '^Invalid bsb',
+      message: '^Invalid BSB',
     },
   },
   accountNumber: {
@@ -194,11 +194,11 @@ const bankDetailsConstraints = {
     },
     length: {
       maximum: 10,
-      tooLong: '^Invalid account number',
+      tooLong: '^Invalid Account Number',
     },
     format: {
       pattern: /^[0-9]+$/,
-      message: '^Invalid account number',
+      message: '^Invalid Account Number',
     },
   },
 };
