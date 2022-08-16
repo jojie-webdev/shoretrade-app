@@ -314,6 +314,41 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
               </Col>
             </Row>
           </Col>
+          {props.data?.totalTransactionFee && (
+            <Col xs={12} className="item">
+              <Row nogutter={true}>
+                <Col sm={9} style={{ alignSelf: 'center' }}>
+                  <div>
+                    <Typography color="shade9" style={{ margin: '12px 0' }}>
+                      {props.data?.transactionValueFeePercentage}% Transaction
+                      Fees
+                    </Typography>
+                  </div>
+                </Col>
+                <Col sm={3} style={{ alignSelf: 'center' }}>
+                  <SubtotalContainer>
+                    <div>
+                      <ItemDetailLabel
+                        className="end-text"
+                        color="shade6"
+                        variant="caption"
+                      >
+                        Subtotal
+                      </ItemDetailLabel>
+                      <ItemDetailValue
+                        className="end-text value"
+                        variant="label"
+                        weight="bold"
+                        color="shade9"
+                      >
+                        {toPrice(props.data.totalTransactionFee)}
+                      </ItemDetailValue>
+                    </div>
+                  </SubtotalContainer>
+                </Col>
+              </Row>
+            </Col>
+          )}
           {props.data.totalCrateFee > 0 && (
             <Col xs={12} className="item">
               <Row nogutter={true}>

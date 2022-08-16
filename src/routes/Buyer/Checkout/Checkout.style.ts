@@ -56,6 +56,40 @@ export const CheckoutCardRow = styled(Row)`
   }
 `;
 
+export const TransactionFee = styled.div`
+  display: flex;
+  padding: 16px 24px;
+  margin-bottom: 16px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(41, 43, 50, 0.04);
+
+  .transaction-fee-label {
+    display: flex;
+    margin: auto auto auto 0;
+
+    svg {
+      margin: auto 16px auto 0;
+    }
+  }
+
+  .transaction-fee-value {
+    margin: auto 50px auto auto;
+  }
+
+  @media ${BREAKPOINTS['sm']} {
+    padding: 16px;
+    border-radius: 0;
+    border: 2px solid ${({ theme }) => theme.grey.shade2};
+    border-top: none;
+    box-shadow: none;
+
+    .transaction-fee-value {
+      margin: auto 0 auto auto;
+    }
+  }
+`;
+
 export const CrateFee = styled.div`
   display: flex;
   padding: 16px 24px;

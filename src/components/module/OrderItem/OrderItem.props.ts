@@ -52,6 +52,8 @@ export interface OrderItem {
     shippingChargeNet: number;
     total: string;
     totalCrateFee: number;
+    totalTransactionFee: number | null;
+    transactionValueFeePercentage: number | null;
   };
 
   estDeliveryDate: Date;

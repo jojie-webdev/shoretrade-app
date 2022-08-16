@@ -43,6 +43,8 @@ export interface OrderItem {
     shippingChargeGst: number;
     shippingChargeNet: number;
     total: string;
+    totalTransactionFee: number | null;
+    transactionValueFeePercentage: number | null;
     totalCrateFee: number;
   };
 

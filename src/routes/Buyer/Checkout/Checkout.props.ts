@@ -25,6 +25,7 @@ export type OrderItem = {
     shipmentMode: string;
   }[];
   crateFee?: number;
+  transactionFee?: number;
   isFreeShipping: boolean;
   listing: {
     isPreAuctionSale?: boolean;

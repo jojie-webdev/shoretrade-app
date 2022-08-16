@@ -198,9 +198,14 @@ const Checkout = (): JSX.Element => {
         title: 'Order Summary',
         uri: cartItem.listing.image,
         name: cartItem.listing.type,
-        price: Number(
-          +cartItem.subTotal * (1 + transactionValueFeePercent / 100)
-        ).toFixed(2),
+        // price: Number(
+        //   +cartItem.subTotal * (1 + transactionValueFeePercent / 100)
+        // ).toFixed(2),
+        price: (Number(cartItem.listing.price) * cartItem.weight).toFixed(2),
+        transactionFee:
+          Number(cartItem.listing.price) *
+          (transactionValueFeePercent / 100) *
+          cartItem.weight,
         tags: additionalInfos
           .map((info) => ({
             label: info,
@@ -358,6 +363,7 @@ const Checkout = (): JSX.Element => {
       (totalItemsPrice, currentItem) =>
         totalItemsPrice +
         Number(currentItem.price) +
+        Number(transactionValueFeePercent ? currentItem.transactionFee : 0) +
         Number(currentItem.crateFee || 0),
       0
     ) +

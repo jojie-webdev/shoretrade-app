@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Accordion from 'components/base/Accordion/Accordion.view';
 import Button from 'components/base/Button';
-import { Cart, Crab, Crate } from 'components/base/SVG';
+import { Cart, Crab, Crate, Fee } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import CheckoutCard from 'components/module/CheckoutCard/CheckoutCard.view';
 import Loading from 'components/module/Loading';
@@ -30,6 +30,7 @@ import {
   SVGContainer,
   Footer,
   CrateFee,
+  TransactionFee,
 } from './Checkout.style';
 
 const Orders = (props: CheckoutGeneratedProps) => {
@@ -38,6 +39,7 @@ const Orders = (props: CheckoutGeneratedProps) => {
     selectedShippingId,
     removeItem,
     onDeliveryMethodSelection,
+    transactionValueFeePercent,
   } = props;
 
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -48,6 +50,7 @@ const Orders = (props: CheckoutGeneratedProps) => {
         isFreeShipping: boolean;
         listings: OrderItem[];
         totalCrateFee: number;
+        totalTransactionFee: number;
       }[],
       vendorId
     ) => [
@@ -58,6 +61,10 @@ const Orders = (props: CheckoutGeneratedProps) => {
         listings: groupedOrders[vendorId],
         totalCrateFee: groupedOrders[vendorId].reduce(
           (totalFee, listing) => totalFee + Number(listing.crateFee || 0),
+          0
+        ),
+        totalTransactionFee: groupedOrders[vendorId].reduce(
+          (totalFee, listing) => totalFee + Number(listing.transactionFee || 0),
           0
         ),
       },
@@ -89,6 +96,34 @@ const Orders = (props: CheckoutGeneratedProps) => {
               ))}
             </Col>
           </CheckoutCardRow>
+
+          {transactionValueFeePercent && (
+            <TransactionFee>
+              <div className="transaction-fee-label">
+                <Fee fill={theme.grey.shade6} />
+                <div>
+                  <Typography variant="label" weight="700">
+                    {transactionValueFeePercent}% Transaction Fees
+                  </Typography>
+                  <Typography color="shade6" variant="caption">
+                    {`An additional ${transactionValueFeePercent}% transaction fee is charged
+        on the product under the Essentials Subscription.`}
+                  </Typography>
+                </div>
+              </div>
+              <div className="transaction-fee-value">
+                {isMobile ? (
+                  <Typography variant="caption" weight="700">
+                    {toPrice(item.totalTransactionFee)}
+                  </Typography>
+                ) : (
+                  <Typography color="shade8">
+                    {toPrice(item.totalTransactionFee)}
+                  </Typography>
+                )}
+              </div>
+            </TransactionFee>
+          )}
 
           {!!item.totalCrateFee && item.totalCrateFee > 0 && (
             <CrateFee>
@@ -324,12 +359,6 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
             </>
           )}
         </>
-      )}
-      {transactionValueFeePercent > 0 && (
-        <Typography color="shade9" variant="caption">
-          {`An additional ${transactionValueFeePercent}% transaction fee is charged
-        on the product under the Essentials Subscription.`}
-        </Typography>
       )}
     </Container>
   );

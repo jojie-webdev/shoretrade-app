@@ -209,6 +209,18 @@ export const orderItemToOrderItemData = ({
 export const transformOrder = (
   orderItem: GetSellerOrdersResponseItem
 ): OrderItem => {
+  const getTransactionFee = (price: number | string) => {
+    return Number(
+      (+price * ((orderItem.transactionValueFeePercentage || 0) / 100)).toFixed(
+        2
+      )
+    );
+  };
+
+  const totalLineItem = orderItem.orderLineItem.reduce((sum, lineItem) => {
+    return sum + lineItem.price;
+  }, 0);
+
   const applyTransactionFee = (price: number | string) => {
     return Number(
       (
@@ -218,12 +230,22 @@ export const transformOrder = (
     );
   };
 
-  const totalLineItem = orderItem.orderLineItem.reduce((sum, lineItem) => {
-    return sum + applyTransactionFee(lineItem.price);
-  }, 0);
+  const totalLineItemWithTransactionFee = orderItem.orderLineItem.reduce(
+    (sum, lineItem) => {
+      return sum + applyTransactionFee(lineItem.price);
+    },
+    0
+  );
+
+  const totalLineItemTransactionFee = orderItem.orderLineItem.reduce(
+    (sum, lineItem) => {
+      return sum + getTransactionFee(lineItem.price);
+    },
+    0
+  );
 
   const totalPrice = toPrice(
-    Number(totalLineItem) +
+    Number(totalLineItemWithTransactionFee) +
       orderItem.shippingCost +
       Number(orderItem?.totalCrateFee || 0)
   );
@@ -254,7 +276,7 @@ export const transformOrder = (
           uri: lineItem.listing.images[0],
           name: lineItem.listing.typeName,
           scanHistory: lineItem.scanHistory,
-          price: toPrice(applyTransactionFee(lineItem.price)),
+          price: toPrice(lineItem.price),
           tags: additionalInfos
             .map((info) => ({
               label: info,
@@ -293,9 +315,7 @@ export const transformOrder = (
           vendor: orderItem.sellerCompanyName,
           cBorderRadius: '0',
           cBorderWidth: '0',
-          pricePerUnit: toPrice(
-            applyTransactionFee(lineItem.listing.pricePerKilo)
-          ),
+          pricePerUnit: toPrice(lineItem.listing.pricePerKilo),
         };
       }),
       shippingOption: getShipmentOptionString(
@@ -316,6 +336,10 @@ export const transformOrder = (
       shippingChargeNet: orderItem.shippingChargeNet,
       total: totalPrice,
       totalCrateFee: orderItem.totalCrateFee || 0,
+      transactionValueFeePercentage: orderItem.transactionValueFeePercentage,
+      totalTransactionFee: orderItem.transactionValueFeePercentage
+        ? totalLineItemTransactionFee
+        : null,
     },
 
     estCatchmentDate: moment(

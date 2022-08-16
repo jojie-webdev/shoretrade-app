@@ -34,6 +34,8 @@ export const cartItemsToPayload = (
   return payload;
 };
 
+// export const computePriceOrderItem = OrderItem
+
 export const simplifyOrderObj = (
   groupedOrders: Record<string, OrderItem[]>
 ) => {
@@ -54,6 +56,10 @@ export const simplifyOrderObj = (
         listings: groupedOrders[vendorId],
         totalCrateFee: groupedOrders[vendorId].reduce(
           (totalFee, listing) => totalFee + Number(listing.crateFee || 0),
+          0
+        ),
+        transactionFeeTotal: groupedOrders[vendorId].reduce(
+          (totalFee, listing) => totalFee + Number(listing.transactionFee || 0),
           0
         ),
       },
