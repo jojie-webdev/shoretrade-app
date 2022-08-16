@@ -100,6 +100,16 @@ const Register = (): JSX.Element => {
       }, 200);
 
       setTimer(timerId);
+    } else if (searchTerm.length <= 0) {
+      setSearchCategory(categories);
+      setSearchCategoryType([]);
+      const timerId = setTimeout(async () => {
+        const data = await getAvailableCategories();
+        const result = data.data.data.categories;
+        setSearchCategory(result);
+        setCategories(result);
+      }, 200);
+      setTimer(timerId);
     } else {
       setSearchCategory(categories);
       setSearchCategoryType([]);
