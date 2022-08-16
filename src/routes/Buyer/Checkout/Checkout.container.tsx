@@ -18,11 +18,13 @@ import {
   removeCartItemActions,
   selectedDeliveryMethodActions,
 } from 'store/actions';
+import getUserActions from 'store/actions/getUser';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import {
   GetCartDataItem,
   GetCartListingDataItem,
 } from 'types/store/GetCartState';
+import { UserCompany } from 'types/store/GetUserState';
 import { OrderCartItem, OrderShipping } from 'types/store/OrderState';
 import { Store } from 'types/store/Store';
 import { getOrderListingKey } from 'utils/getOrderListingKey';
@@ -52,6 +54,9 @@ const Checkout = (): JSX.Element => {
   );
 
   const currentCompany = GetDefaultCompany();
+  const [selectedCompany, setSelectedCompany] = useState<
+    UserCompany | undefined
+  >();
 
   const [selectedShippingId, setSelectedShippingId] = useReducer(
     createUpdateReducer<Record<string, string>>(),
@@ -152,7 +157,7 @@ const Checkout = (): JSX.Element => {
 
     dispatch(
       removeCartItemActions.request({
-        employeeId: currentCompany?.employeeId || '',
+        employeeId: selectedCompany?.employeeId || '',
         cartId: cartData?.id || '',
         transactionRef: id,
         orderListingKey,
@@ -382,7 +387,7 @@ const Checkout = (): JSX.Element => {
       dispatch(
         orderActions.request({
           cartId: cartData?.id || '',
-          employeeId: currentCompany?.employeeId || '',
+          employeeId: selectedCompany?.employeeId || '',
           cart: payload,
           currentAddress,
           totalPrice: totalValue,
@@ -425,7 +430,10 @@ const Checkout = (): JSX.Element => {
 
   const onRefresh = async () => {
     try {
-      await syncAASBalance(currentCompany?.id || '');
+      const { data } = await syncAASBalance(selectedCompany?.id || '');
+      if (data) {
+        dispatch(getUserActions.request());
+      }
     } catch (e) {
       console.log(e);
     }
@@ -491,19 +499,24 @@ const Checkout = (): JSX.Element => {
   }, [cartItems.length]);
 
   useEffect(() => {
-    if (currentCompany) {
+    if (selectedCompany) {
       onRefresh();
       dispatch(
         getCartActions.request({
-          employeeId: currentCompany?.employeeId || '',
+          employeeId: selectedCompany?.employeeId || '',
         })
       );
     }
-    // eslint-disable-next-line
-  }, [currentCompany]);
+  }, [selectedCompany]);
+
+  useEffect(() => {
+    if (currentCompany && currentCompany.id !== selectedCompany?.id) {
+      setSelectedCompany(currentCompany);
+    }
+  }, [currentCompany, selectedCompany]);
 
   const generatedProps = {
-    balance: currentCompany?.credit || '',
+    balance: selectedCompany?.credit || '',
     groupedOrders,
     totalValue,
     keepShopping,

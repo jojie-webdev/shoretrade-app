@@ -11,7 +11,12 @@ export const syncAASBalance = (companyId: string) => {
   return axios({
     method: 'get',
     url: `${AAS_URL}/sync-balance?companyId=${companyId}`,
-  }).catch((e) => {
-    // Ignore error
-  });
+  })
+    .then(({ data }) => {
+      return data;
+    })
+    .catch((e) => {
+      // Ignore error
+      return e && e.response ? e.response.data : undefined;
+    });
 };

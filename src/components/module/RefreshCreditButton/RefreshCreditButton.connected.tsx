@@ -25,9 +25,11 @@ const XRefreshCreditButton = (props: RefreshCreditButtonProps): JSX.Element => {
     if (currentCompany && !isLoading) {
       try {
         setIsSyncing(true);
-        await syncAASBalance(currentCompany.id);
+        const { data } = await syncAASBalance(currentCompany.id);
+        if (data) {
+          dispatch(getUserActions.request());
+        }
         setIsSyncing(false);
-        dispatch(getUserActions.request());
       } catch (e) {
         console.log(e);
         setIsSyncing(false);
