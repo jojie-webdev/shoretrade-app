@@ -51,7 +51,13 @@ function* getUserSuccess(action: AsyncAction<GetUserMeta, GetUserPayload>) {
         yield put(getAddressesActions.request({ companyId }));
 
         // if buyer is at this point, assume he restored session/new login
-        yield call(syncAASBalance, companyId);
+        const { data: syncAASBalanceData } = yield call(
+          syncAASBalance,
+          companyId
+        );
+        if (syncAASBalanceData) {
+          yield put(getUserActions.request());
+        }
       }
 
       // avoids calling request twice

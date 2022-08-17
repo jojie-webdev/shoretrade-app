@@ -157,7 +157,7 @@ const Checkout = (): JSX.Element => {
 
     dispatch(
       removeCartItemActions.request({
-        employeeId: selectedCompany?.employeeId || '',
+        employeeId: currentCompany?.employeeId || '',
         cartId: cartData?.id || '',
         transactionRef: id,
         orderListingKey,
@@ -393,7 +393,7 @@ const Checkout = (): JSX.Element => {
       dispatch(
         orderActions.request({
           cartId: cartData?.id || '',
-          employeeId: selectedCompany?.employeeId || '',
+          employeeId: currentCompany?.employeeId || '',
           cart: payload,
           currentAddress,
           totalPrice: totalValue,
@@ -518,11 +518,17 @@ const Checkout = (): JSX.Element => {
   useEffect(() => {
     if (currentCompany && currentCompany.id !== selectedCompany?.id) {
       setSelectedCompany(currentCompany);
+      onRefresh();
+      dispatch(
+        getCartActions.request({
+          employeeId: selectedCompany?.employeeId || '',
+        })
+      );
     }
   }, [currentCompany, selectedCompany]);
 
   const generatedProps = {
-    balance: selectedCompany?.credit || '',
+    balance: currentCompany?.credit || '',
     groupedOrders,
     totalValue,
     keepShopping,
