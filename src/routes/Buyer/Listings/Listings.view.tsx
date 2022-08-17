@@ -221,7 +221,9 @@ export default function ListingView(props: ListingViewProps) {
         )}
         <ActionContainer>
           <Button
-            disabled={Boolean(isPending) || isDownloadingCsv}
+            disabled={
+              Boolean(isPending) || isDownloadingCsv || isPendingAccount
+            }
             onClick={() => setShowModal(true)}
             text="Download"
             takeFullWidth={isMobile}
