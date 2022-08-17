@@ -86,9 +86,18 @@ const BankDetailsView = (props: BankDetailsGeneratedProps) => {
         />
       )}
 
-      <Typography color="shade1">
+      <Typography color="shade1" style={{ marginBottom: 10 }}>
         Your earnings will be transferred here. Australian banks only.
       </Typography>
+
+      {theme.isSFM && props.toggleBusinessDetailsMessage && (
+        <StyledAlert
+          content={BUSINESS_DETAILS_MESSAGE}
+          variant="error"
+          alignText="center"
+          fullWidth
+        />
+      )}
 
       {/*
             // @ts-ignore*/}
@@ -141,15 +150,6 @@ const BankDetailsView = (props: BankDetailsGeneratedProps) => {
               </div>
             </Col>
           </TextFieldRow>
-          {props.toggleBusinessDetailsMessage && (
-            <Typography
-              color="error"
-              variant="caption"
-              style={{ marginBottom: 10 }}
-            >
-              {BUSINESS_DETAILS_MESSAGE}
-            </Typography>
-          )}
           {!isMobile && (
             <Button
               text="Save"
