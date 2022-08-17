@@ -97,7 +97,7 @@ const Orders = (props: CheckoutGeneratedProps) => {
             </Col>
           </CheckoutCardRow>
 
-          {transactionValueFeePercent && (
+          {transactionValueFeePercent ? (
             <TransactionFee>
               <div className="transaction-fee-label">
                 <Fee fill={theme.grey.shade6} />
@@ -123,6 +123,8 @@ const Orders = (props: CheckoutGeneratedProps) => {
                 )}
               </div>
             </TransactionFee>
+          ) : (
+            <></>
           )}
 
           {!!item.totalCrateFee && item.totalCrateFee > 0 && (
