@@ -589,9 +589,8 @@ export const SubscriptionPlanView = ({
         </div>
         <div style={{ display: 'flex', marginTop: 12 }}>
           <Typography variant="body" color="shade6">
-            This is a pro rata cost to have Reverse Marketplace access for the
-            remainder of your current payment period. Your total future monthly
-            cost will be
+            Add on the Reverse Marketplace and make offers directly to buyers in
+            demand! The ongoing monthly cost will be
             <Typography variant="body" component="span" color="noshade">
               &nbsp;
               {reverseMarketPrice ? toPrice(reverseMarketPrice) : 0}
@@ -604,6 +603,8 @@ export const SubscriptionPlanView = ({
             >
               /Month
             </Typography>
+            &nbsp; and will be charged immediately to your nominated card.
+            Confirm your subscription to unlock your access now.
           </Typography>
         </div>
       </ConfirmationModal>
