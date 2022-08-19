@@ -941,7 +941,6 @@ const StepForm = ({
       </>
     );
   };
-
   return (
     <>
       <Formik
@@ -1380,8 +1379,16 @@ const StepForm = ({
                               });
                             }
                           }}
-                          file={license.file}
-                          fileName={license.fileName}
+                          file={
+                            registrationDetails.licenses.find(
+                              (license) => license.stateId
+                            )?.file || license.file
+                          }
+                          fileName={
+                            registrationDetails.licenses.find(
+                              (license) => license.stateId
+                            )?.fileName || license.fileName
+                          }
                           onRemoveFile={() =>
                             setLicense({
                               file: null,
