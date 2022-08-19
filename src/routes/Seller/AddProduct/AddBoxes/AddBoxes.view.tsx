@@ -41,6 +41,7 @@ export const BoxDetails = ({
   count,
   onRemove,
   unit,
+  sold,
 }: BoxType & {
   unit: string;
   onRemove?: () => void;
@@ -63,7 +64,7 @@ export const BoxDetails = ({
             QTY
           </Typography>
           <Typography color="noshade" variant="copy">
-            {quantity}
+            {quantity - (sold || 0)}
           </Typography>
         </div>
         <div className="text-container">
@@ -257,7 +258,6 @@ const AddBoxes = ({
     ? (editableListing?.boxes || []).map((b) => ({
         ...b,
         fixed: true,
-        quantity: b.quantity - (b.sold || 0),
       }))
     : editableListing?.boxes || []
   ).filter(
@@ -286,9 +286,9 @@ const AddBoxes = ({
 
   const summary = boxes.reduce(
     (computed, current, index) => {
-      const currentWeight =
-        current.weight * current.quantity + computed.weights;
-      const currentQuantities = computed.quantities + current.quantity;
+      const currentQuantity = current.quantity - (current.sold || 0);
+      const currentWeight = current.weight * currentQuantity + computed.weights;
+      const currentQuantities = computed.quantities + currentQuantity;
       const currentCounts = computed.counts + (current.count || 0);
       return {
         weights: currentWeight,
@@ -363,17 +363,19 @@ const AddBoxes = ({
       </Row>
 
       <Row>
-        {boxes.map((box, index) => (
-          <Col xs={12} key={box.id}>
-            <BoxDetails
-              {...box}
-              unit={measurementUnit}
-              onRemove={() => {
-                setBoxes(remove(index, 1, boxes));
-              }}
-            />
-          </Col>
-        ))}
+        {boxes
+          .filter((box) => box.quantity > (box.sold || 0))
+          .map((box, index) => (
+            <Col xs={12} key={box.id}>
+              <BoxDetails
+                {...box}
+                unit={measurementUnit}
+                onRemove={() => {
+                  setBoxes(remove(index, 1, boxes));
+                }}
+              />
+            </Col>
+          ))}
       </Row>
 
       <BoxSummary summary={summary} unit={measurementUnit} />

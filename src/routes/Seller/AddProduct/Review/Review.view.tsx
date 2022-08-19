@@ -103,7 +103,7 @@ const Review = ({
 
   const boxes = editableListing?.boxes
     ? (editableListing?.boxes || [])
-        .reduce((old, box) => old + box.quantity, 0)
+        .reduce((old, box) => old + box.quantity - (box.sold || 0), 0)
         .toString()
     : '';
 

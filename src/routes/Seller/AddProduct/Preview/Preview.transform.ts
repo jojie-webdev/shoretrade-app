@@ -29,6 +29,14 @@ export const editableListingToListingProps = (
     },
     0
   );
+
+  const soldWeight = (editableListing?.boxes || []).reduce(
+    (accumulator, current) => {
+      const subTotalWeight = current.weight * (current.sold || 0);
+      return accumulator + subTotalWeight;
+    },
+    0
+  );
   const stateOptions =
     (isCustomType ? categoryData?.states : listingFormData?.stateOptions) || [];
   const specifications = (editableListing?.states || []).map(
@@ -88,8 +96,8 @@ export const editableListingToListingProps = (
             ],
     },
     sales: {
-      sales: toPrice(0),
-      soldWeight: (0).toFixed(2),
+      sales: toPrice(soldWeight * (editableListing?.pricePerKilo || 0)),
+      soldWeight: soldWeight.toFixed(2),
       totalWeight: totalWeight.toFixed(2),
       unit: measurementUnit,
     },
