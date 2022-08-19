@@ -24,6 +24,7 @@ import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
+import { SubMinorDetail } from 'routes/Buyer/MarketRequests/Landing/Landing.style';
 import { Tag } from 'routes/Seller/Selling/Selling.style';
 import {
   CompanyPlanAlias,
@@ -1092,8 +1093,8 @@ export const SubscriptionPlanView = ({
           </Typography>
           <Typography variant="body" component="span">
             {withinFreeTrial && remainingFreeTrialDays > 0
-              ? moment.utc(seventhFreeDay).format('MMMM Do, YYYY')
-              : moment.utc().format('MMMM Do, YYYY')}
+              ? moment(seventhFreeDay).format('MMMM Do, YYYY')
+              : moment().format('MMMM Do, YYYY')}
           </Typography>
         </Typography>
 
@@ -1160,8 +1161,11 @@ export const SubscriptionPlanView = ({
             this payment period and will be downgraded as of the{' '}
             <Typography variant="body" component="span">
               {withinFreeTrial && remainingFreeTrialDays > 0
-                ? moment.utc(seventhFreeDay).format('MMMM Do, YYYY')
-                : moment.utc().format('MMMM Do, YYYY')}
+                ? moment(seventhFreeDay).format('MMMM Do, YYYY')
+                : moment(currentPlanDetails?.subscription.renews_at).startOf('D').
+                format(
+                    'MMMM Do, YYYY'
+                  )}
             </Typography>
             .
           </Typography>
