@@ -41,6 +41,7 @@ const PlanPaymentMethodView = ({
   isPaymentLoading,
   onRemoveCard,
   companyId,
+  from,
 }: PlanPaymentMethodGeneratedProps) => {
   const theme = useTheme();
   const history = useHistory();
@@ -66,7 +67,7 @@ const PlanPaymentMethodView = ({
               link: SELLER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
             },
             {
-              label: 'Credit Card',
+              label: from || 'Credit Card',
             },
           ]}
         />
@@ -325,6 +326,7 @@ const PlanPaymentMethodView = ({
                               history.push(SELLER_ACCOUNT_ROUTES.CREDIT_CARD, {
                                 card,
                                 preventGoingBack: true,
+                                from,
                               });
                             }}
                             size="sm"
@@ -358,7 +360,7 @@ const PlanPaymentMethodView = ({
                     onClick={() => {
                       history.push(
                         `${SELLER_ACCOUNT_ROUTES.CREDIT_CARD}${qs.stringify(
-                          { companyId },
+                          { companyId, from },
                           { addQueryPrefix: true }
                         )}`,
                         {

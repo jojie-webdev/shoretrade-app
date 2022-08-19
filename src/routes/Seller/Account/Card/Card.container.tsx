@@ -26,6 +26,12 @@ const Card = (): JSX.Element => {
 
   const company = user?.companies[0];
 
+  let from: Partial<string> = pathOr('', ['from'], qs.parse(location.search));
+
+  if (!from) {
+    from = pathOr('', ['from'], location.state);
+  }
+
   const companyFromDeletion = useSelector(
     (store: Store) => store.deleteCard.data?.data
   );
@@ -184,6 +190,7 @@ const Card = (): JSX.Element => {
     isRemoving,
     addCardResult,
     companyId,
+    from,
   };
 
   return <CardView {...generatedProps} />;

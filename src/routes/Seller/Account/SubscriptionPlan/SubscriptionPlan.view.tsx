@@ -234,7 +234,7 @@ export const SubscriptionPlanView = ({
               <Link
                 className="see-payment-methods"
                 to={`${SELLER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD}${qs.stringify(
-                  { companyId: company?.id },
+                  { companyId: company?.id, from: 'Payment Method' },
                   { addQueryPrefix: true }
                 )}`}
               >

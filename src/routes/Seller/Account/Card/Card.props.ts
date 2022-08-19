@@ -27,6 +27,7 @@ export interface CardPrivateProps {
   isExisting: boolean;
   addCardResult?: AsyncState;
   companyId: string;
+  from: string;
 }
 
 export interface CardGeneratedProps extends CardPrivateProps {}

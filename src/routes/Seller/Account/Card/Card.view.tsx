@@ -37,6 +37,7 @@ const CardView = (props: CardGeneratedProps) => {
     isRemoving,
     addCardResult,
     companyId,
+    from,
   } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const formRef = useRef();
@@ -47,7 +48,7 @@ const CardView = (props: CardGeneratedProps) => {
 
     const creditCardLink = `${
       SELLER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD
-    }${qs.stringify({ companyId }, { addQueryPrefix: true })}`;
+    }${qs.stringify({ companyId, from }, { addQueryPrefix: true })}`;
 
     sections = [
       { label: 'Account', link: SELLER_ACCOUNT_ROUTES.LANDING },
@@ -56,10 +57,10 @@ const CardView = (props: CardGeneratedProps) => {
         link: SELLER_ACCOUNT_ROUTES.BANK_DETAILS,
       },
       {
-        label: 'Credit Card',
+        label: from || 'Credit Card',
         onClick: () => history.push(creditCardLink),
       },
-      { label: isExisting ? 'Update Card' : 'Add Card' },
+      { label: isExisting ? 'Update Credit Card' : 'Add Credit Card' },
     ];
 
     return sections;

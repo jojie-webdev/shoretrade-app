@@ -43,6 +43,10 @@ const PaymentHistoryView = ({
         <Breadcrumbs
           sections={[
             { label: 'Account', link: SELLER_ACCOUNT_ROUTES.LANDING },
+            {
+              label: 'Your Plan',
+              link: SELLER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
+            },
             { label: 'Payment History' },
           ]}
         />

@@ -1,8 +1,10 @@
 import React, { useEffect, useReducer, useState } from 'react';
 
 // import { REVERSE_MARKETPLACE_PRICE } from 'consts/prices';
+import qs from 'qs';
+import { pathOr } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   deleteCardActions,
   getPaymentMethodsActions,
@@ -27,7 +29,10 @@ const PlanPaymentMethod = (): JSX.Element => {
   const [companyId] = useCompany();
   const [selectedCardId, setSelectedCardId] = useState('');
   const theme = useTheme();
+  const location = useLocation();
   const isSeller = theme.appType === 'seller';
+
+  const from: Partial<string> = pathOr('', ['from'], qs.parse(location.search));
 
   const isPaymentLoading =
     useSelector((store: Store) => store.paySubscription.pending) || false;
@@ -111,6 +116,7 @@ const PlanPaymentMethod = (): JSX.Element => {
     defaultCard: defaultCard ? defaultCard : '',
     onRemoveCard,
     companyId,
+    from,
   };
 
   return <PlanPaymentMethodView {...generatedProps} />;
