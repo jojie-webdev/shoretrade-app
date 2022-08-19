@@ -72,6 +72,30 @@ const Orders = (props: CheckoutGeneratedProps) => {
     []
   );
 
+  const getShippingOptions = (orderItem: OrderItem) => {
+    let shippingOptions = orderItem.shippingOptions.sort((a, b) => {
+      if (a.est < b.est) return -1;
+      if (a.est > b.est) return 1;
+      return 0;
+    });
+
+    shippingOptions = shippingOptions.reduce(
+      (prevValue: any, curValue: any) => {
+        if (
+          curValue.shipmentMode === 'DEPOT' ||
+          curValue.nameId.toLowerCase().includes('pickup at')
+        ) {
+          return [curValue, ...prevValue];
+        } else {
+          return [...prevValue, curValue];
+        }
+      },
+      []
+    );
+
+    return shippingOptions;
+  };
+
   return orders.map((item, i) => (
     <div className="accordion-container" key={`orders-${i}`}>
       <Accordion title={item.listings[0].vendor} withBackground isOpen>
@@ -162,17 +186,12 @@ const Orders = (props: CheckoutGeneratedProps) => {
               >
                 Shipping
               </Typography>
-
               <ShippingCard
                 isFreeShipping={item.isFreeShipping}
                 selectedDeliveryMethod={
                   selectedShippingId[getOrderListingKey(item.listings[0])]
                 }
-                options={item.listings[0].shippingOptions.sort((a, b) => {
-                  if (a.est < b.est) return -1;
-                  if (a.est > b.est) return 1;
-                  return 0;
-                })}
+                options={getShippingOptions(item.listings[0])}
                 onPress={(id, o) => {
                   onDeliveryMethodSelection(
                     o,

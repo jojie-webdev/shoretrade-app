@@ -87,7 +87,23 @@ const Checkout = (): JSX.Element => {
     if (!loadingShippingQuotes) {
       const defaultShippingIds = Object.keys(shippingQuotes).reduce(
         (accumulator, key) => {
-          const priceResult = shippingQuotes[key].priceResult[0];
+          const priceResults = shippingQuotes[key].priceResult.reduce(
+            (prevValue: any, curValue: any) => {
+              const serviceName = serviceNameToString(
+                curValue.serviceName,
+                curValue.locationName
+              );
+
+              if (serviceName.toLowerCase().includes('pickup at')) {
+                return [curValue, ...prevValue];
+              } else {
+                return [...prevValue, curValue];
+              }
+            },
+            []
+          );
+
+          const priceResult = priceResults[0];
 
           const shipmentMode = shipmentModeToString(
             priceResult.shipmentMode,
