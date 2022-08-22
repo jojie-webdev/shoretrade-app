@@ -47,6 +47,8 @@ const AddCredit = (): JSX.Element => {
 
   const chargeCardResult = useSelector((state: Store) => state.chargeCard);
 
+  const user = useSelector((state: Store) => state.getUser.data?.data.user);
+
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
@@ -98,6 +100,7 @@ const AddCredit = (): JSX.Element => {
     addCredit,
     chargeCardResult,
     downloadInvoice,
+    aasNumber: user?.sfmNumber || '',
   };
   return <AddCreditView {...generatedProps} />;
 };

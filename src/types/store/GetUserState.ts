@@ -75,6 +75,7 @@ export type GetUserPayload = GenericResponse<{
     preferences: {
       searchPreferences: UserSearchPreferences;
     };
+    sfmNumber: string;
   };
   token: string;
 }>;

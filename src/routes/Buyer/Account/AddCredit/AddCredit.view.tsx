@@ -107,7 +107,9 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
             </Col>
           </Row>
 
-          {activeTab === TABS.BANK && <FieldsetBankAccount />}
+          {activeTab === TABS.BANK && (
+            <FieldsetBankAccount aasNumber={props.aasNumber} />
+          )}
 
           {activeTab === TABS.CC && (
             <FieldsetCreditCard

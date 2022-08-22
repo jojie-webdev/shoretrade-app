@@ -11,6 +11,7 @@ export interface AddCreditGeneratedProps {
   addCredit: (x: string) => void;
   chargeCardResult?: AsyncState;
   downloadInvoice: (amount: string) => void;
+  aasNumber: string;
 }
 
 export interface FieldsetCreditCardProps {
