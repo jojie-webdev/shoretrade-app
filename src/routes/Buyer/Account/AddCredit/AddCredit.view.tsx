@@ -122,7 +122,9 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
           {!isMobile && (
             <>
               {activeTab === TABS.BANK ? (
-                <Button type="submit" text="Download Invoice" />
+                theme.isSFM ? null : (
+                  <Button type="submit" text="Download Invoice" />
+                )
               ) : cards.length ? (
                 <Button type="submit" text="Add Credit" loading={isPending} />
               ) : (
