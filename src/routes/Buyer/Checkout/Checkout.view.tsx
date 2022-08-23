@@ -72,6 +72,14 @@ const Orders = (props: CheckoutGeneratedProps) => {
     []
   );
 
+  const excludeShipmentByAir = (shippingOptions: any) => {
+    const modifiedShippingOptions = shippingOptions.filter(
+      (shippingOption: any) => shippingOption.shipmentMode !== 'AIR'
+    );
+
+    return modifiedShippingOptions;
+  };
+
   const getShippingOptions = (orderItem: OrderItem) => {
     let shippingOptions = orderItem.shippingOptions.sort((a, b) => {
       if (a.est < b.est) return -1;
@@ -92,6 +100,10 @@ const Orders = (props: CheckoutGeneratedProps) => {
       },
       []
     );
+
+    if (theme.isSFM) {
+      shippingOptions = excludeShipmentByAir(shippingOptions);
+    }
 
     return shippingOptions;
   };
@@ -233,6 +245,7 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
     (sum, companyId) => sum + (selectedShippingId[companyId] === '' ? 0 : 1),
     0
   );
+
   const disablePlaceOrder = totalSelectedShipping < totalCartGroups;
 
   if (showPaymentMethod) {
