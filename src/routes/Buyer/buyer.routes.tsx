@@ -279,7 +279,7 @@ const BuyerRoutes = (): JSX.Element => {
   }, [subscriptionPlans]);
 
   const handleRenew = () => {
-    if (company?.id && defaultCardId) {
+    if (company?.id) {
       history.push(BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN);
       setShowRenewModal(false);
       // dispatch(
