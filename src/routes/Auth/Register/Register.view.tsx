@@ -330,35 +330,39 @@ const StepForm = ({
   const formRef = useRef<FormikProps<Record<string, string>> | null>(null);
 
   const onAddMoreLicense = () => {
-    if (!license.file) {
-      setLicenseFileError('Please add a license file');
-      return true;
-    } else if (license.file && license.fileName.length === 0) {
-      setLicenseError('Please add a license name');
-      return true;
-    } else {
-      setLicenseError('');
-      setLicenseFileError('');
-      const newLicense = {
-        ...license,
-        fileBack: licenseBack.file,
-        expiredAt: expirationDate?.toISOString(),
-        stateId,
-      };
-      updateRegistrationDetails({
-        licenses: [
-          ...registrationDetails.licenses.filter(
-            (f, idx) => activeLicenseIdx !== idx
-          ),
-          newLicense,
-        ],
-      });
-      setLicense({ file: null, fileName: '' });
-      setLicenseBack({ file: null, fileName: '' });
-      setExpirationDate(null);
-      setStateId('');
-      setActiveLicenseIdx(null);
+    if (registrationDetails?.licenses[0]) {
       return false;
+    } else {
+      if (!license.file) {
+        setLicenseFileError('Please add a license file');
+        return true;
+      } else if (license.file && license.fileName.length === 0) {
+        setLicenseError('Please add a license name');
+        return true;
+      } else {
+        setLicenseError('');
+        setLicenseFileError('');
+        const newLicense = {
+          ...license,
+          fileBack: licenseBack.file,
+          expiredAt: expirationDate?.toISOString(),
+          stateId,
+        };
+        updateRegistrationDetails({
+          licenses: [
+            ...registrationDetails.licenses.filter(
+              (f, idx) => activeLicenseIdx !== idx
+            ),
+            newLicense,
+          ],
+        });
+        setLicense({ file: null, fileName: '' });
+        setLicenseBack({ file: null, fileName: '' });
+        setExpirationDate(null);
+        setStateId('');
+        setActiveLicenseIdx(null);
+        return false;
+      }
     }
   };
 
@@ -941,6 +945,7 @@ const StepForm = ({
       </>
     );
   };
+
   return (
     <>
       <Formik
@@ -1483,7 +1488,13 @@ const StepForm = ({
                             value: state.isoCode,
                             label: state.name,
                           }))}
-                          value={stateName}
+                          value={
+                            licenseStates?.find(
+                              (i) =>
+                                i.id ===
+                                registrationDetails.licenses[0]?.stateId
+                            )?.name || stateName
+                          }
                           onChange={(v) => getStateId(v.value)}
                           borderRadius="4px"
                           marginTop="16px"
