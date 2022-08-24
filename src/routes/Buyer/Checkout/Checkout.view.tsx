@@ -19,7 +19,7 @@ import PaymentMethod from 'routes/Buyer/Checkout/PaymentMethod';
 import { BottomRow } from 'routes/Buyer/Checkout/PaymentMethod/PaymentMethod.style';
 import { getOrderListingKey } from 'utils/getOrderListingKey';
 import { toPrice } from 'utils/String/toPrice';
-import theme from 'utils/Theme';
+import { useTheme } from 'utils/Theme';
 
 import { CheckoutGeneratedProps, OrderItem } from './Checkout.props';
 import {
@@ -41,7 +41,7 @@ const Orders = (props: CheckoutGeneratedProps) => {
     onDeliveryMethodSelection,
     transactionValueFeePercent,
   } = props;
-
+  const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const orders = Object.keys(groupedOrders).reduce(
     (
@@ -235,6 +235,7 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
     orderError,
     transactionValueFeePercent,
   } = props;
+  const theme = useTheme();
 
   const [showPaymentMethod, setShowPaymentMethod] = useState(false);
 
