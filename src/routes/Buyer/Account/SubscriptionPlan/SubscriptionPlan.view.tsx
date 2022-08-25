@@ -423,7 +423,7 @@ export const SubscriptionPlanView = ({
                       }}
                     >
                       <b>
-                        {isApprovedAccount ? toPrice(nextBillingAmount) : 0}
+                        {isApprovedAccount ? nextBillingAmount.toFixed(2) : 0}
                       </b>
                     </Typography>
                   </div>
@@ -1162,10 +1162,9 @@ export const SubscriptionPlanView = ({
             <Typography variant="body" component="span">
               {withinFreeTrial && remainingFreeTrialDays > 0
                 ? moment(seventhFreeDay).format('MMMM Do, YYYY')
-                : moment(currentPlanDetails?.subscription.renews_at).startOf('D').
-                format(
-                    'MMMM Do, YYYY'
-                  )}
+                : moment(currentPlanDetails?.subscription.renews_at)
+                    .startOf('D')
+                    .format('MMMM Do, YYYY')}
             </Typography>
             .
           </Typography>
