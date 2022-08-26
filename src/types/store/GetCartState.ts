@@ -40,6 +40,7 @@ export type GetCartListingDataItem = {
   isIkeJime?: boolean;
   isIceSlurry?: boolean;
   quality?: string;
+  isGSTIncluded: boolean;
 };
 
 export type GetCartDataItem = {

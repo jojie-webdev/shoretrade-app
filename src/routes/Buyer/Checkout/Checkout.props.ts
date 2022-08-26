@@ -27,6 +27,7 @@ export type OrderItem = {
   crateFee?: number;
   transactionFee?: number;
   isFreeShipping: boolean;
+  isGSTIncluded: boolean;
   listing: {
     isPreAuctionSale?: boolean;
   };

@@ -115,6 +115,7 @@ export type GetSellerOrdersResponseItem = {
         priceDelta: number | null;
         isIkeJime: boolean;
         isIceSlurry: boolean;
+        isGSTIncluded: boolean;
         quality?: string;
       };
       scanHistory: ScanHistoryItem[];

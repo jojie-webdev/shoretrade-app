@@ -15,6 +15,7 @@ import { ListingResponseItem } from 'types/store/GetBuyerOrdersState';
 import { GetSellerOrdersResponseItem } from 'types/store/GetSellerOrdersState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { parsePrice } from 'utils/parsePrice';
 import { formatOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
 import { toPrice } from 'utils/String/toPrice';
 import {
@@ -209,18 +210,6 @@ export const orderItemToOrderItemData = ({
 export const transformOrder = (
   orderItem: GetSellerOrdersResponseItem
 ): OrderItem => {
-  const getTransactionFee = (price: number | string) => {
-    return Number(
-      (+price * ((orderItem.transactionValueFeePercentage || 0) / 100)).toFixed(
-        2
-      )
-    );
-  };
-
-  const totalLineItem = orderItem.orderLineItem.reduce((sum, lineItem) => {
-    return sum + lineItem.price;
-  }, 0);
-
   const applyTransactionFee = (price: number | string) => {
     return Number(
       (
@@ -230,22 +219,39 @@ export const transformOrder = (
     );
   };
 
-  const totalLineItemWithTransactionFee = orderItem.orderLineItem.reduce(
-    (sum, lineItem) => {
-      return sum + applyTransactionFee(lineItem.price);
-    },
-    0
-  );
+  const getIsGSTIncluded = (orderLineItem: any) => {
+    return orderLineItem.listing.isGSTIncluded;
+  };
+
+  const totalLineItemPrice = orderItem.orderLineItem.reduce((sum, lineItem) => {
+    return sum + lineItem.price;
+  }, 0);
+
+  const getTransactionFee = (subTotal: number, isGSTIncluded: boolean) => {
+    const parsedSubTotal = isGSTIncluded
+      ? parsePrice(Number(subTotal / 1.1))
+      : parsePrice(Number(subTotal));
+    return parsedSubTotal
+      ? Number(
+          (
+            parsedSubTotal *
+            ((orderItem.transactionValueFeePercentage || 0) / 100)
+          ).toFixed(2)
+        )
+      : 0;
+  };
 
   const totalLineItemTransactionFee = orderItem.orderLineItem.reduce(
     (sum, lineItem) => {
-      return sum + getTransactionFee(lineItem.price);
+      const isGSTIncluded = getIsGSTIncluded(lineItem);
+      return sum + getTransactionFee(lineItem.price, isGSTIncluded);
     },
     0
   );
 
   const totalPrice = toPrice(
-    Number(totalLineItemWithTransactionFee) +
+    Number(totalLineItemPrice) +
+      Number(totalLineItemTransactionFee) +
       orderItem.shippingCost +
       Number(orderItem?.totalCrateFee || 0)
   );

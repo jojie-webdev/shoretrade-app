@@ -31,6 +31,7 @@ import { getOrderListingKey } from 'utils/getOrderListingKey';
 import { createUpdateReducer } from 'utils/Hooks/createUpdateReducer';
 import { isPaymentMethodAvailable } from 'utils/isPaymentMethodAvailable';
 import { sizeToString } from 'utils/Listing';
+import { parsePrice } from 'utils/parsePrice';
 import { toPrice } from 'utils/String/toPrice';
 import {
   shipmentModeToString,
@@ -209,6 +210,15 @@ const Checkout = (): JSX.Element => {
         } else return '';
       }).filter((info) => info !== '');
 
+      const isGSTIncluded = cartItem.listing.isGSTIncluded;
+      const subTotal = isGSTIncluded
+        ? parsePrice((Number(cartItem.listing.price) * cartItem.weight) / 1.1)
+        : parsePrice(Number(cartItem.listing.price) * cartItem.weight);
+
+      const transactionFee = subTotal
+        ? Number((subTotal * (transactionValueFeePercent / 100)).toFixed(2))
+        : 0;
+
       return {
         cartItemId: cartItem.cartItemId || '',
         title: 'Order Summary',
@@ -218,10 +228,7 @@ const Checkout = (): JSX.Element => {
         //   +cartItem.subTotal * (1 + transactionValueFeePercent / 100)
         // ).toFixed(2),
         price: (Number(cartItem.listing.price) * cartItem.weight).toFixed(2),
-        transactionFee:
-          Number(cartItem.listing.price) *
-          (transactionValueFeePercent / 100) *
-          cartItem.weight,
+        transactionFee: transactionFee,
         tags: additionalInfos
           .map((info) => ({
             label: info,
@@ -251,6 +258,7 @@ const Checkout = (): JSX.Element => {
         vendorId: cartItem.companyId,
         crateFee: cartItem.crateFee,
         isFreeShipping: cartItem.isFreeShipping,
+        isGSTIncluded: isGSTIncluded,
         listing: {
           isPreAuctionSale: cartItem.listing.isPreAuctionSale,
         },
