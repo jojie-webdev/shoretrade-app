@@ -550,7 +550,7 @@ export const SubscriptionPlanView = ({
       />
       <ConfirmationModal
         isOpen={showReverseMarketPlaceToggleModal}
-        title="Add Reverse Marketplace package"
+        title="Adding on the Reverse Marketplace"
         actionText="Confirm"
         hideCancel
         onClickClose={() => setShowReverseMarketPlaceToggleModal(false)}
@@ -562,31 +562,6 @@ export const SubscriptionPlanView = ({
         }}
         style={{ width: '686px' }}
       >
-        <Typography color="shade6">
-          The ongoing monthly cost will be an additional:
-          <Typography variant="body" component="span" color="noshade">
-            &nbsp;
-            {reverseMarketPrice ? toPrice(reverseMarketPrice) : 0}
-          </Typography>
-          <Typography
-            component="span"
-            variant="caption"
-            weight="500"
-            color="noshade"
-          >
-            /Month
-          </Typography>
-        </Typography>
-        <Typography variant="body" weight="500" color="shade6">
-          Pay the amount below to unlock your access now.
-        </Typography>
-        <div style={{ display: 'flex', margin: '8px 0' }}>
-          <Typography variant="title5" weight="500" color="noshade">
-            {reverseMarketAddOnDetails
-              ? toPrice(reverseMarketAddOnDetails.remaining_price)
-              : 0}
-          </Typography>
-        </div>
         <div style={{ display: 'flex', marginTop: 12 }}>
           <Typography variant="body" color="shade6">
             Add on the Reverse Marketplace and make offers directly to buyers in
@@ -601,7 +576,7 @@ export const SubscriptionPlanView = ({
               weight="500"
               color="noshade"
             >
-              /Month
+              /month
             </Typography>
             &nbsp; and will be charged immediately to your nominated card.
             Confirm your subscription to unlock your access now.
