@@ -71,6 +71,7 @@ export const SubscriptionPlanView = ({
   lateReverseMarketPayment,
   defaultCard,
   failedReverseMarketPayment,
+  hasUpdateSubsPlanError,
 }: SubscriptionPlanGeneratedProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS.sm });
@@ -118,6 +119,20 @@ export const SubscriptionPlanView = ({
         />
       </BreadcrumbsContainer>
       <AlertsContainer>
+        {hasUpdateSubsPlanError && (
+          <Alert
+            fullWidth
+            header="Payment Unsuccessful"
+            content={
+              <AlertContentContainer>
+                <Typography variant="caption" color="shade7">
+                  Your card was not charged. Please check the payment details.
+                </Typography>
+              </AlertContentContainer>
+            }
+            variant="error"
+          />
+        )}
         {flags?.hasCancelledReversedMarketplace && (
           <Alert
             variant="error"

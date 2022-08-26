@@ -91,6 +91,7 @@ export const SubscriptionPlanView = ({
   latePayment,
   failedPayment,
   cancellationReversePeriodReverseMarket,
+  hasUpdateSubsPlanError,
 }: SubscriptionPlanGeneratedProps) => {
   const location = useLocation();
   const theme = useTheme();
@@ -194,6 +195,20 @@ export const SubscriptionPlanView = ({
         />
       </BreadcrumbsContainer>
       <AlertsContainer>
+        {hasUpdateSubsPlanError && (
+          <Alert
+            fullWidth
+            header="Payment Unsuccessful"
+            content={
+              <AlertContentContainer>
+                <Typography variant="caption" color="shade7">
+                  Your card was not charged. Please check the payment details.
+                </Typography>
+              </AlertContentContainer>
+            }
+            variant="error"
+          />
+        )}
         {!flags?.hasInactiveSubscription && (
           <>
             {flags?.hasCancelledReversedMarketplace && (
