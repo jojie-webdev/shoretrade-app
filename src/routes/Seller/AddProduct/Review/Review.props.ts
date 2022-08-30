@@ -21,6 +21,8 @@ export interface Box {
   weight: number;
   quantity: number;
   count?: number;
+  sold?: number;
+  stocks?: number;
 }
 
 export type ReviewProps = ReviewPublicProps & {

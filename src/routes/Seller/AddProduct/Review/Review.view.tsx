@@ -260,6 +260,7 @@ const Review = ({
                   weight={b.weight}
                   unit={measurementUnit}
                   quantity={b.quantity}
+                  stocks={b.stocks}
                   count={b.count}
                 />
               ))}

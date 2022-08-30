@@ -8,6 +8,7 @@ export type BoxType = {
   count?: number;
   fixed?: boolean;
   sold?: number;
+  stocks?: number;
 };
 
 export type AddBoxesPublicProps = {
