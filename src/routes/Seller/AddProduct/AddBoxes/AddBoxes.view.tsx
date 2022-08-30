@@ -40,6 +40,7 @@ export const BoxDetails = ({
   quantity,
   count,
   onRemove,
+  stocks,
   unit,
   sold,
 }: BoxType & {
@@ -64,7 +65,7 @@ export const BoxDetails = ({
             QTY
           </Typography>
           <Typography color="noshade" variant="copy">
-            {quantity - (sold || 0)}
+            {stocks}
           </Typography>
         </div>
         <div className="text-container">
@@ -258,6 +259,7 @@ const AddBoxes = ({
     ? (editableListing?.boxes || []).map((b) => ({
         ...b,
         fixed: true,
+        stocks: b.quantity - (b.sold || 0),
       }))
     : editableListing?.boxes || []
   ).filter(

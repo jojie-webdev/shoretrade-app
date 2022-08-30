@@ -226,11 +226,21 @@ const AddProduct = (): JSX.Element => {
 
   const isCustomType = editableListing?.isCustomType || false;
 
-  const isGstIncl = listingFormData?.type.isGstIncl || false
+  const isGstIncl = listingFormData?.type.isGstIncl || false;
 
   const isBulkUpload = modifyBulkUpload.currentData.index !== undefined;
 
-  const boxesDetails = editableListing?.boxes || [];
+  const boxesDetails = editableListing?.boxes
+    ? editableListing?.boxes?.map((box) => {
+        const quantity = box.quantity || 0;
+        const sold = box.sold || 0;
+
+        return {
+          ...box,
+          stocks: quantity - sold,
+        };
+      })
+    : [];
 
   const typeName =
     (isCustomType
