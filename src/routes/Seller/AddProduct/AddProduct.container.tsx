@@ -231,15 +231,17 @@ const AddProduct = (): JSX.Element => {
   const isBulkUpload = modifyBulkUpload.currentData.index !== undefined;
 
   const boxesDetails = editableListing?.boxes
-    ? editableListing?.boxes?.map((box) => {
-        const quantity = box.quantity || 0;
-        const sold = box.sold || 0;
+    ? editableListing?.boxes
+        ?.map((box) => {
+          const quantity = box.quantity || 0;
+          const sold = box.sold || 0;
 
-        return {
-          ...box,
-          stocks: quantity - sold,
-        };
-      })
+          return {
+            ...box,
+            stocks: quantity - sold,
+          };
+        })
+        .filter((box) => box.stocks !== 0)
     : [];
 
   const typeName =
