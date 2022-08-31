@@ -126,7 +126,7 @@ export const SubscriptionPlanView = ({
             content={
               <AlertContentContainer>
                 <Typography variant="caption" color="shade7">
-                  Your card was not charged. Please check the payment details.
+                  Your card was not charged. Please check your payment details.
                 </Typography>
               </AlertContentContainer>
             }
