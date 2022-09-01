@@ -104,7 +104,13 @@ const Checkout = (): JSX.Element => {
             []
           );
 
-          const priceResult = priceResults[0];
+          const clickCollectShipping = priceResults.filter(
+            (result) => result.serviceName === 'CLICK & COLLECT'
+          );
+
+          const priceResult = clickCollectShipping
+            ? clickCollectShipping[0]
+            : priceResults[0];
 
           const shipmentMode = shipmentModeToString(
             priceResult.shipmentMode,
