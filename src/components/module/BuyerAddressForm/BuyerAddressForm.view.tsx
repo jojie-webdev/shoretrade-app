@@ -1,8 +1,10 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 
+import Alert from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
+import { Close } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
@@ -12,7 +14,9 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import pathOr from 'ramda/es/pathOr';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
+import { identifyIsAUOrNZAddress } from 'utils/Address/identifyIsAUOrNZAddress';
 import { createUpdateReducer } from 'utils/Hooks';
+import { useTheme } from 'utils/Theme';
 
 import { BuyerAddressFormProps } from './BuyerAddressForm.props';
 import { Container } from './BuyerAddressForm.style';
@@ -32,6 +36,8 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
     type,
   } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const [toggleAlert, setToggleAlert] = useState(true);
+  const theme = useTheme();
 
   let routeHeader = '';
 
@@ -74,11 +80,48 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
         />
       </div>
 
+      {!theme.isSFM &&
+      theme.appType === 'seller' &&
+      toggleAlert &&
+      identifyIsAUOrNZAddress(address?.address || '') ? (
+        <Alert
+          content={
+            <Typography variant="caption">
+              Please enter a valid international address. For Australia and New
+              Zealand, please register at{' '}
+              <span>
+                <a
+                  href="https://www.sfmblue.com.au"
+                  style={{ color: '#09131D', textDecoration: 'underline' }}
+                >
+                  www.sfmblue.com.au
+                </a>
+              </span>
+            </Typography>
+          }
+          variant="error"
+          alignText="center"
+          fullWidth
+          iconRight={
+            <div
+              style={{ cursor: 'pointer' }}
+              onClick={() => setToggleAlert(false)}
+            >
+              <Close />
+            </div>
+          }
+          style={{
+            marginTop: 16,
+          }}
+        />
+      ) : null}
+
       <Row className="textfield-row">
         <Col className="textfield-col" md={12} xl={4}>
           <LocationSearch
             onSelect={(location) => {
               if (location) {
+                setToggleAlert(true);
                 setAddress(location);
               }
             }}

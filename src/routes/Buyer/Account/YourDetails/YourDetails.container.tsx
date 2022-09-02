@@ -42,7 +42,7 @@ const YourDetails = (): JSX.Element => {
     // layout/Dashboard/Dashboard.container.tsx
     if (!getUser.pending) {
       const user = getUser.data?.data.user;
-
+      setCallingCode(getCallingCode(user?.mobile || ''));
       setUserDetails({
         firstName: user?.firstName || '',
         lastName: user?.lastName || '',

@@ -1,8 +1,10 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 
+import Alert from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox';
+import { Close } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
@@ -14,7 +16,9 @@ import qs from 'qs';
 import pathOr from 'ramda/es/pathOr';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
+import { identifyIsAUOrNZAddress } from 'utils/Address/identifyIsAUOrNZAddress';
 import { createUpdateReducer } from 'utils/Hooks';
+import { useTheme } from 'utils/Theme';
 
 import { SellerAddressFormProps } from './SellerAddressForm.props';
 import { Container } from './SellerAddressForm.style';
@@ -37,6 +41,8 @@ const SellerAddressForm = (props: SellerAddressFormProps): JSX.Element => {
     userPending,
   } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const [toggleAlert, setToggleAlert] = useState(true);
+  const theme = useTheme();
 
   let routeHeader = '';
 
@@ -83,11 +89,47 @@ const SellerAddressForm = (props: SellerAddressFormProps): JSX.Element => {
         />
       </div>
 
+      {!theme.isSFM &&
+      toggleAlert &&
+      identifyIsAUOrNZAddress(address?.address || '') ? (
+        <Alert
+          content={
+            <Typography color="noshade" variant="caption">
+              Please enter a valid international address. For Australia and New
+              Zealand, please register at{' '}
+              <span>
+                <a
+                  href="https://www.sfmblue.com.au"
+                  style={{ textDecoration: 'underline' }}
+                >
+                  www.sfmblue.com.au
+                </a>
+              </span>
+            </Typography>
+          }
+          variant="error"
+          alignText="center"
+          fullWidth
+          iconRight={
+            <div
+              style={{ cursor: 'pointer' }}
+              onClick={() => setToggleAlert(false)}
+            >
+              <Close fill="white" />
+            </div>
+          }
+          style={{
+            marginTop: 16,
+          }}
+        />
+      ) : null}
+
       <Row className="textfield-row">
         <Col className="textfield-col" md={12} xl={4}>
           <LocationSearch
             onSelect={(location) => {
               if (location) {
+                setToggleAlert(true);
                 setAddress(location);
               }
             }}

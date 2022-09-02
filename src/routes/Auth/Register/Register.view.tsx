@@ -433,6 +433,10 @@ const StepForm = ({
 
   const [isOpen, setIsOpen] = useState(false);
 
+  const isAUorNZ =
+    registrationDetails.callingCode === '61' ||
+    registrationDetails.callingCode === '64';
+
   const selectedPlanHandler = (value: string) => {
     updateRegistrationDetails({
       subscriptionPreference: {
@@ -1211,7 +1215,30 @@ const StepForm = ({
                       }}
                     />
                   </LocationField>
-
+                  {!theme.isSFM && theme.appType === 'seller' && isAUorNZ ? (
+                    <Alert
+                      content={
+                        <Typography color="noshade" variant="caption">
+                          Please enter a valid international address. For
+                          Australia and New Zealand, please register at{' '}
+                          <span>
+                            <a
+                              href="https://www.sfmblue.com.au"
+                              style={{ textDecoration: 'underline' }}
+                            >
+                              www.sfmblue.com.au
+                            </a>
+                          </span>
+                        </Typography>
+                      }
+                      variant="error"
+                      alignText="center"
+                      fullWidth
+                      style={{
+                        marginTop: 16,
+                      }}
+                    />
+                  ) : null}
                   <BaseTextField
                     label="Unit number (optional)"
                     value={registrationDetails.unitNumber}
@@ -2177,6 +2204,11 @@ const StepForm = ({
                   }
                   variant={
                     buttonTextHandler(step) === 'SKIP' ? 'outline' : 'primary'
+                  }
+                  disabled={
+                    theme.appType === 'seller'
+                      ? !registrationDetails.callingCode
+                      : false
                   }
                 />
               </>

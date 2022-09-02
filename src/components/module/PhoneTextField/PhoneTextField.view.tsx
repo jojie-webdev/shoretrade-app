@@ -10,6 +10,7 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import CALLING_CODES from 'consts/callingCodes';
 import { useField } from 'formik';
 import { useMediaQuery } from 'react-responsive';
+import { useTheme } from 'utils/Theme';
 
 import { PhoneTextFieldProps } from './PhoneTextField.props';
 import {
@@ -60,8 +61,14 @@ const PhoneTextField = (props: PhoneTextFieldProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
 
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const theme = useTheme();
 
-  const australia = { callingCode: '61', flag: '🇦🇺' };
+  const isST = !theme.isSFM;
+
+  const australia = {
+    callingCode: isST ? '' : '61',
+    flag: isST ? '' : '🇦🇺',
+  };
   const initCountry = callingCode
     ? CALLING_CODES.find((cc) => cc.callingCode === callingCode) || australia
     : australia;
@@ -82,7 +89,7 @@ const PhoneTextField = (props: PhoneTextFieldProps): JSX.Element => {
             Country
           </Typography>
           <Country readOnly={textFieldProps.readOnly}>
-            +{country.callingCode}
+            {country.callingCode ? `+ ${country.callingCode}` : ''}
           </Country>
         </CountryContainer>
 

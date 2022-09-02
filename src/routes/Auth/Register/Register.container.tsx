@@ -187,7 +187,7 @@ const Register = (): JSX.Element => {
       password: '',
       passwordConfirm: '',
       mobile: '',
-      callingCode: '61',
+      callingCode: !theme.isSFM && theme.appType === 'seller' ? '' : '61',
       // business
       businessName: '',
       abn: '',
