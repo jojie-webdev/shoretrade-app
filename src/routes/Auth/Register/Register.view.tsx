@@ -1215,10 +1215,15 @@ const StepForm = ({
                       }}
                     />
                   </LocationField>
-                  {!theme.isSFM && theme.appType === 'seller' && isAUorNZ ? (
+                  {!theme.isSFM && isAUorNZ ? (
                     <Alert
                       content={
-                        <Typography color="noshade" variant="caption">
+                        <Typography
+                          color={
+                            theme.appType === 'seller' ? 'noshade' : 'shade6'
+                          }
+                          variant="caption"
+                        >
                           Please enter a valid international address. For
                           Australia and New Zealand, please register at{' '}
                           <span>
@@ -2205,11 +2210,7 @@ const StepForm = ({
                   variant={
                     buttonTextHandler(step) === 'SKIP' ? 'outline' : 'primary'
                   }
-                  disabled={
-                    theme.appType === 'seller'
-                      ? !registrationDetails.callingCode
-                      : false
-                  }
+                  disabled={!registrationDetails.callingCode}
                 />
               </>
             ) : null}

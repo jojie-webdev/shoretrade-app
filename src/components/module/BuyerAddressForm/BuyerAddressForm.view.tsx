@@ -81,7 +81,6 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
       </div>
 
       {!theme.isSFM &&
-      theme.appType === 'seller' &&
       toggleAlert &&
       identifyIsAUOrNZAddress(address?.address || '') ? (
         <Alert
