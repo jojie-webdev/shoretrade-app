@@ -56,6 +56,7 @@ export const SubscriptionContainer = styled.div`
     background: ${({ theme }) => theme.grey.noshade};
     border-radius: 12px;
     padding: 24px;
+    padding-right: 4px;
     width: 100%;
   }
 
@@ -63,11 +64,19 @@ export const SubscriptionContainer = styled.div`
     .payment-section {
       margin: 24px 10px;
     }
+
+    .section {
+      padding-right: 4px;
+    }
   }
 
   @media ${BREAKPOINTS.md} {
     .payment-section {
       margin: 24px 10px;
+    }
+
+    .section {
+      padding-right: 4px;
     }
   }
 
@@ -144,6 +153,7 @@ export const PlanContainer = styled.div`
   margin-bottom: 24px;
   background: ${({ theme }) => theme.grey.noshade};
   border-radius: 12px;
+  margin-left: 10px;
 
   .cancel-subscription {
     margin-top: 24px;
@@ -151,11 +161,29 @@ export const PlanContainer = styled.div`
       cursor: pointer;
     }
   }
+
+  @media ${BREAKPOINTS.sm} {
+    margin-right: -10px;
+    gap: unset;
+  }
+
+  @media ${BREAKPOINTS.md} {
+    margin-right: -10px;
+    gap: unset;
+  }
 `;
 
 export const PlanSection = styled.div`
   display: flex;
   gap: 24px;
+
+  @media ${BREAKPOINTS.sm} {
+    flex-direction: column;
+  }
+
+  @media ${BREAKPOINTS.md} {
+    flex-direction: column;
+  }
 `;
 
 export const Subscription = styled.div`
@@ -176,6 +204,14 @@ export const Subscription = styled.div`
     pointer-events: none;
     opacity: 0.4;
   }
+
+  @media ${BREAKPOINTS.sm} {
+    width: 100%;
+  }
+
+  @media ${BREAKPOINTS.md} {
+    width: 100%;
+  }
 `;
 
 export const AdditionalSubSection = styled.div`
@@ -190,7 +226,7 @@ export const AdditionalSubSection = styled.div`
 export const Footer = styled.div`
   display: flex;
   flex-direction: column;
-  gap 8px;
+  gap: 8px;
 `;
 
 export const PlanPriceContainer = styled.div`
@@ -215,6 +251,7 @@ export const IncusionSection = styled.div`
     &:hover {
       cursor: pointer;
     }
+  }
 `;
 
 export const ReverseMarketplace = styled.div`
@@ -262,7 +299,6 @@ export const PlanTitleWrapper = styled.div`
   justify-content: space-between;
 
   .disable {
-    // pointer-events: none;
     opacity: 0.4;
   }
 `;
