@@ -30,6 +30,7 @@ import {
   formatUnitToPricePerUnit,
 } from 'utils/Listing/formatMeasurementUnit';
 import { parseImageUrl } from 'utils/parseImageURL';
+import { parsePrice } from 'utils/parsePrice';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
@@ -144,6 +145,18 @@ export const PendingItem = (props: {
       (i) => i.weightConfirmed
     );
 
+    let totalPrice = toPrice(order.totalPrice);
+
+    if (order.transactionValueFeePercentage) {
+      totalPrice = toPrice(
+        order.orderLineItem.reduce((accum: number, current: any) => {
+          const price = parsePrice(current.price);
+
+          return accum + (price || 0);
+        }, 0)
+      );
+    }
+
     return (
       <Fragment key={order.orderId}>
         <InnerStyledInteraction
@@ -174,9 +187,7 @@ export const PendingItem = (props: {
               <div className="order-details">
                 <ItemDetail variant="caption" color="shade6">
                   Price (AUD)s
-                  <span style={{ fontSize: '14px' }}>
-                    {toPrice(order.totalPrice)}
-                  </span>
+                  <span style={{ fontSize: '14px' }}>{totalPrice}</span>
                 </ItemDetail>
                 <div className="buyer-type">
                   <ItemDetail variant="caption" color="shade6" row>
