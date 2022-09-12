@@ -182,6 +182,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               hideArrowArea={hideCarouselArrowArea}
               arrowWidth={mediumArrowWidth ? 75 : undefined}
               addMargin
+              bgPosition="left"
             />
           </SwiperContainer>
           {!isPendingAccount && (

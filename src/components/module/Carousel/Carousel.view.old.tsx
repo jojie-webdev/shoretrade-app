@@ -40,6 +40,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
     showAquafuture,
     showAlmostGone,
     showAlwaysAvailable,
+    bgPosition,
   } = props;
 
   const theme = useTheme();
@@ -48,7 +49,11 @@ const Carousel = (props: CarouselProps): JSX.Element => {
   const swiperItems = images.map((image) => {
     return (
       <SwiperSlide key={image}>
-        <ImageContainer img={parseImageUrl(image)} aspectRatio={aspectRatio} />
+        <ImageContainer
+          img={parseImageUrl(image)}
+          aspectRatio={aspectRatio}
+          bgPosition={bgPosition}
+        />
       </SwiperSlide>
     );
   });

@@ -115,12 +115,17 @@ const safeEncodeUri = (img: string) => {
 export const ImageContainer = styled.div<{
   img: string;
   aspectRatio: AspectRatio;
+  bgPosition?: string;
 }>`
   width: 100%;
   background-image: url(${(props) => safeEncodeUri(props.img)});
   background-size: cover;
   background-position: ${(props) =>
-    props.aspectRatio === '16:9' ? '50% 50%' : '50% 65%'};
+    props.bgPosition
+      ? props.bgPosition
+      : props.aspectRatio === '16:9'
+      ? '50% 50%'
+      : '35% 65%'};
   height: 295px;
   border-radius: 4px;
 
@@ -129,7 +134,11 @@ export const ImageContainer = styled.div<{
       `${ImageContainerHeight[aspectRatio][375]}px`};
 
     background-position: ${(props) =>
-      props.aspectRatio === '16:9' ? '50% 50%' : '35% 65%'};
+      props.bgPosition
+        ? props.bgPosition
+        : props.aspectRatio === '16:9'
+        ? '50% 50%'
+        : '35% 65%'};
   }
 
   @media (min-width: 768px) {

@@ -37,6 +37,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
     showActionButton,
     actionButton,
     variant = 'bullet',
+    bgPosition,
   } = props;
   const [swiperRef, setSwiperRef] = useState<any>(null);
   const [activeSlideIndex, setActiveSlideIndex] = useState<any>(0);
@@ -44,7 +45,11 @@ const Carousel = (props: CarouselProps): JSX.Element => {
   const swiperItems = images.map((image) => {
     return (
       <SwiperSlide key={image}>
-        <ImageContainer img={parseImageUrl(image)} aspectRatio={aspectRatio} />
+        <ImageContainer
+          img={parseImageUrl(image)}
+          aspectRatio={aspectRatio}
+          bgPosition={bgPosition}
+        />
       </SwiperSlide>
     );
   });
