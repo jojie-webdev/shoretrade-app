@@ -619,3 +619,21 @@ export const ReverseMarketModal = styled.div`
     flex-direction: row;
   }
 `;
+
+export const SFMBlueLink = styled.a`
+  color: ${({ theme }) => {
+    return { ...theme.brand, ...theme.grey }[
+      theme.appType === 'seller' ? 'noshade' : 'shade6'
+    ];
+  }};
+
+  :hover {
+    color: ${({ theme }) => {
+      return { ...theme.brand, ...theme.grey }[
+        theme.appType === 'seller' ? 'noshade' : 'shade6'
+      ];
+    }};
+  }
+
+  text-decoration: underline;
+`;

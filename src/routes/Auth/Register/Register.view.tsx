@@ -145,6 +145,7 @@ import {
   ReverseMarketModal,
   PlusIcon,
   ReverseMarketTitle2,
+  SFMBlueLink,
 } from './Register.style';
 import {
   addressToPlaceData2,
@@ -1227,12 +1228,9 @@ const StepForm = ({
                           Please enter a valid international address. For
                           Australia and New Zealand, please register at{' '}
                           <span>
-                            <a
-                              href="https://www.sfmblue.com.au"
-                              style={{ textDecoration: 'underline' }}
-                            >
+                            <SFMBlueLink href="https://www.sfmblue.com.au">
                               www.sfmblue.com.au
-                            </a>
+                            </SFMBlueLink>
                           </span>
                         </Typography>
                       }
