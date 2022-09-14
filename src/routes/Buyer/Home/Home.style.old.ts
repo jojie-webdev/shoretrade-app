@@ -30,6 +30,14 @@ export const ViewContainer = styled.div`
 export const SwiperContainer = styled.div`
   width: 100%;
   max-width: 100%;
+
+  @media (max-width: 1365px) {
+    height: 182px;
+  }
+
+  @media (max-width: 1023px) {
+    height: 150px;
+  }
 `;
 
 export const CategoriesContainer = styled.div``;

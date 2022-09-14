@@ -39,6 +39,10 @@ export const Parent = styled.div<{
   height: ${({ height }) => height || '325px'};
   width: 100%;
 
+  @media (max-width: 374px) {
+    height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][375] + 30}px`};
+  }
+
   @media (min-width: 375px) {
     height: ${({ aspectRatio }) => `${ParentHeight[aspectRatio][375] + 30}px`};
   }

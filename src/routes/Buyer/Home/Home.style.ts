@@ -60,7 +60,13 @@ export const FavouritesContainer = styled.div`
   }
 `;
 
-export const ViewCol = styled(Col)``;
+export const ViewCol = styled(Col)`
+  margin-top: 30px;
+
+  @media (max-width: 374px) {
+    margin-top: 0px;
+  }
+`;
 
 export const RecentContainer = styled.div``;
 

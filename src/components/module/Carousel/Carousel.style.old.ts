@@ -5,10 +5,10 @@ import { AspectRatio, MediaQueries } from './Carousel.props';
 const ImageContainerHeight: Record<AspectRatio, MediaQueries> = {
   '16:9': {
     '1440': 350,
-    '1366': 325,
-    '1024': 300,
-    '768': 220,
-    '375': 220,
+    '1366': 309,
+    '1024': 181,
+    '768': 148,
+    '375': 180,
   },
   '9:4': {
     '1440': 440,
@@ -112,6 +112,14 @@ export const ImageContainer = styled.div<{
       : '35% 65%'};
   height: 295px;
   border-radius: 4px;
+
+  @media (max-width: 350px) {
+    height: 100%;
+  }
+
+  @media (max-width: 374px) {
+    height: 166px;
+  }
 
   @media (min-width: 375px) {
     height: ${({ aspectRatio }) =>

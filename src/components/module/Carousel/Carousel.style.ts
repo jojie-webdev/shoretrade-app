@@ -11,7 +11,7 @@ const ImageContainerHeight: Record<AspectRatio, MediaQueries> = {
     '1366': 325,
     '1024': 300,
     '768': 220,
-    '375': 220,
+    '375': 180,
   },
   '9:4': {
     '1440': 440,
@@ -129,6 +129,14 @@ export const ImageContainer = styled.div<{
   height: 295px;
   border-radius: 4px;
 
+  @media (max-width: 350px) {
+    height: 100%;
+  }
+
+  @media (max-width: 374px) {
+    height: 166px;
+  }
+
   @media (min-width: 375px) {
     height: ${({ aspectRatio }) =>
       `${ImageContainerHeight[aspectRatio][375]}px`};
@@ -165,9 +173,9 @@ export const ImageContainer = styled.div<{
   @media ${BREAKPOINTS['xl']} {
     min-height: 342px;
   }
-  @media ${BREAKPOINTS['sm']} {
+  /* @media ${BREAKPOINTS['sm']} {
     min-height: 242px;
-  }
+  } */
 `;
 
 export const Image = styled.img`
