@@ -23,6 +23,7 @@ const SubscriptionPlan = () => {
   const [loading, setLoading] = useState(false);
   const [hasUpdateSubsPlanError, setHasUpdateSubsPlanError] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
+  const [hideSubsPlanAlert, setHideSubsPlanAlert] = useState(true);
   const company = user?.companies[0];
 
   // SELECTORS
@@ -65,6 +66,9 @@ const SubscriptionPlan = () => {
   const updateSubsPlanErrorFromStore = useSelector(
     (store: Store) => store.updateSubscriptionPlan.error
   );
+  const updateSubsPlanPending =
+    useSelector((store: Store) => store.updateSubscriptionPlan.pending) ||
+    false;
 
   const cancelSuccess = useSelector(
     (store: Store) => store.cancelSubscriptionPlan.data?.data
@@ -120,6 +124,24 @@ const SubscriptionPlan = () => {
       setHasUpdateSubsPlanError(false);
     }
   }, [updateSubsPlanErrorFromStore]);
+
+  useEffect(() => {
+    if (timer) {
+      clearTimeout(timer);
+      setTimer(null);
+    }
+
+    if (updateSuccess) {
+      setHideSubsPlanAlert(false);
+
+      const timerId = setTimeout(() => {
+        setHideSubsPlanAlert(true);
+      }, 5000);
+      setTimer(timerId);
+    } else {
+      setHideSubsPlanAlert(true);
+    }
+  }, [updateSuccess]);
 
   // METHODS
 
@@ -215,6 +237,8 @@ const SubscriptionPlan = () => {
     revertSubscription,
     downgradeSubscription,
     hasUpdateSubsPlanError,
+    updateSubsPlanPending,
+    updateSubsPlanSuccess: !!updateSuccess && !hideSubsPlanAlert,
   };
 
   return <SubscriptionPlanView {...params} />;

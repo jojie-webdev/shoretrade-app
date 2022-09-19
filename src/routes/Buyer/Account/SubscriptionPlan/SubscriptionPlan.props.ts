@@ -50,4 +50,6 @@ export interface SubscriptionPlanGeneratedProps
   revertSubscription: (subscriptionPlanId?: string) => void;
   downgradeSubscription: () => void;
   hasUpdateSubsPlanError: boolean;
+  updateSubsPlanPending: boolean;
+  updateSubsPlanSuccess: boolean;
 }

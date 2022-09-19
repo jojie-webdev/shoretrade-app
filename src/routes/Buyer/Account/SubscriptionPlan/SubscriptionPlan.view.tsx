@@ -92,6 +92,8 @@ export const SubscriptionPlanView = ({
   failedPayment,
   cancellationReversePeriodReverseMarket,
   hasUpdateSubsPlanError,
+  updateSubsPlanPending,
+  updateSubsPlanSuccess,
 }: SubscriptionPlanGeneratedProps) => {
   const location = useLocation();
   const theme = useTheme();
@@ -195,6 +197,20 @@ export const SubscriptionPlanView = ({
         />
       </BreadcrumbsContainer>
       <AlertsContainer>
+        {updateSubsPlanSuccess && (
+          <Alert
+            fullWidth
+            header="Payment Successful"
+            content={
+              <AlertContentContainer>
+                <Typography variant="caption" color="shade7">
+                  You are successfully subscribed to Essentials plan.
+                </Typography>
+              </AlertContentContainer>
+            }
+            variant="success"
+          />
+        )}
         {hasUpdateSubsPlanError && (
           <Alert
             fullWidth
@@ -540,6 +556,14 @@ export const SubscriptionPlanView = ({
                                 </div>
                               ) : (
                                 <>
+                                  <Button
+                                    onClick={() =>
+                                      revertSubscription(proPlanDetails?.id)
+                                    }
+                                    variant="primary"
+                                    text="Revert Subscription"
+                                    size="sm"
+                                  />
                                   {flags?.hasDowngraded && (
                                     <DowngradeStartsIndicator>
                                       <Typography
@@ -596,6 +620,7 @@ export const SubscriptionPlanView = ({
                                         variant="primary"
                                         text="Subscribe"
                                         size="sm"
+                                        loading={updateSubsPlanPending}
                                       />
                                     </div>
                                   ) : (
