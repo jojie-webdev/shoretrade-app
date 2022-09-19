@@ -31,7 +31,7 @@ export function addressToPlaceData2(data: PlaceData, unitNumber: string) {
     : `${unitNumber ? `${unitNumber} ` : ''}${data.address}`;
 
   return {
-    address: `${street}, ${data.countryCode}`,
+    address: street,
     coordinates: {
       lat: null,
       lng: null,
