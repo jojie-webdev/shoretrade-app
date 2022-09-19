@@ -117,6 +117,7 @@ const PlanPaymentMethod = (): JSX.Element => {
     onRemoveCard,
     companyId,
     from,
+    hasCompanyPlan: !!companyPlan?.activePlans?.length,
   };
 
   return <PlanPaymentMethodView {...generatedProps} />;

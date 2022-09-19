@@ -42,6 +42,7 @@ const PlanPaymentMethodView = ({
   onRemoveCard,
   companyId,
   from,
+  hasCompanyPlan,
 }: PlanPaymentMethodGeneratedProps) => {
   const theme = useTheme();
   const history = useHistory();
@@ -340,7 +341,7 @@ const PlanPaymentMethodView = ({
                             style={{ padding: '4px 11px', marginRight: 7 }}
                           ></Button>
                           <Button
-                            disabled={cards.length === 1}
+                            disabled={hasCompanyPlan && cards.length === 1}
                             onClick={(e) => {
                               e.preventDefault();
                               onRemoveCard(card);

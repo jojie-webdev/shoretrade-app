@@ -28,4 +28,5 @@ export interface PlanPaymentMethodGeneratedProps {
   onRemoveCard: (card: Card) => void;
   companyId: string;
   from: string;
+  hasCompanyPlan: boolean;
 }
