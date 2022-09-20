@@ -27,7 +27,7 @@ import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
 import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
-import theme, { useTheme } from 'utils/Theme';
+import { useTheme } from 'utils/Theme';
 
 import {
   HomeGeneratedProps,
@@ -91,6 +91,7 @@ const Credit = (props: { creditState: CreditState; loading: boolean }) => {
 
 const HomeView = (props: HomeGeneratedProps) => {
   const history = useHistory();
+  const theme = useTheme();
   const {
     loading,
     creditState,
@@ -182,7 +183,7 @@ const HomeView = (props: HomeGeneratedProps) => {
               hideArrowArea={hideCarouselArrowArea}
               arrowWidth={mediumArrowWidth ? 75 : undefined}
               addMargin
-              bgPosition="left"
+              bgPosition={theme.isSFM ? 'left' : 'center'}
             />
           </SwiperContainer>
           {!isPendingAccount && (

@@ -205,7 +205,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                     hideArrowArea={hideCarouselArrowArea}
                     arrowWidth={mediumArrowWidth ? 75 : undefined}
                     addMargin
-                    bgPosition="left"
+                    bgPosition={theme.isSFM ? 'left' : 'center'}
                   />
                 </div>
               </ViewCol>

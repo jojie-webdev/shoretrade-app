@@ -8,7 +8,9 @@ import { GetDefaultCompany } from 'store/selectors/buyer';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
 import useHomeOld from 'utils/Hooks/useHomeOld';
+import { useTheme } from 'utils/Theme';
 
+import { HOME_BANNER } from './Home.constants';
 import { HomeGeneratedProps, CreditState, HomeData } from './Home.props';
 import HomeView from './Home.view';
 import HomeViewOld from './Home.view.old';
@@ -17,6 +19,7 @@ const Home = (): JSX.Element => {
   const dispatch = useDispatch();
   const isOld = useHomeOld();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const theme = useTheme();
 
   // MARK:- Store
   const buyerHomePageData = useSelector(
@@ -44,8 +47,11 @@ const Home = (): JSX.Element => {
     addresses !== undefined &&
     !(addresses || []).some((a) => a.approved === 'APPROVED');
   const company = GetDefaultCompany();
-  const featured: string[] =
-    (isMobile ? bannerData?.app : bannerData?.web) || [];
+  let featured: string[] = (isMobile ? bannerData?.app : bannerData?.web) || [];
+
+  if (!theme.isSFM) {
+    featured = isMobile ? HOME_BANNER.mobile : HOME_BANNER.desktop;
+  }
 
   const companyPlan = useSelector(
     (store: Store) => store.getCompanyPlan.data?.data
