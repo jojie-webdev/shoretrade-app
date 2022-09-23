@@ -65,7 +65,7 @@ export const BoxDetails = ({
             QTY
           </Typography>
           <Typography color="noshade" variant="copy">
-            {stocks}
+            {quantity}
           </Typography>
         </div>
         <div className="text-container">
@@ -363,7 +363,6 @@ const AddBoxes = ({
           {/*</div>*/}
         </Col>
       </Row>
-
       <Row>
         {boxes
           .filter((box) => box.quantity > (box.sold || 0))
