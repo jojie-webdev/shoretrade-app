@@ -103,12 +103,9 @@ export const Container = styled.div<{ variant?: string }>`
       height: 8px;
       display: inline-block;
       border-radius: 100%;
-      background: ${({ theme }) => theme.grey.shade5};
+      background: ${({ theme }) => theme.grey.shade6};
       opacity: 0.2;
       margin: 0 4px;
-      @media ${BREAKPOINTS['sm']} {
-        background: ${({ theme }) => theme.grey.noshade};
-      }
     }
 
     .swiper-pagination-bullet-active {
