@@ -15,3 +15,11 @@ export const getCallingCode = (mobile: string) => {
 
   return country ? country.callingCode : '61';
 };
+
+export const getCallingCode2 = (mobile: string) => {
+  const country = CALLING_CODES.find(
+    (cc: { callingCode: string }) => mobile.slice(1, 3) === cc.callingCode
+  );
+
+  return country ? country.callingCode : '61';
+};

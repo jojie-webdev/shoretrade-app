@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { updateUserActions } from 'store/actions';
 import { Store } from 'types/store/Store';
-import { replaceCallingCode, getCallingCode } from 'utils/String/callingCode';
+import { getCallingCode2 } from 'utils/String/callingCode';
 
 import {
   UserDetails,
@@ -50,12 +50,12 @@ const YourDetails = (): JSX.Element => {
     // layout/Dashboard/Dashboard.container.tsx
     if (!getUser.pending) {
       const user = getUser.data?.data.user;
-
+      setCallingCode(getCallingCode2(user?.mobile || ''));
       setUserDetails({
         firstName: user?.firstName || '',
         lastName: user?.lastName || '',
         email: user?.email || '',
-        mobile: replaceCallingCode(user?.mobile || ''),
+        mobile: user?.mobile?.slice(3, user?.mobile?.length) || '',
       });
 
       const { companyId } = qs.parse(location.search, {
@@ -83,9 +83,6 @@ const YourDetails = (): JSX.Element => {
 
   // MARK:- Methods
   const onClickSave = (updateUserForm: UpdateUserForm) => {
-    const user = getUser.data?.data.user;
-    const callingCode = getCallingCode(user?.mobile || '');
-
     const {
       firstName,
       lastName,
