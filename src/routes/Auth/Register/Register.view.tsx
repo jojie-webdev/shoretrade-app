@@ -2383,7 +2383,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
       cardName: registrationDetails.cardName,
       cardBillingAddress:
         registrationDetails.cardBillingAddress || registrationDetails.address
-          ? `${registrationDetails.address?.streetNumber} ${registrationDetails.address?.route}`.trim()
+          ? `${registrationDetails.unitNumber}${registrationDetails.address?.streetNumber} ${registrationDetails.address?.route}`.trim()
           : '',
       cardZipCode:
         registrationDetails.cardZipCode ||
