@@ -118,6 +118,7 @@ export const SubscriptionPlanView = ({
     setShowReverseMarketPlaceToggleModal,
   ] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState('Essentials');
 
   const redirectState = {
     from: {
@@ -556,14 +557,6 @@ export const SubscriptionPlanView = ({
                                 </div>
                               ) : (
                                 <>
-                                  <Button
-                                    onClick={() =>
-                                      revertSubscription(proPlanDetails?.id)
-                                    }
-                                    variant="primary"
-                                    text="Revert Subscription"
-                                    size="sm"
-                                  />
                                   {flags?.hasDowngraded && (
                                     <DowngradeStartsIndicator>
                                       <Typography
@@ -611,6 +604,7 @@ export const SubscriptionPlanView = ({
                                     <div className="subscription-action">
                                       <Button
                                         onClick={() => {
+                                          setSelectedPlan('Essentials');
                                           if (basePlanDetails) {
                                             updateSubscription(
                                               basePlanDetails.id
@@ -620,7 +614,10 @@ export const SubscriptionPlanView = ({
                                         variant="primary"
                                         text="Subscribe"
                                         size="sm"
-                                        loading={updateSubsPlanPending}
+                                        loading={
+                                          selectedPlan === 'Essentials' &&
+                                          updateSubsPlanPending
+                                        }
                                       />
                                     </div>
                                   ) : (
@@ -793,12 +790,17 @@ export const SubscriptionPlanView = ({
                                   <Button
                                     onClick={() => {
                                       if (proPlanDetails) {
+                                        setSelectedPlan('Pro');
                                         updateSubscription(proPlanDetails.id);
                                       }
                                     }}
                                     variant="primary"
                                     text="Subscribe"
                                     size="sm"
+                                    loading={
+                                      selectedPlan === 'Pro' &&
+                                      updateSubsPlanPending
+                                    }
                                   />
                                 </div>
                               ) : (
@@ -1062,6 +1064,7 @@ export const SubscriptionPlanView = ({
         }}
         action={() => {
           if (proPlanDetails?.id) {
+            setSelectedPlan('Pro');
             updateSubscription(proPlanDetails.id);
           }
           setShowProToggleModal(false);
@@ -1122,6 +1125,7 @@ export const SubscriptionPlanView = ({
           } else {
             downgradeSubscription();
             if (basePlanDetails?.id) {
+              setSelectedPlan('Essential');
               updateSubscription(basePlanDetails.id);
             }
           }
