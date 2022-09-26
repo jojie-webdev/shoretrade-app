@@ -435,8 +435,8 @@ const StepForm = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const isAUorNZ =
-    registrationDetails.address?.countryCode === 'AU' ||
-    registrationDetails.address?.countryCode === 'NZ';
+    registrationDetails.address?.countryCode === 'AU' || //AU
+    registrationDetails.address?.countryCode === 'NZ'; //NZ
 
   const selectedPlanHandler = (value: string) => {
     updateRegistrationDetails({
