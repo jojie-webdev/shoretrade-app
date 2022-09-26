@@ -205,7 +205,11 @@ export const SubscriptionPlanView = ({
             content={
               <AlertContentContainer>
                 <Typography variant="caption" color="shade7">
-                  You are successfully subscribed to Essentials plan.
+                  You are successfully subscribed to{' '}
+                  {currentPlanDetails?.plan.name.toLowerCase() === 'base'
+                    ? 'Essentials'
+                    : 'Pro'}{' '}
+                  plan.
                 </Typography>
               </AlertContentContainer>
             }
