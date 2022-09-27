@@ -31,7 +31,7 @@ export const SwiperContainer = styled.div`
   width: 100%;
   max-width: 100%;
 
-  @media (max-width: 1365px) {
+  @media (max-width: 1439px) {
     height: 182px;
   }
 

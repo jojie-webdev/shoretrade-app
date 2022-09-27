@@ -5,7 +5,7 @@ import { AspectRatio, MediaQueries } from './Carousel.props';
 const ImageContainerHeight: Record<AspectRatio, MediaQueries> = {
   '16:9': {
     '1440': 350,
-    '1366': 309,
+    '1366': 205,
     '1024': 181,
     '768': 148,
     '375': 180,
