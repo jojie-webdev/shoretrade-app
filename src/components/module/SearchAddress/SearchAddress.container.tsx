@@ -60,7 +60,9 @@ const SearchAddress = (): JSX.Element => {
     [];
   const addressOptions = GetAddressOptions();
   const currentDefaultAddressId = (
-    addresses.find((i) => i.default) || { id: '' }
+    addresses
+      .filter((a) => a.approved === 'APPROVED')
+      .find((i) => i.default) || { id: '' }
   ).id;
 
   const [targetAddress, setTargetAddress] = useState('');
