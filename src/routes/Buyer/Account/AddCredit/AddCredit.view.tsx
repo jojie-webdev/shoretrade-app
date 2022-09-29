@@ -94,18 +94,20 @@ const AddCreditView = (props: AddCreditGeneratedProps) => {
         enableReinitialize
       >
         <FormAddCredit>
-          <Row>
-            <Col md={12} xl={6} className="form-spacer">
-              <FormikTextField
-                type="text"
-                name="amount"
-                id="amount"
-                label="How much credit would you like to add?"
-                placeholder="$10,000.00"
-                LeftComponent={<DollarSign fill={theme.grey.shade6} />}
-              />
-            </Col>
-          </Row>
+          {activeTab === TABS.CC && (
+            <Row>
+              <Col md={12} xl={6} className="form-spacer">
+                <FormikTextField
+                  type="text"
+                  name="amount"
+                  id="amount"
+                  label="How much credit would you like to add?"
+                  placeholder="$10,000.00"
+                  LeftComponent={<DollarSign fill={theme.grey.shade6} />}
+                />
+              </Col>
+            </Row>
+          )}
 
           {activeTab === TABS.BANK && (
             <FieldsetBankAccount aasNumber={props.aasNumber} />
