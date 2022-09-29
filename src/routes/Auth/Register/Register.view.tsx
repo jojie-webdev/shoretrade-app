@@ -2208,7 +2208,10 @@ const StepForm = ({
                   variant={
                     buttonTextHandler(step) === 'SKIP' ? 'outline' : 'primary'
                   }
-                  disabled={!theme.isSFM && isAUorNZ}
+                  disabled={
+                    !registrationDetails.callingCode ||
+                    (!theme.isSFM && isAUorNZ)
+                  }
                 />
               </>
             ) : null}
