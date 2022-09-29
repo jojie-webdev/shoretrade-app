@@ -114,7 +114,7 @@ const LandingView = (props: LandingGeneratedProps) => {
     permission
       ? {
           iconName: 'anchor',
-          value: 'Linked Accounts & Assistants',
+          value: 'Linked Accounts',
           path: BUYER_ACCOUNT_ROUTES.LINKED_ACCOUNTS,
         }
       : {},
