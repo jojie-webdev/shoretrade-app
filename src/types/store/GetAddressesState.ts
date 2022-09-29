@@ -15,7 +15,7 @@ export type GetAddressesResponseItem = {
   postcode: string;
   countryCode: string;
   default: boolean;
-  approved: 'APPROVED';
+  approved: 'APPROVED' | 'PENDING';
   flatDeliveryFee: string | null;
   depotAddress: {
     id: string;

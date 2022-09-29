@@ -5,6 +5,7 @@ import {
   addressToPlaceData,
   placeDataToUpdateAddressMeta,
 } from 'components/module/SearchAddress/SearchAddress.transform';
+import debounce from 'lodash.debounce';
 import { remove } from 'ramda';
 import reverse from 'ramda/es/reverse';
 import { useSelector, useDispatch } from 'react-redux';
@@ -14,24 +15,38 @@ import {
   historyActions,
   getBuyerSearchFiltersActions,
   updatePreferencesActions,
+  getAddressesActions,
 } from 'store/actions';
 import { GetAddressOptions, GetDefaultCompany } from 'store/selectors/buyer';
+import { GetAddressesResponseItem } from 'types/store/GetAddressesState';
 import { UserSearchPreferences } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
 import { UpdatePreferencesMeta } from 'types/store/UpdatePreferencesState';
+import useLocalStorage from 'utils/Hooks/useLocalStorage';
 
 import SearchAddressView from './SearchAddress.view';
-import debounce from 'lodash.debounce';
 
 const SearchAddress = (): JSX.Element => {
   const dispatch = useDispatch();
   const [hasInitPreferences, setHasInitPreferences] = useState(false);
+  const [currentDefaultAddressId, setCurrentDefaultAddressId] = useState('');
+  const [previousDefaultAddress] = useLocalStorage(
+    'previousDefaultAddress',
+    {} as GetAddressesResponseItem
+  );
   //#region Address
+  const companyId = GetDefaultCompany()?.id || '';
 
   useEffect(() => {
     dispatch(getBuyerSearchFiltersActions.request({}));
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    if (companyId) {
+      dispatch(getAddressesActions.request({ companyId }));
+    }
+  }, [companyId]);
 
   const searchPreferences = useSelector(
     (state: Store) =>
@@ -53,18 +68,13 @@ const SearchAddress = (): JSX.Element => {
     dispatch(updatePreferencesActions.clear());
   };
 
-  const companyId = GetDefaultCompany()?.id || '';
-
   const addresses =
     useSelector((state: Store) => state.getAddresses.data?.data.addresses) ||
     [];
   const addressOptions = GetAddressOptions();
-  const currentDefaultAddressId = (
-    addresses
-      .filter((a) => a.approved === 'APPROVED')
-      .find((i) => i.default) || { id: '' }
-  ).id;
-
+  const pendingApproveDefaultAddress = addresses
+    .filter((a) => a.approved === 'PENDING')
+    .find((i) => i.default);
   const [targetAddress, setTargetAddress] = useState('');
 
   const setDefaultAddress = (addressId: string) => {
@@ -85,16 +95,19 @@ const SearchAddress = (): JSX.Element => {
   };
 
   useEffect(() => {
+    if (pendingApproveDefaultAddress) {
+      setCurrentDefaultAddressId(previousDefaultAddress.id);
+    } else {
+      const currentDefaultAddressId = (
+        addresses.find((i) => i.default) || { id: '' }
+      ).id;
+      setCurrentDefaultAddressId(currentDefaultAddressId);
+    }
+  }, [addresses, pendingApproveDefaultAddress]);
+
+  useEffect(() => {
     if (currentDefaultAddressId.length > 0 && targetAddress.length > 0) {
       setTargetAddress('');
-    }
-
-    if (
-      currentDefaultAddressId.length > 0 &&
-      addressOptions.length > 0 &&
-      !addressOptions.map((a) => a.value).includes(currentDefaultAddressId)
-    ) {
-      setDefaultAddress(addressOptions[0].value);
     }
     // eslint-disable-next-line
   }, [currentDefaultAddressId]);
