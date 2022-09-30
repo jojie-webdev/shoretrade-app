@@ -106,7 +106,12 @@ const SearchAddress = (): JSX.Element => {
   }, [addresses, pendingApproveDefaultAddress]);
 
   useEffect(() => {
-    if (currentDefaultAddressId.length > 0 && targetAddress.length > 0) {
+    if (
+      currentDefaultAddressId &&
+      currentDefaultAddressId.length > 0 &&
+      targetAddress &&
+      targetAddress.length > 0
+    ) {
       setTargetAddress('');
     }
     // eslint-disable-next-line
