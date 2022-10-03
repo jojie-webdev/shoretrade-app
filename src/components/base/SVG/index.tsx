@@ -1,4 +1,8 @@
 /* PLOP_INJECT_IMPORT */
+export { default as Bill } from './Bill';
+export { default as Crates2 } from './Crates2';
+export { default as QrCodeScan } from './QrCodeScan';
+export { default as Home3 } from './Home3';
 export { default as Fee } from './Fee';
 export { default as Plus } from './Plus';
 export { default as QuestionCircle } from './QuestionCircle';

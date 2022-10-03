@@ -65,9 +65,13 @@ const NavLink = ({
   onClick,
   isActive,
   isAccessible,
+  title,
 }: NavLinkProps) => {
   const theme = useTheme();
   const disabledColor = theme.appType === 'buyer' ? 'shade6' : 'shade7';
+
+  const styleExemptedIcons = ['Home', 'Market Requests'];
+
   return (
     <SidebarItem
       activeStyle={{
@@ -91,8 +95,8 @@ const NavLink = ({
         {Icon && (
           <Icon
             fill={isAccessible ? iconColor : theme.grey[disabledColor]}
-            height={20}
-            width={20}
+            height={styleExemptedIcons.includes(title) ? 24 : 20}
+            width={styleExemptedIcons.includes(title) ? 24 : 20}
           />
         )}
       </div>
@@ -397,6 +401,7 @@ const DashboardView = (props: DashboardGeneratedProps): JSX.Element => {
                   linkText={route.title || ''}
                   Icon={route.icon}
                   isAccessible={isRouteAccessible(route)}
+                  title={route.title || ''}
                 />
               ))}
             </div>

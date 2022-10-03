@@ -57,6 +57,7 @@ export type NavLinkProps = {
   onClick: () => void;
   isActive: boolean;
   isAccessible: boolean;
+  title: string;
 };
 
 // Inner component props

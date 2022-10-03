@@ -3,15 +3,15 @@ import React, { useEffect, useMemo, useState } from 'react';
 import {
   Search as SearchIcon,
   Account as AccountIcon,
-  Home as HomeIcon,
+  Home3 as HomeIcon,
   Category as CategoryIcon,
   Notepad as OrderIcon,
-  Bolt as BoltIcon,
+  CatchNet as CatchNetIcon,
   Listing as ListingIcon,
   Cog as CogIcon,
-  Barcode as BarcodeSVG,
+  QrCodeScan as QRCodeScanIcon,
   QuestionCircle as QuestionIcon,
-  Crates,
+  Crates2 as CratesIcon,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import DashboardLayout from 'components/layout/Dashboard';
@@ -43,6 +43,7 @@ import NotificationsSettings from './Account/NotificationsSettings';
 import Categories from './Categories/categories.routes';
 import CategoriesPreview from './Categories/Preview';
 import Checkout from './Checkout';
+import CratesManagement from './CratesManagement';
 import HelpAndSupport from './HelpAndSupport/HelpAndSupport.routes';
 import Home from './Home';
 import Favourites from './Home/Favourites';
@@ -57,7 +58,6 @@ import ProductDetails from './ProductDetails';
 import Search from './Search';
 import SellerDetails from './SellerDetails';
 import Upgrade from './Upgrade';
-import CratesManagement from './CratesManagement';
 
 const ROUTES: Routes = {
   HOME: {
@@ -89,7 +89,7 @@ const ROUTES: Routes = {
     path: BUYER_ROUTES.MARKET_REQUESTS,
     children: <Market />,
     title: 'Market Requests',
-    icon: BoltIcon,
+    icon: CatchNetIcon,
     nested: true,
   },
   ORDERS: {
@@ -102,14 +102,14 @@ const ROUTES: Routes = {
     path: BUYER_ROUTES.BARCODE_SCANNER,
     title: 'Barcode Scanner',
     children: <BarcodeScanner />,
-    icon: BarcodeSVG,
+    icon: QRCodeScanIcon,
     nested: true,
   },
   CREATES_MANAGEMENT: {
     path: BUYER_ROUTES.CRATES_MANAGEMENT,
     title: 'Crates Management',
     children: <CratesManagement />,
-    icon: Crates,
+    icon: CratesIcon,
     nested: true,
   },
   NOTIFICATIONS_SETTINGS: {

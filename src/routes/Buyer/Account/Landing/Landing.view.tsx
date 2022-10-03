@@ -7,7 +7,7 @@ import {
   Anchor,
   CategoriesOutline,
   Cog,
-  CreditCardOutline,
+  Bill,
   FileAlt,
   HelmOutline,
   Location,
@@ -62,8 +62,8 @@ const LandingView = (props: LandingGeneratedProps) => {
     switch (iconName) {
       case 'account':
         return <Account fill={theme.grey.shade6} />;
-      case 'creditCardOutline':
-        return <CreditCardOutline fill={theme.grey.shade6} />;
+      case 'bill':
+        return <Bill fill={theme.grey.shade6} />;
       case 'dashboardOutline':
         return <HelmOutline fill={theme.grey.shade6} />;
       case 'anchor':
@@ -101,7 +101,7 @@ const LandingView = (props: LandingGeneratedProps) => {
       path: BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
     },
     {
-      iconName: 'creditCardOutline',
+      iconName: 'bill',
       value: 'Balance & Payments',
       path: BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
     },
