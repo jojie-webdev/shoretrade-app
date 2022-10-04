@@ -5,13 +5,13 @@ import {
   AddBorder,
   Account as AccountSVG,
   QuestionCircle as QuestionIcon,
-  FileCheck,
-  Cart,
-  CheckBorder,
-  Bolt,
-  Crates,
+  ChartLine,
+  BulletList as BulletListIcon,
+  Notepad as NotepadIcon,
+  CatchNet as CatchNetIcon,
+  Crates2 as CratesIcon,
   Cog,
-  Barcode as BarcodeSVG,
+  QrCodeScan as BarcodeSVG,
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
 import { SELLER_ACCOUNT_ROUTES, SELLER_ROUTES } from 'consts';
@@ -59,7 +59,7 @@ const ROUTES: Routes = {
     path: SELLER_ROUTES.MARKET_DATA,
     title: 'Market Data',
     children: <MarketDataRoutes />,
-    icon: FileCheck,
+    icon: ChartLine,
     nested: true,
   },
   //Market Board
@@ -67,7 +67,7 @@ const ROUTES: Routes = {
     path: SELLER_ROUTES.MARKET_BOARD,
     title: 'Reverse Marketplace',
     children: <MarketBoardRoutes />,
-    icon: Bolt,
+    icon: CatchNetIcon,
     nested: true,
   },
   // Add Product
@@ -82,14 +82,14 @@ const ROUTES: Routes = {
     path: SELLER_ROUTES.SELLING,
     title: 'Selling',
     children: <Selling />,
-    icon: Cart,
+    icon: BulletListIcon,
     nested: true,
   },
   SOLD: {
     path: SELLER_ROUTES.SOLD,
     title: 'Sold',
     children: <Sold />,
-    icon: CheckBorder,
+    icon: NotepadIcon,
     nested: true,
   },
   BARCODE_SCANNER: {
@@ -103,7 +103,7 @@ const ROUTES: Routes = {
     path: SELLER_ROUTES.CREATES_MANAGEMENT,
     title: 'Crates Management',
     children: <CratesManagement />,
-    icon: Crates,
+    icon: CratesIcon,
     nested: true,
   },
   NOTIFICATIONS_SETTINGS: {

@@ -8,6 +8,10 @@ import {
   Crates2,
   QrCodeScan,
   Home3,
+  FileCheck2,
+  University,
+  BulletList,
+  ChartLine,
   Fee,
   Plus,
   QuestionCircle,
@@ -250,6 +254,18 @@ storiesOf('base/SVG', module).add('Summary', () => {
         </Wrapper>
         <Wrapper label="Home3">
           <Home3 width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="FileCheck2">
+          <FileCheck2 width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="University">
+          <University width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="BulletList">
+          <BulletList width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="ChartLine">
+          <ChartLine width={30} height={30} />
         </Wrapper>
         <Wrapper label="Fee">
           <Fee width={30} height={30} />

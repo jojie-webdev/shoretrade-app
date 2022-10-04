@@ -3,17 +3,18 @@ import React from 'react';
 import Button from 'components/base/Button';
 import Select from 'components/base/Select';
 import {
-  ClipboardNotes,
+  FileCheck2,
   Account,
   Anchor,
   CategoriesOutline,
   Cog,
-  CreditCardOutline,
+  QuestionCircle,
+  University,
   FileAlt,
   HelmOutline,
   Location,
   Lock,
-  CatchNet,
+  Fishes,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import AccountPicture from 'components/module/AccountPicture';
@@ -58,8 +59,8 @@ const AccountLandingView = ({
     switch (iconName) {
       case 'account':
         return <Account fill={theme.grey.shade7} />;
-      case 'creditCardOutline':
-        return <CreditCardOutline fill={theme.grey.shade7} />;
+      case 'university':
+        return <University fill={theme.grey.shade7} />;
       case 'dashboardOutline':
         return <HelmOutline fill={theme.grey.shade7} />;
       case 'fileAlt':
@@ -74,10 +75,12 @@ const AccountLandingView = ({
         return <CategoriesOutline fill={theme.grey.shade7} />;
       case 'cog':
         return <Cog fill={theme.grey.shade7} />;
-      case 'clipboardNotes':
-        return <ClipboardNotes fill={theme.grey.shade7} />;
-      case 'catchNet':
-        return <CatchNet fill={theme.grey.shade7} />;
+      case 'fileCheck':
+        return <FileCheck2 fill={theme.grey.shade7} />;
+      case 'fishes':
+        return <Fishes fill={theme.grey.shade7} />;
+      case 'questionCircle':
+        return <QuestionCircle fill={theme.grey.shade7} />;
     }
   };
 
@@ -125,7 +128,7 @@ const AccountLandingView = ({
       path: SELLER_ACCOUNT_ROUTES.CHANGE_PASSWORD,
     },
     {
-      iconName: 'clipboardNotes',
+      iconName: 'fileCheck',
       value: 'Fishing Licenses',
       path: `${SELLER_ACCOUNT_ROUTES.LICENSES}${qs.stringify(
         { companyId: currentCompany?.id },
@@ -133,7 +136,7 @@ const AccountLandingView = ({
       )}`,
     },
     {
-      iconName: 'catchNet',
+      iconName: 'fishes',
       value: "Products I'm Selling",
       path: `${SELLER_ACCOUNT_ROUTES.MARKET_INTERESTS}${qs.stringify(
         { companyId: currentCompany?.id },
@@ -151,7 +154,7 @@ const AccountLandingView = ({
       hideFrom: [COMPANY_RELATIONSHIPS.FISHERMAN],
     },
     {
-      iconName: 'creditCardOutline',
+      iconName: 'university',
       value: 'Bank Details',
       path: `${SELLER_ACCOUNT_ROUTES.BANK_DETAILS}${qs.stringify(
         { companyId: currentCompany?.id },
@@ -167,7 +170,7 @@ const AccountLandingView = ({
       )}`,
     },
     {
-      iconName: 'cog',
+      iconName: 'questionCircle',
       value: 'Help & Support',
       path: SELLER_ROUTES.HELP_AND_SUPPORT,
     },
