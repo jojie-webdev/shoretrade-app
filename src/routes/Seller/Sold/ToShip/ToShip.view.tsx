@@ -214,6 +214,7 @@ export const PendingItem = (props: {
                     isOpen: true,
                     buyerId: order.buyerId,
                     buyerName: order.buyerCompanyName,
+                    orderRefNumber: order.orderRefNumber.toString()
                   });
                   e.stopPropagation();
                 }}
@@ -502,11 +503,13 @@ const ToShip = (props: SoldGeneratedProps) => {
     createUpdateReducer<{
       buyerId: string;
       buyerName: string;
+      orderRefNumber: string;
       isOpen: boolean;
     }>(),
     {
       buyerId: '',
       buyerName: '',
+      orderRefNumber: '',
       isOpen: false,
     }
   );
@@ -668,7 +671,7 @@ const ToShip = (props: SoldGeneratedProps) => {
         isOpen={isSendingMessage || messageModal.isOpen}
         recipient={messageModal.buyerName}
         onSend={(message) => {
-          sendMessage(messageModal.buyerId, message);
+          sendMessage(messageModal.buyerId, message, messageModal.orderRefNumber);
           updateMessageModal({ isOpen: false });
         }}
         onClickClose={() => {

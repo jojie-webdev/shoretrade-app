@@ -118,7 +118,11 @@ export interface SoldGeneratedProps {
     updateDeliveredFilters: Dispatch<Partial<RequestFilters>>;
   };
   token: string;
-  sendMessage: (buyerId: string, message: string) => void;
+  sendMessage: (
+    buyerId: string,
+    message: string,
+    orderRefNumber: string
+  ) => void;
   isSendingMessage: boolean;
   isPlacingOrder: boolean;
   placeOrder: (data: PlaceOrderMeta) => void;

@@ -120,12 +120,17 @@ const Sold = (): JSX.Element => {
 
   // MARK: Methods
 
-  const sendMessage = (buyerId: string, message: string) => {
-    if (buyerId && message) {
+  const sendMessage = (
+    buyerId: string,
+    message: string,
+    orderRefNumber: string
+  ) => {
+    if (buyerId && message && orderRefNumber) {
       dispatch(
         sendMessageActions.request({
           buyerId: buyerId || '',
           message,
+          orderRefNumber,
         })
       );
     }
