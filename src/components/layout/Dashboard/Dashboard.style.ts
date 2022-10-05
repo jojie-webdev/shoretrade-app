@@ -235,6 +235,7 @@ export const SidebarItem = styled(NavLink)<{
   padding-left: 14px;
   .icon-container {
     margin-right: 12px;
+    margin-bottom: 3px;
   }
 
   :hover {

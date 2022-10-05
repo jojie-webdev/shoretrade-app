@@ -70,7 +70,7 @@ const NavLink = ({
   const theme = useTheme();
   const disabledColor = theme.appType === 'buyer' ? 'shade6' : 'shade7';
 
-  const styleExemptedIcons = ['Home', 'Market Requests'];
+  const styleExemptedIcons = ['Home', 'Market Requests', 'Sold'];
 
   return (
     <SidebarItem

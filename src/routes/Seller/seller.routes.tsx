@@ -7,7 +7,7 @@ import {
   QuestionCircle as QuestionIcon,
   ChartLine,
   BulletList as BulletListIcon,
-  Notepad as NotepadIcon,
+  CheckCircle as CheckCircleIcon,
   CatchNet as CatchNetIcon,
   Crates2 as CratesIcon,
   Cog,
@@ -89,7 +89,7 @@ const ROUTES: Routes = {
     path: SELLER_ROUTES.SOLD,
     title: 'Sold',
     children: <Sold />,
-    icon: NotepadIcon,
+    icon: CheckCircleIcon,
     nested: true,
   },
   BARCODE_SCANNER: {
