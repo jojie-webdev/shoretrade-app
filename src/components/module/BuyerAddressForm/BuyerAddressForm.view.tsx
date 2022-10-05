@@ -155,7 +155,12 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
 
       {!isMobile && (
         <Row nogutter>
-          <Button text="Submit" onClick={validate} loading={pending} />
+          <Button
+            text="Submit"
+            onClick={validate}
+            loading={pending}
+            disabled={identifyIsAUOrNZAddress(address?.address || '')}
+          />
           {type === 'EDIT' && (
             <Button
               className="delete-btn"
@@ -173,6 +178,7 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
           text="Submit"
           onClick={validate}
           loading={pending}
+          disabled={identifyIsAUOrNZAddress(address?.address || '')}
         />
         {type === 'EDIT' && (
           <Button
