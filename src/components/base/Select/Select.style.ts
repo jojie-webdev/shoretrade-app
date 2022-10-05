@@ -118,7 +118,7 @@ export const StyledDropdown = styled(Dropdown)<DropdownProps>`
     padding: 12px 16px;
     &:hover {
       background-color: ${({ theme }) =>
-        theme.appType === 'seller' ? '#ffffff20' : '#00000020'};
+        theme.appType === 'seller' ? '#283139' : '#081119'};
     }
   }
 
@@ -143,6 +143,7 @@ export const StyledDropdown = styled(Dropdown)<DropdownProps>`
         }
         return dark ? `${theme.grey.noshade};` : `${theme.grey.shade9};`;
       }}
+    }
     @media ${BREAKPOINTS['xs']} {
       height: 18px;
       width: 100px;

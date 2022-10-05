@@ -24,6 +24,7 @@ import {
   // Aquafuture,
   Choices,
   Container,
+  SelectWrapper,
   StyledTextField,
 } from './AddPackaging.style';
 
@@ -153,7 +154,7 @@ const AddPackaging = ({
 
             {p.value === choice && choice === PACKAGING.polystyrene && (
               <div>
-                <Select
+                <SelectWrapper
                   value={selectedId}
                   options={transformPolystyrene(polystyrene)}
                   onChange={({ value }) => setSelectedId(value)}

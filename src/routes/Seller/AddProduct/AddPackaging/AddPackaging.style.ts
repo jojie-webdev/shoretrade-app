@@ -1,3 +1,4 @@
+import Select from 'components/base/Select';
 import TextField from 'components/base/TextField';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
@@ -66,5 +67,11 @@ export const Aquafuture = styled.div`
 
   .text-container {
     margin-left: 8px;
+  }
+`;
+
+export const SelectWrapper = styled(Select)`
+  .Dropdown-menu {
+    overflow-y: visible;
   }
 `;
