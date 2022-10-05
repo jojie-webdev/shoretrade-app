@@ -22,13 +22,7 @@ export function addressToPlaceData(data: PlaceData, unitNumber: string) {
 }
 
 export function addressToPlaceData2(data: PlaceData, unitNumber: string) {
-  const street = data.streetNumber
-    ? `${data.streetNumber} ${data.address}`.indexOf(data.streetNumber) > -1
-      ? `${data.address}`
-      : `${unitNumber ? `${unitNumber}/` : ''}${data.streetNumber} ${
-          data.address
-        }`
-    : `${unitNumber ? `${unitNumber} ` : ''}${data.address}`;
+  const street = `${unitNumber} ${data?.address}`.trim();
 
   return {
     address: street,
