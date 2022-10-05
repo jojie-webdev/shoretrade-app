@@ -12,6 +12,7 @@ import {
   HelmOutline,
   Location,
   Lock,
+  QuestionCircle,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import AccountPicture from 'components/module/AccountPicture';
@@ -76,6 +77,8 @@ const LandingView = (props: LandingGeneratedProps) => {
         return <CategoriesOutline fill={theme.grey.shade6} />;
       case 'cog':
         return <Cog fill={theme.grey.shade6} />;
+      case 'questionCircle':
+        return <QuestionCircle fill={theme.grey.shade6} />;
     }
   };
 
@@ -132,7 +135,7 @@ const LandingView = (props: LandingGeneratedProps) => {
       )}`,
     },
     {
-      iconName: 'cog',
+      iconName: 'questionCircle',
       value: 'Help & Support',
       path: BUYER_ROUTES.HELP_AND_SUPPORT,
     },
