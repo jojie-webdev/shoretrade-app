@@ -159,7 +159,11 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
             text="Submit"
             onClick={validate}
             loading={pending}
-            disabled={identifyIsAUOrNZAddress(address?.address || '')}
+            disabled={
+              theme.isSFM
+                ? !identifyIsAUOrNZAddress(address?.address || '')
+                : identifyIsAUOrNZAddress(address?.address || '')
+            }
           />
           {type === 'EDIT' && (
             <Button
@@ -178,7 +182,11 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
           text="Submit"
           onClick={validate}
           loading={pending}
-          disabled={identifyIsAUOrNZAddress(address?.address || '')}
+          disabled={
+            theme.isSFM
+              ? !identifyIsAUOrNZAddress(address?.address || '')
+              : identifyIsAUOrNZAddress(address?.address || '')
+          }
         />
         {type === 'EDIT' && (
           <Button

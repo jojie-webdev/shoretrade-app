@@ -165,7 +165,16 @@ const SellerAddressForm = (props: SellerAddressFormProps): JSX.Element => {
 
       {!isMobile && !userPending && (
         <Row nogutter>
-          <Button text="Submit" onClick={validate} loading={pending} />
+          <Button
+            text="Submit"
+            onClick={validate}
+            loading={pending}
+            disabled={
+              theme.isSFM
+                ? !identifyIsAUOrNZAddress(address?.address || '')
+                : identifyIsAUOrNZAddress(address?.address || '')
+            }
+          />
           {type === 'EDIT' &&
             companyRelationship !== COMPANY_RELATIONSHIPS.FISHERMAN && (
               <Button
@@ -184,6 +193,11 @@ const SellerAddressForm = (props: SellerAddressFormProps): JSX.Element => {
           text="Submit"
           onClick={validate}
           loading={pending}
+          disabled={
+            theme.isSFM
+              ? !identifyIsAUOrNZAddress(address?.address || '')
+              : identifyIsAUOrNZAddress(address?.address || '')
+          }
         />
         {type === 'EDIT' && (
           <Button
