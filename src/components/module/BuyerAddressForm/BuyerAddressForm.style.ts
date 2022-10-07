@@ -32,3 +32,8 @@ export const Container = styled.div`
     margin-left: 8px;
   }
 `;
+
+export const AnchorWrapper = styled.a`
+  text-decoration: underline;
+  color: ${({ theme }) => theme.grey.shade9};
+`;
