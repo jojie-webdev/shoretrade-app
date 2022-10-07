@@ -436,8 +436,8 @@ const StepForm = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const isAUorNZ =
-    registrationDetails.address?.countryCode === 'AU' || //AU
-    registrationDetails.address?.countryCode === 'NZ'; //NZ
+    registrationDetails.address?.countryCode === 'AU' ||
+    registrationDetails.address?.countryCode === 'NZ';
 
   const selectedPlanHandler = (value: string) => {
     updateRegistrationDetails({
@@ -1233,6 +1233,34 @@ const StepForm = ({
                           <span>
                             <SFMBlueLink href="https://www.sfmblue.com.au">
                               www.sfmblue.com.au
+                            </SFMBlueLink>
+                          </span>
+                        </Typography>
+                      }
+                      variant="error"
+                      alignText="center"
+                      fullWidth
+                      style={{
+                        marginTop: 16,
+                      }}
+                    />
+                  ) : null}
+                  {theme.isSFM &&
+                  registrationDetails.address?.countryCode &&
+                  !isAUorNZ ? (
+                    <Alert
+                      content={
+                        <Typography
+                          color={
+                            theme.appType === 'seller' ? 'noshade' : 'shade6'
+                          }
+                          variant="caption"
+                        >
+                          Please enter an Australian or New Zealand address. For
+                          international addresses, please register at{' '}
+                          <span>
+                            <SFMBlueLink href="https://www.shoretrade.com">
+                              www.shoretrade.com
                             </SFMBlueLink>
                           </span>
                         </Typography>

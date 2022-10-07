@@ -19,7 +19,7 @@ import { createUpdateReducer } from 'utils/Hooks';
 import { useTheme } from 'utils/Theme';
 
 import { BuyerAddressFormProps } from './BuyerAddressForm.props';
-import { Container } from './BuyerAddressForm.style';
+import { AnchorWrapper, Container } from './BuyerAddressForm.style';
 import { isValid } from './BuyerAddressForm.validation';
 
 const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
@@ -36,7 +36,14 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
     type,
   } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
-  const [toggleAlert, setToggleAlert] = useState(true);
+  const [
+    toggleSFMAddressRestriction,
+    setToggleSFMAddressRestriction,
+  ] = useState(false);
+  const [
+    toggleNonSFMAddressRestriction,
+    setToggleNonSFMAddressRestriction,
+  ] = useState(false);
   const theme = useTheme();
 
   let routeHeader = '';
@@ -81,7 +88,7 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
       </div>
 
       {!theme.isSFM &&
-      toggleAlert &&
+      toggleSFMAddressRestriction &&
       identifyIsAUOrNZAddress(address?.address || '') ? (
         <Alert
           content={
@@ -104,9 +111,41 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
           iconRight={
             <div
               style={{ cursor: 'pointer' }}
-              onClick={() => setToggleAlert(false)}
+              onClick={() => setToggleSFMAddressRestriction(false)}
             >
               <Close />
+            </div>
+          }
+          style={{
+            marginTop: 16,
+          }}
+        />
+      ) : null}
+
+      {theme.isSFM &&
+      toggleNonSFMAddressRestriction &&
+      !identifyIsAUOrNZAddress(address?.address || '') ? (
+        <Alert
+          content={
+            <Typography color="shade9" variant="caption">
+              Please enter an Australian or New Zealand address. For
+              international addresses, please register at{' '}
+              <span>
+                <AnchorWrapper href="https://www.shoretrade.com">
+                  www.shoretrade.com
+                </AnchorWrapper>
+              </span>
+            </Typography>
+          }
+          variant="error"
+          alignText="center"
+          fullWidth
+          iconRight={
+            <div
+              style={{ cursor: 'pointer' }}
+              onClick={() => setToggleNonSFMAddressRestriction(false)}
+            >
+              <Close fill={theme.grey.shade9} />
             </div>
           }
           style={{
@@ -120,7 +159,12 @@ const BuyerAddressForm = (props: BuyerAddressFormProps): JSX.Element => {
           <LocationSearch
             onSelect={(location) => {
               if (location) {
-                setToggleAlert(true);
+                if (theme.isSFM) {
+                  setToggleNonSFMAddressRestriction(true);
+                } else {
+                  setToggleSFMAddressRestriction(true);
+                }
+
                 setAddress(location);
               }
             }}

@@ -41,7 +41,14 @@ const SellerAddressForm = (props: SellerAddressFormProps): JSX.Element => {
     userPending,
   } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
-  const [toggleAlert, setToggleAlert] = useState(true);
+  const [
+    toggleSFMAddressRestriction,
+    setToggleSFMAddressRestriction,
+  ] = useState(false);
+  const [
+    toggleNonSFMAddressRestriction,
+    setToggleNonSFMAddressRestriction,
+  ] = useState(false);
   const theme = useTheme();
 
   let routeHeader = '';
@@ -90,7 +97,7 @@ const SellerAddressForm = (props: SellerAddressFormProps): JSX.Element => {
       </div>
 
       {!theme.isSFM &&
-      toggleAlert &&
+      toggleSFMAddressRestriction &&
       identifyIsAUOrNZAddress(address?.address || '') ? (
         <Alert
           content={
@@ -113,7 +120,42 @@ const SellerAddressForm = (props: SellerAddressFormProps): JSX.Element => {
           iconRight={
             <div
               style={{ cursor: 'pointer' }}
-              onClick={() => setToggleAlert(false)}
+              onClick={() => setToggleSFMAddressRestriction(false)}
+            >
+              <Close fill="white" />
+            </div>
+          }
+          style={{
+            marginTop: 16,
+          }}
+        />
+      ) : null}
+
+      {theme.isSFM &&
+      toggleNonSFMAddressRestriction &&
+      !identifyIsAUOrNZAddress(address?.address || '') ? (
+        <Alert
+          content={
+            <Typography color="noshade" variant="caption">
+              Please enter an Australian or New Zealand address. For
+              international addresses, please register at{' '}
+              <span>
+                <a
+                  href="https://www.shoretrade.com"
+                  style={{ textDecoration: 'underline' }}
+                >
+                  www.shoretrade.com
+                </a>
+              </span>
+            </Typography>
+          }
+          variant="error"
+          alignText="center"
+          fullWidth
+          iconRight={
+            <div
+              style={{ cursor: 'pointer' }}
+              onClick={() => setToggleNonSFMAddressRestriction(false)}
             >
               <Close fill="white" />
             </div>
@@ -129,7 +171,12 @@ const SellerAddressForm = (props: SellerAddressFormProps): JSX.Element => {
           <LocationSearch
             onSelect={(location) => {
               if (location) {
-                setToggleAlert(true);
+                if (theme.isSFM) {
+                  setToggleNonSFMAddressRestriction(true);
+                } else {
+                  setToggleSFMAddressRestriction(true);
+                }
+
                 setAddress(location);
               }
             }}
