@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 
 import Interactions from 'components/base/Interactions/Interactions.view';
+import { UpArrow, DropdownArrow } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography/Typography.view';
 import MobileModal from 'components/layout/MobileModal';
@@ -25,7 +26,7 @@ import {
 const ResultsView = (
   props: PhoneTextFieldProps & { setIsOpen: Dispatch<SetStateAction<boolean>> }
 ) => {
-  const { setCallingCode, setIsOpen } = props;
+  const { setCallingCode, setIsOpen, setToggleCountryCode } = props;
   const [search, setSearch] = useState('');
 
   return (
@@ -45,6 +46,10 @@ const ResultsView = (
             type="next"
             value={`${item.flag} ${item.name} +${item.callingCode} `}
             onClick={() => {
+              if (setToggleCountryCode) {
+                setToggleCountryCode(false);
+              }
+
               setCallingCode(item.callingCode);
               setIsOpen(false);
             }}
@@ -56,9 +61,17 @@ const ResultsView = (
 };
 
 const PhoneTextField = (props: PhoneTextFieldProps): JSX.Element => {
-  const { name, callingCode, setCallingCode, ...textFieldProps } = props;
+  const {
+    name,
+    callingCode,
+    setCallingCode,
+    toggleCountryCode,
+    setToggleCountryCode,
+    ...textFieldProps
+  } = props;
   const [field, meta] = useField<string>(name);
   const [isOpen, setIsOpen] = useState(false);
+  const [isCountryCodeTouched, setIsCountryCodeTouched] = useState(false);
 
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const theme = useTheme();
@@ -83,13 +96,38 @@ const PhoneTextField = (props: PhoneTextFieldProps): JSX.Element => {
       <Container>
         <CountryContainer
           {...textFieldProps}
-          onClick={() => !props.readOnly && setIsOpen(true)}
+          onClick={() => {
+            if (!props.readOnly) {
+              setIsCountryCodeTouched(true);
+              setIsOpen(true);
+            }
+          }}
         >
           <Typography variant="overline" color="shade6">
             Country
           </Typography>
-          <Country readOnly={textFieldProps.readOnly}>
-            {country.callingCode ? `+ ${country.callingCode}` : ''}
+          <Country
+            readOnly={textFieldProps.readOnly}
+            onClick={() => setToggleCountryCode && setToggleCountryCode(true)}
+          >
+            <Typography
+              variant="label"
+              color="shade6"
+              style={{ whiteSpace: 'nowrap' }}
+            >
+              {country.callingCode ? `+ ${country.callingCode}` : ''}
+            </Typography>
+            <div style={{ marginLeft: 'auto' }}>
+              {toggleCountryCode ? (
+                <UpArrow fill={theme.brand.warning} width={13} height={13} />
+              ) : (
+                <DropdownArrow
+                  fill={theme.brand.warning}
+                  width={10}
+                  height={10}
+                />
+              )}
+            </div>
           </Country>
         </CountryContainer>
 
@@ -101,6 +139,11 @@ const PhoneTextField = (props: PhoneTextFieldProps): JSX.Element => {
           style={{ width: '100%' }}
         />
       </Container>
+      {isCountryCodeTouched && !callingCode && (
+        <Error variant="caption" color="error">
+          Please select your country code
+        </Error>
+      )}
       {meta.touched && (
         <Error variant="caption" color="error">
           {meta.error}
@@ -108,11 +151,29 @@ const PhoneTextField = (props: PhoneTextFieldProps): JSX.Element => {
       )}
 
       {isSmallScreen ? (
-        <MobileModal isOpen={isOpen} onClickClose={() => setIsOpen(false)}>
+        <MobileModal
+          isOpen={isOpen}
+          onClickClose={() => {
+            if (setToggleCountryCode) {
+              setToggleCountryCode(false);
+            }
+
+            setIsOpen(false);
+          }}
+        >
           <ResultsView {...props} setIsOpen={setIsOpen} />
         </MobileModal>
       ) : (
-        <Modal isOpen={isOpen} onClickClose={() => setIsOpen(false)}>
+        <Modal
+          isOpen={isOpen}
+          onClickClose={() => {
+            if (setToggleCountryCode) {
+              setToggleCountryCode(false);
+            }
+
+            setIsOpen(false);
+          }}
+        >
           <ResultsView {...props} setIsOpen={setIsOpen} />
         </Modal>
       )}

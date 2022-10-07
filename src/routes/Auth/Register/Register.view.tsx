@@ -197,6 +197,7 @@ const StepForm = ({
   plans,
 }: StepFormProps) => {
   const theme = useTheme();
+  const [toggleCountryCode, setToggleCountryCode] = useState(false);
   const isSeller = theme.appType === 'seller';
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const reverseMarketPlaceAlias = isSeller
@@ -1178,6 +1179,8 @@ const StepForm = ({
                     setCallingCode={(value) =>
                       updateRegistrationDetails({ callingCode: value })
                     }
+                    setToggleCountryCode={setToggleCountryCode}
+                    toggleCountryCode={toggleCountryCode}
                   />
                   <Alert
                     variant={isSeller ? 'info' : 'infoAlert'}
