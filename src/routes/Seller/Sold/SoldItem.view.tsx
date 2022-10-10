@@ -2,7 +2,14 @@ import React, { useState, Fragment } from 'react';
 
 import Button from 'components/base/Button';
 import Divider from 'components/base/Divider';
-import { Plane, Truck, FileCheck, Box, Expand } from 'components/base/SVG';
+import {
+  Plane,
+  Truck,
+  FileCheck,
+  Box,
+  Expand,
+  MapMarker,
+} from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import ScanHistoryButton from 'components/module/ScanHistoryButton';
 import { API, SELLER_SOLD_ROUTES } from 'consts';
@@ -107,19 +114,30 @@ const SoldItem = (props: {
       salesChannel,
       id,
       deliveryAddress,
+      groupName,
     } = entry[0];
     const isPreAuction = salesChannel === 'Pre-Auction';
 
-    const Icon = () => {
-      if (key.toUpperCase() === 'PRE-AUCTION') {
-        return <Box fill={theme.grey.noshade} />;
+    const getIcon = (() => {
+      const iconProps = { fill: theme.grey.noshade };
+
+      switch (groupName) {
+        case 'airPickupOrders':
+          return <Plane {...iconProps} />;
+        case 'airDeliveryOrders':
+          return <Plane {...iconProps} />;
+        case 'roadDeliveryOrders':
+          return <Truck {...iconProps} />;
+        case 'roadPickupOrders':
+          return <Truck {...iconProps} />;
+        case 'preAuctionOrders':
+          return <Truck {...iconProps} />;
+        case 'selfDeliveryOrder':
+          return <Truck {...iconProps} />;
+        default:
+          return <MapMarker {...iconProps} />;
       }
-      return type.toLowerCase().includes('air') ? (
-        <Plane fill={theme.grey.noshade} />
-      ) : (
-        <Truck fill={theme.grey.noshade} />
-      );
-    };
+    })();
 
     const renderDeliveryLabelAndAddress = (hideLabel: boolean) => (
       <div>
@@ -198,7 +216,7 @@ const SoldItem = (props: {
                     marginRight: isMobile ? '4px' : '8px',
                   }}
                 >
-                  <Icon />
+                  {getIcon}
                 </span>
                 <div>{renderDeliveryLabelAndAddress(false)}</div>
               </div>

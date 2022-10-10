@@ -8,7 +8,15 @@ import React, {
 
 import Button from 'components/base/Button';
 import Divider from 'components/base/Divider';
-import { Truck, Box, PaperPlane } from 'components/base/SVG';
+import {
+  Truck,
+  Box,
+  PaperPlane,
+  Listing,
+  ArrowUpRight,
+  MapMarker,
+  Plane,
+} from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import MessageModal from 'components/module/MessageModal';
 import Pagination from 'components/module/Pagination';
@@ -214,7 +222,7 @@ export const PendingItem = (props: {
                     isOpen: true,
                     buyerId: order.buyerId,
                     buyerName: order.buyerCompanyName,
-                    orderRefNumber: order.orderRefNumber.toString()
+                    orderRefNumber: order.orderRefNumber.toString(),
                   });
                   e.stopPropagation();
                 }}
@@ -584,15 +592,24 @@ const ToShip = (props: SoldGeneratedProps) => {
     return a + c.orderCount;
   }, 0);
 
-  const getDeliveryIcon = (deliveryMethod: string) => {
+  const getIcon = (deliveryMethod: string) => {
     const iconProps = { fill: theme.grey.noshade };
+
     switch (deliveryMethod) {
-      case 'ROAD':
+      case 'airPickupOrders':
+        return <Plane {...iconProps} />;
+      case 'airDeliveryOrders':
+        return <Plane {...iconProps} />;
+      case 'roadDeliveryOrders':
         return <Truck {...iconProps} />;
-      case 'SELLER':
-        return <Box {...iconProps} />;
+      case 'roadPickupOrders':
+        return <Truck {...iconProps} />;
+      case 'preAuctionOrders':
+        return <Truck {...iconProps} />;
+      case 'selfDeliveryOrder':
+        return <Truck {...iconProps} />;
       default:
-        return <PaperPlane {...iconProps} />;
+        return <MapMarker {...iconProps} />;
     }
   };
 
@@ -671,7 +688,11 @@ const ToShip = (props: SoldGeneratedProps) => {
         isOpen={isSendingMessage || messageModal.isOpen}
         recipient={messageModal.buyerName}
         onSend={(message) => {
-          sendMessage(messageModal.buyerId, message, messageModal.orderRefNumber);
+          sendMessage(
+            messageModal.buyerId,
+            message,
+            messageModal.orderRefNumber
+          );
           updateMessageModal({ isOpen: false });
         }}
         onClickClose={() => {
@@ -739,7 +760,7 @@ const ToShip = (props: SoldGeneratedProps) => {
                             marginRight: isMobile ? '4px' : '8px',
                           }}
                         >
-                          {getDeliveryIcon(group.deliveryMethod)}
+                          {group?.groupName && getIcon(group.groupName)}
                         </span>
                         <div>{renderDeliveryLabelAndAddress(group)}</div>
                       </div>
