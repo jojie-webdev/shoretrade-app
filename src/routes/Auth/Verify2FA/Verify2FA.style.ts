@@ -32,6 +32,10 @@ export const MobileContainer = styled.div`
       color: ${({ theme }) => theme.grey.shade10};
     }
   }
+
+  .__react_component_tooltip {
+    border-radius: 6px;
+  }
 `;
 
 export const ContentWrapper = styled.div`
@@ -58,6 +62,10 @@ export const ContentWrapper = styled.div`
       font-family: 'Basis Grotesque Pro', sans-serif;
       color: ${({ theme }) => theme.grey.shade10};
     }
+  }
+
+  .__react_component_tooltip {
+    border-radius: 6px;
   }
 `;
 
@@ -117,6 +125,7 @@ export const FooterContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  cursor: pointer;
 `;
 
 export const FooterIcon = styled(Help)`

@@ -8,6 +8,7 @@ import Typography from 'components/base/Typography';
 import AuthContainer from 'components/layout/AuthContainer';
 import MobileHeader from 'components/layout/MobileNav';
 import DialogModal from 'components/module/DialogModal';
+import { ToolTip } from 'components/module/RefreshCreditButton/RefreshCreditButton.style';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
 import ReactCodeInput from 'react-verification-code-input';
@@ -58,25 +59,52 @@ const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
 
   const FooterContent = () => {
     return (
-      <FooterContainer>
-        <FooterIcon fill={isSeller ? theme.grey.noshade : theme.grey.shade9} />
-        <Typography
-          variant="label"
-          weight="400"
-          color={isSeller ? 'noshade' : 'shade9'}
+      <>
+        <ToolTip
+          id="verify-code"
+          className="verify-code-tooltip"
+          effect="solid"
+          backgroundColor={
+            theme.appType === 'buyer' ? theme.grey.shade9 : theme.grey.noshade
+          }
+          place="top"
+          offset={{ right: 70 }}
         >
-          Haven’t received the code?
-        </Typography>
-        <Touchable dark={isSeller} onPress={() => resendCode()}>
-          <FooterLink
+          <Typography
+            color={theme.appType === 'buyer' ? 'noshade' : 'shade8'}
+            variant="caption"
+          >
+            Please press Send Again. If an SMS is still not received, check your
+            email for the code.
+          </Typography>
+        </ToolTip>
+
+        <FooterContainer>
+          <FooterIcon
+            data-tip
+            data-for="verify-code"
+            fill={isSeller ? theme.grey.noshade : theme.grey.shade9}
+          />
+          <Typography
+            data-tip
+            data-for="verify-code"
             variant="label"
             weight="400"
-            color={isSeller ? 'noshade' : 'primary'}
+            color={isSeller ? 'noshade' : 'shade9'}
           >
-            Send Again
-          </FooterLink>
-        </Touchable>
-      </FooterContainer>
+            Haven’t received the code?
+          </Typography>
+          <Touchable dark={isSeller} onPress={() => resendCode()}>
+            <FooterLink
+              variant="label"
+              weight="400"
+              color={isSeller ? 'noshade' : 'primary'}
+            >
+              Send Again
+            </FooterLink>
+          </Touchable>
+        </FooterContainer>
+      </>
     );
   };
 
