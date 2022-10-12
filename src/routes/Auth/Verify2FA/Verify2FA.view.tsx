@@ -86,8 +86,6 @@ const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
             fill={isSeller ? theme.grey.noshade : theme.grey.shade9}
           />
           <Typography
-            data-tip
-            data-for="verify-code"
             variant="label"
             weight="400"
             color={isSeller ? 'noshade' : 'shade9'}
