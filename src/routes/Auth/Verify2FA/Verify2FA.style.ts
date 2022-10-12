@@ -128,6 +128,13 @@ export const FooterContainer = styled.div`
   cursor: pointer;
 `;
 
+export const FooterTooltipContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+`;
+
 export const FooterIcon = styled(Help)`
   margin-right: 11px;
   margin-bottom: 2px;

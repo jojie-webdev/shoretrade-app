@@ -29,6 +29,7 @@ import {
   FooterContainer,
   FooterIcon,
   FooterLink,
+  FooterTooltipContainer,
 } from './Verify2FA.style';
 
 const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
@@ -80,18 +81,18 @@ const Verify2FAView = (props: Verify2FAGeneratedProps): JSX.Element => {
         </ToolTip>
 
         <FooterContainer>
-          <FooterIcon
-            data-tip
-            data-for="verify-code"
-            fill={isSeller ? theme.grey.noshade : theme.grey.shade9}
-          />
-          <Typography
-            variant="label"
-            weight="400"
-            color={isSeller ? 'noshade' : 'shade9'}
-          >
-            Haven’t received the code?
-          </Typography>
+          <FooterTooltipContainer data-tip data-for="verify-code">
+            <FooterIcon
+              fill={isSeller ? theme.grey.noshade : theme.grey.shade9}
+            />
+            <Typography
+              variant="label"
+              weight="400"
+              color={isSeller ? 'noshade' : 'shade9'}
+            >
+              Haven’t received the code?
+            </Typography>
+          </FooterTooltipContainer>
           <Touchable dark={isSeller} onPress={() => resendCode()}>
             <FooterLink
               variant="label"
