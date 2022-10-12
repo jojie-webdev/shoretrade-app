@@ -55,6 +55,9 @@ const constraints = {
   endAndCatchmentDate: {
     isTrue: '^Expiry date must not be beyond the catch date.',
   },
+  endAndCatchmentDateForDirectSale: {
+    isTrue: '^Expiry date must beyond or same as the catch date.',
+  },
 };
 
 const constraintsAlt = {
@@ -131,6 +134,9 @@ const constraintsAuction = {
   isAuctionDateValid: {
     isTrue: '^Please set a valid auction date',
   },
+  endAndCatchmentDateForPreAuction: {
+    isTrue: '^Auction date must beyond the catch date.',
+  },
 };
 
 export const isValid = createValidator(constraints);
@@ -142,6 +148,12 @@ export const isValidPreAuction = createValidator({
 });
 export const isValidExpiryDate = createValidator({
   isListingExpiryDateValid: constraints.endAndCatchmentDate,
+});
+export const isValidExpiryDateForDirectSale = createValidator({
+  isListingExpiryDateValid: constraints.endAndCatchmentDateForDirectSale,
+});
+export const isValidExpiryDateForPreAuction = createValidator({
+  isListingExpiryDateValid: constraintsAuction.endAndCatchmentDateForPreAuction,
 });
 
 export const isDateRangeValid = (endListing: Date) => {

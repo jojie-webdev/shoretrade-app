@@ -34,6 +34,8 @@ import {
 } from 'utils/Listing/formatMeasurementUnit';
 // import { toPrice } from 'utils/String/toPrice';
 
+import theme from 'utils/SFMTheme';
+
 import { AddDetailsProps } from './AddDetails.props';
 import {
   Container,
@@ -41,7 +43,7 @@ import {
   CustomCol,
   DatePickerTop,
   SfmContainer,
-  GstBadge
+  GstBadge,
 } from './AddDetails.style';
 import { combineDateTime } from './AddDetails.transform';
 import {
@@ -53,8 +55,9 @@ import {
   isAuctionDateValid,
   isValidExpiryDate,
   isListingExpiryDateValid,
+  isValidExpiryDateForDirectSale,
+  isValidExpiryDateForPreAuction,
 } from './AddDetails.validation';
-import theme, { SpecialColors } from 'utils/SFMTheme';
 
 // Note: even this is AEST, keep calculations on local time
 const timeOptions = [...Array(48)].map((v, i) => {
@@ -116,7 +119,7 @@ const AddDetails = ({
   marketEstimate,
   listingFormData,
   navBack,
-  isGstIncl
+  isGstIncl,
 }: AddDetailsProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -195,7 +198,7 @@ const AddDetails = ({
   );
 
   const [templateDeliveryDate, setTemplateDeliveryDate] = useState(
-    !isAquafuture && editableListing?.templateDeliveryDate || null
+    (!isAquafuture && editableListing?.templateDeliveryDate) || null
   );
   const [customDeliveryDate, setCustomDeliveryDate] = useState<{
     from: Moment | null;
@@ -295,6 +298,20 @@ const AddDetails = ({
         })
       );
     }
+    if (selectedChannel === 'direct' && catchDate && listingEndDate) {
+      setErrors(
+        isValidExpiryDateForDirectSale({
+          isListingExpiryDateValid: onRevalidateCatchmentForDirectSale(),
+        })
+      );
+    }
+    if (isPreAuctionSale && catchDate && auctionDate) {
+      setErrors(
+        isValidExpiryDateForPreAuction({
+          isListingExpiryDateValid: onRevalidateCatchmentForPreAuction(),
+        })
+      );
+    }
     if (listingEndTime) {
       setErrors(
         isValid({
@@ -330,6 +347,7 @@ const AddDetails = ({
     }
     // eslint-disable-next-line
   }, [
+    selectedChannel,
     catchDate,
     auctionDate,
     origin,
@@ -365,6 +383,7 @@ const AddDetails = ({
           auctionDate,
           origin,
           isAuctionDateValid: isAuctionDateValid(auctionDate),
+          endAndCatchmentDateForPreAuction: onRevalidateCatchmentForPreAuction(),
         });
         break;
       case isAuctionSale:
@@ -401,6 +420,7 @@ const AddDetails = ({
           endAndCatchmentDate: isListingExpiryDateValid(
             onRevalidateCatchment()
           ),
+          endAndCatchmentDateForDirectSale: onRevalidateCatchmentForDirectSale(),
         });
         break;
     }
@@ -501,13 +521,13 @@ const AddDetails = ({
 
   const handleSelectedChannelChange = () => {
     setListingEndDate(null);
-    setListingEndTimeString('')
-    setTemplateDeliveryDate(null)
-    setCatchDate(null)
-  }
+    setListingEndTimeString('');
+    setTemplateDeliveryDate(null);
+    setCatchDate(null);
+  };
 
   const handleToggleAquafuture = () => {
-    handleSelectedChannelChange()
+    handleSelectedChannelChange();
     setIsAquafuture((prevState) => !prevState);
     setAlwaysAvailable(false);
     setIsAuctionSale(false);
@@ -515,7 +535,7 @@ const AddDetails = ({
   };
 
   const handleToggleAuctionSale = () => {
-    handleSelectedChannelChange()
+    handleSelectedChannelChange();
     setIsAuctionSale((prevState) => !prevState);
     setAlwaysAvailable(false);
     setIsAquafuture(false);
@@ -523,7 +543,7 @@ const AddDetails = ({
   };
 
   const handleToggleDirect = () => {
-    handleSelectedChannelChange()
+    handleSelectedChannelChange();
     setIsAquafuture(false);
     setIsAuctionSale(false);
     setIsPreAuctionSale(false);
@@ -538,6 +558,20 @@ const AddDetails = ({
         moment(listingEndDate).isSameOrBefore(moment(catchDate).endOf('day'))
       );
     else return isSameOrAfterToday;
+  };
+
+  const onRevalidateCatchmentForDirectSale = (): boolean => {
+    const isCatchDateSameOrBeforeListingEndDate = moment(
+      catchDate
+    ).isSameOrBefore(moment(listingEndDate).endOf('day'));
+    return isCatchDateSameOrBeforeListingEndDate;
+  };
+
+  const onRevalidateCatchmentForPreAuction = (): boolean => {
+    const isCatchDateBeforeAuctionDate = moment(catchDate)
+      .endOf('day')
+      .isBefore(moment(auctionDate));
+    return isCatchDateBeforeAuctionDate;
   };
 
   const isValidUntilOutsideRange = (date: Moment) => {
@@ -721,14 +755,18 @@ const AddDetails = ({
               }}
               RightComponent={
                 <>
-                  {isGstIncl ? <GstBadge>
-                    <OfferTag
-                      text={'INCLUDE GST'}
-                      badgeColor={'#E35D32'}
-                      variantColor={'alert'}
-                      color={'alert'}
-                    />
-                  </GstBadge> : <></>}
+                  {isGstIncl ? (
+                    <GstBadge>
+                      <OfferTag
+                        text={'INCLUDE GST'}
+                        badgeColor={'#E35D32'}
+                        variantColor={'alert'}
+                        color={'alert'}
+                      />
+                    </GstBadge>
+                  ) : (
+                    <></>
+                  )}
                   <Typography
                     variant="overlineSmall"
                     color="shade6"
@@ -753,7 +791,8 @@ const AddDetails = ({
               onDateChange={(d) => setAuctionDate(d?.toDate() || null)}
               error={
                 pathOr('', ['auctionDate', '0'], errors) ||
-                pathOr('', ['isAuctionDateValid', '0'], errors)
+                pathOr('', ['isAuctionDateValid', '0'], errors) ||
+                pathOr('', ['isListingExpiryDateValid', '0'], errors)
               }
               showCalendarIcon={true}
               showArrowDownIcon={true}
@@ -780,7 +819,9 @@ const AddDetails = ({
             showCalendarIcon={true}
             showArrowDownIcon={true}
             isOutsideRange={(date) =>
-              date < (isAquafuture && new Date().setHours(0, 0, 0, 0))
+              date <
+              ((isAquafuture || selectedChannel === 'direct') &&
+                new Date().setHours(0, 0, 0, 0))
             }
             topComponent={
               !isAquafuture &&
@@ -964,7 +1005,11 @@ const AddDetails = ({
                   This product coincides with the{' '}
                   <a
                     href="https://shoretrade-prod-assets.s3.ap-southeast-2.amazonaws.com/Seafood_Handling_Guidelines.pdf"
-                    style={{ textDecoration: 'underline', cursor: 'pointer', color: theme.grey.noshade }}
+                    style={{
+                      textDecoration: 'underline',
+                      cursor: 'pointer',
+                      color: theme.grey.noshade,
+                    }}
                     // eslint-disable-next-line react/jsx-no-target-blank
                     target="_blank"
                   >
