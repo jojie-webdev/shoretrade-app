@@ -23,6 +23,15 @@ import {
   TransxRight,
 } from './PaymentHistory.style';
 
+const getSubscriptionPlanNameV2 = (alias: string) => {
+  console.log('alias ', alias);
+  return (
+    SUBSCRIPTION_NAMES.find((sub) => {
+      return sub.PLAN === alias;
+    })?.PLAN_NAME || ''
+  );
+};
+
 const PaymentHistoryView = ({
   isLoading,
   subscriptionPlan,
@@ -31,10 +40,12 @@ const PaymentHistoryView = ({
 }: PaymentHistoryGeneratedProps) => {
   const history = useHistory();
 
-  const getSubscriptionPlanName = () => {
-    return SUBSCRIPTION_NAMES.map((sub) => {
-      return sub.PLAN === subscriptionPlan && sub.PLAN_NAME;
-    });
+  const getSubscriptionPlanName = (alias: string) => {
+    return (
+      SUBSCRIPTION_NAMES.find((sub) => {
+        return sub.PLAN === alias;
+      })?.PLAN_NAME || ''
+    );
   };
 
   return (
@@ -72,6 +83,12 @@ const PaymentHistoryView = ({
           </EmptyStateContainer>
         )}
         {transactions.map((transaction, idx) => {
+          const subscriptionLength = transaction.metadata.subscriptions.length;
+          const title = getSubscriptionPlanNameV2(
+            transaction.metadata.subscriptions[subscriptionLength - 1]?.alias ||
+              ''
+          );
+
           return (
             <Transx key={idx}>
               <TransxLeft>
@@ -83,7 +100,7 @@ const PaymentHistoryView = ({
                       `${
                         API.PDF_URL || API.URL
                       }/v2/subscription/company/invoice/${
-                        transaction.refNumber
+                        transaction.createdAt
                       }?token=${token}&invoice=true`,
                       '_blank'
                     );
@@ -94,7 +111,7 @@ const PaymentHistoryView = ({
                 </Downloadable>
                 <div className="text">
                   <Typography variant="body" color="noshade">
-                    {getSubscriptionPlanName()} Subscription
+                    {title} Subscription
                   </Typography>
                   <Typography variant="caption" color="shade6">
                     {moment(transaction.createdAt).format('DD MMM YYYY')}

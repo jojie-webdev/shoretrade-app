@@ -23,6 +23,14 @@ import {
   TransxRight,
 } from './BalanceHistory.style';
 
+const getSubscriptionPlanNameV2 = (alias: string) => {
+  return (
+    SUBSCRIPTION_NAMES.find((sub) => {
+      return sub.PLAN === alias;
+    })?.PLAN_NAME || ''
+  );
+};
+
 const BalanceHistoryView = ({
   isLoading,
   subscriptionPlan,
@@ -175,9 +183,13 @@ const BalanceHistoryView = ({
             <Button onClick={() => history.goBack()} text="Back" />
           </EmptyStateContainer>
         )}
+
         {transactions.map((transaction, idx) => {
-          const { title, subtitle } = getTransactionLabel(
-            transaction.description
+          const { subtitle } = getTransactionLabel(transaction.description);
+          const subscriptionLength = transaction.metadata.subscriptions.length;
+          const title = getSubscriptionPlanNameV2(
+            transaction.metadata.subscriptions[subscriptionLength - 1]?.alias ||
+              ''
           );
 
           const isCreditCardTopUp = transaction.description.includes(
@@ -212,7 +224,7 @@ const BalanceHistoryView = ({
                 </Downloadable>
                 <div className="text">
                   <Typography variant="body" color="shade9">
-                    {title}
+                    {title} Subscription
                   </Typography>
                   {subtitle.length > 0 && (
                     <Typography variant="caption" color="shade9">
