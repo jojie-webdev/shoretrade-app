@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { isValidElement, useEffect } from 'react';
 
 import 'react-dropdown/style.css';
 
@@ -44,12 +44,19 @@ const Select = ({
   }, []);
 
   return (
-    <Container label={label} marginTop={marginTop}>
+    <Container
+      label={typeof label === 'string' ? label : ''}
+      marginTop={marginTop}
+    >
       {label ? (
-        <Label variant="overline" color="shade6">
-          {label}
-          {labelTooltip}
-        </Label>
+        isValidElement(label) ? (
+          label
+        ) : (
+          <Label variant="overline" color="shade6">
+            {label}
+            {labelTooltip}
+          </Label>
+        )
       ) : null}
       <div id={`${label}-dropdown`}>
         <StyledDropdown

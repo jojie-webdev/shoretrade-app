@@ -7,7 +7,7 @@ export interface DatePickerDropdownProps {
   onDateChange: (date: moment.Moment | null) => void;
   className?: string;
   placeholder?: string;
-  label?: string;
+  label?: string | JSX.Element;
   error?: string;
   isOutsideRange?: (date: any) => boolean;
   showCalendarIcon?: boolean;

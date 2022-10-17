@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { isValidElement, useState } from 'react';
 
 import {
   ArrowLeft,
@@ -71,9 +71,13 @@ const DatePickerDropdown = (props: DatePickerDropdownProps): JSX.Element => {
 
   return (
     <Container className={props.className}>
-      <Typography variant="overline" color="shade6" weight="900">
-        {label}
-      </Typography>
+      {isValidElement(label) ? (
+        label
+      ) : (
+        <Typography variant="overline" color="shade6" weight="900">
+          {label}
+        </Typography>
+      )}
 
       <div className="content">
         <Dropdown

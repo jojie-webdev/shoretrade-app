@@ -1,7 +1,7 @@
 import { ReactDropdownProps } from 'react-dropdown';
 
 export interface SelectProps extends ReactDropdownProps {
-  label?: string;
+  label?: string | JSX.Element;
   error?: string;
   size?: 'small' | 'large';
   height?: string;

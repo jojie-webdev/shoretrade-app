@@ -53,6 +53,10 @@ export const Container = styled.div`
   .next-btn {
     max-width: 67px;
   }
+
+  .__react_component_tooltip {
+    border-radius: 6px;
+  }
 `;
 
 export const CustomCol = styled(Col)`
@@ -104,9 +108,14 @@ export const SfmContainer = styled(Col)(({ theme }) => ({
 }));
 
 export const GstBadge = styled.div`
- margin-bottom: 5px;
- margin-right: 8px;
- p {
-   font-family: initial;
- }
-`
+  margin-bottom: 5px;
+  margin-right: 8px;
+  p {
+    font-family: initial;
+  }
+`;
+
+export const LabelAndIconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;

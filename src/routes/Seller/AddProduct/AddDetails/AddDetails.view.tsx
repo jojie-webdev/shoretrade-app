@@ -7,7 +7,7 @@ import Checkbox from 'components/base/Checkbox/Checkbox.view';
 import Interactions from 'components/base/Interactions';
 import Radio from 'components/base/Radio';
 import Select from 'components/base/Select';
-import { DollarSign } from 'components/base/SVG';
+import { DollarSign, InfoFilled } from 'components/base/SVG';
 import TextArea from 'components/base/TextArea';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
@@ -17,6 +17,7 @@ import DateRangePicker from 'components/module/DateRangePicker';
 // import IconTooltip from 'components/module/IconTooltip';
 import LocationSearch from 'components/module/LocationSearch';
 import OfferTag from 'components/module/OfferTag';
+import { ToolTip } from 'components/module/RefreshCreditButton/RefreshCreditButton.style';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Moment } from 'moment';
 import moment from 'moment-timezone';
@@ -36,6 +37,7 @@ import {
 
 import theme from 'utils/SFMTheme';
 
+import { TOOLTIP_MESSAGES } from './AddDetails.constants';
 import { AddDetailsProps } from './AddDetails.props';
 import {
   Container,
@@ -44,6 +46,7 @@ import {
   DatePickerTop,
   SfmContainer,
   GstBadge,
+  LabelAndIconWrapper,
 } from './AddDetails.style';
 import { combineDateTime } from './AddDetails.transform';
 import {
@@ -581,6 +584,35 @@ const AddDetails = ({
     else return isBeforeToday;
   };
 
+  const tooltip = (name: string, message: JSX.Element) => (
+    <ToolTip
+      id={`${selectedChannel}-${name}`}
+      className={`${selectedChannel}-${name}-tooltip`}
+      effect="solid"
+      backgroundColor={theme.grey.shade9}
+      place="top"
+      offset={{ right: 70 }}
+    >
+      {message}
+    </ToolTip>
+  );
+
+  const label = (label: string, name: string) => (
+    <LabelAndIconWrapper>
+      <Typography
+        variant="overline"
+        color="shade6"
+        weight="900"
+        style={{ marginRight: 8 }}
+      >
+        {label}
+      </Typography>
+      <div data-tip data-for={`${selectedChannel}-${name}`}>
+        <InfoFilled width={17} height={17} fill={theme.brand.info} />
+      </div>
+    </LabelAndIconWrapper>
+  );
+
   return (
     <Container>
       {/* <Row>
@@ -784,9 +816,13 @@ const AddDetails = ({
       {isAuctionSale && (
         <Row className="textfield-row">
           <Col sm={12} md={6} className="textfield-col">
+            {tooltip('auctionDate', TOOLTIP_MESSAGES.auctionDate.preAuction)}
             <DatePickerDropdown
               placeholder=""
-              label="Auction date (date arriving at sfm)"
+              label={label(
+                'Auction date (date arriving at sfm)',
+                'auctionDate'
+              )}
               date={auctionDate ? moment(auctionDate) : null}
               onDateChange={(d) => setAuctionDate(d?.toDate() || null)}
               error={
@@ -804,9 +840,17 @@ const AddDetails = ({
       <Row className="textfield-row">
         <Col md={6} className="textfield-col">
           {/* {!alwaysAvailable ? ( */}
+          {tooltip(
+            'catchDate',
+            selectedChannel === 'direct'
+              ? TOOLTIP_MESSAGES.catchDate.directSale
+              : isAquafuture
+              ? TOOLTIP_MESSAGES.catchDate.aquafuture
+              : TOOLTIP_MESSAGES.catchDate.preAuction
+          )}
           <DatePickerDropdown
             placeholder={alwaysAvailable ? 'Always Available' : ''}
-            label="Catch Date"
+            label={label('Catch Date', 'catchDate')}
             date={!alwaysAvailable && catchDate ? moment(catchDate) : null}
             onDateChange={(d) => {
               setCatchDate(d?.toDate() || null);
@@ -897,10 +941,19 @@ const AddDetails = ({
         <>
           <Row className="textfield-row">
             <Col md={6} className="textfield-col">
+              {tooltip(
+                'listingValidUntilDate',
+                selectedChannel === 'direct'
+                  ? TOOLTIP_MESSAGES.listValidUntilDate.directSale
+                  : TOOLTIP_MESSAGES.listValidUntilDate.aquafuture
+              )}
               <DatePickerDropdown
                 className="date-picker"
                 placeholder=""
-                label="Listing valid until (Date)"
+                label={label(
+                  'Listing valid until (Date)',
+                  'listingValidUntilDate'
+                )}
                 date={listingEndDate ? moment(listingEndDate) : null}
                 onDateChange={(d) => setListingEndDate(d ? d?.toDate() : null)}
                 error={
@@ -916,13 +969,19 @@ const AddDetails = ({
           </Row>
           <Row className="textfield-row">
             <Col md={6} className="textfield-col">
+              {tooltip(
+                'listingValidUntilTime',
+                selectedChannel === 'direct'
+                  ? TOOLTIP_MESSAGES.listValidUntilTime.directSale
+                  : TOOLTIP_MESSAGES.listValidUntilTime.aquafuture
+              )}
               <Select
                 value={listingEndTimeString}
                 onChange={(option) => {
                   setListingEndTimeString(option.value);
                 }}
                 options={timeOptions}
-                label="LISTING VALID UNTIL"
+                label={label('LISTING VALID UNTIL', 'listingValidUntilTime')}
                 error={
                   pathOr('', ['listingEndTime', '0'], errors) ||
                   pathOr('', ['isDateRangeValid', '0'], errors)
