@@ -2240,8 +2240,13 @@ const StepForm = ({
                     buttonTextHandler(step) === 'SKIP' ? 'outline' : 'primary'
                   }
                   disabled={
-                    !registrationDetails.callingCode ||
-                    (!theme.isSFM && isAUorNZ)
+                    step === 2
+                      ? registrationDetails.address?.countryCode
+                        ? theme.isSFM
+                          ? !isAUorNZ
+                          : isAUorNZ
+                        : true
+                      : false
                   }
                 />
               </>
