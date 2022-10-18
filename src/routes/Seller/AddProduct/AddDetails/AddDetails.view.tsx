@@ -863,9 +863,9 @@ const AddDetails = ({
             showCalendarIcon={true}
             showArrowDownIcon={true}
             isOutsideRange={(date) =>
-              date <
-              ((isAquafuture || selectedChannel === 'direct') &&
-                new Date().setHours(0, 0, 0, 0))
+              selectedChannel === 'direct'
+                ? date.toDate().setHours(0, 0, 0, 0) >= new Date()
+                : date < (isAquafuture && new Date().setHours(0, 0, 0, 0))
             }
             topComponent={
               !isAquafuture &&
