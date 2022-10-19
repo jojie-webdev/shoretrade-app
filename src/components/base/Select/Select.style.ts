@@ -118,7 +118,7 @@ export const StyledDropdown = styled(Dropdown)<DropdownProps>`
     padding: 12px 16px;
     &:hover {
       background-color: ${({ theme }) =>
-        theme.appType === 'seller' ? '#283139' : '#081119'};
+        theme.appType === 'seller' ? '#283139' : '#00000020'};
     }
   }
 
