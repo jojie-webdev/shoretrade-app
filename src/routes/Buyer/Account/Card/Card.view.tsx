@@ -73,13 +73,23 @@ const CardView = (props: CardGeneratedProps) => {
         <Breadcrumbs sections={breadcrumbsSection} />
       </div>
 
-      {addCardResult?.error && (
+      {addCardResult?.error?.includes('503') ? (
         <Alert
           variant="error"
           fullWidth
-          content="Cannot add Credit Card at the moment."
+          header="Credit Card cannot be added"
+          content="Please check your card details and card balance before trying again."
           style={{ marginBottom: 16 }}
         />
+      ) : (
+        addCardResult?.error && (
+          <Alert
+            variant="error"
+            fullWidth
+            content={addCardResult?.error}
+            style={{ marginBottom: 16 }}
+          />
+        )
       )}
 
       <CCImageRow>
