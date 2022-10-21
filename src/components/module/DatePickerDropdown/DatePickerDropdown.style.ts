@@ -50,6 +50,10 @@ export const Container = styled.div`
     color: ${(props) => props.theme.grey.shade5};
   }
 
+  .CalendarDay__blocked_out_of_range {
+    color: ${(props) => props.theme.grey.shade5};
+  }
+
   .CalendarDay__selected {
     background: ${(props) => props.theme.brand.primary};
     border-radius: 100px;
