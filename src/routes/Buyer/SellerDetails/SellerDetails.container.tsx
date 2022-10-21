@@ -75,7 +75,7 @@ const SellerDetails = (): JSX.Element => {
       dispatch(
         updateFavoriteSellerActions.request({
           sellerId: seller.id,
-          favorite: !seller?.isFavourite,
+          favorite: !isFavorite,
         })
       );
     }
