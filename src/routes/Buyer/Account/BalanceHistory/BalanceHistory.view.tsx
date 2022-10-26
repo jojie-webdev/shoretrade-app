@@ -186,13 +186,16 @@ const BalanceHistoryView = ({
 
         {transactions.map((transaction, idx) => {
           const { subtitle } = getTransactionLabel(transaction.description);
-          const subscriptionLength = transaction.metadata.subscriptions.length;
+          const subscriptionLength =
+            transaction?.metadata?.subscriptions?.length;
           const title = getSubscriptionPlanNameV2(
-            transaction.metadata.subscriptions[subscriptionLength - 1]?.alias ||
+            (transaction?.metadata?.subscriptions &&
+              transaction?.metadata?.subscriptions[subscriptionLength - 1]
+                ?.alias) ||
               ''
           );
 
-          const isCreditCardTopUp = transaction.description.includes(
+          const isCreditCardTopUp = transaction?.description?.includes(
             'Credit card'
           );
           const paymentHistoryItem = isPlanView ? true : false;
@@ -208,7 +211,7 @@ const BalanceHistoryView = ({
                       BUYER_ACCOUNT_ROUTES.PAYMENT_HISTORY || isCreditCardTopUp
                       ? onFileIconClick(
                           isCreditCardTopUp,
-                          transaction.refNumber,
+                          transaction?.refNumber,
                           e
                         )
                       : undefined
@@ -232,17 +235,17 @@ const BalanceHistoryView = ({
                     </Typography>
                   )}
                   <Typography variant="caption" color="shade6">
-                    {moment(transaction.createdAt).format('DD MMM YYYY')}
+                    {moment(transaction?.createdAt).format('DD MMM YYYY')}
                   </Typography>
                 </div>
               </TransxLeft>
               <TransxRight>
                 <Typography variant="body" color="shade9">
-                  {toPrice(transaction.adjustmentAmount)}
+                  {toPrice(transaction?.adjustmentAmount)}
                 </Typography>
-                {transaction.description !== 'ShoreTrade Plan' && (
+                {transaction?.description !== 'ShoreTrade Plan' && (
                   <Typography variant="caption" color="shade6">
-                    Balance: {toPrice(transaction.balance)}
+                    Balance: {toPrice(transaction?.balance)}
                   </Typography>
                 )}
               </TransxRight>
