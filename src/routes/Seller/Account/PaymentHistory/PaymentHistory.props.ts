@@ -5,5 +5,4 @@ export interface PaymentHistoryGeneratedProps {
   transactions: GetTransactionHistoryResponseItem[];
   isLoading: boolean;
   token: string;
-
 }
