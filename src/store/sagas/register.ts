@@ -114,7 +114,8 @@ function* registerRequest(action: AsyncAction<RegisterMeta, RegisterPayload>) {
           password: data.password,
           firstName: data.firstName,
           lastName: data.lastName,
-          mobile: data.mobile,
+          mobile_cc: data.mobile_cc,
+          mobile_no: data.mobile_no,
           company: {
             name: data.company.businessName,
             abn: data.company.abn,
@@ -141,7 +142,8 @@ function* registerRequest(action: AsyncAction<RegisterMeta, RegisterPayload>) {
         password: data.password,
         firstName: data.firstName,
         lastName: data.lastName,
-        mobile: data.mobile,
+        mobile_cc: data.mobile_cc,
+        mobile_no: data.mobile_no,
         company: {
           name: data.company.businessName,
           abn: data.company.abn,

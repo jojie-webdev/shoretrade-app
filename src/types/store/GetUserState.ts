@@ -54,7 +54,8 @@ export type GetUserPayload = GenericResponse<{
     firstName: string;
     lastName: string;
     email: string;
-    mobile: string;
+    mobile_no: string;
+    mobile_cc: string;
     profileImage: string; // image uri
     userGroup: string; // SELLER_ADMIN | BUYER_ADMIN
     status: string;

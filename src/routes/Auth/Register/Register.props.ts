@@ -24,8 +24,8 @@ export interface RegistrationDetails {
   email: string;
   password: string;
   passwordConfirm: string;
-  mobile: string;
-  callingCode: string;
+  mobile_cc: string;
+  mobile_no: string;
 
   // business
   businessName: string;

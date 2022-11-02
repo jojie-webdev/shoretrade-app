@@ -15,7 +15,8 @@ export interface UserDetails {
   firstName: string;
   lastName: string;
   email: string;
-  mobile: string;
+  mobile_cc: string;
+  mobile_no: string;
 }
 
 export interface BusinessDetails {

@@ -753,7 +753,7 @@ const StepForm = ({
           />
           <CustomInteraction
             label="Mobile"
-            value={`+${registrationDetails.callingCode}${registrationDetails.mobile}`}
+            value={`+${registrationDetails.mobile_cc}${registrationDetails.mobile_no}`}
             onClick={() => {
               summaryHandleStep(1);
               setSummaryEdit();
@@ -1173,11 +1173,11 @@ const StepForm = ({
               {step === 1 && (
                 <>
                   <MobileField
-                    name="mobile"
+                    name="mobile_no"
                     label="MOBILE NUMBER"
-                    callingCode={registrationDetails.callingCode}
+                    callingCode={registrationDetails.mobile_cc}
                     setCallingCode={(value) =>
-                      updateRegistrationDetails({ callingCode: value })
+                      updateRegistrationDetails({ mobile_cc: value })
                     }
                     setToggleCountryCode={setToggleCountryCode}
                     toggleCountryCode={toggleCountryCode}
@@ -2372,7 +2372,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
       email: registrationDetails.email,
       password: registrationDetails.password,
       passwordConfirm: registrationDetails.passwordConfirm,
-      mobile: registrationDetails.mobile,
+      mobile_no: registrationDetails.mobile_no,
     },
     validate: validateUserDetails,
     onSubmit: (values: Record<string, string>) => {

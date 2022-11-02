@@ -5,7 +5,8 @@ export type UpdateUserMeta =
       firstName: string;
       lastName: string;
       email: string;
-      mobile: string;
+      mobile_cc: string;
+      mobile_no: string;
       company: { name: string; abn: string };
       companyId: string;
     }
@@ -19,7 +20,8 @@ export type UpdateUserRequestData = {
   firstName: string;
   lastName: string;
   email: string;
-  mobile: string;
+  mobile_cc: string;
+  mobile_no: string;
   company: { name: string; abn: string };
   companyId: string;
 };

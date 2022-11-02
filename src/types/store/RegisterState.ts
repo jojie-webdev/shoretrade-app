@@ -8,7 +8,8 @@ export type RegisterMeta = {
   email: string;
   password: string;
   passwordConfirm: string;
-  mobile: string;
+  mobile_cc: string;
+  mobile_no: string;
   company: {
     businessName: string;
     abn: string;
@@ -59,7 +60,8 @@ export type RegisterRequestData = {
   debtFinancingEstRevenue: number;
   url?: string;
   products?: string[];
-  mobile: string;
+  mobile_cc: string;
+  mobile_no: string;
   profileImage?: string;
   addresses: Partial<PlaceData>[];
   bankAccounts:

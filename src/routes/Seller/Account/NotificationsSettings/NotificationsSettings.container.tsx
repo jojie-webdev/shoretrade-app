@@ -241,7 +241,8 @@ const NotificationsSettings = (): JSX.Element => {
     handleGlobalToggle,
     groupedNotifSettings,
     email: getUser?.data?.user.email || '',
-    contactNo: getUser?.data?.user.mobile || '',
+    contactNo:
+      getUser?.data?.user.mobile_cc + '' + getUser?.data?.user.mobile_no || '',
     loading: getPendingNotificationsSettings && !settingsUpdated,
     handleCustomSettingUpdate,
     setShowDeactivationWarning,
