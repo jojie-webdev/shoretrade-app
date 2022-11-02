@@ -516,7 +516,7 @@ export const SubscriptionPlanView = ({
                       weight="400"
                       style={{ textDecoration: 'underline' }}
                     >
-                      See Payment History
+                      See Subscription History
                     </Typography>
                   </Link>
                 </div>

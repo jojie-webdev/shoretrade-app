@@ -182,7 +182,7 @@ const BalanceHistoryView = ({
                 ? BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN
                 : BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
             },
-            { label: `${isPlanView ? 'Payment' : 'Credit'} History` },
+            { label: `${isPlanView ? 'Subscription' : 'Credit'} History` },
           ]}
         />
       </div>
