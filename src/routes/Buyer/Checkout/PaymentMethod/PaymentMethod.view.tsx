@@ -199,15 +199,27 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
         </div>
       )}
 
-      {props.addCardAndPayError && (
+      {props.addCardAndPayError === 'Payment service unavailable' ? (
         <div className="box-error-container">
           <Alert
             fullWidth
             alignText="center"
             variant="error"
-            content={`Payment unsuccessful: ${props.addCardAndPayError}`}
+            header="Credit Card Payment Unsuccessful"
+            content="Please check your card details or card balance before trying again."
           />
         </div>
+      ) : (
+        props.addCardAndPayError && (
+          <div className="box-error-container">
+            <Alert
+              fullWidth
+              alignText="center"
+              variant="error"
+              content={props.addCardAndPayError}
+            />
+          </div>
+        )
       )}
 
       {paymentMethod !== 'card' && (
