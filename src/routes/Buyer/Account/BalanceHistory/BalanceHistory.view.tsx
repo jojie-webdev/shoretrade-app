@@ -244,7 +244,7 @@ const BalanceHistoryView = ({
                 </Downloadable>
                 <div className="text">
                   <Typography variant="body" color="shade9">
-                    {title} {isPlanView ? 'Subscription Upgrade' : ''}
+                    {title} Subscription {title == 'Pro' ? 'Upgrade' : ''}
                   </Typography>
                   {subtitle.length > 0 && (
                     <Typography variant="caption" color="shade9">
