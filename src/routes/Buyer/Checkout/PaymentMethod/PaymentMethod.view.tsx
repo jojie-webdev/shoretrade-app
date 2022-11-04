@@ -6,7 +6,13 @@ import Button from 'components/base/Button';
 import Checkbox from 'components/base/Checkbox/Checkbox.view';
 import Radio from 'components/base/Radio';
 import SegmentedControls from 'components/base/SegmentedControls/SegmentedControls.view';
-import { Amex, Cart, InfoFilled, Mastercard, Visa } from 'components/base/SVG';
+import {
+  Amex,
+  ShoppingTrolley,
+  InfoFilled,
+  Mastercard,
+  Visa,
+} from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import FormikTextField from 'components/module/FormikTextField';
@@ -468,7 +474,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
               </Typography>
             </div>
 
-            <Cart fill={theme.grey.shade4} />
+            <ShoppingTrolley fill={theme.grey.shade4} />
           </div>
         </BottomRow>
       ) : (
