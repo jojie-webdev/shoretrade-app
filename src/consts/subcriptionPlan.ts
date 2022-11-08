@@ -350,8 +350,13 @@ export const yourPlanFeaturesList = {
   ],
 };
 
-export const BASE_PLAN_ITEMS = [
-  { title: '2% Buying Fee on Transaction Value**', subText: '' },
+export const getBasePlanItems = (transactionValueFeePercentage: string) => [
+  {
+    title: `${
+      transactionValueFeePercentage.split('.')[0]
+    }% Buying Fee on Transaction Value**`,
+    subText: '',
+  },
 ];
 export const PRO_PLAN_ITEMS = [
   { title: 'No Additional Buying Fees', subText: '' },

@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
 import _ from 'lodash';
+import pathOr from 'ramda/es/pathOr';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   cancelSubscriptionPlanActions,
@@ -51,6 +52,27 @@ const SubscriptionPlan = () => {
   const companyPlanError = useSelector(
     (store: Store) => store.getCompanyPlan.error
   );
+
+  const activeBaseSubscription = (
+    companyPlan?.activePlans || []
+  ).find(({ plan }) => ['BASE', 'PRO'].includes(plan.name.toUpperCase()));
+
+  let transactionValueFeePercent = +pathOr(
+    0,
+    ['plan', 'transaction_value_fee_percentage'],
+    activeBaseSubscription
+  );
+
+  const overrideTransactionValueFeePercent = +pathOr(
+    0,
+    ['subscription', 'override_fee_percentage'],
+    activeBaseSubscription
+  );
+
+  if (overrideTransactionValueFeePercent) {
+    transactionValueFeePercent = overrideTransactionValueFeePercent;
+  }
+
   const planStatus =
     useSelector((store: Store) => store.subscription.status) || '';
 
@@ -239,6 +261,7 @@ const SubscriptionPlan = () => {
     hasUpdateSubsPlanError,
     updateSubsPlanPending,
     updateSubsPlanSuccess: !!updateSuccess && !hideSubsPlanAlert,
+    transactionValueFeePercent,
   };
 
   return <SubscriptionPlanView {...params} />;

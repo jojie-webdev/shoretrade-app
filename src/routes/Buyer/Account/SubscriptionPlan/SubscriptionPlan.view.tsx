@@ -14,7 +14,7 @@ import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import {
-  BASE_PLAN_ITEMS,
+  getBasePlanItems,
   PRO_PLAN_ITEMS,
   PRO_TRANSACTION_VALUES,
 } from 'consts/subcriptionPlan';
@@ -94,6 +94,7 @@ export const SubscriptionPlanView = ({
   hasUpdateSubsPlanError,
   updateSubsPlanPending,
   updateSubsPlanSuccess,
+  transactionValueFeePercent,
 }: SubscriptionPlanGeneratedProps) => {
   const location = useLocation();
   const theme = useTheme();
@@ -667,7 +668,9 @@ export const SubscriptionPlanView = ({
                             </PlanPrice>
                             <div>
                               <BenefitsList>
-                                {BASE_PLAN_ITEMS.map((i, index) => {
+                                {getBasePlanItems(
+                                  transactionValueFeePercent.toString()
+                                ).map((i, index) => {
                                   if (index === 0) {
                                     return (
                                       <>

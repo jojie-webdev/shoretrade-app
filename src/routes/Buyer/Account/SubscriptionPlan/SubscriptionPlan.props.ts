@@ -52,4 +52,5 @@ export interface SubscriptionPlanGeneratedProps
   hasUpdateSubsPlanError: boolean;
   updateSubsPlanPending: boolean;
   updateSubsPlanSuccess: boolean;
+  transactionValueFeePercent: number;
 }

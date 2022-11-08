@@ -195,11 +195,22 @@ const Checkout = (): JSX.Element => {
   const activeBaseSubscription = (
     companyPlan?.activePlans || []
   ).find(({ plan }) => ['BASE', 'PRO'].includes(plan.name.toUpperCase()));
-  const transactionValueFeePercent = +pathOr(
+
+  let transactionValueFeePercent = +pathOr(
     0,
     ['plan', 'transaction_value_fee_percentage'],
     activeBaseSubscription
   );
+
+  const overrideTransactionValueFeePercent = +pathOr(
+    0,
+    ['subscription', 'override_fee_percentage'],
+    activeBaseSubscription
+  );
+
+  if (overrideTransactionValueFeePercent) {
+    transactionValueFeePercent = overrideTransactionValueFeePercent;
+  }
 
   const cartItems: GetCartDataItem[] = Object.keys(cartDataItems).map(
     (key) => ({
