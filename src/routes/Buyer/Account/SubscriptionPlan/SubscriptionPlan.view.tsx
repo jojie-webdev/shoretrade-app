@@ -24,6 +24,7 @@ import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
+import { TRANSACTION_VALUE_FEE_PERCENTAGE } from 'routes/Buyer/Checkout/Checkout.constants';
 import { SubMinorDetail } from 'routes/Buyer/MarketRequests/Landing/Landing.style';
 import { Tag } from 'routes/Seller/Selling/Selling.style';
 import {
@@ -669,7 +670,9 @@ export const SubscriptionPlanView = ({
                             <div>
                               <BenefitsList>
                                 {getBasePlanItems(
-                                  transactionValueFeePercent.toString()
+                                  !transactionValueFeePercent
+                                    ? TRANSACTION_VALUE_FEE_PERCENTAGE.toString()
+                                    : transactionValueFeePercent.toString()
                                 ).map((i, index) => {
                                   if (index === 0) {
                                     return (

@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import _ from 'lodash';
 import pathOr from 'ramda/es/pathOr';
 import { useDispatch, useSelector } from 'react-redux';
+import { TRANSACTION_VALUE_FEE_PERCENTAGE } from 'routes/Buyer/Checkout/Checkout.constants';
 import {
   cancelSubscriptionPlanActions,
   getMarketInterestsActions,
@@ -57,6 +58,10 @@ const SubscriptionPlan = () => {
     companyPlan?.activePlans || []
   ).find(({ plan }) => ['BASE', 'PRO'].includes(plan.name.toUpperCase()));
 
+  let essentials = (companyPlan?.activePlans || []).find(
+    ({ plan }) => plan?.alias === 'BASE'
+  );
+
   let transactionValueFeePercent = +pathOr(
     0,
     ['plan', 'transaction_value_fee_percentage'],
@@ -66,11 +71,18 @@ const SubscriptionPlan = () => {
   const overrideTransactionValueFeePercent = +pathOr(
     0,
     ['subscription', 'override_fee_percentage'],
-    activeBaseSubscription
+    essentials
   );
 
-  if (overrideTransactionValueFeePercent) {
-    transactionValueFeePercent = overrideTransactionValueFeePercent;
+  if (!overrideTransactionValueFeePercent) {
+    essentials = (companyPlan?.activePlans || []).find(
+      ({ plan }) => plan?.alias === 'FREE_BASE'
+    );
+  }
+
+  if (essentials) {
+    transactionValueFeePercent =
+      overrideTransactionValueFeePercent || TRANSACTION_VALUE_FEE_PERCENTAGE;
   }
 
   const planStatus =
