@@ -186,8 +186,8 @@ const Register = (): JSX.Element => {
       email: '',
       password: '',
       passwordConfirm: '',
-      mobile: '',
-      callingCode: !theme.isSFM ? '' : '61',
+      mobile_cc: !theme.isSFM ? '' : '61',
+      mobile_no: '',
       // business
       businessName: '',
       abn: '',
@@ -234,7 +234,8 @@ const Register = (): JSX.Element => {
           email: details.email,
           password: details.password,
           passwordConfirm: details.passwordConfirm,
-          mobile: `+${details.callingCode || '61'}${details.mobile}`,
+          mobile_cc: `+${details.mobile_cc || '61'}`,
+          mobile_no: details.mobile_no,
           company: {
             businessName: details.businessName,
             abn: details.abn,
@@ -272,7 +273,8 @@ const Register = (): JSX.Element => {
           email: details.email,
           password: details.password,
           passwordConfirm: details.passwordConfirm,
-          mobile: `+${details.callingCode || '61'}${details.mobile}`,
+          mobile_cc: `+${details.mobile_cc || '61'}`,
+          mobile_no: details.mobile_no,
           company: {
             businessName: details.businessName,
             abn: details.abn,

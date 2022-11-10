@@ -110,11 +110,6 @@ const AccountLandingView = ({
       )}`,
     },
     {
-      iconName: 'fileAlt',
-      value: 'Payment History',
-      path: SELLER_ACCOUNT_ROUTES.PAYMENT_HISTORY,
-    },
-    {
       iconName: 'location',
       value: 'Shipping Addresses',
       path: `${SELLER_ACCOUNT_ROUTES.SHIPPING_ADDRESS}${qs.stringify(

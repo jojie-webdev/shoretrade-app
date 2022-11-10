@@ -8,7 +8,7 @@ import FavoriteButtonView from 'components/base/FavoriteButton';
 import {
   Expand,
   Location,
-  Cart,
+  ShoppingTrolley,
   Crate,
   CheckFilled,
 } from 'components/base/SVG';
@@ -358,7 +358,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                         loading={isLoadingAddCart}
                         iconPosition="before"
                         icon={
-                          <Cart
+                          <ShoppingTrolley
                             fill={
                               pressedBoxRadio
                                 ? theme.grey.noshade

@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { updateUserActions } from 'store/actions';
 import { Store } from 'types/store/Store';
-import { getCallingCode2 } from 'utils/String/callingCode';
+import { getCallingCode } from 'utils/String/callingCode';
 
 import {
   UserDetails,
@@ -33,7 +33,8 @@ const YourDetails = (): JSX.Element => {
     firstName: '',
     lastName: '',
     email: '',
-    mobile: '',
+    mobile_cc: '',
+    mobile_no: '',
   });
   const [businessDetails, setBusinessDetails] = useState<BusinessDetails>({
     businessName: '',
@@ -50,12 +51,13 @@ const YourDetails = (): JSX.Element => {
     // layout/Dashboard/Dashboard.container.tsx
     if (!getUser.pending) {
       const user = getUser.data?.data.user;
-      setCallingCode(getCallingCode2(user?.mobile || ''));
+      setCallingCode(getCallingCode(user?.mobile_cc || ''));
       setUserDetails({
         firstName: user?.firstName || '',
         lastName: user?.lastName || '',
         email: user?.email || '',
-        mobile: user?.mobile?.slice(3, user?.mobile?.length) || '',
+        mobile_cc: user?.mobile_cc || '',
+        mobile_no: user?.mobile_no || '',
       });
 
       const { companyId } = qs.parse(location.search, {
@@ -87,7 +89,8 @@ const YourDetails = (): JSX.Element => {
       firstName,
       lastName,
       email,
-      mobile,
+      mobile_cc,
+      mobile_no,
       businessName,
       abn,
     } = updateUserForm;
@@ -96,7 +99,8 @@ const YourDetails = (): JSX.Element => {
       firstName,
       lastName,
       email,
-      mobile,
+      mobile_cc,
+      mobile_no,
     };
 
     const updateBusinessDetails = {
@@ -107,7 +111,8 @@ const YourDetails = (): JSX.Element => {
     dispatch(
       updateUserActions.request({
         ...updatedUserDetails,
-        mobile: `+${callingCode}${updatedUserDetails.mobile}`,
+        mobile_no: updatedUserDetails?.mobile_no || '',
+        mobile_cc: `+${callingCode}`,
         company: {
           name: updateBusinessDetails.businessName,
           abn: updateBusinessDetails.abn,

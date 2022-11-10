@@ -1,4 +1,5 @@
 /* PLOP_INJECT_IMPORT */
+export { default as ShoppingTrolley } from './ShoppingTrolley';
 export { default as MapMarker } from './MapMarker';
 export { default as Bill } from './Bill';
 export { default as Crates2 } from './Crates2';

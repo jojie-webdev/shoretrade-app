@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Accordion from 'components/base/Accordion/Accordion.view';
 import Button from 'components/base/Button';
-import { Cart, Crab, Crate, Fee } from 'components/base/SVG';
+import { ShoppingTrolley, Crab, Crate, Fee } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import CheckoutCard from 'components/module/CheckoutCard/CheckoutCard.view';
 import Loading from 'components/module/Loading';
@@ -340,7 +340,7 @@ const CheckoutView = (props: CheckoutGeneratedProps) => {
                       </Typography>
                     </div>
 
-                    <Cart fill={theme.grey.shade4} />
+                    <ShoppingTrolley fill={theme.grey.shade4} />
                   </div>
                 </BottomRow>
               ) : (

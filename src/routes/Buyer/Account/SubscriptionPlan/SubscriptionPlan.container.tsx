@@ -1,7 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
 import _ from 'lodash';
+import pathOr from 'ramda/es/pathOr';
 import { useDispatch, useSelector } from 'react-redux';
+import { TRANSACTION_VALUE_FEE_PERCENTAGE } from 'routes/Buyer/Checkout/Checkout.constants';
 import {
   cancelSubscriptionPlanActions,
   getMarketInterestsActions,
@@ -51,6 +53,38 @@ const SubscriptionPlan = () => {
   const companyPlanError = useSelector(
     (store: Store) => store.getCompanyPlan.error
   );
+
+  const activeBaseSubscription = (
+    companyPlan?.activePlans || []
+  ).find(({ plan }) => ['BASE', 'PRO'].includes(plan.name.toUpperCase()));
+
+  let essentials = (companyPlan?.activePlans || []).find(
+    ({ plan }) => plan?.alias === 'BASE'
+  );
+
+  let transactionValueFeePercent = +pathOr(
+    0,
+    ['plan', 'transaction_value_fee_percentage'],
+    activeBaseSubscription
+  );
+
+  const overrideTransactionValueFeePercent = +pathOr(
+    0,
+    ['subscription', 'override_fee_percentage'],
+    essentials
+  );
+
+  if (!overrideTransactionValueFeePercent) {
+    essentials = (companyPlan?.activePlans || []).find(
+      ({ plan }) => plan?.alias === 'FREE_BASE'
+    );
+  }
+
+  if (essentials) {
+    transactionValueFeePercent =
+      overrideTransactionValueFeePercent || TRANSACTION_VALUE_FEE_PERCENTAGE;
+  }
+
   const planStatus =
     useSelector((store: Store) => store.subscription.status) || '';
 
@@ -239,6 +273,7 @@ const SubscriptionPlan = () => {
     hasUpdateSubsPlanError,
     updateSubsPlanPending,
     updateSubsPlanSuccess: !!updateSuccess && !hideSubsPlanAlert,
+    transactionValueFeePercent,
   };
 
   return <SubscriptionPlanView {...params} />;

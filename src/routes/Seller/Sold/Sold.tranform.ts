@@ -50,8 +50,8 @@ export const getDeliveryAddress = (
   switch (deliveryMethod) {
     case 'selfDeliveryOrder':
     case 'selfPickupOrders':
-      return sellerDropOffAddress ?? sellerAddress;
     case 'roadPickupOrders':
+      return sellerDropOffAddress ?? sellerAddress;
     case 'airPickupOrders':
       return sellerDropOffAddress;
     case 'roadDeliveryOrders':

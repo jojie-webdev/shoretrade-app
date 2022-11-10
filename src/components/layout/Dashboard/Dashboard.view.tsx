@@ -2,7 +2,7 @@ import React from 'react';
 
 import {
   Exit,
-  Cart as CartIcon,
+  ShoppingTrolley,
   PlaceholderProfile,
   ChevronRight,
   ArrowLeft,
@@ -125,7 +125,7 @@ const Cart = ({ cartItems }: { cartItems: number }) => {
         className="icon-wrapper"
         onClick={() => history.push(BUYER_ROUTES.CHECKOUT)}
       >
-        <CartIcon
+        <ShoppingTrolley
           fill={
             isNonDesktop
               ? theme.grey.noshade

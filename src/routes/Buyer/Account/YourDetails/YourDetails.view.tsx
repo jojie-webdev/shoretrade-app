@@ -39,7 +39,8 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
     initialValues: {
       firstName: userDetails.firstName,
       lastName: userDetails.lastName,
-      mobile: userDetails.mobile,
+      mobile_cc: userDetails.mobile_cc,
+      mobile_no: userDetails.mobile_no,
       email: userDetails.email,
       businessName: businessDetails.businessName,
       abn: businessDetails.abn,
@@ -86,7 +87,7 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
             <Col md={12} xl={4} className="input-col">
               <PhoneTextField
                 label="Mobile"
-                name="mobile"
+                name="mobile_no"
                 callingCode={callingCode}
                 setCallingCode={setCallingCode}
               />

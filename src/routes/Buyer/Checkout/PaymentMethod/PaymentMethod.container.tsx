@@ -135,6 +135,14 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
     // eslint-disable-next-line
   }, [companyId]);
 
+  useEffect(() => {
+    if (addCardAndPayError) {
+      setTimeout(() => {
+        dispatch(addCardAndPayActions.clear());
+      }, 10000);
+    }
+  }, [addCardAndPayError]);
+
   const generatedProps = {
     balance: currentCompany?.credit || '',
     cards,

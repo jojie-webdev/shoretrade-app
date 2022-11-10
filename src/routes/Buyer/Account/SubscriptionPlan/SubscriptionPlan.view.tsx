@@ -14,7 +14,7 @@ import Loading from 'components/module/Loading';
 import { BUYER_ACCOUNT_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import {
-  BASE_PLAN_ITEMS,
+  getBasePlanItems,
   PRO_PLAN_ITEMS,
   PRO_TRANSACTION_VALUES,
 } from 'consts/subcriptionPlan';
@@ -24,6 +24,7 @@ import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
+import { TRANSACTION_VALUE_FEE_PERCENTAGE } from 'routes/Buyer/Checkout/Checkout.constants';
 import { SubMinorDetail } from 'routes/Buyer/MarketRequests/Landing/Landing.style';
 import { Tag } from 'routes/Seller/Selling/Selling.style';
 import {
@@ -94,6 +95,7 @@ export const SubscriptionPlanView = ({
   hasUpdateSubsPlanError,
   updateSubsPlanPending,
   updateSubsPlanSuccess,
+  transactionValueFeePercent,
 }: SubscriptionPlanGeneratedProps) => {
   const location = useLocation();
   const theme = useTheme();
@@ -516,7 +518,7 @@ export const SubscriptionPlanView = ({
                       weight="400"
                       style={{ textDecoration: 'underline' }}
                     >
-                      See Payment History
+                      See Subscription History
                     </Typography>
                   </Link>
                 </div>
@@ -667,7 +669,11 @@ export const SubscriptionPlanView = ({
                             </PlanPrice>
                             <div>
                               <BenefitsList>
-                                {BASE_PLAN_ITEMS.map((i, index) => {
+                                {getBasePlanItems(
+                                  !transactionValueFeePercent
+                                    ? TRANSACTION_VALUE_FEE_PERCENTAGE.toString()
+                                    : transactionValueFeePercent.toString()
+                                ).map((i, index) => {
                                   if (index === 0) {
                                     return (
                                       <>

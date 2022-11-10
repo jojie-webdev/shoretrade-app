@@ -10,6 +10,7 @@ import { SUBSCRIPTION_NAMES } from 'consts/subcriptionPlan';
 import moment from 'moment';
 import { Col } from 'react-grid-system';
 import { useHistory, useLocation } from 'react-router-dom';
+import { GetTransactionHistoryResponseItem } from 'types/store/GetTransactionHistoryState';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
@@ -147,6 +148,28 @@ const BalanceHistoryView = ({
     };
   };
 
+  const getDetailsForPaymentHistory = (
+    transaction: GetTransactionHistoryResponseItem
+  ) => {
+    const { subtitle } = getTransactionLabel(transaction.description);
+    const subscriptionLength = transaction?.metadata?.subscriptions?.length;
+    const title = getSubscriptionPlanNameV2(
+      (transaction?.metadata?.subscriptions &&
+        transaction?.metadata?.subscriptions[subscriptionLength - 1]?.alias) ||
+        ''
+    );
+
+    return { title, subtitle };
+  };
+
+  const getDetailsForCreditHistory = (
+    transaction: GetTransactionHistoryResponseItem
+  ) => {
+    const { title, subtitle } = getTransactionLabel(transaction.description);
+
+    return { subtitle, title };
+  };
+
   return (
     <Container>
       <div className="breadcrumb-container">
@@ -159,7 +182,7 @@ const BalanceHistoryView = ({
                 ? BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN
                 : BUYER_ACCOUNT_ROUTES.BANK_DETAILS,
             },
-            { label: `${isPlanView ? 'Payment' : 'Credit'} History` },
+            { label: `${isPlanView ? 'Subscription' : 'Credit'} History` },
           ]}
         />
       </div>
@@ -185,15 +208,9 @@ const BalanceHistoryView = ({
         )}
 
         {transactions.map((transaction, idx) => {
-          const { subtitle } = getTransactionLabel(transaction.description);
-          const subscriptionLength =
-            transaction?.metadata?.subscriptions?.length;
-          const title = getSubscriptionPlanNameV2(
-            (transaction?.metadata?.subscriptions &&
-              transaction?.metadata?.subscriptions[subscriptionLength - 1]
-                ?.alias) ||
-              ''
-          );
+          const { title, subtitle } = isPlanView
+            ? getDetailsForPaymentHistory(transaction)
+            : getDetailsForCreditHistory(transaction);
 
           const isCreditCardTopUp = transaction?.description?.includes(
             'Credit card'
@@ -227,7 +244,12 @@ const BalanceHistoryView = ({
                 </Downloadable>
                 <div className="text">
                   <Typography variant="body" color="shade9">
-                    {title} Subscription Upgrade
+                    {title}{' '}
+                    {isPlanView
+                      ? title === 'Pro'
+                        ? 'Subscription Upgrade'
+                        : 'Subscription'
+                      : ''}
                   </Typography>
                   {subtitle.length > 0 && (
                     <Typography variant="caption" color="shade9">
