@@ -7,7 +7,7 @@ export type AccountOption = {
 export type ChooseAccountPublicProps = {
   accountOptions: AccountOption[];
   onSelectAccount: (account: string) => void;
-  onUploadCSV: (csv: File) => void;
+  onUploadCSV: (csv: File, salesChannel: string) => void;
   isUploadingCSV: boolean;
   userPending: boolean;
 };

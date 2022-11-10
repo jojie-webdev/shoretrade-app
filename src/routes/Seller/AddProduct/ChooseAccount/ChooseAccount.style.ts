@@ -37,7 +37,7 @@ export const Container = styled.div`
     max-height: 48px;
     padding: 18px 32px;
 
-    margin-bottom: 32px;
+    margin-bottom: 10px;
     background-color: ${({ theme }) => theme.brand.primary};
     border-radius: 4px;
     cursor: pointer;
@@ -60,6 +60,10 @@ export const Container = styled.div`
     @media ${BREAKPOINTS['sm']} {
       padding: 18px;
     }
+  }
+
+  .template-btn.last-btn {
+    margin-bottom: 32px;
   }
 
   input {

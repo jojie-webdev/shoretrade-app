@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import Button from 'components/base/Button';
+import Checkbox from 'components/base/Checkbox';
 import Interactions from 'components/base/Interactions';
 import Select from 'components/base/Select';
 import { PlaceholderProfile } from 'components/base/SVG';
@@ -8,9 +9,10 @@ import Typography from 'components/base/Typography';
 import Modal from 'components/layout/Modal';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import pathOr from 'ramda/es/pathOr';
+import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 //@ts-ignore
-import template from 'res/docs/bulkUpload.xlsx';
+import preAuctionBulkUploadTemplate from 'res/docs/pre_auction_bulk_upload_template.xlsx';
 
 import { AccountOption, ChooseAccountProps } from './ChooseAccount.props';
 import {
@@ -50,6 +52,7 @@ const ChooseAccount = ({
 
   const [selected, setSelected] = useState('');
   const [isAddInBulk, setIsAddInBulk] = useState(false);
+  const [salesChannel, setSalesChannel] = useState('Pre-Auction');
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   useEffect(() => {
@@ -141,6 +144,26 @@ const ChooseAccount = ({
             You can use Microsoft Excel or the free Google Sheets to complete
           </Typography>
 
+          {/* <Typography
+            className="template-btn"
+            variant="overline"
+            color="noshade"
+            onClick={() => {
+              if (aRef.current !== null) {
+                aRef.current.click();
+              }
+            }}
+          >
+            <a
+              ref={aRef}
+              href={preAuctionBulkUploadTemplate}
+              download="bulkUpload.xlsx"
+              onClick={(e) => e.stopPropagation()}
+            >
+              Direct Sale Template
+            </a>
+          </Typography>
+
           <Typography
             className="template-btn"
             variant="overline"
@@ -153,11 +176,31 @@ const ChooseAccount = ({
           >
             <a
               ref={aRef}
-              href={template}
+              href={preAuctionBulkUploadTemplate}
               download="bulkUpload.xlsx"
               onClick={(e) => e.stopPropagation()}
             >
-              DOWNLOAD TEMPLATE
+              Aquafuture Template
+            </a>
+          </Typography> */}
+
+          <Typography
+            className="template-btn last-btn"
+            variant="overline"
+            color="noshade"
+            onClick={() => {
+              if (aRef.current !== null) {
+                aRef.current.click();
+              }
+            }}
+          >
+            <a
+              ref={aRef}
+              href={preAuctionBulkUploadTemplate}
+              download="pre_auction_bulk_upload_template.xlsx"
+              onClick={(e) => e.stopPropagation()}
+            >
+              Pre-Auction Template
             </a>
           </Typography>
 
@@ -177,10 +220,45 @@ const ChooseAccount = ({
             accept=".csv"
             onChange={(e) => {
               if (e.currentTarget.files) {
-                onUploadCSV(e.currentTarget.files[0]);
+                onUploadCSV(e.currentTarget.files[0], salesChannel);
               }
             }}
           />
+
+          <Row nogutter style={{ marginBottom: '12px' }}>
+            {/* <Col xs="content">
+              <Checkbox
+                label="Direct Sale"
+                checked={true}
+                onClick={() => {
+                  return true;
+                }}
+                typographyProps={{ variant: 'label', weight: '400' }}
+                style={{ marginRight: '16px' }}
+              />
+            </Col>
+            <Col xs="content">
+              <Checkbox
+                label="Aquafuture"
+                checked={true}
+                onClick={() => {
+                  return true;
+                }}
+                typographyProps={{ variant: 'label', weight: '400' }}
+                style={{ marginRight: '16px' }}
+              />
+            </Col> */}
+            <Col xs="content">
+              <Checkbox
+                label="Pre-Auction"
+                checked={true}
+                onClick={() => {
+                  setSalesChannel('Pre-Auction');
+                }}
+                typographyProps={{ variant: 'label', weight: '400' }}
+              />
+            </Col>
+          </Row>
 
           <Button
             text="Upload csv file"
