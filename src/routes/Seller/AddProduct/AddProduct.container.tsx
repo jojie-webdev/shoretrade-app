@@ -589,7 +589,7 @@ const AddProduct = (): JSX.Element => {
     })()
   );
 
-  const onUploadCSV = (csv: File) => {
+  const onUploadCSV = (csv: File, salesChannel: string) => {
     const companies = getUser.data?.data.user.companies || [{ id: '' }];
     const companyId = companies[0].id || '';
 
@@ -602,6 +602,7 @@ const AddProduct = (): JSX.Element => {
           uploadBulkActions.request({
             companyId,
             csv: reader.result as string,
+            salesChannel,
           })
         );
       };

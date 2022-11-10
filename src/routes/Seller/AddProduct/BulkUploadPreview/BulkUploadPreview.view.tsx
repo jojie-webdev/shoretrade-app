@@ -95,7 +95,7 @@ const BulkUploadPreviewView = ({
             accept=".csv"
             onChange={(e) => {
               if (e.currentTarget.files) {
-                props.onUploadCSV(e.currentTarget.files[0]);
+                props.onUploadCSV(e.currentTarget.files[0], 'Pre-Auction');
               }
             }}
           />

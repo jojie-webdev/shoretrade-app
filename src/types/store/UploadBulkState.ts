@@ -3,6 +3,7 @@ import { GenericResponse } from 'types/GenericResponse';
 export type UploadBulkMeta = {
   companyId: string;
   csv: string;
+  salesChannel: string;
 };
 
 export type UploadBulkState = {

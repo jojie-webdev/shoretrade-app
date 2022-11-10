@@ -44,7 +44,7 @@ const BulkUploadPreview = (): JSX.Element => {
     })
   );
 
-  const onUploadCSV = (csv: File) => {
+  const onUploadCSV = (csv: File, salesChannel: string) => {
     const reader = new FileReader();
     reader.readAsText(csv);
 
@@ -53,6 +53,7 @@ const BulkUploadPreview = (): JSX.Element => {
         uploadBulkActions.request({
           companyId,
           csv: reader.result as string,
+          salesChannel,
         })
       );
     };
