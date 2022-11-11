@@ -54,23 +54,32 @@ const AssistantsView = (props: AssistantsGeneratedProps) => {
       {!notifMsg && (
         <InfoContainer>
           <Typography variant="label" color="shade9">
-            {`If you want to give others access to you account, you can add a “linked account”.`}
+            {`Add multiple users to your ${
+              theme.isSFM ? 'SFMblue' : 'ShoreTrade'
+            } by adding Linked Accounts.`}
           </Typography>
           <Typography variant="label" className="text-people" color="shade9">
-            {`People with linked accounts`}
+            {`At no extra charge to you, these Linked Accounts can transact on your behalf.`}
           </Typography>
-          <TextContainer>
-            <CheckFilled fill={theme.brand.success} />
-            <Typography variant="label" color="shade9">
-              Can make purchases and track orders using your stored credit cards
-              or existing credit balance.
-            </Typography>
-          </TextContainer>
-
+          <Typography variant="label" className="text-people" color="shade9">
+            {`A Linked Account has the same abilities as you, the Primary Account holder, except;`}
+          </Typography>
           <TextContainer>
             <CloseFilled fill={theme.brand.error} />
             <Typography variant="label" color="shade9">
-              Cannot add other linked accounts.
+              The ability to add other Linked Accounts.
+            </Typography>
+          </TextContainer>
+          <TextContainer>
+            <CloseFilled fill={theme.brand.error} />
+            <Typography variant="label" color="shade9">
+              The ability to access Your Plan and manage your subscription.
+            </Typography>
+          </TextContainer>
+          <TextContainer>
+            <CloseFilled fill={theme.brand.error} />
+            <Typography variant="label" color="shade9">
+              The ability to change Business Name and Business Number.
             </Typography>
           </TextContainer>
         </InfoContainer>

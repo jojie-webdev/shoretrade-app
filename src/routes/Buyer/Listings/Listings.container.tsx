@@ -209,6 +209,9 @@ export default function ListingContainer() {
       setShowModal(false);
       setIsCsvPending(false);
     }
+    if (showModal && isDownloadingCsv) {
+      setShowModal(false);
+    }
   }, [isDownloadingCsv, showModal, isCsvPending]);
 
   useComponentShouldUpdate(() => {
