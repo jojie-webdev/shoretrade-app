@@ -12,8 +12,7 @@ import pathOr from 'ramda/es/pathOr';
 import { Row, Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 //@ts-ignore
-import preAuctionBulkUploadTemplate from 'res/docs/pre_auction_bulk_upload_template.xlsx';
-
+import preAuctionBulkUploadTemplate from 'res/docs/pre_auction_bulk_upload_template_1668144231.xlsx';
 import { AccountOption, ChooseAccountProps } from './ChooseAccount.props';
 import {
   Container,
@@ -197,7 +196,11 @@ const ChooseAccount = ({
             <a
               ref={aRef}
               href={preAuctionBulkUploadTemplate}
+<<<<<<< HEAD
+              download="pre_auction_bulk_upload_template_1668144231.xlsx"
+=======
               download="pre_auction_bulk_upload_template.xlsx"
+>>>>>>> dev
               onClick={(e) => e.stopPropagation()}
             >
               Pre-Auction Template
