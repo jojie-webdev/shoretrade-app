@@ -3,7 +3,7 @@ import { GenericResponse } from 'types/GenericResponse';
 export type UploadBulkMeta = {
   companyId: string;
   csv: string;
-  salesChannel: string;
+  salesChannel?: string | null;
 };
 
 export type UploadBulkState = {
@@ -25,9 +25,9 @@ export type UploadBulkState = {
   pricePerKilo?: number;
   minOrder?: number;
   sellInMultiplesOfMinOrder?: boolean;
-  catchDate?: Date | string;
+  catchDate?: Date | null;
   description?: string;
-  ends?: Date | string;
+  ends?: Date | null;
   origin: {
     suburb: string;
     state: string;
@@ -44,7 +44,7 @@ export type UploadBulkState = {
   quality: string | null;
   isPreAuctionSale: boolean;
   isAuctionSale: boolean;
-  auctionDate: string | null;
+  auctionDate?: Date | null;
   isIkeJime: boolean;
   isIceSlurry: boolean;
   packaging: { id: string | null } | null;
@@ -54,4 +54,5 @@ export type UploadBulkState = {
 export type UploadBulkPayload = GenericResponse<{
   companyId: string;
   editableListings: UploadBulkState[];
+  salesChannel?: string | null;
 }>;

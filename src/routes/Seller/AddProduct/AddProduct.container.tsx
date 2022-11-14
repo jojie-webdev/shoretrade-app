@@ -474,8 +474,8 @@ const AddProduct = (): JSX.Element => {
     restrictToState,
   }: {
     pricePerKilo: number;
-    auctionDate: Date | null;
     catchDate: Date | null;
+    auctionDate: Date | null;
     catchRecurrence: string | null;
     ends: Date | null;
     origin: {
@@ -497,6 +497,7 @@ const AddProduct = (): JSX.Element => {
         modifyBulkUploadActions.update({
           pricePerKilo,
           //@ts-ignore
+          auctionDate,
           catchDate,
           //@ts-ignore
           ends,

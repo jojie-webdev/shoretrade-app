@@ -29,7 +29,9 @@ export const bulkListingToCreateListing = (
   addressId: shippingAddress,
   isPreAuctionSale: data?.isPreAuctionSale || false,
   isAuctionSale: data?.isAuctionSale || false,
-  auctionDate: data?.auctionDate || null,
+  auctionDate: data?.auctionDate
+    ? moment(data.auctionDate).toISOString()
+    : null,
   quality: data?.quality || null,
   isIkeJime: data?.isIkeJime || false,
   isIceSlurry: data?.isIceSlurry || false,
