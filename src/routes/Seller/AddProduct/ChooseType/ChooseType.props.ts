@@ -32,4 +32,5 @@ export type ChooseTypePublicProps = {
 
 export type ChooseTypeProps = ChooseTypePublicProps & {
   editableListing: EditableListingState;
+  disableBackBtn?: boolean;
 };

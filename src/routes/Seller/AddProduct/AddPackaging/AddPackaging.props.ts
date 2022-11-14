@@ -26,4 +26,5 @@ export type AddPackagingPublicProps = {
 export type AddPackagingProps = AddPackagingPublicProps & {
   listingFormData: GetListingFormDataResponse | null;
   editableListing: EditableListingState;
+  disableBackBtn?: boolean;
 };

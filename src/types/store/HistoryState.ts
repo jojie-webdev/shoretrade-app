@@ -1,7 +1,8 @@
 export type HistoryState = {
-  buyerRecentSearch: {
+  buyerRecentSearch?: {
     count: string;
     label: string;
     value: string;
   }[];
+  isFromBulkUploadPreview?: boolean;
 };

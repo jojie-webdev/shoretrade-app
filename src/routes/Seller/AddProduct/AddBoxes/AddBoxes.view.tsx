@@ -242,6 +242,7 @@ const AddBoxes = ({
   onAddBoxes,
   isExisting,
   navBack,
+  disableBackBtn,
 }: AddBoxesProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -422,6 +423,7 @@ const AddBoxes = ({
           <Button
             variant={'outline'}
             text="Back"
+            disabled={disableBackBtn}
             onClick={() => {
               navBack();
             }}
@@ -459,6 +461,7 @@ const AddBoxes = ({
             takeFullWidth
             variant={'outline'}
             text="Back"
+            disabled={disableBackBtn}
             onClick={() => {
               navBack();
             }}

@@ -7,7 +7,11 @@ import { Action } from 'types/Action';
 import { Store } from 'types/store/Store';
 import { UploadBulkState } from 'types/store/UploadBulkState';
 
-import { editableListingActions, modifyBulkUploadActions } from '../actions';
+import {
+  editableListingActions,
+  historyActions,
+  modifyBulkUploadActions,
+} from '../actions';
 
 //TODO: bulk upload catch recurrence
 function* modifyBulkUploadEdit(
@@ -53,6 +57,12 @@ function* modifyBulkUploadEdit(
 
       // assume we are on bulk upload page
       yield put(push(ADD_PRODUCT_ROUTES.LANDING));
+
+      yield put(
+        historyActions.update({
+          isFromBulkUploadPreview: true,
+        })
+      );
     }
   }
 }

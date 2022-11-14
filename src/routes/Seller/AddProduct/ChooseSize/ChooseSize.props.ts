@@ -26,4 +26,5 @@ export type ChooseSizeProps = ChooseSizePublicProps & {
   listingFormData: GetListingFormDataResponse | null;
   editableListing: EditableListingState;
   isCustomType: boolean;
+  disableBackBtn?: boolean;
 };

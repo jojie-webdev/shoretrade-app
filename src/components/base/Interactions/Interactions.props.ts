@@ -34,4 +34,5 @@ export interface InteractionsProps {
   bottomComponent?: React.ReactNode;
   showEmptyIndicator?: boolean;
   disabled?: boolean;
+  noCursor?: boolean;
 }

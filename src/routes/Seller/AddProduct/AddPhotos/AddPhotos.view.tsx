@@ -23,6 +23,7 @@ const AddPhotos = ({
   onUpdateImage,
   onSetProductPhotoType,
   navBack,
+  disableBackBtn,
 }: AddPhotosProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -180,6 +181,7 @@ const AddPhotos = ({
           <Button
             variant={'outline'}
             text="Back"
+            disabled={disableBackBtn}
             onClick={() => {
               navBack();
             }}
@@ -198,6 +200,7 @@ const AddPhotos = ({
           takeFullWidth
           variant={'outline'}
           text="Back"
+          disabled={disableBackBtn}
           onClick={() => {
             navBack();
           }}

@@ -36,4 +36,5 @@ export interface AddProductGeneratedProps
   userPending: boolean;
   isBulkUpload: boolean;
   discardBulkUploadChanges: () => void;
+  isFromBulkUploadPreview: boolean;
 }

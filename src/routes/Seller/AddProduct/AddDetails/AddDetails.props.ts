@@ -51,4 +51,5 @@ export type AddDetailsProps = AddDetailsPublicProps & {
   isGstIncl: boolean;
   listingFormData: GetListingFormDataResponse | null;
   editableListing: EditableListingState;
+  disableBackBtn?: boolean;
 };

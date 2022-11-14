@@ -78,6 +78,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     navBack,
     additionalInfos,
     updateAdditionalInfos,
+    isFromBulkUploadPreview,
   } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -148,6 +149,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             selectCustomType={selectCustomType}
             navBack={navBack}
             desktopSearchValue={searchKey}
+            disableBackBtn={isFromBulkUploadPreview}
           />
         );
       case 3:
@@ -161,6 +163,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             navBack={navBack}
             onSelectSpecifications={onSelectSpecifications}
             updateAdditionalInfos={updateAdditionalInfos}
+            disableBackBtn={isFromBulkUploadPreview}
           />
         );
       case 4:
@@ -171,6 +174,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             isCustomType={isCustomType}
             navBack={navBack}
             onSelectSizes={onSelectSizes}
+            disableBackBtn={isFromBulkUploadPreview}
           />
         );
       case 5:
@@ -182,6 +186,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             navBack={navBack}
             onUpdateImage={onUpdateImage}
             onSetProductPhotoType={onSetProductPhotoType}
+            disableBackBtn={isFromBulkUploadPreview}
           />
         );
       case 6:
@@ -191,6 +196,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             listingFormData={listingFormData}
             onAddPackaging={onAddPackaging}
             navBack={navBack}
+            disableBackBtn={isFromBulkUploadPreview}
           />
         );
       case 7:
@@ -203,6 +209,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             onAddBoxes={onAddBoxes}
             navBack={navBack}
             isExisting={isExisting}
+            disableBackBtn={isFromBulkUploadPreview}
           />
         );
       case 8:
@@ -216,6 +223,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             onUpdateDetails={onUpdateDetails}
             navBack={navBack}
             marketEstimate={marketEstimate}
+            disableBackBtn={isFromBulkUploadPreview}
           />
         );
       case 9:

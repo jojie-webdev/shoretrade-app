@@ -33,6 +33,7 @@ const AddPackaging = ({
   listingFormData,
   onAddPackaging,
   navBack,
+  disableBackBtn,
 }: AddPackagingProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -312,6 +313,7 @@ const AddPackaging = ({
           <Button
             variant={'outline'}
             text="Back"
+            disabled={disableBackBtn}
             onClick={() => {
               navBack();
             }}
@@ -332,6 +334,7 @@ const AddPackaging = ({
           takeFullWidth
           variant={'outline'}
           text="Back"
+          disabled={disableBackBtn}
           onClick={() => {
             navBack();
           }}

@@ -40,16 +40,6 @@ export const Container = styled.div<InteractionsProps>`
       : 'none !important';
   }};
 
-  ${({ type, disabled }) =>
-    disabled
-      ? 'cursor: none'
-      : type !== 'none'
-      ? `cursor: pointer;
-        &:hover {
-          opacity: 0.9;
-        }`
-      : ''}
-
   .top-content,
   .left-content,
   .right-content,
@@ -64,6 +54,15 @@ export const Container = styled.div<InteractionsProps>`
   .top-content {
     justify-content: space-between;
   }
+
+  ${({ type }) =>
+    type !== 'none'
+      ? `cursor: pointer;
+        &:hover {
+          opacity: 0.9;
+        }`
+      : 'cursor: pointer'}
+  ${({ noCursor }) => noCursor && 'cursor: none;'}
 `;
 
 export const Value = styled(Typography)<{ fontColor?: string }>`

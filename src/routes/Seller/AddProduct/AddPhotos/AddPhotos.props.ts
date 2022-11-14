@@ -20,4 +20,5 @@ export type AddPhotosProps = AddPhotosPublicProps & {
   isCustomType: boolean;
   listingFormData: GetListingFormDataResponse | null;
   editableListing: EditableListingState;
+  disableBackBtn?: boolean;
 };

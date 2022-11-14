@@ -54,6 +54,7 @@ const ChooseType = ({
   editableListing,
   navBack,
   desktopSearchValue,
+  disableBackBtn,
 }: ChooseTypeProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -157,6 +158,7 @@ const ChooseType = ({
             <BackButton
               variant={'outline'}
               text="Back"
+              disabled={disableBackBtn}
               onClick={() => setShowCustomTypeSettings(false)}
             />
             <Button
@@ -189,6 +191,7 @@ const ChooseType = ({
             takeFullWidth
             variant={'outline'}
             text="Back"
+            disabled={disableBackBtn}
             onClick={() => setShowCustomTypeSettings(false)}
             style={{ marginRight: 8 }}
           />

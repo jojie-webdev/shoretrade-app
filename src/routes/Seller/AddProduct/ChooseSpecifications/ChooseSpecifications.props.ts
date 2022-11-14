@@ -25,4 +25,5 @@ export type ChooseSpecificationsProps = ChooseSpecificationsPublicProps & {
   editableListing: EditableListingState;
   isCustomType: boolean;
   categories: CategoryData[];
+  disableBackBtn?: boolean;
 };

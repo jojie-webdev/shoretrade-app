@@ -18,6 +18,7 @@ import {
   getMarketInterestsActions,
   getHistoricalListingsActions,
   useHistoricalListingActions,
+  historyActions,
 } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { GetCategoryData } from 'store/selectors/seller/categories';
@@ -52,6 +53,9 @@ const AddProduct = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const isFromBulkUploadPreview = useSelector(
+    (state: Store) => state.history.isFromBulkUploadPreview || false
+  );
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
   const currentCompany = GetDefaultCompany();
   const companyId = currentCompany?.id || '';
@@ -120,6 +124,7 @@ const AddProduct = (): JSX.Element => {
 
   const onSkipHistoricalListings = () => {
     onChangeCurrentPage(2);
+    dispatch(historyActions.clear());
   };
 
   const onUseHistoricalListing = (listingId: string, typeId: string) => {
@@ -715,6 +720,7 @@ const AddProduct = (): JSX.Element => {
     navBack,
     additionalInfos,
     updateAdditionalInfos,
+    isFromBulkUploadPreview,
   };
 
   return <AddProductView {...generatedProps} />;

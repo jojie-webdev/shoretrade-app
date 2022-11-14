@@ -123,6 +123,7 @@ const AddDetails = ({
   listingFormData,
   navBack,
   isGstIncl,
+  disableBackBtn,
 }: AddDetailsProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -251,6 +252,14 @@ const AddDetails = ({
 
     return address ? address.state : '';
   }, [shippingAddress, shippingAddressOptions]);
+
+  useEffect(() => {
+    if (disableBackBtn) {
+      setSelectedChannel('auction');
+      setAlwaysAvailable(false);
+      setIsAquafuture(false);
+    }
+  }, [disableBackBtn]);
 
   useEffect(() => {
     if (listingEndTimeString) {
@@ -645,18 +654,23 @@ const AddDetails = ({
         {SALES_CHANNELS.map((c) => (
           <CustomCol key={c.value} sm={4} md={3}>
             <Interactions
+              disabled={c.value !== 'auction' && disableBackBtn}
               padding="12px"
               onClick={() => {
-                setSelectedChannel((prevState) => {
-                  if (prevState === c.value) return '';
-                  else return c.value;
-                });
-                if (c.value === 'aquafuture') {
-                  handleToggleAquafuture();
-                } else if (c.value === 'auction') {
-                  handleToggleAuctionSale();
+                if (selectedChannel === 'auction' && disableBackBtn) {
+                  return;
                 } else {
-                  handleToggleDirect();
+                  setSelectedChannel((prevState) => {
+                    if (prevState === c.value) return '';
+                    else return c.value;
+                  });
+                  if (c.value === 'aquafuture') {
+                    handleToggleAquafuture();
+                  } else if (c.value === 'auction') {
+                    handleToggleAuctionSale();
+                  } else {
+                    handleToggleDirect();
+                  }
                 }
               }}
               leftComponent={
@@ -1093,6 +1107,7 @@ const AddDetails = ({
             variant="outline"
             className="back-btn"
             text="Back"
+            disabled={disableBackBtn}
             onClick={() => {
               navBack();
             }}
@@ -1112,6 +1127,7 @@ const AddDetails = ({
           takeFullWidth
           variant="outline"
           text="Back"
+          disabled={disableBackBtn}
           onClick={() => {
             navBack();
           }}

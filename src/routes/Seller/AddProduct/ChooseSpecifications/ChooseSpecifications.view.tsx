@@ -20,6 +20,7 @@ import {
 import { Container } from './ChooseSpecifications.style';
 
 const ChooseSpecifications = ({
+  disableBackBtn,
   editableListing,
   listingFormData,
   onSelectSpecifications,
@@ -194,6 +195,7 @@ const ChooseSpecifications = ({
                 onClick={() => {
                   navBack();
                 }}
+                disabled={disableBackBtn}
               />
               <Button
                 text="Next"
@@ -216,6 +218,7 @@ const ChooseSpecifications = ({
               takeFullWidth
               text="Back"
               variant={'outline'}
+              disabled={disableBackBtn}
               onClick={() => {
                 navBack();
               }}

@@ -38,4 +38,5 @@ export type AddBoxesProps = AddBoxesPublicProps & {
   isExisting: boolean;
   listingFormData: GetListingFormDataResponse | null;
   editableListing: EditableListingState;
+  disableBackBtn?: boolean;
 };

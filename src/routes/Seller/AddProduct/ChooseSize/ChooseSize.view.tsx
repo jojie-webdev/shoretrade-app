@@ -134,6 +134,7 @@ const ChooseSize = ({
   listingFormData,
   onSelectSizes,
   navBack,
+  disableBackBtn,
 }: ChooseSizeProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -335,6 +336,7 @@ const ChooseSize = ({
             <Button
               variant={'outline'}
               text="Back"
+              disabled={disableBackBtn}
               onClick={() => {
                 navBack();
               }}
@@ -363,6 +365,7 @@ const ChooseSize = ({
             takeFullWidth
             variant={'outline'}
             text="Back"
+            disabled={disableBackBtn}
             onClick={() => {
               navBack();
             }}
