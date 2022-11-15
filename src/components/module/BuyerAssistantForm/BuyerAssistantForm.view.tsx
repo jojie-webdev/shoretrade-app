@@ -100,7 +100,7 @@ const BuyerAssistantForm = (props: BuyerAssistantFormProps): JSX.Element => {
             <Col md={12} xl={4} className="textfield-container">
               <PhoneTextField
                 label="Mobile"
-                name="mobile"
+                name="mobile_no"
                 callingCode={callingCode}
                 setCallingCode={(cc) => setCallingCode && setCallingCode(cc)}
                 readOnly={type === 'EDIT'}
@@ -123,6 +123,9 @@ const BuyerAssistantForm = (props: BuyerAssistantFormProps): JSX.Element => {
               onClick={() => {
                 if (type === 'EDIT') {
                   setShowDelete(true);
+                } else if (formRef.current) {
+                  // @ts-ignore
+                  formRef.current.handleSubmit();
                 }
               }}
             />

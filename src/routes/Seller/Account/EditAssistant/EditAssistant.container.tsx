@@ -35,7 +35,7 @@ const EditAssistant = (): JSX.Element => {
 
   // MARK:- State
   // eslint-disable-next-line
-  const [callingCode, setCallingCode] = useState('61');
+  const [callingCode, setCallingCode] = useState('');
 
   // MARK:- Methods
   const onClickDelete = () => {
@@ -65,18 +65,25 @@ const EditAssistant = (): JSX.Element => {
       firstName: currentLinkedAccount?.firstName || '',
       lastName: currentLinkedAccount?.lastName || '',
       email: currentLinkedAccount?.email || '',
-      mobile: replaceCallingCode(currentLinkedAccount?.mobile || ''),
+      mobile_cc: currentLinkedAccount?.mobile_cc || '',
+      mobile_no: currentLinkedAccount?.mobile_no || '',
     },
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     onSubmit: () => {},
   };
+
+  useEffect(() => {
+    if (currentLinkedAccount) {
+      setCallingCode(currentLinkedAccount?.mobile_cc || '');
+    }
+  }, [currentLinkedAccount]);
 
   // MARK:- Render
   const generatedProps: EditAssistantGeneratedProps = {
     companyId,
     type: 'EDIT',
     formikInitial,
-    callingCode,
+    callingCode: callingCode?.replace('+', ''),
     pending: deleteLinkedAccount.pending || false,
     loading: getLinkedAccounts.pending || false,
     onClickDelete,

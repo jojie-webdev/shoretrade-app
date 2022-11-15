@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom';
 import { addLinkedAccountActions } from 'store/actions';
 import { Store } from 'types/store/Store';
 import { useCompany } from 'utils/Hooks';
+import { useTheme } from 'utils/Theme';
 
 import { CreateAssistantGeneratedProps } from './CreateAssistant.props';
 import { isValid } from './CreateAssistant.validation';
@@ -18,6 +19,8 @@ const CreateAssistant = (): JSX.Element => {
   // MARK:- Store / Hooks
   const history = useHistory();
   const dispatch = useDispatch();
+  const theme = useTheme();
+
   const [companyId] = useCompany();
   const addLinkedAccount = useSelector(
     (store: Store) => store.addLinkedAccount
@@ -25,7 +28,7 @@ const CreateAssistant = (): JSX.Element => {
 
   // MARK:- State
   const [role, setRole] = useState<Role>('ASSISTANT');
-  const [callingCode, setCallingCode] = useState('61');
+  const [callingCode, setCallingCode] = useState(theme.isSFM ? '61' : '');
   const [submitted, setSubmitted] = useState(false);
 
   // MARK:- Methods
@@ -34,7 +37,8 @@ const CreateAssistant = (): JSX.Element => {
       addLinkedAccountActions.request({
         companyId,
         ...form,
-        mobile: `+${callingCode}${form.mobile}`,
+        mobile_cc: `+${callingCode}`,
+        mobile_no: form.mobile_no,
         relationship: role === 'FISHERMAN' ? 'SECONDARY' : 'ASSISTANT',
         userGroup: 'seller',
       })
@@ -49,7 +53,8 @@ const CreateAssistant = (): JSX.Element => {
       firstName: '',
       lastName: '',
       email: '',
-      mobile: '',
+      mobile_cc: '',
+      mobile_no: '',
     },
     validate: isValid,
     onSubmit: onClickCreate,

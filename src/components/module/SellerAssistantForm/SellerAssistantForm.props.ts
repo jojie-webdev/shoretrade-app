@@ -31,7 +31,8 @@ export type AssistantForm = {
   firstName: string;
   lastName: string;
   email: string;
-  mobile: string;
+  mobile_cc: string;
+  mobile_no: string;
 };
 
 export type FormikForm = {

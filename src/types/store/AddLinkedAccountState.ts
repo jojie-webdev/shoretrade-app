@@ -5,7 +5,8 @@ export type AddLinkedAccountMeta = {
   email: string;
   firstName: string;
   lastName: string;
-  mobile: string;
+  mobile_cc: string;
+  mobile_no: string;
   relationship: 'ASSISTANT' | 'SECONDARY'; // SECONDARY === FISHERMAN
   userGroup: 'seller' | 'buyer';
 };

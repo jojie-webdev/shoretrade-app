@@ -132,7 +132,7 @@ const SellerAssistantFormView = (props: SellerAssistantFormProps) => {
             <Col md={12} xl={4} className="textfield-container">
               <PhoneTextField
                 label="Mobile"
-                name="mobile"
+                name="mobile_no"
                 callingCode={callingCode}
                 setCallingCode={(cc) => setCallingCode && setCallingCode(cc)}
                 readOnly={type === 'EDIT'}

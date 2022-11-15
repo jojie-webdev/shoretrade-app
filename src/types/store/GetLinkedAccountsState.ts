@@ -12,7 +12,8 @@ export type GetLinkedAccountsResponseItem = {
   firstName: string;
   lastName: string;
   email: string;
-  mobile: string;
+  mobile_cc: string;
+  mobile_no: string;
   relationship: string; // ex. 'SECONDARY'
 };
 

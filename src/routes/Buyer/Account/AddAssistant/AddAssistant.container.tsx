@@ -10,6 +10,7 @@ import { addLinkedAccountActions } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
 import { isPermitted } from 'utils/isPermitted';
+import { useTheme } from 'utils/Theme';
 
 import { AddAssistantGeneratedProps } from './AddAssistant.props';
 import { isValid } from './AddAssistant.validation';
@@ -17,6 +18,7 @@ import { isValid } from './AddAssistant.validation';
 const AddAssistant = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const theme = useTheme();
 
   const currentCompany = GetDefaultCompany();
   const companyId = currentCompany?.id || '';
@@ -38,7 +40,7 @@ const AddAssistant = (): JSX.Element => {
     !isPendingAccount &&
     isPermitted(user, PERMISSIONS.BUYER.VIEW_LINKED_ACCOUNTS);
   // MARK:- State
-  const [callingCode, setCallingCode] = useState('61');
+  const [callingCode, setCallingCode] = useState(theme.isSFM ? '61' : '');
   const [submitted, setSubmitted] = useState(false);
 
   // MARK:- Methods
@@ -47,7 +49,8 @@ const AddAssistant = (): JSX.Element => {
       addLinkedAccountActions.request({
         companyId,
         ...form,
-        mobile: `+${callingCode}${form.mobile}`,
+        mobile_cc: `+${callingCode}`,
+        mobile_no: form.mobile_no,
         relationship: 'SECONDARY',
         userGroup: 'buyer',
       })
@@ -65,7 +68,8 @@ const AddAssistant = (): JSX.Element => {
       firstName: '',
       lastName: '',
       email: '',
-      mobile: '',
+      mobile_cc: '',
+      mobile_no: '',
     },
     validate: isValid,
     onSubmit: onClickCreate,
