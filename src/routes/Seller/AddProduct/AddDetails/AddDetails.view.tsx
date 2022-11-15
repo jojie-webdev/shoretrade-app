@@ -256,8 +256,7 @@ const AddDetails = ({
   useEffect(() => {
     if (disableBackBtn) {
       setSelectedChannel('auction');
-      setAlwaysAvailable(false);
-      setIsAquafuture(false);
+      handleToggleAuctionSale();
     }
   }, [disableBackBtn]);
 
