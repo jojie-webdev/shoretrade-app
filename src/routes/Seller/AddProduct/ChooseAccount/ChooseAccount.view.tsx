@@ -71,8 +71,8 @@ const ChooseAccount = ({
           </Typography>
           <ButtonImport
             variant={userPending ? 'disabled' : undefined}
-            disabled={userPending}
-            text="Bulk import"
+            disabled //userPending
+            text="Bulk import (Coming Soon)"
             onClick={() => setIsAddInBulk(true)}
           />
         </div>
