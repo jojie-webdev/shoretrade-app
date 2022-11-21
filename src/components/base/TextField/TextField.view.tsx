@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { isValidElement, useRef, useState } from 'react';
 
 import Alert from 'components/base/Alert';
 import { Eye, EyeOff } from 'components/base/SVG';
@@ -162,9 +162,13 @@ const TextField = (props: TextFieldProps): JSX.Element => {
   return (
     <Container className={className} style={style}>
       <FieldTopContainer>
-        <Typography variant={variant || 'overline'} color={color || 'shade6'}>
-          {label}
-        </Typography>
+        {isValidElement(label) ? (
+          label
+        ) : (
+          <Typography variant={variant || 'overline'} color={color || 'shade6'}>
+            {label}
+          </Typography>
+        )}
         {tooltipText && (
           <IconTooltip margin={0} content={tooltipText} variant="info" />
         )}

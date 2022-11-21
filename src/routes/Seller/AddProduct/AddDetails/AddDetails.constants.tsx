@@ -55,4 +55,11 @@ export const TOOLTIP_MESSAGES = {
       </Typography>
     ),
   },
+  pricePer: {
+    tooltip1: (
+      <Typography color="noshade" variant="caption">
+        Excluding Freight
+      </Typography>
+    ),
+  },
 };

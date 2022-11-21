@@ -3,7 +3,7 @@ import { Theme } from 'types/Theme';
 
 export interface TextFieldProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
+  label?: string | JSX.Element;
   onChangeText?: (value: string) => void;
   secured?: boolean;
   error?: string;

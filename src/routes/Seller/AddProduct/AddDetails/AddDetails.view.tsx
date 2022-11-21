@@ -772,11 +772,15 @@ const AddDetails = ({
       {(!isAuctionSale || (isAuctionSale && isPreAuctionSale)) && (
         <Row className="textfield-row">
           <Col md={6} className="textfield-col">
+            {tooltip('pricePer', TOOLTIP_MESSAGES.pricePer.tooltip1)}
             <TextField
               inputType="decimal"
-              label={`Price per ${formatUnitToPricePerUnit(
-                formatMeasurementUnit(listingFormData?.measurementUnit)
-              )} (excluding freight)`}
+              label={label(
+                `Price per ${formatUnitToPricePerUnit(
+                  formatMeasurementUnit(listingFormData?.measurementUnit)
+                )}`,
+                'pricePer'
+              )}
               LeftComponent={
                 <DollarSign
                   fill={theme.isSFM ? theme.grey.shade6 : undefined}
