@@ -16,6 +16,7 @@ import {
   getBuyerSearchFiltersActions,
   updatePreferencesActions,
   getAddressesActions,
+  getBuyerHomepageActions
 } from 'store/actions';
 import { GetAddressOptions, GetDefaultCompany } from 'store/selectors/buyer';
 import { GetAddressesResponseItem } from 'types/store/GetAddressesState';
@@ -91,6 +92,8 @@ const SearchAddress = (): JSX.Element => {
           )
         )
       );
+
+      dispatch(getBuyerHomepageActions.request());
     }
   };
 
@@ -199,7 +202,7 @@ const SearchAddress = (): JSX.Element => {
         dispatch(
           searchAndCountProductTypeActions.request({
             term: searchTerm,
-            address: '',
+            address: currentDefaultAddressId,
           })
         );
       }, 200);
