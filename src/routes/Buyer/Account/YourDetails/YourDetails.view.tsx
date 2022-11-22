@@ -27,6 +27,7 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
     updateUserSuccess,
     callingCode,
     setCallingCode,
+    permitted,
   } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const formRef = useRef();
@@ -97,10 +98,18 @@ const YourDetailsView = (props: YourDetailsGeneratedProps) => {
             </Col>
             <Col xl={4} />
             <Col md={12} xl={4} className="input-col">
-              <FormikTextField label="Business" name="businessName" />
+              <FormikTextField
+                label="Business"
+                name="businessName"
+                disabled={!permitted}
+              />
             </Col>
             <Col md={12} xl={4} className="input-col">
-              <FormikTextField label="Business number (optional)" name="abn" />
+              <FormikTextField
+                label="Business number (optional)"
+                name="abn"
+                disabled={!permitted}
+              />
             </Col>
           </InputRow>
 

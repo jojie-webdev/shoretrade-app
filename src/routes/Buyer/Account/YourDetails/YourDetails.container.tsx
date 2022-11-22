@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
+import { PERMISSIONS } from 'consts/permissions';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateUserActions } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { Store } from 'types/store/Store';
+import { isPermitted } from 'utils/isPermitted';
 import { getCallingCode } from 'utils/String/callingCode';
 
 import {
@@ -36,6 +38,20 @@ const YourDetails = (): JSX.Element => {
     businessName: '',
     abn: '',
   });
+
+  const user = useSelector((state: Store) => state.getUser.data?.data.user);
+
+  const addresses = useSelector(
+    (state: Store) => state.getAddresses.data?.data.addresses
+  );
+
+  const isPendingAccount =
+    addresses !== undefined &&
+    !(addresses || []).some((a) => a.approved === 'APPROVED');
+
+  const permitted =
+    !isPendingAccount &&
+    isPermitted(user, PERMISSIONS.BUYER.VIEW_LINKED_ACCOUNTS);
 
   // MARK:- Effects
   useEffect(() => {
@@ -111,6 +127,7 @@ const YourDetails = (): JSX.Element => {
     updateUserSuccess: updateUser.data?.status === 200 && submitted,
     callingCode,
     setCallingCode,
+    permitted,
   };
   return <YourDetailsView {...generatedProps} />;
 };

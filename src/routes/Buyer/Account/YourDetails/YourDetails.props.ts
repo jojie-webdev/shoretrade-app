@@ -9,6 +9,7 @@ export interface YourDetailsGeneratedProps {
   updateUserSuccess: boolean;
   callingCode: string;
   setCallingCode: Dispatch<SetStateAction<string>>;
+  permitted: boolean;
 }
 
 export interface UserDetails {

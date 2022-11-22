@@ -98,11 +98,13 @@ const LandingView = (props: LandingGeneratedProps) => {
       value: 'Delivery Address',
       path: BUYER_ACCOUNT_ROUTES.ADDRESS,
     },
-    {
-      iconName: 'dashboardOutline',
-      value: 'Your Plan',
-      path: BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
-    },
+    permission
+      ? {
+          iconName: 'dashboardOutline',
+          value: 'Your Plan',
+          path: BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
+        }
+      : {},
     {
       iconName: 'bill',
       value: 'Balance & Payments',
