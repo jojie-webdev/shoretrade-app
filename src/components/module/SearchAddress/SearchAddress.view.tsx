@@ -54,10 +54,14 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
   const [selectedBuyingStates, setSelectedBuyingStates] = useState<
     OptionsType[]
   >(
-    searchPreferences.states?.map((s) => ({
-      label: s,
-      value: s,
-    })) ?? buyingStates
+        (
+          searchPreferences.isAllStates ? 
+          buyingStates :
+          searchPreferences.states?.map((s) => ({
+              label: s,
+              value: s,
+            })) 
+        ) ?? buyingStates
   );
   const [selectedMinBuyingQty, setSelectedMinBuyingQty] = useState(
     searchPreferences.weight ?? 0
@@ -67,10 +71,14 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
   useEffect(() => {
     if (initialisedPreferences) {
       setSelectedBuyingStates(
-        searchPreferences.states?.map((s) => ({
-          label: s,
-          value: s,
-        })) ?? buyingStates
+        (
+          searchPreferences.isAllStates ? 
+          buyingStates :
+          searchPreferences.states?.map((s) => ({
+              label: s,
+              value: s,
+            })) 
+        ) ?? buyingStates
       );
       setSelectedMinBuyingQty(searchPreferences.weight ?? 0);
       clearUpdate();
@@ -90,6 +98,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
         search: {
           ...searchPreferences,
           states: states.map((s) => s.value),
+          isAllStates: states.length === buyingStates.length
         },
       });
   };

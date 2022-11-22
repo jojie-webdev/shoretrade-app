@@ -180,6 +180,7 @@ const SearchAddress = (): JSX.Element => {
         search: {
           states: buyerSearchFilters?.states,
           weight: Number(buyerSearchFilters?.minimum_order || '0'),
+          isAllStates: true
         },
       });
       setHasInitPreferences(true);

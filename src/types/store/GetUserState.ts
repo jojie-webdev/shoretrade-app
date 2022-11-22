@@ -46,6 +46,7 @@ export type UserSearchPreferences = {
   metric?: string | null;
   states?: string[];
   weight?: number;
+  isAllStates?: boolean;
 };
 
 export type GetUserPayload = GenericResponse<{
