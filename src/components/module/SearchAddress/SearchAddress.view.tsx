@@ -91,6 +91,17 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
     }
   }
 
+  useEffect(() => {
+    if(searchPreferences.states?.length === buyingStates.length) {
+      updatePreferences({
+        search: {
+          ...searchPreferences,
+          isAllStates: true
+        }
+      })
+    }
+  }, [])
+
   const updateBuyingState = (states: OptionsType[]) => {
     setSelectedBuyingStates(states);
     if (searchPreferences.states?.length !== states.length)
