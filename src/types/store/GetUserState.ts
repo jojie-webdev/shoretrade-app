@@ -47,6 +47,7 @@ export type UserSearchPreferences = {
   states?: string[];
   weight?: number;
   isAllStates?: boolean;
+  isMaxWeight?: boolean;
 };
 
 export type GetUserPayload = GenericResponse<{

@@ -64,7 +64,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
         ) ?? buyingStates
   );
   const [selectedMinBuyingQty, setSelectedMinBuyingQty] = useState(
-    searchPreferences.weight ?? 0
+    (searchPreferences.isMaxWeight ? minBuyingQuantity : searchPreferences.weight) ?? 0
   );
   const [selectedMetric, setSelectedMetric] = useState('ALL');
 
@@ -80,7 +80,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
             })) 
         ) ?? buyingStates
       );
-      setSelectedMinBuyingQty(searchPreferences.weight ?? 0);
+      setSelectedMinBuyingQty((searchPreferences.isMaxWeight ? minBuyingQuantity : searchPreferences.weight) ?? 0);
       clearUpdate();
     }
   }, [initialisedPreferences]);
@@ -92,14 +92,13 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
   }
 
   useEffect(() => {
-    if(searchPreferences.states?.length === buyingStates.length) {
-      updatePreferences({
-        search: {
-          ...searchPreferences,
-          isAllStates: true
-        }
-      })
-    }
+    updatePreferences({
+      search: {
+        ...searchPreferences,
+        isAllStates: searchPreferences.states?.length === buyingStates.length,
+        isMaxWeight: searchPreferences.weight === minBuyingQuantity
+      }
+    })
   }, [])
 
   const updateBuyingState = (states: OptionsType[]) => {
@@ -109,7 +108,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
         search: {
           ...searchPreferences,
           states: states.map((s) => s.value),
-          isAllStates: states.length === buyingStates.length
+          isAllStates: states.length === buyingStates.length,
         },
       });
   };
@@ -120,6 +119,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
       search: {
         ...searchPreferences,
         weight,
+        isMaxWeight: weight === minBuyingQuantity
       },
     });
   };
