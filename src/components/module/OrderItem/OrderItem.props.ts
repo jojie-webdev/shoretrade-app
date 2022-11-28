@@ -63,6 +63,7 @@ export interface OrderItem {
   isAquafuture: boolean;
   token?: string;
   deliveryAddress: string | null;
+  isPartialShipped?: boolean;
   updateScanHistoryModal?: React.Dispatch<
     Partial<{
       isOpen: boolean;

@@ -54,6 +54,7 @@ export interface OrderItem {
   price: string;
   isAquafuture: boolean;
   token?: string;
+  isPartialShipped?: boolean;
 }
 
 export type RequestFilters = {

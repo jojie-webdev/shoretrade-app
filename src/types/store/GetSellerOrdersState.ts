@@ -60,6 +60,7 @@ export type GetSellerOrdersResponseItem = {
     marketAddress: string;
     sellerDropOff: string;
     sellerDropOffAddress: string;
+    isPartialShipped?: boolean;
   };
   sellerDropOffCutOffTime: null;
   status: string;
