@@ -283,7 +283,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
           <Col xs={12} className="item">
             <Row nogutter={true}>
               <Col sm={9} style={{ alignSelf: 'center', margin: '4px 0' }}>
-                <Typography color="shade9">{props && props.isPartialShipped ? "Partial Shipment" : "Shipping Fees"}</Typography>
+                <Typography color="shade9">{props?.isPartialShipped ? "Partial Shipment" : "Shipping Fees"}</Typography>
                 <Typography color="shade6" variant="label" weight="400">
                   Shipping from {props.data.shippingFrom}
                 </Typography>
@@ -304,7 +304,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                       weight="bold"
                       color="shade9"
                     >
-                      {props && props.isPartialShipped ? toPrice(0) : toPrice(
+                      {props?.isPartialShipped ? toPrice(0) : toPrice(
                         props.data.shippingChargeNet +
                           props.data.shippingChargeGst
                       )}
@@ -452,7 +452,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                       align="right"
                       className="end-text"
                     >
-                      {props && props.isPartialShipped ?
+                      {props?.isPartialShipped ?
                         toPrice(
                           Number(props.data.total.replace(/[^0-9.]/g, '')) - 
                           (props.data.shippingChargeNet + props.data.shippingChargeGst)

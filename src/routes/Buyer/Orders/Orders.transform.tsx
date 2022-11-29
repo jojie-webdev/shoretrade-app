@@ -375,7 +375,7 @@ export const transformOrder = (
       ['orderLineItem', '0', 'listing', 'isAquafuture'],
       orderItem
     ),
-    isPartialShipped: orderItem.deliveryInstruction.isPartialShipped,
+    isPartialShipped: orderItem.deliveryInstruction?.isPartialShipped,
   };
 };
 
