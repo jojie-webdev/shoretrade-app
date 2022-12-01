@@ -419,13 +419,6 @@ const SellingView = (props: SellingGeneratedProps) => {
                 marginBottom: 16,
               }}
             />
-            {!!(listingDetailPreview || {}).type_id && (
-              <Item
-                {...listingToItem(listingDetailPreview)}
-                key={listingDetailPreview.listing_id}
-                goToListingDetails={goToListingDetails}
-              />
-            )}
           </ProductPreviewContainer>
         )}
         <Row className="row" justify="center">
