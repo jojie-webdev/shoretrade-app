@@ -128,9 +128,21 @@ const Review = ({
     ? moment(editableListing.ends).tz('Australia/Brisbane').format('HH:mm')
     : '';
 
+  const auctionListingEndsDate =
+    editableListing?.ends && listingEndDate
+      ? moment(editableListing.ends)
+          .subtract(1, 'days')
+          .tz('Australia/Brisbane')
+          .format('ddd DD MMM yyyy')
+      : '';
+
+  const auctionListingEndsTime = '22:00';
+
   const listingEnds =
     listingEndDate && listingEndTime
-      ? `${listingEndTime} ${listingEndDate}`
+      ? editableListing.isAuctionSale || editableListing.isPreAuctionSale
+        ? `${auctionListingEndsTime} ${auctionListingEndsDate}`
+        : `${listingEndTime} ${listingEndDate}`
       : '';
 
   const price = editableListing?.pricePerKilo || 0;
