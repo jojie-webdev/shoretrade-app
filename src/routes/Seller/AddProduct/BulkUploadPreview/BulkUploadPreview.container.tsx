@@ -3,6 +3,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   createBulkListingActions,
+  historyActions,
   modifyBulkUploadActions,
   uploadBulkActions,
 } from 'store/actions';
@@ -60,6 +61,7 @@ const BulkUploadPreview = (): JSX.Element => {
   };
 
   const onSubmit = (shippingAddress: string) => {
+    dispatch(historyActions.clear());
     dispatch(
       createBulkListingActions.request({
         data: actualData,
