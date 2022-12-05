@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 import { EditableListingState } from 'types/store/EditableListingState';
 import { GetListingFormDataResponse } from 'types/store/GetListingFormDataState';
+import { GetNSWHolidaysPayload } from 'types/store/GetNSWHolidaysState';
 
 export type AddDetailsPublicProps = {
   onUpdateDetails: ({
@@ -52,4 +53,5 @@ export type AddDetailsProps = AddDetailsPublicProps & {
   listingFormData: GetListingFormDataResponse | null;
   editableListing: EditableListingState;
   disableBackBtn?: boolean;
+  nswHolidays: GetNSWHolidaysPayload | null;
 };

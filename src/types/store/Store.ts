@@ -220,6 +220,7 @@ import {
   GetNotificationsMeta,
   GetNotificationsPayload,
 } from './GetNotificationsState';
+import { GetNSWHolidaysPayload } from './GetNSWHolidaysState';
 import {
   GetPaymentMethodsMeta,
   GetPaymentMethodsPayload,
@@ -641,6 +642,7 @@ export interface Store {
     GetNotificationsSettingsPayload
   >;
   getNotifications: AsyncState<GetNotificationsMeta, GetNotificationsPayload>;
+  getNSWHolidays: AsyncState<Record<string, unknown>, GetNSWHolidaysPayload>;
   updateNotificationSettings: AsyncState<
     UpdateNotificationSettingsMetaData,
     UpdateNotificationSettingsPayload

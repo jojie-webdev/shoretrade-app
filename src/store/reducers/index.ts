@@ -71,6 +71,7 @@ import getMarketNotification from './getMarketNotification';
 import getMarketRequestBuyerFilters from './getMarketRequestBuyerFilters';
 import getNotifications from './getNotifications';
 import getNotificationsSettings from './getNotificationsSettings';
+import getNSWHolidays from './getNSWHolidays';
 import getPaymentMethods from './getPaymentMethods';
 import getPaymentMode from './getPaymentMode';
 import getSellerById from './getSellerById';
@@ -263,6 +264,7 @@ const createAppReducer = (routeHistory: History) =>
         getPaymentMode,
         sendDispute,
         getNotificationsSettings,
+        getNSWHolidays,
         editableMarketRequest,
         updateNotificationSettings,
         getCompanyPlan,

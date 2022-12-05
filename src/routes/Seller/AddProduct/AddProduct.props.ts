@@ -1,5 +1,6 @@
 import { EditableListingState } from 'types/store/EditableListingState';
 import { GetListingFormDataResponse } from 'types/store/GetListingFormDataState';
+import { GetNSWHolidaysPayload } from 'types/store/GetNSWHolidaysState';
 
 import { AddBoxesPublicProps } from './AddBoxes/AddBoxes.props';
 import { AddDetailsPublicProps } from './AddDetails/AddDetails.props';
@@ -29,6 +30,7 @@ export interface AddProductGeneratedProps
   isCustomType: boolean;
   isGstIncl: boolean;
   listingFormData: GetListingFormDataResponse | null;
+  nswHolidays: GetNSWHolidaysPayload | null;
   editableListing: EditableListingState;
   saveListing: () => void;
   isExisting: boolean;

@@ -79,6 +79,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     additionalInfos,
     updateAdditionalInfos,
     isFromBulkUploadPreview,
+    nswHolidays,
   } = props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -224,6 +225,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             navBack={navBack}
             marketEstimate={marketEstimate}
             disableBackBtn={isFromBulkUploadPreview}
+            nswHolidays={nswHolidays}
           />
         );
       case 9:

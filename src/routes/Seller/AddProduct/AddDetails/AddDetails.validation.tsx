@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { GetNSWHolidaysPayload } from 'types/store/GetNSWHolidaysState';
 import { createValidator } from 'utils/Validation';
 
 const constraints = {
@@ -160,8 +161,19 @@ export const isDateRangeValid = (endListing: Date) => {
   return endListing && endListing > new Date();
 };
 
-export const isAuctionDateValid = (auctionDate: Date | null) => {
+export const isAuctionDateValid = (
+  auctionDate: Date | null,
+  holidays?: GetNSWHolidaysPayload | null
+) => {
+  const records = holidays?.records || [];
+  const matchedHolidays = records?.filter(
+    (record) => moment(auctionDate).format('YYYY-MM-DD') === record.holiday_date
+  );
   if (!auctionDate) return false;
-  return auctionDate > new Date();
+  return (
+    auctionDate > new Date() &&
+    !(auctionDate.getDay() === 0 || auctionDate.getDay() === 6) &&
+    !(matchedHolidays.length > 0)
+  );
 };
 export const isListingExpiryDateValid = (isBefore: boolean) => isBefore;

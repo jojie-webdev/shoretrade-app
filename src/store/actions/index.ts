@@ -130,3 +130,4 @@ export { default as readNotificationActions } from './readNotification';
 export { default as deleteNotificationActions } from './deleteNotification';
 export { default as getAvailableCratesActions } from './getAvailableCrates';
 export { default as useHistoricalListingActions } from './useHistoricalListing';
+export { default as getNSWHolidaysActions } from './getNSWHolidays';

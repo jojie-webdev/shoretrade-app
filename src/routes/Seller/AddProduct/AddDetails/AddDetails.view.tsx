@@ -124,6 +124,7 @@ const AddDetails = ({
   navBack,
   isGstIncl,
   disableBackBtn,
+  nswHolidays,
 }: AddDetailsProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -621,6 +622,16 @@ const AddDetails = ({
     </LabelAndIconWrapper>
   );
 
+  const isInvalidAuctionDate = (date: Moment): boolean => {
+    const records = nswHolidays?.records || [];
+    const matchedHolidays = records?.filter(
+      (record) => date.format('YYYY-MM-DD') === record.holiday_date
+    );
+    const isWeekend = date.day() === 0 || date.day() === 6;
+
+    return isWeekend || matchedHolidays.length > 0;
+  };
+
   return (
     <Container>
       {/* <Row>
@@ -849,7 +860,10 @@ const AddDetails = ({
               }
               showCalendarIcon={true}
               showArrowDownIcon={true}
-              isOutsideRange={(date) => date < new Date().setHours(0, 0, 0, 0)}
+              isOutsideRange={(date) =>
+                isInvalidAuctionDate(date) ||
+                date < new Date().setHours(0, 0, 0, 0)
+              }
             />
           </Col>
         </Row>

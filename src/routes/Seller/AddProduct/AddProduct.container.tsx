@@ -19,6 +19,7 @@ import {
   getHistoricalListingsActions,
   useHistoricalListingActions,
   historyActions,
+  getNSWHolidaysActions,
 } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { GetCategoryData } from 'store/selectors/seller/categories';
@@ -186,6 +187,10 @@ const AddProduct = (): JSX.Element => {
     dispatch(getCustomFormDataActions.request());
   };
 
+  const getNSWHolidays = () => {
+    dispatch(getNSWHolidaysActions.request());
+  };
+
   const selectCustomType = ({
     customTypeName,
     selectedCategory,
@@ -228,6 +233,9 @@ const AddProduct = (): JSX.Element => {
   const modifyBulkUpload = useSelector(
     (state: Store) => state.modifyBulkUpload
   );
+
+  const nswHolidays =
+    useSelector((state: Store) => state.getNSWHolidays.data || null) || null;
 
   const isCustomType = editableListing?.isCustomType || false;
 
@@ -674,6 +682,11 @@ const AddProduct = (): JSX.Element => {
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    getNSWHolidays();
+    // eslint-disable-next-line
+  }, []);
+
   const generatedProps: AddProductGeneratedProps = {
     currentPage,
     onChangeCurrentPage,
@@ -691,6 +704,7 @@ const AddProduct = (): JSX.Element => {
     showCustomTypeSettings,
     setShowCustomTypeSettings,
     getCustomFormData,
+    nswHolidays,
     categories,
     selectCustomType,
     listingFormData,
