@@ -38,6 +38,7 @@ const Register = (): JSX.Element => {
     []
   );
   const [searchTerm, setSearchTerm] = useState('');
+  const [categorySearch, setCategorySearch] = useState('');
   const [isSummaryEdit, setIsSummaryEdit] = useState(false);
 
   const states = useSelector(
@@ -59,8 +60,34 @@ const Register = (): JSX.Element => {
     setIsSummaryEdit(true);
   };
 
-  const onChangeSearch = (search: string) => {
+  const onChangeSearch = (search: string, category: string) => {
     setSearchTerm(search);
+    setCategorySearch(category);
+  };
+
+  const forceSearch = (search: string, category: string) => {
+    if (!(search.length > 2)) return;
+
+    getAvailableCategories(
+      searchTerm.toLowerCase().toString(),
+      window.encodeURIComponent(category.toLowerCase().toString())
+    ).then(({ data }) => {
+      const cata: any[] = data.data.categories;
+      setSearchCategory(data.data.categories);
+      setSearchCategoryType(
+        cata
+          .map((c: { id: string; types: CategoryType[] }) => {
+            if (c.types) {
+              return c.types.map((t) => ({
+                ...t,
+                categoryId: c.id,
+              }));
+            }
+            return [];
+          })
+          .reduce((acc, val) => acc.concat(val), [])
+      );
+    });
   };
 
   useEffect(() => {
@@ -76,7 +103,10 @@ const Register = (): JSX.Element => {
       }
 
       const timerId = setTimeout(() => {
-        getAvailableCategories(searchTerm.toLowerCase().toString())
+        getAvailableCategories(
+          searchTerm.toLowerCase().toString(),
+          window.encodeURIComponent(categorySearch.toLowerCase().toString())
+        )
           .then(({ data }) => {
             const cata: any[] = data.data.categories;
             setSearchCategory(data.data.categories);
@@ -162,7 +192,6 @@ const Register = (): JSX.Element => {
   const getCategoryItem = async (id: string) => {
     setCategoryItems([]);
     setSearchCategoryType([]);
-
     const data = await getInactiveTypesByCategory(id, token);
     const result = data.data.data.type;
 
@@ -359,6 +388,7 @@ const Register = (): JSX.Element => {
     hideDetails,
     selectedCategoryTypes,
     addSelected,
+    forceSearch,
     searchCategory,
     searchCategoryType,
     searchTerm,

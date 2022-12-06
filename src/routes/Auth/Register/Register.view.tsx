@@ -187,6 +187,7 @@ const StepForm = ({
   setSearchTerm,
   isSuccess,
   backToLogin,
+  forceSearch,
   setSummaryEdit,
   interestedInShorePay,
   handleSelectShorePay,
@@ -290,6 +291,11 @@ const StepForm = ({
     setStateName(selectedStateName);
   }, [stateId]);
 
+  useEffect(() => {
+    if (!isGotoDetails) {
+      setCurrentCategory({ name: '', id: '' });
+    }
+  }, [isGotoDetails]);
   const showSFMFields = ['AU', 'NZ'].includes(
     registrationDetails.address?.countryCode || ''
   );
@@ -562,10 +568,33 @@ const StepForm = ({
           <input
             type="search"
             placeholder="Search for a product"
-            onChange={(e) => onChangeSearch(e.target.value)}
+            onChange={(e) => {
+              if (e.target.value.length === 0)
+                getCategoryItem(currentCategory.id);
+              onChangeSearch(
+                e.target.value,
+                currentCategory?.name ? currentCategory.name : ''
+              );
+            }}
             value={searchTerm}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter' || e.keyCode === 13 || e.which === 13) {
+                forceSearch(
+                  searchTerm,
+                  currentCategory?.name ? currentCategory.name : ''
+                );
+                e.preventDefault();
+                return false;
+              }
+            }}
           />
-          <span onClick={() => setSearchTerm('')} style={{ cursor: 'pointer' }}>
+          <span
+            onClick={() => {
+              setSearchTerm('');
+              getCategoryItem(currentCategory.id);
+            }}
+            style={{ cursor: 'pointer' }}
+          >
             <CloseFilled
               fill={
                 searchTerm.length === 0 ? theme.grey.shade3 : theme.grey.shade6

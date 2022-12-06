@@ -100,7 +100,8 @@ export interface RegisterGeneratedProps {
   searchCategoryType: CategoryType[];
   searchTerm: string;
   setSearchTerm: Dispatch<SetStateAction<string>>;
-  onChangeSearch: (search: string) => void;
+  onChangeSearch: (search: string, category: string) => void;
+  forceSearch: (search: string, category: string) => void;
   isSummaryEdit: boolean;
   setSummaryEdit: () => void;
   interestedInShorePay: boolean;
