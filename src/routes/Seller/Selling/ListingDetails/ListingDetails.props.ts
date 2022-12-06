@@ -36,6 +36,7 @@ export interface ListingProps {
     location: string;
     packaging?: string;
     listingAddress?: string;
+    description?: string;
     vendor: {
       uri?: string;
       name?: string;

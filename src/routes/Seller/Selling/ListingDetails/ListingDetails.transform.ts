@@ -69,6 +69,7 @@ export const listingToListingProps = (
       },
       avgBoxSize: (data?.average || 0).toFixed(2),
       packaging: data?.packaging?.label,
+      description: data?.description,
     },
     orderDetails: {
       price: toPrice(data?.price_per_kilo || 0, false),

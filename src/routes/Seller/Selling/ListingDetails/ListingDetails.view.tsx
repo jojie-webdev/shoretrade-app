@@ -165,7 +165,11 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
         <MobileWrapper>
           <Row nogutter>
             {/* {!isCreatListingSuccess && <Actions {...props} />} */}
-
+            {productDetails.description ? (
+              <Typography variant="label" className="description">
+                {productDetails.description}
+              </Typography>
+            ) : null}
             {!isCreatListingSuccess && (
               <MobileSalesCard isCreatListingSuccess={isCreatListingSuccess}>
                 <div className="sales-container">
@@ -588,6 +592,11 @@ const ListingDetailsView = (props: ListingDetailsProps) => {
                 aspectRatio="9:4"
                 showActionButton={isMobile}
               />
+              {productDetails.description ? (
+                <Typography variant="label" className="description">
+                  {productDetails.description}
+                </Typography>
+              ) : null}
             </CarouselContainer>
           </Col>
           <Col
