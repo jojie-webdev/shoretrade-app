@@ -88,6 +88,13 @@ export const SearchContainerDesktop = styled.div`
   }
 `;
 
+export const ExitContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto;
+  margin-bottom: 8px;
+`;
+
 export const InnerHeaderContainer = styled.div<{ currentPage: number }>`
   ${(props) =>
     props.currentPage === 2 &&

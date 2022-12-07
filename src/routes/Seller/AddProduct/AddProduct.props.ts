@@ -26,6 +26,7 @@ export interface AddProductGeneratedProps
     ReviewPublicProps {
   currentPage: number;
   onChangeCurrentPage: (newPage: number) => void;
+  exitFlow: () => void;
   typeName: string;
   isCustomType: boolean;
   isGstIncl: boolean;

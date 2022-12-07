@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 // import { useTheme } from 'utils/Theme';
 import Alert from 'components/base/Alert';
+import Button from 'components/base/Button';
 import Typography from 'components/base/Typography';
 import InnerRouteHeader from 'components/module/InnerRouteHeader';
 import MobileHeader from 'components/module/MobileHeader';
@@ -20,6 +21,7 @@ import {
   ProgressIndicator,
   SearchContainerDesktop,
   InnerHeaderContainer,
+  ExitContainer,
 } from './AddProduct.style';
 import ChooseAccount from './ChooseAccount/ChooseAccount.view';
 import ChooseSize from './ChooseSize/ChooseSize.view';
@@ -76,6 +78,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     isBulkUpload,
     discardBulkUploadChanges,
     navBack,
+    exitFlow,
     additionalInfos,
     updateAdditionalInfos,
     isFromBulkUploadPreview,
@@ -300,6 +303,11 @@ const AddProductView = (props: AddProductGeneratedProps) => {
         )}
         {isMobile && <MobileHeader>Add a Listing</MobileHeader>}
 
+        {currentPage > 1 && (
+          <ExitContainer>
+            <Button variant="outline" text="Exit" onClick={() => exitFlow()} />
+          </ExitContainer>
+        )}
         {currentPage > 1.5 && (
           <Typography variant="overline" color="shade6">
             Step {currentPage - 1} - 8

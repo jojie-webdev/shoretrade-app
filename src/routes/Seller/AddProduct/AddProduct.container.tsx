@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useReducer, useMemo } from 'react';
 
-import { ADD_PRODUCT_ROUTES } from 'consts';
+import { ADD_PRODUCT_ROUTES, SELLING_ROUTES } from 'consts';
 import pick from 'ramda/src/pick';
 import unnest from 'ramda/src/unnest';
 import { useSelector, useDispatch } from 'react-redux';
@@ -53,6 +53,8 @@ export const toEmployeeOptions = (user: GetCoopUsersResponseItem) =>
 const AddProduct = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const [selectedHistoricalId, setSelectedHistoricalId] = useState('');
 
   const isFromBulkUploadPreview = useSelector(
     (state: Store) => state.history.isFromBulkUploadPreview || false
@@ -135,6 +137,7 @@ const AddProduct = (): JSX.Element => {
         typeId,
       })
     );
+    setSelectedHistoricalId(listingId);
   };
 
   const searchResults =
@@ -623,6 +626,23 @@ const AddProduct = (): JSX.Element => {
     }
   };
 
+  const exitFlow = () => {
+    dispatch(editableListingActions.clear());
+    dispatch(searchProductTypeActions.clear());
+    dispatch(modifyBulkUploadActions.clearSelection());
+    if (selectedHistoricalId) {
+      history.push(
+        SELLING_ROUTES.LISTING_DETAILS.replace(
+          ':listingId',
+          selectedHistoricalId
+        )
+      );
+      return;
+    } else {
+      onChangeCurrentPage(1);
+    }
+  };
+
   const navBack = () => {
     if (isBulkUpload && currentPage === 7) {
       onChangeCurrentPage(5);
@@ -733,6 +753,7 @@ const AddProduct = (): JSX.Element => {
     isBulkUpload,
     discardBulkUploadChanges,
     navBack,
+    exitFlow,
     additionalInfos,
     updateAdditionalInfos,
     isFromBulkUploadPreview,
