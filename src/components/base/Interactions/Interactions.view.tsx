@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Badge from 'components/base/Badge';
 import Checkbox from 'components/base/Checkbox';
 import Radio from 'components/base/Radio';
 import { ChevronRight, DropdownArrow, Pen } from 'components/base/SVG';
@@ -22,6 +23,7 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
   const {
     type = 'next',
     value,
+    badge,
     pressed,
     label,
     onClick,
@@ -93,7 +95,19 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
       ) : (
         <>
           {value ? (
-            <Value fontColor={fontColor}>{value}</Value>
+            <>
+              <Value fontColor={fontColor}>{value}</Value>{' '}
+              {badge ? (
+                <Badge
+                  fontSize="14px"
+                  badgeColor="#DFE9F5"
+                  fontColor="#30347E"
+                  fontWeight="600"
+                >
+                  {badge}
+                </Badge>
+              ) : null}
+            </>
           ) : showEmptyIndicator ? (
             <Value fontColor={theme.brand.alert}>Not Entered</Value>
           ) : null}

@@ -35,4 +35,5 @@ export interface InteractionsProps {
   showEmptyIndicator?: boolean;
   disabled?: boolean;
   noCursor?: boolean;
+  badge?: string;
 }

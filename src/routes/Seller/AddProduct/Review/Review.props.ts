@@ -7,6 +7,7 @@ export type ReviewPublicProps = {
   measurementUnit: string;
   pendingSave: boolean;
   isBulkUpload: boolean;
+  typeMarginCategory: string;
 };
 
 export interface BoxItemProps {

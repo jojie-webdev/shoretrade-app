@@ -265,6 +265,16 @@ const AddProduct = (): JSX.Element => {
       ? editableListing?.customTypeData?.name
       : listingFormData?.type.name) || '';
 
+  // for review page only
+  const typeMarginCategory =
+    (isCustomType
+      ? ''
+      : listingFormData?.type?.id
+      ? searchResults.find(
+          (result) => result.value === listingFormData?.type?.id
+        )?.marginCategory
+      : '') || '';
+
   const onSelectSpecifications = (
     specificationIds: string[],
     specificationLabels: string[]
@@ -730,6 +740,7 @@ const AddProduct = (): JSX.Element => {
     listingFormData,
     editableListing,
     typeName,
+    typeMarginCategory,
     isCustomType,
     isGstIncl,
     onSelectSpecifications,

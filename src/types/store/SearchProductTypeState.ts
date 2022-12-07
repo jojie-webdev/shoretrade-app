@@ -8,6 +8,7 @@ export type SearchProductTypeResponseItem = {
   label: string;
   value: string;
   image: string;
+  marginCategory: string;
 };
 
 export type SearchProductTypePayload = GenericResponse<{

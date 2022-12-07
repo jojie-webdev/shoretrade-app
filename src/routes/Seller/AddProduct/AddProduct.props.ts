@@ -29,6 +29,7 @@ export interface AddProductGeneratedProps
   exitFlow: () => void;
   typeName: string;
   isCustomType: boolean;
+  typeMarginCategory: string;
   isGstIncl: boolean;
   listingFormData: GetListingFormDataResponse | null;
   nswHolidays: GetNSWHolidaysPayload | null;

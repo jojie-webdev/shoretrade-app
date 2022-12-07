@@ -9,7 +9,8 @@ export const BadgeContainer = styled.div<BadgeProps>`
   border-radius: ${(props) =>
     props.borderRadius ? props.borderRadius : '4px'};
   padding: ${(props) => (props.padding ? props.padding : '4px 8px 2px')};
-  font-size: 10px;
+  font-size: ${(props) => (props.fontSize ? props.fontSize : '10px')};
+  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : '400')};
   margin: 0px 2px;
   white-space: nowrap;
 `;

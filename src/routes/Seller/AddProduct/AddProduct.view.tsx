@@ -53,6 +53,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
     categories,
     selectCustomType,
     typeName,
+    typeMarginCategory,
     listingFormData,
     editableListing,
     onSelectSpecifications,
@@ -237,6 +238,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             measurementUnit={measurementUnit}
             boxesDetails={boxesDetails}
             onChangeCurrentPage={onChangeCurrentPage}
+            typeMarginCategory={typeMarginCategory}
             isCustomType={isCustomType}
             editableListing={editableListing}
             listingFormData={listingFormData}

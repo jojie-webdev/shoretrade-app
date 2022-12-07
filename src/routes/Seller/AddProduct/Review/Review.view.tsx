@@ -33,6 +33,7 @@ const Review = ({
   boxesDetails,
   measurementUnit,
   isBulkUpload,
+  typeMarginCategory,
 }: ReviewProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -209,6 +210,9 @@ const Review = ({
           <Interactions
             label="Type"
             value={title}
+            badge={
+              typeMarginCategory === 'Processed' ? 'PROCESSED' : 'UNPROCESSED'
+            }
             type={isExisting ? 'none' : 'edit'}
             onClick={() => {
               if (!isExisting) {
