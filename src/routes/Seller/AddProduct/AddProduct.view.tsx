@@ -305,7 +305,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
         )}
         {isMobile && <MobileHeader>Add a Listing</MobileHeader>}
 
-        {currentPage > 1 && (
+        {currentPage === 2 && currentPage > 1 && (
           <ExitContainer>
             <Button variant="outline" text="Exit" onClick={() => exitFlow()} />
           </ExitContainer>
@@ -316,7 +316,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
           </Typography>
         )}
 
-        <InnerHeaderContainer currentPage={currentPage}>
+        <InnerHeaderContainer currentPage={currentPage} isFlex={true}>
           <InnerRouteHeader
             title={currentPage > 1.5 ? title : ''}
             onClickBack={() => {
@@ -343,6 +343,16 @@ const AddProductView = (props: AddProductGeneratedProps) => {
                 resetValue={() => setSearchKey('')}
               />
             </SearchContainerDesktop>
+          )}
+
+          {currentPage !== 2 && !isMobile && currentPage > 1 && (
+            <ExitContainer>
+              <Button
+                variant="outline"
+                text="Exit"
+                onClick={() => exitFlow()}
+              />
+            </ExitContainer>
           )}
         </InnerHeaderContainer>
       </div>

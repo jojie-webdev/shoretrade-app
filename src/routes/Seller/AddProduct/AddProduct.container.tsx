@@ -640,11 +640,11 @@ const AddProduct = (): JSX.Element => {
     dispatch(editableListingActions.clear());
     dispatch(searchProductTypeActions.clear());
     dispatch(modifyBulkUploadActions.clearSelection());
-    if (selectedHistoricalId) {
+    if (isExisting && editableListing?.currentListingId) {
       history.push(
         SELLING_ROUTES.LISTING_DETAILS.replace(
           ':listingId',
-          selectedHistoricalId
+          editableListing?.currentListingId
         )
       );
       return;

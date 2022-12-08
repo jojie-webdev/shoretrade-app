@@ -95,9 +95,12 @@ export const ExitContainer = styled.div`
   margin-bottom: 8px;
 `;
 
-export const InnerHeaderContainer = styled.div<{ currentPage: number }>`
+export const InnerHeaderContainer = styled.div<{
+  currentPage: number;
+  isFlex: boolean;
+}>`
   ${(props) =>
-    props.currentPage === 2 &&
+    (props.currentPage === 2 || props.isFlex) &&
     `display: flex;
     flex-direction: row;
     justify-content: space-between;`}
