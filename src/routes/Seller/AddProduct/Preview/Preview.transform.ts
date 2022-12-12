@@ -131,6 +131,7 @@ export const editableListingToListingProps = (
         rating: '0.0',
       },
       avgBoxSize: (0).toFixed(2),
+      description: editableListing?.description,
     },
     orderDetails: {
       price: toPrice(editableListing?.pricePerKilo || 0, false),
