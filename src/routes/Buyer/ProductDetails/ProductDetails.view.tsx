@@ -20,6 +20,7 @@ import Loading from 'components/module/Loading';
 import ProductDetailsCard6View from 'components/module/ProductDetailsCard6';
 import ProductSellerCard from 'components/module/ProductSellerCard';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import moment from 'moment';
 import { isEmpty } from 'ramda';
 import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
@@ -70,6 +71,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     addCartItemData,
     showSuccessAddBtn,
   } = props;
+  const { isPreAuction, dateEnds } = productDetailsCard6Props;
 
   const [images, setImages] = useState<string[]>([]);
   const [newCurrentListing, setNewCurrentListing] = useState<
@@ -77,6 +79,14 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   >();
 
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
+  const cutOffDate = moment(productDetailsCard6Props?.dateEnds)
+    .subtract(1, 'day')
+    .endOf('day')
+    .subtract(2, 'hours');
+
+  const isBeyondCutoff =
+    isPreAuction && dateEnds ? (moment() > cutOffDate ? true : false) : false;
 
   useEffect(() => {
     selectAddress(listingId);
@@ -256,6 +266,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                     />
                   ) : null
                 }
+                isPreAuction={productDetailsCard6Props?.isPreAuction}
               />
               {!isPendingAccount && isMobile ? (
                 <ProductSellerCard
@@ -291,6 +302,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                         placeholder={`Minimum Order: ${
                           productDetailsCard6Props.minOrder
                         } ${productDetailsCard6Props.unit ?? 'kg'}`}
+                        disabled={isBeyondCutoff}
                       />
                     </TextFieldWrapper>
                     <RemainingWrapper>
@@ -367,6 +379,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                           />
                         }
                         variant={pressedBoxRadio ? undefined : 'disabled'}
+                        disabled={isBeyondCutoff}
                       />
                     )}
                   </ButtonContainer>

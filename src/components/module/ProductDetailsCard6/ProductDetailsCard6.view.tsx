@@ -16,7 +16,7 @@ import { Container, Row, Price, Label } from './ProductDetailsCard6.style';
 const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
   const {
     price,
-    timeLeft,
+    dateEnds,
     avgBoxSize,
     catchDate,
     catchRecurrence,
@@ -27,9 +27,14 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
     size,
     sizingOptions,
     activeSizeUnit,
+    isPreAuction,
   } = props;
 
   const formattedCatchDate = () => moment(catchDate).format('DD MMMM YYYY');
+  const cutOffDate = moment(dateEnds)
+    .subtract(1, 'day')
+    .endOf('day')
+    .subtract(2, 'hours');
 
   return (
     <Container {...props}>
@@ -54,7 +59,17 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
             Order Cut Off Time:
           </Label>
           <Label variant="label" weight="bold">
-            <ListingTimeLeftView timeLeft={moment(timeLeft)} />
+            {isPreAuction ? (
+              dateEnds ? (
+                moment() > cutOffDate ? (
+                  moment().to(cutOffDate)
+                ) : (
+                  moment(cutOffDate).from(moment())
+                )
+              ) : undefined
+            ) : (
+              <ListingTimeLeftView timeLeft={moment(dateEnds)} />
+            )}
           </Label>
         </Row>
       )}

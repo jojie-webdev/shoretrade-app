@@ -56,6 +56,7 @@ export type GetListingResponseItem = {
     height: number;
     company_id: string | null;
   } | null;
+  isPreAuctionSale?: true;
   isIkeJime: boolean;
   isIceSlurry: boolean;
   quality?: string;

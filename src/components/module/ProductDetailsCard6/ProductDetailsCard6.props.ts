@@ -4,7 +4,7 @@ export interface ProductDetailsCard6Props {
   cBorderWidth?: string;
   cBorderRadius?: string;
   price: string;
-  timeLeft?: Date;
+  dateEnds?: Date;
   avgBoxSize?: string;
   catchDate?: Date;
   catchRecurrence?: string;
@@ -17,4 +17,5 @@ export interface ProductDetailsCard6Props {
   size?: string;
   sizingOptions: SizingOption[];
   activeSizeUnit?: string;
+  isPreAuction?: boolean | undefined;
 }

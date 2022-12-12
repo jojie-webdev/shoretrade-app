@@ -357,13 +357,15 @@ const ProductDetails = (): JSX.Element => {
         }`,
     packaging: currentListing?.packaging?.label,
   };
+  const dateEnds = currentListing?.ends
+    ? moment(currentListing?.ends).toDate()
+    : undefined;
+
   const productDetailsCard6Props: ProductDetailsCard6Props = {
     price: price.toFixed(2),
     minOrder: currentListing?.minimumOrder || '0',
     avgBoxSize: (currentListing?.average || 0).toFixed(2),
-    timeLeft: currentListing?.ends
-      ? moment(currentListing.ends).toDate()
-      : undefined,
+    dateEnds,
     catchDate: currentListing?.caught
       ? moment(currentListing.caught, 'YYYY-MM-DD').toDate()
       : undefined,
@@ -382,6 +384,7 @@ const ProductDetails = (): JSX.Element => {
       ? currentListing?.gmSizingOptions
       : currentListing?.cmSizingOptions,
     activeSizeUnit: currentListing?.activeSizeUnit === 'GM' ? 'g' : 'cm',
+    isPreAuction: currentListing?.isPreAuctionSale,
   };
   const sellerRatingProps: ProductSellerRatingProps = {
     name: currentListing?.coop.name || '',
