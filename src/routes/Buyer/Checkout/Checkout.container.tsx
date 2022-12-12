@@ -85,6 +85,20 @@ const Checkout = (): JSX.Element => {
 
   const orderError = useSelector((store: Store) => store.order.error) || '';
 
+  const cartData = useSelector((store: Store) => store.getCart.data?.data);
+
+  const isCartDataLoading =
+    useSelector((store: Store) => store.getCart.pending) || false;
+
+  const cartDataItems = cartData?.items || {};
+
+  const cartItems: GetCartDataItem[] = Object.keys(cartDataItems).map(
+    (key) => ({
+      ...cartDataItems[key],
+      cartItemId: key,
+    })
+  );
+
   useEffect(() => {
     if (!loadingShippingQuotes) {
       const defaultShippingIds = Object.keys(shippingQuotes).reduce(
@@ -138,10 +152,6 @@ const Checkout = (): JSX.Element => {
         {}
       );
 
-      if (!cartItems || cartItems?.length === 0) {
-        dispatch(selectedDeliveryMethodActions.clear());
-      }
-
       if (Object.keys(selectedDeliveryMethod).length > 0) {
         setSelectedShippingId(selectedDeliveryMethod);
       } else {
@@ -151,9 +161,11 @@ const Checkout = (): JSX.Element => {
     // eslint-disable-next-line
   }, [loadingShippingQuotes]);
 
-  const cartData = useSelector((store: Store) => store.getCart.data?.data);
-
-  const cartDataItems = cartData?.items || {};
+  useEffect(() => {
+    if (!isCartDataLoading && (!cartItems || cartItems?.length === 0)) {
+      dispatch(selectedDeliveryMethodActions.clear());
+    }
+  }, [isCartDataLoading]);
 
   const onDeliveryMethodSelection = (
     option: Option,
@@ -223,13 +235,6 @@ const Checkout = (): JSX.Element => {
     transactionValueFeePercent =
       overrideTransactionValueFeePercent || TRANSACTION_VALUE_FEE_PERCENTAGE;
   }
-
-  const cartItems: GetCartDataItem[] = Object.keys(cartDataItems).map(
-    (key) => ({
-      ...cartDataItems[key],
-      cartItemId: key,
-    })
-  );
 
   const orders = cartItems.map(
     (cartItem): OrderItem => {
@@ -555,7 +560,7 @@ const Checkout = (): JSX.Element => {
       }
     }
     // eslint-disable-next-line
-  }, [cartItems.length]);
+  }, [cartItems.length, currentAddress]);
 
   useEffect(() => {
     if (selectedCompany) {
