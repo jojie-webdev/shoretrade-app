@@ -212,7 +212,11 @@ const Review = ({
             label="Type"
             value={title}
             badge={
-              typeMarginCategory === 'Processed' ? 'PROCESSED' : 'UNPROCESSED'
+              typeMarginCategory === 'Processed'
+                ? 'PROCESSED'
+                : typeMarginCategory === ''
+                ? ''
+                : 'UNPROCESSED'
             }
             type={isExisting ? 'none' : 'edit'}
             onClick={() => {
