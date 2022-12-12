@@ -55,6 +55,7 @@ const ChooseType = ({
   navBack,
   desktopSearchValue,
   disableBackBtn,
+  exitFlow,
 }: ChooseTypeProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -301,6 +302,12 @@ const ChooseType = ({
                   onClick={() => setShowCustomTypeSettings(true)}
                 />
               )}
+              <Button
+                variant="outline"
+                text="Exit"
+                pushLeft
+                onClick={() => exitFlow()}
+              />
             </ButtonContainer>
           )}
         </Col>
@@ -313,15 +320,17 @@ const ChooseType = ({
           variant={'outline'}
           text="Back"
           onClick={() => navBack()}
+          style={{ marginRight: 8 }}
         />
         {!pendingSearch && searchResults.length === 0 && (
           <Button
             takeFullWidth
             text="Create Custom Type"
             onClick={() => setShowCustomTypeSettings(true)}
-            style={{ marginLeft: 8 }}
+            style={{ marginRight: 8 }}
           />
         )}
+        <Button variant="outline" text="Exit" onClick={() => exitFlow()} />
       </MobileFooter>
     </Container>
   );

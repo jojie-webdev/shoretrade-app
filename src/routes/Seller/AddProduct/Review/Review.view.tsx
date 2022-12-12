@@ -34,6 +34,7 @@ const Review = ({
   measurementUnit,
   isBulkUpload,
   typeMarginCategory,
+  exitFlow,
 }: ReviewProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -389,6 +390,12 @@ const Review = ({
             }}
             className="button"
           />
+          <Button
+            variant="outline"
+            text="Exit"
+            onClick={() => exitFlow()}
+            pushLeft
+          />
         </ButtonRow>
       )}
 
@@ -420,7 +427,9 @@ const Review = ({
               saveListing();
             }
           }}
+          style={{ marginRight: 8 }}
         />
+        <Button variant="outline" text="Exit" onClick={() => exitFlow()} />
       </MobileFooter>
     </Container>
   );

@@ -20,6 +20,7 @@ export type ChooseSizePublicProps = {
     quality: string | null;
   }) => void;
   navBack: () => void;
+  exitFlow: () => void;
 };
 
 export type ChooseSizeProps = ChooseSizePublicProps & {

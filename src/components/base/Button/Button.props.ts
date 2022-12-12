@@ -30,6 +30,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   shortenedText?: string;
   padding?: string;
   borderRadius?: string;
+  pushLeft?: boolean;
 }
 
 // Styles

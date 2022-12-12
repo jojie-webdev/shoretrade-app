@@ -243,6 +243,7 @@ const AddBoxes = ({
   isExisting,
   navBack,
   disableBackBtn,
+  exitFlow,
 }: AddBoxesProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -445,6 +446,12 @@ const AddBoxes = ({
               }
             }}
           />
+          <Button
+            variant="outline"
+            text="Exit"
+            onClick={() => exitFlow()}
+            pushLeft
+          />
         </Row>
       )}
 
@@ -500,6 +507,7 @@ const AddBoxes = ({
               }
             }}
           />
+          <Button variant="outline" text="Exit" onClick={() => exitFlow()} />
         </div>
       </MobileFooter>
     </Container>

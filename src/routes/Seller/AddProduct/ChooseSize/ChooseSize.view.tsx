@@ -134,6 +134,7 @@ const ChooseSize = ({
   listingFormData,
   onSelectSizes,
   navBack,
+  exitFlow,
   disableBackBtn,
 }: ChooseSizeProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -357,6 +358,12 @@ const ChooseSize = ({
                 }
               }}
             />
+            <Button
+              variant="outline"
+              pushLeft
+              text="Exit"
+              onClick={() => exitFlow()}
+            />
           </Row>
         )}
 
@@ -385,7 +392,9 @@ const ChooseSize = ({
                 });
               }
             }}
+            style={{ marginRight: 8 }}
           />
+          <Button variant="outline" text="Exit" onClick={() => exitFlow()} />
         </MobileFooter>
       </Container>
     </>

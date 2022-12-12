@@ -21,6 +21,7 @@ export type AddPackagingPublicProps = {
     };
   }) => void;
   navBack: () => void;
+  exitFlow: () => void;
 };
 
 export type AddPackagingProps = AddPackagingPublicProps & {

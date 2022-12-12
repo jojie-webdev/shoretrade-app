@@ -36,6 +36,7 @@ export type ChooseTypePublicProps = {
     };
   }) => void;
   navBack: () => void;
+  exitFlow: () => void;
   desktopSearchValue?: string;
 };
 

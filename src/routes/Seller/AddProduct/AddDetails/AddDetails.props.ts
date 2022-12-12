@@ -44,6 +44,7 @@ export type AddDetailsPublicProps = {
     max: number | null;
   };
   navBack: () => void;
+  exitFlow: () => void;
 };
 
 export type AddDetailsProps = AddDetailsPublicProps & {

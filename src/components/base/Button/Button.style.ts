@@ -65,6 +65,7 @@ export const ButtonContainer = styled.button<
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  margin-left: ${({ pushLeft }) => (pushLeft ? 'auto' : '0')};
 
   :focus {
     outline: none;

@@ -151,6 +151,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             selectProductType={selectProductType}
             categories={categories}
             getCustomFormData={getCustomFormData}
+            exitFlow={exitFlow}
             selectCustomType={selectCustomType}
             navBack={navBack}
             desktopSearchValue={searchKey}
@@ -166,6 +167,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             categories={categories}
             additionalInfos={additionalInfos}
             navBack={navBack}
+            exitFlow={exitFlow}
             onSelectSpecifications={onSelectSpecifications}
             updateAdditionalInfos={updateAdditionalInfos}
             disableBackBtn={isFromBulkUploadPreview}
@@ -178,6 +180,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             listingFormData={listingFormData}
             isCustomType={isCustomType}
             navBack={navBack}
+            exitFlow={exitFlow}
             onSelectSizes={onSelectSizes}
             disableBackBtn={isFromBulkUploadPreview}
           />
@@ -189,6 +192,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             editableListing={editableListing}
             listingFormData={listingFormData}
             navBack={navBack}
+            exitFlow={exitFlow}
             onUpdateImage={onUpdateImage}
             onSetProductPhotoType={onSetProductPhotoType}
             disableBackBtn={isFromBulkUploadPreview}
@@ -201,6 +205,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             listingFormData={listingFormData}
             onAddPackaging={onAddPackaging}
             navBack={navBack}
+            exitFlow={exitFlow}
             disableBackBtn={isFromBulkUploadPreview}
           />
         );
@@ -213,6 +218,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             listingFormData={listingFormData}
             onAddBoxes={onAddBoxes}
             navBack={navBack}
+            exitFlow={exitFlow}
             isExisting={isExisting}
             disableBackBtn={isFromBulkUploadPreview}
           />
@@ -227,6 +233,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             listingFormData={listingFormData}
             onUpdateDetails={onUpdateDetails}
             navBack={navBack}
+            exitFlow={exitFlow}
             marketEstimate={marketEstimate}
             disableBackBtn={isFromBulkUploadPreview}
             nswHolidays={nswHolidays}
@@ -244,6 +251,7 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             listingFormData={listingFormData}
             saveListing={saveListing}
             navBack={navBack}
+            exitFlow={exitFlow}
             preview={preview}
             pendingSave={pendingSave}
             isBulkUpload={isBulkUpload}
@@ -304,12 +312,6 @@ const AddProductView = (props: AddProductGeneratedProps) => {
           />
         )}
         {isMobile && <MobileHeader>Add a Listing</MobileHeader>}
-
-        {currentPage === 2 && currentPage > 1 && (
-          <ExitContainer>
-            <Button variant="outline" text="Exit" onClick={() => exitFlow()} />
-          </ExitContainer>
-        )}
         {currentPage > 1.5 && (
           <Typography variant="overline" color="shade6">
             Step {currentPage - 1} - 8
@@ -343,16 +345,6 @@ const AddProductView = (props: AddProductGeneratedProps) => {
                 resetValue={() => setSearchKey('')}
               />
             </SearchContainerDesktop>
-          )}
-
-          {currentPage !== 2 && !isMobile && currentPage > 1 && (
-            <ExitContainer>
-              <Button
-                variant="outline"
-                text="Exit"
-                onClick={() => exitFlow()}
-              />
-            </ExitContainer>
           )}
         </InnerHeaderContainer>
       </div>

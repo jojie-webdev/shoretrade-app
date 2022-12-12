@@ -7,6 +7,7 @@ export type AddPhotosPublicProps = {
     existingImages: Record<string, string>
   ) => void;
   navBack: () => void;
+  exitFlow: () => void;
   onSetProductPhotoType: ({
     isActualPhoto,
     isForSaleRepPhoto,

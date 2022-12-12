@@ -125,6 +125,7 @@ const AddDetails = ({
   isGstIncl,
   disableBackBtn,
   nswHolidays,
+  exitFlow,
 }: AddDetailsProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -1136,6 +1137,12 @@ const AddDetails = ({
               onNext();
             }}
           />
+          <Button
+            variant="outline"
+            text="Exit"
+            onClick={() => exitFlow()}
+            pushLeft
+          />
         </Row>
       )}
 
@@ -1156,7 +1163,9 @@ const AddDetails = ({
           onClick={() => {
             onNext();
           }}
+          style={{ marginRight: 8 }}
         />
+        <Button variant="outline" text="Exit" onClick={() => exitFlow()} />
       </MobileFooter>
     </Container>
   );

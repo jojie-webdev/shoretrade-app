@@ -25,6 +25,7 @@ const Button = (props: ButtonProps): JSX.Element => {
     takeFullWidth = false,
     size = 'md',
     textColor,
+    pushLeft,
     ...buttonProps
   } = props;
 
@@ -69,6 +70,7 @@ const Button = (props: ButtonProps): JSX.Element => {
       iconPosition={iconPosition}
       takeFullWidth={takeFullWidth}
       disabled={disabled || loading}
+      pushLeft={pushLeft}
       text={text}
       {...buttonProps}
     >

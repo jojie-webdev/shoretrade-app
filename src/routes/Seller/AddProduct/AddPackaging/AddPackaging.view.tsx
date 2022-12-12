@@ -34,6 +34,7 @@ const AddPackaging = ({
   onAddPackaging,
   navBack,
   disableBackBtn,
+  exitFlow,
 }: AddPackagingProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -326,6 +327,12 @@ const AddPackaging = ({
             disabled={isNextDisabled}
             onClick={onNext}
           />
+          <Button
+            variant="outline"
+            text="Exit"
+            onClick={() => exitFlow()}
+            pushLeft
+          />
         </Row>
       )}
 
@@ -346,7 +353,9 @@ const AddPackaging = ({
           text="Next"
           disabled={isNextDisabled}
           onClick={onNext}
+          style={{ marginRight: 8 }}
         />
+        <Button variant="outline" text="Exit" onClick={() => exitFlow()} />
       </MobileFooter>
     </Container>
   );

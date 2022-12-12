@@ -29,6 +29,7 @@ const ChooseSpecifications = ({
   categories,
   additionalInfos,
   updateAdditionalInfos,
+  exitFlow,
 }: ChooseSpecificationsProps) => {
   const categoryData = GetCategoryData(
     editableListing?.customTypeData?.categoryId ||
@@ -210,6 +211,12 @@ const ChooseSpecifications = ({
                   }
                 }}
               />
+              <Button
+                variant="outline"
+                pushLeft
+                text="Exit"
+                onClick={() => exitFlow()}
+              />
             </Row>
           )}
 
@@ -233,7 +240,9 @@ const ChooseSpecifications = ({
                   onSelectSpecifications(specificationIds, specificationLabels);
                 }
               }}
+              style={{ marginRight: 8 }}
             />
+            <Button variant="outline" text="Exit" onClick={() => exitFlow()} />
           </MobileFooter>
         </>
       )}

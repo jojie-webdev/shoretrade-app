@@ -30,6 +30,7 @@ export type AddBoxesPublicProps = {
     isAquafuture: boolean;
   }) => void;
   navBack: () => void;
+  exitFlow: () => void;
 };
 
 export type AddBoxesProps = AddBoxesPublicProps & {

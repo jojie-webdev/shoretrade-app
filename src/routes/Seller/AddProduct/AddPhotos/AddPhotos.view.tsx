@@ -23,6 +23,7 @@ const AddPhotos = ({
   onUpdateImage,
   onSetProductPhotoType,
   navBack,
+  exitFlow,
   disableBackBtn,
 }: AddPhotosProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -192,6 +193,12 @@ const AddPhotos = ({
             text={isExisting ? 'Review' : 'Next'}
             onClick={onSubmitPhotos}
           />
+          <Button
+            variant="outline"
+            text="Exit"
+            onClick={() => exitFlow()}
+            pushLeft
+          />
         </Row>
       )}
 
@@ -210,7 +217,9 @@ const AddPhotos = ({
           takeFullWidth
           text={isExisting ? 'Review' : 'Next'}
           onClick={onSubmitPhotos}
+          style={{ marginRight: 8 }}
         />
+        <Button variant="outline" text="Exit" onClick={() => exitFlow()} />
       </MobileFooter>
     </Container>
   );

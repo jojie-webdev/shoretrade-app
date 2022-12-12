@@ -10,6 +10,7 @@ export type ChooseSpecificationsPublicProps = {
     onSelectSpecifications: string[]
   ) => void;
   navBack: () => void;
+  exitFlow: () => void;
   updateAdditionalInfos: (params: {
     isIkeJime?: boolean;
     isIceSlurry?: boolean;

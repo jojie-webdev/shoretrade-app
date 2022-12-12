@@ -34,4 +34,5 @@ export type ReviewProps = ReviewPublicProps & {
   onChangeCurrentPage: (page: number) => void;
   preview: () => void;
   navBack: () => void;
+  exitFlow: () => void;
 };
