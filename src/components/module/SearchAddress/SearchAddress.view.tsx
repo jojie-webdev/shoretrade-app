@@ -54,33 +54,35 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
   const [selectedBuyingStates, setSelectedBuyingStates] = useState<
     OptionsType[]
   >(
-        (
-          searchPreferences.isAllStates ? 
-          buyingStates :
-          searchPreferences.states?.map((s) => ({
-              label: s,
-              value: s,
-            })) 
-        ) ?? buyingStates
+    (searchPreferences.isAllStates
+      ? buyingStates
+      : searchPreferences.states?.map((s) => ({
+          label: s,
+          value: s,
+        }))) ?? buyingStates
   );
   const [selectedMinBuyingQty, setSelectedMinBuyingQty] = useState(
-    (searchPreferences.isMaxWeight ? minBuyingQuantity : searchPreferences.weight) ?? 0
+    (searchPreferences.isMaxWeight
+      ? minBuyingQuantity
+      : searchPreferences.weight) ?? 0
   );
   const [selectedMetric, setSelectedMetric] = useState('ALL');
 
   useEffect(() => {
     if (initialisedPreferences) {
       setSelectedBuyingStates(
-        (
-          searchPreferences.isAllStates ? 
-          buyingStates :
-          searchPreferences.states?.map((s) => ({
+        (searchPreferences.isAllStates
+          ? buyingStates
+          : searchPreferences.states?.map((s) => ({
               label: s,
               value: s,
-            })) 
-        ) ?? buyingStates
+            }))) ?? buyingStates
       );
-      setSelectedMinBuyingQty((searchPreferences.isMaxWeight ? minBuyingQuantity : searchPreferences.weight) ?? 0);
+      setSelectedMinBuyingQty(
+        (searchPreferences.isMaxWeight
+          ? minBuyingQuantity
+          : searchPreferences.weight) ?? 0
+      );
       clearUpdate();
     }
   }, [initialisedPreferences]);
@@ -95,11 +97,15 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
     updatePreferences({
       search: {
         ...searchPreferences,
-        isAllStates: searchPreferences.states?.length === buyingStates.length,
-        isMaxWeight: searchPreferences.weight === minBuyingQuantity
-      }
-    })
-  }, [])
+        isAllStates:
+          searchPreferences.isAllStates ||
+          searchPreferences.states?.length === buyingStates.length,
+        isMaxWeight:
+          searchPreferences.isMaxWeight ||
+          searchPreferences.weight === minBuyingQuantity,
+      },
+    });
+  }, []);
 
   const updateBuyingState = (states: OptionsType[]) => {
     setSelectedBuyingStates(states);
@@ -119,7 +125,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
       search: {
         ...searchPreferences,
         weight,
-        isMaxWeight: weight === minBuyingQuantity
+        isMaxWeight: weight === minBuyingQuantity,
       },
     });
   };
