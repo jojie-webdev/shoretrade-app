@@ -123,6 +123,7 @@ function* registerRequest(action: AsyncAction<RegisterMeta, RegisterPayload>) {
           profileImage: profileImageUrl,
           addresses: [data.address],
           bankAccounts: data.bankAccounts || {},
+          sfmNumber: data.sfmNumber,
           debtFinancingSegment: data.debtFinancingSegment || '',
           debtFinancingEstRevenue: 0,
           registerDebtFinancing: false,

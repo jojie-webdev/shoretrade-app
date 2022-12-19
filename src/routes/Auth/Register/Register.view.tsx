@@ -1337,7 +1337,8 @@ const StepForm = ({
                       />
                     </>
                   )}
-                  {!isSeller && showSFMFields && (
+                  {((!isSeller && showSFMFields) ||
+                    (theme.isSFM && isAUorNZ)) && (
                     <>
                       <Typography
                         variant="overline"

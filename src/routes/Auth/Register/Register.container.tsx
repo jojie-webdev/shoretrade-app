@@ -274,6 +274,7 @@ const Register = (): JSX.Element => {
             unitNumber: details.unitNumber,
           },
           businessLogo: details.businessLogo,
+          sfmNumber: details.sfmNumber,
           bankAccounts: {
             accountName: details.accountName,
             bsb: details.bsb,
