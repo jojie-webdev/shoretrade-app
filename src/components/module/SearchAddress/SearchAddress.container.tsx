@@ -163,9 +163,10 @@ const SearchAddress = (): JSX.Element => {
   };
 
   const updatePreferences = debounce((data: UpdatePreferencesMeta) => {
-    const { states, metric, weight } = data.search || {};
+    const { states, metric, weight, isAllStates } = data.search || {};
     if (states && weight !== undefined) {
       data.search.metric = metric === 'ALL' ? null : metric;
+      data.search.states = isAllStates ? buyerSearchFilters?.states : states;
       dispatch(updatePreferencesActions.request(data));
     }
   }, 1000);
