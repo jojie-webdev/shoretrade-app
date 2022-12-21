@@ -187,6 +187,17 @@ const DIRECT_SALE_COLUMNS = [
     tooltip: (data: any) =>
       data?.endDate ? moment(data?.endDate).format('ll') : 'Always Available',
     component: function ValidUntil(data: any, _state: any) {
+      const isSFM = process.env.REACT_APP_SFM;
+      const currentDate = moment(new Date()).format('ll');
+      const preAuctionDate = moment(data?.endDate)
+        .subtract(1, 'days')
+        .format('ll');
+
+      const validUntil =
+        isSFM && moment(data?.endDate).diff(currentDate, 'days') >= 0
+          ? `${preAuctionDate} 10PM`
+          : '-';
+
       const isAuctionOrPreauction =
         data?.salesChannel === 'AUCTION' ||
         data?.salesChannel === 'PRE_AUCTION';
@@ -196,7 +207,7 @@ const DIRECT_SALE_COLUMNS = [
             ? data?.endDate
               ? moment(data?.endDate).format('ll')
               : 'Always Available'
-            : '-'}
+            : validUntil}
         </>
       );
     },
