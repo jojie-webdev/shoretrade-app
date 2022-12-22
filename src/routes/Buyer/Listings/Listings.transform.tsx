@@ -54,6 +54,7 @@ export const listingsToTableListings = (
       clickable: listing.sales_channel !== 'AUCTION',
       auctionDate: listing.auction_date,
       quality: listing.quality,
+      sellerName: listing.seller_company,
     };
   });
 };

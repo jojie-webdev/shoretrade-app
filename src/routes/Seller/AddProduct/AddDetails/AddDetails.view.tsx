@@ -930,6 +930,11 @@ const AddDetails = ({
       </Row>
       <Row className="textfield-row">
         <Col md={6} className="textfield-col">
+          <Typography>Company Name</Typography>
+        </Col>
+      </Row>
+      <Row className="textfield-row">
+        <Col md={6} className="textfield-col">
           <LocationSearch
             onSelect={(location) => {
               if (location) {

@@ -31,6 +31,7 @@ export type GetAllBuyerListingResponseItem = {
   is_ice_slurry: boolean;
   auction_date: string;
   quality?: string;
+  seller_company: string;
 };
 
 export interface GetAllBuyerListingRequestOption {

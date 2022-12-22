@@ -213,6 +213,17 @@ const DIRECT_SALE_COLUMNS = [
     },
   },
   {
+    name: 'Company Name',
+    selector: 'company',
+    sortable: true,
+    tooltip: (data: any) => {
+      return `${data?.sellerName}`;
+    },
+    component: function CompanyName(data: any, _state: any) {
+      return data?.sellerName;
+    },
+  },
+  {
     name: 'Catchment Origin',
     selector: 'origin',
     sortable: true,
@@ -343,6 +354,17 @@ const AQUAFUTURE_COLUMNS = [
     },
   },
   {
+    name: 'Company Name',
+    selector: 'companyName',
+    sortable: true,
+    tooltip: (data: any) => {
+      return `${data?.sellerName}`;
+    },
+    component: function CompanyName(data: any, _state: any) {
+      return data?.sellerName;
+    },
+  },
+  {
     name: 'Catchment Origin',
     selector: 'origin',
     sortable: true,
@@ -457,6 +479,17 @@ const PRE_AUCTION_COLUMNS = [
       return (
         <>{data?.auctionDate ? moment(data?.auctionDate).format('ll') : ''}</>
       );
+    },
+  },
+  {
+    name: 'Company Name',
+    selector: 'companyName',
+    sortable: true,
+    tooltip: (data: any) => {
+      return `${data?.sellerName}`;
+    },
+    component: function CompanyName(data: any, _state: any) {
+      return data?.sellerName;
     },
   },
   {
