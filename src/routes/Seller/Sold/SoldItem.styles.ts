@@ -507,3 +507,13 @@ export const Spacer = styled.div`
     width: 48px;
   }
 `;
+
+export const InvoiceContainer = styled.div`
+  background-color: ${({ theme }) => theme.grey.shade3};
+  position: absolute;
+  z-index: 1;
+  border-radius: 10px;
+  padding: 12px 24px;
+  min-width: 220px;
+  bottom: 35px;
+`;

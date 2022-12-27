@@ -11,16 +11,21 @@ import {
   MapMarker,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import { ToolTip } from 'components/module/RefreshCreditButton/RefreshCreditButton.style';
 import ScanHistoryButton from 'components/module/ScanHistoryButton';
 import { API, SELLER_SOLD_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
+import { useSelector, useDispatch } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
+import ReactTooltip from 'react-tooltip';
+import { getOrderInvoiceAdjustmentsActions } from 'store/actions';
 import {
   GetSellerOrdersResponseItem,
   ScanHistoryItem,
 } from 'types/store/GetSellerOrdersState';
+import { Store } from 'types/store/Store';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
@@ -35,6 +40,7 @@ import {
   Tag,
   Spacer,
   StyledInteraction,
+  InvoiceContainer,
 } from './SoldItem.styles';
 
 const SoldItem = (props: {
@@ -82,14 +88,39 @@ const SoldItem = (props: {
     messageModal,
     isSendingMessage,
   } = props;
+  const dispatch = useDispatch();
   const history = useHistory();
   const theme = useTheme();
   const nonDesktop = useMediaQuery({ query: BREAKPOINTS.nonDesktop });
   const isMobile = useMediaQuery({ query: BREAKPOINTS.sm });
-
+  const [toggleInvoicesBtn, setToggleInvoicesBtn] = useState(false);
   const addHorizontalRowMargin = useMediaQuery({
     query: '(min-width: 1080px)',
   });
+
+  const orderInvoiceAdjustments = useSelector(
+    (state: Store) => state.getOrderInvoiceAdjustments.data?.data
+  );
+
+  const handleGetOrderInvoiceAdjustment = (orderRefNum: string) => {
+    setToggleInvoicesBtn((prevValue) => !prevValue);
+    dispatch(
+      getOrderInvoiceAdjustmentsActions.request({
+        orderRefNum,
+      })
+    );
+  };
+
+  const handleOpenPdf = (orderRefNumber: string, adjustmentRef?: string) => {
+    window.open(
+      `${API.PDF_URL || API.URL}/${API.VERSION}/${
+        theme.isSFM ? 'sfm-blue/' : ''
+      }order/invoice/${orderRefNumber}?token=${props.token}${
+        adjustmentRef ? `&adjustmentRef=${adjustmentRef}` : '&showInitial=true'
+      }`,
+      '_blank'
+    );
+  };
 
   const [isOpen, setIsOpen] = useState<string[]>([]);
 
@@ -495,6 +526,12 @@ const SoldItem = (props: {
                                 }}
                               />
                               <Button
+                                data-tip
+                                data-for="tooltip-invoices"
+                                data-event="click"
+                                id={`sold-item_btn-invoices-${accordionId
+                                  .toLowerCase()
+                                  .replaceAll(' ', '-')}`}
                                 text="Invoices"
                                 textColor="noshade"
                                 textVariant="caption"
@@ -508,17 +545,55 @@ const SoldItem = (props: {
                                   />
                                 }
                                 onClick={(e) => {
-                                  window.open(
-                                    `${API.PDF_URL || API.URL}/${API.VERSION}/${
-                                      theme.isSFM ? 'sfm-blue/' : ''
-                                    }order/invoice/${v.orderRefNumber}?token=${
-                                      props.token
-                                    }`,
-                                    '_blank'
+                                  handleGetOrderInvoiceAdjustment(
+                                    order?.orderNumber?.split('-')[1]?.trim()
                                   );
                                   e.stopPropagation();
                                 }}
                               />
+                              {toggleInvoicesBtn && (
+                                <InvoiceContainer>
+                                  <Typography
+                                    variant="label"
+                                    color="shade6"
+                                    onClick={(e) => {
+                                      handleOpenPdf(
+                                        order?.orderNumber?.split('-')[1].trim()
+                                      );
+                                      e.stopPropagation();
+                                    }}
+                                    style={{
+                                      cursor: 'pointer',
+                                      marginBottom: 5,
+                                    }}
+                                  >
+                                    Original Invoice
+                                  </Typography>
+                                  {orderInvoiceAdjustments?.orderAdjustmentsLabel?.map(
+                                    (adjustment) => (
+                                      <Typography
+                                        variant="label"
+                                        color="shade6"
+                                        onClick={(e) => {
+                                          handleOpenPdf(
+                                            order?.orderNumber
+                                              ?.split('-')[1]
+                                              .trim(),
+                                            adjustment
+                                          );
+                                          e.stopPropagation();
+                                        }}
+                                        style={{
+                                          cursor: 'pointer',
+                                          marginBottom: 5,
+                                        }}
+                                      >
+                                        Order Adjustment {adjustment}
+                                      </Typography>
+                                    )
+                                  )}
+                                </InvoiceContainer>
+                              )}
                               <Button
                                 text="Order Summary"
                                 textColor="noshade"
