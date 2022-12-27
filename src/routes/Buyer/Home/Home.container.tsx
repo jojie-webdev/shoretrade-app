@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { getMarketInterestsActions } from 'store/actions';
+import { getMarketInterestsActions, orderActions } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
@@ -29,6 +29,10 @@ const Home = (): JSX.Element => {
   const loading =
     useSelector((state: Store) => state.searchAndCountProductType.pending) ||
     false;
+
+  useEffect(() => {
+    dispatch(orderActions.clear());
+  }, []);
 
   // MARK:- Variables
   const {
