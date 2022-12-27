@@ -5,6 +5,7 @@ import omit from 'ramda/es/omit';
 import { ConfirmWeightMeta } from 'types/store/ConfirmWeightState';
 import { GetAllBuyerOrdersMeta } from 'types/store/GetAllBuyerOrdersState';
 import { GetAllSellerOrdersMeta } from 'types/store/GetAllSellerOrdersState';
+import { GetOrderInvoiceAdjustmentsMeta } from 'types/store/GetOrderInvoiceAdjustmentsState';
 import { GetSellerOrdersMeta } from 'types/store/GetSellerOrdersState';
 import { OrderMeta } from 'types/store/OrderState';
 import { PlaceOrderMeta } from 'types/store/PlaceOrderState';
@@ -150,6 +151,19 @@ export const getAllSellerOrders = (
     url: `${ORDER_URL_V2}/all/seller?status=${data.status || ''}&limit=${
       data.limit || ''
     }&page=${data.page || ''}&term=${data.term || ''}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const getOrderInvoiceAdjustments = (
+  data: GetOrderInvoiceAdjustmentsMeta,
+  token: string
+) => {
+  return axios({
+    method: 'get',
+    url: `${ORDER_URL_V2}/invoice/${data.orderRefNum}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

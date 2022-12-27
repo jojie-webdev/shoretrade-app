@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Button from 'components/base/Button';
-import { DownloadFile, Message, Star, Check } from 'components/base/SVG';
+import {
+  DownloadFile,
+  Message,
+  Star,
+  Check,
+  AngleDown,
+  AngleUp,
+} from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { API } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -28,6 +35,7 @@ import {
   DetailsContainer,
   OrderItemScanTotalContainer,
   SubtotalContainer,
+  InvoiceContainer,
 } from './OrderItem.style';
 
 const OrderItem = (props: OrderItemProps): JSX.Element => {
@@ -40,6 +48,17 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
   const rating = props.data.rating;
   const showCatchment = !props.data.isMarketRequest;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
+  const handleOpenPdf = (adjustmentRef?: string) => {
+    window.open(
+      `${API.PDF_URL || API.URL}/${API.VERSION}/${
+        theme.isSFM ? 'sfm-blue/' : ''
+      }order/invoice/${props.data.orderRefNumber}?token=${props.token}${
+        adjustmentRef ? `&adjustmentRef=${adjustmentRef}` : '&showInitial=true'
+      }`,
+      '_blank'
+    );
+  };
 
   return (
     <OrderItemContainer>
@@ -97,7 +116,7 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
             </div>
           </div>
           <div className="group group-reverse">
-            <div className="group-item">
+            <div className="group-item" style={{ position: 'relative' }}>
               {props.data.isPending ? (
                 <div
                   style={{
@@ -116,25 +135,51 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                   </Typography>
                 </div>
               ) : (
-                <StyledTouchable
-                  onPress={() => {
-                    window.open(
-                      `${API.PDF_URL || API.URL}/${API.VERSION}/${
-                        theme.isSFM ? 'sfm-blue/' : ''
-                      }order/invoice/${props.data.orderRefNumber}?token=${
-                        props.token
-                      }`,
-                      '_blank'
-                    );
-                  }}
-                >
-                  <div className="svg-container">
-                    <DownloadFile />
-                  </div>
-                  <Typography variant="label" color="shade9">
-                    Invoice
-                  </Typography>
-                </StyledTouchable>
+                <>
+                  {props.toggleInvoiceBtn && (
+                    <InvoiceContainer>
+                      <Typography
+                        variant="label"
+                        color="shade6"
+                        onClick={() => handleOpenPdf()}
+                        style={{ cursor: 'pointer', marginBottom: 5 }}
+                      >
+                        Original Invoice
+                      </Typography>
+                      {props?.orderInvoiceAdjustments?.orderAdjustmentsLabel?.map(
+                        (adjustment) => (
+                          <Typography
+                            variant="label"
+                            color="shade6"
+                            onClick={() => handleOpenPdf(adjustment)}
+                            style={{ cursor: 'pointer', marginBottom: 5 }}
+                          >
+                            Order Adjustment {adjustment}
+                          </Typography>
+                        )
+                      )}
+                    </InvoiceContainer>
+                  )}
+
+                  <StyledTouchable
+                    onPress={() =>
+                      props?.handleGetOrderInvoiceAdjustment &&
+                      props?.handleGetOrderInvoiceAdjustment()
+                    }
+                  >
+                    <div className="svg-container">
+                      <DownloadFile />
+                    </div>
+                    <Typography variant="label" color="shade9">
+                      Invoice
+                    </Typography>
+                    {props.toggleInvoiceBtn ? (
+                      <AngleDown fill={theme.brand.primary} />
+                    ) : (
+                      <AngleUp fill={theme.brand.primary} />
+                    )}
+                  </StyledTouchable>
+                </>
               )}
             </div>
             <div className="group-item">
@@ -283,7 +328,11 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
           <Col xs={12} className="item">
             <Row nogutter={true}>
               <Col sm={9} style={{ alignSelf: 'center', margin: '4px 0' }}>
-                <Typography color="shade9">{props?.isPartialShipped ? "Partial Shipment" : "Shipping Fees"}</Typography>
+                <Typography color="shade9">
+                  {props?.isPartialShipped
+                    ? 'Partial Shipment'
+                    : 'Shipping Fees'}
+                </Typography>
                 <Typography color="shade6" variant="label" weight="400">
                   Shipping from {props.data.shippingFrom}
                 </Typography>
@@ -304,10 +353,12 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                       weight="bold"
                       color="shade9"
                     >
-                      {props?.isPartialShipped ? toPrice(0) : toPrice(
-                        props.data.shippingChargeNet +
-                          props.data.shippingChargeGst
-                      )}
+                      {props?.isPartialShipped
+                        ? toPrice(0)
+                        : toPrice(
+                            props.data.shippingChargeNet +
+                              props.data.shippingChargeGst
+                          )}
                     </ItemDetailValue>
                   </div>
                 </SubtotalContainer>
@@ -452,12 +503,13 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                       align="right"
                       className="end-text"
                     >
-                      {props?.isPartialShipped ?
-                        toPrice(
-                          Number(props.data.total.replace(/[^0-9.]/g, '')) - 
-                          (props.data.shippingChargeNet + props.data.shippingChargeGst)
-                        )
-                         : props.data.total }
+                      {props?.isPartialShipped
+                        ? toPrice(
+                            Number(props.data.total.replace(/[^0-9.]/g, '')) -
+                              (props.data.shippingChargeNet +
+                                props.data.shippingChargeGst)
+                          )
+                        : props.data.total}
                     </Typography>
                   </div>
                 </OrderItemScanTotalContainer>

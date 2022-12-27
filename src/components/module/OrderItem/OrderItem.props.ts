@@ -2,6 +2,7 @@ import { MouseEventHandler } from 'react';
 
 // eslint-disable-next-line import/named
 import { Moment } from 'moment';
+import { GetOrderInvoiceAdjustmentResponseItem } from 'types/store/GetOrderInvoiceAdjustmentsState';
 import { ScanHistoryItem } from 'types/store/GetSellerOrdersState';
 
 export interface OrderItemProps extends OrderItem {
@@ -10,6 +11,14 @@ export interface OrderItemProps extends OrderItem {
   completedOrder?: boolean;
   validity?: string;
   onRateClick?: () => void;
+  orderInvoiceAdjustments?:
+    | {
+        initialLabel: string;
+        orderAdjustmentsLabel: string[];
+      }
+    | undefined;
+  handleGetOrderInvoiceAdjustment?: () => void;
+  toggleInvoiceBtn?: boolean;
 }
 
 export interface OrderItem {

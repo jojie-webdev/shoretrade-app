@@ -63,6 +63,7 @@ import getMarketRequestBuyerFilters from './getMarketRequestBuyerFilters';
 import getNotifications from './getNotifications';
 import getNotificationsSettings from './getNotificationsSettings';
 import getNSWHolidays from './getNSWHolidays';
+import getOrderInvoiceAdjustments from './getOrderInvoiceAdjustments';
 import getPaymentMethods from './getPaymentMethods';
 import getPaymentMode from './getPaymentMode';
 import getSellerById from './getSellerById';
@@ -122,6 +123,7 @@ import verify from './verify';
 
 const sagas = [
   /* PLOP_INJECT_INSTANCE */
+  getOrderInvoiceAdjustments,
   paySubscription,
   upgradeSubscription,
   renewSubscriptionPlan,

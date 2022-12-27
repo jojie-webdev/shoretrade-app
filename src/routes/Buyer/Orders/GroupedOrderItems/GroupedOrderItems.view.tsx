@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Truck, Box, PaperPlane } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import OrderItemView from 'components/module/OrderItem';
+import OrderItem from 'components/module/OrderItem';
 import Pagination from 'components/module/Pagination';
 import { DEFAULT_PAGE_LIMIT } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -164,7 +164,7 @@ export const OrderItemAccordion = (
       }
     >
       {orders.map((d) => (
-        <OrderItemView
+        <OrderItem
           {...d}
           token={token}
           key={d.id}

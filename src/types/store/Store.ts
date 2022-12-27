@@ -222,6 +222,10 @@ import {
 } from './GetNotificationsState';
 import { GetNSWHolidaysPayload } from './GetNSWHolidaysState';
 import {
+  GetOrderInvoiceAdjustmentsMeta,
+  GetOrderInvoiceAdjustmentsPayload,
+} from './GetOrderInvoiceAdjustmentsState';
+import {
   GetPaymentMethodsMeta,
   GetPaymentMethodsPayload,
 } from './GetPaymentMethodsState';
@@ -343,6 +347,10 @@ import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
+  getOrderInvoiceAdjustments: AsyncState<
+    GetOrderInvoiceAdjustmentsMeta,
+    GetOrderInvoiceAdjustmentsPayload
+  >;
   selectedDeliveryMethod: SelectedDeliveryMethodState;
   paySubscription: AsyncState<PaySubscriptionMeta, PaySubscriptionPayload>;
   upgradeSubscription: AsyncState<

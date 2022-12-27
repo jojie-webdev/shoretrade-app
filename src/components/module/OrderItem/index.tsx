@@ -1,1 +1,1 @@
-export { default } from './OrderItem.view';
+export { default } from './OrderItem.container';

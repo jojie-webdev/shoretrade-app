@@ -321,3 +321,14 @@ export const SubtotalContainer = styled.div`
     margin-right: 28px;
   }
 `;
+
+export const InvoiceContainer = styled.div`
+  background-color: ${({ theme }) => theme.grey.shade3};
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  z-zndex: 1;
+  border-radius: 10px;
+  padding: 12px 24px;
+  min-width: 220px;
+`;

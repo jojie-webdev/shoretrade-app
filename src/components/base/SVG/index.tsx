@@ -1,4 +1,6 @@
 /* PLOP_INJECT_IMPORT */
+export { default as AngleUp } from './AngleUp';
+export { default as AngleDown } from './AngleDown';
 export { default as ShoppingTrolley } from './ShoppingTrolley';
 export { default as MapMarker } from './MapMarker';
 export { default as Bill } from './Bill';
