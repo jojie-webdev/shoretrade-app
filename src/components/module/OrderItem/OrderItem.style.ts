@@ -327,7 +327,7 @@ export const InvoiceContainer = styled.div`
   position: absolute;
   top: 12px;
   right: 20px;
-  z-zndex: 1;
+  z-index: 1;
   border-radius: 10px;
   padding: 12px 24px;
   min-width: 220px;
