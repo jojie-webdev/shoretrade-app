@@ -9,6 +9,8 @@ import {
   Box,
   Expand,
   MapMarker,
+  AngleDown,
+  AngleUp,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { ToolTip } from 'components/module/RefreshCreditButton/RefreshCreditButton.style';
@@ -593,6 +595,15 @@ const SoldItem = (props: {
                                     )
                                   )}
                                 </InvoiceContainer>
+                              )}
+                              {toggleInvoicesBtn ? (
+                                <div onClick={(e) => e.stopPropagation()}>
+                                  <AngleDown fill={theme.brand.primary} />
+                                </div>
+                              ) : (
+                                <div onClick={(e) => e.stopPropagation()}>
+                                  <AngleUp fill={theme.brand.primary} />
+                                </div>
                               )}
                               <Button
                                 text="Order Summary"
