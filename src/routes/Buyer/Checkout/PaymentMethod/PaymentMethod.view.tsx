@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import Alert from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
@@ -154,7 +154,14 @@ const CardFields = (props: { formik?: any }) => {
 const ConnectedCardFields = connect(CardFields);
 
 const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
-  const { cards, cardDetails, setCardDetails, isLoading, onRefresh } = props;
+  const {
+    cards,
+    cardDetails,
+    clearOrders,
+    setCardDetails,
+    isLoading,
+    onRefresh,
+  } = props;
   const theme = useTheme();
 
   const formRef = useRef<FormikProps<CardDetails>>(null);
@@ -163,6 +170,11 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
   const [paymentMethod, setPaymentMethod] = useState<'account' | 'card' | ''>(
     ''
   );
+  useEffect(() => {
+    if (paymentMethod === 'card') {
+      clearOrders();
+    }
+  }, [paymentMethod]);
   const [currentTab, setCurrentTab] = useState(TABS[0]);
 
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });

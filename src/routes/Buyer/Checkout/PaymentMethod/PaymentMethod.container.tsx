@@ -7,7 +7,11 @@ import {
   CardDetails,
   PaymentMethodPublicProps,
 } from 'routes/Buyer/Checkout/PaymentMethod/PaymentMethod.props';
-import { addCardAndPayActions, getPaymentMethodsActions } from 'store/actions';
+import {
+  addCardAndPayActions,
+  getPaymentMethodsActions,
+  orderActions,
+} from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { OrderCartItem } from 'types/store/AddCardAndPayState';
 import { GetCartDataItem } from 'types/store/GetCartState';
@@ -101,6 +105,10 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
     }
   };
 
+  const clearOrders = () => {
+    dispatch(orderActions.clear());
+  };
+
   const onExistingCard = () => {
     if (
       !pendingAddCard &&
@@ -147,6 +155,7 @@ const PaymentMethod = (props: PaymentMethodPublicProps): JSX.Element => {
     balance: currentCompany?.credit || '',
     cards,
     cardDetails,
+    clearOrders,
     setCardDetails,
     selectedCard,
     setSelectedCard,

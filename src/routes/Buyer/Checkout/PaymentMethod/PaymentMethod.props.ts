@@ -23,6 +23,7 @@ export interface PaymentMethodGeneratedProps extends PaymentMethodPublicProps {
   balance: string;
   cards: GetPaymentMethodsResponseItem[];
   cardDetails: CardDetails;
+  clearOrders: () => void;
   setCardDetails: Dispatch<Partial<CardDetails>>;
   selectedCard: string;
   setSelectedCard: Dispatch<SetStateAction<string>>;
