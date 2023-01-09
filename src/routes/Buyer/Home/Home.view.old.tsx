@@ -174,7 +174,6 @@ const HomeView = (props: HomeGeneratedProps) => {
       </div>
 
       {/* Main Content */}
-      {console.log('loadingHomePage > ', loadingHomePage)}
       {loadingHomePage ? (
         isMobile ? (
           <MobileModal.Backdrop>
