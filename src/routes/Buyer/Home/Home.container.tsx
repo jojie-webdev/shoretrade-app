@@ -20,6 +20,8 @@ const Home = (): JSX.Element => {
   const isOld = useHomeOld();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const theme = useTheme();
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
+  const [loadingHomePage, setLoadingHomePage] = useState(true);
 
   // MARK:- Store
   const buyerHomePageData = useSelector(
@@ -29,10 +31,6 @@ const Home = (): JSX.Element => {
   const loading =
     useSelector((state: Store) => state.searchAndCountProductType.pending) ||
     false;
-
-  useEffect(() => {
-    dispatch(orderActions.clear());
-  }, []);
 
   // MARK:- Variables
   const {
@@ -62,8 +60,6 @@ const Home = (): JSX.Element => {
   );
   const subscription = useSelector((store: Store) => store.subscription);
 
-  const loadingHomePage = buyerHomePageData.pending !== false; // || subscription.status === null;
-
   // MARK:- State
   const [currentCompany, setCurrentCompany] = useState<
     UserCompany | undefined
@@ -72,6 +68,23 @@ const Home = (): JSX.Element => {
   const marketSector = useSelector(
     (state: Store) => state.getMarketInterests.data?.data.sectorAlias
   );
+
+  useEffect(() => {
+    dispatch(orderActions.clear());
+  }, []);
+
+  useEffect(() => {
+    if (timer) {
+      clearTimeout(timer);
+      setTimer(null);
+    }
+
+    const timerId = setTimeout(() => {
+      const loadingHomePage = buyerHomePageData.pending !== false; // || subscription.status === null;
+      setLoadingHomePage(loadingHomePage);
+    }, 3000);
+    setTimer(timerId);
+  }, [buyerHomePageData.pending]);
 
   useEffect(() => {
     if (company) {

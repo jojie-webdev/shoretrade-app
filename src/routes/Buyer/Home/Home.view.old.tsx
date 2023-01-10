@@ -4,6 +4,8 @@ import Alert from 'components/base/Alert';
 import ProgressBar from 'components/base/ProgressBar';
 import { ChevronRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
+import * as MobileModal from 'components/layout/MobileModal/MobileModal.style';
+import { Backdrop } from 'components/layout/Modal/Modal.style';
 import Carousel from 'components/module/Carousel';
 import Card from 'components/module/CategoryCards/Landing';
 import { CardProps } from 'components/module/CategoryCards/Landing/Card.props';
@@ -108,6 +110,8 @@ const HomeView = (props: HomeGeneratedProps) => {
     isApprovedCompany,
   } = props;
 
+  const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+
   const hideCarouselArrowArea = useMediaQuery({
     query: `(max-width: 565px)`,
   });
@@ -171,7 +175,15 @@ const HomeView = (props: HomeGeneratedProps) => {
 
       {/* Main Content */}
       {loadingHomePage ? (
-        <Loading />
+        isMobile ? (
+          <MobileModal.Backdrop>
+            <Loading />
+          </MobileModal.Backdrop>
+        ) : (
+          <Backdrop isOpen>
+            <Loading />
+          </Backdrop>
+        )
       ) : (
         <>
           <SwiperContainer>
