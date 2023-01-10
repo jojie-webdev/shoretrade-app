@@ -629,7 +629,7 @@ const ToShip = (props: SoldGeneratedProps) => {
       <Typography variant="label" color="noshade" className="center-text">
         {group.deliveryMethodLabel}
       </Typography>
-      {group.deliveryAddress && (
+      {group.deliveryAddress && group.groupName !== 'selfDeliveryOrder' && (
         <Typography
           variant="caption"
           color="shade6"
