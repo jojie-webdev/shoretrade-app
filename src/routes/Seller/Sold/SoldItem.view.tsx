@@ -180,7 +180,7 @@ const SoldItem = (props: {
           </Typography>
         )}
 
-        {deliveryAddress && (
+        {deliveryAddress && groupName !== 'selfDeliveryOrder' && (
           <Typography
             variant="caption"
             color="shade6"
