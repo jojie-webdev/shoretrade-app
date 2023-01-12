@@ -49,13 +49,7 @@ export const estimatedDeliveryToString = (
   minTransit: string,
   maxTransit: string,
   estimatedDate?: string,
-  auctionDate?: string
 ) => {
-  if (auctionDate) {
-    const dateFrom = moment(auctionDate).format('D MMM');
-    const dateTo = moment(auctionDate).add('day', 2).format('D MMM');
-    return `Est. delivery: ${dateFrom}${dateTo ? ` - ${dateTo}` : ''}`;
-  }
   if (estimatedDate) {
     const dateSplit = estimatedDate.split('-').map((d) => d.trim());
     const dateFrom = moment(dateSplit[0]).format('D MMM');

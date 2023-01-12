@@ -338,9 +338,6 @@ const Checkout = (): JSX.Element => {
                   data.minTransitTime,
                   data.maxTransitTime,
                   data.estimatedDate,
-                  cartItem.listing.isPreAuctionSale
-                    ? cartItem.listing.auctionDate
-                    : undefined
                 ),
                 imageUrl: data.imageUrl,
                 subAddress:
