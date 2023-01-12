@@ -27,7 +27,7 @@ import useLocalStorage from 'utils/Hooks/useLocalStorage';
 
 import SearchAddressView from './SearchAddress.view';
 
-const SearchAddress = (): JSX.Element => {
+const SearchAddress = (props: { isHomePageLoading: boolean }): JSX.Element => {
   const dispatch = useDispatch();
   const [hasInitPreferences, setHasInitPreferences] = useState(false);
   const [currentDefaultAddressId, setCurrentDefaultAddressId] = useState('');
@@ -254,6 +254,7 @@ const SearchAddress = (): JSX.Element => {
       Object.keys(searchPreferences).length > 0 &&
       hasInitPreferences,
     clearUpdate,
+    isHomePageLoading: props.isHomePageLoading,
   };
 
   if (loadingUser) return <></>;

@@ -36,4 +36,5 @@ export interface SearchAddressProps {
   updatePreferences: (v: UpdatePreferencesMeta) => void;
   initialisedPreferences: boolean;
   clearUpdate: () => void;
+  isHomePageLoading: boolean;
 }

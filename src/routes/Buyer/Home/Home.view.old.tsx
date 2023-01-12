@@ -4,8 +4,6 @@ import Alert from 'components/base/Alert';
 import ProgressBar from 'components/base/ProgressBar';
 import { ChevronRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import * as MobileModal from 'components/layout/MobileModal/MobileModal.style';
-import { Backdrop } from 'components/layout/Modal/Modal.style';
 import Carousel from 'components/module/Carousel';
 import Card from 'components/module/CategoryCards/Landing';
 import { CardProps } from 'components/module/CategoryCards/Landing/Card.props';
@@ -140,20 +138,23 @@ const HomeView = (props: HomeGeneratedProps) => {
 
   return (
     <ViewContainer>
-      {freeTrialSubscription && isApprovedCompany && (
+      {!loadingHomePage && freeTrialSubscription && isApprovedCompany && (
         <FreeTrialCountdown
           freeTrialPeriod={freeTrialPeriod}
           daysLeft={daysLeft}
         />
       )}
 
-      {!freeTrialSubscription && companyPlan && isApprovedCompany && (
-        <div className="wrapper">
-          <SubscriptionAlert companyPlan={companyPlan} />
-        </div>
-      )}
+      {!loadingHomePage &&
+        !freeTrialSubscription &&
+        companyPlan &&
+        isApprovedCompany && (
+          <div className="wrapper">
+            <SubscriptionAlert companyPlan={companyPlan} />
+          </div>
+        )}
 
-      {isPendingAccount && (
+      {!loadingHomePage && isPendingAccount && (
         <div className="wrapper" style={{ marginBottom: 16 }}>
           <Col xs={12}>
             <Alert
@@ -167,23 +168,17 @@ const HomeView = (props: HomeGeneratedProps) => {
       )}
 
       <div className="wrapper">
-        <Credit creditState={creditState} loading={loading} />
+        {!loadingHomePage && (
+          <Credit creditState={creditState} loading={loading} />
+        )}
         <Col xs={12}>
-          <SearchAddress />
+          <SearchAddress isHomePageLoading={loadingHomePage} />
         </Col>
       </div>
 
       {/* Main Content */}
       {loadingHomePage ? (
-        isMobile ? (
-          <MobileModal.Backdrop>
-            <Loading />
-          </MobileModal.Backdrop>
-        ) : (
-          <Backdrop isOpen>
-            <Loading />
-          </Backdrop>
-        )
+        <Loading />
       ) : (
         <>
           <SwiperContainer>

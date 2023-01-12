@@ -46,6 +46,7 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
     updatePreferences,
     initialisedPreferences,
     clearUpdate,
+    isHomePageLoading,
   } = props;
   const theme = useTheme();
   const history = useHistory();
@@ -140,7 +141,9 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
     });
   };
 
-  return (
+  return isHomePageLoading ? (
+    <></>
+  ) : (
     <Container>
       <ConfirmationModal
         isOpen={targetAddress.length > 0}

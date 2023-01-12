@@ -176,7 +176,7 @@ const HomeView = (props: HomeGeneratedProps) => {
 
   return (
     <>
-      {isPendingAccount && (
+      {!loadingHomePage && isPendingAccount && (
         <Alert
           variant="alert"
           content={`Account Pending. You cannot make purchases until approved.`}
@@ -185,8 +185,10 @@ const HomeView = (props: HomeGeneratedProps) => {
           style={{ marginBottom: 24 }}
         />
       )}
-      <Credit creditState={creditState} loading={loading} />
-      <SearchAddress />
+      {!loadingHomePage && (
+        <Credit creditState={creditState} loading={loading} />
+      )}
+      <SearchAddress isHomePageLoading={loadingHomePage} />
 
       {/* Main Content */}
       {loadingHomePage ? (

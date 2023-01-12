@@ -39,6 +39,9 @@ function* getUserSuccess(action: AsyncAction<GetUserMeta, GetUserPayload>) {
   const state: Store = yield select();
   const { companies } = action.payload.data.user;
   const companyId: string = pathOr('', ['0', 'id'], companies);
+  const pathname: string = yield select(
+    (state: Store) => state.router.location.pathname
+  );
 
   if (state.auth.type === 'buyer') {
     yield put(getPaymentModeActions.request({}));
@@ -48,7 +51,9 @@ function* getUserSuccess(action: AsyncAction<GetUserMeta, GetUserPayload>) {
         (state.getAddresses.data?.data.addresses || []).length === 0 ||
         state.getAddresses.request?.companyId !== companyId
       ) {
-        yield put(getAddressesActions.request({ companyId }));
+        if (pathname !== '/buyer/home') {
+          yield put(getAddressesActions.request({ companyId }));
+        }
 
         // if buyer is at this point, assume he restored session/new login
         const { data: syncAASBalanceData } = yield call(
