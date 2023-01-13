@@ -6,7 +6,7 @@ const eventNS = 'SOCKET_EVENT';
 const updateAction = createUpdateAction<Partial<SocketState>>(ns);
 const clearAction = createClearAction(ns);
 
-export const SocketEvents: Record<SOCKET_EVENT, string> = {
+export const SocketEvents: { [x in SOCKET_EVENT]: `${typeof eventNS}/${x}` } = {
   NEW_ORDER: `${eventNS}/NEW_ORDER`,
   NEW_CREDIT: `${eventNS}/NEW_CREDIT`,
   UPDATE_REMAINING_BOXES: `${eventNS}/UPDATE_REMAINING_BOXES`,
@@ -21,7 +21,7 @@ export const SocketEvents: Record<SOCKET_EVENT, string> = {
   UPDATE_LISTING: `${eventNS}/UPDATE_LISTING`,
   BARCODE_SCANNED: `${eventNS}/BARCODE_SCANNED`,
   WEIGHT_CONFIRMED: `${eventNS}/WEIGHT_CONFIRMED`,
-};
+} as const;
 
 const socketActions = {
   ...updateAction,
