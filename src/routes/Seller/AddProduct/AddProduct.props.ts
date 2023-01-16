@@ -9,7 +9,10 @@ import { AddPhotosPublicProps } from './AddPhotos/AddPhotos.props';
 import { ChooseAccountPublicProps } from './ChooseAccount/ChooseAccount.props';
 import { ChooseSizePublicProps } from './ChooseSize/ChooseSize.props';
 import { ChooseSpecificationsPublicProps } from './ChooseSpecifications/ChooseSpecifications.props';
-import { ChooseTypePublicProps } from './ChooseType/ChooseType.props';
+import {
+  ChooseTypePublicProps,
+  TypeMarginCategoryName,
+} from './ChooseType/ChooseType.props';
 import { HistoricalListingsPublicProps } from './HistoricalListings/HistoricalListings.props';
 import { ReviewPublicProps } from './Review/Review.props';
 
@@ -29,7 +32,7 @@ export interface AddProductGeneratedProps
   exitFlow: () => void;
   typeName: string;
   isCustomType: boolean;
-  typeMarginCategory: string;
+  typeMarginCategory?: TypeMarginCategoryName;
   isGstIncl: boolean;
   listingFormData: GetListingFormDataResponse | null;
   nswHolidays: GetNSWHolidaysPayload | null;

@@ -1,3 +1,4 @@
+import { TypeMarginCategoryName } from 'routes/Seller/AddProduct/ChooseType/ChooseType.props';
 import { GenericResponse } from 'types/GenericResponse';
 
 export type SearchProductTypeMeta = {
@@ -8,7 +9,7 @@ export type SearchProductTypeResponseItem = {
   label: string;
   value: string;
   image: string;
-  marginCategory: string;
+  marginCategory?: TypeMarginCategoryName;
 };
 
 export type SearchProductTypePayload = GenericResponse<{

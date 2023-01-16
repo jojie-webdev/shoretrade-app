@@ -1,13 +1,15 @@
 import { EditableListingState } from 'types/store/EditableListingState';
 import { GetListingFormDataResponse } from 'types/store/GetListingFormDataState';
 
+import { TypeMarginCategoryName } from '../ChooseType/ChooseType.props';
+
 export type ReviewPublicProps = {
   preview: () => void;
   boxesDetails: Box[];
   measurementUnit: string;
   pendingSave: boolean;
   isBulkUpload: boolean;
-  typeMarginCategory: string;
+  typeMarginCategory?: TypeMarginCategoryName;
 };
 
 export interface BoxItemProps {

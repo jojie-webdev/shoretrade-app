@@ -266,14 +266,11 @@ const AddProduct = (): JSX.Element => {
       : listingFormData?.type.name) || '';
 
   // for review page only
-  const typeMarginCategory =
-    (isCustomType
-      ? ''
-      : listingFormData?.type?.id
-      ? searchResults.find(
-          (result) => result.value === listingFormData?.type?.id
-        )?.marginCategory
-      : '') || '';
+  const getTypeMarginCategory = listingFormData?.type?.id
+    ? searchResults.find((result) => result.value === listingFormData.type.id)
+        ?.marginCategory || null
+    : null;
+  const typeMarginCategory = isCustomType ? null : getTypeMarginCategory;
 
   const onSelectSpecifications = (
     specificationIds: string[],
@@ -638,7 +635,6 @@ const AddProduct = (): JSX.Element => {
 
   const exitFlow = () => {
     dispatch(editableListingActions.clear());
-    dispatch(searchProductTypeActions.clear());
     dispatch(modifyBulkUploadActions.clearSelection());
     if (isExisting && editableListing?.currentListingId) {
       history.push(
@@ -683,7 +679,6 @@ const AddProduct = (): JSX.Element => {
       if (showCustomTypeSettings) {
         setShowCustomTypeSettings(false);
       }
-      dispatch(searchProductTypeActions.clear());
     }
     // eslint-disable-next-line
   }, [currentPage]);

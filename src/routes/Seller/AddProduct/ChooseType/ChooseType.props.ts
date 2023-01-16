@@ -2,7 +2,8 @@ import { Dispatch } from 'react';
 
 import { EditableListingState } from 'types/store/EditableListingState';
 import { CategoryData } from 'types/store/GetCustomFormDataState';
-import { SearchProductTypeResponseItem } from 'types/store/SearchProductTypeState';
+
+export type TypeMarginCategoryName = 'Processed' | 'Whole' | null;
 
 export type ChooseTypePublicProps = {
   search: (term: string) => void;
@@ -11,7 +12,7 @@ export type ChooseTypePublicProps = {
     label: string;
     value: string;
     image?: string;
-    marginCategory?: string;
+    marginCategory?: TypeMarginCategoryName;
   }[];
   productsToSell: {
     label: string;
