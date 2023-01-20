@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getCratesActions } from 'store/actions';
@@ -12,8 +12,31 @@ const CratesManagement = (): JSX.Element => {
   const currentCompany = GetDefaultCompany();
   const companyId = currentCompany?.id || '';
 
+  const isGettingCrates =
+    useSelector((state: Store) => state.getCrates.pending) !== false;
+
   const leased =
-    useSelector((state: Store) => state.getCrates.data?.data.leased) || '0';
+    useSelector((state: Store) => state.getCrates.data?.data?.leased) || '0';
+
+  const smallCrate =
+    useSelector((state: Store) => state.getCrates.data?.data?.small_crate) ||
+    '0';
+
+  const liddedCrate =
+    useSelector((state: Store) => state.getCrates.data?.data?.lidded_crate) ||
+    '0';
+
+  const largeCrate =
+    useSelector((state: Store) => state.getCrates.data?.data?.large_crate) ||
+    '0';
+
+  function handleCratesLeasedClick() {
+    dispatch(
+      getCratesActions.request({
+        companyId,
+      })
+    );
+  }
 
   useEffect(() => {
     if (companyId) {
@@ -27,6 +50,11 @@ const CratesManagement = (): JSX.Element => {
 
   const generatedProps = {
     leased,
+    smallCrate,
+    liddedCrate,
+    largeCrate,
+    handleCratesLeasedClick,
+    isGettingCrates,
   };
   return <CratesManagementView {...generatedProps} />;
 };
