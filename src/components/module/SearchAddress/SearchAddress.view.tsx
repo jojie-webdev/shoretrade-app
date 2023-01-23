@@ -108,6 +108,29 @@ const SearchAddressView = (props: SearchAddressProps): JSX.Element => {
     });
   }, []);
 
+  useEffect(() => {
+    if (Object.keys(searchPreferences).length > 0) {
+      if (searchPreferences.weight) {
+        setSelectedMinBuyingQty(
+          searchPreferences.isMaxWeight
+            ? minBuyingQuantity
+            : searchPreferences.weight
+        );
+      }
+
+      if (searchPreferences.states) {
+        setSelectedBuyingStates(
+          searchPreferences.isAllStates
+            ? buyingStates
+            : searchPreferences.states?.map((s) => ({
+                label: s,
+                value: s,
+              }))
+        );
+      }
+    }
+  }, [searchPreferences]);
+
   const updateBuyingState = (states: OptionsType[]) => {
     setSelectedBuyingStates(states);
     if (searchPreferences.states?.length !== states.length)
