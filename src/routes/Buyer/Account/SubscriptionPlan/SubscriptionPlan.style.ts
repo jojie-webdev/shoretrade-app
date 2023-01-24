@@ -255,7 +255,6 @@ export const IncusionSection = styled.div`
 `;
 
 export const ReverseMarketplace = styled.div`
-  display: flex;
   padding-bottom: 24px;
 `;
 

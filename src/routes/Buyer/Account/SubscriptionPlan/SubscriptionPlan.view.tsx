@@ -954,22 +954,63 @@ export const SubscriptionPlanView = ({
                       </PlanPrice>
                     </PlanTitleContainer>
                     <ReverseMarketplace>
+                      <ul>
+                        <li>
+                          <Typography
+                            variant="label"
+                            color={
+                              theme.appType === 'seller' ? 'shade6' : 'shade7'
+                            }
+                            weight="400"
+                          >
+                            Negotiate the price of listings
+                          </Typography>
+                        </li>
+                      </ul>
+
                       <Typography
                         variant="label"
                         color={theme.appType === 'seller' ? 'shade6' : 'shade7'}
                         weight="400"
                       >
-                        The Reverse Marketplace puts you in control of the
-                        seafood supply. Instead of buying from a listing,
-                        request tailored products from the sellers on SFMblue.
-                        Recieve multiple offers on your request, negotiate
-                        prices, accept offers and get your custom products
-                        delivered straight to your door. Creating specific
-                        requests means more seafood ends up in our bellies
-                        instead of the bin, with less resoucrces taken from our
-                        oceans. Join the Reverse Market Place and become part of
-                        a sustainability initiative that is revolutionizing the
-                        seafood industry!
+                        Bartering with Sellers on select listings allows you to
+                        get their best price. Initiate and negotiate up to 5
+                        times with this package added to your Essentials Plan,
+                        or upgrade to Pro to have{' '}
+                        <span style={{ fontWeight: 'bold' }}>unlimited</span>{' '}
+                        negotiation abilities. Negotiations have
+                        product-specific time limits to ensure that all parties
+                        offer fair prices.
+                      </Typography>
+
+                      <div style={{ marginTop: 25 }} />
+
+                      <ul>
+                        <li>
+                          <Typography
+                            variant="label"
+                            color={
+                              theme.appType === 'seller' ? 'shade6' : 'shade7'
+                            }
+                            weight="400"
+                          >
+                            Customized products delivered to your door
+                          </Typography>
+                        </li>
+                      </ul>
+
+                      <Typography
+                        variant="label"
+                        color={theme.appType === 'seller' ? 'shade6' : 'shade7'}
+                        weight="400"
+                      >
+                        Buyer Requests creates a reverse marketplace where you
+                        can submit a market-wide seafood request tailored to
+                        your business needs. Choose your desired species,
+                        sizing, specifications, quantity and delivery location,
+                        and our SMFblue Sellers will make you an offer. Accept
+                        their offers or negotiate, and have your custom product
+                        delivered straight to your door.
                       </Typography>
                     </ReverseMarketplace>
 

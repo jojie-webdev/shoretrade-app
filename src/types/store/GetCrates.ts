@@ -7,7 +7,7 @@ export type GetCratesMeta = {
 export type GetCratesPayload = GenericResponse<{
   token: string;
   leased: string;
-  small_crate: number;
-  lidded_crate: number;
-  large_crate: number;
+  small_crate: string;
+  lidded_crate: string;
+  large_crate: string;
 }>;
