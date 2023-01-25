@@ -59,19 +59,19 @@ export function notifURLMapper(
       }
       url = BUYER_ROUTES.ALL_LISTING;
       break;
-    case 'market_requests':
+    case 'negotiations_and_requests':
       if (appType === 'seller') {
         url = SELLER_ROUTES.MARKET_BOARD;
         break;
       }
-      url = BUYER_ROUTES.MARKET_REQUESTS;
+      url = BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS;
       break;
     case 'market_board':
       if (appType === 'seller') {
         url = SELLER_ROUTES.MARKET_BOARD;
         break;
       }
-      url = BUYER_ROUTES.MARKET_REQUESTS;
+      url = BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS;
       break;
     case 'ordering':
       if (appType === 'seller') {

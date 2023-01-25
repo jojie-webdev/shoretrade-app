@@ -110,7 +110,7 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
   // MARK:- Methods
   const formatRouteString = (s: string) => {
     let str = s;
-    str = s.replace('-', ' ');
+    str = s.replaceAll('-', ' ');
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
 

@@ -5,14 +5,14 @@ import { Route, Switch } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
 
 import CreateRequest from './Create/Create.container';
-import MarketRequestsLanding from './Landing';
+import NegotiationsAndRequestsLanding from './Landing';
 import OfferDetails from './OfferDetails';
 import MarketRequestDetail from './RequestDetails';
 
 const ROUTES: Routes = {
-  MARKET_REQUESTS: {
+  NEGOTIATIONS_AND_REQUESTS: {
     path: BUYER_MARKET_REQUEST_ROUTES.LANDING,
-    children: <MarketRequestsLanding />,
+    children: <NegotiationsAndRequestsLanding />,
   },
   CREATE_REQUEST: {
     path: BUYER_MARKET_REQUEST_ROUTES.CREATE_MARKET_REQUEST,

@@ -1,7 +1,7 @@
 export type SVGProps = {
   fill?: string;
-  width?: number;
-  height?: number;
+  width?: number | string;
+  height?: number | string;
   stroke?: string;
   sizeMultiplier?: number;
   fullSize?: boolean;

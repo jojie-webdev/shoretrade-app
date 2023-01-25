@@ -229,6 +229,9 @@ export const Pro = styled(Typography)`
   font-weight: 900;
   font-family: 'Media Sans';
   line-height: normal;
+  display: flex;
+  max-width: min-content;
+  font-size: 10px;
 `;
 
 export const LogoContainer = styled.div`
@@ -240,6 +243,7 @@ export const LogoContainer = styled.div`
 export const Title1 = styled(Typography)`
   font-family: 'Media Sans';
   margin: 24px 0 12px;
+  line-height: 30px;
 
   @media ${BREAKPOINTS['sm']} {
     text-align: center;
@@ -254,9 +258,9 @@ export const DescriptionWrapper = styled.div`
   align-items: center;
   height: 100%;
 
-  @media ${BREAKPOINTS['md']} {
+  /* @media ${BREAKPOINTS['md']} {
     width: 214px;
-  }
+  } */
 `;
 
 export const Description = styled(Typography)`
@@ -284,8 +288,10 @@ export const ImageContainer = styled.div`
 
 export const ImageContainer2 = styled.div`
   height: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
 `;
 
 export const SwiperWrapper = styled(Swiper)`
@@ -303,4 +309,9 @@ export const SwiperWrapper = styled(Swiper)`
       background: ${({ theme }) => theme.brand.primary};
     }
   }
+`;
+
+export const MonthlySubsContainer = styled.div`
+  display: flex;
+  align-items: center;
 `;

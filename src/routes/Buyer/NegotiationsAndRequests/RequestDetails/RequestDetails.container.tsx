@@ -5,7 +5,7 @@ import { BUYER_MARKET_REQUEST_ROUTES } from 'consts/routes';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDetails/RequestDetails.props';
+import { MarketRequestDetailProps } from 'routes/Buyer/NegotiationsAndRequests/RequestDetails/RequestDetails.props';
 import { syncAASBalance } from 'services/aas';
 import {
   deleteMarketRequestActions,
@@ -68,14 +68,14 @@ const MarketRequestDetail = (): JSX.Element => {
 
   let breadCrumbSections = [];
   const offerListBreadCrumb = [
-    { label: 'My Requests', link: BUYER_ROUTES.MARKET_REQUESTS },
+    { label: 'My Requests', link: BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS },
     {
       label: 'Request Details',
     },
   ];
 
   const offerBreadCrumb = [
-    { label: 'My Requests', link: BUYER_ROUTES.MARKET_REQUESTS },
+    { label: 'My Requests', link: BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS },
     {
       label: 'Request Details',
       onClick: () => {

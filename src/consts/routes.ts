@@ -122,7 +122,7 @@ export const BUYER_ROUTES = {
   PRODUCT_PREVIEW: (id = ':id') => `${BUYER_ROOT}/categories/products/${id}`,
   SEARCH_PREVIEW: (id = ':id') => `${BUYER_ROOT}/search/products/${id}`,
   ORDERS: `${BUYER_ROOT}/orders`,
-  MARKET_REQUESTS: `${BUYER_ROOT}/market-requests`,
+  NEGOTIATIONS_AND_REQUESTS: `${BUYER_ROOT}/negotiations-and-requests`,
   FAVOURITES: `${BUYER_ROOT}/favourites`,
   ACCOUNT: `${BUYER_ROOT}/account`,
   HELP_AND_SUPPORT: `${BUYER_ROOT}/help-and-support`,
@@ -147,12 +147,12 @@ export const BUYER_ROUTES = {
 };
 
 export const BUYER_MARKET_REQUEST_ROUTES = {
-  LANDING: `${BUYER_ROUTES.MARKET_REQUESTS}`,
+  LANDING: `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}`,
   MARKET_REQUEST_DETAILS: (id = ':id') =>
-    `${BUYER_ROUTES.MARKET_REQUESTS}/details/${id}`,
-  CREATE_MARKET_REQUEST: `${BUYER_ROUTES.MARKET_REQUESTS}/market-requests/create`,
+    `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}/details/${id}`,
+  CREATE_MARKET_REQUEST: `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}/negotiations-and-requests/create`,
   MARKET_REQUEST_DETAILS_OFFER: (id = ':id', offerId = ':offerId') =>
-    `${BUYER_ROUTES.MARKET_REQUESTS}/market-requests/offer-details/${id}/${offerId}`,
+    `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}/negotiations-and-requests/offer-details/${id}/${offerId}`,
 };
 
 export const BUYER_ACCOUNT_ROUTES = {

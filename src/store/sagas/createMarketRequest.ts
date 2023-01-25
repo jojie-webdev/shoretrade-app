@@ -44,7 +44,7 @@ function* createMarketRequestSuccess(
 function* createMarketRequestClear(
   action: AsyncAction<EditableMarketRequestMeta, EditableMarketRequestPayload>
 ) {
-  yield put(push(BUYER_ROUTES.MARKET_REQUESTS));
+  yield put(push(BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS));
 }
 
 function* createMarketRequestWatcher() {

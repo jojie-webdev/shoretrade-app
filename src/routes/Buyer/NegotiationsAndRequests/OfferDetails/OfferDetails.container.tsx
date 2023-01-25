@@ -100,7 +100,7 @@ const OfferDetails = (): JSX.Element => {
   );
 
   const breadCrumb = [
-    { label: 'My Requests', link: BUYER_ROUTES.MARKET_REQUESTS },
+    { label: 'My Requests', link: BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS },
     {
       label: 'Request Details',
       onClick: () => {

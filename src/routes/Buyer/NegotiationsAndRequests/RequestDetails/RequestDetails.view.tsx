@@ -21,14 +21,14 @@ import { Row, Col, Visible, Hidden } from 'react-grid-system';
 import { useSelector, useDispatch } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { useLocation } from 'react-router-dom';
-import { MarketRequestDetailProps } from 'routes/Buyer/MarketRequests/RequestDetails/RequestDetails.props';
+import { MarketRequestDetailProps } from 'routes/Buyer/NegotiationsAndRequests/RequestDetails/RequestDetails.props';
 import { getAllMarketRequestActions } from 'store/actions';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { createdAtToExpiry } from 'utils/MarketRequest';
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme from 'utils/Theme';
 
-import { Store } from './../../../../types/store/Store';
+import { Store } from '../../../../types/store/Store';
 import {
   RequestDetailsContainer,
   HeaderContainer,

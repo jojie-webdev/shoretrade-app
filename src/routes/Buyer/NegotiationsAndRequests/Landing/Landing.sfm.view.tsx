@@ -1,7 +1,11 @@
 import React from 'react';
 
 import Button from 'components/base/Button';
-import { SfmLogo2 } from 'components/base/SVG';
+import {
+  SfmBuyerNegotiatePrice,
+  SfmBuyerReceiveOffersCards,
+  SfmLogo2,
+} from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col, Hidden, Row, Visible } from 'react-grid-system';
@@ -10,9 +14,10 @@ import SFMBuyerNegotiateCards from 'res/images/sfm-buyer-negotiate-cards.png';
 import SFMBuyerProductOptions from 'res/images/sfm-buyer-product-options.png';
 import SFMBuyerReceiveOffersCards from 'res/images/sfm-buyer-receive-offers-cards.png';
 import SFMBuyerSummaryBoard from 'res/images/sfm-buyer-summary-board.png';
+import SfmBuyerListing from 'res/images/SfmBuyerListing.png';
 import { SwiperSlide } from 'swiper/react';
 
-import { EXPLANATIONS } from './Landing.constants';
+import { EXPLANATIONS } from './Landing.sfm.constants';
 import {
   Container1,
   Description,
@@ -22,11 +27,16 @@ import {
   ImageContainer2,
   LandingDefaultContainer,
   LogoContainer,
+  MonthlySubsContainer,
+  Pro,
   SwiperWrapper,
   Title1,
 } from './Landing.style';
 
-const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
+const LandingSFMView = (props: {
+  handleSeePlansClick: () => void;
+  planPrice?: number | string;
+}) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
@@ -38,8 +48,23 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
           </div>
         </LogoContainer>
         <FirstDescription weight="400" color="shade7">
-          Can’t find a product? Create a Market Request!
+          Upgrade your plan to unlock Negotiations & the Reverse Marketplace
         </FirstDescription>
+        <MonthlySubsContainer>
+          <Typography
+            color="shade7"
+            variant="caption"
+            style={{ marginRight: 5 }}
+          >
+            $
+          </Typography>
+          <Typography variant="title6" weight="900" style={{ marginRight: 5 }}>
+            {props?.planPrice || '0.00'}
+          </Typography>
+          <Typography className="per" color="shade7" variant="caption">
+            /month
+          </Typography>
+        </MonthlySubsContainer>
         <Button
           padding={isMobile ? '10px 16px' : '14px 24px'}
           textVariant="label"
@@ -55,7 +80,7 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
             <DescriptionWrapper>
               <div>
                 <Title1
-                  variant={isMobile ? 'title6' : 'title5'}
+                  variant={isMobile ? 'title6' : 'title4'}
                   weight="700"
                   style={{ fontFamily: 'Canela' }}
                 >
@@ -66,7 +91,14 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
                   color="shade7"
                   weight="400"
                 >
-                  {EXPLANATIONS[0].description}
+                  {EXPLANATIONS[0].descriptions[0]}
+                </Description>
+                <Description
+                  variant={isMobile ? 'label' : 'body'}
+                  color="shade7"
+                  weight="400"
+                >
+                  {EXPLANATIONS[0].descriptions[1]}
                 </Description>
               </div>
             </DescriptionWrapper>
@@ -78,11 +110,12 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
               />
             </ImageContainer>
           </SwiperSlide>
+
           <SwiperSlide>
             <DescriptionWrapper>
               <div>
                 <Title1
-                  variant={isMobile ? 'title6' : 'title5'}
+                  variant={isMobile ? 'title6' : 'title4'}
                   weight="700"
                   style={{ fontFamily: 'Canela' }}
                 >
@@ -93,23 +126,20 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
                   color="shade7"
                   weight="400"
                 >
-                  {EXPLANATIONS[1].description}
+                  {EXPLANATIONS[1].descriptions[0]}
                 </Description>
               </div>
             </DescriptionWrapper>
             <ImageContainer>
-              <img
-                src={SFMBuyerReceiveOffersCards}
-                alt="sfm-buyer-receive-offers-cards.png"
-                style={{ width: '100%', height: '100%' }}
-              />
+              <SfmBuyerReceiveOffersCards width="100%" height="100%" />
             </ImageContainer>
           </SwiperSlide>
+
           <SwiperSlide>
             <DescriptionWrapper>
               <div>
                 <Title1
-                  variant={isMobile ? 'title6' : 'title5'}
+                  variant={isMobile ? 'title6' : 'title4'}
                   weight="700"
                   style={{ fontFamily: 'Canela' }}
                 >
@@ -120,23 +150,29 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
                   color="shade7"
                   weight="400"
                 >
-                  {EXPLANATIONS[2].description}
+                  {EXPLANATIONS[2].descriptions[0]}
                 </Description>
               </div>
             </DescriptionWrapper>
             <ImageContainer>
-              <img
-                src={SFMBuyerNegotiateCards}
-                alt="sfm-buyer-negotiate-cards"
-                style={{ width: '100%' }}
-              />
+              <div style={{ margin: 'auto' }}>
+                <ImageContainer2>
+                  <img
+                    src={SfmBuyerListing}
+                    alt="sfm-buyer-listing-image"
+                    width="100%"
+                    height="100%"
+                  />
+                </ImageContainer2>
+              </div>
             </ImageContainer>
           </SwiperSlide>
+
           <SwiperSlide>
             <DescriptionWrapper>
               <div>
                 <Title1
-                  variant={isMobile ? 'title6' : 'title5'}
+                  variant={isMobile ? 'title6' : 'title4'}
                   weight="700"
                   style={{ fontFamily: 'Canela' }}
                 >
@@ -147,16 +183,12 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
                   color="shade7"
                   weight="400"
                 >
-                  {EXPLANATIONS[3].description}
+                  {EXPLANATIONS[3].descriptions[0]}
                 </Description>
               </div>
             </DescriptionWrapper>
             <ImageContainer>
-              <img
-                src={SFMBuyerProductOptions}
-                alt="sfm-buyer-product-options"
-                style={{ width: '100%' }}
-              />
+              <SfmBuyerNegotiatePrice width="100%" height="100%" />
             </ImageContainer>
           </SwiperSlide>
         </SwiperWrapper>
@@ -168,55 +200,51 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
             <DescriptionWrapper>
               <div>
                 <Title1
-                  variant="title5"
+                  variant="title4"
                   weight="700"
                   style={{ fontFamily: 'Canela' }}
                 >
                   {EXPLANATIONS[0].heading}
                 </Title1>
                 <Typography color="shade7" weight="400">
-                  {EXPLANATIONS[0].description}
+                  {EXPLANATIONS[0].descriptions[0]}
+                </Typography>
+                <div style={{ marginTop: 10 }} />
+                <Typography color="shade7" weight="400">
+                  {EXPLANATIONS[0].descriptions[1]}
                 </Typography>
               </div>
             </DescriptionWrapper>
           </Col>
           <Col xs={12} sm={6}>
             <ImageContainer2>
-              <div style={{ maxWidth: 476, maxHeight: 379 }}>
-                <img
-                  src={SFMBuyerSummaryBoard}
-                  alt="sfm-buyer-summary-board"
-                  style={{ width: '100%' }}
-                />
-              </div>
+              <img
+                src={SFMBuyerSummaryBoard}
+                alt="sfm-buyer-summary-board"
+                style={{ width: 382, height: 312 }}
+              />
             </ImageContainer2>
           </Col>
         </Row>
 
         <Row style={{ padding: '25px 0' }}>
           <Col xs={12} sm={6}>
-            <ImageContainer2>
-              <div style={{ maxWidth: 311, maxHeight: 312 }}>
-                <img
-                  src={SFMBuyerReceiveOffersCards}
-                  alt="sfm-buyer-receive-offers-cards.png"
-                  style={{ width: '100%' }}
-                />
-              </div>
-            </ImageContainer2>
+            <div style={{ maxWidth: 476, maxHeight: 379 }}>
+              <SfmBuyerReceiveOffersCards width="100%" height="100%" />
+            </div>
           </Col>
           <Col xs={12} sm={6}>
             <DescriptionWrapper>
               <div>
                 <Title1
-                  variant="title5"
+                  variant="title4"
                   weight="700"
                   style={{ fontFamily: 'Canela' }}
                 >
                   {EXPLANATIONS[1].heading}
                 </Title1>
                 <Typography color="shade7" weight="400">
-                  {EXPLANATIONS[1].description}
+                  {EXPLANATIONS[1].descriptions[0]}
                 </Typography>
               </div>
             </DescriptionWrapper>
@@ -228,14 +256,14 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
             <DescriptionWrapper>
               <div>
                 <Title1
-                  variant="title5"
+                  variant="title4"
                   weight="700"
                   style={{ fontFamily: 'Canela' }}
                 >
                   {EXPLANATIONS[2].heading}
                 </Title1>
                 <Typography color="shade7" weight="400">
-                  {EXPLANATIONS[2].description}
+                  {EXPLANATIONS[2].descriptions[0]}
                 </Typography>
               </div>
             </DescriptionWrapper>
@@ -243,11 +271,12 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
           <Col xs={12} sm={6}>
             <div style={{ margin: 'auto' }}>
               <ImageContainer2>
-                <div style={{ maxWidth: 476, maxHeight: 379 }}>
+                <div style={{ maxWidth: 308, maxHeight: 497 }}>
                   <img
-                    src={SFMBuyerNegotiateCards}
-                    alt="sfm-buyer-negotiate-cards"
-                    style={{ width: '100%' }}
+                    src={SfmBuyerListing}
+                    alt="sfm-buyer-listing-image"
+                    width="100%"
+                    height="100%"
                   />
                 </div>
               </ImageContainer2>
@@ -257,30 +286,23 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
 
         <Row style={{ padding: '25px 0 0' }}>
           <Col xs={12} sm={6}>
-            <div style={{ margin: 'auto' }}>
-              <ImageContainer2>
-                <div style={{ maxWidth: 476, maxHeight: 379 }}>
-                  <img
-                    src={SFMBuyerProductOptions}
-                    alt="sfm-buyer-product-options"
-                    style={{ width: '100%' }}
-                  />
-                </div>
-              </ImageContainer2>
+            <div style={{ maxWidth: 476, maxHeight: 379 }}>
+              <SfmBuyerNegotiatePrice width="100%" height="100%" />
             </div>
           </Col>
           <Col xs={12} sm={6}>
             <DescriptionWrapper>
               <div>
+                <Pro>PRO</Pro>
                 <Title1
-                  variant="title5"
+                  variant="title4"
                   weight="700"
                   style={{ fontFamily: 'Canela' }}
                 >
                   {EXPLANATIONS[3].heading}
                 </Title1>
                 <Typography color="shade7" weight="400">
-                  {EXPLANATIONS[3].description}
+                  {EXPLANATIONS[3].descriptions[0]}
                 </Typography>
               </div>
             </DescriptionWrapper>

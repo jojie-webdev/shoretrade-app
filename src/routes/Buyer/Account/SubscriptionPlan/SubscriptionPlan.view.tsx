@@ -25,7 +25,7 @@ import { useMediaQuery } from 'react-responsive';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 import { TRANSACTION_VALUE_FEE_PERCENTAGE } from 'routes/Buyer/Checkout/Checkout.constants';
-import { SubMinorDetail } from 'routes/Buyer/MarketRequests/Landing/Landing.style';
+import { SubMinorDetail } from 'routes/Buyer/NegotiationsAndRequests/Landing/Landing.style';
 import { Tag } from 'routes/Seller/Selling/Selling.style';
 import {
   CompanyPlanAlias,

@@ -30,7 +30,7 @@ function* deleteMarketRequestRequest(
 function* deleteMarketRequestSuccess(
   action: AsyncAction<DeleteMarketRequestMeta, DeleteMarketRequestPayload>
 ) {
-  yield put(push(BUYER_ROUTES.MARKET_REQUESTS));
+  yield put(push(BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS));
 }
 
 function* deleteMarketRequestWatcher() {

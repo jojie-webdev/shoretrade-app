@@ -51,7 +51,7 @@ import RecentlyAdded from './Home/RecentlyAdded';
 import SellerFavouritesContainer from './Home/SellerFavourites/SellerFavourites.container';
 import SellerLanding from './Home/SellerLanding';
 import Listings from './Listings';
-import Market from './MarketRequests/market-requests.routes';
+import Market from './NegotiationsAndRequests/negotiations-and-requests.routes';
 import Notifications from './Notifications';
 import Orders from './Orders';
 import ProductDetails from './ProductDetails';
@@ -85,10 +85,10 @@ const ROUTES: Routes = {
     title: 'All Listings',
     icon: ListingIcon,
   },
-  MARKET_REQUESTS: {
-    path: BUYER_ROUTES.MARKET_REQUESTS,
+  NEGOTIATIONS_AND_REQUESTS: {
+    path: BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS,
     children: <Market />,
-    title: 'Market Requests',
+    title: 'Negotiations And Requests',
     icon: CatchNetIcon,
     nested: true,
   },
@@ -359,9 +359,9 @@ const BuyerRoutes = (): JSX.Element => {
       };
     }
 
-    if (pathname.includes('/buyer/market-requests/')) {
+    if (pathname.includes('/buyer/negotiations-and-requests/')) {
       return {
-        pageTitle: 'Market Request',
+        pageTitle: 'Negotiations And Requests',
         onBack: history.goBack,
       };
     }

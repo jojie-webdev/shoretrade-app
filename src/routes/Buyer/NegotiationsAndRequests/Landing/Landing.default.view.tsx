@@ -15,7 +15,7 @@ import { useMediaQuery } from 'react-responsive';
 import BuyerReceiveOffersCards from 'res/images/buyer-receive-offers-cards.png';
 import { SwiperSlide } from 'swiper/react';
 
-import { EXPLANATIONS } from './Landing.constants';
+import { EXPLANATIONS } from './Landing.default.constants';
 import {
   Container1,
   Description,
@@ -72,7 +72,14 @@ const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
                   color="shade7"
                   weight="400"
                 >
-                  {EXPLANATIONS[0].description}
+                  {EXPLANATIONS[0].descriptions[0]}
+                </Description>
+                <Description
+                  variant={isMobile ? 'label' : 'body'}
+                  color="shade7"
+                  weight="400"
+                >
+                  {EXPLANATIONS[0].descriptions[1]}
                 </Description>
               </div>
             </DescriptionWrapper>
@@ -91,7 +98,7 @@ const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
                   color="shade7"
                   weight="400"
                 >
-                  {EXPLANATIONS[1].description}
+                  {EXPLANATIONS[1].descriptions[0]}
                 </Description>
               </div>
             </DescriptionWrapper>
@@ -114,7 +121,7 @@ const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
                   color="shade7"
                   weight="400"
                 >
-                  {EXPLANATIONS[2].description}
+                  {EXPLANATIONS[2].descriptions[0]}
                 </Description>
               </div>
             </DescriptionWrapper>
@@ -133,7 +140,7 @@ const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
                   color="shade7"
                   weight="400"
                 >
-                  {EXPLANATIONS[3].description}
+                  {EXPLANATIONS[3].descriptions[0]}
                 </Description>
               </div>
             </DescriptionWrapper>
@@ -153,7 +160,11 @@ const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
                   {EXPLANATIONS[0].heading}
                 </Title1>
                 <Typography color="shade7" weight="400">
-                  {EXPLANATIONS[0].description}
+                  {EXPLANATIONS[0].descriptions[0]}
+                </Typography>
+                <div style={{ marginTop: 10 }} />
+                <Typography color="shade7" weight="400">
+                  {EXPLANATIONS[0].descriptions[1]}
                 </Typography>
               </div>
             </DescriptionWrapper>
@@ -184,7 +195,7 @@ const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
                   {EXPLANATIONS[1].heading}
                 </Title1>
                 <Typography color="shade7" weight="400">
-                  {EXPLANATIONS[1].description}
+                  {EXPLANATIONS[1].descriptions[0]}
                 </Typography>
               </div>
             </DescriptionWrapper>
@@ -199,7 +210,7 @@ const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
                   {EXPLANATIONS[2].heading}
                 </Title1>
                 <Typography color="shade7" weight="400">
-                  {EXPLANATIONS[2].description}
+                  {EXPLANATIONS[2].descriptions[0]}
                 </Typography>
               </div>
             </DescriptionWrapper>
@@ -224,7 +235,7 @@ const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
                   {EXPLANATIONS[3].heading}
                 </Title1>
                 <Typography color="shade7" weight="400">
-                  {EXPLANATIONS[3].description}
+                  {EXPLANATIONS[3].descriptions[0]}
                 </Typography>
               </div>
             </DescriptionWrapper>

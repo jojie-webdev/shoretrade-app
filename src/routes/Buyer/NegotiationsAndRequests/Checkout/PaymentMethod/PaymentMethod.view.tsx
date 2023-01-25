@@ -69,7 +69,7 @@ const PaymentMethodView = (props: PaymentMethodGeneratedProps) => {
   const { id } = params;
 
   const offerBreadCrumb = [
-    { label: 'My Requests', link: BUYER_ROUTES.MARKET_REQUESTS },
+    { label: 'My Requests', link: BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS },
     {
       label: 'Request Details',
       onClick: () => {

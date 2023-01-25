@@ -136,6 +136,7 @@ const MarketRequestsLanding = (): JSX.Element => {
 
   const sfmViewProps = {
     handleSeePlansClick,
+    planPrice: activePlans ? activePlans[0]?.plan?.price : '0.00',
   };
 
   const defaultViewProps = {
