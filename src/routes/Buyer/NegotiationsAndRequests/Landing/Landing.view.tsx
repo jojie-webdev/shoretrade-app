@@ -1,7 +1,8 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 
 import Case from 'case';
 import Button from 'components/base/Button';
+import SegmentedControls from 'components/base/SegmentedControls';
 import { Crab, TrashCan, ChevronRight } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography/Typography.view';
@@ -293,6 +294,11 @@ export const MarketRequestItemMobile = (props: {
   );
 };
 
+enum TABS {
+  NEGOTIATIONS = 'Negotiations',
+  MARKET_REQUEST = 'Market Request',
+}
+
 const MarketRequestsLandingView = (
   props: MarketRequestsLandingGeneratedProps
 ) => {
@@ -308,6 +314,10 @@ const MarketRequestsLandingView = (
     activeOffersData,
     reverseMarketPlace,
   } = props;
+
+  const theme = useTheme();
+
+  const [selectedTab, setSelectedTab] = useState(TABS.NEGOTIATIONS);
 
   const [isAcceptClicked, setIsAcceptClicked] = useLocalStorage(
     'isTermsAndConAccepted',
@@ -468,54 +478,84 @@ const MarketRequestsLandingView = (
         onClickClose={() => setItemToDelete({ value: null })}
       />
 
-      <Row nogutter justify="around" align="center" className="header">
-        <Col>
-          <Hidden xs sm>
-            <Typography variant="title5" weight="700" color="shade9" altFont>
-              My Market Requests
-            </Typography>
-          </Hidden>
-          <Visible xs sm>
-            <Typography variant="title5" weight="700" color="shade9" altFont>
-              Market Requests
-            </Typography>
-          </Visible>
-        </Col>
-        <Col xs="content">
-          <Visible sm md lg xl xxl>
+      <SegmentedControls
+        options={[TABS.NEGOTIATIONS, TABS.MARKET_REQUEST]}
+        controlButtonColor={theme.brand.secondary}
+        inactiveBackgroundColor={theme.grey.shade3}
+        selectedOption={selectedTab}
+        onClickControl={(value) => {
+          setSelectedTab(
+            value === TABS.NEGOTIATIONS
+              ? TABS.NEGOTIATIONS
+              : TABS.MARKET_REQUEST
+          );
+        }}
+      />
+
+      {selectedTab === TABS.NEGOTIATIONS ? (
+        <>
+          <Row nogutter justify="around" align="center" className="header">
+            <Col>
+              <Hidden xs sm>
+                <Typography
+                  variant="title5"
+                  weight="700"
+                  color="shade9"
+                  altFont
+                >
+                  My Market Requests
+                </Typography>
+              </Hidden>
+              <Visible xs sm>
+                <Typography
+                  variant="title5"
+                  weight="700"
+                  color="shade9"
+                  altFont
+                >
+                  Market Requests
+                </Typography>
+              </Visible>
+            </Col>
+            <Col xs="content">
+              <Visible sm md lg xl xxl>
+                <Button
+                  onClick={() =>
+                    history.push(
+                      BUYER_MARKET_REQUEST_ROUTES.CREATE_MARKET_REQUEST
+                    )
+                  }
+                  text="CREATE REQUEST"
+                  variant={props.isPendingAccount ? 'disabled' : 'primary'}
+                  size="md"
+                  disabled={props.isPendingAccount}
+                />
+              </Visible>
+            </Col>
+          </Row>
+          {renderMobile()}
+          {renderNonMobile()}
+          <MobileFooter>
             <Button
               onClick={() =>
                 history.push(BUYER_MARKET_REQUEST_ROUTES.CREATE_MARKET_REQUEST)
               }
               text="CREATE REQUEST"
               variant={props.isPendingAccount ? 'disabled' : 'primary'}
-              size="md"
+              takeFullWidth
               disabled={props.isPendingAccount}
+              icon={
+                <ChevronRight
+                  width={15}
+                  height={12}
+                  fill="white"
+                  style={{ paddingBottom: '2px' }}
+                />
+              }
             />
-          </Visible>
-        </Col>
-      </Row>
-      {renderMobile()}
-      {renderNonMobile()}
-      <MobileFooter>
-        <Button
-          onClick={() =>
-            history.push(BUYER_MARKET_REQUEST_ROUTES.CREATE_MARKET_REQUEST)
-          }
-          text="CREATE REQUEST"
-          variant={props.isPendingAccount ? 'disabled' : 'primary'}
-          takeFullWidth
-          disabled={props.isPendingAccount}
-          icon={
-            <ChevronRight
-              width={15}
-              height={12}
-              fill="white"
-              style={{ paddingBottom: '2px' }}
-            />
-          }
-        />
-      </MobileFooter>
+          </MobileFooter>
+        </>
+      ) : null}
     </MarketRequestsContainer>
   );
 };

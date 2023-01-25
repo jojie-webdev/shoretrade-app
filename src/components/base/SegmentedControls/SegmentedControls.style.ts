@@ -54,6 +54,7 @@ const ControlButtonTextColor = (
 export const ControlButton = styled.button<{
   active: boolean;
   backgroundColor?: string;
+  inactiveBackgroundColor?: string;
   textColor?: string;
 }>`
   height: 100%;
@@ -66,7 +67,7 @@ export const ControlButton = styled.button<{
       ? ControlButtonColor(props.theme, props.backgroundColor)[
           props.theme.appType
         ]
-      : 'none'};
+      : props.inactiveBackgroundColor || 'none'};
 
   /* Text Properties */
   font-size: 14px;
