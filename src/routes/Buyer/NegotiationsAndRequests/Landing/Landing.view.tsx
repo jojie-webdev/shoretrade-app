@@ -37,9 +37,287 @@ import {
   Badges,
   SearchWrapper,
 } from './Landing.style';
-import NegotiationNonMobile from './NegotiationNonMobile';
-import RequestsMobile from './RequestsMobile';
-import RequestsNonMobile from './RequestsNonMobile';
+
+export const MarketRequestItemNonMobile = (props: {
+  expiry: string;
+  offers: number;
+  type: string;
+  image: string;
+  inDetail: boolean;
+  activeOffersData: GetActiveOffersRequestResponseItem[];
+  metric: string;
+  paymentRequired: boolean;
+  weight?: { from: number; to: number };
+  measurementUnit?: string;
+  setItemToDelete?: Dispatch<SetStateAction<{ value: null | string }>>;
+  id?: string;
+  requestStatus: string;
+  specs?: string;
+  status: string;
+  size?: { from: number; to: number; options: any; ungraded: boolean };
+}) => {
+  const theme = useTheme();
+  const {
+    id,
+    expiry,
+    offers,
+    type,
+    image,
+    measurementUnit,
+    weight,
+    specs,
+    size,
+    setItemToDelete,
+    metric,
+    requestStatus,
+  } = props;
+  const statusTextProps = transformMarketRequestStatusText(
+    theme,
+    requestStatus
+  );
+  const offersTextProps = numberOffersTransform(offers);
+
+  return (
+    <MarketRequestItemContainer>
+      <div className="thumbnail-container">
+        <img src={parseImageUrl(image)} alt="" />
+      </div>
+      <div className="info-container">
+        <Col style={{ padding: '0 5px' }}>
+          <div className="sub-group">
+            <TypographyView variant="label">{type}</TypographyView>
+            <SubText variant="caption">{specs?.split(',').join(', ')}</SubText>
+          </div>
+        </Col>
+
+        <Col style={{ padding: '0 5px' }}>
+          <div className="sub-group">
+            {buildSize(
+              metric,
+              size?.from?.toString(),
+              size?.to?.toString(),
+              size?.options
+            ) && (
+              <SubText variant="caption">{`Size: ${buildSize(
+                metric,
+                size?.from?.toString(),
+                size?.to?.toString(),
+                size?.options
+              )}`}</SubText>
+            )}
+            <SubText variant="caption">
+              {weight &&
+                `Qty: ${weight.from} ${formatUnitToPricePerUnit(
+                  measurementUnit?.toLocaleLowerCase()
+                )} ~ ${weight.to} ${formatUnitToPricePerUnit(
+                  measurementUnit?.toLocaleLowerCase()
+                )}`}
+            </SubText>
+          </div>
+        </Col>
+
+        <Col sm={2} style={{ padding: '0 5px' }}>
+          <div className="sub-group">
+            <SubText
+              variant="caption"
+              color={expiry === 'Expired' ? 'error' : 'primary'}
+            >
+              {expiry === 'Expired' ? expiry : `${expiry} left`}
+            </SubText>
+          </div>
+        </Col>
+
+        <Hidden xs sm>
+          <Col style={{ padding: '0 5px' }}>
+            <Badges>
+              <OfferTag
+                text={offersTextProps.text}
+                badgeColor={offersTextProps.badgeColor || ''}
+                variantColor={offersTextProps.variantColor}
+                color={offersTextProps.tagColor}
+              />
+            </Badges>
+          </Col>
+
+          <Col style={{ padding: '0 5px' }}>
+            <Badges>
+              {statusTextProps.text !== '' && (
+                <OfferTag
+                  text={statusTextProps.text}
+                  badgeColor={statusTextProps.badgeColor || ''}
+                  variantColor={statusTextProps.variantColor}
+                  color={statusTextProps.tagColor}
+                />
+              )}
+            </Badges>
+          </Col>
+        </Hidden>
+
+        <Visible xs sm>
+          <Col style={{ padding: '0 5px' }}>
+            <Badges>
+              {statusTextProps.text !== '' && (
+                <OfferTag
+                  text={statusTextProps.text}
+                  badgeColor={statusTextProps.badgeColor || ''}
+                  variantColor={statusTextProps.variantColor}
+                  color={statusTextProps.tagColor}
+                />
+              )}
+
+              <OfferTag
+                text={offersTextProps.text}
+                badgeColor={offersTextProps.badgeColor || ''}
+                variantColor={offersTextProps.variantColor}
+                color={offersTextProps.tagColor}
+              />
+            </Badges>
+          </Col>
+        </Visible>
+
+        <Col sm={1} style={{ padding: '0 5px' }}>
+          <div className="sub-group">
+            <Button
+              iconPosition="before"
+              icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
+              onClick={
+                setItemToDelete &&
+                ((e) => {
+                  e.stopPropagation();
+                  setItemToDelete({ value: id || '' });
+                })
+              }
+              variant="primary"
+              size="sm"
+              className="delete-button"
+            />
+          </div>
+        </Col>
+      </div>
+    </MarketRequestItemContainer>
+  );
+};
+
+export const MarketRequestItemMobile = (props: {
+  expiry: string;
+  offers: number;
+  type: string;
+  image: string;
+  inDetail: boolean;
+  metric: string;
+  paymentRequired: boolean;
+  weight?: { from: number; to: number };
+  measurementUnit?: string;
+  specs?: string;
+  size?: { from: number; to: number; options: any; ungraded: boolean };
+  requestStatus: string;
+  status: string;
+}) => {
+  const theme = useTheme();
+  const {
+    expiry,
+    offers,
+    type,
+    image,
+    measurementUnit,
+    weight,
+    specs,
+    size,
+    metric,
+    requestStatus,
+  } = props;
+
+  const statusTextProps = transformMarketRequestStatusText(
+    theme,
+    requestStatus
+  );
+  const offersTextProps = numberOffersTransform(offers);
+
+  const subMinorDetail = (label: string, value: string) => (
+    <>
+      <Typography
+        variant="caption"
+        weight="400"
+        color="shade6"
+        style={{ marginRight: '5px' }}
+      >
+        {label}{' '}
+      </Typography>
+      <Typography variant="caption" weight="700" color="shade9">
+        {value}
+      </Typography>
+    </>
+  );
+
+  return (
+    <MarketRequestItemMobileContainer>
+      <MajorInfo>
+        <div className="thumbnail-container">
+          <img src={parseImageUrl(image)} alt="" />
+        </div>
+
+        <TypographyView variant="label" style={{ lineHeight: '20px' }}>
+          {type}
+        </TypographyView>
+      </MajorInfo>
+
+      <MinorInfo>
+        <Typography variant="caption" weight="400" color="shade6">
+          {specs?.split(',').join(', ')}
+        </Typography>
+
+        <SubMinorInfo>
+          <SubMinorDetail>
+            {subMinorDetail(
+              'Quantity',
+              weight?.from +
+                '-' +
+                weight?.to +
+                ' ' +
+                Case.pascal(formatUnitToPricePerUnit(measurementUnit || ''))
+            )}
+          </SubMinorDetail>
+
+          <SubMinorDetail>{subMinorDetail('Time Left', expiry)}</SubMinorDetail>
+
+          <SubMinorDetail>
+            {subMinorDetail(
+              'Size',
+              buildSize(
+                metric,
+                size?.from?.toString(),
+                size?.to?.toString(),
+                size?.options
+              ) || 'None'
+            )}
+          </SubMinorDetail>
+        </SubMinorInfo>
+
+        <Badges>
+          {statusTextProps.text !== '' && (
+            <OfferTag
+              text={statusTextProps.text}
+              badgeColor={statusTextProps.badgeColor || ''}
+              variantColor={statusTextProps.variantColor}
+              color={statusTextProps.tagColor}
+            />
+          )}
+          <OfferTag
+            text={offersTextProps.text}
+            badgeColor={offersTextProps.badgeColor || ''}
+            variantColor={offersTextProps.variantColor}
+            color={offersTextProps.tagColor}
+          />
+        </Badges>
+      </MinorInfo>
+    </MarketRequestItemMobileContainer>
+  );
+};
+
+enum TABS {
+  NEGOTIATIONS = 'Negotiations',
+  MARKET_REQUEST = 'Market Request',
+}
 
 const MarketRequestsLandingView = (
   props: MarketRequestsLandingGeneratedProps
@@ -64,6 +342,8 @@ const MarketRequestsLandingView = (
   } = props;
 
   const theme = useTheme();
+
+  const [selectedTab, setSelectedTab] = useState(TABS.NEGOTIATIONS);
 
   const [isAcceptClicked, setIsAcceptClicked] = useLocalStorage(
     'isTermsAndConAccepted',
@@ -181,7 +461,7 @@ const MarketRequestsLandingView = (
       />
 
       <SegmentedControls
-        options={[TABS.NEGOTIATIONS, TABS.REVERSE_MARKETPLACE]}
+        options={[TABS.NEGOTIATIONS, TABS.MARKET_REQUEST]}
         controlButtonColor={theme.brand.secondary}
         inactiveBackgroundColor={theme.grey.shade3}
         selectedOption={selectedTab}
@@ -189,90 +469,75 @@ const MarketRequestsLandingView = (
           handleTabSelect(
             value === TABS.NEGOTIATIONS
               ? TABS.NEGOTIATIONS
-              : TABS.REVERSE_MARKETPLACE
+              : TABS.MARKET_REQUEST
           );
         }}
       />
 
-      <div style={{ marginTop: 20 }}>
-        <Row nogutter justify="around" align="center" className="header">
-          {selectedTab === TABS.REVERSE_MARKETPLACE ? (
-            <>
-              <Col>
-                <Hidden xs sm>
-                  <Typography
-                    variant="title5"
-                    weight="700"
-                    color="shade9"
-                    altFont
-                  >
-                    My Market Requests
-                  </Typography>
-                </Hidden>
-                <Visible xs sm>
-                  <Typography
-                    variant="title5"
-                    weight="700"
-                    color="shade9"
-                    altFont
-                  >
-                    Market Requests
-                  </Typography>
-                </Visible>
-              </Col>
-              <Col xs="content">
-                <Visible sm md lg xl xxl>
-                  <Button
-                    onClick={() =>
-                      history.push(
-                        BUYER_MARKET_REQUEST_ROUTES.CREATE_MARKET_REQUEST
-                      )
-                    }
-                    text="CREATE REQUEST"
-                    variant={props.isPendingAccount ? 'disabled' : 'primary'}
-                    size="md"
-                    disabled={props.isPendingAccount}
-                  />
-                </Visible>
-              </Col>
-            </>
-          ) : (
-            canNegotiate && (
-              <>
-                <Col></Col>
-                <Col xs="content">
-                  <Visible sm md lg xl xxl>
-                    <Typography color="shade6">
-                      Negotiation Credits: 3
-                    </Typography>
-                  </Visible>
-                </Col>
-              </>
-            )
-          )}
-        </Row>
-        {renderMobile()}
-        {renderNonMobile()}
-        <MobileFooter>
-          <Button
-            onClick={() =>
-              history.push(BUYER_MARKET_REQUEST_ROUTES.CREATE_MARKET_REQUEST)
-            }
-            text="CREATE REQUEST"
-            variant={props.isPendingAccount ? 'disabled' : 'primary'}
-            takeFullWidth
-            disabled={props.isPendingAccount}
-            icon={
-              <ChevronRight
-                width={15}
-                height={12}
-                fill="white"
-                style={{ paddingBottom: '2px' }}
-              />
-            }
-          />
-        </MobileFooter>
-      </div>
+      {selectedTab === TABS.NEGOTIATIONS ? (
+        <>
+          <Row nogutter justify="around" align="center" className="header">
+            <Col>
+              <Hidden xs sm>
+                <Typography
+                  variant="title5"
+                  weight="700"
+                  color="shade9"
+                  altFont
+                >
+                  My Market Requests
+                </Typography>
+              </Hidden>
+              <Visible xs sm>
+                <Typography
+                  variant="title5"
+                  weight="700"
+                  color="shade9"
+                  altFont
+                >
+                  Market Requests
+                </Typography>
+              </Visible>
+            </Col>
+            <Col xs="content">
+              <Visible sm md lg xl xxl>
+                <Button
+                  onClick={() =>
+                    history.push(
+                      BUYER_MARKET_REQUEST_ROUTES.CREATE_MARKET_REQUEST
+                    )
+                  }
+                  text="CREATE REQUEST"
+                  variant={props.isPendingAccount ? 'disabled' : 'primary'}
+                  size="md"
+                  disabled={props.isPendingAccount}
+                />
+              </Visible>
+            </Col>
+          </Row>
+          {renderMobile()}
+          {renderNonMobile()}
+          <MobileFooter>
+            <Button
+              onClick={() =>
+                history.push(BUYER_MARKET_REQUEST_ROUTES.CREATE_MARKET_REQUEST)
+              }
+              text="CREATE REQUEST"
+              variant={props.isPendingAccount ? 'disabled' : 'primary'}
+              takeFullWidth
+              disabled={props.isPendingAccount}
+              icon={
+                <ChevronRight
+                  width={15}
+                  height={12}
+                  fill="white"
+                  style={{ paddingBottom: '2px' }}
+                />
+              }
+            />
+          </MobileFooter>
+        </>
+      ) : null}
     </MarketRequestsContainer>
   );
 };
