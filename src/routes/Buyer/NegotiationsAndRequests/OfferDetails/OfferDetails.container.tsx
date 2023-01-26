@@ -135,7 +135,7 @@ const OfferDetails = (): JSX.Element => {
     const meta: OfferConfirm = {
       marketOfferId: selectedOffer?.id || '',
     };
-    dispatch(marketRequestOfferConfirmActions.request(meta));
+    // dispatch(marketRequestOfferConfirmActions.request(meta));
   };
 
   const handleStartNegotiate = () => {

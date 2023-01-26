@@ -15,6 +15,18 @@ export const Container = styled.div`
     flex-direction: row;
   }
 
+  .confirmation_modal__ok_btn {
+    margin-left: 0 !important;
+  }
+
+  .text_field__field_container {
+    border-radius: 8px;
+
+    .text_field__field_container__input {
+      border-radius: 8px;
+    }
+  }
+
   @media ${BREAKPOINTS['sm']} {
     padding-bottom: 16vh;
   }
@@ -156,4 +168,10 @@ export const NoActionsYetBadgesContainer = styled.div`
   @media (max-width: 991px) {
     display: -webkit-inline-box !important;
   }
+`;
+
+export const AcceptNegoDetailContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
 `;

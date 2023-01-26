@@ -50,6 +50,7 @@ import {
   Container,
   HeaderContainer,
   AlertsContainer,
+  AcceptNegoDetailContainer,
 } from './OfferDetails.style';
 
 const OfferDetailsView = (props: OfferDetailsProps) => {
@@ -92,9 +93,6 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
     <TotalPriceContainer>
       <Typography variant="label" color="shade7" weight="900">
         TOTAL VALUE
-      </Typography>
-      <Typography variant="label" color="shade6">
-        Incl. Delivery
       </Typography>
       <Typography
         variant="title3"
@@ -364,6 +362,67 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
 
   return (
     <Container>
+      <ConfirmationModal
+        isOpen={false}
+        onClickClose={() => {
+          console.log('');
+        }}
+        title={
+          <Typography
+            variant="title4"
+            color="shade8"
+            weight="900"
+            style={{ fontFamily: 'Canela' }}
+          >
+            Accept Negotiation
+          </Typography>
+        }
+        action={() => {
+          console.log('');
+        }}
+        actionText="Accept"
+        hideCancel={true}
+        description={
+          <div style={{ marginTop: 20 }}>
+            <AcceptNegoDetailContainer>
+              <Typography color="shade6" variant="label">
+                Seller&apos;s Negotiated Price:
+              </Typography>
+              <Typography color="shade6" variant="label">
+                {sortedNegotiations.length === 0
+                  ? toPrice(selectedOffer?.price)
+                  : toPrice(
+                      lastNegotiationsOffers[lastNegotiationsOffers.length - 1]
+                        ?.price
+                    )}
+              </Typography>
+            </AcceptNegoDetailContainer>
+            <AcceptNegoDetailContainer>
+              <Typography color="shade6" variant="label">
+                Quantity:
+              </Typography>
+              <Typography color="shade8" variant="label">
+                Price
+              </Typography>
+            </AcceptNegoDetailContainer>
+            <AcceptNegoDetailContainer>
+              <Typography color="shade6" variant="label">
+                Total Product Value:
+              </Typography>
+              <Typography
+                color="shade8"
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: 15,
+                  fontFamily: 'Basis Grotesque Pro',
+                }}
+              >
+                Price
+              </Typography>
+            </AcceptNegoDetailContainer>
+          </div>
+        }
+      />
       <ConfirmationModal
         isOpen={props.showOfferSentModal}
         onClickClose={() => props.onConfirmSentOffer()}

@@ -30,25 +30,33 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
   const renderTitle = () => (
     <>
       <Hidden xs sm>
-        <Typography
-          variant="title4"
-          color={isSeller ? 'noshade' : 'shade8'}
-          className="title"
-          altFont
-        >
-          {title}
-        </Typography>
+        {typeof title === 'string' ? (
+          <Typography
+            variant="title4"
+            color={isSeller ? 'noshade' : 'shade8'}
+            className="title"
+            altFont
+          >
+            {title}
+          </Typography>
+        ) : (
+          title
+        )}
       </Hidden>
 
       <Visible xs sm>
-        <Typography
-          variant="title5"
-          color={isSeller ? 'noshade' : 'shade8'}
-          className="title"
-          altFont
-        >
-          {title}
-        </Typography>
+        {typeof title === 'string' ? (
+          <Typography
+            variant="title5"
+            color={isSeller ? 'noshade' : 'shade8'}
+            className="title"
+            altFont
+          >
+            {title}
+          </Typography>
+        ) : (
+          title
+        )}
       </Visible>
     </>
   );
