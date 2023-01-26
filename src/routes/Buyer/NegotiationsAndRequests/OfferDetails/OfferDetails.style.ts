@@ -27,10 +27,6 @@ export const Container = styled.div`
     }
   }
 
-  .modal_container {
-    width: 686px;
-  }
-
   @media ${BREAKPOINTS['sm']} {
     padding-bottom: 16vh;
   }

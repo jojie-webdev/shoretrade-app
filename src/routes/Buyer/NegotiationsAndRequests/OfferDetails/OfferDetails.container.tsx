@@ -170,8 +170,7 @@ const OfferDetails = (): JSX.Element => {
     const meta: OfferConfirm = {
       marketOfferId: selectedOffer?.id || '',
     };
-    dispatch(marketRequestOfferConfirmActions.request(meta));
-    setClickAccept(false);
+    // dispatch(marketRequestOfferConfirmActions.request(meta));
   };
 
   const handleNegoBtnClick = (show: boolean) => {
