@@ -297,10 +297,6 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
           </CompanyInfoCol>
         </Row>
         <Hidden xs sm>
-          <Row>
-            <Col>{renderTotalPriceContainer()}</Col>
-          </Row>
-
           {selectedOffer?.status !== 'ACCEPTED' &&
             selectedOffer?.status !== 'PARTIAL' &&
             selectedOffer?.status !== 'DECLINED' && (
@@ -311,19 +307,33 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
                       console.log('');
                     }}
                     variant="outline"
-                    text="Decline"
+                    text={
+                      <Typography color="primary" style={{ marginRight: 5 }}>
+                        Decline
+                      </Typography>
+                    }
                     icon={<Close fill={theme.brand.primary} />}
+                    style={{ width: '100%', marginRight: 10 }}
                   />
                   <Button
-                    text="Negotiate"
+                    text={
+                      <Typography color="noshade" style={{ marginRight: 5 }}>
+                        Negotiate
+                      </Typography>
+                    }
                     icon={<Refresh fill={theme.grey.noshade} />}
                     onClick={() => handleStartNegotiate()}
                     disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
+                    style={{ marginRight: 10, width: '100%' }}
                   />
                 </div>
                 <div style={{ width: '124px' }}>
                   <StyledAcceptButton
-                    text="Accept"
+                    text={
+                      <Typography color="noshade" style={{ marginRight: 5 }}>
+                        Accept
+                      </Typography>
+                    }
                     icon={<Check width={10} height={9} />}
                     onClick={() => handleConfirmOffer()}
                     disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
@@ -435,61 +445,19 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
         <Hidden xs sm md lg>
           {renderLeftComponent()}
           <Col sm={12} md={12} xl={4}>
-            <MarketRequestDetailPill
-              countAcceptedWeight={countAcceptedWeight}
-              imgUrl={marketRequest?.image || ''}
-              measurementUnit={marketRequest?.measurementUnit || ''}
-              onClickDelete={() => setShowDelete(true)}
-              weight={marketRequest?.weight}
-              expiry={createdAtToExpiry(marketRequest?.createdAt)}
-            />
-            <MarketRequestSummary
-              measurementUnit={marketRequest?.measurementUnit || ''}
-              metric={marketRequest?.metric || ''}
-              sizeOptions={marketRequest?.size.options || []}
-              sizeUngraded={marketRequest?.sizeUngraded || false}
-              sizeFrom={marketRequest?.size.from}
-              sizeTo={marketRequest?.size.to}
-              specs={marketRequest?.specs}
-              weight={marketRequest?.weight}
-            />
+            {renderTotalPriceContainer()}
           </Col>
         </Hidden>
         <Visible xs sm md lg>
           <Col sm={12} md={12} xl={4}>
-            <MarketRequestDetailPill
-              countAcceptedWeight={countAcceptedWeight}
-              imgUrl={marketRequest?.image || ''}
-              measurementUnit={marketRequest?.measurementUnit || ''}
-              onClickDelete={() => setShowDelete(true)}
-              weight={marketRequest?.weight}
-              expiry={createdAtToExpiry(marketRequest?.createdAt)}
-            />
+            {renderTotalPriceContainer()}
           </Col>
           {/* {renderRightComponent()} */}
           {renderLeftComponent()}
         </Visible>
-        <Visible md lg>
-          <Col>
-            <MarketRequestSummary
-              measurementUnit={marketRequest?.measurementUnit || ''}
-              metric={marketRequest?.metric || ''}
-              sizeOptions={marketRequest?.size.options || []}
-              sizeUngraded={marketRequest?.sizeUngraded || false}
-              sizeFrom={marketRequest?.size.from}
-              sizeTo={marketRequest?.size.to}
-              specs={marketRequest?.specs}
-              weight={marketRequest?.weight}
-            />
-          </Col>
-        </Visible>
       </Row>
 
       <Visible xs sm>
-        <Row>
-          <Col>{renderTotalPriceContainer()}</Col>
-        </Row>
-
         {selectedOffer?.status !== 'ACCEPTED' &&
           selectedOffer?.status !== 'PARTIAL' &&
           selectedOffer?.status !== 'DECLINED' && (
@@ -498,18 +466,42 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
                 <Col>{renderOfferSeenTextContainer()}</Col>
               </Row>
               <Row style={{ marginTop: '40px' }}>
-                <Col style={{ paddingRight: '5px' }}>
+                <Col style={{ paddingRight: 5, marginTop: 5 }}>
+                  <Button
+                    onClick={() => {
+                      console.log('');
+                    }}
+                    variant="outline"
+                    text={
+                      <Typography color="primary" style={{ marginRight: 5 }}>
+                        Decline
+                      </Typography>
+                    }
+                    icon={<Close fill={theme.brand.primary} />}
+                    style={{ width: '100%', padding: '15px 28px' }}
+                  />
+                </Col>
+                <Col style={{ paddingRight: 5, marginTop: 5 }}>
                   <StyledNegotiateButton
                     onClick={() => handleStartNegotiate()}
                     variant="outline"
-                    text="NEGOTIATE"
-                    icon={<Refresh />}
+                    text={
+                      <Typography color="noshade" style={{ marginRight: 5 }}>
+                        Negotiate
+                      </Typography>
+                    }
+                    icon={<Refresh fill={theme.grey.noshade} />}
                     disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
+                    style={{ backgroundColor: theme.brand.primary }}
                   />
                 </Col>
-                <Col style={{ paddingLeft: '5px' }}>
+                <Col style={{ paddingRight: 5, marginTop: 5 }}>
                   <StyledAcceptButton
-                    text="ACCEPT"
+                    text={
+                      <Typography color="noshade" style={{ marginRight: 5 }}>
+                        Accept
+                      </Typography>
+                    }
                     icon={<Check width={10} height={9} />}
                     onClick={() => handleConfirmOffer()}
                     loading={isLoadingConfirmOffer}

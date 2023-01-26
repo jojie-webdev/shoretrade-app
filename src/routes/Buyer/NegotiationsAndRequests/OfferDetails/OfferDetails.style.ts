@@ -56,8 +56,8 @@ export const CompanyInfoCol = styled(Col)`
 `;
 
 export const TotalPriceContainer = styled.div`
-  background: ${({ theme }) => theme.grey.shade1};
-  border: 1px solid ${({ theme }) => theme.grey.shade1};
+  background: ${({ theme }) => theme.grey.noshade};
+  border: 1px solid ${({ theme }) => theme.grey.shade4};
   border-radius: 12px;
   padding: 16px;
   margin-top: 16px;
@@ -135,7 +135,7 @@ export const CTAContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-top: 24px;
+  margin-top: 50px;
 `;
 
 export const StyledNegotiateButtonContainer = styled.div`
