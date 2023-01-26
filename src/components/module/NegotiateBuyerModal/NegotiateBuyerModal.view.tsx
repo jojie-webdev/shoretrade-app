@@ -20,7 +20,7 @@ import { Hidden } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { toPrice } from 'utils/String/toPrice';
-import useTheme from 'utils/Theme';
+import { useTheme } from 'utils/Theme';
 
 const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
   const {
@@ -208,9 +208,10 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
         </ComputationContainer>
         <Hidden xs>
           <ButtonContainer>
-            <MarketBoardOutlined />
             <Button
               variant="primary"
+              icon={<MarketBoardOutlined width={24} height={24} />}
+              iconPosition="before"
               text="NEGOTIATE"
               onClick={() => {
                 if (negotiationPrice && negotiationPrice >= 1) {
