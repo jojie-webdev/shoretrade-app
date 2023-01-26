@@ -562,7 +562,9 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
               <Row style={{ marginTop: '40px' }}>
                 <Col style={{ paddingRight: 5, marginTop: 5 }}>
                   <Button
-                    onClick={() => handleDeclineClick(true)}
+                    onClick={() => {
+                      console.log('');
+                    }}
                     variant="outline"
                     text={
                       <Typography color="primary" style={{ marginRight: 5 }}>
