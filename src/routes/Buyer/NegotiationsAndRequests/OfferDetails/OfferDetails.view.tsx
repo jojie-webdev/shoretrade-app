@@ -395,12 +395,8 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
                 Seller&apos;s Negotiated Price:
               </Typography>
               <Typography color="shade6" variant="label">
-                {sortedNegotiations.length === 0
-                  ? toPrice(selectedOffer?.price)
-                  : toPrice(
-                      lastNegotiationsOffers[lastNegotiationsOffers.length - 1]
-                        ?.price
-                    )}
+                {toPrice(negotiatedPrice)}/
+                {formatUnitToPricePerUnit(selectedOffer.measurementUnit)}
               </Typography>
             </AcceptNegoDetailContainer>
             <AcceptNegoDetailContainer>
@@ -408,7 +404,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
                 Quantity:
               </Typography>
               <Typography color="shade8" variant="label">
-                Price
+                {quantityValue.toLowerCase()}
               </Typography>
             </AcceptNegoDetailContainer>
             <AcceptNegoDetailContainer>
@@ -423,11 +419,44 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
                   fontFamily: 'Basis Grotesque Pro',
                 }}
               >
-                Price
+                {toPrice(selectedOffer?.weight * negotiatedPrice)}
               </Typography>
             </AcceptNegoDetailContainer>
           </div>
         }
+      />
+      <ConfirmationModal
+        isOpen
+        onClickClose={() => {
+          console.log('');
+        }}
+        title={
+          <Typography
+            variant="title4"
+            color="shade8"
+            weight="900"
+            style={{ fontFamily: 'Canela' }}
+          >
+            Decline Confirmation
+          </Typography>
+        }
+        action={() => {
+          console.log('');
+        }}
+        actionText="Confirm"
+        cancelText="Cancel"
+        description={
+          <div style={{ marginTop: 15 }}>
+            <Typography color="shade6" variant="body">
+              Are you sure you want to decline this negotiation?
+            </Typography>
+            <Typography color="shade6" variant="body" style={{ marginTop: 10 }}>
+              The negotiation will automatically close and you will not be
+              refunded any negotiation credits
+            </Typography>
+          </div>
+        }
+        style={{ maxWidth: 686 }}
       />
       <ConfirmationModal
         isOpen={props.showOfferSentModal}
