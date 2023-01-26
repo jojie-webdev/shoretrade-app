@@ -2,8 +2,9 @@ import React from 'react';
 
 import Alert from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs';
+import Button from 'components/base/Button';
 import StarRating from 'components/base/StarRating';
-import { PlaceholderProfile } from 'components/base/SVG';
+import { PlaceholderProfile, Close } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import Loading from 'components/module/Loading';
@@ -304,18 +305,25 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
             selectedOffer?.status !== 'PARTIAL' &&
             selectedOffer?.status !== 'DECLINED' && (
               <CTAContainer>
-                <StyledNegotiateButtonContainer>
-                  <StyledNegotiateButton
-                    onClick={() => handleStartNegotiate()}
+                <div style={{ display: 'flex' }}>
+                  <Button
+                    onClick={() => {
+                      console.log('');
+                    }}
                     variant="outline"
-                    text="NEGOTIATE"
-                    icon={<Refresh />}
+                    text="Decline"
+                    icon={<Close fill={theme.brand.primary} />}
+                  />
+                  <Button
+                    text="Negotiate"
+                    icon={<Refresh fill={theme.grey.noshade} />}
+                    onClick={() => handleStartNegotiate()}
                     disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
                   />
-                </StyledNegotiateButtonContainer>
+                </div>
                 <div style={{ width: '124px' }}>
                   <StyledAcceptButton
-                    text="ACCEPT"
+                    text="Accept"
                     icon={<Check width={10} height={9} />}
                     onClick={() => handleConfirmOffer()}
                     disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}

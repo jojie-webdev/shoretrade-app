@@ -133,6 +133,7 @@ export const StyledNumberRating = styled(Typography)`
 
 export const CTAContainer = styled.div`
   display: flex;
+  justify-content: space-between;
   width: 100%;
   margin-top: 24px;
 `;
