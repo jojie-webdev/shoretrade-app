@@ -5,7 +5,7 @@ import Typography from 'components/base/Typography';
 import MobileHeader from 'components/module/MobileHeader/MobileHeader.view';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
-import { useTheme } from 'utils/SFMTheme';
+import { useTheme } from 'utils/Theme';
 
 import { CratesManagementGeneratedProps } from './CratesManagement.props';
 import {
