@@ -6,7 +6,7 @@ import {
   /* PLOP_INJECT_IMPORT */
   SfmAcceptNegotiation,
   // TechByShoretradeSellerLogo,
-  // TechByShoretradeLogo,
+  // TechByShoretradeLogo, 
   SfmBuyerListing,
   SfmBuyerNegotiatePrice,
   SfmBuyerReceiveOffersCards,
