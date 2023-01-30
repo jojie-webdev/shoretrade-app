@@ -14,6 +14,8 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
   const {
     children,
     title,
+    actionIconPosition,
+    actionIcon,
     actionText,
     cancelText,
     action,
@@ -93,6 +95,8 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
                 className="confirmation_modal__ok_btn"
                 style={{ marginLeft: 8, borderRadius: 12 }}
                 variant="primary"
+                iconPosition={actionIconPosition}
+                icon={actionIcon}
                 text={actionText || 'OK'}
                 onClick={() => {
                   action();
@@ -105,6 +109,8 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
                 className="confirmation_modal__ok_btn"
                 style={{ marginRight: 4, borderRadius: 12 }}
                 variant={switchBtnsEffect ? 'outline' : 'primary'}
+                iconPosition={actionIconPosition}
+                icon={actionIcon}
                 text={actionText || 'OK'}
                 onClick={() => {
                   action();

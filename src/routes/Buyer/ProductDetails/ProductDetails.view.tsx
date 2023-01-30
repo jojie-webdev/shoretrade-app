@@ -5,17 +5,20 @@ import Alert from 'components/base/Alert';
 import Badge from 'components/base/Badge';
 import Divider from 'components/base/Divider';
 import FavoriteButtonView from 'components/base/FavoriteButton';
+import Radio from 'components/base/Radio';
 import {
   Expand,
   Location,
   ShoppingTrolley,
   Crate,
   CheckFilled,
+  MarketBoardOutlined,
 } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import BoxRadio from 'components/module/BoxRadio';
 import Carousel from 'components/module/Carousel';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 import Loading from 'components/module/Loading';
 import ProductDetailsCard6View from 'components/module/ProductDetailsCard6';
 import ProductSellerCard from 'components/module/ProductSellerCard';
@@ -42,6 +45,9 @@ import {
   TopBarContainer,
   StatusContainer,
   BadgeText,
+  StyledTextField,
+  RadioBtnContainer,
+  Container,
 } from './ProductDetails.style';
 
 const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
@@ -75,8 +81,10 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   const { isPreAuction, dateEnds } = productDetailsCard6Props;
 
   const [images, setImages] = useState<string[]>([]);
-  const [newCurrentListing, setNewCurrentListing] =
-    useState<GetListingResponseItem>();
+  const [negotiationPrice, setNegotiationPrice] = useState(0);
+  const [newCurrentListing, setNewCurrentListing] = useState<
+    GetListingResponseItem
+  >();
 
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -124,7 +132,210 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   }, [groupedBox]);
 
   return (
-    <>
+    <Container>
+      <ConfirmationModal
+        isOpen
+        onClickClose={() => {
+          console.log('');
+        }}
+        title={
+          <Typography
+            variant="title4"
+            color="shade8"
+            weight="900"
+            style={{ fontFamily: 'Canela' }}
+          >
+            0 Negotiation Credits
+          </Typography>
+        }
+        action={() => {
+          console.log('');
+        }}
+        actionText="See Plans"
+        cancelText="Close"
+        description={
+          <div style={{ marginTop: 20 }}>
+            <Typography variant="label" color="shade6">
+              Upgrade your subscription plan to PULL NEXT TIER to get more negotiation credits.
+            </Typography>
+          </div>
+        }
+      />
+      <ConfirmationModal
+        isOpen={false}
+        onClickClose={() => {
+          console.log('');
+        }}
+        title={
+          <Typography
+            variant="title4"
+            color="shade8"
+            weight="900"
+            style={{ fontFamily: 'Canela' }}
+          >
+            Confirm Negotiation
+          </Typography>
+        }
+        action={() => {
+          console.log('');
+        }}
+        actionText="Send Negotiation"
+        cancelText="Cancel"
+        description={
+          <div style={{ marginTop: 20 }}>
+            <Typography variant="label" color="shade6">
+              Sending this negotiation will cost 1 Negotiation Credit.
+            </Typography>
+            <div style={{ marginTop: 10 }} />
+            <Typography variant="label" color="shade6">
+              Your current negotiation balance is X Credit.
+            </Typography>
+          </div>
+        }
+      />
+      <ConfirmationModal
+        isOpen={false}
+        onClickClose={() => {
+          console.log('');
+        }}
+        title={
+          <Typography
+            variant="title4"
+            color="shade8"
+            weight="900"
+            style={{ fontFamily: 'Canela' }}
+          >
+            Negotiate
+          </Typography>
+        }
+        action={() => {
+          console.log('');
+        }}
+        actionIconPosition="before"
+        actionIcon={<MarketBoardOutlined width={20} height={20} />}
+        actionText="Negotiate"
+        hideCancel={true}
+        description={
+          <div style={{ marginTop: 20 }}>
+            <StyledTextField
+              type="number"
+              inputType="decimal"
+              step=".01"
+              label={'Counter Offer'}
+              value={negotiationPrice}
+              onChangeText={(v) => {
+                let price = v;
+                if (price.indexOf('.') >= 0) {
+                  price =
+                    price.substr(0, price.indexOf('.')) +
+                    price.substr(price.indexOf('.'), 3);
+                }
+                setNegotiationPrice(parseFloat(price));
+              }}
+              min={1}
+              LeftComponent={
+                <Typography variant="label" color="shade6">
+                  {'$'}
+                </Typography>
+              }
+              placeholder={`per ${unit}`}
+              style={{ marginTop: 10 }}
+            />
+            <StyledTextField
+              type="number"
+              inputType="decimal"
+              step=".01"
+              label={'Desired Quantity'}
+              value={negotiationPrice}
+              onChangeText={(v) => {
+                let price = v;
+                if (price.indexOf('.') >= 0) {
+                  price =
+                    price.substr(0, price.indexOf('.')) +
+                    price.substr(price.indexOf('.'), 3);
+                }
+                setNegotiationPrice(parseFloat(price));
+              }}
+              min={1}
+              LeftComponent={
+                <Typography variant="label" color="shade6">
+                  {'kg'}
+                </Typography>
+              }
+              placeholder={`per ${unit}`}
+              style={{ marginTop: 16 }}
+            />
+            <div style={{ marginTop: 15 }} />
+            <RadioBtnContainer>
+              <div style={{ display: 'flex' }}>
+                <Radio
+                  checked
+                  onClick={() => {
+                    console.log('');
+                  }}
+                />
+                <div style={{ marginRight: 27 }} />
+                <Typography variant="caption" color="shade6">
+                  10kg x 2
+                </Typography>
+              </div>
+              <Typography variant="caption" color="shade6">
+                20 kg
+              </Typography>
+            </RadioBtnContainer>
+            <RadioBtnContainer>
+              <div style={{ display: 'flex' }}>
+                <Radio
+                  checked
+                  onClick={() => {
+                    console.log('');
+                  }}
+                />
+                <div style={{ marginRight: 27 }} />
+                <Typography variant="caption" color="shade6">
+                  10kg x 2
+                </Typography>
+              </div>
+              <Typography variant="caption" color="shade6">
+                20 kg
+              </Typography>
+            </RadioBtnContainer>
+            <div style={{ marginTop: 24 }} />
+            <Typography variant="caption" color="shade6">
+              Seller&apos;s Negotiated Price
+            </Typography>
+            <div style={{ marginTop: 5 }} />
+            <Typography variant="caption" color="shade6">
+              Change in Price
+            </Typography>
+            <div style={{ marginTop: 5 }} />
+            <Typography variant="caption" weight="bold" color="shade6">
+              Total Product Value
+            </Typography>
+            {/* <BoxRadio
+                id="id"
+                checked={'id' === pressedBoxRadio}
+                totalWeight={0}
+                boxes={[
+                  {
+                    count: 0,
+                    id: 'string',
+                    quantity: 0,
+                    weight: 0,
+                  },
+                ]}
+                cost={0}
+                unit={'kg'}
+                onClick={
+                  () => console.log('')
+                  // setPressedBoxRadio((prevState) =>
+                  //   p.id === prevState ? '' : p.id
+                  // )
+                }
+              /> */}
+          </div>
+        }
+      />
       {newCurrentListing !== undefined ? (
         <>
           <DetailsContainer>
@@ -392,7 +603,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
       ) : (
         <Loading />
       )}
-    </>
+    </Container>
   );
 };
 
