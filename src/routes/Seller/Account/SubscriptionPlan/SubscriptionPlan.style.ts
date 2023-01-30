@@ -80,7 +80,7 @@ export const PaymentMethodSection = styled.div`
   }
 `;
 
-export const BillingSection = styled.div` {
+export const BillingSection = styled.div`
   margin-bottom: 20px;
   .billing-item {
     margin-bottom: 24px;
@@ -159,6 +159,7 @@ export const IncusionSection = styled.div`
 
 export const ReverseMarketplace = styled.div`
   display: flex;
+  flex-direction: column;
   padding-bottom: 24px;
 
   .cancel-subscription {
@@ -166,6 +167,10 @@ export const ReverseMarketplace = styled.div`
     &:hover {
       cursor: pointer;
     }
+  }
+
+  ul li::marker {
+    color: ${({ theme }) => theme.grey.shade6};
   }
 `;
 

@@ -339,7 +339,7 @@ export const SubscriptionPlanView = ({
                           theme.appType === 'seller' ? 'noshade' : 'shade9'
                         }
                       >
-                        Reverse Marketplace
+                        Negotiations & Requests
                       </Typography>
                       <PlanPrice>
                         <Typography
@@ -359,21 +359,56 @@ export const SubscriptionPlanView = ({
                       </PlanPrice>
                     </PlanTitleContainer>
                     <ReverseMarketplace>
+                      <ul style={{ marginBottom: 10 }}>
+                        <li>
+                          <Typography
+                            color={
+                              theme.appType === 'seller' ? 'shade6' : 'shade7'
+                            }
+                            weight="700"
+                            style={{ fontFamily: 'Basis Grotesque Pro' }}
+                          >
+                            Gain more sales with access to Buyer Requests
+                          </Typography>
+                        </li>
+                      </ul>
                       <Typography
                         variant="label"
                         color={theme.appType === 'seller' ? 'shade6' : 'shade7'}
                         weight="400"
                       >
-                        Want to gain even more sales with quick turn around
-                        times? See what unique products buyers are after when
-                        you connect to the Reverse Marketplace. Buyers make
-                        specific requests for seafood products, and if you can
-                        provide that product then make them an offer. By
-                        aligning your stock supply to the buyers' needs, your
-                        product is sold more efficiently, and less resources are
-                        taken from our oceans. Gain an extra sales channel and
-                        revolutionize your seafood business with Reverse
-                        Marketplace!
+                        Buyers make specific requests for seafood products, and
+                        if you can provide that product then make them an offer.
+                        By aligning your stock supply to the Buyers&apos; needs,
+                        your product is sold more efficiently through this bonus
+                        sales channel.
+                      </Typography>
+
+                      <ul style={{ marginBottom: 10, marginTop: 32 }}>
+                        <li>
+                          <Typography
+                            color={
+                              theme.appType === 'seller' ? 'shade6' : 'shade7'
+                            }
+                            weight="700"
+                            style={{ fontFamily: 'Basis Grotesque Pro' }}
+                          >
+                            Allow Negotiations on your listings to attract more
+                            Buyers
+                          </Typography>
+                        </li>
+                      </ul>
+                      <Typography
+                        variant="label"
+                        color={theme.appType === 'seller' ? 'shade6' : 'shade7'}
+                        weight="400"
+                      >
+                        Barter with Buyers and get extra sales. Turn on
+                        Negotiations per listing, so the power to negotiate is
+                        in your hands. Accept their offers or negotiate further
+                        by sending a counter offer. Negotiations have
+                        product-specific time limits to ensure that all parties
+                        offer fair prices.
                       </Typography>
                     </ReverseMarketplace>
 
