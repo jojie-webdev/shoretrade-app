@@ -267,7 +267,7 @@ const AddProduct = (): JSX.Element => {
 
   // for review page only
   const getTypeMarginCategory = listingFormData?.type?.id
-    ? searchResults.find((result) => result.value === listingFormData.type.id)
+    ? searchResults.find((result) => result.value === listingFormData?.type?.id)
         ?.marginCategory || null
     : null;
   const typeMarginCategory = isCustomType ? null : getTypeMarginCategory;
