@@ -265,7 +265,7 @@ function* getBuyerHomepagePatchUpdate(action: Action<GetBuyerHomepagePayload>) {
         isBuyerCategories ||
         recentListings.findIndex((a) => a.id === realtimeData.id) === -1
       ) {
-        yield put(getBuyerHomepageActions.request());
+        yield put(getBuyerHomepageActions.patch(modifiedBuyerHomepageData));
       }
     }
   }
