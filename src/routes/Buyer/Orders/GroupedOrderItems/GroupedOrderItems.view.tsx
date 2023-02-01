@@ -44,6 +44,8 @@ export const OrderItemAccordion = (
         scanHistoryItems: ScanHistoryItem[];
       }>
     >;
+    handleToggleInvoice: (invoiceNumber: string) => void;
+    openInvoice: string;
   }
 ) => {
   const theme = useTheme();
@@ -175,6 +177,8 @@ export const OrderItemAccordion = (
           completedOrder={!!(onOrderClick && onRateClick)}
           onRateClick={() => !d.data.rating && onRateClick && onRateClick(d.id)}
           updateScanHistoryModal={updateScanHistoryModal}
+          handleToggleInvoice={props.handleToggleInvoice}
+          openInvoice={props.openInvoice}
         />
       ))}
     </StyledAccordion>
@@ -223,6 +227,8 @@ const GroupedOrderItems = (props: GroupedOrderItemsProps) => {
                 onOrderClick={onOrderClick}
                 onRateClick={onRateClick}
                 updateScanHistoryModal={updateScanHistoryModal}
+                handleToggleInvoice={props.handleToggleInvoice}
+                openInvoice={props.openInvoice}
               />
             );
           })}

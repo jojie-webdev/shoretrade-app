@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 
 import Typography from 'components/base/Typography';
 import DialogModal from 'components/module/DialogModal';
@@ -31,6 +31,21 @@ const InTransit = (props: SoldGeneratedProps) => {
       isOpen: false,
     }
   );
+
+  const [openInvoice, setOpenInvoice] = useState('');
+
+  function handleToggleInvoice(invoiceNumber: string) {
+    if (openInvoice === invoiceNumber) {
+      setOpenInvoice('');
+    } else {
+      setOpenInvoice(invoiceNumber);
+    }
+  }
+
+  const soldItemProps = {
+    handleToggleInvoice,
+    openInvoice,
+  };
 
   return (
     <>
@@ -93,6 +108,7 @@ const InTransit = (props: SoldGeneratedProps) => {
                 data={group.data}
                 token={token}
                 status="TRANSIT"
+                {...soldItemProps}
               />
             </Col>
           </ItemRow>

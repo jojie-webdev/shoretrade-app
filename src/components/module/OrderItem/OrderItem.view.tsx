@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Button from 'components/base/Button';
 import {
@@ -136,7 +136,8 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                 </div>
               ) : (
                 <>
-                  {props.toggleInvoiceBtn && (
+                  {props.openInvoice ===
+                    props.data.orderRefNumber.toString() && (
                     <InvoiceContainer>
                       <Typography
                         variant="label"
@@ -173,7 +174,8 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
                     <Typography variant="label" color="shade9">
                       Invoice
                     </Typography>
-                    {props.toggleInvoiceBtn ? (
+                    {props.openInvoice ===
+                    props.data.orderRefNumber.toString() ? (
                       <AngleDown fill={theme.brand.primary} />
                     ) : (
                       <AngleUp fill={theme.brand.primary} />

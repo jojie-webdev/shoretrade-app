@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Oysters } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
@@ -22,6 +22,16 @@ const Pending = (props: OrdersGeneratedProps) => {
     filters,
     updateFilters,
   } = props;
+  const [openInvoice, setOpenInvoice] = useState('');
+
+  function handleToggleInvoice(invoiceNumber: string) {
+    if (openInvoice === invoiceNumber) {
+      setOpenInvoice('');
+    } else {
+      setOpenInvoice(invoiceNumber);
+    }
+  }
+
   const pendingOrdersTotal = pendingOrders.reduce((a, c) => {
     return a + c.orderCount;
   }, 0);
@@ -55,6 +65,8 @@ const Pending = (props: OrdersGeneratedProps) => {
               {...group}
               key={group.groupKey}
               token={props.token}
+              handleToggleInvoice={handleToggleInvoice}
+              openInvoice={openInvoice}
             />
           ))}
 
@@ -64,6 +76,8 @@ const Pending = (props: OrdersGeneratedProps) => {
             token={props.token}
             filter={filters.toShipOrdersFilter}
             updateFilter={updateFilters.updateToShipOrdersFilter}
+            handleToggleInvoice={handleToggleInvoice}
+            openInvoice={openInvoice}
           />
         </>
       )}

@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 
 import Typography from 'components/base/Typography';
 import Pagination from 'components/module/Pagination';
@@ -15,6 +15,21 @@ const Delivered = (props: SoldGeneratedProps) => {
   const { delivered, token, updateFilters, filters, count } = props;
 
   const deliveredPagesTotal = Math.ceil(Number(count) / DEFAULT_PAGE_LIMIT);
+
+  const [openInvoice, setOpenInvoice] = useState('');
+
+  function handleToggleInvoice(invoiceNumber: string) {
+    if (openInvoice === invoiceNumber) {
+      setOpenInvoice('');
+    } else {
+      setOpenInvoice(invoiceNumber);
+    }
+  }
+
+  const soldItemProps = {
+    handleToggleInvoice,
+    openInvoice,
+  };
 
   return (
     <>
@@ -62,7 +77,12 @@ const Delivered = (props: SoldGeneratedProps) => {
                   </span>
                 </Col>
               </TitleRow>
-              <SoldItem data={group.data} token={token} status="DELIVERED" />
+              <SoldItem
+                data={group.data}
+                token={token}
+                status="DELIVERED"
+                {...soldItemProps}
+              />
             </Col>
           </ItemRow>
         );

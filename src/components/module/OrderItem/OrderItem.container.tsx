@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrderInvoiceAdjustmentsActions } from 'store/actions';
@@ -13,10 +13,8 @@ const OrderItemContainer = (props: OrderItemProps): JSX.Element => {
     (state: Store) => state.getOrderInvoiceAdjustments.data?.data
   );
 
-  const [toggleInvoiceBtn, setToggleInvoiceBtn] = useState(false);
-
   const handleGetOrderInvoiceAdjustment = () => {
-    setToggleInvoiceBtn((prevValue) => !prevValue);
+    props.handleToggleInvoice(props.data.orderRefNumber.toString());
 
     dispatch(
       getOrderInvoiceAdjustmentsActions.request({
@@ -29,7 +27,6 @@ const OrderItemContainer = (props: OrderItemProps): JSX.Element => {
     ...props,
     orderInvoiceAdjustments,
     handleGetOrderInvoiceAdjustment,
-    toggleInvoiceBtn,
   };
 
   return <OrderItemView {...generatedProps} />;

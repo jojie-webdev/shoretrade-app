@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useMemo } from 'react';
 
 import Button from 'components/base/Button';
 import Divider from 'components/base/Divider';
@@ -83,6 +83,8 @@ const SoldItem = (props: {
   ) => void;
   isPlacingOrder?: boolean;
   placeOrderId?: string;
+  handleToggleInvoice: (orderRefNumber: string) => void;
+  openInvoice: string;
 }): any => {
   const {
     updateConfirmModal,
@@ -95,7 +97,6 @@ const SoldItem = (props: {
   const theme = useTheme();
   const nonDesktop = useMediaQuery({ query: BREAKPOINTS.nonDesktop });
   const isMobile = useMediaQuery({ query: BREAKPOINTS.sm });
-  const [toggleInvoicesBtn, setToggleInvoicesBtn] = useState(false);
   const addHorizontalRowMargin = useMediaQuery({
     query: '(min-width: 1080px)',
   });
@@ -105,12 +106,17 @@ const SoldItem = (props: {
   );
 
   const handleGetOrderInvoiceAdjustment = (orderRefNum: string) => {
-    setToggleInvoicesBtn((prevValue) => !prevValue);
-    dispatch(
-      getOrderInvoiceAdjustmentsActions.request({
-        orderRefNum,
-      })
-    );
+    if (props.openInvoice === orderRefNum) {
+      props.handleToggleInvoice('');
+    } else {
+      props.handleToggleInvoice(orderRefNum);
+
+      dispatch(
+        getOrderInvoiceAdjustmentsActions.request({
+          orderRefNum,
+        })
+      );
+    }
   };
 
   const handleOpenPdf = (orderRefNumber: string, adjustmentRef?: string) => {
@@ -553,7 +559,8 @@ const SoldItem = (props: {
                                   e.stopPropagation();
                                 }}
                               />
-                              {toggleInvoicesBtn && (
+                              {props.openInvoice ===
+                                order?.orderNumber?.split('-')[1]?.trim() && (
                                 <InvoiceContainer>
                                   <Typography
                                     variant="label"
@@ -596,7 +603,8 @@ const SoldItem = (props: {
                                   )}
                                 </InvoiceContainer>
                               )}
-                              {toggleInvoicesBtn ? (
+                              {props.openInvoice ===
+                              order?.orderNumber?.split('-')[1]?.trim() ? (
                                 <div onClick={(e) => e.stopPropagation()}>
                                   <AngleDown fill={theme.brand.primary} />
                                 </div>

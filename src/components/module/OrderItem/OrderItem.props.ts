@@ -18,7 +18,8 @@ export interface OrderItemProps extends OrderItem {
       }
     | undefined;
   handleGetOrderInvoiceAdjustment?: () => void;
-  toggleInvoiceBtn?: boolean;
+  handleToggleInvoice: (invoiceNumber: string) => void;
+  openInvoice: string;
 }
 
 export interface OrderItem {

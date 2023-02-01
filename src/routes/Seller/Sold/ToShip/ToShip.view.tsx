@@ -540,6 +540,7 @@ const ToShip = (props: SoldGeneratedProps) => {
   const [placeOrderId, setPlaceOrderId] = useState('');
   const [isOpen, setIsOpen] = useState<string[]>([]);
   const [lastOpenAccordion, setLastOpenAccordion] = useState('');
+  const [openInvoice, setOpenInvoice] = useState('');
 
   const toShipPagesTotal = Math.ceil(Number(count) / DEFAULT_PAGE_LIMIT);
   const addHorizontalRowMargin = useMediaQuery({
@@ -557,6 +558,19 @@ const ToShip = (props: SoldGeneratedProps) => {
         return prevState.filter((v) => v !== title);
       });
     }
+  };
+
+  function handleToggleInvoice(invoiceNumber: string) {
+    if (openInvoice === invoiceNumber) {
+      setOpenInvoice('');
+    } else {
+      setOpenInvoice(invoiceNumber);
+    }
+  }
+
+  const soldItemProps = {
+    handleToggleInvoice,
+    openInvoice,
   };
 
   useEffect(() => {
@@ -861,6 +875,7 @@ const ToShip = (props: SoldGeneratedProps) => {
                 }}
                 isPlacingOrder={isPlacingOrder}
                 placeOrderId={placeOrderId}
+                {...soldItemProps}
               />
             </Col>
           </ItemRow>

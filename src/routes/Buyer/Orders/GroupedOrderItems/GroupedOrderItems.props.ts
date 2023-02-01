@@ -18,4 +18,6 @@ export interface GroupedOrderItemsProps {
       scanHistoryItems: ScanHistoryItem[];
     }>
   >;
+  handleToggleInvoice: (invoiceNumber: string) => void;
+  openInvoice: string;
 }

@@ -57,6 +57,16 @@ const Complete = (props: OrdersGeneratedProps) => {
     false
   );
 
+  const [openInvoice, setOpenInvoice] = useState('');
+
+  function handleToggleInvoice(invoiceNumber: string) {
+    if (openInvoice === invoiceNumber) {
+      setOpenInvoice('');
+    } else {
+      setOpenInvoice(invoiceNumber);
+    }
+  }
+
   useEffect(() => {
     if (isSendingOrderRating === false && rateSellerModal.isOpen) {
       updateRateSellerModal({ isOpen: false, orderId: '' });
@@ -129,6 +139,8 @@ const Complete = (props: OrdersGeneratedProps) => {
           onRateClick={(orderId: string) =>
             updateRateSellerModal({ isOpen: true, orderId })
           }
+          handleToggleInvoice={handleToggleInvoice}
+          openInvoice={openInvoice}
         />
       )}
     </>

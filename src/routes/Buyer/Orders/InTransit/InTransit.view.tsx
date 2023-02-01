@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 
 import { Oysters } from 'components/base/SVG';
 import EmptyState from 'components/module/EmptyState';
@@ -15,6 +15,15 @@ import { OrdersGeneratedProps } from '../Orders.props';
 const InTransit = (props: OrdersGeneratedProps) => {
   const history = useHistory();
   const { inTransitOrders, filters, updateFilters, selectionCount } = props;
+  const [openInvoice, setOpenInvoice] = useState('');
+
+  function handleToggleInvoice(invoiceNumber: string) {
+    if (openInvoice === invoiceNumber) {
+      setOpenInvoice('');
+    } else {
+      setOpenInvoice(invoiceNumber);
+    }
+  }
 
   const [scanHistoryModal, updateScanHistoryModal] = useReducer(
     createUpdateReducer<{
@@ -56,6 +65,8 @@ const InTransit = (props: OrdersGeneratedProps) => {
           filter={filters.inTransitOrdersFilter}
           updateFilter={updateFilters.updateInTransitOrdersFilter}
           updateScanHistoryModal={updateScanHistoryModal}
+          handleToggleInvoice={handleToggleInvoice}
+          openInvoice={openInvoice}
         />
       )}
     </>
