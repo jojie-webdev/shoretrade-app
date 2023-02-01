@@ -210,7 +210,7 @@ const Dashboard = (): JSX.Element => {
       currentNotificationType === 'NEW_MARKET_REQUEST' ||
       currentNotificationType === 'MARKET_OFFER_NEGOTIATED'
     ) {
-      history.push(SELLER_ROUTES.MARKET_BOARD);
+      history.push(SELLER_ROUTES.NEGOTIATIONS_AND_REQUESTS);
     }
 
     if (currentNotificationType === 'MARKET_OFFER_ACCEPTED') {

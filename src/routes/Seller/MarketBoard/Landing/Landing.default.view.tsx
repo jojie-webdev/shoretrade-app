@@ -81,7 +81,7 @@ const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
                   color="shade6"
                   weight="400"
                 >
-                  {EXPLANATIONS[0].description}
+                  {EXPLANATIONS[0].descriptions[0]}
                 </Description>
               </div>
             </DescriptionWrapper>
@@ -104,7 +104,7 @@ const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
                   color="shade6"
                   weight="400"
                 >
-                  {EXPLANATIONS[1].description}
+                  {EXPLANATIONS[1].descriptions[0]}
                 </Description>
               </div>
             </DescriptionWrapper>
@@ -127,7 +127,7 @@ const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
                   color="shade6"
                   weight="400"
                 >
-                  {EXPLANATIONS[2].description}
+                  {EXPLANATIONS[2].descriptions[0]}
                 </Description>
               </div>
             </DescriptionWrapper>
@@ -150,7 +150,7 @@ const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
                   color="shade6"
                   weight="400"
                 >
-                  {EXPLANATIONS[3].description}
+                  {EXPLANATIONS[3].descriptions[0]}
                 </Description>
               </div>
             </DescriptionWrapper>
@@ -173,7 +173,7 @@ const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
                   {EXPLANATIONS[0].heading}
                 </Title1>
                 <Typography color="shade6" weight="400">
-                  {EXPLANATIONS[0].description}
+                  {EXPLANATIONS[0].descriptions[0]}
                 </Typography>
               </div>
             </Description>
@@ -201,7 +201,7 @@ const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
                   {EXPLANATIONS[1].heading}
                 </Title1>
                 <Typography color="shade6" weight="400">
-                  {EXPLANATIONS[1].description}
+                  {EXPLANATIONS[1].descriptions[0]}
                 </Typography>
               </div>
             </Description>
@@ -219,7 +219,7 @@ const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
                   {EXPLANATIONS[2].heading}
                 </Title1>
                 <Typography color="shade6" weight="400">
-                  {EXPLANATIONS[2].description}
+                  {EXPLANATIONS[2].descriptions[0]}
                 </Typography>
               </div>
             </Description>
@@ -247,7 +247,7 @@ const LandingDefaultView = (props: { handleSeePlansClick: () => void }) => {
                   {EXPLANATIONS[3].heading}
                 </Title1>
                 <Typography color="shade6" weight="400">
-                  {EXPLANATIONS[3].description}
+                  {EXPLANATIONS[3].descriptions[0]}
                 </Typography>
               </div>
             </Description>

@@ -326,6 +326,7 @@ const MarketBoardLanding = (): JSX.Element => {
 
   const sfmViewProps = {
     handleSeePlansClick,
+    planPrice: activePlans ? activePlans[0]?.plan?.price : '0.00',
   };
 
   const defaultViewProps = {
@@ -335,6 +336,8 @@ const MarketBoardLanding = (): JSX.Element => {
   if (waitAll || isActivePlanLoading === null || isActivePlanLoading) {
     return <SpinnerLogo style={{ width: '200px', height: '80px' }} />;
   } else {
+    return <LandingSFMView {...sfmViewProps} />;
+
     if (!isAcceptClicked && reverseMarketPlace) {
       return (
         <TermsAndCondition

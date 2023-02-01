@@ -5,6 +5,7 @@ import {
   NegotiateBoardSFMSeller,
   NegotiateCardsSFMSeller,
   ProductOptionsSFMSeller,
+  SfmAcceptNegotiation,
   SfmSellerLogo,
   SummaryBoardSFMSeller,
 } from 'components/base/SVG';
@@ -12,6 +13,7 @@ import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col, Hidden, Row, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
+import SfmSellerReceiveNego from 'res/images/sfm-seller-receive-nego.png';
 import { SwiperSlide } from 'swiper/react';
 
 import {
@@ -26,13 +28,17 @@ import {
   ImageContainer,
   LandingDefaultContainer,
   LogoContainer,
+  MonthlySubsContainer,
   Pro,
   SubscriptionPayment,
   SwiperWrapper,
   Title1,
 } from './Landing.style';
 
-const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
+const LandingSFMView = (props: {
+  handleSeePlansClick: () => void;
+  planPrice?: number | string;
+}) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
   return (
@@ -40,14 +46,33 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
       <Container1>
         <LogoContainer>
           <SfmSellerLogo />
-          <Pro variant="small" style={{ color: '#090909' }}>
+          {/* <Pro variant="small" style={{ color: '#090909' }}>
             PRO
-          </Pro>
+          </Pro> */}
         </LogoContainer>
         <FirstDescription weight="400" color="shade6">
-          Speed up your selling time by making offers on Buyer Requests!
+          Subscribe to unlock Negotiations & the Reverse Marketplace
         </FirstDescription>
-
+        <MonthlySubsContainer>
+          <Typography
+            color="shade5"
+            variant="caption"
+            style={{ marginRight: 5 }}
+          >
+            $
+          </Typography>
+          <Typography
+            variant="title6"
+            weight="900"
+            color="shade5"
+            style={{ marginRight: 5 }}
+          >
+            {props?.planPrice || '0.00'}
+          </Typography>
+          <Typography className="per" color="shade5" variant="caption">
+            /month
+          </Typography>
+        </MonthlySubsContainer>
         <Button
           padding={isMobile ? '10px 16px' : '14px 24px'}
           textVariant="label"
@@ -75,7 +100,7 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
                   color="shade6"
                   weight="400"
                 >
-                  {EXPLANATIONS[0].description}
+                  {EXPLANATIONS[0].descriptions[0]}
                 </Description>
               </div>
             </DescriptionWrapper>
@@ -99,7 +124,7 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
                   color="shade6"
                   weight="400"
                 >
-                  {EXPLANATIONS[1].description}
+                  {EXPLANATIONS[1].descriptions[0]}
                 </Description>
               </div>
             </DescriptionWrapper>
@@ -123,12 +148,17 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
                   color="shade6"
                   weight="400"
                 >
-                  {EXPLANATIONS[2].description}
+                  {EXPLANATIONS[2].descriptions[0]}
                 </Description>
               </div>
             </DescriptionWrapper>
             <ImageContainer>
-              <NegotiateCardsSFMSeller />
+              <img
+                src={SfmSellerReceiveNego}
+                alt="sfm-seller-receive-nego"
+                width="100%"
+                height="100%"
+              />
             </ImageContainer>
           </SwiperSlide>
           <SwiperSlide>
@@ -147,7 +177,7 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
                   color="shade6"
                   weight="400"
                 >
-                  {EXPLANATIONS[3].description}
+                  {EXPLANATIONS[3].descriptions[0]}
                 </Description>
               </div>
             </DescriptionWrapper>
@@ -163,12 +193,12 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
           <Col xs={12} sm={6}>
             <Description>
               <div>
-                <Pro
+                {/* <Pro
                   variant="small"
                   style={{ display: 'inline', color: '#090909' }}
                 >
                   PRO
-                </Pro>
+                </Pro> */}
                 <Title1
                   variant="title5"
                   weight="700"
@@ -178,12 +208,12 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
                   {EXPLANATIONS[0].heading}
                 </Title1>
                 <Typography color="shade6" weight="400">
-                  {EXPLANATIONS[0].description}
+                  {EXPLANATIONS[0].descriptions[0]}
                 </Typography>
               </div>
             </Description>
           </Col>
-          <Col xs={12} sm={6}>
+          <Col xs={12} sm={6} style={{ display: 'flex' }}>
             <div style={{ margin: 'auto' }}>
               <SummaryBoardSFMSeller />
             </div>
@@ -199,12 +229,12 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
           <Col xs={12} sm={6}>
             <Description>
               <div>
-                <Pro
+                {/* <Pro
                   variant="small"
                   style={{ display: 'inline', color: '#090909' }}
                 >
                   PRO
-                </Pro>
+                </Pro> */}
                 <Title1
                   variant="title5"
                   weight="700"
@@ -214,7 +244,7 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
                   {EXPLANATIONS[1].heading}
                 </Title1>
                 <Typography color="shade6" weight="400">
-                  {EXPLANATIONS[1].description}
+                  {EXPLANATIONS[1].descriptions[0]}
                 </Typography>
               </div>
             </Description>
@@ -225,12 +255,12 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
           <Col xs={12} sm={6}>
             <Description>
               <div>
-                <Pro
+                {/* <Pro
                   variant="small"
                   style={{ display: 'inline', color: '#090909' }}
                 >
                   PRO
-                </Pro>
+                </Pro> */}
                 <Title1
                   variant="title5"
                   weight="700"
@@ -240,33 +270,42 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
                   {EXPLANATIONS[2].heading}
                 </Title1>
                 <Typography color="shade6" weight="400">
-                  {EXPLANATIONS[2].description}
+                  {EXPLANATIONS[2].descriptions[0]}
+                </Typography>
+                <div style={{ marginTop: 5 }} />
+                <Typography color="shade6" weight="400">
+                  {EXPLANATIONS[2].descriptions[1]}
                 </Typography>
               </div>
             </Description>
           </Col>
-          <Col xs={12} sm={6}>
+          <Col xs={12} sm={6} style={{ display: 'flex' }}>
             <div style={{ margin: 'auto' }}>
-              <NegotiateCardsSFMSeller />
+              <img
+                src={SfmSellerReceiveNego}
+                alt="sfm-seller-receive-nego"
+                width="100%"
+                height="100%"
+              />
             </div>
           </Col>
         </Row>
 
         <Row style={{ padding: '25px 0 0' }}>
           <Col xs={12} sm={6}>
-            <div style={{ margin: 'auto' }}>
-              <ProductOptionsSFMSeller />
-            </div>
+            <ImageContainer>
+              <SfmAcceptNegotiation width="100%" height="100%" />
+            </ImageContainer>
           </Col>
           <Col xs={12} sm={6}>
             <Description>
               <div>
-                <Pro
+                {/* <Pro
                   variant="small"
                   style={{ display: 'inline', color: '#090909' }}
                 >
                   PRO
-                </Pro>
+                </Pro> */}
                 <Title1
                   variant="title5"
                   weight="700"
@@ -276,7 +315,7 @@ const LandingSFMView = (props: { handleSeePlansClick: () => void }) => {
                   {EXPLANATIONS[3].heading}
                 </Title1>
                 <Typography color="shade6" weight="400">
-                  {EXPLANATIONS[3].description}
+                  {EXPLANATIONS[3].descriptions[0]}
                 </Typography>
               </div>
             </Description>

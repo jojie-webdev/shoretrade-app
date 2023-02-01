@@ -38,7 +38,7 @@ import BarcodeScanner from './BarcodeScanner';
 import CratesManagement from './CratesManagement';
 import DashboardRoutes from './Dashboard/dashboard.routes';
 import HelpAndSupport from './HelpAndSupport/HelpAndSupport.routes';
-import MarketBoardRoutes from './MarketBoard/market-board.routes';
+import MarketBoardRoutes from './MarketBoard/negotiations-and-requests.routes';
 import MarketPriceDetail from './MarketPriceDetail';
 import MarketDataRoutes from './MarketPrices/market-data.routes';
 import Notifications from './Notifications';
@@ -63,9 +63,9 @@ const ROUTES: Routes = {
     nested: true,
   },
   //Market Board
-  MARKET_BOARD: {
-    path: SELLER_ROUTES.MARKET_BOARD,
-    title: 'Reverse Marketplace',
+  NEGOTIATIONS_AND_REQUESTS: {
+    path: SELLER_ROUTES.NEGOTIATIONS_AND_REQUESTS,
+    title: 'Negotiations & Requests',
     children: <MarketBoardRoutes />,
     icon: CatchNetIcon,
     nested: true,
@@ -221,9 +221,9 @@ const SellerRoutes = (): JSX.Element => {
       };
     }
 
-    if (pathname.includes(SELLER_ROUTES.MARKET_BOARD)) {
+    if (pathname.includes(SELLER_ROUTES.NEGOTIATIONS_AND_REQUESTS)) {
       return {
-        pageTitle: 'Reverse Marketplace',
+        pageTitle: 'Negotiations & Requests',
       };
     }
 

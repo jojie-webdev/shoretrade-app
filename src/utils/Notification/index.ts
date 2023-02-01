@@ -61,14 +61,7 @@ export function notifURLMapper(
       break;
     case 'negotiations_and_requests':
       if (appType === 'seller') {
-        url = SELLER_ROUTES.MARKET_BOARD;
-        break;
-      }
-      url = BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS;
-      break;
-    case 'market_board':
-      if (appType === 'seller') {
-        url = SELLER_ROUTES.MARKET_BOARD;
+        url = SELLER_ROUTES.NEGOTIATIONS_AND_REQUESTS;
         break;
       }
       url = BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS;
