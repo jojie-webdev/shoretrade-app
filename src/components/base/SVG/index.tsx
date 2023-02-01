@@ -1,6 +1,6 @@
 /* PLOP_INJECT_IMPORT */
 export { default as SfmAcceptNegotiation } from './SfmAcceptNegotiation';
-// export { default as TechByShoretradeSellerLogo } from './TechByShoretradeSellerLogo';
+// export { default as TechByShoretradeSellerLogo } from './TechByShoretradeSellerLogo'; 
 // export { default as TechByShoretradeLogo } from './TechByShoretradeLogo'; 
 export { default as SfmBuyerListing } from './SfmBuyerListing';
 export { default as SfmBuyerNegotiatePrice } from './SfmBuyerNegotiatePrice';
