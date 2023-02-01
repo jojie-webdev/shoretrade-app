@@ -237,6 +237,11 @@ const CategoriesPreview = (): JSX.Element => {
   //   );
   // };
 
+  console.log(
+    'defaultCompany?.credit  >>>>>>>>>>>>>> ',
+    defaultCompany?.credit
+  );
+
   const generatedProps = {
     searchValue,
     onChangeSearchValue,
