@@ -73,9 +73,7 @@ export function recentlyAddedToPreviewProps(
     templateDeliveryDate: data.templateDeliveryDate,
     isForSaleRepPhoto: data.isForSaleRepPhoto,
     isSFMCrate: data.packaging?.type === 'SFM',
-    allowNegotiations: data.allowNegotiations,
     canNegotiate,
-    auctionDate: data.auctionDate,
   };
 }
 

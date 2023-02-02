@@ -267,8 +267,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                   ) : null
                 }
                 isPreAuction={productDetailsCard6Props?.isPreAuction}
-                canNegotiate={canNegotiate} //TODO: should put inside productDetailsCard6Props
-                auctionDate={productDetailsCard6Props.auctionDate}
+                canNegotiate={canNegotiate}
               />
               {!isPendingAccount && isMobile ? (
                 <ProductSellerCard

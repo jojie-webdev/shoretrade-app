@@ -169,9 +169,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                         templateDeliveryDate={product.templateDeliveryDate}
                         isForSaleRepPhoto={product.isForSaleRepPhoto}
                         isSFMCrate={product.packaging?.type === 'SFM'}
-                        allowNegotiations={product.allowNegotiations}
                         canNegotiate={canNegotiate}
-                        auctionDate={product.auctionDate}
                       />
                     </StyledInteraction>
                   ) : (
@@ -202,9 +200,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                       templateDeliveryDate={product.templateDeliveryDate}
                       isForSaleRepPhoto={product.isForSaleRepPhoto}
                       isSFMCrate={product.packaging?.type === 'SFM'}
-                      allowNegotiations={product.allowNegotiations}
                       canNegotiate={canNegotiate}
-                      auctionDate={product.auctionDate}
                     />
                   )}
                 </Link>

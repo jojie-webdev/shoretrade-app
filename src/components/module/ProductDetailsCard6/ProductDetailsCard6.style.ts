@@ -82,10 +82,11 @@ export const Label = styled(Typography)`
 `;
 
 export const NegotiatePriceBtnWrapper = styled.div<{
-  backgroundColor?: string;
+  backgroundColor?: keyof Theme['grey'];
 }>`
   padding: 0px 6px;
-  background-color: ${({ backgroundColor }) => backgroundColor};
+  background-color: ${({ theme, backgroundColor }) =>
+    backgroundColor ? theme['grey'][backgroundColor] : theme.brand.primary};
   border-radius: 12px;
   display: flex;
   align-items: center;
