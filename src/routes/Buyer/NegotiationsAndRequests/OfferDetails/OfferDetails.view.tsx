@@ -426,7 +426,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
         }
       />
       <ConfirmationModal
-        isOpen
+        isOpen={false}
         onClickClose={() => {
           console.log('');
         }}

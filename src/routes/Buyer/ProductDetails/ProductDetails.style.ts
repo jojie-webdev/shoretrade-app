@@ -25,6 +25,29 @@ export const Container = styled.div`
     text-transform: capitalize !important;
     font-weight: 700;
   }
+
+  .text_field__field_container {
+    height: 40px;
+    border-radius: 8px;
+
+    .text_field__field_container__input {
+      border-radius: 8px;
+    }
+  }
+
+  .radio > span {
+    height: 12px;
+    width: 12px;
+
+    .span {
+      height: 0px;
+      width: 0px;
+    }
+  }
+
+  .indicator {
+    font-weight: bold;
+  }
 `;
 
 export const BannerContainer = styled.div`
@@ -47,25 +70,6 @@ export const DetailsContainer = styled(Row)`
 
   .title {
     margin-bottom: 1rem;
-  }
-
-  .text_field__field_container {
-    height: 40px;
-    border-radius: 8px;
-
-    .text_field__field_container__input {
-      border-radius: 8px;
-    }
-  }
-
-  .radio > span {
-    height: 12px;
-    width: 12px;
-
-    .span {
-      height: 0px;
-      width: 0px;
-    }
   }
 `;
 

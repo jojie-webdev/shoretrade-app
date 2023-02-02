@@ -28,6 +28,7 @@ import { isEmpty } from 'ramda';
 import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { GetListingResponseItem } from 'types/store/GetListingState';
+import { toPrice } from 'utils/String';
 import theme from 'utils/Theme';
 
 import { ProductDetailsGeneratedProps } from './ProductDetails.props';
@@ -96,6 +97,12 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   const isBeyondCutoff =
     isPreAuction && dateEnds ? (moment() > cutOffDate ? true : false) : false;
 
+  const priceDiff = negotiationPrice - Number(productDetailsCard6Props.price);
+  const priceDiff2 =
+    priceDiff / Math.abs(Number(productDetailsCard6Props.price));
+  const priceDiffPercentage =
+    priceDiff2 < 0 ? Math.abs(priceDiff2) * 100 : -(priceDiff2 * 100);
+
   useEffect(() => {
     selectAddress(listingId);
     // onLoad(listingId);
@@ -134,7 +141,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   return (
     <Container>
       <ConfirmationModal
-        isOpen
+        isOpen={false}
         onClickClose={() => {
           console.log('');
         }}
@@ -156,7 +163,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
         description={
           <div style={{ marginTop: 20 }}>
             <Typography variant="label" color="shade6">
-              Upgrade your subscription plan to PULL NEXT TIER to get more negotiation credits.
+              Upgrade your subscription plan to PULL NEXT TIER to get more
+              negotiation credits.
             </Typography>
           </div>
         }
@@ -194,7 +202,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
         }
       />
       <ConfirmationModal
-        isOpen={false}
+        isOpen
         onClickClose={() => {
           console.log('');
         }}
@@ -242,76 +250,107 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
               style={{ marginTop: 10 }}
             />
             <StyledTextField
+              value={weight}
+              onChangeText={setWeight}
               type="number"
               inputType="decimal"
               step=".01"
               label={'Desired Quantity'}
-              value={negotiationPrice}
-              onChangeText={(v) => {
-                let price = v;
-                if (price.indexOf('.') >= 0) {
-                  price =
-                    price.substr(0, price.indexOf('.')) +
-                    price.substr(price.indexOf('.'), 3);
-                }
-                setNegotiationPrice(parseFloat(price));
-              }}
               min={1}
               LeftComponent={
                 <Typography variant="label" color="shade6">
                   {'kg'}
                 </Typography>
               }
-              placeholder={`per ${unit}`}
+              placeholder={`Minimum Order: ${
+                productDetailsCard6Props.minOrder
+              } ${productDetailsCard6Props.unit ?? 'kg'}`}
               style={{ marginTop: 16 }}
             />
             <div style={{ marginTop: 15 }} />
-            <RadioBtnContainer>
-              <div style={{ display: 'flex' }}>
-                <Radio
-                  checked
-                  onClick={() => {
-                    console.log('');
-                  }}
-                />
-                <div style={{ marginRight: 27 }} />
-                <Typography variant="caption" color="shade6">
-                  10kg x 2
-                </Typography>
-              </div>
-              <Typography variant="caption" color="shade6">
-                20 kg
-              </Typography>
-            </RadioBtnContainer>
-            <RadioBtnContainer>
-              <div style={{ display: 'flex' }}>
-                <Radio
-                  checked
-                  onClick={() => {
-                    console.log('');
-                  }}
-                />
-                <div style={{ marginRight: 27 }} />
-                <Typography variant="caption" color="shade6">
-                  10kg x 2
-                </Typography>
-              </div>
-              <Typography variant="caption" color="shade6">
-                20 kg
-              </Typography>
-            </RadioBtnContainer>
+            {!isEmpty(groupedBox)
+              ? groupedBox.map((p) => (
+                  <div key={p.id}>
+                    {p.boxes.map((box) => (
+                      <>
+                        <RadioBtnContainer>
+                          <div style={{ display: 'flex' }}>
+                            <Radio
+                              onClick={() => {
+                                console.log('');
+                              }}
+                            />
+                            <div style={{ marginRight: 27 }} />
+                            <Typography variant="caption" color="shade6">
+                              {box.weight}
+                              {p.unit} x {box.quantity}
+                            </Typography>
+                          </div>
+                          <Typography variant="caption" color="shade6">
+                            {Number.isInteger(box.weight)
+                              ? (box.weight * (box.quantity || 0)).toFixed(0)
+                              : (box.weight * (box.quantity || 0)).toFixed(
+                                  2
+                                )}{' '}
+                            {unit}
+                          </Typography>
+                        </RadioBtnContainer>
+                        <div style={{ marginTop: 15 }} />
+                      </>
+                    ))}
+                  </div>
+                ))
+              : isLoadingListingBoxes && (
+                  <div className="box-loading">
+                    <Loading />
+                  </div>
+                )}
             <div style={{ marginTop: 24 }} />
-            <Typography variant="caption" color="shade6">
-              Seller&apos;s Negotiated Price
-            </Typography>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Typography variant="caption" color="shade6">
+                Seller&apos;s Listed Price
+              </Typography>
+              <Typography variant="label" color="secondary">
+                {toPrice(productDetailsCard6Props.price)}/{unit}
+              </Typography>
+            </div>
             <div style={{ marginTop: 5 }} />
-            <Typography variant="caption" color="shade6">
-              Change in Price
-            </Typography>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex' }}>
+                <Typography variant="caption" color="shade6">
+                  Change in Price{' '}
+                  {!!priceDiffPercentage && (
+                    <span className="indicator">
+                      {priceDiffPercentage.toFixed(2)}%
+                    </span>
+                  )}
+                </Typography>
+                {/* <div style={{ marginLeft: 10 }} />
+                <Typography
+                  color="shade6"
+                  weight="700"
+                  style={{ fontFamily: 'Basis Grotesque Pro' }}
+                >
+                  Change in Price
+                </Typography> */}
+              </div>
+              <Typography variant="label" color="secondary">
+                $15.00/kg
+              </Typography>
+            </div>
             <div style={{ marginTop: 5 }} />
-            <Typography variant="caption" weight="bold" color="shade6">
-              Total Product Value
-            </Typography>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Typography variant="caption" color="shade6">
+                Total Product Value
+              </Typography>
+              <Typography
+                weight="700"
+                color="secondary"
+                style={{ fontFamily: 'Basis Grotesque Pro' }}
+              >
+                $100
+              </Typography>
+            </div>
             {/* <BoxRadio
                 id="id"
                 checked={'id' === pressedBoxRadio}
