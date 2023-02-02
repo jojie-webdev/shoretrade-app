@@ -1789,7 +1789,7 @@ const StepForm = ({
                                   <Plus width={14} height={14} />
                                 </PlusIcon>
                                 <Typography weight="500" variant="label">
-                                  Reverse Marketplace
+                                  Negotiations & Requests
                                 </Typography>
                               </ReverseMarketTitle>
                               <div
@@ -1837,7 +1837,8 @@ const StepForm = ({
                                 </ReverseCheckboxWrapper>
                               </div>
                               <Typography weight="400" variant="label">
-                                Request Products directly from Sellers
+                                Negotiate listing prices and request products
+                                directly from Sellers
                               </Typography>
                               <div
                                 className="benefits"
@@ -1923,7 +1924,7 @@ const StepForm = ({
                                 <Plus width={14} height={14} />
                               </PlusIcon>
                               <Typography weight="500" variant="label">
-                                Reverse Marketplace
+                                Negotiations & Requests
                               </Typography>
                             </ReverseMarketTitle>
                             <IncludedTag>
@@ -1938,7 +1939,8 @@ const StepForm = ({
                               </Tag>
                             </IncludedTag>
                             <Typography weight="400" variant="label">
-                              Request Products directly from Sellers
+                              Negotiate listing prices and request products
+                              directly from Sellers
                             </Typography>
                             <div
                               className="benefits"
@@ -2317,23 +2319,57 @@ const StepForm = ({
             className="title"
             altFont
           >
-            Reverse Marketplace
+            Negotiations & Requests
           </Typography>
           <div className="content-container">
+            <ul>
+              <li>
+                <Typography
+                  variant="body"
+                  color={isSeller ? 'noshade' : 'shade8'}
+                  weight="Medium"
+                >
+                  Negotiate the price of listings
+                </Typography>
+              </li>
+            </ul>
+
             <Typography
               variant="body"
               color={isSeller ? 'noshade' : 'shade8'}
               weight="Medium"
             >
-              The Reverse Marketplace puts you in control of the seafood supply.
-              Instead of buying from a listing, request tailored products from
-              the sellers on SFMblue. Receive multiple offers on your request,
-              negotiate prices, accept offers and get your custom products
-              delivered straight to your door. Creating specific requests means
-              more seafood ends up in our bellies instead of the bin, with less
-              resoucrces taken from our oceans. Join the Reverse Market Place
-              and become part of a sustainability initiative that is
-              revolutionizing the seafood industry!
+              Barter with Sellers on select listings to get their best price.
+              Initiate and negotiate up to 5 times with this package added to
+              your Essentials Plan, or upgrade to Pro to have unlimited
+              negotiation abilities. Negotiations have product-specific time
+              limits to ensure that all parties offer fair prices.
+            </Typography>
+
+            <div style={{ marginTop: 25 }} />
+
+            <ul>
+              <li>
+                <Typography
+                  variant="body"
+                  color={isSeller ? 'noshade' : 'shade8'}
+                  weight="Medium"
+                >
+                  Customised products delivered to your door
+                </Typography>
+              </li>
+            </ul>
+
+            <Typography
+              variant="body"
+              color={isSeller ? 'noshade' : 'shade8'}
+              weight="Medium"
+            >
+              Submit market-wide seafood requests tailored to your business
+              needs. Choose your desired species, sizing, specifications,
+              quantity and delivery location, and our SMFblue Sellers will make
+              you an offer. Accept their offers or negotiate, and have your
+              custom product delivered straight to your door.
             </Typography>
           </div>
         </ReverseMarketModal>
