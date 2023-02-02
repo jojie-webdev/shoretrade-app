@@ -528,18 +528,7 @@ const ProductDetails = (): JSX.Element => {
     isLoadingAddCart,
     addCartItemData,
     showSuccessAddBtn,
-    handleNegoModalShow,
-    showNegoModal,
-    handleSelectedBoxesWeight,
-    selectedBoxesWeight,
-    selectedBoxesIndex,
-    handleShowConfirmNegoModal,
-    showConfirmNegoModal,
-    handleConfirmNegoClick,
-    isSendingNegotiation,
-    handleNegotiationPriceSetting,
-    negotiationPrice,
-    handleDesiredQuantityChange,
+    canNegotiate,
   };
   return <ProductDetailsView {...generatedProps} />;
 };

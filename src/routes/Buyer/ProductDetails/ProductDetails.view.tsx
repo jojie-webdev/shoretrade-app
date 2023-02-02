@@ -78,18 +78,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     isLoadingAddCart,
     addCartItemData,
     showSuccessAddBtn,
-    handleNegoModalShow,
-    showNegoModal,
-    handleSelectedBoxesWeight,
-    selectedBoxesWeight,
-    selectedBoxesIndex,
-    handleShowConfirmNegoModal,
-    showConfirmNegoModal,
-    handleConfirmNegoClick,
-    isSendingNegotiation,
-    handleNegotiationPriceSetting,
-    negotiationPrice,
-    handleDesiredQuantityChange,
+    canNegotiate,
   } = props;
   const { isPreAuction, dateEnds } = productDetailsCard6Props;
 
