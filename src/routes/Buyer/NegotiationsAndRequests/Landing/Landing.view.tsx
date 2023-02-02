@@ -135,25 +135,53 @@ export const MarketRequestItemNonMobile = (props: {
           </div>
         </Col>
 
-        <Col style={{ padding: '0 5px' }}>
-          <Badges>
-            {statusTextProps.text !== '' && (
+        <Hidden xs sm>
+          <Col style={{ padding: '0 5px' }}>
+            <Badges>
               <OfferTag
-                text={statusTextProps.text}
-                badgeColor={statusTextProps.badgeColor || ''}
-                variantColor={statusTextProps.variantColor}
-                color={statusTextProps.tagColor}
+                text={offersTextProps.text}
+                badgeColor={offersTextProps.badgeColor || ''}
+                variantColor={offersTextProps.variantColor}
+                color={offersTextProps.tagColor}
               />
-            )}
+            </Badges>
+          </Col>
 
-            <OfferTag
-              text={offersTextProps.text}
-              badgeColor={offersTextProps.badgeColor || ''}
-              variantColor={offersTextProps.variantColor}
-              color={offersTextProps.tagColor}
-            />
-          </Badges>
-        </Col>
+          <Col style={{ padding: '0 5px' }}>
+            <Badges>
+              {statusTextProps.text !== '' && (
+                <OfferTag
+                  text={statusTextProps.text}
+                  badgeColor={statusTextProps.badgeColor || ''}
+                  variantColor={statusTextProps.variantColor}
+                  color={statusTextProps.tagColor}
+                />
+              )}
+            </Badges>
+          </Col>
+        </Hidden>
+
+        <Visible xs sm>
+          <Col style={{ padding: '0 5px' }}>
+            <Badges>
+              {statusTextProps.text !== '' && (
+                <OfferTag
+                  text={statusTextProps.text}
+                  badgeColor={statusTextProps.badgeColor || ''}
+                  variantColor={statusTextProps.variantColor}
+                  color={statusTextProps.tagColor}
+                />
+              )}
+
+              <OfferTag
+                text={offersTextProps.text}
+                badgeColor={offersTextProps.badgeColor || ''}
+                variantColor={offersTextProps.variantColor}
+                color={offersTextProps.tagColor}
+              />
+            </Badges>
+          </Col>
+        </Visible>
 
         <Col sm={1} style={{ padding: '0 5px' }}>
           <div className="sub-group">

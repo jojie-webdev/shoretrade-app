@@ -46,6 +46,9 @@ export const MarketRequestItemInteraction = styled(Interactions)`
   margin-bottom: 16px;
   border-radius: 8px;
   padding: 8px;
+  ${({ theme }) => {
+    return theme.isSFM && `border: 2px solid ${theme.brand.secondary};`;
+  }}
 
   @media ${BREAKPOINTS['sm']} {
     padding: 12px;
