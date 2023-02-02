@@ -296,7 +296,7 @@ export const MarketRequestItemMobile = (props: {
 
 enum TABS {
   NEGOTIATIONS = 'Negotiations',
-  MARKET_REQUEST = 'Market Request',
+  REVERSE_MARKETPLACE = 'Reverse Marketplace',
 }
 
 const MarketRequestsLandingView = (
@@ -313,11 +313,12 @@ const MarketRequestsLandingView = (
     loading,
     activeOffersData,
     reverseMarketPlace,
+    canNegotiate,
   } = props;
 
   const theme = useTheme();
 
-  const [selectedTab, setSelectedTab] = useState(TABS.MARKET_REQUEST);
+  const [selectedTab, setSelectedTab] = useState(TABS.REVERSE_MARKETPLACE);
 
   const [isAcceptClicked, setIsAcceptClicked] = useLocalStorage(
     'isTermsAndConAccepted',
@@ -479,7 +480,7 @@ const MarketRequestsLandingView = (
       />
 
       <SegmentedControls
-        options={[TABS.NEGOTIATIONS, TABS.MARKET_REQUEST]}
+        options={[TABS.NEGOTIATIONS, TABS.REVERSE_MARKETPLACE]}
         controlButtonColor={theme.brand.secondary}
         inactiveBackgroundColor={theme.grey.shade3}
         selectedOption={selectedTab}
@@ -487,14 +488,14 @@ const MarketRequestsLandingView = (
           setSelectedTab(
             value === TABS.NEGOTIATIONS
               ? TABS.NEGOTIATIONS
-              : TABS.MARKET_REQUEST
+              : TABS.REVERSE_MARKETPLACE
           );
         }}
       />
 
       <div style={{ marginTop: 20 }}>
         <Row nogutter justify="around" align="center" className="header">
-          {selectedTab === TABS.MARKET_REQUEST ? (
+          {selectedTab === TABS.REVERSE_MARKETPLACE ? (
             <>
               <Col>
                 <Hidden xs sm>
@@ -535,14 +536,18 @@ const MarketRequestsLandingView = (
               </Col>
             </>
           ) : (
-            <>
-              <Col></Col>
-              <Col xs="content">
-                <Visible sm md lg xl xxl>
-                  <Typography color="shade6">Negotiation Credits: 3</Typography>
-                </Visible>
-              </Col>
-            </>
+            canNegotiate && (
+              <>
+                <Col></Col>
+                <Col xs="content">
+                  <Visible sm md lg xl xxl>
+                    <Typography color="shade6">
+                      Negotiation Credits: 3
+                    </Typography>
+                  </Visible>
+                </Col>
+              </>
+            )
           )}
         </Row>
         {renderMobile()}

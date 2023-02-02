@@ -7,6 +7,7 @@ import moment from 'moment';
 import { sortBy } from 'ramda';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { getActivePlan } from 'routes/Buyer/Account/SubscriptionPlan/SubscriptionPlan.transform';
 import { syncAASBalance } from 'services/aas';
 import {
   deleteMarketRequestActions,
@@ -22,6 +23,7 @@ import {
   Offer,
   OfferMarketRequest,
 } from 'types/store/GetActiveOffersState';
+import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
 import { AcceptOfferItem, OfferConfirm } from 'types/store/MarketOfferState';
 import { Store } from 'types/store/Store';
 
@@ -43,6 +45,7 @@ const OfferDetails = (): JSX.Element => {
   const [selectedOffer, setSelectedOffer] = useState<Offer>();
   const [offerMR, setOfferMR] = useState<OfferMarketRequest>();
   const [negotiating, setNegotiating] = useState(false);
+  const [clickAccept, setClickAccept] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   // eslint-disable-next-line
   const [showNotEnoughCreditAlert, setShowNotEnoughCreditAlert] = useState(
@@ -51,8 +54,32 @@ const OfferDetails = (): JSX.Element => {
   const [showPaymentMethod, setShowPaymentMethod] = useState(false);
   const [closeOnAccept, setCloseOnAccept] = useState(false);
   const [showOfferSentModal, setShowOfferSentModal] = useState(false);
+  const [clickDecline, setClickDecline] = useState(false);
 
   const defaultCompany = GetDefaultCompany();
+
+  const companyPlan = useSelector(
+    (store: Store) => store.getCompanyPlan.data?.data
+  );
+  const currentReverseMarketDetails = getActivePlan(
+    companyPlan,
+    CompanyPlanName.REVERSE_MARKET
+  );
+  const currentPlanDetails = getActivePlan(companyPlan);
+  const subscriptionType = companyPlan?.activePlans
+    ? companyPlan?.activePlans.find((ac) =>
+        [CompanyPlanName.BASE, CompanyPlanName.PRO].includes(ac.plan.name)
+      )?.plan.name || null
+    : null;
+
+  const isSubscribedToNegoRequest =
+    currentReverseMarketDetails ||
+    currentPlanDetails?.plan?.name === CompanyPlanName.PRO
+      ? companyPlan && !companyPlan.flags?.hasCancelledReversedMarketplace
+      : subscriptionType !== null && false;
+
+  const canNegotiate =
+    defaultCompany?.credit !== '0.00' && (isSubscribedToNegoRequest || false);
 
   const pendingConfirmOffer = useSelector(
     (state: Store) => state.marketRequestOfferConfirm.pending
@@ -112,6 +139,10 @@ const OfferDetails = (): JSX.Element => {
     },
   ];
 
+  const handleDeclineClick = (show: boolean) => {
+    setClickDecline(show);
+  };
+
   const handleAcceptOffer = () => {
     setShowPaymentMethod(true);
     const getMarketNegotiationId = () => {
@@ -131,15 +162,20 @@ const OfferDetails = (): JSX.Element => {
     dispatch(marketOfferActions.add(payload));
   };
 
+  const handleAcceptClick = (show: boolean) => {
+    setClickAccept(show);
+  };
+
   const handleConfirmOffer = () => {
     const meta: OfferConfirm = {
       marketOfferId: selectedOffer?.id || '',
     };
-    // dispatch(marketRequestOfferConfirmActions.request(meta));
+    dispatch(marketRequestOfferConfirmActions.request(meta));
+    setClickAccept(false);
   };
 
-  const handleStartNegotiate = () => {
-    setNegotiating(true);
+  const handleNegoBtnClick = (show: boolean) => {
+    setNegotiating(show);
   };
 
   const onRefresh = async () => {
@@ -334,8 +370,8 @@ const OfferDetails = (): JSX.Element => {
 
   const generatedProps: OfferDetailsProps = {
     counterOffer,
-    handleAcceptOffer,
-    handleStartNegotiate,
+    handleConfirmOffer,
+    handleNegoBtnClick,
     isLoadingAcceptOffer: acceptOffer.pending || false,
     isLoadingOffer: activeOffers.pending || false,
     isAccepted,
@@ -358,7 +394,7 @@ const OfferDetails = (): JSX.Element => {
     onClickDelete,
     showDelete,
     setShowDelete,
-    handleConfirmOffer,
+    handleAcceptClick,
     isLoadingConfirmOffer: confirmOffer.pending || false,
     isLoadingNegotiate: marketRequestNegotiateOfferPending || false,
     handlePayNow,
@@ -367,6 +403,10 @@ const OfferDetails = (): JSX.Element => {
     showConfirmOfferSentModal: confirmOffer.data?.data?.status === 'PARTIAL',
     onCloseAcceptSentModal,
     onPayNow,
+    canNegotiate,
+    clickAccept,
+    handleDeclineClick,
+    clickDecline,
   };
 
   const getPrice = () => {

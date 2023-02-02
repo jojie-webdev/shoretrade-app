@@ -195,8 +195,8 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
         'listing'
       );
 
-      if (innerRoute === 'Market requests') {
-        setPageTitle('Market Requests');
+      if (innerRoute.toLowerCase() === 'negotiations and requests') {
+        setPageTitle('Negotiations & Requests');
       } else {
         setPageTitle(innerRoute);
       }

@@ -38,4 +38,5 @@ export interface MarketRequestsLandingGeneratedProps {
   loading: boolean;
   activeOffersData: GetActiveOffersRequestResponseItem[];
   reverseMarketPlace: boolean;
+  canNegotiate: boolean;
 }

@@ -10,10 +10,13 @@ import moment from 'moment';
 import { ScreenClassRender } from 'react-grid-system';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
+import { getActivePlan } from 'routes/Buyer/Account/SubscriptionPlan/SubscriptionPlan.transform';
 import {
   deleteMarketRequestActions,
   getAllMarketRequestActions,
 } from 'store/actions';
+import { GetDefaultCompany } from 'store/selectors/buyer';
+import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
 import { Store } from 'types/store/Store';
 import useTimeout from 'utils/Hooks/useTimeout';
 import { useTheme } from 'utils/SFMTheme';
@@ -77,6 +80,33 @@ const MarketRequestsLanding = (): JSX.Element => {
       )?.length > 0) ||
     false;
 
+  const defaultCompany = GetDefaultCompany();
+
+  const companyPlan = useSelector(
+    (store: Store) => store.getCompanyPlan.data?.data
+  );
+  const currentReverseMarketDetails = getActivePlan(
+    companyPlan,
+    CompanyPlanName.REVERSE_MARKET
+  );
+  const currentPlanDetails = getActivePlan(companyPlan);
+  const subscriptionType = companyPlan?.activePlans
+    ? companyPlan?.activePlans.find((ac) =>
+        [CompanyPlanName.BASE, CompanyPlanName.PRO].includes(ac.plan.name)
+      )?.plan.name || null
+    : null;
+
+  const isSubscribedToNegoRequest =
+    currentReverseMarketDetails ||
+    currentPlanDetails?.plan?.name === CompanyPlanName.PRO
+      ? companyPlan && !companyPlan.flags?.hasCancelledReversedMarketplace
+      : subscriptionType !== null && false;
+
+  const canNegotiate =
+    defaultCompany?.credit !== '0.00' && (isSubscribedToNegoRequest || false);
+
+  console.log('canNegotiate >>>>>>>>>> ', canNegotiate);
+
   const onClickItem = (row: Result) => {
     if (row.offers > 0) {
       history.push(BUYER_MARKET_REQUEST_ROUTES.MARKET_REQUEST_DETAILS(row.id));
@@ -132,11 +162,13 @@ const MarketRequestsLanding = (): JSX.Element => {
     loading: loading || false,
     activeOffersData,
     reverseMarketPlace,
+    canNegotiate,
   };
 
   const sfmViewProps = {
     handleSeePlansClick,
     planPrice: activePlans ? activePlans[0]?.plan?.price : '0.00',
+    canNegotiate,
   };
 
   const defaultViewProps = {
