@@ -135,6 +135,8 @@ const MarketRequestsLanding = (): JSX.Element => {
   const canNegotiate =
     defaultCompany?.credit !== '0.00' && (isSubscribedToNegoRequest || false);
 
+  console.log('canNegotiate >>>>>>>>>> ', canNegotiate);
+
   const onClickItem = (row: Result) => {
     if (row.offers && row.offers > 0) {
       history.push(BUYER_MARKET_REQUEST_ROUTES.MARKET_REQUEST_DETAILS(row.id));

@@ -141,20 +141,11 @@ const OfferDetails = (): JSX.Element => {
     },
   ];
 
-  const handleShowAcceptOffer = () => {
-    setShowAcceptModal((prevValue) => !prevValue);
+  const handleDeclineClick = (show: boolean) => {
+    setClickDecline(show);
   };
 
-  const handleShowDeclineModal = () => {
-    setShowDeclineModal((prevValue) => !prevValue);
-  };
-
-  const handleConfirmOffer = () => {
-    // const meta: OfferConfirm = {
-    //   marketOfferId: selectedOffer?.id || '',
-    // };
-    // dispatch(marketRequestOfferConfirmActions.request(meta));
-
+  const handleAcceptOffer = () => {
     setShowPaymentMethod(true);
     const getMarketNegotiationId = () => {
       if (!selectedOffer?.negotiations) {
@@ -173,8 +164,20 @@ const OfferDetails = (): JSX.Element => {
     dispatch(marketOfferActions.add(payload));
   };
 
-  const handleStartNegotiate = () => {
-    setNegotiating(true);
+  const handleAcceptClick = (show: boolean) => {
+    setClickAccept(show);
+  };
+
+  const handleConfirmOffer = () => {
+    const meta: OfferConfirm = {
+      marketOfferId: selectedOffer?.id || '',
+    };
+    dispatch(marketRequestOfferConfirmActions.request(meta));
+    setClickAccept(false);
+  };
+
+  const handleNegoBtnClick = (show: boolean) => {
+    setNegotiating(show);
   };
 
   const onRefresh = async () => {
@@ -369,8 +372,8 @@ const OfferDetails = (): JSX.Element => {
 
   const generatedProps: OfferDetailsProps = {
     counterOffer,
-    handleShowAcceptOffer,
-    handleStartNegotiate,
+    handleConfirmOffer,
+    handleNegoBtnClick,
     isLoadingAcceptOffer: acceptOffer.pending || false,
     isLoadingOffer: activeOffers.pending || false,
     isAccepted,
@@ -402,9 +405,10 @@ const OfferDetails = (): JSX.Element => {
     showConfirmOfferSentModal: confirmOffer.data?.data?.status === 'PARTIAL',
     onCloseAcceptSentModal,
     onPayNow,
-    showAcceptModal,
-    handleShowDeclineModal,
-    showDeclineModal,
+    canNegotiate,
+    clickAccept,
+    handleDeclineClick,
+    clickDecline,
   };
 
   const getPrice = () => {

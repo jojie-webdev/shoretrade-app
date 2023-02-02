@@ -35,7 +35,6 @@ export interface MarketRequestOffer {
 }
 
 export interface OfferDetailsProps {
-  handleShowAcceptOffer: () => void;
   handleConfirmOffer: () => void;
   handleAcceptClick: (show: boolean) => void;
   handleNegoBtnClick: (show: boolean) => void;
@@ -70,7 +69,8 @@ export interface OfferDetailsProps {
   onConfirmSentOffer: () => void;
   onCloseAcceptSentModal: () => void;
   onPayNow: () => void;
-  showAcceptModal: boolean;
-  handleShowDeclineModal: () => void;
-  showDeclineModal: boolean;
+  canNegotiate?: boolean;
+  clickAccept: boolean;
+  handleDeclineClick: (show: boolean) => void;
+  clickDecline: boolean;
 }

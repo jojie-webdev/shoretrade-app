@@ -316,7 +316,7 @@ export const MarketRequestItemMobile = (props: {
 
 enum TABS {
   NEGOTIATIONS = 'Negotiations',
-  MARKET_REQUEST = 'Market Request',
+  REVERSE_MARKETPLACE = 'Reverse Marketplace',
 }
 
 const MarketRequestsLandingView = (
@@ -343,7 +343,7 @@ const MarketRequestsLandingView = (
 
   const theme = useTheme();
 
-  const [selectedTab, setSelectedTab] = useState(TABS.NEGOTIATIONS);
+  const [selectedTab, setSelectedTab] = useState(TABS.REVERSE_MARKETPLACE);
 
   const [isAcceptClicked, setIsAcceptClicked] = useLocalStorage(
     'isTermsAndConAccepted',
@@ -461,7 +461,7 @@ const MarketRequestsLandingView = (
       />
 
       <SegmentedControls
-        options={[TABS.NEGOTIATIONS, TABS.MARKET_REQUEST]}
+        options={[TABS.NEGOTIATIONS, TABS.REVERSE_MARKETPLACE]}
         controlButtonColor={theme.brand.secondary}
         inactiveBackgroundColor={theme.grey.shade3}
         selectedOption={selectedTab}
@@ -469,75 +469,90 @@ const MarketRequestsLandingView = (
           handleTabSelect(
             value === TABS.NEGOTIATIONS
               ? TABS.NEGOTIATIONS
-              : TABS.MARKET_REQUEST
+              : TABS.REVERSE_MARKETPLACE
           );
         }}
       />
 
-      {selectedTab === TABS.NEGOTIATIONS ? (
-        <>
-          <Row nogutter justify="around" align="center" className="header">
-            <Col>
-              <Hidden xs sm>
-                <Typography
-                  variant="title5"
-                  weight="700"
-                  color="shade9"
-                  altFont
-                >
-                  My Market Requests
-                </Typography>
-              </Hidden>
-              <Visible xs sm>
-                <Typography
-                  variant="title5"
-                  weight="700"
-                  color="shade9"
-                  altFont
-                >
-                  Market Requests
-                </Typography>
-              </Visible>
-            </Col>
-            <Col xs="content">
-              <Visible sm md lg xl xxl>
-                <Button
-                  onClick={() =>
-                    history.push(
-                      BUYER_MARKET_REQUEST_ROUTES.CREATE_MARKET_REQUEST
-                    )
-                  }
-                  text="CREATE REQUEST"
-                  variant={props.isPendingAccount ? 'disabled' : 'primary'}
-                  size="md"
-                  disabled={props.isPendingAccount}
-                />
-              </Visible>
-            </Col>
-          </Row>
-          {renderMobile()}
-          {renderNonMobile()}
-          <MobileFooter>
-            <Button
-              onClick={() =>
-                history.push(BUYER_MARKET_REQUEST_ROUTES.CREATE_MARKET_REQUEST)
-              }
-              text="CREATE REQUEST"
-              variant={props.isPendingAccount ? 'disabled' : 'primary'}
-              takeFullWidth
-              disabled={props.isPendingAccount}
-              icon={
-                <ChevronRight
-                  width={15}
-                  height={12}
-                  fill="white"
-                  style={{ paddingBottom: '2px' }}
-                />
-              }
-            />
-          </MobileFooter>
-        </>
-      ) : null}
+      <div style={{ marginTop: 20 }}>
+        <Row nogutter justify="around" align="center" className="header">
+          {selectedTab === TABS.REVERSE_MARKETPLACE ? (
+            <>
+              <Col>
+                <Hidden xs sm>
+                  <Typography
+                    variant="title5"
+                    weight="700"
+                    color="shade9"
+                    altFont
+                  >
+                    My Market Requests
+                  </Typography>
+                </Hidden>
+                <Visible xs sm>
+                  <Typography
+                    variant="title5"
+                    weight="700"
+                    color="shade9"
+                    altFont
+                  >
+                    Market Requests
+                  </Typography>
+                </Visible>
+              </Col>
+              <Col xs="content">
+                <Visible sm md lg xl xxl>
+                  <Button
+                    onClick={() =>
+                      history.push(
+                        BUYER_MARKET_REQUEST_ROUTES.CREATE_MARKET_REQUEST
+                      )
+                    }
+                    text="CREATE REQUEST"
+                    variant={props.isPendingAccount ? 'disabled' : 'primary'}
+                    size="md"
+                    disabled={props.isPendingAccount}
+                  />
+                </Visible>
+              </Col>
+            </>
+          ) : (
+            canNegotiate && (
+              <>
+                <Col></Col>
+                <Col xs="content">
+                  <Visible sm md lg xl xxl>
+                    <Typography color="shade6">
+                      Negotiation Credits: 3
+                    </Typography>
+                  </Visible>
+                </Col>
+              </>
+            )
+          )}
+        </Row>
+        {renderMobile()}
+        {renderNonMobile()}
+        <MobileFooter>
+          <Button
+            onClick={() =>
+              history.push(BUYER_MARKET_REQUEST_ROUTES.CREATE_MARKET_REQUEST)
+            }
+            text="CREATE REQUEST"
+            variant={props.isPendingAccount ? 'disabled' : 'primary'}
+            takeFullWidth
+            disabled={props.isPendingAccount}
+            icon={
+              <ChevronRight
+                width={15}
+                height={12}
+                fill="white"
+                style={{ paddingBottom: '2px' }}
+              />
+            }
+          />
+        </MobileFooter>
+      </div>
     </MarketRequestsContainer>
   );
 };

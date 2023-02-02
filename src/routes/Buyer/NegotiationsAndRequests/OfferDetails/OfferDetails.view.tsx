@@ -55,8 +55,8 @@ import {
 
 const OfferDetailsView = (props: OfferDetailsProps) => {
   const {
-    handleStartNegotiate,
-    handleShowAcceptOffer,
+    handleNegoBtnClick,
+    handleAcceptClick,
     handleConfirmOffer,
     isAccepted,
     thereIsNewOffer,
@@ -84,9 +84,10 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
     isLoadingConfirmOffer,
     isLoadingNegotiate,
     offerMR,
-    showAcceptModal,
-    handleShowDeclineModal,
-    showDeclineModal,
+    canNegotiate,
+    clickAccept,
+    handleDeclineClick,
+    clickDecline,
   } = props;
 
   const history = useHistory();
@@ -308,7 +309,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
               <CTAContainer>
                 <div style={{ display: 'flex' }}>
                   <Button
-                    onClick={handleShowDeclineModal}
+                    onClick={() => handleDeclineClick(true)}
                     variant="outline"
                     text={
                       <Typography color="primary" style={{ marginRight: 5 }}>
@@ -338,7 +339,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
                       </Typography>
                     }
                     icon={<Check width={10} height={9} />}
-                    onClick={handleShowAcceptOffer}
+                    onClick={() => handleAcceptClick(true)}
                     disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
                   />
                 </div>
@@ -368,8 +369,8 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
   return (
     <Container>
       <ConfirmationModal
-        isOpen={showAcceptModal}
-        onClickClose={handleShowAcceptOffer}
+        isOpen={clickAccept}
+        onClickClose={() => handleAcceptClick(false)}
         title={
           <Typography
             variant="title4"
@@ -380,7 +381,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
             Accept Negotiation
           </Typography>
         }
-        action={handleConfirmOffer}
+        action={() => handleConfirmOffer()}
         actionText="Accept"
         hideCancel={true}
         description={
@@ -421,8 +422,8 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
         }
       />
       <ConfirmationModal
-        isOpen={showDeclineModal}
-        onClickClose={handleShowDeclineModal}
+        isOpen={clickDecline}
+        onClickClose={() => handleDeclineClick(false)}
         title={
           <Typography
             variant="title4"
@@ -555,7 +556,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
               <Row style={{ marginTop: '40px' }}>
                 <Col style={{ paddingRight: 5, marginTop: 5 }}>
                   <Button
-                    onClick={handleShowDeclineModal}
+                    onClick={() => handleDeclineClick(true)}
                     variant="outline"
                     text={
                       <Typography color="primary" style={{ marginRight: 5 }}>
@@ -588,7 +589,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
                       </Typography>
                     }
                     icon={<Check width={10} height={9} />}
-                    onClick={handleShowAcceptOffer}
+                    onClick={() => handleAcceptClick(true)}
                     loading={isLoadingConfirmOffer}
                     disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
                   />
@@ -602,7 +603,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
               <StyledAcceptButton
                 text="Pay Now"
                 icon={<Check width={10} height={9} />}
-                onClick={handleConfirmOffer}
+                onClick={() => handleConfirmOffer()}
                 disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
               />
             </div>
