@@ -41,6 +41,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
 
     //filterData,
     //onChangeFilter,
+    canNegotiate,
   } = props;
 
   const location = useLocation();
@@ -168,6 +169,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                         templateDeliveryDate={product.templateDeliveryDate}
                         isForSaleRepPhoto={product.isForSaleRepPhoto}
                         isSFMCrate={product.packaging?.type === 'SFM'}
+                        canNegotiate={canNegotiate}
                       />
                     </StyledInteraction>
                   ) : (
@@ -198,6 +200,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                       templateDeliveryDate={product.templateDeliveryDate}
                       isForSaleRepPhoto={product.isForSaleRepPhoto}
                       isSFMCrate={product.packaging?.type === 'SFM'}
+                      canNegotiate={canNegotiate}
                     />
                   )}
                 </Link>

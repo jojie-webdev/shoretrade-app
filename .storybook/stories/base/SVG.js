@@ -10,6 +10,7 @@ import {
   SfmBuyerListing,
   SfmBuyerNegotiatePrice,
   SfmBuyerReceiveOffersCards,
+  MarketBoardOutlined,
   AngleUp,
   AngleDown,
   ShoppingTrolley,
@@ -270,6 +271,9 @@ storiesOf('base/SVG', module).add('Summary', () => {
         </Wrapper>
         <Wrapper label="SfmBuyerReceiveOffersCards">
           <SfmBuyerReceiveOffersCards width={30} height={30} />
+        </Wrapper>
+        <Wrapper label="MarketBoardOutlined">
+          <MarketBoardOutlined width={30} height={30} />
         </Wrapper>
         <Wrapper label="AngleUp">
           <AngleUp width={30} height={30} />

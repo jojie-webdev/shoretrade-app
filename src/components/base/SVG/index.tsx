@@ -5,6 +5,7 @@ export { default as SfmAcceptNegotiation } from './SfmAcceptNegotiation';
 export { default as SfmBuyerListing } from './SfmBuyerListing';
 export { default as SfmBuyerNegotiatePrice } from './SfmBuyerNegotiatePrice';
 export { default as SfmBuyerReceiveOffersCards } from './SfmBuyerReceiveOffersCards';
+export { default as MarketBoardOutlined } from './MarketBoardOutlined';
 export { default as AngleUp } from './AngleUp';
 export { default as AngleDown } from './AngleDown';
 export { default as ShoppingTrolley } from './ShoppingTrolley';

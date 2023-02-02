@@ -26,6 +26,7 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
     onResetSearchValue,
     searchValue,
     isLoadingResults,
+    canNegotiate,
   } = props;
 
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -85,6 +86,7 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
                           templateDeliveryDate={rec.templateDeliveryDate}
                           isForSaleRepPhoto={rec.isForSaleRepPhoto}
                           isSFMCrate={rec.packaging?.type === 'SFM'}
+                          canNegotiate={canNegotiate}
                         />
                       </StyledInteraction>
                     ) : (
@@ -115,6 +117,7 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
                         templateDeliveryDate={rec.templateDeliveryDate}
                         isForSaleRepPhoto={rec.isForSaleRepPhoto}
                         isSFMCrate={rec.packaging?.type === 'SFM'}
+                        canNegotiate={canNegotiate}
                       />
                     )}
                   </Link>

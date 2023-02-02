@@ -18,4 +18,5 @@ export interface ProductDetailsCard6Props {
   sizingOptions: SizingOption[];
   activeSizeUnit?: string;
   isPreAuction?: boolean | undefined;
+  canNegotiate?: boolean;
 }

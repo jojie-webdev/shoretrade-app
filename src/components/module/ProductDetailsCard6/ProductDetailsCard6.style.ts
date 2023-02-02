@@ -1,5 +1,8 @@
+import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography';
+import { Theme } from 'types/Theme';
 import styled from 'utils/styled';
+import { pxToRem } from 'utils/Theme';
 
 import { ProductDetailsCard6Props } from './ProductDetailsCard6.props';
 
@@ -76,4 +79,26 @@ export const Price = styled(Typography)`
 
 export const Label = styled(Typography)`
   margin-bottom: 8px;
+`;
+
+export const NegotiatePriceBtnWrapper = styled.div<{
+  backgroundColor?: keyof Theme['grey'];
+}>`
+  padding: 0px 6px;
+  background-color: ${({ theme, backgroundColor }) =>
+    backgroundColor ? theme['grey'][backgroundColor] : theme.brand.primary};
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+`;
+
+export const NegotiatePriceBtnContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  height: fit-content;
+`;
+
+export const NegotiatePriceText = styled(TypographyView)`
+  font-size: ${pxToRem(14)};
+  margin: 0;
 `;

@@ -1,8 +1,11 @@
 import React from 'react';
 
+import { MarketBoardOutlined } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import moment from 'moment';
 import { Row as TableRow, Col as TableCol } from 'react-grid-system';
+import { useSelector } from 'react-redux';
+import { Store } from 'types/store/Store';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { formatTemplateDeliveryDateLabel } from 'utils/Listing/formatTemplateDeliveryDateLabel';
 import { toPrice, capitalize } from 'utils/String';
@@ -11,7 +14,15 @@ import theme from 'utils/Theme';
 import IconTooltip from '../IconTooltip';
 import ListingTimeLeftView from '../ListingTimeLeft';
 import { ProductDetailsCard6Props } from './ProductDetailsCard6.props';
-import { Container, Row, Price, Label } from './ProductDetailsCard6.style';
+import {
+  Container,
+  Row,
+  Price,
+  Label,
+  NegotiatePriceBtnContainer,
+  NegotiatePriceBtnWrapper,
+  NegotiatePriceText,
+} from './ProductDetailsCard6.style';
 
 const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
   const {
@@ -28,7 +39,16 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
     sizingOptions,
     activeSizeUnit,
     isPreAuction,
+    canNegotiate,
   } = props;
+
+  const companyPlan = useSelector(
+    (store: Store) => store.getCompanyPlan.data?.data
+  );
+
+  const subscriptionPlan = companyPlan?.activePlans
+    ? companyPlan.activePlans[0].plan.alias
+    : 'Unsubscribed';
 
   const formattedCatchDate = () => moment(catchDate).format('DD MMMM YYYY');
   const cutOffDate = moment(dateEnds)
@@ -39,20 +59,51 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
   return (
     <Container {...props}>
       {SellerCard ? SellerCard : <></>}
-      {!hiddenPrice && (
-        <div style={{ display: 'flex' }}>
-          <Price variant="title5" weight="900">
-            {toPrice(price)}
-          </Price>
-          <Label
-            variant="caption"
-            color="shade6"
-            style={{ marginLeft: 6.5, marginTop: 8 }}
-          >
-            per {formatUnitToPricePerUnit(unit)}
-          </Label>
-        </div>
-      )}
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        {!hiddenPrice && (
+          <div style={{ display: 'flex' }}>
+            <Price variant="title5" weight="900">
+              {toPrice(price)}
+            </Price>
+            <Label
+              variant="caption"
+              color="shade6"
+              style={{ marginLeft: 6.5, marginTop: 8 }}
+            >
+              per {formatUnitToPricePerUnit(unit)}
+            </Label>
+          </div>
+        )}
+        {canNegotiate ? (
+          <NegotiatePriceBtnContainer>
+            <NegotiatePriceBtnWrapper>
+              <MarketBoardOutlined />
+              <div style={{ marginRight: 5 }} />
+              <NegotiatePriceText
+                variant="small"
+                color="noshade"
+                style={{ paddingRight: 8 }}
+              >
+                NEGOTIATE PRICE
+              </NegotiatePriceText>
+            </NegotiatePriceBtnWrapper>
+          </NegotiatePriceBtnContainer>
+        ) : (
+          <NegotiatePriceBtnContainer>
+            <NegotiatePriceBtnWrapper backgroundColor="shade3">
+              <MarketBoardOutlined fill={theme.grey.shade6} />
+              <div style={{ marginRight: 5 }} />
+              <NegotiatePriceText
+                variant="small"
+                color="shade6"
+                style={{ paddingRight: 8 }}
+              >
+                NEGOTIATE PRICE
+              </NegotiatePriceText>
+            </NegotiatePriceBtnWrapper>
+          </NegotiatePriceBtnContainer>
+        )}
+      </div>
       {!props.catchRecurrence && (
         <Row>
           <Label variant="label" color="shade6" style={{ marginRight: 4 }}>

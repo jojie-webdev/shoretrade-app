@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { ProductDetailsCard6Props } from 'components/module/ProductDetailsCard6/ProductDetailsCard6.props';
 import { BUYER_ROUTES } from 'consts';
@@ -20,12 +20,14 @@ import getSellerByIdActions from 'store/actions/getSellerById';
 import { GetAddressOptions, GetDefaultCompany } from 'store/selectors/buyer';
 // import { CartItem } from 'types/store/CartState';
 import { AddCartItemPayload } from 'types/store/AddCartItemState';
+import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
 import { GetListingResponseItem } from 'types/store/GetListingState';
 import { Seller } from 'types/store/GetSellerByIdState';
 import { Store } from 'types/store/Store';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 
+import { getActivePlan } from '../Account/SubscriptionPlan/SubscriptionPlan.transform';
 import ProductDetailsView from './ProductDetails.view';
 
 const ProductDetails = (): JSX.Element => {
@@ -62,6 +64,42 @@ const ProductDetails = (): JSX.Element => {
   const currentSeller: Seller | undefined = useSelector(
     (state: Store) => state.getSellerById.data?.data.seller
   );
+
+  const companyPlan = useSelector(
+    (store: Store) => store.getCompanyPlan.data?.data
+  );
+
+  const currentReverseMarketDetails = getActivePlan(
+    companyPlan,
+    CompanyPlanName.REVERSE_MARKET
+  );
+
+  const currentPlanDetails = getActivePlan(companyPlan);
+
+  const subscriptionType = companyPlan?.activePlans
+    ? companyPlan?.activePlans.find((ac) =>
+        [CompanyPlanName.BASE, CompanyPlanName.PRO].includes(ac.plan.name)
+      )?.plan.name || null
+    : null;
+
+  const isSubscribedToNegoRequest =
+    currentReverseMarketDetails ||
+    currentPlanDetails?.plan?.name === CompanyPlanName.PRO
+      ? companyPlan && !companyPlan.flags?.hasCancelledReversedMarketplace
+      : subscriptionType !== null && false;
+
+  const getUser = useSelector((state: Store) => state.getUser);
+
+  const defaultCompany = useMemo(() => {
+    if (!getUser) return null;
+
+    return getUser.data?.data.user.companies.length
+      ? getUser.data?.data.user.companies[0]
+      : null;
+  }, [getUser]);
+
+  const canNegotiate =
+    defaultCompany?.credit !== '0.00' && (isSubscribedToNegoRequest || false);
 
   // const updateFavoriteSeller = useSelector(
   //   (state: Store) => state.updateFavoriteSeller
@@ -433,6 +471,7 @@ const ProductDetails = (): JSX.Element => {
     isLoadingAddCart,
     addCartItemData,
     showSuccessAddBtn,
+    canNegotiate,
   };
   return <ProductDetailsView {...generatedProps} />;
 };

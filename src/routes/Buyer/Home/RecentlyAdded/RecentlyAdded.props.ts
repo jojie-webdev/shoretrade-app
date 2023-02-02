@@ -10,4 +10,5 @@ export interface RecentlyAddedGeneratedProps {
   onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
   onResetSearchValue: () => void;
   searchValue: string;
+  canNegotiate?: boolean;
 }

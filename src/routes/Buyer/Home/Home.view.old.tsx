@@ -106,6 +106,7 @@ const HomeView = (props: HomeGeneratedProps) => {
     companyPlan,
     currentMarketSector,
     isApprovedCompany,
+    canNegotiate,
   } = props;
 
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -257,6 +258,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                   data={recentlyAdded}
                   transform={partialRight(recentlyAddedToPreviewProps, [
                     isPendingAccount,
+                    canNegotiate,
                   ])}
                   Component={PreviewCard}
                   link={BUYER_ROUTES.PRODUCT_DETAIL}

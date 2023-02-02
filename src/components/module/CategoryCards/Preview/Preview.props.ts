@@ -36,4 +36,5 @@ export interface PreviewProps {
   templateDeliveryDate: string | null;
   isForSaleRepPhoto: boolean;
   isSFMCrate: boolean;
+  canNegotiate?: boolean;
 }

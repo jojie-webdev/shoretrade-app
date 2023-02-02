@@ -47,7 +47,8 @@ export function placeDataToUpdateAddressMeta(
 
 export function recentlyAddedToPreviewProps(
   data: GetBuyerHomepageResponseListingItem,
-  isPendingAccount: boolean
+  isPendingAccount: boolean,
+  canNegotiate?: boolean
 ): PreviewProps {
   return {
     id: data.id,
@@ -72,6 +73,7 @@ export function recentlyAddedToPreviewProps(
     templateDeliveryDate: data.templateDeliveryDate,
     isForSaleRepPhoto: data.isForSaleRepPhoto,
     isSFMCrate: data.packaging?.type === 'SFM',
+    canNegotiate,
   };
 }
 

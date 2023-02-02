@@ -1,12 +1,14 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { getActivePlan } from 'routes/Buyer/Account/SubscriptionPlan/SubscriptionPlan.transform';
 import {
   getBuyerSearchFilterDataActions,
   getListingsByTypeActions,
   currentAddressActions,
 } from 'store/actions';
+import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
 import { Store } from 'types/store/Store';
 import useLocalStorage from 'utils/Hooks/useLocalStorage';
 
@@ -33,6 +35,38 @@ const CategoriesPreview = (): JSX.Element => {
   const isPendingAccount =
     addressesData !== undefined &&
     !(addressesData || []).some((a) => a.approved === 'APPROVED');
+
+  const companyPlan = useSelector(
+    (store: Store) => store.getCompanyPlan.data?.data
+  );
+
+  const currentReverseMarketDetails = getActivePlan(
+    companyPlan,
+    CompanyPlanName.REVERSE_MARKET
+  );
+
+  const currentPlanDetails = getActivePlan(companyPlan);
+  const subscriptionType = companyPlan?.activePlans
+    ? companyPlan?.activePlans.find((ac) =>
+        [CompanyPlanName.BASE, CompanyPlanName.PRO].includes(ac.plan.name)
+      )?.plan.name || null
+    : null;
+
+  const getUser = useSelector((state: Store) => state.getUser);
+
+  const defaultCompany = useMemo(() => {
+    if (!getUser) return null;
+
+    return getUser.data?.data.user.companies.length
+      ? getUser.data?.data.user.companies[0]
+      : null;
+  }, [getUser]);
+
+  const isSubscribedToNegoRequest =
+    currentReverseMarketDetails ||
+    currentPlanDetails?.plan?.name === CompanyPlanName.PRO
+      ? companyPlan && !companyPlan.flags?.hasCancelledReversedMarketplace
+      : subscriptionType !== null && false;
 
   const results = (
     useSelector(
@@ -230,6 +264,8 @@ const CategoriesPreview = (): JSX.Element => {
 
     //filterData,
     // onChangeFilter,
+    canNegotiate:
+      defaultCompany?.credit !== '0.00' && (isSubscribedToNegoRequest || false),
   };
   return <CategoriesPreviewView {...generatedProps} />;
 };

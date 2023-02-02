@@ -1,5 +1,6 @@
 import TypographyView from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { Theme } from 'types/Theme';
 import { SpecialColors } from 'utils/SFMTheme';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
@@ -173,6 +174,12 @@ export const Title = styled(TypographyView)`
 export const ResultText = styled(TypographyView)`
   font-size: ${pxToRem(14)};
   margin-bottom: 0.6rem;
+  margin: 0;
+`;
+
+export const NegotiatePriceText = styled(TypographyView)`
+  font-size: ${pxToRem(14)};
+  margin: 0;
 `;
 
 export const ResultTextAlt = styled(TypographyView)`
@@ -213,4 +220,21 @@ export const Image = styled.div<{ imgSrc: string }>`
 export const TitleContainer = styled.div`
   display: flex;
   margin-bottom: 8px;
+`;
+
+export const NegotiatePriceBtnWrapper = styled.div<{
+  backgroundColor?: keyof Theme['grey'];
+}>`
+  padding: 0px 6px;
+  background-color: ${({ theme, backgroundColor }) =>
+    backgroundColor ? theme['grey'][backgroundColor] : theme.brand.primary};
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+`;
+
+export const NegotiatePriceBtnContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: -webkit-fill-available;
 `;

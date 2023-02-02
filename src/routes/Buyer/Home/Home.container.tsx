@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { getMarketInterestsActions, orderActions } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
+import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
 import useHomeOld from 'utils/Hooks/useHomeOld';
 import { useTheme } from 'utils/Theme';
 
+import { getActivePlan } from '../Account/SubscriptionPlan/SubscriptionPlan.transform';
 import { HOME_BANNER } from './Home.constants';
 import { HomeGeneratedProps, CreditState, HomeData } from './Home.props';
 import HomeView from './Home.view';
@@ -63,6 +65,37 @@ const Home = (): JSX.Element => {
   const subscription = useSelector((store: Store) => store.subscription);
 
   const loadingHomePage = buyerHomePageData.pending !== false; // || subscription.status === null;
+
+  const currentReverseMarketDetails = getActivePlan(
+    companyPlan,
+    CompanyPlanName.REVERSE_MARKET
+  );
+
+  const currentPlanDetails = getActivePlan(companyPlan);
+  const subscriptionType = companyPlan?.activePlans
+    ? companyPlan?.activePlans.find((ac) =>
+        [CompanyPlanName.BASE, CompanyPlanName.PRO].includes(ac.plan.name)
+      )?.plan.name || null
+    : null;
+
+  const getUser = useSelector((state: Store) => state.getUser);
+
+  const defaultCompany = useMemo(() => {
+    if (!getUser) return null;
+
+    return getUser.data?.data.user.companies.length
+      ? getUser.data?.data.user.companies[0]
+      : null;
+  }, [getUser]);
+
+  const isSubscribedToNegoRequest =
+    currentReverseMarketDetails ||
+    currentPlanDetails?.plan?.name === CompanyPlanName.PRO
+      ? companyPlan && !companyPlan.flags?.hasCancelledReversedMarketplace
+      : subscriptionType !== null && false;
+
+  const canNegotiate =
+    defaultCompany?.credit !== '0.00' && (isSubscribedToNegoRequest || false);
 
   // MARK:- State
   const [currentCompany, setCurrentCompany] = useState<
@@ -125,6 +158,7 @@ const Home = (): JSX.Element => {
     companyPlan,
     currentMarketSector,
     isApprovedCompany,
+    canNegotiate,
   };
 
   return isOld ? (

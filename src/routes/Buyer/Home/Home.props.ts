@@ -33,6 +33,7 @@ export interface HomeGeneratedProps {
   companyPlan?: GetCompanyPlanResponseData;
   currentMarketSector: string;
   isApprovedCompany: boolean;
+  canNegotiate?: boolean;
 }
 
 export interface HomeData {

@@ -70,6 +70,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     isLoadingAddCart,
     addCartItemData,
     showSuccessAddBtn,
+    canNegotiate,
   } = props;
   const { isPreAuction, dateEnds } = productDetailsCard6Props;
 
@@ -267,6 +268,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                   ) : null
                 }
                 isPreAuction={productDetailsCard6Props?.isPreAuction}
+                canNegotiate={canNegotiate}
               />
               {!isPendingAccount && isMobile ? (
                 <ProductSellerCard
