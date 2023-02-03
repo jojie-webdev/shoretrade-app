@@ -168,7 +168,12 @@ export const StyledTextField = styled(TextField)`
 `;
 
 export const RadioBtnContainer = styled.div`
-  padding: 0 0 0 20px;
   display: flex;
   justify-content: space-between;
+`;
+
+export const GroupedBoxContainer = styled.div`
+  display: flex;
+  border: 1px solid ${({ theme }) => theme.grey.shade5};
+  padding: 5px;
 `;

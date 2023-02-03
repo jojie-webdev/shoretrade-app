@@ -49,6 +49,7 @@ import {
   StyledTextField,
   RadioBtnContainer,
   Container,
+  GroupedBoxContainer,
 } from './ProductDetails.style';
 
 const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
@@ -82,7 +83,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   const { isPreAuction, dateEnds } = productDetailsCard6Props;
 
   const [images, setImages] = useState<string[]>([]);
-  const [negotiationPrice, setNegotiationPrice] = useState(0);
+  const [negotiationPrice, setNegotiationPrice] = useState<number | any>(null);
   const [newCurrentListing, setNewCurrentListing] = useState<
     GetListingResponseItem
   >();
@@ -230,6 +231,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
               inputType="decimal"
               step=".01"
               label={'Counter Offer'}
+              defaultValue={productDetailsCard6Props.price}
               value={negotiationPrice}
               onChangeText={(v) => {
                 let price = v;
@@ -269,35 +271,48 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
             />
             <div style={{ marginTop: 15 }} />
             {!isEmpty(groupedBox)
-              ? groupedBox.map((p) => (
+              ? groupedBox.map((p, index) => (
                   <div key={p.id}>
-                    {p.boxes.map((box) => (
-                      <>
-                        <RadioBtnContainer>
-                          <div style={{ display: 'flex' }}>
-                            <Radio
-                              onClick={() => {
-                                console.log('');
-                              }}
-                            />
-                            <div style={{ marginRight: 27 }} />
-                            <Typography variant="caption" color="shade6">
-                              {box.weight}
-                              {p.unit} x {box.quantity}
-                            </Typography>
+                    <GroupedBoxContainer>
+                      <div style={{ padding: '0 0 0 20px' }}>
+                        <Radio
+                          onClick={() => {
+                            console.log('');
+                          }}
+                        />
+                      </div>
+                      <div style={{ width: '100%', paddingTop: 2 }}>
+                        {p.boxes.map((box, index) => (
+                          <div key={box.id}>
+                            <RadioBtnContainer>
+                              <div style={{ display: 'flex' }}>
+                                <div style={{ marginRight: 27 }} />
+                                <Typography variant="caption" color="shade6">
+                                  {box.weight}
+                                  {p.unit} x {box.quantity}
+                                </Typography>
+                              </div>
+                              <Typography variant="caption" color="shade6">
+                                {Number.isInteger(box.weight)
+                                  ? (box.weight * (box.quantity || 0)).toFixed(
+                                      0
+                                    )
+                                  : (box.weight * (box.quantity || 0)).toFixed(
+                                      2
+                                    )}{' '}
+                                {unit}
+                              </Typography>
+                            </RadioBtnContainer>
+                            {p.boxes.length > index + 1 && (
+                              <div style={{ marginTop: 5 }} />
+                            )}
                           </div>
-                          <Typography variant="caption" color="shade6">
-                            {Number.isInteger(box.weight)
-                              ? (box.weight * (box.quantity || 0)).toFixed(0)
-                              : (box.weight * (box.quantity || 0)).toFixed(
-                                  2
-                                )}{' '}
-                            {unit}
-                          </Typography>
-                        </RadioBtnContainer>
-                        <div style={{ marginTop: 15 }} />
-                      </>
-                    ))}
+                        ))}
+                      </div>
+                    </GroupedBoxContainer>
+                    {groupedBox.length > index + 1 && (
+                      <div style={{ marginTop: 5 }} />
+                    )}
                   </div>
                 ))
               : isLoadingListingBoxes && (
@@ -348,7 +363,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                 color="secondary"
                 style={{ fontFamily: 'Basis Grotesque Pro' }}
               >
-                $100
+                ${negotiationPrice * Number(weight)}
               </Typography>
             </div>
             {/* <BoxRadio
