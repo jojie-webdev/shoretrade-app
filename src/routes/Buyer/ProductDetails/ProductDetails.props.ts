@@ -28,6 +28,13 @@ interface ProductDetailsCard1Props {
   packaging?: string;
 }
 
+export interface Box {
+  count: number | null;
+  id: string;
+  quantity: number | null;
+  weight: number;
+}
+
 export interface ProductDetailsGeneratedProps {
   currentListing: GetListingResponseItem;
   onLoad: (listingId: string) => void;
@@ -59,15 +66,14 @@ export interface ProductDetailsGeneratedProps {
     totalWeight: number;
     quantity: number;
     cost: number;
-    boxes: {
-      count: number | null;
-      id: string;
-      quantity: number | null;
-      weight: number;
-    }[];
+    boxes: Box[];
     unit: string;
   }[];
   isPendingAccount: boolean;
   showSuccessAddBtn: boolean;
-  canNegotiate?: boolean;
+  handleNegoModalShow: () => void;
+  showNegoModal: boolean;
+  handleSelectedBoxesWeight: (boxes: Box[], boxesIndex: number) => void;
+  selectedBoxesWeight: Box[];
+  selectedBoxesIndex: number | null;
 }

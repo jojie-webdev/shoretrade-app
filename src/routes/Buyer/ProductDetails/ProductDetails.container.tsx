@@ -6,7 +6,10 @@ import { ADDITIONAL_INFOS } from 'consts/listingAdditionalInfos';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { ProductSellerRatingProps } from 'routes/Buyer/ProductDetails/ProductDetails.props';
+import {
+  Box,
+  ProductSellerRatingProps,
+} from 'routes/Buyer/ProductDetails/ProductDetails.props';
 import {
   getListingActions,
   getListingBoxesActions,
@@ -118,6 +121,11 @@ const ProductDetails = (): JSX.Element => {
   const [weight, setWeight] = useState('');
   const [shouldHideResult, setShouldHideResult] = useState(true);
   const [favorite, setFavorite] = useState(currentListing?.isFavourite);
+  const [showNegoModal, setShowNegoModal] = useState(true);
+  const [selectedBoxesIndex, setSelectedBoxesIndex] = useState<number | null>(
+    null
+  );
+  const [selectedBoxesWeight, setSelectedBoxesWeight] = useState<Box[]>([]);
   const unit = formatMeasurementUnit(currentListing?.measurementUnit);
   const remainingWeight = (currentListing?.remaining || 0).toFixed(2);
   const price = Number(currentListing?.price || '0');
@@ -246,6 +254,15 @@ const ProductDetails = (): JSX.Element => {
       // history.push(BUYER_ROUTES.CHECKOUT); // moved to sagas
       setShowSuccessAddBtn(true);
     }
+  };
+
+  const handleSelectedBoxesWeight = (boxes: Box[], boxesIndex: number) => {
+    setSelectedBoxesIndex(boxesIndex);
+    setSelectedBoxesWeight(boxes);
+  };
+
+  const handleNegoModalShow = () => {
+    setShowNegoModal((prevValue) => !prevValue);
   };
 
   const getBoxes = () => {
@@ -473,7 +490,11 @@ const ProductDetails = (): JSX.Element => {
     isLoadingAddCart,
     addCartItemData,
     showSuccessAddBtn,
-    canNegotiate,
+    handleNegoModalShow,
+    showNegoModal,
+    handleSelectedBoxesWeight,
+    selectedBoxesWeight,
+    selectedBoxesIndex,
   };
   return <ProductDetailsView {...generatedProps} />;
 };

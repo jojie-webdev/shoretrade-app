@@ -78,7 +78,11 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     isLoadingAddCart,
     addCartItemData,
     showSuccessAddBtn,
-    canNegotiate,
+    handleNegoModalShow,
+    showNegoModal,
+    handleSelectedBoxesWeight,
+    selectedBoxesWeight,
+    selectedBoxesIndex,
   } = props;
   const { isPreAuction, dateEnds } = productDetailsCard6Props;
 
@@ -102,7 +106,11 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   const priceDiff2 =
     priceDiff / Math.abs(Number(productDetailsCard6Props.price));
   const priceDiffPercentage =
-    priceDiff2 < 0 ? Math.abs(priceDiff2) * 100 : -(priceDiff2 * 100);
+    negotiationPrice === null
+      ? 0
+      : priceDiff2 < 0
+      ? Math.abs(priceDiff2) * 100
+      : -(priceDiff2 * 100);
 
   useEffect(() => {
     selectAddress(listingId);
@@ -203,10 +211,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
         }
       />
       <ConfirmationModal
-        isOpen
-        onClickClose={() => {
-          console.log('');
-        }}
+        isOpen={showNegoModal}
+        onClickClose={handleNegoModalShow}
         title={
           <Typography
             variant="title4"
@@ -276,9 +282,13 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                     <GroupedBoxContainer>
                       <div style={{ padding: '0 0 0 20px' }}>
                         <Radio
-                          onClick={() => {
-                            console.log('');
-                          }}
+                          checked={index === selectedBoxesIndex}
+                          onClick={() =>
+                            handleSelectedBoxesWeight(
+                              groupedBox[index].boxes,
+                              index
+                            )
+                          }
                         />
                       </div>
                       <div style={{ width: '100%', paddingTop: 2 }}>
@@ -340,20 +350,18 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                     </span>
                   )}
                 </Typography>
-                {/* <div style={{ marginLeft: 10 }} />
-                <Typography
-                  color="shade6"
-                  weight="700"
-                  style={{ fontFamily: 'Basis Grotesque Pro' }}
-                >
-                  Change in Price
-                </Typography> */}
               </div>
               <Typography variant="label" color="secondary">
-                $15.00/kg
+                {toPrice(
+                  Math.abs(
+                    Number(productDetailsCard6Props.price) - negotiationPrice
+                  )
+                )}
+                /{unit}
               </Typography>
             </div>
             <div style={{ marginTop: 5 }} />
+            {console.log('negotiationPrice > ', negotiationPrice)}
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <Typography variant="caption" color="shade6">
                 Total Product Value
@@ -363,30 +371,20 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                 color="secondary"
                 style={{ fontFamily: 'Basis Grotesque Pro' }}
               >
-                ${negotiationPrice * Number(weight)}
+                {toPrice(
+                  selectedBoxesWeight.reduce(
+                    (acc, cur) =>
+                      acc +
+                      (cur.quantity || 0) *
+                        cur.weight *
+                        (negotiationPrice === null || isNaN(negotiationPrice)
+                          ? productDetailsCard6Props.price
+                          : negotiationPrice),
+                    0
+                  )
+                )}
               </Typography>
             </div>
-            {/* <BoxRadio
-                id="id"
-                checked={'id' === pressedBoxRadio}
-                totalWeight={0}
-                boxes={[
-                  {
-                    count: 0,
-                    id: 'string',
-                    quantity: 0,
-                    weight: 0,
-                  },
-                ]}
-                cost={0}
-                unit={'kg'}
-                onClick={
-                  () => console.log('')
-                  // setPressedBoxRadio((prevState) =>
-                  //   p.id === prevState ? '' : p.id
-                  // )
-                }
-              /> */}
           </div>
         }
       />
