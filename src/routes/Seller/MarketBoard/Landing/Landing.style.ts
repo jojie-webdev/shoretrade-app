@@ -7,6 +7,10 @@ import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
 export const Container = styled.div`
+  .segmented_control__option {
+    color: ${({ theme }) => theme.grey.noshade};
+  }
+
   @media ${BREAKPOINTS['sm']} {
     padding-bottom: 24px;
   }
@@ -128,6 +132,7 @@ export const FilterSearchContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 20px;
 
   .filter-button {
     margin-left: 16px;

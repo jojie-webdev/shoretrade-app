@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 
 import {
   /* PLOP_INJECT_IMPORT */
+  MarketBoard,
   SfmAcceptNegotiation,
   // TechByShoretradeSellerLogo,
   // TechByShoretradeLogo, 
@@ -254,6 +255,9 @@ storiesOf('base/SVG', module).add('Summary', () => {
     <Container background="white">
       <Content>
         {/* PLOP_INJECT_INSTANCE*/}
+        <Wrapper label="MarketBoard">
+          <MarketBoard width={30} height={30} />
+        </Wrapper>
         <Wrapper label="SfmAcceptNegotiation">
           <SfmAcceptNegotiation width={30} height={30} />
         </Wrapper>

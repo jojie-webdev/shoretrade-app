@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Alert from 'components/base/Alert';
 import Interactions from 'components/base/Interactions';
+import SegmentedControls from 'components/base/SegmentedControls';
 import { ChevronRight, Filter } from 'components/base/SVG';
 import Tabs from 'components/base/Tabs';
 import Typography from 'components/base/Typography';
@@ -38,6 +39,11 @@ import {
 } from './Landing.style';
 import MobileMarketRequests from './MobileMarketRequest/MobileMarketRequest.view';
 import MobileOffers from './MobileOffers/MobileOffers.view';
+
+enum TABS {
+  REVERSE_MARKETPLACE = 'Market Requests',
+  NEGO = 'Negotiations',
+}
 
 const BuyerRequestsInteractions = (props: {
   onClick: () => void;
@@ -245,6 +251,8 @@ const MyActiveOffersInteractions = (props: {
 const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
+  const [activeTab, setActiveTab] = useState(TABS.NEGO);
+
   return (
     <Container>
       {props.userPending && (
@@ -260,6 +268,19 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
       {isMobile && <MobileHeader>Reverse Marketplace</MobileHeader>}
 
       <div className="tabs-row">
+        <SegmentedControls
+          options={[TABS.NEGO, TABS.REVERSE_MARKETPLACE]}
+          controlButtonColor={theme.brand.primary}
+          controlButtonTextColor={theme.grey.noshade}
+          inactiveBackgroundColor={theme.grey.shade9}
+          selectedOption={activeTab}
+          onClickControl={(value) => {
+            setActiveTab(
+              value === TABS.NEGO ? TABS.NEGO : TABS.REVERSE_MARKETPLACE
+            );
+          }}
+        />
+
         <div className="tabs">
           <Tabs
             tabs={['My Active Offers', 'Buyer Requests']}

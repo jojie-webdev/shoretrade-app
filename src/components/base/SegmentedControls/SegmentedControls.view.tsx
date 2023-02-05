@@ -39,11 +39,13 @@ const SegmentedControls = (props: SegmentedControlsProps): JSX.Element => {
           return (
             <Col key={option}>
               <ControlButton
+                className="segmented_control__option"
                 active={option === selectedOption}
                 onClick={() => onClickControl(option)}
                 backgroundColor={controlButtonColor}
                 inactiveBackgroundColor={inactiveBackgroundColor}
                 textColor={controlButtonTextColor}
+                inactiveBackgroundColor={inactiveBackgroundColor}
                 type="button"
               >
                 {option}
