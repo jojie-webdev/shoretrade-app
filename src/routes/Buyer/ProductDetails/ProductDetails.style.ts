@@ -7,7 +7,7 @@ import styled from 'utils/styled';
 
 export const Container = styled.div`
   .confirmation_modal__ok_btn {
-    margin-left: 0px;
+    margin-left: 0px !important;
     padding: 14px 24px !important;
   }
 

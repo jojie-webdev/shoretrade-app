@@ -24,6 +24,7 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
     hideCancel,
     switchBtns,
     switchBtnsEffect,
+    disableActionText,
     ...modalProps
   } = props;
 
@@ -98,6 +99,7 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
                 iconPosition={actionIconPosition}
                 icon={actionIcon}
                 text={actionText || 'OK'}
+                disabled={disableActionText}
                 onClick={() => {
                   action();
                 }}
@@ -112,6 +114,7 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
                 iconPosition={actionIconPosition}
                 icon={actionIcon}
                 text={actionText || 'OK'}
+                disabled={disableActionText}
                 onClick={() => {
                   action();
                 }}

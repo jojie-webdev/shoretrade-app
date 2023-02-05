@@ -109,8 +109,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     negotiationPrice === null
       ? 0
       : priceDiff2 < 0
-      ? Math.abs(priceDiff2) * 100
-      : -(priceDiff2 * 100);
+      ? -(Math.abs(priceDiff2) * 100)
+      : priceDiff2 * 100;
 
   useEffect(() => {
     selectAddress(listingId);
@@ -228,7 +228,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
         }}
         actionIconPosition="before"
         actionIcon={<MarketBoardOutlined width={20} height={20} />}
-        actionText="Negotiate"
+        actionText="NEGOTIATE"
+        disableActionText={isBeyondCutoff}
         hideCancel={true}
         description={
           <div style={{ marginTop: 20 }}>
@@ -344,14 +345,22 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
               <div style={{ display: 'flex' }}>
                 <Typography variant="caption" color="shade6">
                   Change in Price{' '}
-                  {!!priceDiffPercentage && (
+                  {priceDiffPercentage ? (
                     <span className="indicator">
-                      {priceDiffPercentage.toFixed(2)}%
+                      {new Intl.NumberFormat('en-US', {
+                        signDisplay: 'exceptZero',
+                      }).format(Number(priceDiffPercentage.toFixed(2)))}
+                      %
                     </span>
+                  ) : (
+                    <span className="indicator">0.00%</span>
                   )}
                 </Typography>
               </div>
-              <Typography variant="label" color="secondary">
+              <Typography
+                variant="label"
+                color={priceDiffPercentage > 0 ? 'error' : 'success'}
+              >
                 {toPrice(
                   Math.abs(
                     Number(productDetailsCard6Props.price) - negotiationPrice
@@ -361,7 +370,6 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
               </Typography>
             </div>
             <div style={{ marginTop: 5 }} />
-            {console.log('negotiationPrice > ', negotiationPrice)}
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <Typography variant="caption" color="shade6">
                 Total Product Value
