@@ -83,6 +83,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     handleSelectedBoxesWeight,
     selectedBoxesWeight,
     selectedBoxesIndex,
+    handleShowConfirmNegoModal,
+    showConfirmNegoModal,
   } = props;
   const { isPreAuction, dateEnds } = productDetailsCard6Props;
 
@@ -179,10 +181,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
         }
       />
       <ConfirmationModal
-        isOpen={false}
-        onClickClose={() => {
-          console.log('');
-        }}
+        isOpen={showConfirmNegoModal}
+        onClickClose={handleShowConfirmNegoModal}
         title={
           <Typography
             variant="title4"
@@ -196,6 +196,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
         action={() => {
           console.log('');
         }}
+        cancel={handleShowConfirmNegoModal}
         actionText="Send Negotiation"
         cancelText="Cancel"
         description={
@@ -223,9 +224,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
             Negotiate
           </Typography>
         }
-        action={() => {
-          console.log('');
-        }}
+        action={() => handleShowConfirmNegoModal()}
         actionIconPosition="before"
         actionIcon={<MarketBoardOutlined width={20} height={20} />}
         actionText="NEGOTIATE"

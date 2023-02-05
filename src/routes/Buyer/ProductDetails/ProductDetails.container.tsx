@@ -122,6 +122,7 @@ const ProductDetails = (): JSX.Element => {
   const [shouldHideResult, setShouldHideResult] = useState(true);
   const [favorite, setFavorite] = useState(currentListing?.isFavourite);
   const [showNegoModal, setShowNegoModal] = useState(true);
+  const [showConfirmNegoModal, setShowConfirmNegoModal] = useState(false);
   const [selectedBoxesIndex, setSelectedBoxesIndex] = useState<number | null>(
     null
   );
@@ -263,6 +264,11 @@ const ProductDetails = (): JSX.Element => {
 
   const handleNegoModalShow = () => {
     setShowNegoModal((prevValue) => !prevValue);
+  };
+
+  const handleShowConfirmNegoModal = () => {
+    setShowNegoModal((prevValue) => !prevValue);
+    setShowConfirmNegoModal((prevValue) => !prevValue);
   };
 
   const getBoxes = () => {
@@ -495,6 +501,8 @@ const ProductDetails = (): JSX.Element => {
     handleSelectedBoxesWeight,
     selectedBoxesWeight,
     selectedBoxesIndex,
+    handleShowConfirmNegoModal,
+    showConfirmNegoModal,
   };
   return <ProductDetailsView {...generatedProps} />;
 };

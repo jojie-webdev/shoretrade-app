@@ -76,4 +76,6 @@ export interface ProductDetailsGeneratedProps {
   handleSelectedBoxesWeight: (boxes: Box[], boxesIndex: number) => void;
   selectedBoxesWeight: Box[];
   selectedBoxesIndex: number | null;
+  handleShowConfirmNegoModal: () => void;
+  showConfirmNegoModal: boolean;
 }
