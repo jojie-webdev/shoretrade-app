@@ -47,6 +47,8 @@ const OfferDetails = (): JSX.Element => {
   const [negotiating, setNegotiating] = useState(false);
   const [clickAccept, setClickAccept] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [showAcceptModal, setShowAcceptModal] = useState(false);
+  const [showDeclineModal, setShowDeclineModal] = useState(false);
   // eslint-disable-next-line
   const [showNotEnoughCreditAlert, setShowNotEnoughCreditAlert] = useState(
     false
@@ -139,11 +141,20 @@ const OfferDetails = (): JSX.Element => {
     },
   ];
 
-  const handleDeclineClick = (show: boolean) => {
-    setClickDecline(show);
+  const handleShowAcceptOffer = () => {
+    setShowAcceptModal((prevValue) => !prevValue);
   };
 
-  const handleAcceptOffer = () => {
+  const handleShowDeclineModal = () => {
+    setShowDeclineModal((prevValue) => !prevValue);
+  };
+
+  const handleConfirmOffer = () => {
+    // const meta: OfferConfirm = {
+    //   marketOfferId: selectedOffer?.id || '',
+    // };
+    // dispatch(marketRequestOfferConfirmActions.request(meta));
+
     setShowPaymentMethod(true);
     const getMarketNegotiationId = () => {
       if (!selectedOffer?.negotiations) {
@@ -162,19 +173,8 @@ const OfferDetails = (): JSX.Element => {
     dispatch(marketOfferActions.add(payload));
   };
 
-  const handleAcceptClick = (show: boolean) => {
-    setClickAccept(show);
-  };
-
-  const handleConfirmOffer = () => {
-    const meta: OfferConfirm = {
-      marketOfferId: selectedOffer?.id || '',
-    };
-    // dispatch(marketRequestOfferConfirmActions.request(meta));
-  };
-
-  const handleNegoBtnClick = (show: boolean) => {
-    setNegotiating(show);
+  const handleStartNegotiate = () => {
+    setNegotiating(true);
   };
 
   const onRefresh = async () => {
@@ -186,7 +186,7 @@ const OfferDetails = (): JSX.Element => {
   };
 
   const handlePayNow = () => {
-    handleAcceptOffer();
+    handleShowAcceptOffer();
   };
 
   const onClickDelete = () => {
@@ -369,8 +369,8 @@ const OfferDetails = (): JSX.Element => {
 
   const generatedProps: OfferDetailsProps = {
     counterOffer,
-    handleConfirmOffer,
-    handleNegoBtnClick,
+    handleShowAcceptOffer,
+    handleStartNegotiate,
     isLoadingAcceptOffer: acceptOffer.pending || false,
     isLoadingOffer: activeOffers.pending || false,
     isAccepted,
@@ -402,10 +402,9 @@ const OfferDetails = (): JSX.Element => {
     showConfirmOfferSentModal: confirmOffer.data?.data?.status === 'PARTIAL',
     onCloseAcceptSentModal,
     onPayNow,
-    canNegotiate,
-    clickAccept,
-    handleDeclineClick,
-    clickDecline,
+    showAcceptModal,
+    handleShowDeclineModal,
+    showDeclineModal,
   };
 
   const getPrice = () => {

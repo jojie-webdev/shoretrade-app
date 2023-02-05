@@ -156,7 +156,7 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
             </Typography>
           </div>
 
-          {sortedNegotiations.length >= 2 && (
+          {/* {sortedNegotiations.length >= 2 && (
             <div className="computation-item-container">
               <Typography variant="body" color="shade6">
                 Your New Offer
@@ -165,7 +165,7 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
                 {toPrice(negotiationPrice || 0)}/{unit}
               </Typography>
             </div>
-          )}
+          )} */}
 
           <div className="computation-item-container">
             <Typography variant="body" color="shade6">
@@ -193,7 +193,7 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
               Quantity
             </Typography>
             <Typography variant="body" color="shade7">
-              10/{unit}
+              {weightValue} {unit}
             </Typography>
           </div>
 
