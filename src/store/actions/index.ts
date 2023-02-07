@@ -1,5 +1,5 @@
 /* PLOP_INJECT_IMPORT */
-export { default as createNegotiationActions } from './createNegotiation';
+export { default as getAllNegotiationsActions } from './getAllNegotiations';
 export { default as getOrderInvoiceAdjustmentsActions } from './getOrderInvoiceAdjustments';
 export { default as selectedDeliveryMethodActions } from './selectedDeliveryMethod';
 export { default as paySubscriptionActions } from './paySubscription';

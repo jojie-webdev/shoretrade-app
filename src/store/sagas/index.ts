@@ -125,7 +125,7 @@ import verify from './verify';
 
 const sagas = [
   /* PLOP_INJECT_INSTANCE */
-  createNegotiation,
+  getAllNegotiations,
   getOrderInvoiceAdjustments,
   paySubscription,
   upgradeSubscription,

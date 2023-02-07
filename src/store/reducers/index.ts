@@ -141,7 +141,7 @@ const createAppReducer = (routeHistory: History) =>
     Object.fromEntries(
       Object.entries({
         /* PLOP_INJECT_INSTANCE */
-        createNegotiation,
+        getAllNegotiations,
         getOrderInvoiceAdjustments,
         selectedDeliveryMethod,
         paySubscription,
