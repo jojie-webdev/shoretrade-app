@@ -53,6 +53,7 @@ export type GetListingsByTypeResponseListingItem = {
     type: string;
     width: number;
   };
+  allowNegotiations: boolean;
 };
 
 export type GetListingsByTypePayload = GenericResponse<{

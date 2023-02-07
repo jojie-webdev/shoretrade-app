@@ -247,8 +247,11 @@ const Preview = (props: PreviewProps): JSX.Element => {
     hiddenPrice,
     hiddenVendor,
     canNegotiate,
+    allowNegotiations,
   } = props;
   const theme = useTheme();
+
+  const allowedNegotiationByBuyer = allowNegotiations;
 
   return (
     <CardContainer
@@ -589,35 +592,37 @@ const Preview = (props: PreviewProps): JSX.Element => {
             </Row>
 
             <Row justify="between" nogutter>
-              {canNegotiate ? (
-                <NegotiatePriceBtnContainer>
-                  <NegotiatePriceBtnWrapper>
-                    <MarketBoardOutlined />
-                    <div style={{ marginRight: 5 }} />
-                    <NegotiatePriceText
-                      variant="small"
-                      color="noshade"
-                      style={{ paddingRight: 8 }}
-                    >
-                      NEGOTIATE PRICE
-                    </NegotiatePriceText>
-                  </NegotiatePriceBtnWrapper>
-                </NegotiatePriceBtnContainer>
-              ) : (
-                <NegotiatePriceBtnContainer>
-                  <NegotiatePriceBtnWrapper backgroundColor="shade3">
-                    <MarketBoardOutlined fill={theme.grey.shade6} />
-                    <div style={{ marginRight: 5 }} />
-                    <NegotiatePriceText
-                      variant="small"
-                      color="shade6"
-                      style={{ paddingRight: 8 }}
-                    >
-                      NEGOTIATE PRICE
-                    </NegotiatePriceText>
-                  </NegotiatePriceBtnWrapper>
-                </NegotiatePriceBtnContainer>
-              )}
+              {allowedNegotiationByBuyer ? (
+                canNegotiate ? (
+                  <NegotiatePriceBtnContainer>
+                    <NegotiatePriceBtnWrapper>
+                      <MarketBoardOutlined />
+                      <div style={{ marginRight: 5 }} />
+                      <NegotiatePriceText
+                        variant="small"
+                        color="noshade"
+                        style={{ paddingRight: 8, marginTop: 2 }}
+                      >
+                        NEGOTIATE PRICE
+                      </NegotiatePriceText>
+                    </NegotiatePriceBtnWrapper>
+                  </NegotiatePriceBtnContainer>
+                ) : (
+                  <NegotiatePriceBtnContainer>
+                    <NegotiatePriceBtnWrapper backgroundColor="shade3">
+                      <MarketBoardOutlined fill={theme.grey.shade6} />
+                      <div style={{ marginRight: 5 }} />
+                      <NegotiatePriceText
+                        variant="small"
+                        color="shade6"
+                        style={{ paddingRight: 8, marginTop: 2 }}
+                      >
+                        NEGOTIATE PRICE
+                      </NegotiatePriceText>
+                    </NegotiatePriceBtnWrapper>
+                  </NegotiatePriceBtnContainer>
+                )
+              ) : null}
             </Row>
           </BodyContainer>
         </DetailsContainer>

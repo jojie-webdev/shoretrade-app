@@ -60,6 +60,7 @@ export type GetBuyerHomepageResponseListingItem = {
     type: string;
     width: number;
   };
+  allowNegotiations: boolean;
 };
 
 export type GetBuyerHomepagePayload = GenericResponse<{

@@ -111,6 +111,7 @@ const ProductDetails = (): JSX.Element => {
   const currentListing: GetListingResponseItem | undefined = (useSelector(
     (state: Store) => state.getListing.data?.data.listing
   ) || [])[0];
+  console.log('currentListing > ', currentListing);
 
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const [pressedBoxRadio, setPressedBoxRadio] = useState('');

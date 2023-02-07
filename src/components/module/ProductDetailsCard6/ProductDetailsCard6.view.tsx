@@ -82,7 +82,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
               <NegotiatePriceText
                 variant="small"
                 color="noshade"
-                style={{ paddingRight: 8 }}
+                style={{ paddingRight: 8, marginTop: 2 }}
               >
                 NEGOTIATE PRICE
               </NegotiatePriceText>
@@ -96,7 +96,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
               <NegotiatePriceText
                 variant="small"
                 color="shade6"
-                style={{ paddingRight: 8 }}
+                style={{ paddingRight: 8, marginTop: 2 }}
               >
                 NEGOTIATE PRICE
               </NegotiatePriceText>

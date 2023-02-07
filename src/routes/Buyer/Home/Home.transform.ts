@@ -73,6 +73,7 @@ export function recentlyAddedToPreviewProps(
     templateDeliveryDate: data.templateDeliveryDate,
     isForSaleRepPhoto: data.isForSaleRepPhoto,
     isSFMCrate: data.packaging?.type === 'SFM',
+    allowNegotiations: data.allowNegotiations,
     canNegotiate,
   };
 }
@@ -110,6 +111,7 @@ export function favouritesToPreviewProps(
     templateDeliveryDate: data.templateDeliveryDate,
     isForSaleRepPhoto: data.isForSaleRepPhoto,
     isSFMCrate: data.packaging?.type === 'SFM',
+    allowNegotiations: data.allowNegotiations,
   };
 }
 

@@ -85,6 +85,7 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
                           templateDeliveryDate={fav.templateDeliveryDate}
                           isForSaleRepPhoto={fav.isForSaleRepPhoto}
                           isSFMCrate={fav.packaging?.type === 'SFM'}
+                          allowNegotiations={fav.allowNegotiations}
                         />
                       </StyledInteraction>
                     ) : (
@@ -114,6 +115,7 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
                         templateDeliveryDate={fav.templateDeliveryDate}
                         isForSaleRepPhoto={fav.isForSaleRepPhoto}
                         isSFMCrate={fav.packaging?.type === 'SFM'}
+                        allowNegotiations={fav.allowNegotiations}
                       />
                     )}
                   </Link>

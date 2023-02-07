@@ -37,4 +37,5 @@ export interface PreviewProps {
   isForSaleRepPhoto: boolean;
   isSFMCrate: boolean;
   canNegotiate?: boolean;
+  allowNegotiations: boolean;
 }
