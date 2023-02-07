@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import Button from 'components/base/Button';
 import Divider from 'components/base/Divider';
+import Radio from 'components/base/Radio';
 import Typography from 'components/base/Typography/Typography.view';
 import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
 import MobileModal from 'components/layout/MobileModal';
@@ -12,6 +13,7 @@ import {
   Inputs,
   ButtonContainer,
   ComputationContainer,
+  BoxContainer,
 } from 'components/module/NegotiateSellerModal/NegotiateSellerModal.style';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { sortBy } from 'ramda';
@@ -86,8 +88,65 @@ const Content = (props: NegotiateSellerModalProps) => {
           placeholder={`per ${unit}`}
         />
       </Inputs>
+
       <ComputationContainer>
-        <div className="computation-item-container">
+        <div className="computation-item-container" style={{ marginTop: -3 }}>
+          <Typography variant="body" weight="400" color={textColor}>
+            Quantity
+          </Typography>
+          <Typography variant="body" weight="400" color={textColor}>
+            20 kg
+          </Typography>
+        </div>
+
+        <div style={{ padding: '10px 0px' }}>
+          <BoxContainer>
+            <div style={{ display: 'flex' }}>
+              <div style={{ marginTop: 1 }}>
+                <Radio size={13} />
+              </div>
+
+              <div>
+                <Typography color="noshade" style={{ marginLeft: 5 }}>
+                  5kg x 2
+                </Typography>
+              </div>
+            </div>
+            <Typography color="noshade">10 kg</Typography>
+          </BoxContainer>
+          <div style={{ marginTop: 10 }} />
+
+          <BoxContainer>
+            <div style={{ display: 'flex' }}>
+              <div style={{ marginTop: 1 }}>
+                <Radio size={13} />
+              </div>
+
+              <div>
+                <Typography color="noshade" style={{ marginLeft: 5 }}>
+                  5kg x 2
+                </Typography>
+                <Typography color="noshade" style={{ marginLeft: 5 }}>
+                  4kg x 1
+                </Typography>
+              </div>
+            </div>
+            <Typography color="noshade">14 kg</Typography>
+          </BoxContainer>
+        </div>
+
+        {sortedNegotiations.length >= 1 && (
+          <div className="computation-item-container">
+            <Typography variant="body" weight="400" color={textColor}>
+              Buyer&apos;s negotiated price
+            </Typography>
+            <Typography variant="body" weight="400" color={textColor}>
+              {toPrice(latestCounterOffer.price)}/{unit}
+            </Typography>
+          </div>
+        )}
+
+        {/* <div className="computation-item-container">
           <Typography variant="body" weight="400" color={textColor}>
             Previous offer was
           </Typography>
@@ -96,24 +155,13 @@ const Content = (props: NegotiateSellerModalProps) => {
               ? `${toPrice(props.marketOffer.originalOfferPrice)}/${unit}`
               : `${toPrice(latestPrice)}/${unit}`}
           </Typography>
-        </div>
-
-        {sortedNegotiations.length >= 1 && (
-          <div className="computation-item-container">
-            <Typography variant="body" weight="400" color={textColor}>
-              Buyer&apos;s counter offer
-            </Typography>
-            <Typography variant="body" weight="400" color={textColor}>
-              {toPrice(latestCounterOffer.price)}/{unit}
-            </Typography>
-          </div>
-        )}
+        </div> */}
 
         <div className="computation-item-container">
-          <Typography variant="body" weight="400" color={textColor}>
+          <Typography variant="body" weight="400" color="noshade">
             Your counter offer is
           </Typography>
-          <Typography variant="body" weight="400" color={textColor}>
+          <Typography variant="body" weight="400" color="noshade">
             {toPrice(negotiationPrice || 0)}/{unit}
           </Typography>
         </div>
@@ -149,11 +197,11 @@ const Content = (props: NegotiateSellerModalProps) => {
           )}
         </div>
 
-        <Divider backgroundColor={theme.grey.shade7} />
+        <Divider backgroundColor={theme.grey.shade7} spacing={10} />
 
         <div className="computation-item-container total-delivery">
-          <Typography variant="body" weight="bold" color={textColor}>
-            Total Value inc. Delivery
+          <Typography variant="body" weight="bold" color="noshade">
+            Total Value
           </Typography>
           <Typography variant="body" weight="bold" color="noshade">
             {toPrice(totalValue)}

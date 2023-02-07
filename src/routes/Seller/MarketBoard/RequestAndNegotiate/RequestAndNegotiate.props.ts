@@ -24,6 +24,12 @@ export interface CommonProps {
 export interface Step1Props extends StepProps, CommonProps {
   userPending: boolean;
   buyerRequestForActiveOfferTab?: GetAllMarketRequestResponseItem;
+  handleAcceptBtnClick: () => void;
+  showAcceptModal: boolean;
+  handleDeclineBtnClick: () => void;
+  handleCancelBtnClick: () => void;
+  handleConfirmBtnClick: () => void;
+  showDeclineModal: boolean;
 }
 
 export interface OfferProps {
@@ -43,4 +49,10 @@ export interface RequestAndNegotiateGeneratedProps
   onConfirmSentOffer: () => void;
   showOfferSentModal: boolean;
   showOfferAcceptSentModal: boolean;
+  handleDeclineBtnClick: () => void;
+  handleAcceptBtnClick: () => void;
+  handleCancelBtnClick: () => void;
+  handleConfirmBtnClick: () => void;
+  showAcceptModal: boolean;
+  showDeclineModal: boolean;
 }

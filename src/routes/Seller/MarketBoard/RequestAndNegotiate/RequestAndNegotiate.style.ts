@@ -15,12 +15,22 @@ export const Container = styled.div`
 
   .submit-btns {
     display: flex;
+    justify-content: space-between;
   }
 
   .submit-btn {
     margin-top: 1rem;
     margin-right: 8px;
     max-width: 148px;
+  }
+
+  .modal_container__exit_btn {
+    background-color: ${({ theme }) => theme.grey.shade10} !important;
+    border: ${({ theme }) => theme.grey.shade8} !important;
+
+    svg > path {
+      fill: ${({ theme }) => theme.grey.noshade};
+    }
   }
 `;
 

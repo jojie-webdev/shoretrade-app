@@ -5,9 +5,13 @@ import Alert from 'components/base/Alert';
 import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
+import { Check, Close } from 'components/base/SVG';
+import Refresh from 'components/base/SVG/Refresh';
 import Typography from 'components/base/Typography/Typography.view';
 import MobileFooter from 'components/layout/MobileFooter';
+import AcceptSellerModal from 'components/module/AcceptSellerModal';
 import ConfirmationModal from 'components/module/ConfirmationModal';
+import DeclineSellerModal from 'components/module/DeclineSellerModal';
 import MobileHeader from 'components/module/MobileHeader';
 import NegotiateSellerModal from 'components/module/NegotiateSellerModal';
 // import PaymentTimeLeft from 'components/module/PaymentTimeLeft';
@@ -15,6 +19,7 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { SELLER_MARKET_BOARD_ROUTES, SELLER_ROUTES } from 'consts/routes';
 import moment from 'moment';
 import { groupBy, isEmpty, pathOr, sortBy } from 'ramda';
+import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory, useLocation } from 'react-router-dom';
 import { OfferStatus } from 'types/store/GetActiveOffersState';
@@ -49,6 +54,12 @@ const Step1 = ({
   activeOffer,
   userPending,
   buyerRequestForActiveOfferTab,
+  handleAcceptBtnClick,
+  showAcceptModal,
+  handleDeclineBtnClick,
+  handleConfirmBtnClick,
+  handleCancelBtnClick,
+  showDeclineModal,
   ...props
 }: Step1Props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -340,52 +351,108 @@ const Step1 = ({
 
         {showButtons && !isMobile && (
           <div className={'submit-btns'}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <Button
+                onClick={handleDeclineBtnClick}
+                text={
+                  <Typography color="primary" style={{ marginRight: 5 }}>
+                    Decline
+                  </Typography>
+                }
+                variant="outline"
+                icon={<Close fill={theme.brand.primary} />}
+              />
+              <div style={{ marginLeft: 8 }} />
+              <Button
+                text={
+                  <Typography color="noshade" style={{ marginRight: 5 }}>
+                    Negotiate
+                  </Typography>
+                }
+                onClick={() => setIsOpen(true)}
+                icon={<Refresh fill={theme.grey.noshade} />}
+              />
+            </div>
+            <div style={{ marginLeft: 8 }} />
             <Button
-              onClick={() => setIsOpen(true)}
-              className={'submit-btn'}
-              text="Negotiate"
-              variant="outline"
-            />
-            <Button
-              loading={props.isNegotiating}
-              onClick={() =>
-                props.onNegotiateOffer(
-                  activeOffer.id,
-                  latestBuyerNego.price,
-                  true
-                )
+              text={
+                <Typography color="noshade" style={{ marginRight: 5 }}>
+                  Accept
+                </Typography>
               }
-              className={'submit-btn'}
-              text="accept"
+              onClick={handleAcceptBtnClick}
               variant="primary"
+              icon={<Check width={10} height={9} />}
             />
           </div>
         )}
 
         {showButtons && isMobile && (
           <MobileFooter>
-            <Button
-              onClick={() => setIsOpen(true)}
-              takeFullWidth
-              text="Negotiate"
-              variant="outline"
-            />
-            <Button
-              loading={props.isNegotiating}
-              onClick={() =>
-                props.onNegotiateOffer(
-                  activeOffer.id,
-                  latestBuyerNego.price,
-                  true
-                )
-              }
-              takeFullWidth
-              style={{ marginLeft: 8 }}
-              text="accept"
-              variant="primary"
-            />
+            <div style={{ width: '100%' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Button
+                  onClick={handleDeclineBtnClick}
+                  text={
+                    <Typography color="primary" style={{ marginRight: 5 }}>
+                      Decline
+                    </Typography>
+                  }
+                  variant="outline"
+                  icon={<Close fill={theme.brand.primary} />}
+                  takeFullWidth
+                />
+                <div style={{ marginRight: 10 }} />
+                <Button
+                  text={
+                    <Typography color="noshade" style={{ marginRight: 5 }}>
+                      Accept
+                    </Typography>
+                  }
+                  onClick={handleAcceptBtnClick}
+                  variant="primary"
+                  icon={<Check width={10} height={9} />}
+                  takeFullWidth
+                />
+              </div>
+              <div style={{ marginTop: 10 }} />
+              <div>
+                <Button
+                  text={
+                    <Typography color="noshade" style={{ marginRight: 5 }}>
+                      Negotiate
+                    </Typography>
+                  }
+                  onClick={() => setIsOpen(true)}
+                  icon={<Refresh fill={theme.grey.noshade} />}
+                  takeFullWidth
+                />
+              </div>
+            </div>
           </MobileFooter>
         )}
+
+        <AcceptSellerModal
+          show={showAcceptModal}
+          onCloseClick={handleAcceptBtnClick}
+          isAccepting={props.isNegotiating}
+          onAcceptBtnClick={() => {
+            handleAcceptBtnClick();
+            props.onNegotiateOffer(activeOffer.id, latestBuyerNego.price, true);
+          }}
+          quantity={
+            (isReview
+              ? buyerRequest.weight?.from || 0
+              : activeOffer.weight || 0) + ` ${unit}`
+          }
+          buyersNegoPrice={`${toPrice(latestBuyerNego.price)}/${unit}`}
+          percentageChangeInPrice={`${
+            discountValue > 0 ? '+' : ''
+          }${discountPercentage}%`}
+          isGoodNego={discountValue >= 0}
+          negoDiff={`${toPrice(Math.abs(discountValue))}/${unit}`}
+          totalValue={toPrice(activeOffer.price * activeOffer.weight)}
+        />
 
         <NegotiateSellerModal
           marketOffer={activeOffer}
@@ -397,6 +464,12 @@ const Step1 = ({
             props.onNegotiateOffer(activeOffer.id, counterOffer);
             setIsOpen(false);
           }}
+        />
+
+        <DeclineSellerModal
+          show={showDeclineModal}
+          onCancelBtnClick={handleCancelBtnClick}
+          onConfirmBtnClick={handleConfirmBtnClick}
         />
       </>
     );

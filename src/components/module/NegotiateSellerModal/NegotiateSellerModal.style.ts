@@ -32,7 +32,6 @@ export const ComputationContainer = styled.div`
   flex-direction: column;
   padding-top: 0.6rem;
   margin-bottom: 24px;
-  margin-top: 24px;
 
   .computation-item-container {
     display: flex;
@@ -48,6 +47,12 @@ export const ComputationContainer = styled.div`
   }
 
   .total-delivery {
-    margin-top: 34px;
+    margin-top: -3px;
   }
+`;
+
+export const BoxContainer = styled.div`
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
 `;
