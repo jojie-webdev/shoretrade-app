@@ -49,7 +49,7 @@ const Theme = ({ children }: { children: React.ReactNode }) => {
   const isSeller =
     pathname.startsWith('/seller') || pathname === SELLER_ROUTES.REGISTER;
 
-  const isSFM = process.env.REACT_APP_SFM;
+  const isSFM = true; //process.env.REACT_APP_SFM;
 
   if (isSFM) {
     document.body.classList.add('sfm');

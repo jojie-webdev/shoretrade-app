@@ -138,6 +138,10 @@ import {
   GetAllListingsPayload,
 } from './GetAllListingsState';
 import {
+  GetAllNegotiationsMeta,
+  GetAllNegotiationsPayload,
+} from './GetAllNegotiationsState';
+import {
   GetAllSellerOrdersMeta,
   GetAllSellerOrdersPayload,
 } from './GetAllSellerOrdersState';
@@ -347,6 +351,10 @@ import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
+  getAllNegotiations: AsyncState<
+    GetAllNegotiationsMeta,
+    GetAllNegotiationsPayload
+  >;
   getOrderInvoiceAdjustments: AsyncState<
     GetOrderInvoiceAdjustmentsMeta,
     GetOrderInvoiceAdjustmentsPayload

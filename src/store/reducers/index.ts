@@ -5,7 +5,6 @@ import { logoutActions } from 'store/actions';
 import getAccountCompletion from 'store/reducers/getAccountCompletion';
 
 /* PLOP_INJECT_IMPORT */
-import getOrderInvoiceAdjustments from './getOrderInvoiceAdjustments';
 
 import addAddress from './addAddress';
 import addCardAndPay from './addCardAndPay';
@@ -42,6 +41,7 @@ import getAllBuyerOrders from './getAllBuyerOrders';
 import getAllListings from './getAllListings';
 import getAllMarketRequest from './getAllMarketRequest';
 import getAllMarketRequestFilters from './getAllMarketRequestFilters';
+import getAllNegotiations from './getAllNegotiations';
 import getAllSellerOrders from './getAllSellerOrders';
 import getAvailableCrates from './getAvailableCrates';
 import getBankDetails from './getBankDetails';
@@ -73,6 +73,7 @@ import getMarketRequestBuyerFilters from './getMarketRequestBuyerFilters';
 import getNotifications from './getNotifications';
 import getNotificationsSettings from './getNotificationsSettings';
 import getNSWHolidays from './getNSWHolidays';
+import getOrderInvoiceAdjustments from './getOrderInvoiceAdjustments';
 import getPaymentMethods from './getPaymentMethods';
 import getPaymentMode from './getPaymentMode';
 import getSellerById from './getSellerById';
@@ -140,7 +141,8 @@ const createAppReducer = (routeHistory: History) =>
     Object.fromEntries(
       Object.entries({
         /* PLOP_INJECT_INSTANCE */
-  getOrderInvoiceAdjustments,
+        getAllNegotiations,
+        getOrderInvoiceAdjustments,
         selectedDeliveryMethod,
         paySubscription,
         upgradeSubscription,
