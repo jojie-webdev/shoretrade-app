@@ -172,3 +172,16 @@ export const ProductPreviewContainer = styled('div')({
   marginTop: 16,
   marginBottom: 20,
 });
+
+export const MarketBoardIconWrapper = styled.div`
+  background-color: ${({ theme }) => theme.brand.primary};
+  width: 23px;
+  height: 23px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3px;
+  border-radius: 25px !important;
+  margin-left: 10px;
+  margin-top: -6px;
+`;

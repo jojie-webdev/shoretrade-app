@@ -7,6 +7,7 @@ import {
   TexturedSwordFish,
   ArrowRight,
   ChevronRight,
+  MarketBoardOutlined,
 } from 'components/base/SVG';
 import Tabs from 'components/base/Tabs';
 import Typography from 'components/base/Typography';
@@ -39,6 +40,7 @@ import {
   SVGContainer,
   TabItem,
   ProductPreviewContainer,
+  MarketBoardIconWrapper,
 } from './Selling.style';
 import { listingToItem } from './Selling.transform';
 
@@ -161,9 +163,21 @@ const Item = (props: ItemProp) => {
                       <Typography variant="caption" color="shade7">
                         Price
                       </Typography>
-                      <Typography variant="label" color="noshade" weight="400">
-                        $ {props.price} / {formatUnitToPricePerUnit(props.unit)}
-                      </Typography>
+                      <div style={{ display: 'flex', alignItems: 'baseline' }}>
+                        <Typography
+                          variant="label"
+                          color="noshade"
+                          weight="400"
+                        >
+                          $ {props.price} /{' '}
+                          {formatUnitToPricePerUnit(props.unit)}
+                        </Typography>
+                        {props.allowNegotiations && (
+                          <MarketBoardIconWrapper>
+                            <MarketBoardOutlined />
+                          </MarketBoardIconWrapper>
+                        )}
+                      </div>
                     </Col>
 
                     <Col xs={6} style={{ marginTop: '8px' }}>

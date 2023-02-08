@@ -37,6 +37,7 @@ export type ItemProp = {
   unit?: string;
   originalWeight?: string;
   goToListingDetails?: (id: string) => void;
+  allowNegotiations: boolean;
 };
 
 export interface CounterProps {

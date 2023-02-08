@@ -12,6 +12,7 @@ import {
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
 
+import { listingToListingProps } from './ListingDetails/ListingDetails.transform';
 import {
   SellingGeneratedProps,
   SearchFilterProps,
@@ -19,7 +20,6 @@ import {
   CounterProps,
 } from './Selling.props';
 import SellingView from './Selling.view';
-import { listingToListingProps } from './ListingDetails/ListingDetails.transform';
 
 const Selling = (): JSX.Element => {
   // MARK:- Hooks / Selectors

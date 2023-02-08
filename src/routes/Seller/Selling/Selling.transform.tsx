@@ -49,6 +49,7 @@ export const listingToItem = (
     unit: formatMeasurementUnit(data.measurement_unit),
     originalWeight: Number(data.original_weight).toFixed(2),
     sales: toPrice(sales),
+    allowNegotiations: data.allow_negotiations,
     data,
   };
 };
