@@ -49,6 +49,7 @@ export type UploadBulkState = {
   isIceSlurry: boolean;
   packaging: { id: string | null } | null;
   catchRecurrence?: string | null;
+  allowNegotiations: boolean;
 };
 
 export type UploadBulkPayload = GenericResponse<{

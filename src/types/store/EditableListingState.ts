@@ -75,6 +75,7 @@ export type EditableListingState = Partial<{
   hasNoSelectedType: boolean;
   restrictToState?: boolean;
   isGstIncl?: boolean;
+  allowNegotiations: boolean;
 }>;
 
 export type EditableListingPayload = EditableListingState;

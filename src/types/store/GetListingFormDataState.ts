@@ -40,6 +40,7 @@ export type GetListingFormDataResponse = {
     isGstIncl: boolean;
   };
   qualityOptions: string[];
+  allowNegotiations: boolean;
 };
 
 export type SizingOption = {

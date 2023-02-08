@@ -490,6 +490,7 @@ const AddProduct = (): JSX.Element => {
     isPreAuctionSale,
     templateDeliveryDate,
     restrictToState,
+    allowNegotiations,
   }: {
     pricePerKilo: number;
     catchDate: Date | null;
@@ -509,6 +510,7 @@ const AddProduct = (): JSX.Element => {
     isPreAuctionSale: boolean;
     templateDeliveryDate: string | null;
     restrictToState?: boolean;
+    allowNegotiations: boolean;
   }) => {
     if (isBulkUpload) {
       dispatch(
@@ -521,6 +523,7 @@ const AddProduct = (): JSX.Element => {
           ends,
           origin,
           description,
+          allowNegotiations,
         })
       );
     } else {
@@ -537,6 +540,7 @@ const AddProduct = (): JSX.Element => {
                 addressId,
                 templateDeliveryDate,
                 restrictToState,
+                allowNegotiations,
               }
             : {
                 isAquafuture,
@@ -552,6 +556,7 @@ const AddProduct = (): JSX.Element => {
                 addressId,
                 templateDeliveryDate,
                 restrictToState,
+                allowNegotiations,
               }
         )
       );

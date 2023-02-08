@@ -47,6 +47,7 @@ import {
   SfmContainer,
   GstBadge,
   LabelAndIconWrapper,
+  AllowNegoContainer,
 } from './AddDetails.style';
 import { combineDateTime } from './AddDetails.transform';
 import {
@@ -230,6 +231,10 @@ const AddDetails = ({
     editableListing?.restrictToState || false
   );
 
+  const [allowNegotiations, setAllowNegotiations] = useState(
+    editableListing?.allowNegotiations || false
+  );
+
   const selectedCompany = editableListing?.company || '';
 
   const shippingAddressOptions = GetCompanyAddresses(selectedCompany).map(
@@ -388,6 +393,11 @@ const AddDetails = ({
       }));
       return;
     }
+
+    if (allowNegotiations) {
+      setAllowNegotiations((prevValue) => !prevValue);
+    }
+
     switch (true) {
       case isPreAuctionSale:
         detailsError = isValidPreAuction({
@@ -476,6 +486,7 @@ const AddDetails = ({
           alwaysAvailable: false,
           templateDeliveryDate: formattedDeliveryDate,
           restrictToState,
+          allowNegotiations,
         });
       } else if (
         isEmptyError &&
@@ -499,6 +510,7 @@ const AddDetails = ({
           addressId: shippingAddress || defaultShippingAddress?.value || '',
           templateDeliveryDate: formattedDeliveryDate,
           restrictToState,
+          allowNegotiations,
         });
       }
     } else {
@@ -518,6 +530,7 @@ const AddDetails = ({
           alwaysAvailable: true,
           templateDeliveryDate: formattedDeliveryDate,
           restrictToState,
+          allowNegotiations,
         });
       }
     }
@@ -842,6 +855,13 @@ const AddDetails = ({
           </Col>
         </Row>
       )}
+      <AllowNegoContainer>
+        <Checkbox
+          onClick={() => setAllowNegotiations((prevValue) => !prevValue)}
+          checked={allowNegotiations}
+          label="Allow Negotiotions"
+        />
+      </AllowNegoContainer>
       {isAuctionSale && (
         <Row className="textfield-row">
           <Col sm={12} md={6} className="textfield-col">

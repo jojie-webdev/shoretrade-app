@@ -57,4 +57,5 @@ export const editableListingToCreateListing = (
   isActualPhoto: data?.isActualPhoto || false,
   isForSaleRepPhoto: data?.isForSaleRepPhoto || false,
   restrictToState: data?.restrictToState || false,
+  allowNegotiations: data?.allowNegotiations || false,
 });

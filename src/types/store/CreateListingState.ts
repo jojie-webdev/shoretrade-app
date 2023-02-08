@@ -50,6 +50,7 @@ export type CreateListingRequestData = {
   isActualPhoto: boolean;
   isForSaleRepPhoto: boolean;
   restrictToState?: boolean;
+  allowNegotiations: boolean;
 };
 
 export type CreateListingPayload = GenericResponse;

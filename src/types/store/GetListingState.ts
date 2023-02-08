@@ -64,6 +64,7 @@ export type GetListingResponseItem = {
   activeSizeUnit: string;
   cmSizingOptions: SizingOption[];
   gmSizingOptions: SizingOption[];
+  allowNegotiations: boolean;
 };
 
 export type SizingOption = {

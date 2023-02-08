@@ -120,6 +120,8 @@ const Review = ({
 
   const catchRecurrence = editableListing?.catchRecurrence || '';
 
+  const allowNegotiations = editableListing?.allowNegotiations;
+
   const listingEndDate = editableListing?.ends
     ? moment(editableListing.ends)
         .tz('Australia/Brisbane')
@@ -332,6 +334,18 @@ const Review = ({
             />
           </Col>
         )}
+
+        <Col md={12} className="interaction-col ">
+          <div className="text-area">
+            <Interactions
+              label="Allow Negotiations"
+              value={allowNegotiations ? 'Yes' : 'No'}
+              type="edit"
+              showEmptyIndicator
+              onClick={() => onChangeCurrentPage(8)}
+            />
+          </div>
+        </Col>
 
         <Col md={12} className="interaction-col ">
           <div className="text-area">
