@@ -52,7 +52,6 @@ const MarketRequestsLanding = (): JSX.Element => {
   });
   const [waitAll, setWaitAll] = useState(true);
   const [selectedTab, setSelectedTab] = useState(TABS.REVERSE_MARKETPLACE);
-  const [searchKeyword, setSearchKeyword] = useState('');
 
   const deleteMarketRequest = useSelector(
     (store: Store) => store.deleteMarketRequest
@@ -98,7 +97,6 @@ const MarketRequestsLanding = (): JSX.Element => {
     }
 
     setSelectedTab(selectedTab);
-    history.push(`?tab=${selectedTab}&searchTerm=${searchKeyword}`);
   };
 
   const reverseMarketPlace =
@@ -169,13 +167,6 @@ const MarketRequestsLanding = (): JSX.Element => {
   }, 2000);
 
   useEffect(() => {
-    setSelectedTab(
-      (negoAndRMQueryParams.tab as TABS) || TABS.REVERSE_MARKETPLACE
-    );
-    setSearchKeyword(negoAndRMQueryParams.searchTerm || '');
-  }, []);
-
-  useEffect(() => {
     if (deleteMarketRequest.pending) {
       setItemToDelete({ value: null });
     } else {
@@ -210,8 +201,6 @@ const MarketRequestsLanding = (): JSX.Element => {
     canNegotiate,
     handleTabSelect,
     selectedTab,
-    handleSearchChange,
-    searchKeyword,
   };
 
   const sfmViewProps = {
