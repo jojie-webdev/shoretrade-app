@@ -4,6 +4,7 @@ import {
   GetActiveOffersRequestResponseItem,
   Offer,
 } from 'types/store/GetActiveOffersState';
+import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
 
 export type Result = {
   id: string;
@@ -26,6 +27,11 @@ export type Result = {
 
 export interface MarketRequestsLandingGeneratedProps {
   marketRequests: Result[];
+  negotiations:
+    | (GetAllNegoRequestResponseItem & {
+        expiry: any;
+      })[]
+    | undefined;
   currentPath: string;
   onClickItem: (row: any) => void;
   isPendingAccount: boolean;
@@ -39,4 +45,11 @@ export interface MarketRequestsLandingGeneratedProps {
   activeOffersData: GetActiveOffersRequestResponseItem[];
   reverseMarketPlace: boolean;
   canNegotiate: boolean;
+  handleTabSelect: (selectedTab: TABS) => void;
+  selectedTab: string;
+}
+
+export enum TABS {
+  NEGOTIATIONS = 'Negotiations',
+  REVERSE_MARKETPLACE = 'Reverse Marketplace',
 }

@@ -1,5 +1,4 @@
 import Alert from 'components/base/Alert';
-import Interactions from 'components/base/Interactions';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -41,90 +40,6 @@ export const MarketRequestsContainer = styled.div`
   }
 `;
 
-export const MarketRequestItemInteraction = styled(Interactions)`
-  justify-content: initial;
-  margin-bottom: 16px;
-  border-radius: 8px;
-  padding: 8px;
-  ${({ theme }) => {
-    return theme.isSFM && `border: 2px solid ${theme.brand.secondary};`;
-  }}
-
-  @media ${BREAKPOINTS['sm']} {
-    padding: 12px;
-  }
-
-  padding-right: 12px;
-  align-items: center;
-
-  .left-content {
-    flex-grow: 2;
-  }
-
-  .cta {
-    display: flex;
-    align-items: center;
-    height: 140px;
-    align-content: space-between;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-`;
-
-export const MarketRequestItemContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-grow: 1;
-
-  .thumbnail-container {
-    margin-right: 1rem;
-
-    img {
-      width: 48px;
-      height: 48px;
-      border-radius: 8px;
-      @media ${BREAKPOINTS['sm']} {
-        width: 40px;
-        height: 40px;
-      }
-    }
-  }
-
-  .sub-group {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
-
-  .info-container {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    flex-grow: 1;
-    justify-content: space-between;
-
-    .time {
-      font-size: ${pxToRem(12)};
-      margin: 4px 0px;
-      line-height: 1rem;
-    }
-
-    .offers-badge,
-    .offers-status {
-      margin: 0;
-      width: fit-content;
-      border-radius: 8px;
-      padding: 5px 10px;
-    }
-  }
-`;
-
-export const SubText = styled(Typography)`
-  font-family: 'Basis Grotesque Pro';
-  font-weight: 400;
-  color: ${(props) => `${props.theme.grey.shade7}`};
-`;
-
 export const BadgeText = styled(Typography)<{ empty?: boolean }>`
   font-size: ${pxToRem(9)};
   text-align: center;
@@ -146,44 +61,12 @@ export const SizeTextContainer = styled.div`
   }
 `;
 
-export const MajorInfo = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-export const MinorInfo = styled.div`
-  margin-top: 8px;
-`;
-
-export const SubMinorInfo = styled.div`
-  margin-top: 5px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-`;
-
-export const SubMinorDetail = styled.div`
-  display: flex;
-  margin-right: 20px;
-`;
-
 export const Badges = styled.div`
   display: flex;
   margin-top: 10px;
   flex-direction: column;
   > div {
     margin-bottom: 4px;
-  }
-`;
-
-export const MarketRequestItemMobileContainer = styled.div`
-  .thumbnail-container {
-    img {
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      margin-right: 8px;
-    }
   }
 `;
 
@@ -317,4 +200,9 @@ export const SwiperWrapper = styled(Swiper)`
 export const MonthlySubsContainer = styled.div`
   display: flex;
   align-items: center;
+`;
+
+export const SubMinorDetail = styled.div`
+  display: flex;
+  margin-right: 20px;
 `;
