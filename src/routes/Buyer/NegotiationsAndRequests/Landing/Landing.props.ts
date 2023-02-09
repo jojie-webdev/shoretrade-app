@@ -47,6 +47,8 @@ export interface MarketRequestsLandingGeneratedProps {
   canNegotiate: boolean;
   handleTabSelect: (selectedTab: TABS) => void;
   selectedTab: string;
+  handleSearchChange: (text: string) => void;
+  searchKeyword: string;
 }
 
 export enum TABS {

@@ -1,5 +1,6 @@
 import Alert from 'components/base/Alert';
 import Typography from 'components/base/Typography';
+import Search from 'components/module/Search';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import styled from 'utils/styled';
@@ -37,6 +38,10 @@ export const MarketRequestsContainer = styled.div`
     path {
       fill: ${({ theme }) => theme.grey.shade7};
     }
+  }
+
+  .search__input {
+    height: 33px;
   }
 `;
 
@@ -205,4 +210,11 @@ export const MonthlySubsContainer = styled.div`
 export const SubMinorDetail = styled.div`
   display: flex;
   margin-right: 20px;
+`;
+
+export const SearchWrapper = styled(Search)`
+  height: 40px;
+  max-width: 350px;
+  border-radius: 10px;
+  margin-bottom: 30px;
 `;

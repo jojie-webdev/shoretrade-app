@@ -32,7 +32,11 @@ import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
 
 import { MarketRequestsLandingGeneratedProps, TABS } from './Landing.props';
-import { MarketRequestsContainer, Badges } from './Landing.style';
+import {
+  MarketRequestsContainer,
+  Badges,
+  SearchWrapper,
+} from './Landing.style';
 import NegotiationNonMobile from './NegotiationNonMobile';
 import RequestsMobile from './RequestsMobile';
 import RequestsNonMobile from './RequestsNonMobile';
@@ -55,6 +59,8 @@ const MarketRequestsLandingView = (
     canNegotiate,
     handleTabSelect,
     selectedTab,
+    handleSearchChange,
+    searchKeyword,
   } = props;
 
   const theme = useTheme();
@@ -162,6 +168,16 @@ const MarketRequestsLandingView = (
         }}
         actionText="DELETE"
         onClickClose={() => setItemToDelete({ value: null })}
+      />
+
+      <Typography variant="label" style={{ marginBottom: 5 }}>
+        Search
+      </Typography>
+      <SearchWrapper
+        value={searchKeyword}
+        onChange={(e) => handleSearchChange(e.target.value)}
+        placeholder="Search..."
+        resetValue={() => handleSearchChange('')}
       />
 
       <SegmentedControls

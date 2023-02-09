@@ -7,6 +7,7 @@ import {
   BUYER_MARKET_REQUEST_ROUTES,
 } from 'consts/routes';
 import moment from 'moment';
+import queryString from 'query-string';
 import { ScreenClassRender } from 'react-grid-system';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -17,6 +18,7 @@ import {
   getAllNegotiationsActions,
 } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
+import { NegoAndRMQueryParams } from 'types/NegoAndRMQueryParams';
 import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
 import { Store } from 'types/store/Store';
 import useTimeout from 'utils/Hooks/useTimeout';
@@ -41,12 +43,16 @@ const MarketRequestsLanding = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
   const theme = useTheme();
+  const negoAndRMQueryParams = queryString.parse(
+    location.search
+  ) as NegoAndRMQueryParams;
 
   const [itemToDelete, setItemToDelete] = useState<{ value: null | string }>({
     value: null,
   });
   const [waitAll, setWaitAll] = useState(true);
   const [selectedTab, setSelectedTab] = useState(TABS.REVERSE_MARKETPLACE);
+  const [searchKeyword, setSearchKeyword] = useState('');
 
   const deleteMarketRequest = useSelector(
     (store: Store) => store.deleteMarketRequest
@@ -92,6 +98,7 @@ const MarketRequestsLanding = (): JSX.Element => {
     }
 
     setSelectedTab(selectedTab);
+    history.push(`?tab=${selectedTab}&searchTerm=${searchKeyword}`);
   };
 
   const reverseMarketPlace =
@@ -144,6 +151,12 @@ const MarketRequestsLanding = (): JSX.Element => {
     }
   };
 
+  const handleSearchChange = (text: string) => {
+    setSearchKeyword(text);
+
+    history.push(`?tab=${selectedTab}&searchTerm=${text}`);
+  };
+
   const handleSeePlansClick = () => {
     history.push(BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN);
   };
@@ -152,6 +165,13 @@ const MarketRequestsLanding = (): JSX.Element => {
     setWaitAll(false);
     clear();
   }, 2000);
+
+  useEffect(() => {
+    setSelectedTab(
+      (negoAndRMQueryParams.tab as TABS) || TABS.REVERSE_MARKETPLACE
+    );
+    setSearchKeyword(negoAndRMQueryParams.searchTerm || '');
+  }, []);
 
   useEffect(() => {
     if (deleteMarketRequest.pending) {
@@ -188,6 +208,8 @@ const MarketRequestsLanding = (): JSX.Element => {
     canNegotiate,
     handleTabSelect,
     selectedTab,
+    handleSearchChange,
+    searchKeyword,
   };
 
   const sfmViewProps = {

@@ -1,7 +1,11 @@
 import React, { useEffect, useState, useMemo } from 'react';
 
 import { push } from 'connected-react-router';
-import { BUYER_ACCOUNT_ROUTES, SELLER_ACCOUNT_ROUTES } from 'consts';
+import {
+  BUYER_ACCOUNT_ROUTES,
+  BUYER_MARKET_REQUEST_ROUTES,
+  SELLER_ACCOUNT_ROUTES,
+} from 'consts';
 import { isMobile } from 'react-device-detect';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -216,8 +220,10 @@ const Dashboard = (props: DashboardPublicProps): JSX.Element => {
 
   useEffect(() => {
     dispatch(getNotificationsActions.request());
-    const unlisten = history.listen(() => {
-      dispatch(getUserActions.request());
+    const unlisten = history.listen((a) => {
+      if (!a.pathname.includes(BUYER_MARKET_REQUEST_ROUTES.LANDING)) {
+        dispatch(getUserActions.request());
+      }
     });
 
     return () => {
