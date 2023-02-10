@@ -474,7 +474,6 @@ const ProductDetails = (): JSX.Element => {
     addCartItemData,
     showSuccessAddBtn,
     canNegotiate,
-    auctionDate: '',
   };
   return <ProductDetailsView {...generatedProps} />;
 };

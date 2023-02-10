@@ -12,7 +12,6 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
-import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
 import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
 
