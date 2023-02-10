@@ -114,9 +114,8 @@ const MarketBoardLanding = (): JSX.Element => {
     }
   );
 
-  const { filters, checkboxFilters } = requestToModalFilter(
-    buyerRequestsFilters
-  );
+  const { filters, checkboxFilters } =
+    requestToModalFilter(buyerRequestsFilters);
 
   const [currentTab, setCurrentTab] = useState<TabOptions>(
     locationTab as TabOptions

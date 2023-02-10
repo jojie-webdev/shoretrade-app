@@ -61,9 +61,8 @@ const RequestAndNegotiate = (): JSX.Element => {
   const [offerSpecs, setOfferSpecs] = useState<Option[]>([]);
   const [currentOfferItem, setCurrentOfferItem] = useState('');
   const [showOfferSentModal, setShowOfferSentModal] = useState(false);
-  const [showOfferAcceptSentModal, setShowOfferAcceptSentModal] = useState(
-    false
-  );
+  const [showOfferAcceptSentModal, setShowOfferAcceptSentModal] =
+    useState(false);
   const [showAcceptModal, setShowAcceptModal] = useState(false);
   const [shouldHideResult, setShouldHideResult] = useState(false);
   const [showDeclineModal, setShowDeclineModal] = useState(false);
@@ -137,9 +136,8 @@ const RequestAndNegotiate = (): JSX.Element => {
         })
       : [];
 
-  const weight = (isReview
-    ? buyerRequest.weight?.from || 0
-    : activeOffer.weight || 0
+  const weight = (
+    isReview ? buyerRequest.weight?.from || 0 : activeOffer.weight || 0
   ).toString();
 
   const onNegotiateOffer = (

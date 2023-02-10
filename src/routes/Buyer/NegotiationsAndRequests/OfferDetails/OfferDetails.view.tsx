@@ -451,8 +451,8 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
               Are you sure you want to decline this negotiation?
             </Typography>
             <Typography color="shade6" variant="body" style={{ marginTop: 10 }}>
-              The negotiation will automatically close and you will not be
-              refunded any negotiation credits
+              The negotiation will automatically close and you will no longer be
+              able to barter with the buyer.
             </Typography>
           </div>
         }
