@@ -54,6 +54,7 @@ export type GetListingsByTypeResponseListingItem = {
     width: number;
   };
   allowNegotiations: boolean;
+  auctionDate: string;
 };
 
 export type GetListingsByTypePayload = GenericResponse<{

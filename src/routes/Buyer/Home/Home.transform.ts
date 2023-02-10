@@ -75,6 +75,7 @@ export function recentlyAddedToPreviewProps(
     isSFMCrate: data.packaging?.type === 'SFM',
     allowNegotiations: data.allowNegotiations,
     canNegotiate,
+    auctionDate: data.auctionDate,
   };
 }
 
@@ -112,6 +113,7 @@ export function favouritesToPreviewProps(
     isForSaleRepPhoto: data.isForSaleRepPhoto,
     isSFMCrate: data.packaging?.type === 'SFM',
     allowNegotiations: data.allowNegotiations,
+    auctionDate: data.auctionDate,
   };
 }
 

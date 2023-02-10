@@ -424,6 +424,7 @@ const ProductDetails = (): JSX.Element => {
       : currentListing?.cmSizingOptions,
     activeSizeUnit: currentListing?.activeSizeUnit === 'GM' ? 'g' : 'cm',
     isPreAuction: currentListing?.isPreAuctionSale,
+    auctionDate: currentListing?.auctionDate,
   };
   const sellerRatingProps: ProductSellerRatingProps = {
     name: currentListing?.coop.name || '',
@@ -473,6 +474,7 @@ const ProductDetails = (): JSX.Element => {
     addCartItemData,
     showSuccessAddBtn,
     canNegotiate,
+    auctionDate: '',
   };
   return <ProductDetailsView {...generatedProps} />;
 };

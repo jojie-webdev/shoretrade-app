@@ -38,4 +38,5 @@ export interface PreviewProps {
   isSFMCrate: boolean;
   canNegotiate?: boolean;
   allowNegotiations: boolean;
+  auctionDate: string;
 }

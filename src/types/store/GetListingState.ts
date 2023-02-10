@@ -65,6 +65,7 @@ export type GetListingResponseItem = {
   cmSizingOptions: SizingOption[];
   gmSizingOptions: SizingOption[];
   allowNegotiations: boolean;
+  auctionDate: string;
 };
 
 export type SizingOption = {

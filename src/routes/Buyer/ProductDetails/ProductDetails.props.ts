@@ -70,4 +70,5 @@ export interface ProductDetailsGeneratedProps {
   isPendingAccount: boolean;
   showSuccessAddBtn: boolean;
   canNegotiate?: boolean;
+  auctionDate: string;
 }

@@ -4,11 +4,14 @@ import Badge from 'components/base/Badge';
 import { Crate, Location, MarketBoardOutlined } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { ADDITIONAL_INFOS } from 'consts/listingAdditionalInfos';
+import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
 import { useSelector } from 'react-redux';
 import { getActivePlan } from 'routes/Buyer/Account/SubscriptionPlan/SubscriptionPlan.transform';
 import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
 import { Store } from 'types/store/Store';
+import { Theme } from 'types/Theme';
+import { isPreAuctionExpired } from 'utils/Listing';
 import {
   formatMeasurementUnit,
   formatUnitToPricePerUnit,
@@ -253,6 +256,27 @@ const Preview = (props: PreviewProps): JSX.Element => {
 
   const allowedNegotiationByBuyer = allowNegotiations;
 
+  const NegotiatePriceElem = (props: {
+    backgroundColor: string;
+    fill: string;
+  }) => {
+    return (
+      <NegotiatePriceBtnContainer>
+        <NegotiatePriceBtnWrapper backgroundColor={props.backgroundColor}>
+          <MarketBoardOutlined fill={props.fill} />
+          <div style={{ marginRight: 5 }} />
+          <NegotiatePriceText
+            variant="small"
+            color="noshade"
+            style={{ paddingRight: 8, marginTop: 2 }}
+          >
+            NEGOTIATE PRICE
+          </NegotiatePriceText>
+        </NegotiatePriceBtnWrapper>
+      </NegotiatePriceBtnContainer>
+    );
+  };
+
   return (
     <CardContainer
       className="category-preview-card"
@@ -317,25 +341,26 @@ const Preview = (props: PreviewProps): JSX.Element => {
                 </Typography>
               </Badge>
             )}
-            {parseInt(props.remaining || '0') <= 50 && !props.catchRecurrence && (
-              <Badge
-                className="badge"
-                badgeColor={
-                  theme.isSFM
-                    ? SpecialColors.secondaryOpacity
-                    : theme.brand.warning
-                }
-              >
-                <Typography
-                  noSfmFont
-                  color={theme.isSFM ? 'warning' : 'noshade'}
-                  variant="overline"
-                  weight={theme.isSFM ? '900' : '500'}
+            {parseInt(props.remaining || '0') <= 50 &&
+              !props.catchRecurrence && (
+                <Badge
+                  className="badge"
+                  badgeColor={
+                    theme.isSFM
+                      ? SpecialColors.secondaryOpacity
+                      : theme.brand.warning
+                  }
                 >
-                  Almost Gone!
-                </Typography>
-              </Badge>
-            )}
+                  <Typography
+                    noSfmFont
+                    color={theme.isSFM ? 'warning' : 'noshade'}
+                    variant="overline"
+                    weight={theme.isSFM ? '900' : '500'}
+                  >
+                    Almost Gone!
+                  </Typography>
+                </Badge>
+              )}
             {props.catchRecurrence && (
               <Badge
                 className="badge"
@@ -594,33 +619,31 @@ const Preview = (props: PreviewProps): JSX.Element => {
             <Row justify="between" nogutter>
               {allowedNegotiationByBuyer ? (
                 canNegotiate ? (
-                  <NegotiatePriceBtnContainer>
-                    <NegotiatePriceBtnWrapper>
-                      <MarketBoardOutlined />
-                      <div style={{ marginRight: 5 }} />
-                      <NegotiatePriceText
-                        variant="small"
-                        color="noshade"
-                        style={{ paddingRight: 8, marginTop: 2 }}
-                      >
-                        NEGOTIATE PRICE
-                      </NegotiatePriceText>
-                    </NegotiatePriceBtnWrapper>
-                  </NegotiatePriceBtnContainer>
+                  props.auctionDate ? (
+                    isPreAuctionExpired(props.auctionDate) ? null : (
+                      <NegotiatePriceElem
+                        backgroundColor={theme.brand.primary}
+                        fill={theme.grey.noshade}
+                      />
+                    )
+                  ) : (
+                    <NegotiatePriceElem
+                      backgroundColor={theme.brand.primary}
+                      fill={theme.grey.noshade}
+                    />
+                  )
+                ) : props.auctionDate ? (
+                  isPreAuctionExpired(props.auctionDate) ? null : (
+                    <NegotiatePriceElem
+                      backgroundColor={theme.grey.shade6}
+                      fill={theme.grey.noshade}
+                    />
+                  )
                 ) : (
-                  <NegotiatePriceBtnContainer>
-                    <NegotiatePriceBtnWrapper backgroundColor="shade3">
-                      <MarketBoardOutlined fill={theme.grey.shade6} />
-                      <div style={{ marginRight: 5 }} />
-                      <NegotiatePriceText
-                        variant="small"
-                        color="shade6"
-                        style={{ paddingRight: 8, marginTop: 2 }}
-                      >
-                        NEGOTIATE PRICE
-                      </NegotiatePriceText>
-                    </NegotiatePriceBtnWrapper>
-                  </NegotiatePriceBtnContainer>
+                  <NegotiatePriceElem
+                    backgroundColor={theme.grey.shade6}
+                    fill={theme.grey.noshade}
+                  />
                 )
               ) : null}
             </Row>

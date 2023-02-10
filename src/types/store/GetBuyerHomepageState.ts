@@ -61,6 +61,7 @@ export type GetBuyerHomepageResponseListingItem = {
     width: number;
   };
   allowNegotiations: boolean;
+  auctionDate: string;
 };
 
 export type GetBuyerHomepagePayload = GenericResponse<{

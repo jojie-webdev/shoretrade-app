@@ -12,6 +12,7 @@ import { BREAKPOINTS } from 'consts/breakpoints';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
+import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
 import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
 
@@ -88,6 +89,7 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
                           isSFMCrate={rec.packaging?.type === 'SFM'}
                           allowNegotiations={rec.allowNegotiations}
                           canNegotiate={canNegotiate}
+                          auctionDate={rec.auctionDate}
                         />
                       </StyledInteraction>
                     ) : (
@@ -120,6 +122,7 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
                         isSFMCrate={rec.packaging?.type === 'SFM'}
                         allowNegotiations={rec.allowNegotiations}
                         canNegotiate={canNegotiate}
+                        auctionDate={rec.auctionDate}
                       />
                     )}
                   </Link>

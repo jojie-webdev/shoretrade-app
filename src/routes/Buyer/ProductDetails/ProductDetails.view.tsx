@@ -75,9 +75,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   const { isPreAuction, dateEnds } = productDetailsCard6Props;
 
   const [images, setImages] = useState<string[]>([]);
-  const [newCurrentListing, setNewCurrentListing] = useState<
-    GetListingResponseItem
-  >();
+  const [newCurrentListing, setNewCurrentListing] =
+    useState<GetListingResponseItem>();
 
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -268,7 +267,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                   ) : null
                 }
                 isPreAuction={productDetailsCard6Props?.isPreAuction}
-                canNegotiate={canNegotiate}
+                canNegotiate={canNegotiate} //TODO: should put inside productDetailsCard6Props
+                auctionDate={productDetailsCard6Props.auctionDate}
               />
               {!isPendingAccount && isMobile ? (
                 <ProductSellerCard
