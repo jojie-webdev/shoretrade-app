@@ -637,3 +637,32 @@ export const SFMBlueLink = styled.a`
 
   text-decoration: underline;
 `;
+
+export const SFMFreeSubWrapper = styled.img`
+  right: 39px;
+  top: 59px;
+  position: absolute;
+  height: 220px;
+  width: 220px;
+
+  @media ${BREAKPOINTS['md']} {
+    right: 27px;
+    height: 180px;
+    width: 180px;
+  }
+
+  @media (max-width: 576px) {
+    display: none;
+  }
+`;
+
+export const SFMFreeSubWrapper2 = styled.img`
+  margin: auto;
+  display: flex;
+  height: 220px;
+  width: 220px;
+
+  @media (min-width: 576px) {
+    display: none;
+  }
+`;

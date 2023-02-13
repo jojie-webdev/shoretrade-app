@@ -38,6 +38,7 @@ import { Formik, FormikProps } from 'formik';
 import moment from 'moment';
 import { isEmpty, pathOr } from 'ramda';
 import { useMediaQuery } from 'react-responsive';
+import SFMFreeSubscription from 'res/images/sfm-free-subscription.png';
 import { Tag } from 'routes/Seller/Selling/Selling.style';
 // import { TipsContainer } from 'routes/Seller/Account/Licenses/Licenses.style';
 // import { LicenseDetails } from 'routes/Seller/Account/Licenses/Licenses.view';
@@ -79,6 +80,7 @@ import {
   TRANSACTION_VALUES,
   SELLER_REVERSE_MARKET_FEAT,
   BUYER_REVERSE_MARKET_FEAT,
+  EASTER_DATE,
 } from './Register.constants';
 import { RegisterGeneratedProps, StepFormProps } from './Register.props';
 import {
@@ -146,6 +148,8 @@ import {
   PlusIcon,
   ReverseMarketTitle2,
   SFMBlueLink,
+  SFMFreeSubWrapper,
+  SFMFreeSubWrapper2,
 } from './Register.style';
 import {
   addressToPlaceData2,
@@ -204,9 +208,10 @@ const StepForm = ({
   const reverseMarketPlaceAlias = isSeller
     ? SELLER_REVERSE_MARKET_FEAT
     : BUYER_REVERSE_MARKET_FEAT;
-  const hasReverseMarketPlace = registrationDetails.subscriptionPreference.addOns.includes(
-    reverseMarketPlaceAlias
-  );
+  const hasReverseMarketPlace =
+    registrationDetails.subscriptionPreference.addOns.includes(
+      reverseMarketPlaceAlias
+    );
   const modifiedStates = COUNTRY_STATES.filter(({ isoCode, countryCode }) => {
     if (registrationDetails.address?.countryCode === NEW_ZEALAND_COUNTRY_CODE) {
       if (DEFAULT_NEW_ZEALAND_PROVINCES_CODE.includes(isoCode)) {
@@ -496,13 +501,14 @@ const StepForm = ({
       }`
   );
 
-  const reverseMarketPlacePrice = registrationDetails.subscriptionPreference.addOns.includes(
-    reverseMarketPlaceAlias
-  )
-    ? isSeller
-      ? 279
-      : 49.99
-    : 0;
+  const reverseMarketPlacePrice =
+    registrationDetails.subscriptionPreference.addOns.includes(
+      reverseMarketPlaceAlias
+    )
+      ? isSeller
+        ? 279
+        : 49.99
+      : 0;
 
   useEffect(() => {
     if (
@@ -2403,9 +2409,10 @@ const RegisterView = (props: RegisterGeneratedProps) => {
   const reverseMarketPlaceAlias = isSeller
     ? SELLER_REVERSE_MARKET_FEAT
     : BUYER_REVERSE_MARKET_FEAT;
-  const hasReverseMarketPlace = registrationDetails.subscriptionPreference.addOns.includes(
-    reverseMarketPlaceAlias
-  );
+  const hasReverseMarketPlace =
+    registrationDetails.subscriptionPreference.addOns.includes(
+      reverseMarketPlaceAlias
+    );
 
   const renderRef = useRef<HTMLDivElement | null>(null);
 
@@ -2430,6 +2437,16 @@ const RegisterView = (props: RegisterGeneratedProps) => {
   const previousStep = () => {
     setStep((s) => (s > 0 ? --s : 0));
   };
+
+  const renderHeaderTexts = (
+    <AppTypeTitle
+      customFont={theme.isSFM ? 'Canela' : undefined}
+      variant="title3"
+      weight="700"
+    >
+      {isSeller ? 'Seller' : 'Buyer'} Sign Up
+    </AppTypeTitle>
+  );
 
   const userDetailsFormikProps = {
     initialValues: {
@@ -2655,13 +2672,31 @@ const RegisterView = (props: RegisterGeneratedProps) => {
       return (
         <GetStartedWrapper>
           <SignUpHeader>
-            <AppTypeTitle
-              customFont={theme.isSFM ? 'Canela' : undefined}
-              variant="title3"
-              weight="700"
-            >
-              {isSeller ? 'Seller' : 'Buyer'} Sign Up
-            </AppTypeTitle>
+            {theme.isSFM ? (
+              moment() >= moment(EASTER_DATE).add(1, 'day') ? (
+                renderHeaderTexts
+              ) : (
+                <div>
+                  <SFMFreeSubWrapper2
+                    src={SFMFreeSubscription}
+                    alt="sfm free subscription image"
+                  />
+                  <AppTypeTitle
+                    customFont={theme.isSFM ? 'Canela' : undefined}
+                    variant="title3"
+                    weight="700"
+                  >
+                    {isSeller ? 'Seller' : 'Buyer'} Sign Up
+                  </AppTypeTitle>
+                  <SFMFreeSubWrapper
+                    src={SFMFreeSubscription}
+                    alt="sfm free subscription image"
+                  />
+                </div>
+              )
+            ) : (
+              renderHeaderTexts
+            )}
             <LogInLinkContainer>
               <LogInLinkPrefix
                 variant="label"

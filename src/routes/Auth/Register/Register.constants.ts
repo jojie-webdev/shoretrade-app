@@ -257,8 +257,7 @@ export const BUYER_PAYMENT_METHOD_DETAILS = [
   },
   {
     label: 'Shore Pay',
-    text:
-      'Apply for our Buy Now Pay Later trading account to fast track your business and help with cashflow. ShorePay is a financing tool built by industry for industry.',
+    text: 'Apply for our Buy Now Pay Later trading account to fast track your business and help with cashflow. ShorePay is a financing tool built by industry for industry.',
   },
 ];
 
@@ -281,3 +280,5 @@ export const TRANSACTION_VALUES = [
 
 export const SELLER_REVERSE_MARKET_FEAT = 'FEATURE_REVERSED_MARKETPLACE_SELLER';
 export const BUYER_REVERSE_MARKET_FEAT = 'FEATURE_REVERSED_MARKETPLACE';
+
+export const EASTER_DATE = '2023-04-09T16:00:00.000z';
