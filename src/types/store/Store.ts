@@ -95,6 +95,10 @@ import {
   CreateCustomListingPayload,
 } from './CreateCustomListingState';
 import { CreateListingMeta, CreateListingPayload } from './CreateListingState';
+import {
+  CreateNegotiationMeta,
+  CreateNegotiationPayload,
+} from './CreateNegotiationState';
 import { CurrentAddressState } from './CurrentAddressState';
 import { DeleteCardMeta, DeleteCardPayload } from './DeleteCardState';
 import {
@@ -351,9 +355,9 @@ import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
-  getAllNegotiations: AsyncState<
-    GetAllNegotiationsMeta,
-    GetAllNegotiationsPayload
+  createNegotiation: AsyncState<
+    CreateNegotiationMeta,
+    CreateNegotiationPayload
   >;
   getOrderInvoiceAdjustments: AsyncState<
     GetOrderInvoiceAdjustmentsMeta,

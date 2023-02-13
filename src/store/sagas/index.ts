@@ -17,6 +17,7 @@ import createCustomListing from './createCustomListing';
 import createListing from './createListing';
 import createMarketOffer from './createMarketOffer';
 import createMarketRequest from './createMarketRequest';
+import createNegotiation from './createNegotiation';
 import currentAddress from './currentAddress';
 import deleteCard from './deleteCard';
 import deleteLinkedAccount from './deleteLinkedAccount';
@@ -124,7 +125,7 @@ import verify from './verify';
 
 const sagas = [
   /* PLOP_INJECT_INSTANCE */
-  getAllNegotiations,
+  createNegotiation,
   getOrderInvoiceAdjustments,
   paySubscription,
   upgradeSubscription,

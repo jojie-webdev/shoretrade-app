@@ -22,6 +22,7 @@ import createCustomListing from './createCustomListing';
 import createListing from './createListing';
 import createMarketOffer from './createMarketOffer';
 import createMarketRequest from './createMarketRequest';
+import createNegotiation from './createNegotiation';
 import currentAddress from './currentAddress';
 import deleteCard from './deleteCard';
 import deleteLinkedAccount from './deleteLinkedAccount';
@@ -140,7 +141,7 @@ const createAppReducer = (routeHistory: History) =>
     Object.fromEntries(
       Object.entries({
         /* PLOP_INJECT_INSTANCE */
-        getAllNegotiations,
+        createNegotiation,
         getOrderInvoiceAdjustments,
         selectedDeliveryMethod,
         paySubscription,

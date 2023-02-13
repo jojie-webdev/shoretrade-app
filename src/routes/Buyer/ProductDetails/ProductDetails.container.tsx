@@ -18,6 +18,7 @@ import {
   updateFavouriteProductActions,
   currentAddressActions,
   addCartItemActions,
+  createNegotiationActions,
 } from 'store/actions';
 import getSellerByIdActions from 'store/actions/getSellerById';
 import { GetAddressOptions, GetDefaultCompany } from 'store/selectors/buyer';
@@ -123,10 +124,9 @@ const ProductDetails = (): JSX.Element => {
   const [favorite, setFavorite] = useState(currentListing?.isFavourite);
   const [showNegoModal, setShowNegoModal] = useState(true);
   const [showConfirmNegoModal, setShowConfirmNegoModal] = useState(false);
-  const [selectedBoxesIndex, setSelectedBoxesIndex] = useState<number | null>(
-    null
-  );
+  const [selectedBoxesIndex, setSelectedBoxesIndex] = useState<number>(0);
   const [selectedBoxesWeight, setSelectedBoxesWeight] = useState<Box[]>([]);
+  const [negotiationPrice, setNegotiationPrice] = useState<number | any>(null);
   const unit = formatMeasurementUnit(currentListing?.measurementUnit);
   const remainingWeight = (currentListing?.remaining || 0).toFixed(2);
   const price = Number(currentListing?.price || '0');
@@ -144,6 +144,10 @@ const ProductDetails = (): JSX.Element => {
 
   const isLoadingListingBoxes =
     useSelector((state: Store) => state.getListingBoxes.pending) || false;
+
+  const isSendingNegotiation = useSelector(
+    (state: Store) => state.createNegotiation.pending
+  );
 
   const previousWeightRequest = useSelector(
     (state: Store) => state.getListingBoxes.request
@@ -271,6 +275,14 @@ const ProductDetails = (): JSX.Element => {
     setShowConfirmNegoModal((prevValue) => !prevValue);
   };
 
+  const handleNegotiationPriceSetting = (price: number) => {
+    setNegotiationPrice(price);
+  };
+
+  const handleDesiredQuantityChange = (weight: string) => {
+    setWeight(weight);
+  };
+
   const getBoxes = () => {
     if (!shouldHideResult) {
       setShouldHideResult(true);
@@ -330,6 +342,26 @@ const ProductDetails = (): JSX.Element => {
         })
       );
     }
+  };
+
+  const handleConfirmNegoClick = () => {
+    console.log(
+      'handleConfirmNegoClick > selectedBoxesIndex > ',
+      selectedBoxesIndex
+    );
+
+    // if (selectedBoxesIndex) {
+    dispatch(
+      createNegotiationActions.request({
+        listingId: currentListing.id,
+        listingBoxId: (groupedBox[0].boxes || selectedBoxesWeight)[
+          selectedBoxesIndex
+        ].id,
+        desiredQuantity: weight,
+        counterOffer: negotiationPrice,
+      })
+    );
+    // }
   };
 
   // MARK:- Effects
@@ -503,6 +535,11 @@ const ProductDetails = (): JSX.Element => {
     selectedBoxesIndex,
     handleShowConfirmNegoModal,
     showConfirmNegoModal,
+    handleConfirmNegoClick,
+    isSendingNegotiation,
+    handleNegotiationPriceSetting,
+    negotiationPrice,
+    handleDesiredQuantityChange,
   };
   return <ProductDetailsView {...generatedProps} />;
 };

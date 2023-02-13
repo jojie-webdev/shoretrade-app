@@ -85,14 +85,17 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     selectedBoxesIndex,
     handleShowConfirmNegoModal,
     showConfirmNegoModal,
+    handleConfirmNegoClick,
+    isSendingNegotiation,
+    handleNegotiationPriceSetting,
+    negotiationPrice,
+    handleDesiredQuantityChange,
   } = props;
   const { isPreAuction, dateEnds } = productDetailsCard6Props;
 
   const [images, setImages] = useState<string[]>([]);
-  const [negotiationPrice, setNegotiationPrice] = useState<number | any>(null);
-  const [newCurrentListing, setNewCurrentListing] = useState<
-    GetListingResponseItem
-  >();
+  const [newCurrentListing, setNewCurrentListing] =
+    useState<GetListingResponseItem>();
 
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -193,9 +196,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
             Confirm Negotiation
           </Typography>
         }
-        action={() => {
-          console.log('');
-        }}
+        action={handleConfirmNegoClick}
+        disableActionText={isSendingNegotiation || false}
         cancel={handleShowConfirmNegoModal}
         actionText="Send Negotiation"
         cancelText="Cancel"
@@ -246,7 +248,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                     price.substr(0, price.indexOf('.')) +
                     price.substr(price.indexOf('.'), 3);
                 }
-                setNegotiationPrice(parseFloat(price));
+                handleNegotiationPriceSetting(parseFloat(price));
               }}
               min={1}
               LeftComponent={
@@ -259,7 +261,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
             />
             <StyledTextField
               value={weight}
-              onChangeText={setWeight}
+              onChangeText={handleDesiredQuantityChange}
               type="number"
               inputType="decimal"
               step=".01"
@@ -384,9 +386,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                       acc +
                       (cur.quantity || 0) *
                         cur.weight *
-                        (negotiationPrice === null || isNaN(negotiationPrice)
-                          ? productDetailsCard6Props.price
-                          : negotiationPrice),
+                        (negotiationPrice ||
+                          Number(productDetailsCard6Props.price)),
                     0
                   )
                 )}
