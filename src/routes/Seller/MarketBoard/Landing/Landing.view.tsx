@@ -41,7 +41,7 @@ import MobileMarketRequests from './MobileMarketRequest/MobileMarketRequest.view
 import MobileOffers from './MobileOffers/MobileOffers.view';
 
 enum TABS {
-  REVERSE_MARKETPLACE = 'Market Requests',
+  REVERSE_MARKETPLACE = 'Reverse Marketplace',
   NEGO = 'Negotiations',
 }
 
