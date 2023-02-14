@@ -51,7 +51,7 @@ const MarketRequestsLanding = (): JSX.Element => {
     value: null,
   });
   const [waitAll, setWaitAll] = useState(true);
-  const [selectedTab, setSelectedTab] = useState(TABS.REVERSE_MARKETPLACE);
+  const [selectedTab, setSelectedTab] = useState(TABS.BUYER_REQUEST);
 
   const deleteMarketRequest = useSelector(
     (store: Store) => store.deleteMarketRequest
