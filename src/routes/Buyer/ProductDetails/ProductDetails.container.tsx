@@ -345,12 +345,6 @@ const ProductDetails = (): JSX.Element => {
   };
 
   const handleConfirmNegoClick = () => {
-    console.log(
-      'handleConfirmNegoClick > selectedBoxesIndex > ',
-      selectedBoxesIndex
-    );
-
-    // if (selectedBoxesIndex) {
     dispatch(
       createNegotiationActions.request({
         listingId: currentListing.id,
@@ -361,7 +355,6 @@ const ProductDetails = (): JSX.Element => {
         counterOffer: negotiationPrice,
       })
     );
-    // }
   };
 
   // MARK:- Effects
@@ -398,6 +391,13 @@ const ProductDetails = (): JSX.Element => {
       dispatch(addCartItemActions.clear());
     }
   }, [weight, addCartItemData]);
+
+  useEffect(() => {
+    if (isSendingNegotiation === false) {
+      setShowNegoModal(false);
+      setShowConfirmNegoModal(false);
+    }
+  }, [isSendingNegotiation]);
 
   // On error, set favorite back to what it originally was
   // useEffect(() => {
