@@ -94,23 +94,16 @@ const NegotiationMobileView = (props: NegotiationNonMobilePrivateProps) => {
                 size?.options
               ) && ( */}
               <SubText variant="caption">{`Size: ${buildSize(
-                'kg',
+                item.active_size_unit || 'Grams',
                 item.size_from,
                 item.size_to,
-                ''
+                {}
               )}`}</SubText>
-              {/*   )}    */}
-              {/* ${buildSize(
-                 metric,
-                 size?.from?.toString(),
-                 size?.to?.toString(),
-                 size?.options
-               )} */}
               <SubText variant="caption">
-                {item.desired_quantity && `Qty: ${item.desired_quantity} `}
-                {/* ${formatUnitToPricePerUnit(
-                   measurementUnit?.toLocaleLowerCase()
-                 )} */}
+                {item.desired_quantity &&
+                  `Qty: ${item.desired_quantity} ${formatUnitToPricePerUnit(
+                    item.measurement_unit?.toLocaleLowerCase()
+                  )}`}
               </SubText>
             </div>
           </Col>

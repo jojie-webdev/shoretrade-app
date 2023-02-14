@@ -20,6 +20,7 @@ export type GetAllNegoRequestResponseItem = {
   specifications: { id: string; name: string }[];
   status: string;
   thumbnail: string;
+  measurement_unit: string;
 };
 
 export type GetAllNegotiationsPayload = GenericResponse<{
