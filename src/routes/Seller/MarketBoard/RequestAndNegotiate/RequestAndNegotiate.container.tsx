@@ -13,9 +13,10 @@ import {
 import { MarketOfferItem } from 'types/store/CreateMarketOfferState';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
-import { GetListingResponseItem } from 'types/store/GetListingState';
+import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
 import { Store } from 'types/store/Store';
 
+import { TABS } from '../Landing/Landing.constants';
 import { Option } from './MakeOffer/MakeOffer.props';
 import RequestAndNegotiateView from './RequestAndNegotiate.view';
 
@@ -30,18 +31,23 @@ const RequestAndNegotiate = (): JSX.Element => {
     state: {
       buyerRequest: GetAllMarketRequestResponseItem;
       activeOffer: GetActiveOffersRequestResponseItem;
+      negotiation: GetAllNegoRequestResponseItem & {
+        expiry: any;
+      };
+      selectedTab: TABS;
     };
   } = useLocation();
 
   const buyerRequest = state.buyerRequest;
   const activeOffer = state.activeOffer;
+  const negotiation = state.negotiation;
+  const selectedTab = state.selectedTab;
   const offerSentStatus = useSelector(
     (state: Store) => state.createMarketOffer.data?.status
   );
   const marketOfferNegotiate = useSelector(
     (state: Store) => state.marketOfferNegotiate
   );
-
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
   const buyerRequests = useSelector(
     (state: Store) => state.getAllMarketRequest.data?.data.marketRequests
@@ -63,9 +69,6 @@ const RequestAndNegotiate = (): JSX.Element => {
   const [showOfferSentModal, setShowOfferSentModal] = useState(false);
   const [showOfferAcceptSentModal, setShowOfferAcceptSentModal] =
     useState(false);
-  const [showAcceptModal, setShowAcceptModal] = useState(false);
-  const [shouldHideResult, setShouldHideResult] = useState(false);
-  const [showDeclineModal, setShowDeclineModal] = useState(false);
 
   const isNegotiating =
     useSelector((state: Store) => state.marketOfferNegotiate.pending) || false;
@@ -221,7 +224,15 @@ const RequestAndNegotiate = (): JSX.Element => {
     }
   }, [marketOfferNegotiate]);
 
-  if ((isReview && !buyerRequest) || (!isReview && !activeOffer)) {
+  if (selectedTab === TABS.NEGO && !negotiation) {
+    history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING);
+    return <></>;
+  }
+
+  if (
+    selectedTab === TABS.REVERSE_MARKETPLACE &&
+    ((isReview && !buyerRequest) || (!isReview && !activeOffer))
+  ) {
     history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING);
     return <></>;
   }
@@ -229,6 +240,7 @@ const RequestAndNegotiate = (): JSX.Element => {
   const generatedProps = {
     buyerRequest,
     activeOffer,
+    negotiation,
     offer,
     setOffer,
     currentOfferItem,
@@ -243,12 +255,7 @@ const RequestAndNegotiate = (): JSX.Element => {
     offerSpecs,
     setOfferSpecs,
     showOfferAcceptSentModal,
-    handleAcceptBtnClick,
-    showAcceptModal,
-    handleConfirmBtnClick,
-    handleCancelBtnClick,
-    showDeclineModal,
-    handleDeclineBtnClick,
+    selectedTab,
   };
   return <RequestAndNegotiateView {...generatedProps} />;
 };

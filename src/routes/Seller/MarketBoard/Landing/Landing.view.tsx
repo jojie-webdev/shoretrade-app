@@ -10,6 +10,7 @@ import EmptyState from 'components/module/EmptyState';
 import FilterModal from 'components/module/FilterModal';
 import Loading from 'components/module/Loading';
 import MobileHeader from 'components/module/MobileHeader';
+import NegotiationInteractions from 'components/module/NegotiationInteractions';
 import OfferTag from 'components/module/OfferTag';
 import Search from 'components/module/Search';
 import { BREAKPOINTS } from 'consts/breakpoints';
@@ -30,6 +31,7 @@ import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequ
 import { parseImageUrl } from 'utils/parseImageURL';
 import theme, { useTheme } from 'utils/Theme';
 
+import { TABS } from './Landing.constants';
 import { MarketBoardLandingGeneratedProps, TabOptions } from './Landing.props';
 import {
   Container,
@@ -39,11 +41,6 @@ import {
 } from './Landing.style';
 import MobileMarketRequests from './MobileMarketRequest/MobileMarketRequest.view';
 import MobileOffers from './MobileOffers/MobileOffers.view';
-
-enum TABS {
-  REVERSE_MARKETPLACE = 'Reverse Marketplace',
-  NEGO = 'Negotiations',
-}
 
 const BuyerRequestsInteractions = (props: {
   onClick: () => void;
@@ -251,8 +248,6 @@ const MyActiveOffersInteractions = (props: {
 const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
-  const [activeTab, setActiveTab] = useState(TABS.NEGO);
-
   return (
     <Container>
       {props.userPending && (
@@ -273,20 +268,22 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
           controlButtonColor={theme.brand.primary}
           controlButtonTextColor={theme.grey.noshade}
           inactiveBackgroundColor={theme.grey.shade9}
-          selectedOption={activeTab}
+          selectedOption={props.activeTab}
           onClickControl={(value) => {
-            setActiveTab(
+            props.handleTabSelect(
               value === TABS.NEGO ? TABS.NEGO : TABS.REVERSE_MARKETPLACE
             );
           }}
         />
 
         <div className="tabs">
-          <Tabs
-            tabs={['My Active Offers', 'Buyer Requests']}
-            selectedTab={props.currentTab}
-            onClickTab={(tab) => props.onChangeCurrentTab(tab as TabOptions)}
-          />
+          {props.activeTab === TABS.REVERSE_MARKETPLACE && (
+            <Tabs
+              tabs={['My Active Offers', 'Buyer Requests']}
+              selectedTab={props.currentTab}
+              onClickTab={(tab) => props.onChangeCurrentTab(tab as TabOptions)}
+            />
+          )}
         </div>
 
         <FilterSearchContainer>
@@ -322,7 +319,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
 
       {props.isLoading ? (
         <Loading />
-      ) : (
+      ) : props.activeTab === TABS.REVERSE_MARKETPLACE ? (
         <>
           {props.currentTab === 'Buyer Requests' &&
             !isEmpty(props.sellingRequests) && (
@@ -471,6 +468,27 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                 title="No buyer requests"
               />
             )}
+        </>
+      ) : (
+        <>
+          <Typography
+            variant="overlineSmall"
+            color="shade7"
+            style={{ marginBottom: 10 }}
+          >
+            LISTINGS UNDER NEGOTIATIONS
+          </Typography>
+          {props?.negotiations ? (
+            props.negotiations.map((data) => (
+              <NegotiationInteractions
+                key={data.listing_id}
+                onClick={() => props.onNegotiationClick(data)}
+                data={data}
+              />
+            ))
+          ) : (
+            <EmptyState AnimatedSvg={AnimatedOctopus} title="No negotiations" />
+          )}
         </>
       )}
 

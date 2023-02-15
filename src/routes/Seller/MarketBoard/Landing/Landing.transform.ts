@@ -11,7 +11,9 @@ import {
 } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestFiltersResponseItem } from 'types/store/GetAllMarketRequestFiltersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
+import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
 import { Theme } from 'types/Theme';
+import { formatRunningDateDifference } from 'utils/MarketRequest';
 
 export const requestToModalFilter = (
   data?: GetAllMarketRequestFiltersResponseItem
@@ -283,4 +285,37 @@ export const getStatus = (
   if (status === 'DECLINED') return 'LOST';
   if (status === 'CLOSED') return 'DECLINED';
   return '';
+};
+
+export const getNegoRequestLandingData = (
+  data: GetAllNegoRequestResponseItem[] | undefined
+) => {
+  // if (!data) return [];
+  const buildExpiryData = (item: GetAllNegoRequestResponseItem) => {
+    const createdAtPlusDays = moment(item.created_at).add(7, 'd').format();
+    const hoursLeft = moment
+      .duration(moment(createdAtPlusDays).diff(moment()))
+      .asHours();
+    if (hoursLeft <= 24 && hoursLeft > 0) {
+      return hoursLeft.toFixed() + ' Hours';
+    }
+    if (hoursLeft <= 0) {
+      return 'Expired';
+    }
+    const expiry = moment(item.created_at).add(7, 'd').isBefore()
+      ? 'Expired'
+      : formatRunningDateDifference(
+          moment(item.created_at).add(7, 'd').format(),
+          'day'
+        );
+    return expiry;
+  };
+  const negoRequest = data?.map((item: GetAllNegoRequestResponseItem) => ({
+    ...item,
+    expiry: buildExpiryData(item),
+  }));
+
+  return negoRequest as
+    | (GetAllNegoRequestResponseItem & { expiry: any })[]
+    | undefined;
 };

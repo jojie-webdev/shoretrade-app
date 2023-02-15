@@ -98,8 +98,8 @@ export const ButtonContainer = styled.button<
 
   @media ${BREAKPOINTS.sm} {
     p:after {
-      content: '${({ shortenedText, text }) =>
-        shortenedText ? shortenedText : typeof text === 'string' && text}';
+      content: ${({ shortenedText, text }) =>
+        shortenedText ? shortenedText : typeof text === 'string' && text};
     }
   }
 `;

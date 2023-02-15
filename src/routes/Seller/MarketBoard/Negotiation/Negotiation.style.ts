@@ -14,28 +14,14 @@ export const Container = styled.div`
     margin-bottom: 40px;
   }
 
-  .submit-btns1 {
-    display: flex;
-  }
-
   .submit-btns {
     display: flex;
-    justify-content: space-between;
   }
 
   .submit-btn {
     margin-top: 1rem;
     margin-right: 8px;
     max-width: 148px;
-  }
-
-  .modal_container__exit_btn {
-    background-color: ${({ theme }) => theme.grey.shade10} !important;
-    border: ${({ theme }) => theme.grey.shade8} !important;
-
-    svg > path {
-      fill: ${({ theme }) => theme.grey.noshade};
-    }
   }
 `;
 
@@ -128,83 +114,16 @@ export const MetricContainer = styled.div`
   margin-bottom: 16px;
 `;
 
-export const Contents = styled.div`
-  margin-top: 24px;
-  padding: 48px;
-  background-color: ${({ theme }) => theme.grey.shade10};
+export const StyledAcceptButton = styled(Button)`
   border-radius: 12px;
-`;
-
-export const Tag = styled.div`
-  padding: 4px;
-  border-radius: 4px;
-  background-color: ${({ theme }) => theme.grey.noshade};
-  width: fit-content;
-  margin-right: 5px;
-`;
-
-export const Line = styled.div`
-  height: 1px;
+  padding: 15px 28px;
   width: 100%;
-  background-color: ${({ theme }) => theme.grey.shade6};
+  height: 100%;
 `;
 
-export const CalculationContainer = styled.div`
-  margin-top: 24px;
-`;
-
-export const LeftBtnsContainer = styled.div`
+export const CTAContainer = styled.div`
   display: flex;
   justify-content: space-between;
-
-  @media (max-width: 630px) {
-    width: 100%;
-  }
-
-  @media (max-width: 480px) {
-    flex-wrap: wrap;
-  }
-`;
-
-export const NegoCTAContainer = styled.div`
-  margin-top: 24px;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-
-  @media (max-width: 630px) {
-    flex-wrap: wrap;
-  }
-`;
-
-export const DeclineBtnWrapper = styled(Button)`
-  margin-right: 8px;
-
-  @media (max-width: 630px) {
-    width: inherit;
-  }
-
-  @media (max-width: 480px) {
-    margin-right: 0px;
-  }
-`;
-
-export const NegoBtnWrapper = styled(Button)`
-  @media (max-width: 630px) {
-    width: inherit;
-  }
-
-  @media (max-width: 480px) {
-    margin-top: 5px;
-  }
-`;
-
-export const AcceptBtnWrapper = styled(Button)`
-  margin-left: 8px;
-
-  @media (max-width: 630px) {
-    margin-top: 5px;
-    margin-left: 0px;
-    width: 100%;
-  }
+  width: 100%;
+  margin-top: 50px;
 `;

@@ -29,10 +29,8 @@ const Button = (props: ButtonProps): JSX.Element => {
     ...buttonProps
   } = props;
 
-  let defaultTextColor:
-    | keyof Theme['brand']
-    | keyof Theme['grey']
-    | undefined = textColor;
+  let defaultTextColor: keyof Theme['brand'] | keyof Theme['grey'] | undefined =
+    textColor;
 
   if (!defaultTextColor) {
     if (variant === 'primary') {

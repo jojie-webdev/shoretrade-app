@@ -3,7 +3,9 @@ import { Dispatch, SetStateAction } from 'react';
 import { MarketOfferItem } from 'types/store/CreateMarketOfferState';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
+import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
 
+import { TABS } from '../Landing/Landing.constants';
 import { Option } from './MakeOffer/MakeOffer.props';
 
 export interface StepProps {
@@ -19,6 +21,10 @@ export interface CommonProps {
   onNegotiateOffer: (id: string, price: number, accepted?: boolean) => void;
 
   isNegotiating: boolean;
+  negotiation: GetAllNegoRequestResponseItem & {
+    expiry: any;
+  };
+  selectedTab: TABS;
 }
 
 export interface Step1Props extends StepProps, CommonProps {

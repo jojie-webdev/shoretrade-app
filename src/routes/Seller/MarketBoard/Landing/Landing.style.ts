@@ -27,6 +27,7 @@ export const Container = styled.div`
     }
 
     .tabs {
+      margin-top: 10px;
       width: 330px;
 
       @media ${BREAKPOINTS['sm']} {
@@ -36,10 +37,20 @@ export const Container = styled.div`
     }
 
     .search {
+      border: none;
+      background-color: ${({ theme }) => theme.grey.shade9};
       width: 280px;
 
       @media ${BREAKPOINTS['sm']} {
         width: 100%;
+      }
+
+      input {
+        background-color: ${({ theme }) => theme.grey.shade9};
+
+        ::placeholder {
+          color: ${({ theme }) => theme.grey.shade7};
+        }
       }
     }
   }

@@ -13,6 +13,7 @@ import { ScreenClassRender } from 'react-grid-system';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
+  getNegoRequestLandingData,
   getRespectiveValues,
   getSize,
   requestToModalFilter,
@@ -21,16 +22,19 @@ import {
   getActiveOffersActions,
   getAllMarketRequestActions,
   getAllMarketRequestFiltersActions,
+  getAllNegotiationsActions,
   getMarketInterestsActions,
 } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
+import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
 import { Store } from 'types/store/Store';
 import useLocalStorage from 'utils/Hooks/useLocalStorage';
 import useTimeout from 'utils/Hooks/useTimeout';
 import { useTheme } from 'utils/SFMTheme';
 
+import { TABS } from './Landing.constants';
 import LandingDefaultView from './Landing.default.view';
 import { TabOptions } from './Landing.props';
 import LandingSFMView from './Landing.sfm.view';
@@ -48,6 +52,7 @@ const MarketBoardLanding = (): JSX.Element => {
     GetActiveOffersRequestResponseItem[]
   >([]);
   const [waitAll, setWaitAll] = useState(true);
+  const [activeTab, setActiveTab] = useState(TABS.REVERSE_MARKETPLACE);
 
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
   const userPending =
@@ -113,6 +118,12 @@ const MarketBoardLanding = (): JSX.Element => {
       others: [],
     }
   );
+  const negotiations = useSelector(
+    (store: Store) => store.getAllNegotiations.data?.data.negotiations
+  );
+  const isPendingNegotiations = useSelector(
+    (store: Store) => store.getAllNegotiations.pending
+  );
 
   const { filters, checkboxFilters } =
     requestToModalFilter(buyerRequestsFilters);
@@ -144,6 +155,15 @@ const MarketBoardLanding = (): JSX.Element => {
   const isActivePlanLoading = useSelector(
     (store: Store) => store.getCompanyPlan.pending
   );
+
+  const handleTabSelect = (selectedTab: TABS) => {
+    if (selectedTab === TABS.NEGO) {
+      dispatch(getAllNegotiationsActions.request({}));
+    } else {
+      dispatch(getAllMarketRequestActions.request({}));
+    }
+    setActiveTab(selectedTab);
+  };
 
   const reverseMarketPlace =
     (activePlans &&
@@ -231,12 +251,21 @@ const MarketBoardLanding = (): JSX.Element => {
   const onClickOffer = (data: GetAllMarketRequestResponseItem) => {
     history.push(SELLER_MARKET_BOARD_ROUTES.OFFER, {
       buyerRequest: data,
+      selectedTab: TABS.REVERSE_MARKETPLACE,
     });
   };
 
   const onClickActiveOffer = (data: GetActiveOffersRequestResponseItem) => {
     history.push(SELLER_MARKET_BOARD_ROUTES.NEGOTIATE, {
       activeOffer: data,
+      selectedTab: TABS.REVERSE_MARKETPLACE,
+    });
+  };
+
+  const onNegotiationClick = (data: GetAllNegoRequestResponseItem) => {
+    history.push(SELLER_MARKET_BOARD_ROUTES.NEGOTIATE, {
+      negotiation: data,
+      selectedTab: TABS.NEGO,
     });
   };
 
@@ -297,7 +326,16 @@ const MarketBoardLanding = (): JSX.Element => {
     sellingRequests: marketRequestsData.interests,
     buyerRequests: marketRequestsData.others,
     activeOffers: activeOffersDataCopy,
-    isLoading: buyerRequests.pending || activeOffers.pending || false,
+    negotiations: getNegoRequestLandingData(
+      negotiations?.filter(
+        (nego) => nego.status !== 'DELETED' && nego.status !== 'CLOSED'
+      )
+    ),
+    isLoading:
+      buyerRequests.pending ||
+      activeOffers.pending ||
+      isPendingNegotiations ||
+      false,
     currentTab,
     onChangeCurrentTab,
     searchTerm,
@@ -321,6 +359,9 @@ const MarketBoardLanding = (): JSX.Element => {
       buyerRequestFilter,
     },
     userPending,
+    handleTabSelect,
+    activeTab,
+    onNegotiationClick,
   };
 
   const sfmViewProps = {
