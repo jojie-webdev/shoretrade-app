@@ -13,6 +13,10 @@ export const Container = styled.div`
     margin-bottom: 40px;
   }
 
+  .submit-btns1 {
+    display: flex;
+  }
+
   .submit-btns {
     display: flex;
     justify-content: space-between;

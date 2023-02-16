@@ -350,6 +350,55 @@ const Step1 = ({
         </div>
 
         {showButtons && !isMobile && (
+          <div className={'submit-btns1'}>
+            <Button
+              onClick={() => setIsOpen(true)}
+              className={'submit-btn'}
+              text="Negotiate"
+              variant="outline"
+            />
+            <Button
+              loading={props.isNegotiating}
+              onClick={() =>
+                props.onNegotiateOffer(
+                  activeOffer.id,
+                  latestBuyerNego.price,
+                  true
+                )
+              }
+              className={'submit-btn'}
+              text="accept"
+              variant="primary"
+            />
+          </div>
+        )}
+
+        {showButtons && isMobile && (
+          <MobileFooter>
+            <Button
+              onClick={() => setIsOpen(true)}
+              takeFullWidth
+              text="Negotiate"
+              variant="outline"
+            />
+            <Button
+              loading={props.isNegotiating}
+              onClick={() =>
+                props.onNegotiateOffer(
+                  activeOffer.id,
+                  latestBuyerNego.price,
+                  true
+                )
+              }
+              takeFullWidth
+              style={{ marginLeft: 8 }}
+              text="accept"
+              variant="primary"
+            />
+          </MobileFooter>
+        )}
+
+        {showButtons && !isMobile && (
           <div className={'submit-btns'}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <Button
