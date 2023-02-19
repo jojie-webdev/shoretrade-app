@@ -72,4 +72,16 @@ export interface ProductDetailsGeneratedProps {
   isPendingAccount: boolean;
   showSuccessAddBtn: boolean;
   canNegotiate?: boolean;
+  handleNegoModalShow: () => void;
+  showNegoModal: boolean;
+  handleSelectedBoxesWeight: (boxes: Box[], boxesIndex: number) => void;
+  selectedBoxesWeight: Box[];
+  selectedBoxesIndex: number;
+  handleShowConfirmNegoModal: () => void;
+  showConfirmNegoModal: boolean;
+  handleConfirmNegoClick: () => void;
+  isSendingNegotiation: boolean | null;
+  handleNegotiationPriceSetting: (price: number) => void;
+  negotiationPrice: number;
+  handleDesiredQuantityChange: (weight: string) => void;
 }
