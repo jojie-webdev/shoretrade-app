@@ -110,8 +110,8 @@ export function favouritesToPreviewProps(
     templateDeliveryDate: data.templateDeliveryDate,
     isForSaleRepPhoto: data.isForSaleRepPhoto,
     isSFMCrate: data.packaging?.type === 'SFM',
-    allowNegotiations: data.allowNegotiations,
-    auctionDate: data.auctionDate,
+    // allowNegotiations: data.allowNegotiations,
+    // auctionDate: data.auctionDate,
   };
 }
 

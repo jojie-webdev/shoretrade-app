@@ -96,6 +96,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   const isBeyondCutoff =
     isPreAuction && dateEnds ? (moment() > cutOffDate ? true : false) : false;
 
+  const negotiationPrice = 0;
   const priceDiff = negotiationPrice - Number(productDetailsCard6Props.price);
   const priceDiff2 =
     priceDiff / Math.abs(Number(productDetailsCard6Props.price));
@@ -173,8 +174,12 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
         }
       />
       <ConfirmationModal
-        isOpen={showConfirmNegoModal}
-        onClickClose={handleShowConfirmNegoModal}
+        // isOpen={showConfirmNegoModal}
+        isOpen={false}
+        // onClickClose={handleShowConfirmNegoModal}
+        onClickClose={() => {
+          console.log('');
+        }}
         title={
           <Typography
             variant="title4"
@@ -185,9 +190,16 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
             Confirm Negotiation
           </Typography>
         }
-        action={handleConfirmNegoClick}
-        disableActionText={isSendingNegotiation || false}
-        cancel={handleShowConfirmNegoModal}
+        // action={handleConfirmNegoClick}
+        action={() => {
+          console.log('');
+        }}
+        // disableActionText={isSendingNegotiation || false}
+        disableActionText={false}
+        // cancel={handleShowConfirmNegoModal}
+        cancel={() => {
+          console.log('');
+        }}
         actionText="Send Negotiation"
         cancelText="Cancel"
         description={
@@ -203,8 +215,12 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
         }
       />
       <ConfirmationModal
-        isOpen={showNegoModal}
-        onClickClose={handleNegoModalShow}
+        // isOpen={showNegoModal}
+        // onClickClose={handleNegoModalShow}
+        isOpen={false}
+        onClickClose={() => {
+          console.log('');
+        }}
         title={
           <Typography
             variant="title4"
@@ -215,7 +231,10 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
             Negotiate
           </Typography>
         }
-        action={() => handleShowConfirmNegoModal()}
+        // action={() => handleShowConfirmNegoModal()}
+        action={() => {
+          console.log('');
+        }}
         actionIconPosition="before"
         actionIcon={<MarketBoardOutlined width={20} height={20} />}
         actionText="NEGOTIATE"
@@ -237,7 +256,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                     price.substr(0, price.indexOf('.')) +
                     price.substr(price.indexOf('.'), 3);
                 }
-                handleNegotiationPriceSetting(parseFloat(price));
+                // handleNegotiationPriceSetting(parseFloat(price));
               }}
               min={1}
               LeftComponent={
@@ -250,7 +269,10 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
             />
             <StyledTextField
               value={weight}
-              onChangeText={handleDesiredQuantityChange}
+              // onChangeText={handleDesiredQuantityChange}
+              onChangeText={() => {
+                console.log('');
+              }}
               type="number"
               inputType="decimal"
               step=".01"
@@ -273,12 +295,20 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                     <GroupedBoxContainer>
                       <div style={{ padding: '0 0 0 20px' }}>
                         <Radio
-                          checked={index === selectedBoxesIndex}
-                          onClick={() =>
-                            handleSelectedBoxesWeight(
-                              groupedBox[index].boxes,
-                              index
-                            )
+                          // checked={index === selectedBoxesIndex}
+                          // onClick={() =>
+                          //   handleSelectedBoxesWeight(
+                          //     groupedBox[index].boxes,
+                          //     index
+                          //   )
+                          // }
+                          checked={true}
+                          onClick={
+                            () => console.log('')
+                            // handleSelectedBoxesWeight(
+                            //   groupedBox[index].boxes,
+                            //   index
+                            // )
                           }
                         />
                       </div>
@@ -369,7 +399,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                 color="secondary"
                 style={{ fontFamily: 'Basis Grotesque Pro' }}
               >
-                {toPrice(
+                {/* {toPrice(
                   selectedBoxesWeight.reduce(
                     (acc, cur) =>
                       acc +
@@ -379,7 +409,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                           Number(productDetailsCard6Props.price)),
                     0
                   )
-                )}
+                )} */}
+                {toPrice('0')}
               </Typography>
             </div>
           </div>

@@ -408,7 +408,8 @@ const Step1 = ({
           <div className={'submit-btns'}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <Button
-                onClick={handleDeclineBtnClick}
+                // onClick={handleDeclineBtnClick}
+                onClick={() => console.log('')}
                 text={
                   <Typography color="primary" style={{ marginRight: 5 }}>
                     Decline
@@ -435,7 +436,8 @@ const Step1 = ({
                   Accept
                 </Typography>
               }
-              onClick={handleAcceptBtnClick}
+              // onClick={handleAcceptBtnClick}
+              onClick={() => console.log('')}
               variant="primary"
               icon={<Check width={10} height={9} />}
             />
@@ -447,7 +449,8 @@ const Step1 = ({
             <div style={{ width: '100%' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Button
-                  onClick={handleDeclineBtnClick}
+                  // onClick={handleDeclineBtnClick}
+                  onClick={() => console.log('')}
                   text={
                     <Typography color="primary" style={{ marginRight: 5 }}>
                       Decline
@@ -464,7 +467,8 @@ const Step1 = ({
                       Accept
                     </Typography>
                   }
-                  onClick={handleAcceptBtnClick}
+                  // onClick={handleAcceptBtnClick}
+                  onClick={() => console.log('')}
                   variant="primary"
                   icon={<Check width={10} height={9} />}
                   takeFullWidth
@@ -488,11 +492,13 @@ const Step1 = ({
         )}
 
         <AcceptSellerModal
-          show={showAcceptModal}
-          onCloseClick={handleAcceptBtnClick}
+          // show={showAcceptModal}
+          // onCloseClick={handleAcceptBtnClick}
+          show={false}
+          onCloseClick={() => console.log('')}
           isAccepting={props.isNegotiating}
           onAcceptBtnClick={() => {
-            handleAcceptBtnClick();
+            // handleAcceptBtnClick();
             props.onNegotiateOffer(activeOffer.id, latestBuyerNego.price, true);
           }}
           quantity={
@@ -522,9 +528,12 @@ const Step1 = ({
         />
 
         <DeclineSellerModal
-          show={showDeclineModal}
-          onCancelBtnClick={handleCancelBtnClick}
-          onConfirmBtnClick={handleConfirmBtnClick}
+          // show={showDeclineModal}
+          // onCancelBtnClick={handleCancelBtnClick}
+          // onConfirmBtnClick={handleConfirmBtnClick}
+          show={false}
+          onCancelBtnClick={() => console.log('')}
+          onConfirmBtnClick={() => console.log('')}
         />
       </>
     );

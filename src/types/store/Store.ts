@@ -355,6 +355,10 @@ import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
+  createNegotiation: AsyncState<
+    CreateNegotiationMeta,
+    CreateNegotiationPayload
+  >;
   getAllNegotiations: AsyncState<
     GetAllNegotiationsMeta,
     GetAllNegotiationsPayload

@@ -152,7 +152,7 @@ const MarketRequestsLanding = (): JSX.Element => {
   };
 
   const handleSearchChange = (text: string) => {
-    setSearchKeyword(text);
+    // setSearchKeyword(text);
 
     history.push(`?tab=${selectedTab}&searchTerm=${text}`);
   };
@@ -201,6 +201,7 @@ const MarketRequestsLanding = (): JSX.Element => {
     canNegotiate,
     handleTabSelect,
     selectedTab,
+    handleSearchChange,
   };
 
   const sfmViewProps = {

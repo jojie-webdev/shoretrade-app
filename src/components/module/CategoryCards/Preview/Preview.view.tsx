@@ -248,10 +248,11 @@ const Preview = (props: PreviewProps): JSX.Element => {
     hiddenPrice,
     hiddenVendor,
     canNegotiate,
+    // allowNegotiations,
   } = props;
   const theme = useTheme();
 
-  const allowedNegotiationByBuyer = allowNegotiations;
+  // const allowedNegotiationByBuyer = allowNegotiations;
 
   const NegotiatePriceElem = (props: {
     backgroundColor: string;

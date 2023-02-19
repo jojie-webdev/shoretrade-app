@@ -189,7 +189,7 @@ const OfferDetails = (): JSX.Element => {
   };
 
   const handlePayNow = () => {
-    handleShowAcceptOffer();
+    // handleShowAcceptOffer();
   };
 
   const onClickDelete = () => {

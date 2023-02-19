@@ -14,6 +14,7 @@ import { MarketOfferItem } from 'types/store/CreateMarketOfferState';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
+import { GetListingResponseItem } from 'types/store/GetListingState';
 import { Store } from 'types/store/Store';
 
 import { TABS } from '../Landing/Landing.constants';
@@ -96,6 +97,8 @@ const RequestAndNegotiate = (): JSX.Element => {
   const { id } = useParams<any>();
   const listingId = 'f04aeee8-e816-4afe-9bfe-ab2b34763391'; //'8897ec8f-276d-4657-8a2f-958d39788a7b';
 
+  const shouldHideResult = true;
+
   const groupedBox =
     previousWeightRequest?.listingId === listingId && !shouldHideResult
       ? getListingBoxesResponse.map((boxGroup) => {
@@ -170,20 +173,20 @@ const RequestAndNegotiate = (): JSX.Element => {
   };
 
   const handleAcceptBtnClick = () => {
-    setShowAcceptModal((prevValue) => !prevValue);
+    // setShowAcceptModal((prevValue) => !prevValue);
   };
 
   const handleConfirmBtnClick = () => {
-    setShowDeclineModal((prevValue) => !prevValue);
+    // setShowDeclineModal((prevValue) => !prevValue);
   };
 
   const handleCancelBtnClick = () => {
-    setShowDeclineModal((prevValue) => !prevValue);
+    // setShowDeclineModal((prevValue) => !prevValue);
   };
 
   const handleDeclineBtnClick = () => {
     console.log('handleDeclineBtnClick > showDeclineModal > ');
-    setShowDeclineModal((prevValue) => !prevValue);
+    // setShowDeclineModal((prevValue) => !prevValue);
   };
 
   useEffect(() => {
@@ -256,6 +259,12 @@ const RequestAndNegotiate = (): JSX.Element => {
     setOfferSpecs,
     showOfferAcceptSentModal,
     selectedTab,
+    handleDeclineBtnClick,
+    showDeclineModal: false,
+    handleAcceptBtnClick,
+    showAcceptModal: false,
+    handleCancelBtnClick,
+    handleConfirmBtnClick,
   };
   return <RequestAndNegotiateView {...generatedProps} />;
 };

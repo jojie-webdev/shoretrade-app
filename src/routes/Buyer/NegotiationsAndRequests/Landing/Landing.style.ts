@@ -207,3 +207,10 @@ export const SubMinorDetail = styled.div`
   display: flex;
   margin-right: 20px;
 `;
+
+export const SearchWrapper = styled(Search)`
+  height: 40px;
+  max-width: 350px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+`;
