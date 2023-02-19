@@ -87,6 +87,8 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
                           isForSaleRepPhoto={rec.isForSaleRepPhoto}
                           isSFMCrate={rec.packaging?.type === 'SFM'}
                           canNegotiate={canNegotiate}
+                          allowNegotiations={rec.allowNegotiations}
+                          auctionDate={rec.auctionDate}
                         />
                       </StyledInteraction>
                     ) : (
@@ -118,6 +120,8 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
                         isForSaleRepPhoto={rec.isForSaleRepPhoto}
                         isSFMCrate={rec.packaging?.type === 'SFM'}
                         canNegotiate={canNegotiate}
+                        allowNegotiations={rec.allowNegotiations}
+                        auctionDate={rec.auctionDate}
                       />
                     )}
                   </Link>

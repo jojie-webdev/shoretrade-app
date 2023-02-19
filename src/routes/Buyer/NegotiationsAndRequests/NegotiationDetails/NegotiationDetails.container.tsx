@@ -13,6 +13,7 @@ import {
   deleteMarketRequestActions,
   getActiveOffersActions,
   getAllMarketRequestActions,
+  getAllNegotiationsActions,
   marketOfferActions,
 } from 'store/actions';
 import marketRequestNegotiateOfferActions from 'store/actions/marketRequestNegotiation';
@@ -28,14 +29,13 @@ import { AcceptOfferItem, OfferConfirm } from 'types/store/MarketOfferState';
 import { Store } from 'types/store/Store';
 
 import PaymentMethod from '../Checkout/PaymentMethod/PaymentMethod.container';
-import { OfferDetailsProps } from './OfferDetails.props';
-import OfferDetailsView from './OfferDetails.view';
+import { NegotiationDetailsProps } from './NegotiationDetails.props';
+import NegotiationDetailsView from './NegotiationDetails.view';
 
-const OfferDetails = (): JSX.Element => {
+const NegotiationDetails = (): JSX.Element => {
   const location = useLocation();
   const params = useParams<{ id: string }>();
   const { id } = params;
-  console.log('offerdetails > id > ', id);
   const history = useHistory();
   const dispatch = useDispatch();
   const [offerId, setOfferId] = useState<string>('');
@@ -97,10 +97,6 @@ const OfferDetails = (): JSX.Element => {
     return [];
   }, [activeOffers]);
 
-  const goTolist = () => {
-    history.push(BUYER_MARKET_REQUEST_ROUTES.MARKET_REQUEST_DETAILS(id));
-  };
-
   const acceptOffer = useSelector(
     (store: Store) => store.marketRequestAcceptOffer
   );
@@ -121,6 +117,14 @@ const OfferDetails = (): JSX.Element => {
     (state: Store) => state.marketRequestNegotiation.data?.status
   );
 
+  const negotiations = useSelector(
+    (store: Store) => store.getAllNegotiations.data?.data.negotiations
+  );
+
+  const negotiation = negotiations?.find(
+    (negotiation) => negotiation.listing_id === id
+  );
+
   const filteredBuyerRequests = buyerRequests.data?.data?.marketRequests.filter(
     (mR) => mR.status !== 'DELETED' && mR.status !== 'CLOSED'
   );
@@ -130,20 +134,18 @@ const OfferDetails = (): JSX.Element => {
   );
 
   const breadCrumb = [
-    { label: 'My Requests', link: BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS },
+    { label: 'All Negotiations', link: BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS },
     {
-      label: 'Request Details',
-      onClick: () => {
-        goTolist();
-      },
-    },
-    {
-      label: 'Offer Details',
+      label: 'Negotiation Details',
     },
   ];
 
   const handleDeclineClick = (show: boolean) => {
     setClickDecline(show);
+  };
+
+  const handleDeclineConfirm = () => {
+    setClickDecline(false);
   };
 
   const handlePayNow = () => {
@@ -174,6 +176,10 @@ const OfferDetails = (): JSX.Element => {
       marketOfferId: selectedOffer?.id || '',
     };
     dispatch(marketRequestOfferConfirmActions.request(meta));
+    setClickAccept(false);
+  };
+
+  const handleAcceptConfirm = () => {
     setClickAccept(false);
   };
 
@@ -241,16 +247,9 @@ const OfferDetails = (): JSX.Element => {
       onRefresh();
     }
 
-    if (id && !activeOffers.data) {
-      dispatch(
-        getActiveOffersActions.request({
-          queryParams: {
-            marketRequestId: id,
-          },
-        })
-      );
+    if (id) {
+      dispatch(getAllNegotiationsActions.request({}));
     }
-    // eslint-disable-next-line
   }, [id]);
 
   useEffect(() => {
@@ -366,16 +365,11 @@ const OfferDetails = (): JSX.Element => {
     isAccepted = selectedOffer.status === 'ACCEPTED';
   }
 
-  if (
-    !selectedOffer ||
-    !filteredBuyerRequest ||
-    !offerMR ||
-    pendingConfirmOffer
-  ) {
+  if (!negotiation) {
     return <Loading />;
   }
 
-  const generatedProps: OfferDetailsProps = {
+  const generatedProps: NegotiationDetailsProps = {
     counterOffer,
     handleStartNegotiate,
     handleConfirmOffer,
@@ -384,7 +378,6 @@ const OfferDetails = (): JSX.Element => {
     isLoadingOffer: activeOffers.pending || false,
     isAccepted,
     newOffer,
-    selectedOffer,
     thereIsNewOffer,
     seller,
     nego,
@@ -396,8 +389,6 @@ const OfferDetails = (): JSX.Element => {
     sortedNegotiations,
     submitNegotiation,
     breadCrumb,
-    marketRequest: filteredBuyerRequest,
-    offerMR,
     countAcceptedWeight,
     onClickDelete,
     showDelete,
@@ -415,6 +406,9 @@ const OfferDetails = (): JSX.Element => {
     clickAccept,
     handleDeclineClick,
     clickDecline,
+    negotiation,
+    handleAcceptConfirm,
+    handleDeclineConfirm,
   };
 
   const getPrice = () => {
@@ -439,7 +433,7 @@ const OfferDetails = (): JSX.Element => {
       />
     );
   }
-  return <OfferDetailsView {...generatedProps} />;
+  return <NegotiationDetailsView {...generatedProps} />;
 };
 
-export default OfferDetails;
+export default NegotiationDetails;

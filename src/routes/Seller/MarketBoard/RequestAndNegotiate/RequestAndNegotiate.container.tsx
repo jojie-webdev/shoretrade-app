@@ -9,6 +9,7 @@ import {
   getListingActions,
   getListingBoxesActions,
   marketOfferNegotiateActions,
+  createNegotiationActions,
 } from 'store/actions';
 import { MarketOfferItem } from 'types/store/CreateMarketOfferState';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
@@ -158,6 +159,22 @@ const RequestAndNegotiate = (): JSX.Element => {
         accepted: accepted,
       })
     );
+  };
+
+  const onNegotiationOffer = (
+    listingId: string,
+    listingBoxId: string,
+    desiredQuantity: string,
+    counterOffer: string
+  ) => {
+    const payload = {
+      listingId,
+      listingBoxId,
+      desiredQuantity,
+      counterOffer,
+    };
+
+    dispatch(createNegotiationActions.request(payload));
   };
 
   const onConfirmSentOffer = () => {

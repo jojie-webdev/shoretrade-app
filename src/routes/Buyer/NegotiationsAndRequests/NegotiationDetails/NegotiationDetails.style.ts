@@ -76,7 +76,6 @@ export const TotalPriceContainer = styled.div`
   border: 1px solid ${({ theme }) => theme.grey.shade4};
   border-radius: 12px;
   padding: 16px;
-  margin-top: 16px;
 
   @media ${BREAKPOINTS['sm']} {
     border: 1px solid ${({ theme }) => theme.grey.shade4};

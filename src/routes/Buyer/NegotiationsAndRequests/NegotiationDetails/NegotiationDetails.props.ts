@@ -1,40 +1,13 @@
 import { Dispatch, SetStateAction } from 'react';
 
-import { FilterModalProps } from 'components/module/FilterModal/FilterModal.props';
 import {
-  GetActiveOffersRequestResponseItem,
   Negotiations,
-  Offer,
   OfferMarketRequest,
 } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
-import { GetMarketRequestResponseItem } from 'types/store/GetMarketRequestState';
+import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
 
-export enum MarketRequestOfferTip {
-  Negotiation = 'Negotiation',
-  GreatValue = 'Great Value',
-  AboveMarket = 'Above Market',
-}
-
-export interface MarketRequestOffer {
-  sellerId: string;
-  sellerRating: string;
-  sellerName: string;
-  id: string; //offerid
-  status: string;
-  specs: string[];
-  price: {
-    value: number;
-    currency: string;
-  };
-  weight: {
-    unit: string;
-    value: number;
-  };
-  tip: MarketRequestOfferTip;
-}
-
-export interface OfferDetailsProps {
+export interface NegotiationDetailsProps {
   handleConfirmOffer: () => void;
   handleStartNegotiate: () => void;
   handleAcceptClick: (show: boolean) => void;
@@ -43,7 +16,6 @@ export interface OfferDetailsProps {
   newOffer: string;
   thereIsNewOffer: boolean;
   isAccepted: boolean;
-  selectedOffer: Offer;
   seller: any;
   nego?: Negotiations;
   negotiating: boolean;
@@ -54,8 +26,6 @@ export interface OfferDetailsProps {
   lastNegotiationsOffers: Negotiations[];
   submitNegotiation: (counterOffer: number) => void;
   breadCrumb: any[];
-  marketRequest: GetAllMarketRequestResponseItem;
-  offerMR: OfferMarketRequest;
   countAcceptedWeight: number;
   onClickDelete: () => void;
   showDelete: boolean;
@@ -74,4 +44,7 @@ export interface OfferDetailsProps {
   clickAccept: boolean;
   handleDeclineClick: (show: boolean) => void;
   clickDecline: boolean;
+  negotiation: GetAllNegoRequestResponseItem | undefined;
+  handleAcceptConfirm: () => void;
+  handleDeclineConfirm: () => void;
 }

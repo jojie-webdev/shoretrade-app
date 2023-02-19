@@ -1,11 +1,15 @@
 import React from 'react';
 
-import { BUYER_MARKET_REQUEST_ROUTES } from 'consts/routes';
+import {
+  BUYER_MARKET_REQUEST_ROUTES,
+  BUYER_NEGOTIATION_ROUTES,
+} from 'consts/routes';
 import { Route, Switch } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
 
 import CreateRequest from './Create/Create.container';
 import NegotiationsAndRequestsLanding from './Landing';
+import NegotiationDetails from './NegotiationDetails';
 import OfferDetails from './OfferDetails';
 import MarketRequestDetail from './RequestDetails';
 
@@ -29,6 +33,12 @@ const ROUTES: Routes = {
   MARKET_REQUEST_DETAILS_OFFER: {
     path: BUYER_MARKET_REQUEST_ROUTES.MARKET_REQUEST_DETAILS_OFFER(),
     children: <OfferDetails />,
+    title: '',
+    hideFromSidebar: true,
+  },
+  NEGOTIATION_DETAILS: {
+    path: BUYER_NEGOTIATION_ROUTES.NEGOTIATION_DETAILS(),
+    children: <NegotiationDetails />,
     title: '',
     hideFromSidebar: true,
   },

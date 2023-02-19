@@ -6,6 +6,7 @@ import moment from 'moment';
 import { Row as TableRow, Col as TableCol } from 'react-grid-system';
 import { useSelector } from 'react-redux';
 import { Store } from 'types/store/Store';
+import { isPreAuctionExpired } from 'utils/Listing';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { formatTemplateDeliveryDateLabel } from 'utils/Listing/formatTemplateDeliveryDateLabel';
 import { toPrice, capitalize } from 'utils/String';
@@ -40,6 +41,8 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
     activeSizeUnit,
     isPreAuction,
     canNegotiate,
+    auctionDate,
+    handleNegoModalShow,
   } = props;
 
   const companyPlan = useSelector(
@@ -59,10 +62,14 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
   const NegotiatePriceElem = (props: {
     backgroundColor: string;
     fill: string;
+    clickable?: boolean;
   }) => {
     return (
       <NegotiatePriceBtnContainer>
-        <NegotiatePriceBtnWrapper backgroundColor={props.backgroundColor}>
+        <NegotiatePriceBtnWrapper
+          backgroundColor={props.backgroundColor}
+          clickable={props.clickable}
+        >
           <MarketBoardOutlined fill={props.fill} />
           <div style={{ marginRight: 5 }} />
           <NegotiatePriceText
@@ -96,33 +103,37 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
           </div>
         )}
         {canNegotiate ? (
-          <NegotiatePriceBtnContainer>
-            <NegotiatePriceBtnWrapper>
-              <MarketBoardOutlined />
-              <div style={{ marginRight: 5 }} />
-              <NegotiatePriceText
-                variant="small"
-                color="noshade"
-                style={{ paddingRight: 8 }}
-              >
-                NEGOTIATE PRICE
-              </NegotiatePriceText>
-            </NegotiatePriceBtnWrapper>
-          </NegotiatePriceBtnContainer>
+          auctionDate ? (
+            isPreAuctionExpired(auctionDate) ? null : (
+              <div onClick={handleNegoModalShow}>
+                <NegotiatePriceElem
+                  backgroundColor={theme.brand.primary}
+                  fill={theme.grey.noshade}
+                  clickable
+                />
+              </div>
+            )
+          ) : (
+            <div onClick={handleNegoModalShow}>
+              <NegotiatePriceElem
+                backgroundColor={theme.brand.primary}
+                fill={theme.grey.noshade}
+                clickable
+              />
+            </div>
+          )
+        ) : auctionDate ? (
+          isPreAuctionExpired(auctionDate) ? null : (
+            <NegotiatePriceElem
+              backgroundColor={theme.grey.shade6}
+              fill={theme.grey.noshade}
+            />
+          )
         ) : (
-          <NegotiatePriceBtnContainer>
-            <NegotiatePriceBtnWrapper backgroundColor="shade3">
-              <MarketBoardOutlined fill={theme.grey.shade6} />
-              <div style={{ marginRight: 5 }} />
-              <NegotiatePriceText
-                variant="small"
-                color="shade6"
-                style={{ paddingRight: 8 }}
-              >
-                NEGOTIATE PRICE
-              </NegotiatePriceText>
-            </NegotiatePriceBtnWrapper>
-          </NegotiatePriceBtnContainer>
+          <NegotiatePriceElem
+            backgroundColor={theme.grey.shade6}
+            fill={theme.grey.noshade}
+          />
         )}
       </div>
       {!props.catchRecurrence && (

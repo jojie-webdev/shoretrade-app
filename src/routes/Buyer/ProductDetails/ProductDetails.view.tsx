@@ -79,7 +79,6 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     addCartItemData,
     showSuccessAddBtn,
     canNegotiate,
-    handleNegoModalShow,
     showNegoModal,
     handleSelectedBoxesWeight,
     selectedBoxesWeight,
@@ -216,7 +215,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
       />
       <ConfirmationModal
         isOpen={showNegoModal}
-        onClickClose={handleNegoModalShow}
+        onClickClose={props.productDetailsCard6Props.handleNegoModalShow}
         title={
           <Typography
             variant="title4"

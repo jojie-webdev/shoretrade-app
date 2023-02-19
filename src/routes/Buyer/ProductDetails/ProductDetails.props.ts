@@ -72,7 +72,6 @@ export interface ProductDetailsGeneratedProps {
   isPendingAccount: boolean;
   showSuccessAddBtn: boolean;
   canNegotiate?: boolean;
-  handleNegoModalShow: () => void;
   showNegoModal: boolean;
   handleSelectedBoxesWeight: (boxes: Box[], boxesIndex: number) => void;
   selectedBoxesWeight: Box[];

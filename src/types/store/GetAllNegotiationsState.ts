@@ -21,6 +21,7 @@ export type GetAllNegoRequestResponseItem = {
   status: string;
   thumbnail: string;
   measurement_unit: string;
+  metric: string;
 };
 
 export type GetAllNegotiationsPayload = GenericResponse<{

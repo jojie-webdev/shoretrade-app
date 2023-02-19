@@ -4,7 +4,7 @@ import {
 } from 'types/store/CreateNegotiationState';
 import { createAsyncAction } from 'utils/Redux';
 
-const ns = 'NEGOTIATE';
+const ns = 'CREATE_NEGOTIATION';
 const asyncAction = createAsyncAction<
   CreateNegotiationMeta,
   CreateNegotiationPayload

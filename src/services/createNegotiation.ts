@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { API } from 'consts';
 import { omit } from 'ramda';
-import { CreateNegotiationMeta } from 'types/store/CreateNegotiationState';
+import { CreateNegotiation_2Meta } from 'types/store/CreateNegotiation_2State';
 
 const BASE_URL = `${API.URL}/v2`;
 const LISTING_URL = `${BASE_URL}/listing`;
 
 export const createNegotiation = (
-  data: CreateNegotiationMeta,
+  data: CreateNegotiation_2Meta,
   token: string
 ) => {
   const modifiedData = omit(['listingId'], data);

@@ -49,6 +49,11 @@ export interface MarketRequestsLandingGeneratedProps {
   selectedTab: string;
   handleSearchChange: (text: string) => void;
   // searchKeyword: string;
+  onClickNegoItem: (
+    row: GetAllNegoRequestResponseItem & {
+      expiry: any;
+    }
+  ) => void;
 }
 
 export enum TABS {

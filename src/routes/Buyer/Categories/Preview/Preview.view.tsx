@@ -170,6 +170,8 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                         isForSaleRepPhoto={product.isForSaleRepPhoto}
                         isSFMCrate={product.packaging?.type === 'SFM'}
                         canNegotiate={canNegotiate}
+                        allowNegotiations={product.allowNegotiations}
+                        auctionDate={product.auctionDate}
                       />
                     </StyledInteraction>
                   ) : (
@@ -201,6 +203,8 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                       isForSaleRepPhoto={product.isForSaleRepPhoto}
                       isSFMCrate={product.packaging?.type === 'SFM'}
                       canNegotiate={canNegotiate}
+                      allowNegotiations={product.allowNegotiations}
+                      auctionDate={product.auctionDate}
                     />
                   )}
                 </Link>

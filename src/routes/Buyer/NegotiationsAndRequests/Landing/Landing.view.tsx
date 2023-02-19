@@ -49,6 +49,7 @@ const MarketRequestsLandingView = (
     marketRequests,
     negotiations,
     onClickItem,
+    onClickNegoItem,
     onDelete,
     itemToDelete,
     setItemToDelete,
@@ -113,7 +114,7 @@ const MarketRequestsLandingView = (
           <NegotiationNonMobile
             key={nego.listing_id}
             item={nego}
-            onClickItem={onClickItem}
+            onClickItem={() => onClickNegoItem(nego)}
             activeOffersData={activeOffersData}
             setItemToDelete={setItemToDelete}
           />

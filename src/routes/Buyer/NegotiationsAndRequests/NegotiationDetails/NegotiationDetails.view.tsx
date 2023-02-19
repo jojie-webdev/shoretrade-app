@@ -32,7 +32,7 @@ import theme from 'utils/Theme';
 
 import Check from '../../../../components/base/SVG/Check';
 import Refresh from '../../../../components/base/SVG/Refresh';
-import { OfferDetailsProps } from './OfferDetails.props';
+import { NegotiationDetailsProps } from './NegotiationDetails.props';
 import {
   FullOfferDetailsContainer,
   CompanyInfoCol,
@@ -55,9 +55,9 @@ import {
   DefaultStyledNegotiateButtonContainer,
   DefaultStyledNegotiateButton,
   DefaultStyledAcceptButton,
-} from './OfferDetails.style';
+} from './NegotiationDetails.style';
 
-const OfferDetailsView = (props: OfferDetailsProps) => {
+const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
   const {
     handleStartNegotiate,
     handleNegoBtnClick,
@@ -67,7 +67,6 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
     thereIsNewOffer,
     counterOffer,
     newOffer,
-    selectedOffer,
     handlePayNow,
     seller,
     nego,
@@ -79,7 +78,6 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
     sortedNegotiations,
     submitNegotiation,
     breadCrumb,
-    marketRequest,
     countAcceptedWeight,
     onClickDelete,
     showDelete,
@@ -88,11 +86,13 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
     isLoadingOffer,
     isLoadingConfirmOffer,
     isLoadingNegotiate,
-    offerMR,
     canNegotiate,
     clickAccept,
     handleDeclineClick,
     clickDecline,
+    negotiation,
+    handleAcceptConfirm,
+    handleDeclineConfirm,
   } = props;
 
   const history = useHistory();
@@ -109,11 +109,10 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
         color="shade9"
         style={{ marginTop: '8px' }}
       >
-        <sup className="sup-text-2">$</sup>
         {toPrice(
-          (selectedOffer?.weight || 0) *
-            (nego?.price || selectedOffer?.price || 0)
-        ).replace('$', '')}
+          Number(negotiation?.desired_quantity || '0.00') *
+            Number(negotiation?.counter_offer || '0.00')
+        )}
       </Typography>
     </TotalPriceContainer>
   );
@@ -159,33 +158,45 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
   );
 
   const renderLabelValue = (value: string | undefined) => (
-    <DetailsValueContainer>
-      <StyledTypography weight="900" variant="overline">
-        {value}
-      </StyledTypography>
-    </DetailsValueContainer>
+    <>
+      <DetailsValueContainer>
+        <StyledTypography weight="700" variant="label">
+          {value}
+        </StyledTypography>
+      </DetailsValueContainer>
+    </>
   );
+
+  console.log('negotiation > ');
 
   const sizeValue = sizeToString(
-    selectedOffer?.metric || '',
-    selectedOffer?.size?.from,
-    selectedOffer?.size?.to
+    negotiation?.metric || negotiation?.active_size_unit || '',
+    negotiation?.size_from,
+    negotiation?.size_to
   ).toUpperCase();
 
-  const latestOfferPrice = newOffer !== '' ? newOffer : selectedOffer.price;
+  // const latestOfferPrice = newOffer !== '' ? newOffer : selectedOffer.price;
+
+  // const quantityValue =
+  //   selectedOffer?.weight + ' ' + selectedOffer?.measurementUnit;
 
   const quantityValue =
-    selectedOffer?.weight + ' ' + selectedOffer?.measurementUnit;
-  const pricePerUnit = `${toPrice(
-    latestOfferPrice
-  )} / ${formatUnitToPricePerUnit(selectedOffer.measurementUnit)}`;
+    negotiation?.desired_quantity + ' ' + negotiation?.measurement_unit;
 
-  const mrStatusProps = transformMarketRequestStatusText(
-    theme,
-    selectedOffer.statusText,
-    false,
-    [`${formatOrderReferenceNumber(selectedOffer.orderRefNumber)}`]
-  );
+  // const pricePerUnit = `${toPrice(
+  //   latestOfferPrice
+  // )} / ${formatUnitToPricePerUnit(selectedOffer.measurementUnit)}`;
+
+  const pricePerUnit = `${toPrice(
+    negotiation?.counter_offer || '0.00'
+  )} per ${formatUnitToPricePerUnit(negotiation?.measurement_unit)}`;
+
+  // const mrStatusProps = transformMarketRequestStatusText(
+  //   theme,
+  //   selectedOffer.statusText,
+  //   false,
+  //   [`${formatOrderReferenceNumber(selectedOffer.orderRefNumber)}`]
+  // );
 
   const AlertContent = (props: { text: string; description: string }) => {
     if (props.text === 'Finalised') {
@@ -198,24 +209,24 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
         </span>
       );
     }
-    if (props.text === 'Payment Required') {
-      return (
-        <>
-          {props.description}
-          <PaymentTimeLeft timeLeft={selectedOffer.expiryDate} />
-        </>
-      );
-    }
+    // if (props.text === 'Payment Required') {
+    //   return (
+    //     <>
+    //       {props.description}
+    //       <PaymentTimeLeft timeLeft={selectedOffer.expiryDate} />
+    //     </>
+    //   );
+    // }
     return <>{props.description}</>;
   };
 
-  const negotiatedPrice =
-    sortedNegotiations.length === 0
-      ? selectedOffer?.price
-      : lastNegotiationsOffers[lastNegotiationsOffers.length - 1]?.price;
+  // const negotiatedPrice =
+  //   sortedNegotiations.length === 0
+  //     ? selectedOffer?.price
+  //     : lastNegotiationsOffers[lastNegotiationsOffers.length - 1]?.price;
   const renderLeftComponent = () => (
     <Col sm={12} md={12} xl={8}>
-      {mrStatusProps.text && (
+      {/* {mrStatusProps.text && (
         <AlertsContainer>
           <Alert
             content={
@@ -230,87 +241,41 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
             fullWidth
           />
         </AlertsContainer>
-      )}
+      )} */}
 
       <FullOfferDetailsContainer>
         <Row>
           <Col>
             {renderLabel('SPECIFICATION')}
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-              {selectedOffer?.specifications?.map((spec) => (
-                <div key={spec} style={{ marginRight: 8 }}>
-                  {renderLabelValue(spec)}
+              {negotiation?.specifications.map((spec) => (
+                <div key={spec.id} style={{ marginRight: 8 }}>
+                  {renderLabelValue(spec.name)}
                 </div>
               ))}
             </div>
 
             {renderLabel('SIZE', { marginTop: '24px' })}
-            {renderLabelValue(sizeValue)}
+            {/* {renderLabelValue(sizeValue)} */}
+            {renderLabelValue('lacking metric')}
 
             {renderLabel('QUANTITY', { marginTop: '24px' })}
-            {renderLabelValue(quantityValue)}
+            {renderLabelValue(quantityValue.toLowerCase())}
 
             {renderLabel('PRICE', { marginTop: '24px' })}
-            {renderLabelValue(pricePerUnit)}
-
-            {renderLabel(
-              isMobile ? 'Est. Delivery Date' : 'Estimated Delivery Date',
-              { marginTop: '24px' }
-            )}
-            {renderLabelValue(
-              moment(selectedOffer?.deliveryDate).format('MMMM DD, YYYY')
-            )}
+            {renderLabelValue(pricePerUnit.toLowerCase())}
 
             {renderLabel('Delivery Address', { marginTop: '24px' })}
             {renderLabelValue(
               // eslint-disable-next-line react/prop-types
-              getShippingAddress(offerMR.shippingTo as ShippingAddress)
+              // getShippingAddress(offerMR.shippingTo as ShippingAddress)
+              'negotiation.shippingTo'
             )}
           </Col>
-          <CompanyInfoCol xl={3}>
-            <div style={{ display: 'flex' }}>
-              {seller?.image ? (
-                <StyledImage src={parseImageUrl(seller?.image || '')} />
-              ) : (
-                <AvatarPlaceholder
-                  width="48px"
-                  height="48px"
-                  borderRadius="8px"
-                >
-                  <PlaceholderProfile width={48} height={48} />
-                </AvatarPlaceholder>
-              )}
-
-              <StyledTypography2 weight="400" variant="label" color="shade9">
-                {seller?.name || ''}
-              </StyledTypography2>
-            </div>
-
-            {/* <StarContainer>
-              <StyledNumberRating variant="caption" color="shade7">
-                {seller?.rating || 0}
-              </StyledNumberRating>
-              <StarRating
-                rating={seller?.rating || 0}
-                spacing={3}
-                starSize={13}
-                unfilledColor={theme.brand.alert}
-              />
-            </StarContainer> */}
-
-            <Typography
-              variant="caption"
-              color="shade7"
-              style={{ marginTop: '4px' }}
-            >
-              {Object.values(seller?.address || {}).join(', ')}
-            </Typography>
-          </CompanyInfoCol>
         </Row>
         <Hidden xs sm>
-          {selectedOffer?.status !== 'ACCEPTED' &&
-            selectedOffer?.status !== 'PARTIAL' &&
-            selectedOffer?.status !== 'DECLINED' && (
+          {/* {negotiation?.status !== 'ACCEPTED' &&
+            negotiation?.status !== 'PARTIAL' && (
               <DefaultCTAContainer>
                 <DefaultStyledNegotiateButtonContainer>
                   <DefaultStyledNegotiateButton
@@ -330,11 +295,11 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
                   />
                 </div>
               </DefaultCTAContainer>
-            )}
+            )} */}
 
-          {selectedOffer?.status !== 'ACCEPTED' &&
-            selectedOffer?.status !== 'PARTIAL' &&
-            selectedOffer?.status !== 'DECLINED' && (
+          {negotiation?.status !== 'ACCEPTED' &&
+            negotiation?.status !== 'PARTIAL' &&
+            negotiation?.status !== 'DECLINED' && (
               <CTAContainer>
                 <div style={{ display: 'flex' }}>
                   <Button
@@ -374,7 +339,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
                 </div>
               </CTAContainer>
             )}
-          {selectedOffer?.status === 'PARTIAL' && (
+          {/* {selectedOffer?.status === 'PARTIAL' && (
             <CTAContainer>
               <div style={{ width: '124px' }}>
                 <StyledAcceptButton
@@ -385,7 +350,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
                 />
               </div>
             </CTAContainer>
-          )}
+          )} */}
         </Hidden>
       </FullOfferDetailsContainer>
     </Col>
@@ -410,7 +375,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
             Accept Negotiation
           </Typography>
         }
-        action={() => handleConfirmOffer()}
+        action={() => handleAcceptConfirm()}
         actionText="Accept"
         hideCancel={true}
         description={
@@ -419,9 +384,9 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
               <Typography color="shade6" variant="label">
                 Seller&apos;s Negotiated Price
               </Typography>
-              <Typography color="shade6" variant="label">
-                {toPrice(negotiatedPrice)}/
-                {formatUnitToPricePerUnit(selectedOffer.measurementUnit)}
+              <Typography color="shade8" variant="label">
+                {toPrice(negotiation?.counter_offer || '')}/
+                {formatUnitToPricePerUnit(negotiation?.measurement_unit || '')}
               </Typography>
             </AcceptNegoDetailContainer>
             <AcceptNegoDetailContainer>
@@ -444,7 +409,10 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
                   fontFamily: 'Basis Grotesque Pro',
                 }}
               >
-                {toPrice(selectedOffer?.weight * negotiatedPrice)}
+                {toPrice(
+                  Number(negotiation?.desired_quantity || '0.00') *
+                    Number(negotiation?.counter_offer || '0.00')
+                )}
               </Typography>
             </AcceptNegoDetailContainer>
           </div>
@@ -463,9 +431,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
             Decline Confirmation
           </Typography>
         }
-        action={() => {
-          console.log('');
-        }}
+        action={handleDeclineConfirm}
         actionText="Confirm"
         cancelText="Cancel"
         description={
@@ -529,12 +495,12 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
         closeOnAccept={closeOnAccept}
         setCloseOnAccept={setCloseOnAccept}
         onSubmit={submitNegotiation}
-        originalOffer={selectedOffer?.price}
+        originalOffer={Number(negotiation?.counter_offer || '0.00')}
         counterOffer={counterOffer}
         newOffer={newOffer}
         weight={{
-          unit: selectedOffer?.measurementUnit,
-          value: selectedOffer?.weight,
+          unit: negotiation?.measurement_unit || '',
+          value: Number(negotiation?.desired_quantity || '0'),
         }}
         isOpen={negotiating}
         onClickClose={() => {
@@ -551,10 +517,19 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
         </HeaderContainer>
       </Hidden>
       <Row>
-        {' '}
         <Col>
           <Typography color="shade9" font-weight="700" altFont variant="title5">
-            {marketRequest.type}
+            {negotiation?.name}
+          </Typography>
+          <Typography
+            color="shade9"
+            font-weight="700"
+            style={{
+              fontFamily: 'Basis Grotesque Pro',
+              margin: '12px 0 32px 0',
+            }}
+          >
+            Below are the details of the negotiation.
           </Typography>
         </Col>
       </Row>
@@ -579,7 +554,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
           <Col>{renderTotalPriceContainer()}</Col>
         </Row>
 
-        {selectedOffer?.status !== 'ACCEPTED' &&
+        {/* {selectedOffer?.status !== 'ACCEPTED' &&
           selectedOffer?.status !== 'PARTIAL' &&
           selectedOffer?.status !== 'DECLINED' && (
             <>
@@ -672,10 +647,10 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
                 </Col>
               </Row>
             </>
-          )}
+          )} */}
       </Visible>
     </Container>
   );
 };
 
-export default OfferDetailsView;
+export default NegotiationDetailsView;

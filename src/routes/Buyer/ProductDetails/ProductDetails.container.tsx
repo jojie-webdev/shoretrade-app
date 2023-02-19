@@ -122,7 +122,7 @@ const ProductDetails = (): JSX.Element => {
   const [weight, setWeight] = useState('');
   const [shouldHideResult, setShouldHideResult] = useState(true);
   const [favorite, setFavorite] = useState(currentListing?.isFavourite);
-  const [showNegoModal, setShowNegoModal] = useState(true);
+  const [showNegoModal, setShowNegoModal] = useState(false);
   const [showConfirmNegoModal, setShowConfirmNegoModal] = useState(false);
   const [selectedBoxesIndex, setSelectedBoxesIndex] = useState<number>(0);
   const [selectedBoxesWeight, setSelectedBoxesWeight] = useState<Box[]>([]);
@@ -145,9 +145,8 @@ const ProductDetails = (): JSX.Element => {
   const isLoadingListingBoxes =
     useSelector((state: Store) => state.getListingBoxes.pending) || false;
 
-  const isSendingNegotiation = useSelector(
-    (state: Store) => state.createNegotiation.pending
-  );
+  const isSendingNegotiation =
+    useSelector((state: Store) => state.createNegotiation_2.pending) || false;
 
   const previousWeightRequest = useSelector(
     (state: Store) => state.getListingBoxes.request
@@ -267,6 +266,7 @@ const ProductDetails = (): JSX.Element => {
   };
 
   const handleNegoModalShow = () => {
+    console.log('handleNegoModalShow > ');
     setShowNegoModal((prevValue) => !prevValue);
   };
 
@@ -392,12 +392,12 @@ const ProductDetails = (): JSX.Element => {
     }
   }, [weight, addCartItemData]);
 
-  useEffect(() => {
-    if (isSendingNegotiation === false) {
-      setShowNegoModal(false);
-      setShowConfirmNegoModal(false);
-    }
-  }, [isSendingNegotiation]);
+  // useEffect(() => {
+  //   if (isSendingNegotiation === false) {
+  //     setShowNegoModal(false);
+  //     setShowConfirmNegoModal(false);
+  //   }
+  // }, [isSendingNegotiation]);
 
   // On error, set favorite back to what it originally was
   // useEffect(() => {
@@ -480,6 +480,7 @@ const ProductDetails = (): JSX.Element => {
     activeSizeUnit: currentListing?.activeSizeUnit === 'GM' ? 'g' : 'cm',
     isPreAuction: currentListing?.isPreAuctionSale,
     auctionDate: currentListing?.auctionDate,
+    handleNegoModalShow,
   };
   const sellerRatingProps: ProductSellerRatingProps = {
     name: currentListing?.coop.name || '',
@@ -529,7 +530,6 @@ const ProductDetails = (): JSX.Element => {
     addCartItemData,
     showSuccessAddBtn,
     canNegotiate,
-    handleNegoModalShow,
     showNegoModal,
     handleSelectedBoxesWeight,
     selectedBoxesWeight,

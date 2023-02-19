@@ -5,6 +5,7 @@ import LoadingView from 'components/module/Loading';
 import {
   BUYER_ACCOUNT_ROUTES,
   BUYER_MARKET_REQUEST_ROUTES,
+  BUYER_NEGOTIATION_ROUTES,
 } from 'consts/routes';
 import moment from 'moment';
 import queryString from 'query-string';
@@ -19,6 +20,7 @@ import {
 } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { NegoAndRMQueryParams } from 'types/NegoAndRMQueryParams';
+import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
 import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
 import { Store } from 'types/store/Store';
 import useTimeout from 'utils/Hooks/useTimeout';
@@ -141,6 +143,15 @@ const MarketRequestsLanding = (): JSX.Element => {
     }
   };
 
+  const onClickNegoItem = (
+    row: GetAllNegoRequestResponseItem & {
+      expiry: any;
+    }
+  ) => {
+    console.log('onClickNegoItem > ', row.listing_id);
+    history.push(BUYER_NEGOTIATION_ROUTES.NEGOTIATION_DETAILS(row.listing_id));
+  };
+
   const onDelete = (id: string) => {
     if (id) {
       dispatch(
@@ -202,6 +213,7 @@ const MarketRequestsLanding = (): JSX.Element => {
     handleTabSelect,
     selectedTab,
     handleSearchChange,
+    onClickNegoItem,
   };
 
   const sfmViewProps = {

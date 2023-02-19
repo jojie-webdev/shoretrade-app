@@ -150,9 +150,14 @@ export const BUYER_MARKET_REQUEST_ROUTES = {
   LANDING: `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}`,
   MARKET_REQUEST_DETAILS: (id = ':id') =>
     `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}/details/${id}`,
-  CREATE_MARKET_REQUEST: `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}/negotiations-and-requests/create`,
+  CREATE_MARKET_REQUEST: `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}/create`,
   MARKET_REQUEST_DETAILS_OFFER: (id = ':id', offerId = ':offerId') =>
-    `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}/negotiations-and-requests/offer-details/${id}/${offerId}`,
+    `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}/offer-details/${id}/${offerId}`,
+};
+
+export const BUYER_NEGOTIATION_ROUTES = {
+  NEGOTIATION_DETAILS: (id = ':id') =>
+    `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}/negotiation/${id}`,
 };
 
 export const BUYER_ACCOUNT_ROUTES = {

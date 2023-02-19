@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { getActivePlan } from 'routes/Buyer/Account/SubscriptionPlan/SubscriptionPlan.transform';
 import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
 import { Store } from 'types/store/Store';
+import { isPreAuctionExpired } from 'utils/Listing';
 import {
   formatMeasurementUnit,
   formatUnitToPricePerUnit,
@@ -248,11 +249,11 @@ const Preview = (props: PreviewProps): JSX.Element => {
     hiddenPrice,
     hiddenVendor,
     canNegotiate,
-    // allowNegotiations,
+    allowNegotiations,
   } = props;
   const theme = useTheme();
 
-  // const allowedNegotiationByBuyer = allowNegotiations;
+  const allowedNegotiationByBuyer = allowNegotiations;
 
   const NegotiatePriceElem = (props: {
     backgroundColor: string;
@@ -615,35 +616,35 @@ const Preview = (props: PreviewProps): JSX.Element => {
             </Row>
 
             <Row justify="between" nogutter>
-              {canNegotiate ? (
-                <NegotiatePriceBtnContainer>
-                  <NegotiatePriceBtnWrapper>
-                    <MarketBoardOutlined />
-                    <div style={{ marginRight: 5 }} />
-                    <NegotiatePriceText
-                      variant="small"
-                      color="noshade"
-                      style={{ paddingRight: 8 }}
-                    >
-                      NEGOTIATE PRICE
-                    </NegotiatePriceText>
-                  </NegotiatePriceBtnWrapper>
-                </NegotiatePriceBtnContainer>
-              ) : (
-                <NegotiatePriceBtnContainer>
-                  <NegotiatePriceBtnWrapper backgroundColor="shade3">
-                    <MarketBoardOutlined fill={theme.grey.shade6} />
-                    <div style={{ marginRight: 5 }} />
-                    <NegotiatePriceText
-                      variant="small"
-                      color="shade6"
-                      style={{ paddingRight: 8 }}
-                    >
-                      NEGOTIATE PRICE
-                    </NegotiatePriceText>
-                  </NegotiatePriceBtnWrapper>
-                </NegotiatePriceBtnContainer>
-              )}
+              {allowedNegotiationByBuyer ? (
+                canNegotiate ? (
+                  props.auctionDate ? (
+                    isPreAuctionExpired(props.auctionDate) ? null : (
+                      <NegotiatePriceElem
+                        backgroundColor={theme.brand.primary}
+                        fill={theme.grey.noshade}
+                      />
+                    )
+                  ) : (
+                    <NegotiatePriceElem
+                      backgroundColor={theme.brand.primary}
+                      fill={theme.grey.noshade}
+                    />
+                  )
+                ) : props.auctionDate ? (
+                  isPreAuctionExpired(props.auctionDate) ? null : (
+                    <NegotiatePriceElem
+                      backgroundColor={theme.grey.shade6}
+                      fill={theme.grey.noshade}
+                    />
+                  )
+                ) : (
+                  <NegotiatePriceElem
+                    backgroundColor={theme.grey.shade6}
+                    fill={theme.grey.noshade}
+                  />
+                )
+              ) : null}
             </Row>
           </BodyContainer>
         </DetailsContainer>

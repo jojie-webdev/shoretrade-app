@@ -58,6 +58,7 @@ import {
 } from './RequestAndNegotiate.style';
 import ReviewOffer from './ReviewOffer';
 import { ReviewOfferProps } from './ReviewOffer/ReviewOffer.props';
+import NegotiationSellerModal from 'components/module/NegotiationSellerModal';
 
 const Step1 = ({
   isReview,
@@ -398,7 +399,7 @@ const Step1 = ({
               }
               takeFullWidth
               style={{ marginLeft: 8 }}
-              text="accept"
+              text="accept123"
               variant="primary"
             />
           </MobileFooter>
@@ -526,6 +527,19 @@ const Step1 = ({
             setIsOpen(false);
           }}
         />
+
+        <NegotiationSellerModal
+          marketOffer={activeOffer}
+          modalLastNegotiationsArray={modalLastNegotiationsArray}
+          isOpen={false}
+          onClickClose={() => setIsOpen(false)}
+          isNegotiating={props.isNegotiating}
+          onSubmit={(counterOffer) => {
+            props.onNegotiateOffer(activeOffer.id, counterOffer);
+            setIsOpen(false);
+          }}
+        />
+
 
         <DeclineSellerModal
           // show={showDeclineModal}
