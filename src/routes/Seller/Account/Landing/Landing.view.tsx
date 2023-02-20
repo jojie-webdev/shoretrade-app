@@ -101,14 +101,14 @@ const AccountLandingView = ({
         { addQueryPrefix: true }
       )}`,
     },
-    {
-      iconName: 'dashboardOutline',
-      value: 'Your Plan',
-      path: `${SELLER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN}${qs.stringify(
-        { companyId: currentCompany?.id },
-        { addQueryPrefix: true }
-      )}`,
-    },
+    // {
+    //   iconName: 'dashboardOutline',
+    //   value: 'Your Plan',
+    //   path: `${SELLER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN}${qs.stringify(
+    //     { companyId: currentCompany?.id },
+    //     { addQueryPrefix: true }
+    //   )}`,
+    // },
     {
       iconName: 'location',
       value: 'Shipping Addresses',

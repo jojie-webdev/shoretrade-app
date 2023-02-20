@@ -38,10 +38,10 @@ const ROUTES: Routes = {
     path: SELLER_ACCOUNT_ROUTES.YOUR_DETAILS,
     children: <YourDetails />,
   },
-  SUBSCRIPTION_PLAN: {
-    path: SELLER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
-    children: <SubscriptionPlan />,
-  },
+  // SUBSCRIPTION_PLAN: {
+  //   path: SELLER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN,
+  //   children: <SubscriptionPlan />,
+  // },
   PLAN_PAYMENT_METHOD: {
     path: SELLER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD,
     children: <PlanPaymentMethod />,
