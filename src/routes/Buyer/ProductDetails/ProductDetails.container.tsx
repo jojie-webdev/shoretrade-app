@@ -481,6 +481,7 @@ const ProductDetails = (): JSX.Element => {
     isPreAuction: currentListing?.isPreAuctionSale,
     auctionDate: currentListing?.auctionDate,
     handleNegoModalShow,
+    allowNegotiations: currentListing?.allowNegotiations,
   };
   const sellerRatingProps: ProductSellerRatingProps = {
     name: currentListing?.coop.name || '',

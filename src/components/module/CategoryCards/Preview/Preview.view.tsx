@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { getActivePlan } from 'routes/Buyer/Account/SubscriptionPlan/SubscriptionPlan.transform';
 import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
 import { Store } from 'types/store/Store';
+import { Theme } from 'types/Theme';
 import { isPreAuctionExpired } from 'utils/Listing';
 import {
   formatMeasurementUnit,
@@ -257,16 +258,17 @@ const Preview = (props: PreviewProps): JSX.Element => {
 
   const NegotiatePriceElem = (props: {
     backgroundColor: string;
-    fill: string;
+    iconFill: string;
+    fontColor: keyof Theme['brand'] | keyof Theme['grey'];
   }) => {
     return (
       <NegotiatePriceBtnContainer>
         <NegotiatePriceBtnWrapper backgroundColor={props.backgroundColor}>
-          <MarketBoardOutlined fill={props.fill} />
+          <MarketBoardOutlined fill={props.iconFill} />
           <div style={{ marginRight: 5 }} />
           <NegotiatePriceText
             variant="small"
-            color="noshade"
+            color={props.fontColor || 'noshade'}
             style={{ paddingRight: 8, marginTop: 2 }}
           >
             NEGOTIATE PRICE
@@ -622,26 +624,30 @@ const Preview = (props: PreviewProps): JSX.Element => {
                     isPreAuctionExpired(props.auctionDate) ? null : (
                       <NegotiatePriceElem
                         backgroundColor={theme.brand.primary}
-                        fill={theme.grey.noshade}
+                        iconFill={theme.grey.noshade}
+                        fontColor="noshade"
                       />
                     )
                   ) : (
                     <NegotiatePriceElem
                       backgroundColor={theme.brand.primary}
-                      fill={theme.grey.noshade}
+                      iconFill={theme.grey.noshade}
+                      fontColor="noshade"
                     />
                   )
                 ) : props.auctionDate ? (
                   isPreAuctionExpired(props.auctionDate) ? null : (
                     <NegotiatePriceElem
-                      backgroundColor={theme.grey.shade6}
-                      fill={theme.grey.noshade}
+                      backgroundColor={theme.grey.shade3}
+                      iconFill={theme.grey.shade6}
+                      fontColor="shade6"
                     />
                   )
                 ) : (
                   <NegotiatePriceElem
-                    backgroundColor={theme.grey.shade6}
-                    fill={theme.grey.noshade}
+                    backgroundColor={theme.grey.shade3}
+                    iconFill={theme.grey.shade6}
+                    fontColor="shade6"
                   />
                 )
               ) : null}

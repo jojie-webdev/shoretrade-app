@@ -6,6 +6,7 @@ import moment from 'moment';
 import { Row as TableRow, Col as TableCol } from 'react-grid-system';
 import { useSelector } from 'react-redux';
 import { Store } from 'types/store/Store';
+import { Theme } from 'types/Theme';
 import { isPreAuctionExpired } from 'utils/Listing';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { formatTemplateDeliveryDateLabel } from 'utils/Listing/formatTemplateDeliveryDateLabel';
@@ -43,6 +44,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
     canNegotiate,
     auctionDate,
     handleNegoModalShow,
+    allowNegotiations,
   } = props;
 
   const companyPlan = useSelector(
@@ -61,7 +63,8 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
 
   const NegotiatePriceElem = (props: {
     backgroundColor: string;
-    fill: string;
+    iconFill: string;
+    fontColor: keyof Theme['grey'] | keyof Theme['brand'];
     clickable?: boolean;
   }) => {
     return (
@@ -70,11 +73,11 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
           backgroundColor={props.backgroundColor}
           clickable={props.clickable}
         >
-          <MarketBoardOutlined fill={props.fill} />
+          <MarketBoardOutlined fill={props.iconFill} />
           <div style={{ marginRight: 5 }} />
           <NegotiatePriceText
             variant="small"
-            color="noshade"
+            color={props.fontColor || 'noshade'}
             style={{ paddingRight: 8, marginTop: 2 }}
           >
             NEGOTIATE PRICE
@@ -102,39 +105,45 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
             </Label>
           </div>
         )}
-        {canNegotiate ? (
-          auctionDate ? (
-            isPreAuctionExpired(auctionDate) ? null : (
+        {allowNegotiations ? (
+          canNegotiate ? (
+            auctionDate ? (
+              isPreAuctionExpired(auctionDate) ? null : (
+                <div onClick={handleNegoModalShow}>
+                  <NegotiatePriceElem
+                    backgroundColor={theme.brand.primary}
+                    iconFill={theme.grey.noshade}
+                    fontColor="noshade"
+                    clickable
+                  />
+                </div>
+              )
+            ) : (
               <div onClick={handleNegoModalShow}>
                 <NegotiatePriceElem
                   backgroundColor={theme.brand.primary}
-                  fill={theme.grey.noshade}
+                  iconFill={theme.grey.noshade}
+                  fontColor="noshade"
                   clickable
                 />
               </div>
             )
-          ) : (
-            <div onClick={handleNegoModalShow}>
+          ) : auctionDate ? (
+            isPreAuctionExpired(auctionDate) ? null : (
               <NegotiatePriceElem
-                backgroundColor={theme.brand.primary}
-                fill={theme.grey.noshade}
-                clickable
+                backgroundColor={theme.grey.shade3}
+                iconFill={theme.grey.shade6}
+                fontColor="shade6"
               />
-            </div>
-          )
-        ) : auctionDate ? (
-          isPreAuctionExpired(auctionDate) ? null : (
+            )
+          ) : (
             <NegotiatePriceElem
-              backgroundColor={theme.grey.shade6}
-              fill={theme.grey.noshade}
+              backgroundColor={theme.grey.shade3}
+              iconFill={theme.grey.shade6}
+              fontColor="shade6"
             />
           )
-        ) : (
-          <NegotiatePriceElem
-            backgroundColor={theme.grey.shade6}
-            fill={theme.grey.noshade}
-          />
-        )}
+        ) : null}
       </div>
       {!props.catchRecurrence && (
         <Row>

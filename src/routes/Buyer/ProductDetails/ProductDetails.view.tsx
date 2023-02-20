@@ -539,6 +539,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                 }
                 isPreAuction={productDetailsCard6Props?.isPreAuction}
                 canNegotiate={canNegotiate}
+                allowNegotiations={productDetailsCard6Props.allowNegotiations}
               />
               {!isPendingAccount && isMobile ? (
                 <ProductSellerCard
