@@ -209,7 +209,10 @@ const HomeView = (props: HomeGeneratedProps) => {
                     PreviewProps
                   >
                     data={favourites}
-                    transform={favouritesToPreviewProps}
+                    transform={partialRight(favouritesToPreviewProps, [
+                      isPendingAccount,
+                      canNegotiate,
+                    ])}
                     Component={PreviewCard}
                     link={BUYER_ROUTES.PRODUCT_DETAIL}
                     emptyText="No Favourite Products"

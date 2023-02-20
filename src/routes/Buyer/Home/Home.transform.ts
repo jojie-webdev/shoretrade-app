@@ -89,7 +89,9 @@ export function categoriesToCardProps(data: CategoryResults): CardProps {
 }
 
 export function favouritesToPreviewProps(
-  data: GetBuyerHomepageResponseListingItem
+  data: GetBuyerHomepageResponseListingItem,
+  isPendingAccount: boolean,
+  canNegotiate?: boolean
 ): PreviewProps {
   return {
     id: data.id,
@@ -114,6 +116,7 @@ export function favouritesToPreviewProps(
     isSFMCrate: data.packaging?.type === 'SFM',
     allowNegotiations: data.allowNegotiations,
     auctionDate: data.auctionDate,
+    canNegotiate,
   };
 }
 
