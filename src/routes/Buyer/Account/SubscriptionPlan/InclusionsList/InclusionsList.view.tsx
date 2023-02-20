@@ -11,6 +11,7 @@ import {
   Truck,
   Fan,
   Anchor,
+  Bolt,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { MARKET_GROUP_1 } from 'consts/markets';
@@ -57,6 +58,8 @@ const InclusionsListView = (props: InclusionsListGeneratedProps) => {
         return <Account width={14} height={14} fill={theme.brand.primary} />;
       case 'MARKETPLACE':
         return <Net width={14} height={14} fill={theme.brand.primary} />;
+      case 'NEGOTIATION':
+        return <Bolt width={14} height={14} fill={theme.brand.primary} />;
     }
   };
 

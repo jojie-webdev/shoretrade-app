@@ -7,6 +7,18 @@ export const yourPlanFeaturesList = {
         'Create profiles for team members in your organisation under your company.',
     },
     {
+      name: 'Unlimited Access to the Reverse Marketplace',
+      alias: 'MARKETPLACE',
+      description:
+        'Create Product Requests that are sent to all Sellers on the platform. Receive offers and negotiate!',
+    },
+    {
+      name: 'Negotiate Listings',
+      alias: 'NEGOTIATION',
+      description:
+        'Send Counter-Offers to sellers on the price of their listings.',
+    },
+    {
       title: 'View Direct Sale',
       alias: 'DIRECT_SALES',
       description:
@@ -37,6 +49,18 @@ export const yourPlanFeaturesList = {
       alias: 'PROFILE',
       description:
         'Create profiles for team members in your organisation under your company.',
+    },
+    {
+      name: 'Unlimited Access to the Reverse Marketplace',
+      alias: 'MARKETPLACE',
+      description:
+        'Create Product Requests that are sent to all Sellers on the platform. Receive offers and negotiate!',
+    },
+    {
+      name: 'Negotiate Listings',
+      alias: 'NEGOTIATION',
+      description:
+        'Send Counter-Offers to sellers on the price of their listings.',
     },
     {
       title: 'View Direct Sale',
@@ -71,6 +95,18 @@ export const yourPlanFeaturesList = {
         'Create profiles for team members in your organisation under your company.',
     },
     {
+      name: 'Unlimited Access to the Reverse Marketplace',
+      alias: 'MARKETPLACE',
+      description:
+        'Create Product Requests that are sent to all Sellers on the platform. Receive offers and negotiate!',
+    },
+    {
+      name: 'Negotiate Listings',
+      alias: 'NEGOTIATION',
+      description:
+        'Send Counter-Offers to sellers on the price of their listings.',
+    },
+    {
       title: 'View Direct Sale',
       alias: 'DIRECT_SALES',
       description:
@@ -102,6 +138,18 @@ export const yourPlanFeaturesList = {
       description:
         'Access the SFM Blue platform and make purchases with no fees for the first month!',
       alias: 'FREE_MONTH',
+    },
+    {
+      name: 'Unlimited Access to the Reverse Marketplace',
+      alias: 'MARKETPLACE',
+      description:
+        'Create Product Requests that are sent to all Sellers on the platform. Receive offers and negotiate!',
+    },
+    {
+      name: 'Negotiate Listings',
+      alias: 'NEGOTIATION',
+      description:
+        'Send Counter-Offers to sellers on the price of their listings.',
     },
     {
       name: 'Costs $399/month*',
@@ -159,6 +207,18 @@ export const yourPlanFeaturesList = {
       alias: 'FREE_MONTH',
     },
     {
+      name: 'Unlimited Access to the Reverse Marketplace',
+      alias: 'MARKETPLACE',
+      description:
+        'Create Product Requests that are sent to all Sellers on the platform. Receive offers and negotiate!',
+    },
+    {
+      name: 'Negotiate Listings',
+      alias: 'NEGOTIATION',
+      description:
+        'Send Counter-Offers to sellers on the price of their listings.',
+    },
+    {
       name: 'Costs $599/month*',
       description: 'Automatically debited from your stored credit card.',
       alias: 'COST',
@@ -212,6 +272,18 @@ export const yourPlanFeaturesList = {
       description:
         'Access the SFM Blue platform and make purchases with no fees for the first two weeks!',
       alias: 'FREE_MONTH',
+    },
+    {
+      name: 'Unlimited Access to the Reverse Marketplace',
+      alias: 'MARKETPLACE',
+      description:
+        'Create Product Requests that are sent to all Sellers on the platform. Receive offers and negotiate!',
+    },
+    {
+      name: 'Negotiate Listings',
+      alias: 'NEGOTIATION',
+      description:
+        'Send Counter-Offers to sellers on the price of their listings.',
     },
     {
       name: 'Costs $30/month*',
@@ -268,6 +340,18 @@ export const yourPlanFeaturesList = {
       description:
         'Access the SFM Blue platform and make purchases with no fees for the first month!',
       alias: 'FREE_MONTH',
+    },
+    {
+      name: 'Unlimited Access to the Reverse Marketplace',
+      alias: 'MARKETPLACE',
+      description:
+        'Create Product Requests that are sent to all Sellers on the platform. Receive offers and negotiate!',
+    },
+    {
+      name: 'Negotiate Listings',
+      alias: 'NEGOTIATION',
+      description:
+        'Send Counter-Offers to sellers on the price of their listings.',
     },
     {
       name: 'Costs $99/month*',
@@ -352,14 +436,21 @@ export const yourPlanFeaturesList = {
 
 export const getBasePlanItems = (transactionValueFeePercentage: string) => [
   {
-    title: `${
-      transactionValueFeePercentage.split('.')[0]
-    }% Buying Fee on Transaction Value**`,
+    title: `10 Negotiation Credits`,
+    subText: 'Credit reset every month',
+  },
+  {
+    title: `${transactionValueFeePercentage}% (Inc. GST) Transaction Fee on Product Value`,
     subText: '',
   },
 ];
 export const PRO_PLAN_ITEMS = [
-  { title: 'No Additional Buying Fees', subText: '' },
+  {
+    title: `Unlimited Negotiation Credits`,
+    subText:
+      'Negotiate listing prices with Sellers without running out of credits',
+  },
+  { title: 'No Transaction Fees', subText: '' },
   {
     title: 'Access to Buyer Data Reports',
     subText:

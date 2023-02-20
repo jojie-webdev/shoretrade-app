@@ -208,10 +208,9 @@ const StepForm = ({
   const reverseMarketPlaceAlias = isSeller
     ? SELLER_REVERSE_MARKET_FEAT
     : BUYER_REVERSE_MARKET_FEAT;
-  const hasReverseMarketPlace =
-    registrationDetails.subscriptionPreference.addOns.includes(
-      reverseMarketPlaceAlias
-    );
+  const hasReverseMarketPlace = registrationDetails.subscriptionPreference.addOns.includes(
+    reverseMarketPlaceAlias
+  );
   const modifiedStates = COUNTRY_STATES.filter(({ isoCode, countryCode }) => {
     if (registrationDetails.address?.countryCode === NEW_ZEALAND_COUNTRY_CODE) {
       if (DEFAULT_NEW_ZEALAND_PROVINCES_CODE.includes(isoCode)) {
@@ -501,14 +500,13 @@ const StepForm = ({
       }`
   );
 
-  const reverseMarketPlacePrice =
-    registrationDetails.subscriptionPreference.addOns.includes(
-      reverseMarketPlaceAlias
-    )
-      ? isSeller
-        ? 279
-        : 49.99
-      : 0;
+  const reverseMarketPlacePrice = registrationDetails.subscriptionPreference.addOns.includes(
+    reverseMarketPlaceAlias
+  )
+    ? isSeller
+      ? 279
+      : 49.99
+    : 0;
 
   useEffect(() => {
     if (
@@ -1761,14 +1759,14 @@ const StepForm = ({
                             </PlanTitle>
                             <PlanPrice>
                               <Typography weight="700" variant="copy">
-                                ${PLAN_PRICE.BASE.price}
+                                AUD ${PLAN_PRICE.BASE.price}
                               </Typography>
                               <Typography
                                 variant="label"
                                 color="shade6"
                                 weight="300"
                               >
-                                /month
+                                /Month
                               </Typography>
                             </PlanPrice>
                             <PlanSectionContainer>
@@ -1780,13 +1778,14 @@ const StepForm = ({
                                   className="text__with_free"
                                   weight="500"
                                   variant="body"
+                                  color="error"
                                 >
                                   7 Days Free
                                 </Typography>
                               </ReverseMarketTitle2>
                               <Typography weight="400" variant="label">
-                                Access the SFM Blue platform and make purchases
-                                with no fees for the first week!
+                                Access SFMblue and begin purchasing the highest
+                                quality seafood immediately.
                               </Typography>
                             </PlanSectionContainer>
                             <PlanSectionContainer>
@@ -1794,11 +1793,11 @@ const StepForm = ({
                                 <PlusIcon>
                                   <Plus width={14} height={14} />
                                 </PlusIcon>
-                                <Typography weight="500" variant="label">
+                                <Typography weight="600" variant="body">
                                   Negotiations & Requests
                                 </Typography>
                               </ReverseMarketTitle>
-                              <div
+                              {/* <div
                                 style={{
                                   display: 'flex',
                                   justifyContent: 'space-between',
@@ -1841,10 +1840,12 @@ const StepForm = ({
                                     size={20}
                                   />
                                 </ReverseCheckboxWrapper>
-                              </div>
+                              </div> */}
                               <Typography weight="400" variant="label">
-                                Negotiate listing prices and request products
-                                directly from Sellers
+                                Access to the Reverse Market Place to request
+                                products from Sellers & includes{' '}
+                                <strong>10</strong> Negotiation Credits per
+                                month to negotiate listing prices.
                               </Typography>
                               <div
                                 className="benefits"
@@ -1870,10 +1871,15 @@ const StepForm = ({
                                 <PlusIcon>
                                   <Plus width={14} height={14} />
                                 </PlusIcon>
-                                <Typography weight="500" variant="label">
-                                  2% Buying Fee on Transaction Value*
+                                <Typography weight="500" variant="body">
+                                  2.2% Transaction Fee (Inc. GST)
                                 </Typography>
                               </ReverseMarketTitle>
+                              <Typography weight="400" variant="label">
+                                Transaction fee is charged on product value
+                                only. It is not charged on shipping or crate and
+                                handling fees.
+                              </Typography>
                             </PlanSectionContainer>
                           </PlanPriceConatiner>
                         </div>
@@ -1896,14 +1902,14 @@ const StepForm = ({
                           </PlanTitle>
                           <PlanPrice>
                             <Typography weight="700" variant="copy">
-                              ${PLAN_PRICE.PRO.price.toFixed(2)}
+                              AUD ${PLAN_PRICE.PRO.price.toFixed(2)}
                             </Typography>
                             <Typography
                               variant="label"
                               color="shade6"
                               weight="300"
                             >
-                              /month
+                              /Month
                             </Typography>
                           </PlanPrice>
                           <PlanSectionContainer>
@@ -1915,6 +1921,7 @@ const StepForm = ({
                                 className="text__with_free"
                                 weight="500"
                                 variant="body"
+                                color="error"
                               >
                                 30 Days Free
                               </Typography>
@@ -1929,11 +1936,11 @@ const StepForm = ({
                               <PlusIcon>
                                 <Plus width={14} height={14} />
                               </PlusIcon>
-                              <Typography weight="500" variant="label">
+                              <Typography weight="600" variant="body">
                                 Negotiations & Requests
                               </Typography>
                             </ReverseMarketTitle>
-                            <IncludedTag>
+                            {/* <IncludedTag>
                               <Tag background={theme.brand.success}>
                                 <Typography
                                   variant="caption"
@@ -1943,10 +1950,13 @@ const StepForm = ({
                                   Included
                                 </Typography>
                               </Tag>
-                            </IncludedTag>
+                            </IncludedTag> */}
                             <Typography weight="400" variant="label">
-                              Negotiate listing prices and request products
-                              directly from Sellers
+                              Access to the Reverse Market Place to request
+                              products from Sellers & includes
+                              <strong> unlimited </strong>
+                              Negotiation Credits per month to negotiate listing
+                              prices.
                             </Typography>
                             <div
                               className="benefits"
@@ -1972,8 +1982,8 @@ const StepForm = ({
                               <PlusIcon>
                                 <Plus width={14} height={14} />
                               </PlusIcon>
-                              <Typography weight="500" variant="label">
-                                No Additional Buying Fees
+                              <Typography weight="500" variant="body">
+                                No Transaction Fees
                               </Typography>
                             </ReverseMarketTitle>
                           </PlanSectionContainer>
@@ -1983,21 +1993,20 @@ const StepForm = ({
                               <PlusIcon>
                                 <Plus width={14} height={14} />
                               </PlusIcon>
-                              <Typography weight="500" variant="label">
-                                Access to Buyer Data Reports
+                              <Typography weight="500" variant="body">
+                                Access to Data Reports
                               </Typography>
                             </ReverseMarketTitle>
                             <Typography weight="400" variant="label">
-                              Access to Buyer Data Reports on Product
-                              Seasonality and Upcoming Harvests. Valued at
-                              $100/month
+                              Access to Data Reports on Product Seasonality and
+                              Upcoming Harvests. Valued at $100/month
                             </Typography>
                           </PlanSectionContainer>
 
                           <PlanSectionContainer>
                             <ReverseMarketTitle>
                               <Plus width={14} height={14} />
-                              <Typography weight="500" variant="label">
+                              <Typography weight="500" variant="body">
                                 Customer Service
                               </Typography>
                             </ReverseMarketTitle>
@@ -2409,10 +2418,9 @@ const RegisterView = (props: RegisterGeneratedProps) => {
   const reverseMarketPlaceAlias = isSeller
     ? SELLER_REVERSE_MARKET_FEAT
     : BUYER_REVERSE_MARKET_FEAT;
-  const hasReverseMarketPlace =
-    registrationDetails.subscriptionPreference.addOns.includes(
-      reverseMarketPlaceAlias
-    );
+  const hasReverseMarketPlace = registrationDetails.subscriptionPreference.addOns.includes(
+    reverseMarketPlaceAlias
+  );
 
   const renderRef = useRef<HTMLDivElement | null>(null);
 

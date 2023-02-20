@@ -890,6 +890,7 @@ export const SubscriptionPlanView = ({
                 </Col>
               </Row>
             </PlanContainer>
+            {/* 
             <PlanContainer>
               <Row gutterWidth={20} style={{ width: '100%' }}>
                 <Col md={12}>
@@ -1014,7 +1015,7 @@ export const SubscriptionPlanView = ({
                       </Typography>
                     </ReverseMarketplace>
 
-                    {/* // NEEDED LATER FOR MARKET PLACE CANCEL SUBSCRIPTION TASK */}
+                    // NEEDED LATER FOR MARKET PLACE CANCEL SUBSCRIPTION TASK
                     {currentReverseMarketDetails ||
                     currentPlanDetails?.plan.name === CompanyPlanName.PRO ? (
                       <>
@@ -1071,6 +1072,7 @@ export const SubscriptionPlanView = ({
                 </Col>
               </Row>
             </PlanContainer>
+            */}
             <PlanContainer>
               <IncusionSection>
                 <Typography
