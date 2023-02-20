@@ -173,7 +173,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
     negotiation?.metric || negotiation?.active_size_unit || '',
     negotiation?.size_from,
     negotiation?.size_to
-  ).toUpperCase();
+  );
 
   // const latestOfferPrice = newOffer !== '' ? newOffer : selectedOffer.price;
 
@@ -256,8 +256,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
             </div>
 
             {renderLabel('SIZE', { marginTop: '24px' })}
-            {/* {renderLabelValue(sizeValue)} */}
-            {renderLabelValue('lacking metric')}
+            {renderLabelValue(sizeValue)}
 
             {renderLabel('QUANTITY', { marginTop: '24px' })}
             {renderLabelValue(quantityValue.toLowerCase())}
@@ -321,7 +320,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
                     }
                     icon={<Refresh fill={theme.grey.noshade} />}
                     onClick={() => handleNegoBtnClick(true)}
-                    disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
+                    disabled={negotiation?.status === 'OPEN'}
                     style={{ marginRight: 10, width: '100%' }}
                   />
                 </div>
@@ -334,7 +333,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
                     }
                     icon={<Check width={10} height={9} />}
                     onClick={() => handleAcceptClick(true)}
-                    disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
+                    disabled={negotiation?.status === 'OPEN'}
                   />
                 </div>
               </CTAContainer>

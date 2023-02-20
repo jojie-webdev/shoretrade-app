@@ -1,6 +1,5 @@
-import pathOr from 'ramda/es/pathOr';
 import { put, call, takeLatest, select } from 'redux-saga/effects';
-import { createNegotiation } from 'services/createNegotiation';
+import { createNegotiation } from 'services/listing';
 import { AsyncAction } from 'types/Action';
 import {
   CreateNegotiation_2Meta,

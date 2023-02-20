@@ -17,6 +17,7 @@ import {
   deleteMarketRequestActions,
   getAllMarketRequestActions,
   getAllNegotiationsActions,
+  getNegotiationCreditActions,
 } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { NegoAndRMQueryParams } from 'types/NegoAndRMQueryParams';
@@ -115,6 +116,9 @@ const MarketRequestsLanding = (): JSX.Element => {
   const companyPlan = useSelector(
     (store: Store) => store.getCompanyPlan.data?.data
   );
+  const negotiationCredit = useSelector(
+    (store: Store) => store.getNegotiationCredit.data?.data
+  );
   const currentReverseMarketDetails = getActivePlan(
     companyPlan,
     CompanyPlanName.REVERSE_MARKET
@@ -148,8 +152,12 @@ const MarketRequestsLanding = (): JSX.Element => {
       expiry: any;
     }
   ) => {
-    console.log('onClickNegoItem > ', row.listing_id);
-    history.push(BUYER_NEGOTIATION_ROUTES.NEGOTIATION_DETAILS(row.listing_id));
+    history.push(
+      BUYER_NEGOTIATION_ROUTES.NEGOTIATION_DETAILS(
+        row.listing_id,
+        row.negotiation_request_id
+      )
+    );
   };
 
   const onDelete = (id: string) => {
@@ -186,7 +194,9 @@ const MarketRequestsLanding = (): JSX.Element => {
     // eslint-disable-next-line
   }, [deleteMarketRequest]);
 
-  console.log('negotiations >>> ', negotiations);
+  useEffect(() => {
+    dispatch(getNegotiationCreditActions.request({}));
+  }, []);
 
   const generatedProps: MarketRequestsLandingGeneratedProps = {
     currentPath: location.pathname,
@@ -214,6 +224,7 @@ const MarketRequestsLanding = (): JSX.Element => {
     selectedTab,
     handleSearchChange,
     onClickNegoItem,
+    negotiationCredit,
   };
 
   const sfmViewProps = {

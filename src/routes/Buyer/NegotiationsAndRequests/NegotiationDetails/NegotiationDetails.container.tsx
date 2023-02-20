@@ -14,6 +14,7 @@ import {
   getActiveOffersActions,
   getAllMarketRequestActions,
   getAllNegotiationsActions,
+  getNegotiationByIdActions,
   marketOfferActions,
 } from 'store/actions';
 import marketRequestNegotiateOfferActions from 'store/actions/marketRequestNegotiation';
@@ -34,8 +35,8 @@ import NegotiationDetailsView from './NegotiationDetails.view';
 
 const NegotiationDetails = (): JSX.Element => {
   const location = useLocation();
-  const params = useParams<{ id: string }>();
-  const { id } = params;
+  const params = useParams<{ id: string; negoRequestId: string }>();
+  const { id, negoRequestId } = params;
   const history = useHistory();
   const dispatch = useDispatch();
   const [offerId, setOfferId] = useState<string>('');
@@ -58,6 +59,14 @@ const NegotiationDetails = (): JSX.Element => {
   const [closeOnAccept, setCloseOnAccept] = useState(false);
   const [showOfferSentModal, setShowOfferSentModal] = useState(false);
   const [clickDecline, setClickDecline] = useState(false);
+
+  useEffect(() => {
+    dispatch(
+      getNegotiationByIdActions.request({
+        negotiationRequestId: negoRequestId,
+      })
+    );
+  }, [negoRequestId]);
 
   const defaultCompany = GetDefaultCompany();
 
@@ -121,9 +130,13 @@ const NegotiationDetails = (): JSX.Element => {
     (store: Store) => store.getAllNegotiations.data?.data.negotiations
   );
 
-  const negotiation = negotiations?.find(
-    (negotiation) => negotiation.listing_id === id
+  const negotiation = useSelector(
+    (store: Store) => store.getNegotiationById.data?.data
   );
+
+  // const negotiation = negotiations?.find(
+  //   (negotiation) => negotiation.listing_id === id
+  // );
 
   const filteredBuyerRequests = buyerRequests.data?.data?.marketRequests.filter(
     (mR) => mR.status !== 'DELETED' && mR.status !== 'CLOSED'

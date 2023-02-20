@@ -22,4 +22,5 @@ export interface ProductDetailsCard6Props {
   auctionDate: string;
   handleNegoModalShow: () => void;
   allowNegotiations: boolean;
+  handleShowNegoCreditsModal: () => void;
 }

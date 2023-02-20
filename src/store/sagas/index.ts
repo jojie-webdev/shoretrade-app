@@ -1,6 +1,8 @@
 import { fork, all } from 'redux-saga/effects';
 
 /* PLOP_INJECT_IMPORT */
+import getNegotiationCredit from './getNegotiationCredit';
+import getNegotiationById from './getNegotiationById';
 import createNegotiation_2 from './createNegotiation_2';
 import getAllNegotiations from './getAllNegotiations';
 import addAddress from './addAddress';
@@ -126,6 +128,8 @@ import verify from './verify';
 
 const sagas = [
   /* PLOP_INJECT_INSTANCE */
+  getNegotiationCredit,
+  getNegotiationById,
   createNegotiation_2,
   getAllNegotiations,
   getOrderInvoiceAdjustments,

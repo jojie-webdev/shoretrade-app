@@ -5,6 +5,7 @@ import omit from 'ramda/es/omit';
 import { CreateBulkListingRequestData } from 'types/store/CreateBulkListingState';
 import { CreateCustomListingRequestData } from 'types/store/CreateCustomListingState';
 import { CreateListingRequestData } from 'types/store/CreateListingState';
+import { CreateNegotiation_2Meta } from 'types/store/CreateNegotiation_2State';
 import { EndListingMeta } from 'types/store/EndListingState';
 import { GetAllBuyerListingRequestOption } from 'types/store/GetAllBuyerListingsState';
 import { GetBuyerSearchFilterDataMeta } from 'types/store/GetBuyerSearchFilterDataState';
@@ -337,5 +338,21 @@ export const getBuyerSearchFilters = (
     headers: {
       Authorization: `Bearer ${token}`,
     },
+  });
+};
+
+export const createNegotiation = (
+  data: CreateNegotiation_2Meta,
+  token: string
+) => {
+  const modifiedData = omit(['listingId'], data);
+
+  return axios({
+    method: 'post',
+    url: `${LISTING_URL}/${data.listingId}/negotiations`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: modifiedData,
   });
 };

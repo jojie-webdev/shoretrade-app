@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { ProductDetailsCard6Props } from 'components/module/ProductDetailsCard6/ProductDetailsCard6.props';
 import { AddCartItemPayload } from 'types/store/AddCartItemState';
 import { GetListingResponseItem } from 'types/store/GetListingState';
+import { GetNegotiationCreditRequestResponseItem } from 'types/store/GetNegotiationCreditState';
 
 export interface ProductSellerRatingProps {
   name: string;
@@ -83,4 +84,8 @@ export interface ProductDetailsGeneratedProps {
   handleNegotiationPriceSetting: (price: number) => void;
   negotiationPrice: number;
   handleDesiredQuantityChange: (weight: string) => void;
+  negotiationWeight: string;
+  negotiationCredit: GetNegotiationCreditRequestResponseItem | undefined;
+  handleShowNegoCreditsModal: () => void;
+  showNegoCreditsModal: boolean;
 }

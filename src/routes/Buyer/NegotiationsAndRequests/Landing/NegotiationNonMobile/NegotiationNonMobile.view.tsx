@@ -87,14 +87,8 @@ const NegotiationMobileView = (props: NegotiationNonMobilePrivateProps) => {
 
           <Col style={{ padding: '0 5px' }}>
             <div className="sub-group">
-              {/* {buildSize(
-                metric,
-                size?.from?.toString(),
-                size?.to?.toString(),
-                size?.options
-              ) && ( */}
               <SubText variant="caption">{`Size: ${buildSize(
-                item.active_size_unit || 'Grams',
+                item.metric || item.active_size_unit || 'Grams',
                 item.size_from,
                 item.size_to,
                 {}

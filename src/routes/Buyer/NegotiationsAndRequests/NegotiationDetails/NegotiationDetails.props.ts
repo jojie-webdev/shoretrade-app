@@ -6,6 +6,7 @@ import {
 } from 'types/store/GetActiveOffersState';
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
+import { GetNegotiationByIdRequestResponseItem } from 'types/store/GetNegotiationByIdState';
 
 export interface NegotiationDetailsProps {
   handleConfirmOffer: () => void;
@@ -44,7 +45,7 @@ export interface NegotiationDetailsProps {
   clickAccept: boolean;
   handleDeclineClick: (show: boolean) => void;
   clickDecline: boolean;
-  negotiation: GetAllNegoRequestResponseItem | undefined;
+  negotiation: GetNegotiationByIdRequestResponseItem;
   handleAcceptConfirm: () => void;
   handleDeclineConfirm: () => void;
 }

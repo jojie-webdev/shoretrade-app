@@ -23,10 +23,12 @@ import Loading from 'components/module/Loading';
 import ProductDetailsCard6View from 'components/module/ProductDetailsCard6';
 import ProductSellerCard from 'components/module/ProductSellerCard';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { BUYER_ACCOUNT_ROUTES } from 'consts/routes';
 import moment from 'moment';
 import { isEmpty } from 'ramda';
 import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
+import { useHistory } from 'react-router';
 import { GetListingResponseItem } from 'types/store/GetListingState';
 import { toPrice } from 'utils/String';
 import theme from 'utils/Theme';
@@ -90,12 +92,18 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     handleNegotiationPriceSetting,
     negotiationPrice,
     handleDesiredQuantityChange,
+    negotiationWeight,
+    negotiationCredit,
+    handleShowNegoCreditsModal,
+    showNegoCreditsModal,
   } = props;
   const { isPreAuction, dateEnds } = productDetailsCard6Props;
 
   const [images, setImages] = useState<string[]>([]);
   const [newCurrentListing, setNewCurrentListing] =
     useState<GetListingResponseItem>();
+
+  const history = useHistory();
 
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -155,10 +163,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   return (
     <Container>
       <ConfirmationModal
-        isOpen={false}
-        onClickClose={() => {
-          console.log('');
-        }}
+        isOpen={showNegoCreditsModal}
+        onClickClose={handleShowNegoCreditsModal}
         title={
           <Typography
             variant="title4"
@@ -166,19 +172,18 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
             weight="900"
             style={{ fontFamily: 'Canela' }}
           >
-            0 Negotiation Credits
+            {negotiationCredit?.credit || '0'} Negotiation Credits
           </Typography>
         }
-        action={() => {
-          console.log('');
-        }}
+        action={() => history.push(BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN)}
+        cancel={handleShowNegoCreditsModal}
         actionText="See Plans"
         cancelText="Close"
         description={
           <div style={{ marginTop: 20 }}>
             <Typography variant="label" color="shade6">
-              Upgrade your subscription plan to PULL NEXT TIER to get more
-              negotiation credits.
+              Upgrade your subscription plan to Pro to get more negotiation
+              credits.
             </Typography>
           </div>
         }
@@ -260,7 +265,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
               style={{ marginTop: 10 }}
             />
             <StyledTextField
-              value={weight}
+              value={negotiationWeight}
               onChangeText={handleDesiredQuantityChange}
               type="number"
               inputType="decimal"
@@ -596,23 +601,24 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                         >
                           BEST BOX WEIGHT MATCH
                         </Typography>
-                        {groupedBox.map((p) => (
-                          <BoxRadioContainer key={p.id}>
-                            <BoxRadio
-                              id={p.id}
-                              checked={p.id === pressedBoxRadio}
-                              totalWeight={p.totalWeight}
-                              boxes={p.boxes}
-                              cost={p.cost}
-                              unit={p.unit}
-                              onClick={() =>
-                                setPressedBoxRadio((prevState) =>
-                                  p.id === prevState ? '' : p.id
-                                )
-                              }
-                            />
-                          </BoxRadioContainer>
-                        ))}
+                        {weight &&
+                          groupedBox.map((p) => (
+                            <BoxRadioContainer key={p.id}>
+                              <BoxRadio
+                                id={p.id}
+                                checked={p.id === pressedBoxRadio}
+                                totalWeight={p.totalWeight}
+                                boxes={p.boxes}
+                                cost={p.cost}
+                                unit={p.unit}
+                                onClick={() =>
+                                  setPressedBoxRadio((prevState) =>
+                                    p.id === prevState ? '' : p.id
+                                  )
+                                }
+                              />
+                            </BoxRadioContainer>
+                          ))}
                       </ProductBoxContainer>
                     ) : (
                       isLoadingListingBoxes && (

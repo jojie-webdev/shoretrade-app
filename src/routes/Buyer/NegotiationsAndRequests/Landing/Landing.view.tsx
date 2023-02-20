@@ -62,6 +62,7 @@ const MarketRequestsLandingView = (
     selectedTab,
     handleSearchChange,
     // searchKeyword,
+    negotiationCredit,
   } = props;
 
   const theme = useTheme();
@@ -242,7 +243,7 @@ const MarketRequestsLandingView = (
                 <Col xs="content">
                   <Visible sm md lg xl xxl>
                     <Typography color="shade6">
-                      Negotiation Credits: 3
+                      Negotiation Credits: {negotiationCredit?.credit}
                     </Typography>
                   </Visible>
                 </Col>

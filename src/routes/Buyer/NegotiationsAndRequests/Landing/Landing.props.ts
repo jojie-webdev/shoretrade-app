@@ -5,6 +5,7 @@ import {
   Offer,
 } from 'types/store/GetActiveOffersState';
 import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
+import { GetNegotiationCreditRequestResponseItem } from 'types/store/GetNegotiationCreditState';
 
 export type Result = {
   id: string;
@@ -54,6 +55,7 @@ export interface MarketRequestsLandingGeneratedProps {
       expiry: any;
     }
   ) => void;
+  negotiationCredit: GetNegotiationCreditRequestResponseItem | undefined;
 }
 
 export enum TABS {

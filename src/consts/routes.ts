@@ -156,8 +156,8 @@ export const BUYER_MARKET_REQUEST_ROUTES = {
 };
 
 export const BUYER_NEGOTIATION_ROUTES = {
-  NEGOTIATION_DETAILS: (id = ':id') =>
-    `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}/negotiation/${id}`,
+  NEGOTIATION_DETAILS: (id = ':id', negoRequestId = ':negoRequestId') =>
+    `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}/negotiation/${id}/${negoRequestId}`,
 };
 
 export const BUYER_ACCOUNT_ROUTES = {

@@ -45,6 +45,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
     auctionDate,
     handleNegoModalShow,
     allowNegotiations,
+    handleShowNegoCreditsModal,
   } = props;
 
   const companyPlan = useSelector(
@@ -130,18 +131,24 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
             )
           ) : auctionDate ? (
             isPreAuctionExpired(auctionDate) ? null : (
+              <div onClick={handleShowNegoCreditsModal}>
+                <NegotiatePriceElem
+                  backgroundColor={theme.grey.shade3}
+                  iconFill={theme.grey.shade6}
+                  fontColor="shade6"
+                  clickable
+                />
+              </div>
+            )
+          ) : (
+            <div onClick={handleShowNegoCreditsModal}>
               <NegotiatePriceElem
                 backgroundColor={theme.grey.shade3}
                 iconFill={theme.grey.shade6}
                 fontColor="shade6"
+                clickable
               />
-            )
-          ) : (
-            <NegotiatePriceElem
-              backgroundColor={theme.grey.shade3}
-              iconFill={theme.grey.shade6}
-              fontColor="shade6"
-            />
+            </div>
           )
         ) : null}
       </div>

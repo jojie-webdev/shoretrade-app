@@ -5,7 +5,6 @@ import { logoutActions } from 'store/actions';
 import getAccountCompletion from 'store/reducers/getAccountCompletion';
 
 /* PLOP_INJECT_IMPORT */
-import createNegotiation_2 from './createNegotiation_2';
 import addAddress from './addAddress';
 import addCardAndPay from './addCardAndPay';
 import addCardToken from './addCardToken';
@@ -24,6 +23,7 @@ import createListing from './createListing';
 import createMarketOffer from './createMarketOffer';
 import createMarketRequest from './createMarketRequest';
 import createNegotiation from './createNegotiation';
+import createNegotiation_2 from './createNegotiation_2';
 import currentAddress from './currentAddress';
 import deleteCard from './deleteCard';
 import deleteLinkedAccount from './deleteLinkedAccount';
@@ -71,6 +71,8 @@ import getMarketEstimate from './getMarketEstimate';
 import getMarketInterests from './getMarketInterests';
 import getMarketNotification from './getMarketNotification';
 import getMarketRequestBuyerFilters from './getMarketRequestBuyerFilters';
+import getNegotiationById from './getNegotiationById';
+import getNegotiationCredit from './getNegotiationCredit';
 import getNotifications from './getNotifications';
 import getNotificationsSettings from './getNotificationsSettings';
 import getNSWHolidays from './getNSWHolidays';
@@ -142,7 +144,9 @@ const createAppReducer = (routeHistory: History) =>
     Object.fromEntries(
       Object.entries({
         /* PLOP_INJECT_INSTANCE */
-  createNegotiation_2,
+        getNegotiationCredit,
+        getNegotiationById,
+        createNegotiation_2,
         getAllNegotiations,
         getOrderInvoiceAdjustments,
         selectedDeliveryMethod,

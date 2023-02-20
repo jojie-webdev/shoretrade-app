@@ -1,8 +1,4 @@
 /* PLOP_INJECT_IMPORT */
-import {
-  CreateNegotiation_2Meta,
-  CreateNegotiation_2Payload,
-} from './CreateNegotiation_2State';
 
 import { RouterState } from 'connected-react-router';
 import { History } from 'history';
@@ -99,6 +95,10 @@ import {
   CreateCustomListingPayload,
 } from './CreateCustomListingState';
 import { CreateListingMeta, CreateListingPayload } from './CreateListingState';
+import {
+  CreateNegotiation_2Meta,
+  CreateNegotiation_2Payload,
+} from './CreateNegotiation_2State';
 import {
   CreateNegotiationMeta,
   CreateNegotiationPayload,
@@ -224,6 +224,14 @@ import {
   GetMarketRequestBuyerFiltersMeta,
   GetMarketRequestBuyerFiltersPayload,
 } from './GetMarketRequestBuyerFiltersState';
+import {
+  GetNegotiationByIdMeta,
+  GetNegotiationByIdPayload,
+} from './GetNegotiationByIdState';
+import {
+  GetNegotiationCreditMeta,
+  GetNegotiationCreditPayload,
+} from './GetNegotiationCreditState';
 import {
   GetNotificationsSettingsMeta,
   GetNotificationsSettingsPayload,
@@ -359,7 +367,18 @@ import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
-  createNegotiation_2: AsyncState<CreateNegotiation_2Meta, CreateNegotiation_2Payload>;
+  getNegotiationCredit: AsyncState<
+    GetNegotiationCreditMeta,
+    GetNegotiationCreditPayload
+  >;
+  getNegotiationById: AsyncState<
+    GetNegotiationByIdMeta,
+    GetNegotiationByIdPayload
+  >;
+  createNegotiation_2: AsyncState<
+    CreateNegotiation_2Meta,
+    CreateNegotiation_2Payload
+  >;
   createNegotiation: AsyncState<
     CreateNegotiationMeta,
     CreateNegotiationPayload
