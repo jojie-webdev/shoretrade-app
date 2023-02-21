@@ -674,7 +674,7 @@ export const SubscriptionPlanView = ({
                                     ? TRANSACTION_VALUE_FEE_PERCENTAGE.toString()
                                     : transactionValueFeePercent.toString()
                                 ).map((i, index) => {
-                                  if (index === 0) {
+                                  if (index === 1) {
                                     return (
                                       <>
                                         <BenefitsItem

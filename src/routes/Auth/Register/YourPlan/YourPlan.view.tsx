@@ -189,7 +189,7 @@ const YourPlanView = ({
         />
       )}
 
-      {!isSeller && (
+      {/* {!isSeller && (
         <Footer>
           <Typography
             variant="label"
@@ -200,7 +200,7 @@ const YourPlanView = ({
             order excluding any crate fees and shipping costs.
           </Typography>
         </Footer>
-      )}
+      )} */}
 
       {isSeller && (
         <BenefitsList>

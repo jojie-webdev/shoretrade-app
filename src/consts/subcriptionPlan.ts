@@ -19,19 +19,13 @@ export const yourPlanFeaturesList = {
         'Send Counter-Offers to sellers on the price of their listings.',
     },
     {
-      title: 'View Direct Sale',
-      alias: 'DIRECT_SALES',
-      description:
-        'Purchase products directly from Fisheries, Processors and other market sectors of the Seafood Industry',
-    },
-    {
-      title: 'View Pre-Auction Listing',
+      title: 'Pre-Auction Listing',
       alias: 'PRE_AUCTION',
       description:
         'See & Buy Listings before they go to Auction at Sydney FIsh Market',
     },
     {
-      title: 'View Aquafuture Listings',
+      title: 'Aquafuture Listings',
       alias: 'AQUAFUTURE',
       description:
         'Buy products before they are caught  and secure your supply',
@@ -63,19 +57,13 @@ export const yourPlanFeaturesList = {
         'Send Counter-Offers to sellers on the price of their listings.',
     },
     {
-      title: 'View Direct Sale',
-      alias: 'DIRECT_SALES',
-      description:
-        'Purchase products directly from Fisheries, Processors and other market sectors of the Seafood Industry',
-    },
-    {
-      title: 'View Pre-Auction Listing',
+      title: 'Pre-Auction Listing',
       alias: 'PRE_AUCTION',
       description:
         'See & Buy Listings before they go to Auction at Sydney FIsh Market',
     },
     {
-      title: 'View Aquafuture Listings',
+      title: 'Aquafuture Listings',
       alias: 'AQUAFUTURE',
       description:
         'Buy products before they are caught  and secure your supply',
@@ -107,19 +95,13 @@ export const yourPlanFeaturesList = {
         'Send Counter-Offers to sellers on the price of their listings.',
     },
     {
-      title: 'View Direct Sale',
-      alias: 'DIRECT_SALES',
-      description:
-        'Purchase products directly from Fisheries, Processors and other market sectors of the Seafood Industry',
-    },
-    {
-      title: 'View Pre-Auction Listing',
+      title: 'Pre-Auction Listing',
       alias: 'PRE_AUCTION',
       description:
         'See & Buy Listings before they go to Auction at Sydney FIsh Market',
     },
     {
-      title: 'View Aquafuture Listings',
+      title: 'Aquafuture Listings',
       alias: 'AQUAFUTURE',
       description:
         'Buy products before they are caught  and secure your supply',
@@ -134,9 +116,9 @@ export const yourPlanFeaturesList = {
 
   buyer_standard_group_1: [
     {
-      name: '1 Month Free',
+      name: 'View and Buy Australian & New Zealand Products',
       description:
-        'Access the SFM Blue platform and make purchases with no fees for the first month!',
+        'Purchase products directly from Fisheries, Processors and other market sectors of the Seafood Industry across Australia and New Zealand',
       alias: 'FREE_MONTH',
     },
     {
@@ -162,19 +144,13 @@ export const yourPlanFeaturesList = {
       alias: 'PLUS',
     },
     {
-      name: 'View Direct Sales',
-      description:
-        'Purchase products directly from Fisheries, Processors and other market sectors of the Seafood Industry.',
-      alias: 'DIRECT_SALES',
-    },
-    {
-      name: 'View Pre-Auction Listings',
+      name: 'Pre-Auction Listings',
       description:
         'See & Buy Listings before they go to Auction at Sydney FIsh Market.',
       alias: 'PRE_AUCTION',
     },
     {
-      name: 'View Aquafuture Listings',
+      name: 'Aquafuture Listings',
       description:
         'Buy products before they are caught  and secure your supply.',
       alias: 'AQUAFUTURE',
@@ -201,9 +177,9 @@ export const yourPlanFeaturesList = {
 
   buyer_premium_group_1: [
     {
-      name: '2 Months Free',
+      name: 'View and Buy Australian & New Zealand Products',
       description:
-        'Access the SFM Blue platform and make purchases with no fees for the first month!',
+        'Purchase products directly from Fisheries, Processors and other market sectors of the Seafood Industry across Australia and New Zealand',
       alias: 'FREE_MONTH',
     },
     {
@@ -229,19 +205,13 @@ export const yourPlanFeaturesList = {
       alias: 'PLUS',
     },
     {
-      name: 'View Direct Sales',
-      description:
-        'Purchase products directly from Fisheries, Processors and other market sectors of the Seafood Industry.',
-      alias: 'DIRECT_SALES',
-    },
-    {
-      name: 'View Pre-Auction Listings',
+      name: 'Pre-Auction Listings',
       description:
         'See & Buy Listings before they go to Auction at Sydney FIsh Market.',
       alias: 'PRE_AUCTION',
     },
     {
-      name: 'View Aquafuture Listings',
+      name: 'Aquafuture Listings',
       description:
         'Buy products before they are caught  and secure your supply.',
       alias: 'AQUAFUTURE',
@@ -268,9 +238,9 @@ export const yourPlanFeaturesList = {
 
   buyer_standard_group_2: [
     {
-      name: '2 Weeks Free',
+      name: 'View and Buy Australian & New Zealand Products',
       description:
-        'Access the SFM Blue platform and make purchases with no fees for the first two weeks!',
+        'Purchase products directly from Fisheries, Processors and other market sectors of the Seafood Industry across Australia and New Zealand',
       alias: 'FREE_MONTH',
     },
     {
@@ -297,19 +267,13 @@ export const yourPlanFeaturesList = {
       alias: 'PLUS',
     },
     {
-      name: 'View Direct Sales',
-      description:
-        'Purchase products directly from Fisheries, Processors and other market sectors of the Seafood Industry.',
-      alias: 'DIRECT_SALES',
-    },
-    {
-      name: 'View Pre-Auction Listings',
+      name: 'Pre-Auction Listings',
       description:
         'See & Buy Listings before they go to Auction at Sydney FIsh Market.',
       alias: 'PRE_AUCTION',
     },
     {
-      name: 'View Aquafuture Listings',
+      name: 'Aquafuture Listings',
       description:
         'Buy products before they are caught  and secure your supply.',
       alias: 'AQUAFUTURE',
@@ -336,9 +300,9 @@ export const yourPlanFeaturesList = {
 
   buyer_premium_group_2: [
     {
-      name: '1 Month Free',
+      name: 'View and Buy Australian & New Zealand Products',
       description:
-        'Access the SFM Blue platform and make purchases with no fees for the first month!',
+        'Purchase products directly from Fisheries, Processors and other market sectors of the Seafood Industry across Australia and New Zealand',
       alias: 'FREE_MONTH',
     },
     {
@@ -364,19 +328,13 @@ export const yourPlanFeaturesList = {
       alias: 'PLUS',
     },
     {
-      name: 'View Direct Sales',
-      description:
-        'Purchase products directly from Fisheries, Processors and other market sectors of the Seafood Industry.',
-      alias: 'DIRECT_SALES',
-    },
-    {
-      name: 'View Pre-Auction Listings',
+      name: 'Pre-Auction Listings',
       description:
         'See & Buy Listings before they go to Auction at Sydney FIsh Market.',
       alias: 'PRE_AUCTION',
     },
     {
-      name: 'View Aquafuture Listings',
+      name: 'Aquafuture Listings',
       description:
         'Buy products before they are caught  and secure your supply.',
       alias: 'AQUAFUTURE',
@@ -446,11 +404,11 @@ export const getBasePlanItems = (transactionValueFeePercentage: string) => [
 ];
 export const PRO_PLAN_ITEMS = [
   {
-    title: `Unlimited Negotiation Credits`,
+    title: 'Unlimited Negotiation Credits',
     subText:
       'Negotiate listing prices with Sellers without running out of credits',
   },
-  { title: 'No Transaction Fees', subText: '' },
+  { title: `No Transaction Fees`, subText: '' },
   {
     title: 'Access to Buyer Data Reports',
     subText:

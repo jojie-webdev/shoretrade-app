@@ -1842,12 +1842,12 @@ const StepForm = ({
                                 </ReverseCheckboxWrapper>
                               </div> */}
                               <Typography weight="400" variant="label">
-                                Access to the Reverse Market Place to request
+                                Access to the Reverse Marketplace to request
                                 products from Sellers & includes{' '}
                                 <strong>10</strong> Negotiation Credits per
                                 month to negotiate listing prices.
                               </Typography>
-                              <div
+                              {/* <div
                                 className="benefits"
                                 onClick={() => {
                                   setIsOpen(true);
@@ -1864,7 +1864,7 @@ const StepForm = ({
                                 >
                                   Explore the benefits
                                 </Typography>
-                              </div>
+                              </div> */}
                             </PlanSectionContainer>
                             <PlanSectionContainer>
                               <ReverseMarketTitle>
@@ -1952,13 +1952,13 @@ const StepForm = ({
                               </Tag>
                             </IncludedTag> */}
                             <Typography weight="400" variant="label">
-                              Access to the Reverse Market Place to request
+                              Access to the Reverse Marketplace to request
                               products from Sellers & includes
                               <strong> unlimited </strong>
                               Negotiation Credits per month to negotiate listing
                               prices.
                             </Typography>
-                            <div
+                            {/* <div
                               className="benefits"
                               onClick={() => {
                                 setIsOpen(true);
@@ -1975,7 +1975,7 @@ const StepForm = ({
                               >
                                 Explore the benefits
                               </Typography>
-                            </div>
+                            </div> */}
                           </PlanSectionContainer>
                           <PlanSectionContainer>
                             <ReverseMarketTitle>

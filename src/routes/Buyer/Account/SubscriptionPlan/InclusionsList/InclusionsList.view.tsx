@@ -9,9 +9,10 @@ import {
   CreditCardOutline,
   TagAlt,
   Truck,
-  Fan,
   Anchor,
   Bolt,
+  SellingOutline,
+  CategoriesOutline,
 } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import { MARKET_GROUP_1 } from 'consts/markets';
@@ -32,7 +33,7 @@ const InclusionsListView = (props: InclusionsListGeneratedProps) => {
   const getIcon = (alias: string) => {
     switch (alias) {
       case 'FREE_MONTH':
-        return <Anchor width={14} height={14} fill={theme.brand.primary} />;
+        return <SellingOutline width={14} height={14} fill={theme.brand.primary} />;
       case 'LISTINGS':
       case 'COST':
         return (
@@ -47,9 +48,9 @@ const InclusionsListView = (props: InclusionsListGeneratedProps) => {
       case 'DIRECT_SALES':
         return <Fishes width={14} height={14} fill={theme.brand.primary} />;
       case 'PRE_AUCTION':
-        return <Union width={14} height={14} fill={theme.brand.primary} />;
+        return <Anchor width={14} height={14} fill={theme.brand.primary} />;
       case 'AQUAFUTURE':
-        return <Fan width={14} height={14} fill={theme.brand.primary} />;
+        return <CategoriesOutline width={14} height={14} fill={theme.brand.primary} />;
       case 'DELIVERY':
         return <Truck width={14} height={14} fill={theme.brand.primary} />;
       case 'BUYING_ADDRESSES':
@@ -57,9 +58,9 @@ const InclusionsListView = (props: InclusionsListGeneratedProps) => {
       case 'PROFILE':
         return <Account width={14} height={14} fill={theme.brand.primary} />;
       case 'MARKETPLACE':
-        return <Net width={14} height={14} fill={theme.brand.primary} />;
-      case 'NEGOTIATION':
         return <Bolt width={14} height={14} fill={theme.brand.primary} />;
+      case 'NEGOTIATION':
+        return <Union width={14} height={14} fill={theme.brand.primary} />;
     }
   };
 
@@ -103,9 +104,10 @@ const InclusionsListView = (props: InclusionsListGeneratedProps) => {
                 <Col>
                   <Typography
                     variant="body"
+                    weight="700"
                     color={theme.appType === 'seller' ? 'noshade' : 'shade9'}
                   >
-                    {feat.title}
+                    {feat.name}
                   </Typography>
                   <Typography
                     variant="label"
