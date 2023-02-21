@@ -444,6 +444,7 @@ const NegotiationDetails = (): JSX.Element => {
     handleNegoModalNegoBtnClick,
     isCreateBuyerCounterNegotiationPending,
     handleNegoBtnClick2,
+    showBuyerCounterNegoModal,
   };
 
   const getPrice = () => {

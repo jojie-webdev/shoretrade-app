@@ -99,6 +99,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
     handleNegoModalNegoBtnClick,
     isCreateBuyerCounterNegotiationPending,
     handleNegoBtnClick2,
+    showBuyerCounterNegoModal,
   } = props;
 
   const history = useHistory();
@@ -501,10 +502,8 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
         onClickClose={() => setShowDelete(false)}
       />
       <NegotiationBuyerModal
-        isOpen={negotiating}
-        onClickClose={() => {
-          setNegotiating(false);
-        }}
+        isOpen={showBuyerCounterNegoModal}
+        onClickClose={handleNegoBtnClick2}
         onSubmitClick={handleNegoModalNegoBtnClick}
         negotiation={negotiation}
         isCreateBuyerCounterNegotiationPending={

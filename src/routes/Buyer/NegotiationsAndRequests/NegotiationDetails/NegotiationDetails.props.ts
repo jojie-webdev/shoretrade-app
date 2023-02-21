@@ -51,4 +51,5 @@ export interface NegotiationDetailsProps {
   handleNegoModalNegoBtnClick: (buyerNegotiatedPrice: number) => void;
   isCreateBuyerCounterNegotiationPending: boolean;
   handleNegoBtnClick2: () => void;
+  showBuyerCounterNegoModal: boolean;
 }

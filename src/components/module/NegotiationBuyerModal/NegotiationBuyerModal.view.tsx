@@ -163,18 +163,22 @@ const NegotiationBuyerModal = (
             </div>
           )} */}
 
+          {console.log('buyerNegotiatedPrice > ', buyerNegotiatedPrice)}
+
           <div className="computation-item-container">
             <Typography variant="body" color="shade6">
               Change in Price{' '}
-              {buyerNegotiatedPrice === null
+              {buyerNegotiatedPrice === null || isNaN(buyerNegotiatedPrice)
                 ? ''
                 : negotiation?.negotiation_offer.counter_offer >
                   (buyerNegotiatedPrice || 0)
                 ? '+'
                 : '-'}
-              {Math.abs(priceDiffPercentage)}%
+              {buyerNegotiatedPrice === null || isNaN(buyerNegotiatedPrice)
+                ? ''
+                : `${Math.abs(priceDiffPercentage).toFixed(2)}%`}
             </Typography>
-            {buyerNegotiatedPrice === null ? (
+            {buyerNegotiatedPrice === null || isNaN(buyerNegotiatedPrice) ? (
               ''
             ) : priceDiff !== 0 ? (
               <Typography
@@ -196,11 +200,19 @@ const NegotiationBuyerModal = (
               Quantity
             </Typography>
             <Typography variant="body" color="shade7">
-              {negotiation?.desired_quantity *
+              {/* {negotiation?.desired_quantity *
                 ((buyerNegotiatedPrice ?? 0) ||
                   negotiation?.negotiation_offer?.counter_offer ||
                   Number(negotiation?.counter_offer || '0'))}{' '}
-              {negotiation?.measurement_unit.toLowerCase()}
+              {negotiation?.measurement_unit.toLowerCase()} */}
+              {buyerNegotiatedPrice === null || isNaN(buyerNegotiatedPrice)
+                ? ''
+                : negotiation?.desired_quantity *
+                  ((buyerNegotiatedPrice ?? 0) ||
+                    negotiation?.negotiation_offer?.counter_offer)}{' '}
+              {buyerNegotiatedPrice === null || isNaN(buyerNegotiatedPrice)
+                ? ''
+                : negotiation?.measurement_unit.toLowerCase()}
             </Typography>
           </div>
 
@@ -214,7 +226,7 @@ const NegotiationBuyerModal = (
               color="shade9"
               style={{ fontFamily: 'Basis Grotesque Pro' }}
             >
-              {buyerNegotiatedPrice === null
+              {buyerNegotiatedPrice === null || isNaN(buyerNegotiatedPrice)
                 ? ''
                 : toPrice(
                     (buyerNegotiatedPrice ||

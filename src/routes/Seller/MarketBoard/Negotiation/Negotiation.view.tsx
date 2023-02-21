@@ -86,6 +86,20 @@ const NegotiationView = (props: NegotiationProps) => {
     </>
   );
 
+  // const getAlertColorByDisplayStatus = () => {
+  //   switch (negotiation?.display_status) {
+  //     case "New Negotiation":
+  //       return theme.brand.alert;
+
+  //     default: return theme.brand.alert
+  //   }
+  // }
+
+  // const buildStatusProps = {
+  //   title: negotiation?.display_status,
+  //   alertColor: getAlertColorByDisplayStatus()
+  // }
+
   return (
     <Container>
       <AcceptSellerModal
@@ -212,6 +226,93 @@ const NegotiationView = (props: NegotiationProps) => {
         color="blue"
         fullWidth
       />
+
+      {/*         
+
+      <Alert
+        content={
+          <div style={{ display: 'flex' }}>
+            <Typography variant="body" color="shade6" weight="400">
+              infoAlert
+            </Typography>
+            <Typography
+              variant="body"
+              color="secondary"
+              weight="400"
+              style={{ marginLeft: 5 }}
+            >
+              {negotiation?.name}
+            </Typography>
+          </div>
+        }
+        header={negotiation?.display_status}
+        variant="infoAlert"
+        color="blue"
+        fullWidth
+      />
+      <Alert
+        content={
+          <div style={{ display: 'flex' }}>
+            <Typography variant="body" color="shade6" weight="400">
+              alert
+            </Typography>
+            <Typography
+              variant="body"
+              color="alert"
+              weight="400"
+              style={{ marginLeft: 5 }}
+            >
+              {negotiation?.name}
+            </Typography>
+          </div>
+        }
+        header={negotiation?.display_status}
+        variant="alert"
+        color="blue"
+        fullWidth
+      />
+      <Alert
+        content={
+          <div style={{ display: 'flex' }}>
+            <Typography variant="body" color="shade6" weight="400">
+              warning
+            </Typography>
+            <Typography
+              variant="body"
+              color="warning"
+              weight="400"
+              style={{ marginLeft: 5 }}
+            >
+              {negotiation?.name}
+            </Typography>
+          </div>
+        }
+        header={negotiation?.display_status}
+        variant="warning"
+        color="blue"
+        fullWidth
+      />
+      <Alert
+        content={
+          <div style={{ display: 'flex' }}>
+            <Typography variant="body" color="shade6" weight="400">
+              error
+            </Typography>
+            <Typography
+              variant="body"
+              color="warning"
+              weight="400"
+              style={{ marginLeft: 5 }}
+            >
+              {negotiation?.name}
+            </Typography>
+          </div>
+        }
+        header={negotiation?.display_status}
+        variant="error"
+        color="blue"
+        fullWidth
+      /> */}
 
       <DetailsContainer>
         {renderLabel('SPECIFICATION')}

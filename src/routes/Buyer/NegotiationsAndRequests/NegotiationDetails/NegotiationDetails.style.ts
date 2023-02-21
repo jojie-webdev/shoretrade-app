@@ -59,6 +59,10 @@ export const FullOfferDetailsContainer = styled.div`
     padding: 16px;
     border: none;
   }
+
+  @media (max-width: 1200px) {
+    margin-top: 16px;
+  }
 `;
 
 export const CompanyInfoCol = styled(Col)`
