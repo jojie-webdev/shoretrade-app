@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import { Routes, Route as TRoute } from 'types/Routes';
 
 import Landing from './Landing';
+import Negotiation from './Negotiation';
 import RequestAndNegotiate from './RequestAndNegotiate';
 
 const ROUTES: Routes = {
@@ -19,6 +20,10 @@ const ROUTES: Routes = {
   NEGOTIATE: {
     path: SELLER_MARKET_BOARD_ROUTES.NEGOTIATE,
     children: <RequestAndNegotiate />,
+  },
+  NEGOTIATION: {
+    path: SELLER_MARKET_BOARD_ROUTES.NEGOTIATION,
+    children: <Negotiation />,
   },
 };
 

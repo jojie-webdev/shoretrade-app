@@ -91,6 +91,10 @@ import {
 import { ChargeCardMeta, ChargeCardPayload } from './ChargeCardState';
 import { ConfirmWeightMeta, ConfirmWeightPayload } from './ConfirmWeightState';
 import {
+  CreateBuyerCounterNegotiationMeta,
+  CreateBuyerCounterNegotiationPayload,
+} from './CreateBuyerCounterNegotiationState';
+import {
   CreateCustomListingMeta,
   CreateCustomListingPayload,
 } from './CreateCustomListingState';
@@ -103,6 +107,10 @@ import {
   CreateNegotiationMeta,
   CreateNegotiationPayload,
 } from './CreateNegotiationState';
+import {
+  CreateSellerCounterOfferMeta,
+  CreateSellerCounterOfferPayload,
+} from './CreateSellerCounterOfferState';
 import { CurrentAddressState } from './CurrentAddressState';
 import { DeleteCardMeta, DeleteCardPayload } from './DeleteCardState';
 import {
@@ -367,6 +375,14 @@ import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
+  createBuyerCounterNegotiation: AsyncState<
+    CreateBuyerCounterNegotiationMeta,
+    CreateBuyerCounterNegotiationPayload
+  >;
+  createSellerCounterOffer: AsyncState<
+    CreateSellerCounterOfferMeta,
+    CreateSellerCounterOfferPayload
+  >;
   getNegotiationCredit: AsyncState<
     GetNegotiationCreditMeta,
     GetNegotiationCreditPayload

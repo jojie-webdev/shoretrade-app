@@ -11,16 +11,19 @@ import Loading from 'components/module/Loading';
 import MarketRequestDetailPill from 'components/module/MarketRequestDetailPill';
 import MarketRequestSummary from 'components/module/MarketRequestSummary';
 import NegotiateBuyerModal from 'components/module/NegotiateBuyerModal';
+import NegotiationBuyerModal from 'components/module/NegotiationBuyerModal';
 import PaymentTimeLeft from 'components/module/PaymentTimeLeft';
 import { AvatarPlaceholder } from 'components/module/ProductSellerCard/ProductSellerCard.style';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
+import pathOr from 'ramda/es/pathOr';
 import { Row, Col, Hidden, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 import { getShippingAddress } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
 import { ShippingAddress } from 'types/store/GetActiveOffersState';
+import { GetNegotiationByIdRequestResponseItem } from 'types/store/GetNegotiationByIdState';
 import { sizeToString } from 'utils/Listing';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { createdAtToExpiry } from 'utils/MarketRequest';
@@ -93,6 +96,9 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
     negotiation,
     handleAcceptConfirm,
     handleDeclineConfirm,
+    handleNegoModalNegoBtnClick,
+    isCreateBuyerCounterNegotiationPending,
+    handleNegoBtnClick2,
   } = props;
 
   const history = useHistory();
@@ -167,8 +173,6 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
     </>
   );
 
-  console.log('negotiation > ');
-
   const sizeValue = sizeToString(
     negotiation?.metric || negotiation?.active_size_unit || '',
     negotiation?.size_from,
@@ -187,8 +191,14 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
   //   latestOfferPrice
   // )} / ${formatUnitToPricePerUnit(selectedOffer.measurementUnit)}`;
 
+  const negotiationOffer = pathOr(
+    {},
+    ['negotiation_offer'],
+    negotiation
+  ) as GetNegotiationByIdRequestResponseItem['negotiation_offer'];
+
   const pricePerUnit = `${toPrice(
-    negotiation?.counter_offer || '0.00'
+    negotiationOffer?.counter_offer || negotiation?.counter_offer || '0.00'
   )} per ${formatUnitToPricePerUnit(negotiation?.measurement_unit)}`;
 
   // const mrStatusProps = transformMarketRequestStatusText(
@@ -319,8 +329,8 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
                       </Typography>
                     }
                     icon={<Refresh fill={theme.grey.noshade} />}
-                    onClick={() => handleNegoBtnClick(true)}
-                    disabled={negotiation?.status === 'OPEN'}
+                    onClick={handleNegoBtnClick2}
+                    disabled={negotiation?.display_status !== 'Counter Offer'}
                     style={{ marginRight: 10, width: '100%' }}
                   />
                 </div>
@@ -333,7 +343,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
                     }
                     icon={<Check width={10} height={9} />}
                     onClick={() => handleAcceptClick(true)}
-                    disabled={negotiation?.status === 'OPEN'}
+                    disabled={negotiation?.display_status !== 'Counter Offer'}
                   />
                 </div>
               </CTAContainer>
@@ -490,7 +500,18 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
         actionText="DELETE"
         onClickClose={() => setShowDelete(false)}
       />
-      <NegotiateBuyerModal
+      <NegotiationBuyerModal
+        isOpen={negotiating}
+        onClickClose={() => {
+          setNegotiating(false);
+        }}
+        onSubmitClick={handleNegoModalNegoBtnClick}
+        negotiation={negotiation}
+        isCreateBuyerCounterNegotiationPending={
+          isCreateBuyerCounterNegotiationPending
+        }
+      />
+      {/* <NegotiateBuyerModal
         closeOnAccept={closeOnAccept}
         setCloseOnAccept={setCloseOnAccept}
         onSubmit={submitNegotiation}
@@ -507,7 +528,8 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
         }}
         sortedNegotiations={sortedNegotiations}
         modalLastNegotiationsArray={lastNegotiationsOffers}
-      />
+        // negotiation={negotiation}
+      /> */}
       <Hidden xs sm>
         <HeaderContainer>
           <div>
@@ -619,7 +641,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
                 </Col>
                 <Col style={{ paddingRight: 5, marginTop: 5 }}>
                   <StyledNegotiateButton
-                    onClick={() => handleNegoBtnClick(true)}
+                    onClick={handleNegoBtnClick2}
                     variant="outline"
                     text={
                       <Typography color="noshade" style={{ marginRight: 5 }}>
@@ -627,7 +649,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
                       </Typography>
                     }
                     icon={<Refresh fill={theme.grey.noshade} />}
-                    disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
+                    disabled={negotiation?.display_status !== 'Counter Offer'}
                     style={{ backgroundColor: theme.brand.primary }}
                   />
                 </Col>
@@ -641,7 +663,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
                     icon={<Check width={10} height={9} />}
                     onClick={() => handleAcceptClick(true)}
                     loading={isLoadingConfirmOffer}
-                    disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
+                    disabled={negotiation?.display_status !== 'Counter Offer'}
                   />
                 </Col>
               </Row>

@@ -1,5 +1,6 @@
 import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
+import Typography from 'components/base/Typography';
 import TypographyView from 'components/base/Typography/Typography.view';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
@@ -23,95 +24,15 @@ export const Container = styled.div`
     margin-right: 8px;
     max-width: 148px;
   }
-`;
 
-export const BadgesContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  .modal_container__exit_btn {
+    background-color: ${({ theme }) => theme.grey.shade10};
+    border: 1px solid ${({ theme }) => theme.grey.shade8};
 
-  .badge {
-    padding: 6px 8px;
-    border-radius: 8px;
-    margin-right: 0.6rem;
-    margin-bottom: 0.6rem;
-
-    @media ${BREAKPOINTS['sm']} {
-      margin-bottom: 0.2rem;
+    svg > path {
+      fill: ${({ theme }) => theme.grey.noshade};
     }
   }
-`;
-
-export const StyledBadge = styled(Badge)`
-  padding: 6px 8px;
-  border-radius: 8px;
-  margin-bottom: 0.6rem;
-
-  @media ${BREAKPOINTS['sm']} {
-    margin-bottom: 0.2rem;
-  }
-`;
-
-export const SummaryContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  max-width: 641px;
-  padding: 48px;
-  border-radius: 12px;
-  background-color: ${({ theme }) => theme.grey.shade9};
-
-  .quantity-container {
-    display: flex;
-
-    .dash {
-      margin-left: 0.6rem;
-      margin-right: 0.6rem;
-    }
-  }
-
-  .shipping-to {
-    display: flex;
-    align-items: center;
-    margin-top: 16px;
-
-    p:first-child {
-      margin-right: 4px;
-    }
-  }
-
-  .offer-container {
-    padding-top: 24px;
-    margin: 16px 0;
-    border-top: 1px solid ${({ theme }) => theme.grey.shade7};
-
-    .computation-item-container {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      margin-bottom: 6px;
-
-      p {
-        .indicator {
-          font-weight: bold;
-        }
-      }
-    }
-  }
-
-  @media ${BREAKPOINTS['sm']} {
-    padding: 16px;
-  }
-`;
-
-export const BadgeText = styled(TypographyView)`
-  font-size: ${pxToRem(11)};
-  text-align: center;
-`;
-
-export const MetricContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-
-  margin-bottom: 16px;
 `;
 
 export const StyledAcceptButton = styled(Button)`
@@ -125,5 +46,33 @@ export const CTAContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-top: 50px;
+  margin-top: 56px;
+`;
+
+export const DetailsContainer = styled.div`
+  background-color: ${({ theme }) => theme.grey.shade10};
+  border-radius: 12px;
+  padding: 48px;
+  margin-top: 24px;
+`;
+
+export const DetailsValueContainer = styled.div`
+  margin-top: 12px;
+  padding: 4px 6px;
+  background-color: #e5e8f5;
+  border-radius: 8px;
+  width: fit-content;
+`;
+
+export const StyledTypography = styled(Typography)`
+  font-family: 'Basis Grotesque Pro';
+  clear: both;
+  color: ${({ theme }) => theme.grey.shade9};
+`;
+
+export const Line = styled.div`
+  height: 1px;
+  width: 100%;
+  background-color: ${({ theme }) => theme.grey.shade6};
+  margin: 24px 0;
 `;

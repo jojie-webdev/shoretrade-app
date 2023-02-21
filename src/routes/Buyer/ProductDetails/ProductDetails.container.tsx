@@ -153,7 +153,7 @@ const ProductDetails = (): JSX.Element => {
     useSelector((state: Store) => state.getListingBoxes.pending) || false;
 
   const isSendingNegotiation =
-    useSelector((state: Store) => state.createNegotiation_2.pending) || false;
+    useSelector((state: Store) => state.createNegotiation_2.pending) === true;
 
   const sendingNegotiationStatus = useSelector(
     (state: Store) => state.createNegotiation_2.data?.status
@@ -418,12 +418,13 @@ const ProductDetails = (): JSX.Element => {
     }
   }, [weight, addCartItemData]);
 
-  // useEffect(() => {
-  //   if (isSendingNegotiation === false) {
-  //     setShowNegoModal(false);
-  //     setShowConfirmNegoModal(false);
-  //   }
-  // }, [isSendingNegotiation]);
+  useEffect(() => {
+    if (!isSendingNegotiation) {
+      setShowNegoModal(false);
+      setShowConfirmNegoModal(false);
+      dispatch(getNegotiationCreditActions.request({}));
+    }
+  }, [isSendingNegotiation]);
 
   useEffect(() => {
     const box = pathOr([] as Box[], ['0', 'boxes'], groupedBox);

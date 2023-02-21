@@ -48,4 +48,7 @@ export interface NegotiationDetailsProps {
   negotiation: GetNegotiationByIdRequestResponseItem;
   handleAcceptConfirm: () => void;
   handleDeclineConfirm: () => void;
+  handleNegoModalNegoBtnClick: (buyerNegotiatedPrice: number) => void;
+  isCreateBuyerCounterNegotiationPending: boolean;
+  handleNegoBtnClick2: () => void;
 }

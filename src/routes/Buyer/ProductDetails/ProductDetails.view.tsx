@@ -202,7 +202,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
           </Typography>
         }
         action={handleConfirmNegoClick}
-        disableActionText={isSendingNegotiation || false}
+        disableActionText={isSendingNegotiation}
         cancel={handleShowConfirmNegoModal}
         actionText="Send Negotiation"
         cancelText="Cancel"
@@ -213,7 +213,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
             </Typography>
             <div style={{ marginTop: 10 }} />
             <Typography variant="label" color="shade6">
-              Your current negotiation balance is X Credit.
+              Your current negotiation balance is {negotiationCredit?.credit}{' '}
+              Credit.
             </Typography>
           </div>
         }

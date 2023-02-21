@@ -28,7 +28,18 @@ export type GetNegotiationByIdRequestResponseItem = {
   measurement_unit: string;
   unit_kg_conversion: string;
   metric: string;
-  negotiation_offer: string;
+  negotiation_offer: {
+    company_id: string;
+    counter_offer: number;
+    created_at: string;
+    desired_quantity: number;
+    id: string;
+    listing_box_id: string;
+    negotiation_request_id: string;
+    seller_id: string;
+    status: string;
+    updated_at: string;
+  };
   auction_date: string;
   is_pre_auction: false;
   display_status: string;

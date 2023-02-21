@@ -1,5 +1,10 @@
-import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
+import { GetNegotiationByIdRequestResponseItem } from 'types/store/GetNegotiationByIdState';
 
 export interface NegotiationProps {
-  negotiation: GetAllNegoRequestResponseItem;
+  negotiation: GetNegotiationByIdRequestResponseItem | undefined;
+  handleAcceptBtnClick: () => void;
+  showAcceptModal: boolean;
+  handleNegotiationCloseBtnClick: () => void;
+  showNegotiationModal: boolean;
+  handleNegotiationConfirmClick: (counterOffer: number) => void;
 }

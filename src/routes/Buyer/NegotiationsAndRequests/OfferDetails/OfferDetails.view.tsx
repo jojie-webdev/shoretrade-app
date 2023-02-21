@@ -332,7 +332,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
               </DefaultCTAContainer>
             )}
 
-          {selectedOffer?.status !== 'ACCEPTED' &&
+          {/* {selectedOffer?.status !== 'ACCEPTED' &&
             selectedOffer?.status !== 'PARTIAL' &&
             selectedOffer?.status !== 'DECLINED' && (
               <CTAContainer>
@@ -373,7 +373,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
                   />
                 </div>
               </CTAContainer>
-            )}
+            )} */}
           {selectedOffer?.status === 'PARTIAL' && (
             <CTAContainer>
               <div style={{ width: '124px' }}>
@@ -622,7 +622,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
           </CTAContainer>
         )}
 
-        {selectedOffer?.status !== 'ACCEPTED' &&
+        {/* {selectedOffer?.status !== 'ACCEPTED' &&
           selectedOffer?.status !== 'PARTIAL' &&
           selectedOffer?.status !== 'DECLINED' && (
             <>
@@ -672,7 +672,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
                 </Col>
               </Row>
             </>
-          )}
+          )} */}
       </Visible>
     </Container>
   );

@@ -859,7 +859,7 @@ const AddDetails = ({
         <Checkbox
           onClick={() => setAllowNegotiations((prevValue) => !prevValue)}
           checked={allowNegotiations}
-          label="Allow Negotiotions"
+          label="Allow Negotiations"
         />
       </AllowNegoContainer>
       {isAuctionSale && (

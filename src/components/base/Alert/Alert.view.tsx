@@ -75,13 +75,17 @@ const Alert = (props: AlertProps): JSX.Element => {
             </Typography>
           )}
 
-          <Typography
-            variant={header ? 'body' : 'label'}
-            color={header ? 'shade6' : isSeller ? 'noshade' : 'shade9'}
-            weight="400"
-          >
-            {content}
-          </Typography>
+          {typeof content === 'string' ? (
+            <Typography
+              variant={header ? 'body' : 'label'}
+              color={header ? 'shade6' : isSeller ? 'noshade' : 'shade9'}
+              weight="400"
+            >
+              {content}
+            </Typography>
+          ) : (
+            content
+          )}
         </div>
       </div>
 

@@ -10,6 +10,7 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { getActivePlan } from 'routes/Buyer/Account/SubscriptionPlan/SubscriptionPlan.transform';
 import { syncAASBalance } from 'services/aas';
 import {
+  createBuyerCounterNegotiationActions,
   deleteMarketRequestActions,
   getActiveOffersActions,
   getAllMarketRequestActions,
@@ -45,7 +46,6 @@ const NegotiationDetails = (): JSX.Element => {
   const [countAcceptedWeight, setCountAcceptedWeight] = useState(0);
   const activeOffers = useSelector((store: Store) => store.getActiveOffers);
   const [selectedOffer, setSelectedOffer] = useState<Offer>();
-  const [offerMR, setOfferMR] = useState<OfferMarketRequest>();
   const [negotiating, setNegotiating] = useState(false);
   const [clickAccept, setClickAccept] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
@@ -59,6 +59,8 @@ const NegotiationDetails = (): JSX.Element => {
   const [closeOnAccept, setCloseOnAccept] = useState(false);
   const [showOfferSentModal, setShowOfferSentModal] = useState(false);
   const [clickDecline, setClickDecline] = useState(false);
+  const [showBuyerCounterNegoModal, setShowBuyerCounterNegoModal] =
+    useState(false);
 
   useEffect(() => {
     dispatch(
@@ -126,17 +128,14 @@ const NegotiationDetails = (): JSX.Element => {
     (state: Store) => state.marketRequestNegotiation.data?.status
   );
 
-  const negotiations = useSelector(
-    (store: Store) => store.getAllNegotiations.data?.data.negotiations
-  );
-
   const negotiation = useSelector(
     (store: Store) => store.getNegotiationById.data?.data
   );
 
-  // const negotiation = negotiations?.find(
-  //   (negotiation) => negotiation.listing_id === id
-  // );
+  const isCreateBuyerCounterNegotiationPending =
+    useSelector(
+      (store: Store) => store.createBuyerCounterNegotiation.pending
+    ) === true;
 
   const filteredBuyerRequests = buyerRequests.data?.data?.marketRequests.filter(
     (mR) => mR.status !== 'DELETED' && mR.status !== 'CLOSED'
@@ -198,6 +197,10 @@ const NegotiationDetails = (): JSX.Element => {
 
   const handleNegoBtnClick = (show: boolean) => {
     setNegotiating(show);
+  };
+
+  const handleNegoBtnClick2 = () => {
+    setShowBuyerCounterNegoModal((prevValue) => !prevValue);
   };
 
   const handleStartNegotiate = () => {
@@ -293,7 +296,6 @@ const NegotiationDetails = (): JSX.Element => {
         if (offer?.id === offerId) {
           setSelectedOffer(offer);
           setSeller(marketOffer.company);
-          setOfferMR(marketOffer.marketRequest);
           if (offer && offer.negotiations) {
             setNego(offer?.negotiations[0]);
           }
@@ -332,6 +334,12 @@ const NegotiationDetails = (): JSX.Element => {
       setShowOfferSentModal(false);
     }
   }, [offerSentStatus]);
+
+  useEffect(() => {
+    if (!isCreateBuyerCounterNegotiationPending) {
+      setShowBuyerCounterNegoModal(false);
+    }
+  }, [isCreateBuyerCounterNegotiationPending]);
 
   const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
@@ -378,6 +386,17 @@ const NegotiationDetails = (): JSX.Element => {
     isAccepted = selectedOffer.status === 'ACCEPTED';
   }
 
+  const handleNegoModalNegoBtnClick = (buyerNegotiatedPrice: number) => {
+    if (negotiation?.id) {
+      dispatch(
+        createBuyerCounterNegotiationActions.request({
+          negotiationRequestId: negotiation?.id,
+          counterOffer: buyerNegotiatedPrice.toString(),
+        })
+      );
+    }
+  };
+
   if (!negotiation) {
     return <Loading />;
   }
@@ -422,6 +441,9 @@ const NegotiationDetails = (): JSX.Element => {
     negotiation,
     handleAcceptConfirm,
     handleDeclineConfirm,
+    handleNegoModalNegoBtnClick,
+    isCreateBuyerCounterNegotiationPending,
+    handleNegoBtnClick2,
   };
 
   const getPrice = () => {

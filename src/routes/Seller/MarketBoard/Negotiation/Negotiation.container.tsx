@@ -4,136 +4,85 @@ import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
-  createMarketOfferActions,
-  getActiveOffersActions,
-  marketOfferNegotiateActions,
+  getNegotiationByIdActions,
+  createSellerCounterOfferActions,
 } from 'store/actions';
-import { MarketOfferItem } from 'types/store/CreateMarketOfferState';
-import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
-import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
-import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
 import { Store } from 'types/store/Store';
 
 import NegotiationView from './Negotiation.view';
 
 const Negotiation = (): JSX.Element => {
+  const [showAcceptModal, setShowAcceptModal] = useState(false);
+  const [showNegotiationModal, setShowNegotiationModal] = useState(false);
+
   const history = useHistory();
   const location = useLocation();
   const dispatch = useDispatch();
-  const { pathname } = location;
   const {
     state,
   }: {
     state: {
-      buyerRequest: GetAllMarketRequestResponseItem;
-      activeOffer: GetActiveOffersRequestResponseItem;
-      negotiation: GetAllNegoRequestResponseItem;
+      negotiationRequestId: string;
     };
   } = useLocation();
 
-  const buyerRequest = state.buyerRequest;
-  const activeOffer = state.activeOffer;
-  const negotiation = state.negotiation;
-  const offerSentStatus = useSelector(
-    (state: Store) => state.createMarketOffer.data?.status
-  );
-  const marketOfferNegotiate = useSelector(
-    (state: Store) => state.marketOfferNegotiate
+  const { negotiationRequestId } = state;
+
+  const negotiation = useSelector(
+    (store: Store) => store.getNegotiationById.data?.data
   );
 
-  const user = useSelector((state: Store) => state.getUser.data?.data.user);
-  const buyerRequests = useSelector(
-    (state: Store) => state.getAllMarketRequest.data?.data.marketRequests
-  );
+  const isCreateSellerCounterOfferPending =
+    useSelector((store: Store) => store.createSellerCounterOffer.pending) ===
+    true;
 
-  const buyerRequestForActiveOfferTab = buyerRequests?.find(
-    (buyerRequest) => buyerRequest.id === activeOffer?.marketRequest?.id
-  );
-
-  const userPending =
-    user !== undefined &&
-    !(user.companies || []).some((a) =>
-      a.addresses.some((b) => b.approved === 'APPROVED')
-    );
-
-  const [offer, setOffer] = useState<MarketOfferItem[]>([]);
-  const [currentOfferItem, setCurrentOfferItem] = useState('');
-  const [showOfferSentModal, setShowOfferSentModal] = useState(false);
-  const [showOfferAcceptSentModal, setShowOfferAcceptSentModal] =
-    useState(false);
-
-  const isNegotiating =
-    useSelector((state: Store) => state.marketOfferNegotiate.pending) || false;
-
-  const isReview = pathname.includes(SELLER_MARKET_BOARD_ROUTES.OFFER);
-
-  const onNegotiateOffer = (
-    marketOfferId: string,
-    price: number,
-    accepted?: boolean
-  ) => {
-    dispatch(
-      marketOfferNegotiateActions.request({
-        marketOfferId,
-        price,
-        accepted: accepted,
-      })
-    );
+  const handleAcceptBtnClick = () => {
+    setShowAcceptModal((prevValue) => !prevValue);
   };
 
-  const onConfirmSentOffer = () => {
-    setShowOfferSentModal(false);
-    setShowOfferAcceptSentModal(false);
-    dispatch(marketOfferNegotiateActions.clear());
-    dispatch(createMarketOfferActions.clear());
-    dispatch(getActiveOffersActions.request({}));
-    dispatch(getActiveOffersActions.request({}));
-    history.push(SELLER_MARKET_BOARD_ROUTES.LANDING, {
-      currentTab: 'My Active Offers',
-    });
+  const handleNegotiationCloseBtnClick = () => {
+    setShowNegotiationModal((prevValue) => !prevValue);
+  };
+
+  const handleNegotiationConfirmClick = (counterOffer: number) => {
+    if (negotiationRequestId && negotiation?.listing_box_id) {
+      dispatch(
+        createSellerCounterOfferActions.request({
+          negotiationRequestId,
+          counterOffer,
+          listingBoxId: negotiation?.listing_box_id,
+        })
+      );
+    }
   };
 
   useEffect(() => {
-    if (offerSentStatus === 200) {
-      setShowOfferSentModal(true);
-    } else {
-      setShowOfferSentModal(false);
+    if (negotiationRequestId) {
+      dispatch(getNegotiationByIdActions.request({ negotiationRequestId }));
     }
-  }, [offerSentStatus]);
+  }, [negotiationRequestId]);
 
   useEffect(() => {
-    if (marketOfferNegotiate?.data?.status === 200) {
-      if (marketOfferNegotiate?.request?.accepted === true) {
-        setShowOfferAcceptSentModal(true);
-      } else {
-        setShowOfferSentModal(true);
-      }
-    } else {
-      setShowOfferSentModal(false);
-      setShowOfferAcceptSentModal(false);
+    if (isCreateSellerCounterOfferPending === false) {
+      setShowNegotiationModal(false);
+      dispatch(getNegotiationByIdActions.request({ negotiationRequestId }));
     }
-  }, [marketOfferNegotiate]);
+  }, [isCreateSellerCounterOfferPending]);
 
-  if ((isReview && !buyerRequest) || (!isReview && !activeOffer)) {
+  if (!negotiationRequestId) {
     history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING);
     return <></>;
   }
 
   const generatedProps = {
     negotiation,
-    offer,
-    setOffer,
-    currentOfferItem,
-    setCurrentOfferItem,
-    isReview,
-    onNegotiateOffer,
-    isNegotiating,
-    userPending,
-    buyerRequestForActiveOfferTab,
-    showOfferSentModal,
-    onConfirmSentOffer,
-    showOfferAcceptSentModal,
+    handleAcceptBtnClick,
+    showAcceptModal,
+    handleNegotiationCloseBtnClick,
+    showNegotiationModal,
+    handleNegotiationConfirmClick,
   };
+
   return <NegotiationView {...generatedProps} />;
 };
 

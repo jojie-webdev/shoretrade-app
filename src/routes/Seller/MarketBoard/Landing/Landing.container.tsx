@@ -263,9 +263,8 @@ const MarketBoardLanding = (): JSX.Element => {
   };
 
   const onNegotiationClick = (data: GetAllNegoRequestResponseItem) => {
-    history.push(SELLER_MARKET_BOARD_ROUTES.NEGOTIATE, {
-      negotiation: data,
-      selectedTab: TABS.NEGO,
+    history.push(SELLER_MARKET_BOARD_ROUTES.NEGOTIATION, {
+      negotiationRequestId: data.negotiation_request_id,
     });
   };
 

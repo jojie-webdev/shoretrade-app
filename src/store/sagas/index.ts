@@ -1,10 +1,6 @@
 import { fork, all } from 'redux-saga/effects';
 
 /* PLOP_INJECT_IMPORT */
-import getNegotiationCredit from './getNegotiationCredit';
-import getNegotiationById from './getNegotiationById';
-import createNegotiation_2 from './createNegotiation_2';
-import getAllNegotiations from './getAllNegotiations';
 import addAddress from './addAddress';
 import addCardAndPay from './addCardAndPay';
 import addCardToken from './addCardToken';
@@ -16,11 +12,14 @@ import changePassword from './changePassword';
 import chargeCard from './chargeCard';
 import confirmWeight from './confirmWeight';
 import createBulkListing from './createBulkListing';
+import createBuyerCounterNegotiation from './createBuyerCounterNegotiation';
 import createCustomListing from './createCustomListing';
 import createListing from './createListing';
 import createMarketOffer from './createMarketOffer';
 import createMarketRequest from './createMarketRequest';
 import createNegotiation from './createNegotiation';
+import createNegotiation_2 from './createNegotiation_2';
+import createSellerCounterOffer from './createSellerCounterOffer';
 import currentAddress from './currentAddress';
 import deleteCard from './deleteCard';
 import deleteLinkedAccount from './deleteLinkedAccount';
@@ -40,6 +39,7 @@ import getAllBuyerOrders from './getAllBuyerOrders';
 import getAllListings from './getAllListings';
 import getAllMarketRequest from './getAllMarketRequest';
 import getAllMarketRequestFilters from './getAllMarketRequestFilters';
+import getAllNegotiations from './getAllNegotiations';
 import getAllSellerOrders from './getAllSellerOrders';
 import getAvailableCrates from './getAvailableCrates';
 import getBankDetails from './getBankDetails';
@@ -65,6 +65,8 @@ import getMarketEstimate from './getMarketEstimate';
 import getMarketInterests from './getMarketInterests';
 import getMarketNotification from './getMarketNotification';
 import getMarketRequestBuyerFilters from './getMarketRequestBuyerFilters';
+import getNegotiationById from './getNegotiationById';
+import getNegotiationCredit from './getNegotiationCredit';
 import getNotifications from './getNotifications';
 import getNotificationsSettings from './getNotificationsSettings';
 import getNSWHolidays from './getNSWHolidays';
@@ -128,6 +130,8 @@ import verify from './verify';
 
 const sagas = [
   /* PLOP_INJECT_INSTANCE */
+  createBuyerCounterNegotiation,
+  createSellerCounterOffer,
   getNegotiationCredit,
   getNegotiationById,
   createNegotiation_2,

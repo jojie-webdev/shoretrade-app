@@ -24,38 +24,21 @@ import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
 const Content = (props: NegotiationSellerModalProps) => {
-  const { marketOffer, onSubmit, isNegotiating } = props;
+  const { negotiation, onSubmit, isNegotiating } = props;
   const theme = useTheme();
-  const textColor = 'shade7';
+  const textColor = '#565A6A';
 
-  const [negotiationPrice, setNegotiationPrice] = useState<number | undefined>(
-    undefined
-  );
+  const [negotiationPrice, setNegotiationPrice] = useState<number | null>(null);
 
-  const { negotiations, price, weight, measurementUnit } = marketOffer;
-
-  const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
-  const sortedNegotiations = sortByDate(negotiations);
-  const newOffers = sortedNegotiations.filter((a) => a.type === 'NEW_OFFER');
-  const counterOffers = sortedNegotiations.filter(
-    (a) => a.type === 'COUNTER_OFFER'
-  );
-  const latestNewOffer = newOffers.slice(-1)[0];
-  const latestCounterOffer = counterOffers.slice(-1)[0];
-  const currentOfferPrice = latestCounterOffer?.price || price;
-
-  const currentNewOffer = negotiationPrice || currentOfferPrice;
-  const latestPrice = latestNewOffer?.price || price;
-
-  // input field vs latest buyer's counter offer
-  const discountValue = currentNewOffer - currentOfferPrice;
-  const discountPercentage = (
-    (discountValue / currentOfferPrice) *
-    100
-  ).toFixed(2);
-  const totalValue = currentNewOffer * weight;
-
-  const unit = formatMeasurementUnit(measurementUnit);
+  const priceDiff =
+    Number(negotiation?.counter_offer) - (negotiationPrice || 0);
+  const priceDiff2 = priceDiff / Math.abs(Number(negotiation?.counter_offer));
+  const priceDiffPercentage =
+    negotiationPrice === null
+      ? 0
+      : priceDiff2 < 0
+      ? -(Math.abs(priceDiff2) * 100)
+      : priceDiff2 * 100;
 
   return (
     <>
@@ -69,7 +52,7 @@ const Content = (props: NegotiationSellerModalProps) => {
           inputType="decimal"
           label={'Counter offer'}
           step=".01"
-          value={negotiationPrice}
+          value={negotiationPrice?.toString()}
           onChangeText={(v) => {
             let price = v;
             if (price.indexOf('.') >= 0) {
@@ -78,6 +61,7 @@ const Content = (props: NegotiationSellerModalProps) => {
                 price.substr(price.indexOf('.'), 3);
             }
             setNegotiationPrice(parseFloat(price));
+            console.log('onChangeText > price > ', price);
           }}
           min={1}
           LeftComponent={
@@ -85,21 +69,22 @@ const Content = (props: NegotiationSellerModalProps) => {
               {'$'}
             </Typography>
           }
-          placeholder={`per ${unit}`}
+          // placeholder={`per ${unit}`}
         />
       </Inputs>
 
       <ComputationContainer>
         <div className="computation-item-container" style={{ marginTop: -3 }}>
-          <Typography variant="body" weight="400" color={textColor}>
+          <Typography variant="body" weight="400" style={{ color: textColor }}>
             Quantity
           </Typography>
-          <Typography variant="body" weight="400" color={textColor}>
-            20 kg
+          <Typography variant="body" weight="400" style={{ color: textColor }}>
+            {negotiation?.desired_quantity}{' '}
+            {negotiation?.measurement_unit.toLowerCase()}
           </Typography>
         </div>
 
-        <div style={{ padding: '10px 0px' }}>
+        {/* <div style={{ padding: '10px 0px' }}>
           <BoxContainer>
             <div style={{ display: 'flex' }}>
               <div style={{ marginTop: 1 }}>
@@ -133,24 +118,26 @@ const Content = (props: NegotiationSellerModalProps) => {
             </div>
             <Typography color="noshade">14 kg</Typography>
           </BoxContainer>
+        </div> */}
+
+        <div className="computation-item-container">
+          <Typography variant="body" weight="400" style={{ color: textColor }}>
+            Buyer&apos;s negotiated price
+          </Typography>
+          <Typography variant="body" weight="400" style={{ color: textColor }}>
+            {negotiation
+              ? `${toPrice(
+                  negotiation?.counter_offer
+                )}/${negotiation.measurement_unit.toLowerCase()}`
+              : '0.00'}
+          </Typography>
         </div>
 
-        {sortedNegotiations.length >= 1 && (
-          <div className="computation-item-container">
-            <Typography variant="body" weight="400" color={textColor}>
-              Buyer&apos;s negotiated price
-            </Typography>
-            <Typography variant="body" weight="400" color={textColor}>
-              {toPrice(latestCounterOffer.price)}/{unit}
-            </Typography>
-          </div>
-        )}
-
         {/* <div className="computation-item-container">
-          <Typography variant="body" weight="400" color={textColor}>
+          <Typography variant="body" weight="400" style={{ color: textColor }}>
             Previous offer was
           </Typography>
-          <Typography variant="body" weight="400" color={textColor}>
+          <Typography variant="body" weight="400" style={{ color: textColor }}>
             {sortedNegotiations.length === 1
               ? `${toPrice(props.marketOffer.originalOfferPrice)}/${unit}`
               : `${toPrice(latestPrice)}/${unit}`}
@@ -162,49 +149,63 @@ const Content = (props: NegotiationSellerModalProps) => {
             Your counter offer is
           </Typography>
           <Typography variant="body" weight="400" color="noshade">
-            {toPrice(negotiationPrice || 0)}/{unit}
+            {negotiation
+              ? `${toPrice(negotiationPrice || 0)}/${
+                  negotiation.measurement_unit
+                }`
+              : '0.00'}
           </Typography>
         </div>
 
         {/* 
         {latestCounterOffer && sortedNegotiations.length <= 3 && (
           <div className="computation-item-container">
-            <Typography variant="body" color={textColor}>
+            <Typography variant="body" style={{ color: textColor }}>
               Your New Offer
             </Typography>
-            <Typography variant="body" color={textColor}>
+            <Typography variant="body" style={{ color: textColor }}>
               {toPrice(negotiationPrice || 0)}/{unit}
             </Typography>
           </div>
         )} */}
 
         <div className="computation-item-container">
-          <Typography variant="body" weight="400" color={textColor}>
+          <Typography variant="body" weight="400" style={{ color: textColor }}>
             Change in value{' '}
-            <span
-              className="indicator"
-              style={{ color: theme.grey.noshade }}
-            >{`${discountValue > 0 ? '+' : ''}${discountPercentage}%`}</span>
+            <span className="indicator" style={{ color: theme.grey.noshade }}>
+              {negotiationPrice === null
+                ? ''
+                : (negotiationPrice || 0) > Number(negotiation?.counter_offer)
+                ? '+'
+                : '-'}
+              {Math.abs(priceDiffPercentage)}%
+            </span>
           </Typography>
-          {discountValue !== 0 ? (
-            <Typography weight="400" color={textColor} variant="body">
-              {toPrice(discountValue)}/{formatMeasurementUnit(unit)}
-            </Typography>
-          ) : (
-            <Typography variant="body" color={textColor}>
-              0
-            </Typography>
-          )}
+          <Typography weight="400" style={{ color: textColor }} variant="body">
+            {negotiationPrice === null
+              ? ''
+              : `${toPrice(
+                  (negotiationPrice || 0) -
+                    Number(negotiation?.counter_offer || '0.00')
+                )}/${
+                  negotiation &&
+                  formatMeasurementUnit(negotiation.measurement_unit)
+                }`}
+          </Typography>
         </div>
 
-        <Divider backgroundColor={theme.grey.shade7} spacing={10} />
+        <Divider backgroundColor="#565A6A" spacing={10} />
 
         <div className="computation-item-container total-delivery">
           <Typography variant="body" weight="bold" color="noshade">
             Total Value
           </Typography>
           <Typography variant="body" weight="bold" color="noshade">
-            {toPrice(totalValue)}
+            {negotiationPrice === null
+              ? ''
+              : toPrice(
+                  negotiationPrice * (negotiation?.desired_quantity || 0)
+                )}
           </Typography>
         </div>
       </ComputationContainer>
@@ -245,13 +246,7 @@ const Content = (props: NegotiationSellerModalProps) => {
 const NegotiationSellerModal = (
   props: NegotiationSellerModalProps
 ): JSX.Element => {
-  const {
-    marketOffer,
-    onSubmit,
-    isNegotiating,
-    modalLastNegotiationsArray,
-    ...modalProps
-  } = props;
+  const { onSubmit, isNegotiating, ...modalProps } = props;
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const ModalLayout = isMobile ? MobileModal : Modal;

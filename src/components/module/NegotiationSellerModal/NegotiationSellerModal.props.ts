@@ -1,12 +1,8 @@
 import { ModalProps } from 'components/layout/Modal/Modal.props';
-import {
-  GetActiveOffersRequestResponseItem,
-  Negotiations,
-} from 'types/store/GetActiveOffersState';
+import { GetNegotiationByIdRequestResponseItem } from 'types/store/GetNegotiationByIdState';
 
 export interface NegotiationSellerModalProps extends ModalProps {
-  marketOffer: GetActiveOffersRequestResponseItem;
-  modalLastNegotiationsArray: Negotiations[];
+  negotiation: GetNegotiationByIdRequestResponseItem | undefined;
   isNegotiating?: boolean;
   onSubmit: (counterOffer: number) => void;
 }

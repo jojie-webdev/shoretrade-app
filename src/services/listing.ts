@@ -24,8 +24,10 @@ import { UpdateListingRequestData } from 'types/store/UpdateListingState';
 import { UploadBulkMeta } from 'types/store/UploadBulkState';
 
 const BASE_URL = `${API.URL}/${API.VERSION}`;
+const BASE_URL_V2 = `${API.URL}/${API.VERSION_NEXT}`;
 const ENDPOINT = 'listing';
 const LISTING_URL = `${BASE_URL}/listing`;
+const LISTING_URL_V2 = `${BASE_URL_V2}/listing`;
 
 export const getAllListings = (token: string) => {
   return axios({
@@ -349,7 +351,7 @@ export const createNegotiation = (
 
   return axios({
     method: 'post',
-    url: `${LISTING_URL}/${data.listingId}/negotiations`,
+    url: `${LISTING_URL_V2}/${data.listingId}/negotiations`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

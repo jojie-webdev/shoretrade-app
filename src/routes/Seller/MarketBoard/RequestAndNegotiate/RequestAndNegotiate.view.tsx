@@ -15,6 +15,7 @@ import DeclineSellerModal from 'components/module/DeclineSellerModal';
 import MobileHeader from 'components/module/MobileHeader';
 import NegotiateSellerModal from 'components/module/NegotiateSellerModal';
 // import PaymentTimeLeft from 'components/module/PaymentTimeLeft';
+import NegotiationSellerModal from 'components/module/NegotiationSellerModal';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { SELLER_MARKET_BOARD_ROUTES, SELLER_ROUTES } from 'consts/routes';
 import moment from 'moment';
@@ -58,7 +59,6 @@ import {
 } from './RequestAndNegotiate.style';
 import ReviewOffer from './ReviewOffer';
 import { ReviewOfferProps } from './ReviewOffer/ReviewOffer.props';
-import NegotiationSellerModal from 'components/module/NegotiationSellerModal';
 
 const Step1 = ({
   isReview,
@@ -399,7 +399,7 @@ const Step1 = ({
               }
               takeFullWidth
               style={{ marginLeft: 8 }}
-              text="accept123"
+              text="accept"
               variant="primary"
             />
           </MobileFooter>
@@ -528,7 +528,7 @@ const Step1 = ({
           }}
         />
 
-        <NegotiationSellerModal
+        {/* <NegotiationSellerModal
           marketOffer={activeOffer}
           modalLastNegotiationsArray={modalLastNegotiationsArray}
           isOpen={false}
@@ -538,17 +538,16 @@ const Step1 = ({
             props.onNegotiateOffer(activeOffer.id, counterOffer);
             setIsOpen(false);
           }}
-        />
+        /> */}
 
-
-        <DeclineSellerModal
+        {/* <DeclineSellerModal
           // show={showDeclineModal}
           // onCancelBtnClick={handleCancelBtnClick}
           // onConfirmBtnClick={handleConfirmBtnClick}
           show={false}
           onCancelBtnClick={() => console.log('')}
           onConfirmBtnClick={() => console.log('')}
-        />
+        /> */}
       </>
     );
   };

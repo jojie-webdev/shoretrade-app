@@ -46,10 +46,10 @@ const AcceptSellerModal = (props: AcceptSellerModalProps): JSX.Element => {
 
       <div style={{ marginTop: 25 }} />
       <DetailsContainer>
-        <Typography color="shade7">Quantity</Typography>
-        <Typography color="shade7">{props.quantity}</Typography>
+        <Typography style={{ color: '#565A6A' }}>Quantity</Typography>
+        <Typography style={{ color: '#565A6A' }}>{props.quantity}</Typography>
       </DetailsContainer>
-      <div style={{ padding: '10px 0px 10px 10px' }}>
+      {/* <div style={{ padding: '10px 0px 10px 10px' }}>
         <BoxContainer>
           <div style={{ display: 'flex' }}>
             <div style={{ marginTop: 1 }}>
@@ -83,16 +83,20 @@ const AcceptSellerModal = (props: AcceptSellerModalProps): JSX.Element => {
           </div>
           <Typography color="noshade">14 kg</Typography>
         </BoxContainer>
-      </div>
+      </div> 
 
-      <div style={{ marginTop: 15 }} />
+      <div style={{ marginTop: 15 }} />*/}
 
       <DetailsContainer>
-        <Typography color="shade7">Buyer&apos;s Negotiated Price</Typography>
-        <Typography color="shade7">{props.buyersNegoPrice}</Typography>
+        <Typography style={{ color: '#565A6A' }}>
+          Buyer&apos;s Negotiated Price
+        </Typography>
+        <Typography style={{ color: '#565A6A' }}>
+          {props.buyersNegoPrice}
+        </Typography>
       </DetailsContainer>
       <DetailsContainer>
-        <Typography color="shade7">
+        <Typography style={{ color: '#565A6A' }}>
           Change in value{' '}
           <span className="indicator" style={{ color: theme.grey.noshade }}>
             {props.percentageChangeInPrice}
@@ -103,7 +107,7 @@ const AcceptSellerModal = (props: AcceptSellerModalProps): JSX.Element => {
         </Typography>
       </DetailsContainer>
 
-      <div style={{ marginTop: 20 }} />
+      <div style={{ marginTop: 48 }} />
       <Line />
       <TotalValueContainer>
         <Typography color="noshade">Total Value</Typography>

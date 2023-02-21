@@ -41,10 +41,9 @@ const NegotiationInteractions = (
 
   const buildSizeValue = () => {
     const size = sizeToString(
-      'Grams', // || 'data.metric'
+      data.metric || data.measurement_unit || 'Grams',
       data.size_from || '',
-      data.size_to || '',
-      []
+      data.size_to || ''
     );
 
     return size;

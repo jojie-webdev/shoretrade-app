@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 import { ModalProps } from 'components/layout/Modal/Modal.props';
 import { Negotiations } from 'types/store/GetActiveOffersState';
+import { GetNegotiationByIdRequestResponseItem } from 'types/store/GetNegotiationByIdState';
 
 export interface NegotiateBuyerModalProps extends ModalProps {
   originalOffer: number;

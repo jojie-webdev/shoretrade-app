@@ -80,7 +80,7 @@ export interface ProductDetailsGeneratedProps {
   handleShowConfirmNegoModal: () => void;
   showConfirmNegoModal: boolean;
   handleConfirmNegoClick: () => void;
-  isSendingNegotiation: boolean | null;
+  isSendingNegotiation: boolean;
   handleNegotiationPriceSetting: (price: number) => void;
   negotiationPrice: number;
   handleDesiredQuantityChange: (weight: string) => void;

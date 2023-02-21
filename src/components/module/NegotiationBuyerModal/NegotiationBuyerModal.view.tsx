@@ -7,14 +7,6 @@ import Typography from 'components/base/Typography/Typography.view';
 import MobileFooter from 'components/layout/MobileFooter';
 import MobileModal from 'components/layout/MobileModal';
 import Modal from 'components/layout/Modal';
-import { NegotiateBuyerModalProps } from 'components/module/NegotiateBuyerModal/NegotiateBuyerModal.props';
-import {
-  StyledTextField,
-  Inputs,
-  ButtonContainer,
-  ComputationContainer,
-  // CheckBoxContainer,
-} from 'components/module/NegotiateBuyerModal/NegotiateBuyerModal.style';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import pathOr from 'ramda/es/pathOr';
 import { Hidden } from 'react-grid-system';
@@ -24,66 +16,59 @@ import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
-const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
+import { NegotiationBuyerModalProps } from './NegotiationBuyerModal.props';
+import {
+  StyledTextField,
+  Inputs,
+  ButtonContainer,
+  ComputationContainer,
+  // CheckBoxContainer,
+} from './NegotiationBuyerModal.style';
+
+const NegotiationBuyerModal = (
+  props: NegotiationBuyerModalProps
+): JSX.Element => {
   const {
-    originalOffer,
-    newOffer,
-    counterOffer,
-    weight,
-    sortedNegotiations,
-    modalLastNegotiationsArray,
-    closeOnAccept,
-    setCloseOnAccept,
-    isNegotiating,
-    onSubmit,
-    // negotiation,
+    negotiation,
+    onSubmitClick,
+    isCreateBuyerCounterNegotiationPending,
     ...modalProps
   } = props;
-  const { unit: measurementUnit, value: weightValue } = weight;
+
+  const [buyerNegotiatedPrice, setBuyerNegotiatedPrice] = useState<
+    number | null
+  >(null);
+
   const theme = useTheme();
-  const textColor = 'shade9';
+
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const ModalLayout = isSmallScreen ? MobileModal : Modal;
 
-  const [negotiationPrice, setNegotiationPrice] = useState<number | undefined>(
-    undefined
-  );
-
-  // const handleCheck = () => {
-  //   if (setCloseOnAccept) {
-  //     setCloseOnAccept(!closeOnAccept);
-  //   }
-  // };
-
-  const initialPrice = newOffer ? parseFloat(newOffer) : originalOffer;
-  const updatedPrice = negotiationPrice || initialPrice;
-
-  // standard change in price formula
-  const discountValue = updatedPrice - initialPrice;
-  const discountPercentage = ((discountValue / initialPrice) * 100).toFixed(2);
-
-  // const discountValue =
-  //   actualPrice - (negotiationPrice || parseFloat(counterOffer));
-  // const discountPercentage = (discountValue
-  //   ? (discountValue / actualPrice) * 100
-  //   : 0
-  // ).toFixed(2);
-
-  const deliveryTotal =
-    (negotiationPrice ? negotiationPrice : parseFloat(newOffer)) * weightValue;
-
-  // const lastOffer =
-  //   sortedNegotiations.filter((i) => i.type === 'COUNTER_OFFER').length + 1;
-
-  const unit = formatMeasurementUnit(measurementUnit);
-  const latestSellerNego =
-    modalLastNegotiationsArray[modalLastNegotiationsArray.length - 1];
-
-  // const negotiationOffer = pathOr(
-  //   {},
-  //   ['negotiation_offer'],
-  //   negotiation
-  // ) as GetNegotiationByIdRequestResponseItem['negotiation_offer'];
+  const priceDiff =
+    (buyerNegotiatedPrice || 0) -
+    Number(
+      negotiation?.negotiation_offer?.counter_offer ||
+        negotiation?.counter_offer ||
+        '0'
+    );
+  const priceDiff2 =
+    priceDiff /
+    Math.abs(
+      Number(
+        negotiation?.negotiation_offer?.counter_offer ||
+          negotiation?.counter_offer ||
+          '0'
+      )
+    );
+  const priceDiffPercentage =
+    buyerNegotiatedPrice === null
+      ? 0
+      : priceDiff2 < 0
+      ? -(Math.abs(priceDiff2) * 100)
+      : priceDiff2 * 100;
+  // const priceDiff = 0;
+  // const priceDiff2 = 0;
+  // const priceDiffPercentage = 0;
 
   return (
     <ModalLayout
@@ -107,7 +92,7 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
             Negotiate
           </Typography>
         ) : (
-          <Typography weight="bold" variant="title4" color={textColor} altFont>
+          <Typography weight="bold" variant="title4" color="noshade" altFont>
             Negotiate
           </Typography>
         )}
@@ -117,7 +102,7 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
             inputType="decimal"
             step=".01"
             label={'Counter Offer'}
-            value={negotiationPrice}
+            value={buyerNegotiatedPrice?.toString()}
             onChangeText={(v) => {
               let price = v;
               if (price.indexOf('.') >= 0) {
@@ -125,7 +110,7 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
                   price.substr(0, price.indexOf('.')) +
                   price.substr(price.indexOf('.'), 3);
               }
-              setNegotiationPrice(parseFloat(price));
+              setBuyerNegotiatedPrice(parseFloat(price));
             }}
             min={1}
             LeftComponent={
@@ -133,7 +118,9 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
                 {'$'}
               </Typography>
             }
-            placeholder={`per ${unit}`}
+            placeholder={`per ${negotiation.measurement_unit
+              .toLowerCase()
+              .toLowerCase()}`}
             style={{ marginTop: 10 }}
           />
         </Inputs>
@@ -158,10 +145,10 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
               Seller&apos;s Negotiated Price
             </Typography>
             <Typography variant="body" color="shade7">
-              {sortedNegotiations.length === 0
-                ? toPrice(originalOffer)
-                : toPrice(latestSellerNego.price)}
-              /{unit}
+              {negotiation?.negotiation_offer?.counter_offer ||
+                negotiation?.counter_offer ||
+                0}
+              /{negotiation?.measurement_unit.toLowerCase()}
             </Typography>
           </div>
 
@@ -179,16 +166,23 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
           <div className="computation-item-container">
             <Typography variant="body" color="shade6">
               Change in Price{' '}
-              <span className="indicator">{`${
-                discountValue > 0 ? '+' : ''
-              }${discountPercentage}%`}</span>
+              {buyerNegotiatedPrice === null
+                ? ''
+                : negotiation?.negotiation_offer.counter_offer >
+                  (buyerNegotiatedPrice || 0)
+                ? '+'
+                : '-'}
+              {Math.abs(priceDiffPercentage)}%
             </Typography>
-            {discountValue !== 0 ? (
+            {buyerNegotiatedPrice === null ? (
+              ''
+            ) : priceDiff !== 0 ? (
               <Typography
-                color={discountValue > 0 ? 'error' : 'success'}
+                color={priceDiff > 0 ? 'error' : 'success'}
                 variant="body"
               >
-                {toPrice(Math.abs(discountValue))}/{unit}
+                {toPrice(Math.abs(priceDiff))}/
+                {negotiation?.measurement_unit.toLowerCase()}
               </Typography>
             ) : (
               <Typography variant="body" color="shade7">
@@ -202,7 +196,11 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
               Quantity
             </Typography>
             <Typography variant="body" color="shade7">
-              {weightValue} {unit}
+              {negotiation?.desired_quantity *
+                ((buyerNegotiatedPrice ?? 0) ||
+                  negotiation?.negotiation_offer?.counter_offer ||
+                  Number(negotiation?.counter_offer || '0'))}{' '}
+              {negotiation?.measurement_unit.toLowerCase()}
             </Typography>
           </div>
 
@@ -210,8 +208,20 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
             <Typography variant="body" weight="bold" color="shade6">
               Total Product Value
             </Typography>
-            <Typography variant="body" weight="bold" color={textColor}>
-              {toPrice(deliveryTotal)}
+            <Typography
+              variant="body"
+              weight="700"
+              color="shade9"
+              style={{ fontFamily: 'Basis Grotesque Pro' }}
+            >
+              {buyerNegotiatedPrice === null
+                ? ''
+                : toPrice(
+                    (buyerNegotiatedPrice ||
+                      negotiation?.negotiation_offer.counter_offer ||
+                      Number(negotiation?.counter_offer || '0')) *
+                      negotiation?.desired_quantity
+                  )}
             </Typography>
           </div>
         </ComputationContainer>
@@ -223,12 +233,12 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
               iconPosition="before"
               text="NEGOTIATE"
               onClick={() => {
-                if (negotiationPrice && negotiationPrice >= 1) {
-                  onSubmit(negotiationPrice);
+                if (buyerNegotiatedPrice) {
+                  onSubmitClick(buyerNegotiatedPrice);
                 }
               }}
               takeFullWidth={isSmallScreen}
-              loading={isNegotiating}
+              loading={isCreateBuyerCounterNegotiationPending}
               style={{ borderRadius: 12, maxWidth: 128 }}
             />
           </ButtonContainer>
@@ -238,12 +248,12 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
             variant="primary"
             text="Negotiate"
             onClick={() => {
-              if (negotiationPrice && negotiationPrice >= 1) {
-                onSubmit(negotiationPrice);
+              if (buyerNegotiatedPrice) {
+                onSubmitClick(buyerNegotiatedPrice);
               }
             }}
             takeFullWidth={isSmallScreen}
-            loading={isNegotiating}
+            loading={isCreateBuyerCounterNegotiationPending}
           />
         </MobileFooter>
       </>
@@ -251,4 +261,4 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
   );
 };
 
-export default React.memo(NegotiateBuyerModal);
+export default React.memo(NegotiationBuyerModal);

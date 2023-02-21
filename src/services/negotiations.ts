@@ -1,19 +1,17 @@
 import axios from 'axios';
 import { API } from 'consts';
 import { omit } from 'ramda';
-import { CreateNegotiation_2Meta } from 'types/store/CreateNegotiation_2State';
+import { CreateBuyerCounterNegotiationMeta } from 'types/store/CreateBuyerCounterNegotiationState';
+import { CreateSellerCounterOfferMeta } from 'types/store/CreateSellerCounterOfferState';
 import { GetNegotiationByIdMeta } from 'types/store/GetNegotiationByIdState';
 
-const BASE_URL = `${API.URL}/${API.VERSION}`;
-const v2_BASE_URL = `${API.URL}/${API.VERSION_NEXT}`;
-const MARKET_REQUEST_URL = `${BASE_URL}/negotiations`;
-const V2_MARKET_REQUEST_URL = `${v2_BASE_URL}/negotiations`;
-const LISTING_URL = `${BASE_URL}/listing`;
+const BASE_URL_V2 = `${API.URL}/${API.VERSION_NEXT}`;
+const Negotiation_URL_V2 = `${BASE_URL_V2}/negotiations`;
 
 export const getAllNegotiations = (token: string) => {
   return axios({
     method: 'get',
-    url: V2_MARKET_REQUEST_URL,
+    url: Negotiation_URL_V2,
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -24,7 +22,7 @@ export const getNegotiationById = (
   negotiation: GetNegotiationByIdMeta,
   token: string
 ) => {
-  const url = `${V2_MARKET_REQUEST_URL}/${negotiation.negotiationRequestId}`;
+  const url = `${Negotiation_URL_V2}/${negotiation.negotiationRequestId}`;
 
   return axios({
     method: 'get',
@@ -32,5 +30,39 @@ export const getNegotiationById = (
     headers: {
       Authorization: `Bearer ${token}`,
     },
+  });
+};
+
+export const createSellerCounterOffer = (
+  negotiation: CreateSellerCounterOfferMeta,
+  token: string
+) => {
+  const url = `${Negotiation_URL_V2}/${negotiation.negotiationRequestId}/counterOffer`;
+
+  const modifiedNegotiation = omit(['negotiationRequestId'], negotiation);
+
+  return axios({
+    method: 'post',
+    url,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: modifiedNegotiation,
+  });
+};
+
+export const createBuyerCounterNegotiation = (
+  negotiation: CreateBuyerCounterNegotiationMeta,
+  token: string
+) => {
+  const url = `${Negotiation_URL_V2}/`;
+
+  return axios({
+    method: 'post',
+    url,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: negotiation,
   });
 };
