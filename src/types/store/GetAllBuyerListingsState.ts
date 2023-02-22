@@ -46,6 +46,7 @@ export interface GetAllBuyerListingRequestOption {
   all?: boolean;
   exceptId?: string[];
   address?: string;
+  negotiations?: boolean;
 }
 
 export type CounterResponseItem = {

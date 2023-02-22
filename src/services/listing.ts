@@ -66,6 +66,9 @@ export const getAllBuyerListings = (
     url += `&salesChannel=${requestOptions.salesChannel}`;
   if (requestOptions?.address) url += `&address=${requestOptions.address}`;
 
+  const negoQuery = requestOptions?.negotiations ? `&negotiations=true` : '';
+  url += negoQuery;
+
   return axios({
     method: 'get',
     url,

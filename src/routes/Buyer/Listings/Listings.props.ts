@@ -77,6 +77,10 @@ export interface ListingViewProps {
   onChangeSortField: (field: string) => void;
   onChangeSortOrder: (field: string) => void;
   goToProductDetails: (id: string) => void;
+  handleNegotiableToggle: () => void;
+  showNegotiable: {
+    showNegotiable: boolean;
+  };
 }
 
 export interface CounterProps {

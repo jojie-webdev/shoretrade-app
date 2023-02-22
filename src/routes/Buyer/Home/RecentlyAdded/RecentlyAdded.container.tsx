@@ -26,7 +26,6 @@ const RecentlyAdded = (): JSX.Element => {
   );
 
   const showNegotiable = useSelector((store: Store) => store.showNegotiable);
-  console.log('RecentlyAddedView > showNegotiable > ', showNegotiable);
 
   const currentReverseMarketDetails = getActivePlan(
     companyPlan,

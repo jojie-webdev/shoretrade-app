@@ -5,6 +5,7 @@ import Checkbox from 'components/base/Checkbox';
 import Select from 'components/base/Select';
 import { Cog, ChevronRight, Exit, Crab } from 'components/base/SVG';
 import Tabs from 'components/base/Tabs';
+import Toggle from 'components/base/Toggle';
 import Typography from 'components/base/Typography';
 import Modal from 'components/layout/Modal';
 import ListingCard from 'components/module/ListingCard';
@@ -46,6 +47,8 @@ import {
   MobileResults,
   TabItem,
   Tag,
+  FilterContainer,
+  NegotiableTextWrapper,
 } from './Listings.styles';
 import { listingsToTableListings } from './Listings.transform';
 
@@ -116,6 +119,8 @@ export default function ListingView(props: ListingViewProps) {
     onChangeSortField,
     onChangeSortOrder,
     goToProductDetails,
+    handleNegotiableToggle,
+    showNegotiable,
   } = props;
 
   const [settings, setSettings] = useState(tableSettings);
@@ -206,10 +211,18 @@ export default function ListingView(props: ListingViewProps) {
       {TabComponent}
       <FlexContainer
         style={{
-          width: isSmallDesktop || isTablet ? '100%' : '32%',
+          width: isSmallDesktop || isTablet ? '100%' : '',
           marginTop: isSmallDesktop || isTablet ? '16px' : '0',
         }}
       >
+        <FilterContainer>
+          <NegotiableTextWrapper>Negotiable</NegotiableTextWrapper>
+          <Toggle
+            onClick={handleNegotiableToggle}
+            checked={showNegotiable.showNegotiable}
+          />
+        </FilterContainer>
+
         {(isSmallDesktop || isTablet) && (
           <SearchContainer>
             <Search
@@ -219,19 +232,8 @@ export default function ListingView(props: ListingViewProps) {
             />
           </SearchContainer>
         )}
-        <ActionContainer>
-          <Button
-            disabled={
-              Boolean(isPending) || isDownloadingCsv || isPendingAccount
-            }
-            onClick={() => setShowModal(true)}
-            text="Download"
-            takeFullWidth={isMobile}
-            borderRadius="8px"
-            padding="10px 12px"
-          />
-        </ActionContainer>
-        {!(isSmallDesktop || isTablet) && (
+
+        {(isSmallDesktop || isTablet) && (
           <SearchContainer>
             <Search
               defaultValue={search}
@@ -240,6 +242,30 @@ export default function ListingView(props: ListingViewProps) {
             />
           </SearchContainer>
         )}
+
+        <div style={{ display: 'flex' }}>
+          <ActionContainer>
+            <Button
+              disabled={
+                Boolean(isPending) || isDownloadingCsv || isPendingAccount
+              }
+              onClick={() => setShowModal(true)}
+              text="Download"
+              takeFullWidth={isMobile}
+              borderRadius="8px"
+              padding="10px 12px"
+            />
+          </ActionContainer>
+          {!(isSmallDesktop || isTablet) && (
+            <SearchContainer>
+              <Search
+                defaultValue={search}
+                onChange={debouncedSearch}
+                activeTab={activeTab}
+              />
+            </SearchContainer>
+          )}
+        </div>
       </FlexContainer>
     </Header>
   );
@@ -332,6 +358,13 @@ export default function ListingView(props: ListingViewProps) {
             </div>
           </MobileDownloadButton>
         </MobileSearchContainer>
+        <FilterContainer>
+          <NegotiableTextWrapper>Negotiable</NegotiableTextWrapper>
+          <Toggle
+            onClick={handleNegotiableToggle}
+            checked={showNegotiable.showNegotiable}
+          />
+        </FilterContainer>
         <Select
           grey={true}
           borderRadius="12px"

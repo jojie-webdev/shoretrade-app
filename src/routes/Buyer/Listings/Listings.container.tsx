@@ -1,3 +1,5 @@
+import { truncate } from 'fs';
+
 import React, {
   useState,
   useEffect,
@@ -13,7 +15,11 @@ import debounce from 'lodash.debounce';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
-import { getAllBuyerListingsActions } from 'store/actions';
+import {
+  getAllBuyerListingsActions,
+  getBuyerHomepageActions,
+  showNegotiableActions,
+} from 'store/actions';
 import { Store } from 'types/store/Store';
 import { createUpdateReducer } from 'utils/Hooks';
 import { useComponentShouldUpdate } from 'utils/Hooks/useComponentShouldUpdate';
@@ -46,9 +52,8 @@ export default function ListingContainer() {
   const [showTableSettings, setShowTableSettings] = useState(false);
   const [prevScrollTop, setPrevScrollTop] = useState(0);
   const [prevListingData, setPrevListingData] = useState<any[]>([]);
-  const [isReadypaginateViaScroll, setIsReadypaginateViaScroll] = useState(
-    true
-  );
+  const [isReadypaginateViaScroll, setIsReadypaginateViaScroll] =
+    useState(true);
   const [activeTab, setActiveTab] = useState('allListing');
   const [tableSettings, setTableSettings] = useState<string[]>(
     DEFAULT_TABLE_SETTINGS[activeTab as keyof CounterProps]
@@ -137,6 +142,8 @@ export default function ListingContainer() {
   const totalPage = Math.ceil(tabCounts[activeTab as keyof CounterProps] / 10);
   const page = tabPageFilters[activeTab as keyof TabPageFilterProps];
   const search = searchFilters[activeTab as keyof SearchFilterProps];
+
+  const showNegotiable = useSelector((store: Store) => store.showNegotiable);
 
   // MARK:- Callbacks
 
@@ -233,6 +240,21 @@ export default function ListingContainer() {
     }
   }, [listingRequestData]);
 
+  useEffect(() => {
+    dispatch(
+      getAllBuyerListingsActions.request({
+        sortOrder: tabSortOrder[activeTab as keyof TabSortProps],
+        page,
+        limit: isMobile ? 100 : pageLimit,
+        salesChannel:
+          SALES_CHANNELS_BUYER.find((channel) => channel.value === activeTab)
+            ?.constant || SALES_CHANNELS_BUYER[0].constant,
+        address: currentDefaultAddressId,
+        negotiations: showNegotiable.showNegotiable,
+      })
+    );
+  }, [showNegotiable]);
+
   // MARK:- Methods
 
   const handleDownloadCSV = () => {
@@ -286,6 +308,14 @@ export default function ListingContainer() {
     ) {
       history.push(BUYER_ROUTES.PRODUCT_DETAIL(id));
     }
+  };
+
+  const handleNegotiableToggle = () => {
+    dispatch(
+      showNegotiableActions.update({
+        showNegotiable: !showNegotiable.showNegotiable,
+      })
+    );
   };
 
   const listingViewProps: ListingViewProps = {
@@ -343,6 +373,8 @@ export default function ListingContainer() {
       setIsPending(true);
     },
     goToProductDetails,
+    handleNegotiableToggle,
+    showNegotiable,
   };
 
   return <ListingView {...listingViewProps} />;
