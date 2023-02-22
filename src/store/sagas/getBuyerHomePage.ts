@@ -31,7 +31,10 @@ function* getBuyerHomepageRequest(_action: never) {
     try {
       const { data } = yield call(
         getBuyerHomepage,
-        { addressId: state.currentAddress.id },
+        {
+          addressId: state.currentAddress.id,
+          negotiations: state.showNegotiable.showNegotiable,
+        },
         state.auth.token
       );
 

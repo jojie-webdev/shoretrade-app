@@ -1,6 +1,8 @@
 import React from 'react';
 
 import { Octopus } from 'components/base/SVG';
+import Toggle from 'components/base/Toggle';
+import Typography from 'components/base/Typography';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import { PreviewDetailAlt } from 'components/module/CategoryCards/Preview/Preview.view';
 import EmptyState from 'components/module/EmptyState';
@@ -16,7 +18,13 @@ import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
 
 import { RecentlyAddedGeneratedProps } from './RecentlyAdded.props';
-import { PreviewContainer, StyledInteraction } from './RecentlyAdded.style';
+import {
+  FilterAndSearchContainer,
+  FilterContainer,
+  NegotiableTextWrapper,
+  PreviewContainer,
+  StyledInteraction,
+} from './RecentlyAdded.style';
 
 const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
   const {
@@ -27,6 +35,8 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
     searchValue,
     isLoadingResults,
     canNegotiate,
+    handleNegotiableToggle,
+    showNegotiable,
   } = props;
 
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -35,17 +45,28 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
     <PreviewContainer>
       <div className="header">
         {isSmallScreen && <MobileHeader>Recently Added</MobileHeader>}
+        <FilterAndSearchContainer>
+          <FilterContainer>
+            <NegotiableTextWrapper>Negotiable</NegotiableTextWrapper>
+            <Toggle
+              onClick={() =>
+                handleNegotiableToggle(!showNegotiable.showNegotiable)
+              }
+              checked={showNegotiable.showNegotiable}
+            />
+          </FilterContainer>
 
-        <div className="right-header">
-          <Search
-            className="search"
-            placeholder={`Search for a product or seller`}
-            value={searchValue}
-            onChange={onChangeSearchValue}
-            resetValue={onResetSearchValue}
-            rounded
-          />
-        </div>
+          <div className="right-header">
+            <Search
+              className="search"
+              placeholder={`Search for a product or seller`}
+              value={searchValue}
+              onChange={onChangeSearchValue}
+              resetValue={onResetSearchValue}
+              rounded
+            />
+          </div>
+        </FilterAndSearchContainer>
       </div>
 
       {isLoadingResults && <Loading />}

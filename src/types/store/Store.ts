@@ -342,6 +342,7 @@ import {
   SendOrderRatingMeta,
   SendOrderRatingPayload,
 } from './SendOrderRatingState';
+import { ShowNegotiableState } from './ShowNegotiableState';
 import { SocketState } from './SocketState';
 import { SubscriptionState } from './SubscriptionState';
 import { UpdateAddressMeta, UpdateAddressPayload } from './UpdateAddressState';
@@ -383,6 +384,7 @@ import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
+  showNegotiable: ShowNegotiableState;
   declineNegotiation: AsyncState<
     DeclineNegotiationMeta,
     DeclineNegotiationPayload

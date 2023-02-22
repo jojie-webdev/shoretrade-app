@@ -1,4 +1,5 @@
 import InteractionsView from 'components/base/Interactions/Interactions.view';
+import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import styled from 'utils/styled';
 
@@ -61,4 +62,22 @@ export const StyledInteraction = styled(InteractionsView)`
   .right-content {
     padding: 24px 18px 0px 0px;
   }
+`;
+
+export const FilterAndSearchContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+export const FilterContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const NegotiableTextWrapper = styled(Typography)`
+  color: #32357a;
+  margin-right: 5px;
+  font-family: 'Basis Grotesque Pro';
 `;

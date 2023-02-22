@@ -125,6 +125,7 @@ import sellerDashboardDate from './sellerDashboardDate';
 import sendDispute from './sendDispute';
 import sendMessage from './sendMessage';
 import sendOrderRating from './sendOrderRating';
+import showNegotiable from './showNegotiable';
 import socket from './socket';
 import subscription from './subscription';
 import updateAddress from './updateAddress';
@@ -148,6 +149,7 @@ const createAppReducer = (routeHistory: History) =>
     Object.fromEntries(
       Object.entries({
         /* PLOP_INJECT_INSTANCE */
+        showNegotiable,
         declineNegotiation,
         acceptNegotiation,
         createBuyerCounterNegotiation,

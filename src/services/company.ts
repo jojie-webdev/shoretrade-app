@@ -201,12 +201,14 @@ export const getSellerMarketPrice = (
 };
 
 export const getBuyerHomepage = (
-  { addressId }: GetBuyerHomepageRequestData,
+  { addressId, negotiations }: GetBuyerHomepageRequestData,
   token: string
 ) => {
+  const negoQuery = negotiations ? `&negotiations=true` : '';
+
   return axios({
     method: 'get',
-    url: `${COMPANY_URL}/buyer-homepage?address=${addressId}`,
+    url: `${COMPANY_URL}/buyer-homepage?address=${addressId}${negoQuery}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

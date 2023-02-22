@@ -1,7 +1,6 @@
 import { fork, all } from 'redux-saga/effects';
 
 /* PLOP_INJECT_IMPORT */
-import declineNegotiation from './declineNegotiation';
 import acceptNegotiation from './acceptNegotiation';
 import addAddress from './addAddress';
 import addCardAndPay from './addCardAndPay';
@@ -23,6 +22,7 @@ import createNegotiation from './createNegotiation';
 import createNegotiation_2 from './createNegotiation_2';
 import createSellerCounterOffer from './createSellerCounterOffer';
 import currentAddress from './currentAddress';
+import declineNegotiation from './declineNegotiation';
 import deleteCard from './deleteCard';
 import deleteLinkedAccount from './deleteLinkedAccount';
 import deleteMarketRequest from './deleteMarketRequest';

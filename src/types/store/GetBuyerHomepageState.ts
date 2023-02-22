@@ -5,6 +5,7 @@ export type GetBuyerHomepageMeta = {};
 
 export type GetBuyerHomepageRequestData = {
   addressId: string;
+  negotiations: boolean;
 };
 
 export type GetBuyerHomepageResponseListingItem = {

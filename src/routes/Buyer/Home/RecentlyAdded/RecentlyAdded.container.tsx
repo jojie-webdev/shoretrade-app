@@ -1,7 +1,8 @@
-import React, { ChangeEvent, useMemo, useState } from 'react';
+import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getActivePlan } from 'routes/Buyer/Account/SubscriptionPlan/SubscriptionPlan.transform';
+import { getBuyerHomepageActions, showNegotiableActions } from 'store/actions';
 import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
 import { Store } from 'types/store/Store';
 
@@ -9,6 +10,8 @@ import RecentlyAddedView from './RecentlyAdded.view';
 
 const RecentlyAdded = (): JSX.Element => {
   const [searchValue, setSearchValue] = useState('');
+
+  const dispatch = useDispatch();
 
   const addresses = useSelector(
     (state: Store) => state.getAddresses.data?.data.addresses
@@ -21,6 +24,9 @@ const RecentlyAdded = (): JSX.Element => {
   const companyPlan = useSelector(
     (store: Store) => store.getCompanyPlan.data?.data
   );
+
+  const showNegotiable = useSelector((store: Store) => store.showNegotiable);
+  console.log('RecentlyAddedView > showNegotiable > ', showNegotiable);
 
   const currentReverseMarketDetails = getActivePlan(
     companyPlan,
@@ -78,6 +84,14 @@ const RecentlyAdded = (): JSX.Element => {
     setSearchValue('');
   };
 
+  const handleNegotiableToggle = (show: boolean) => {
+    dispatch(showNegotiableActions.update({ showNegotiable: show }));
+  };
+
+  useEffect(() => {
+    dispatch(getBuyerHomepageActions.request());
+  }, [showNegotiable]);
+
   const generatedProps = {
     results,
     isPendingAccount,
@@ -86,6 +100,8 @@ const RecentlyAdded = (): JSX.Element => {
     onResetSearchValue,
     searchValue,
     canNegotiate,
+    handleNegotiableToggle,
+    showNegotiable,
   };
 
   return <RecentlyAddedView {...generatedProps} />;
