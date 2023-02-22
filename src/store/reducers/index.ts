@@ -5,6 +5,7 @@ import { logoutActions } from 'store/actions';
 import getAccountCompletion from 'store/reducers/getAccountCompletion';
 
 /* PLOP_INJECT_IMPORT */
+import acceptNegotiation from './acceptNegotiation';
 import addAddress from './addAddress';
 import addCardAndPay from './addCardAndPay';
 import addCardToken from './addCardToken';
@@ -27,6 +28,7 @@ import createNegotiation from './createNegotiation';
 import createNegotiation_2 from './createNegotiation_2';
 import createSellerCounterOffer from './createSellerCounterOffer';
 import currentAddress from './currentAddress';
+import declineNegotiation from './declineNegotiation';
 import deleteCard from './deleteCard';
 import deleteLinkedAccount from './deleteLinkedAccount';
 import deleteMarketRequest from './deleteMarketRequest';
@@ -146,6 +148,8 @@ const createAppReducer = (routeHistory: History) =>
     Object.fromEntries(
       Object.entries({
         /* PLOP_INJECT_INSTANCE */
+        declineNegotiation,
+        acceptNegotiation,
         createBuyerCounterNegotiation,
         createSellerCounterOffer,
         getNegotiationCredit,

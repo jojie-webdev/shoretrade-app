@@ -37,6 +37,13 @@ const NegotiationView = (props: NegotiationProps) => {
     handleNegotiationCloseBtnClick,
     showNegotiationModal,
     handleNegotiationConfirmClick,
+    handleAcceptModalAcceptBtnClick,
+    handleDeclineClick,
+    showDeclineModal,
+    handleDeclineModalCancelBtnClick,
+    handleDeclineModalConfirmBtnClick,
+    isAcceptNegotiationPending,
+    isDeclineNegotiationPending,
   } = props;
 
   const history = useHistory();
@@ -105,11 +112,9 @@ const NegotiationView = (props: NegotiationProps) => {
       <AcceptSellerModal
         show={showAcceptModal}
         onCloseClick={handleAcceptBtnClick}
-        // isAccepting={props.isNegotiating}
-        isAccepting={true}
+        isAccepting={isAcceptNegotiationPending}
         onAcceptBtnClick={() => {
-          // handleAcceptBtnClick();
-          // props.onNegotiateOffer(activeOffer.id, latestBuyerNego.price, true);
+          handleAcceptModalAcceptBtnClick();
         }}
         quantity={`${
           negotiation?.desired_quantity || 0
@@ -164,12 +169,10 @@ const NegotiationView = (props: NegotiationProps) => {
       />
 
       <DeclineSellerModal
-        // show={showDeclineModal}
-        // onCancelBtnClick={handleCancelBtnClick}
-        // onConfirmBtnClick={handleConfirmBtnClick}
-        show={false}
-        onCancelBtnClick={() => console.log('')}
-        onConfirmBtnClick={() => console.log('')}
+        show={showDeclineModal}
+        onCancelBtnClick={handleDeclineModalCancelBtnClick}
+        onConfirmBtnClick={handleDeclineModalConfirmBtnClick}
+        disableConfirmBtn={isDeclineNegotiationPending}
       />
 
       <Breadcrumbs
@@ -378,8 +381,7 @@ const NegotiationView = (props: NegotiationProps) => {
             <CTAContainer>
               <div style={{ display: 'flex' }}>
                 <Button
-                  // onClick={() => handleDeclineClick(true)}
-                  onClick={() => console.log('')}
+                  onClick={handleDeclineClick}
                   variant="outline"
                   text={
                     <Typography color="primary" style={{ marginRight: 5 }}>

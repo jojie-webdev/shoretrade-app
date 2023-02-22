@@ -7,4 +7,11 @@ export interface NegotiationProps {
   handleNegotiationCloseBtnClick: () => void;
   showNegotiationModal: boolean;
   handleNegotiationConfirmClick: (counterOffer: number) => void;
+  handleAcceptModalAcceptBtnClick: () => void;
+  handleDeclineClick: () => void;
+  showDeclineModal: boolean;
+  handleDeclineModalCancelBtnClick: () => void;
+  handleDeclineModalConfirmBtnClick: () => void;
+  isAcceptNegotiationPending: boolean;
+  isDeclineNegotiationPending: boolean;
 }

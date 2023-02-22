@@ -178,7 +178,7 @@ const Content = (props: NegotiationSellerModalProps) => {
                 : (negotiationPrice || 0) > Number(negotiation?.counter_offer)
                 ? '+'
                 : '-'}
-              {Math.abs(priceDiffPercentage)}%
+              {Math.abs(priceDiffPercentage).toFixed(2)}%
             </span>
           </Typography>
           <Typography weight="400" style={{ color: textColor }} variant="body">

@@ -1,4 +1,6 @@
 /* PLOP_INJECT_IMPORT */
+export { default as declineNegotiationActions } from './declineNegotiation';
+export { default as acceptNegotiationActions } from './acceptNegotiation';
 export { default as createBuyerCounterNegotiationActions } from './createBuyerCounterNegotiation';
 export { default as createSellerCounterOfferActions } from './createSellerCounterOffer';
 export { default as getNegotiationCreditActions } from './getNegotiationCredit';

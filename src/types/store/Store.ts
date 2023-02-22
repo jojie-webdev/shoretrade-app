@@ -70,6 +70,10 @@ import {
   UploadBulkState,
 } from 'types/store/UploadBulkState';
 
+import {
+  AcceptNegotiationMeta,
+  AcceptNegotiationPayload,
+} from './AcceptNegotiationState';
 import { AddAddressMeta, AddAddressPayload } from './AddAddressState';
 import { AddCardTokenMeta, AddCardTokenPayload } from './AddCardTokenState';
 import { AddCartItemMeta, AddCartItemPayload } from './AddCartItemState';
@@ -112,6 +116,10 @@ import {
   CreateSellerCounterOfferPayload,
 } from './CreateSellerCounterOfferState';
 import { CurrentAddressState } from './CurrentAddressState';
+import {
+  DeclineNegotiationMeta,
+  DeclineNegotiationPayload,
+} from './DeclineNegotiationState';
 import { DeleteCardMeta, DeleteCardPayload } from './DeleteCardState';
 import {
   DeleteLinkedAccountMeta,
@@ -375,6 +383,14 @@ import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
+  declineNegotiation: AsyncState<
+    DeclineNegotiationMeta,
+    DeclineNegotiationPayload
+  >;
+  acceptNegotiation: AsyncState<
+    AcceptNegotiationMeta,
+    AcceptNegotiationPayload
+  >;
   createBuyerCounterNegotiation: AsyncState<
     CreateBuyerCounterNegotiationMeta,
     CreateBuyerCounterNegotiationPayload

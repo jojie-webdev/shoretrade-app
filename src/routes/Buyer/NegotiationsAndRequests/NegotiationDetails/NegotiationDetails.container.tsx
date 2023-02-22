@@ -10,7 +10,9 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { getActivePlan } from 'routes/Buyer/Account/SubscriptionPlan/SubscriptionPlan.transform';
 import { syncAASBalance } from 'services/aas';
 import {
+  acceptNegotiationActions,
   createBuyerCounterNegotiationActions,
+  declineNegotiationActions,
   deleteMarketRequestActions,
   getActiveOffersActions,
   getAllMarketRequestActions,
@@ -61,14 +63,6 @@ const NegotiationDetails = (): JSX.Element => {
   const [clickDecline, setClickDecline] = useState(false);
   const [showBuyerCounterNegoModal, setShowBuyerCounterNegoModal] =
     useState(false);
-
-  useEffect(() => {
-    dispatch(
-      getNegotiationByIdActions.request({
-        negotiationRequestId: negoRequestId,
-      })
-    );
-  }, [negoRequestId]);
 
   const defaultCompany = GetDefaultCompany();
 
@@ -137,6 +131,12 @@ const NegotiationDetails = (): JSX.Element => {
       (store: Store) => store.createBuyerCounterNegotiation.pending
     ) === true;
 
+  const isAcceptNegotiationPending =
+    useSelector((store: Store) => store.acceptNegotiation.pending) === true;
+
+  const isDeclineNegotiationPending =
+    useSelector((store: Store) => store.declineNegotiation.pending) === true;
+
   const filteredBuyerRequests = buyerRequests.data?.data?.marketRequests.filter(
     (mR) => mR.status !== 'DELETED' && mR.status !== 'CLOSED'
   );
@@ -153,11 +153,18 @@ const NegotiationDetails = (): JSX.Element => {
   ];
 
   const handleDeclineClick = (show: boolean) => {
-    setClickDecline(show);
+    setShowDeclineModal((prevValue) => !prevValue);
   };
 
-  const handleDeclineConfirm = () => {
-    setClickDecline(false);
+  const handleDeclineModalConfirmBtnClick = () => {
+    if (negotiation) {
+      dispatch(
+        declineNegotiationActions.request({
+          negotiationRequestId: negotiation?.id,
+          listingBoxId: negotiation.listing_box_id,
+        })
+      );
+    }
   };
 
   const handlePayNow = () => {
@@ -192,7 +199,14 @@ const NegotiationDetails = (): JSX.Element => {
   };
 
   const handleAcceptConfirm = () => {
-    setClickAccept(false);
+    if (negotiation) {
+      dispatch(
+        acceptNegotiationActions.request({
+          negotiationRequestId: negotiation?.id,
+          listingBoxId: negotiation?.listing_box_id,
+        })
+      );
+    }
   };
 
   const handleNegoBtnClick = (show: boolean) => {
@@ -341,6 +355,38 @@ const NegotiationDetails = (): JSX.Element => {
     }
   }, [isCreateBuyerCounterNegotiationPending]);
 
+  useEffect(() => {
+    if (!isAcceptNegotiationPending) {
+      setClickAccept(false);
+
+      dispatch(
+        getNegotiationByIdActions.request({
+          negotiationRequestId: negoRequestId,
+        })
+      );
+    }
+  }, [isAcceptNegotiationPending]);
+
+  useEffect(() => {
+    dispatch(
+      getNegotiationByIdActions.request({
+        negotiationRequestId: negoRequestId,
+      })
+    );
+  }, [negoRequestId]);
+
+  useEffect(() => {
+    if (!isDeclineNegotiationPending) {
+      setShowDeclineModal(false);
+
+      dispatch(
+        getNegotiationByIdActions.request({
+          negotiationRequestId: negoRequestId,
+        })
+      );
+    }
+  }, [isDeclineNegotiationPending]);
+
   const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
   let counterOffer = '';
@@ -397,6 +443,10 @@ const NegotiationDetails = (): JSX.Element => {
     }
   };
 
+  const handleDeclineModalCloseBtnClick = () => {
+    setShowDeclineModal((prevValue) => !prevValue);
+  };
+
   if (!negotiation) {
     return <Loading />;
   }
@@ -440,11 +490,15 @@ const NegotiationDetails = (): JSX.Element => {
     clickDecline,
     negotiation,
     handleAcceptConfirm,
-    handleDeclineConfirm,
+    handleDeclineModalConfirmBtnClick,
     handleNegoModalNegoBtnClick,
     isCreateBuyerCounterNegotiationPending,
     handleNegoBtnClick2,
     showBuyerCounterNegoModal,
+    isAcceptNegotiationPending,
+    showDeclineModal,
+    handleDeclineModalCloseBtnClick,
+    isDeclineNegotiationPending,
   };
 
   const getPrice = () => {

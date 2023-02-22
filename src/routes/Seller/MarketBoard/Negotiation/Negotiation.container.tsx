@@ -6,6 +6,8 @@ import { useHistory, useLocation } from 'react-router-dom';
 import {
   getNegotiationByIdActions,
   createSellerCounterOfferActions,
+  acceptNegotiationActions,
+  declineNegotiationActions,
 } from 'store/actions';
 import { Store } from 'types/store/Store';
 
@@ -14,6 +16,7 @@ import NegotiationView from './Negotiation.view';
 const Negotiation = (): JSX.Element => {
   const [showAcceptModal, setShowAcceptModal] = useState(false);
   const [showNegotiationModal, setShowNegotiationModal] = useState(false);
+  const [showDeclineModal, setShowDeclineModal] = useState(false);
 
   const history = useHistory();
   const location = useLocation();
@@ -36,6 +39,23 @@ const Negotiation = (): JSX.Element => {
     useSelector((store: Store) => store.createSellerCounterOffer.pending) ===
     true;
 
+  const isAcceptNegotiationPending =
+    useSelector((store: Store) => store.acceptNegotiation.pending) === true;
+
+  const isDeclineNegotiationPending =
+    useSelector((store: Store) => store.declineNegotiation.pending) === true;
+
+  const handleAcceptModalAcceptBtnClick = () => {
+    if (negotiation) {
+      dispatch(
+        acceptNegotiationActions.request({
+          negotiationRequestId: negotiation?.id,
+          listingBoxId: negotiation?.listing_box_id,
+        })
+      );
+    }
+  };
+
   const handleAcceptBtnClick = () => {
     setShowAcceptModal((prevValue) => !prevValue);
   };
@@ -56,6 +76,25 @@ const Negotiation = (): JSX.Element => {
     }
   };
 
+  const handleDeclineClick = () => {
+    setShowDeclineModal((prevValue) => !prevValue);
+  };
+
+  const handleDeclineModalCancelBtnClick = () => {
+    setShowDeclineModal((prevValue) => !prevValue);
+  };
+
+  const handleDeclineModalConfirmBtnClick = () => {
+    if (negotiation) {
+      dispatch(
+        declineNegotiationActions.request({
+          negotiationRequestId: negotiation.id,
+          listingBoxId: negotiation.listing_box_id,
+        })
+      );
+    }
+  };
+
   useEffect(() => {
     if (negotiationRequestId) {
       dispatch(getNegotiationByIdActions.request({ negotiationRequestId }));
@@ -69,6 +108,20 @@ const Negotiation = (): JSX.Element => {
     }
   }, [isCreateSellerCounterOfferPending]);
 
+  useEffect(() => {
+    if (!isAcceptNegotiationPending) {
+      setShowAcceptModal(false);
+      dispatch(getNegotiationByIdActions.request({ negotiationRequestId }));
+    }
+  }, [isAcceptNegotiationPending]);
+
+  useEffect(() => {
+    if (!isDeclineNegotiationPending) {
+      setShowDeclineModal(false);
+      dispatch(getNegotiationByIdActions.request({ negotiationRequestId }));
+    }
+  }, [isDeclineNegotiationPending]);
+
   if (!negotiationRequestId) {
     history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING);
     return <></>;
@@ -81,6 +134,13 @@ const Negotiation = (): JSX.Element => {
     handleNegotiationCloseBtnClick,
     showNegotiationModal,
     handleNegotiationConfirmClick,
+    handleAcceptModalAcceptBtnClick,
+    handleDeclineClick,
+    showDeclineModal,
+    handleDeclineModalCancelBtnClick,
+    handleDeclineModalConfirmBtnClick,
+    isAcceptNegotiationPending,
+    isDeclineNegotiationPending,
   };
 
   return <NegotiationView {...generatedProps} />;

@@ -95,11 +95,15 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
     clickDecline,
     negotiation,
     handleAcceptConfirm,
-    handleDeclineConfirm,
+    handleDeclineModalConfirmBtnClick,
     handleNegoModalNegoBtnClick,
     isCreateBuyerCounterNegotiationPending,
     handleNegoBtnClick2,
     showBuyerCounterNegoModal,
+    isAcceptNegotiationPending,
+    showDeclineModal,
+    handleDeclineModalCloseBtnClick,
+    isDeclineNegotiationPending,
   } = props;
 
   const history = useHistory();
@@ -116,9 +120,12 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
         color="shade9"
         style={{ marginTop: '8px' }}
       >
-        {toPrice(
+        {/* {toPrice(
           Number(negotiation?.desired_quantity || '0.00') *
             Number(negotiation?.counter_offer || '0.00')
+        )} */}
+        {toPrice(
+          Number(negotiation?.desired_quantity || '0.00') * Number(price)
         )}
       </Typography>
     </TotalPriceContainer>
@@ -198,9 +205,12 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
     negotiation
   ) as GetNegotiationByIdRequestResponseItem['negotiation_offer'];
 
-  const pricePerUnit = `${toPrice(
-    negotiationOffer?.counter_offer || negotiation?.counter_offer || '0.00'
-  )} per ${formatUnitToPricePerUnit(negotiation?.measurement_unit)}`;
+  const price =
+    negotiationOffer?.counter_offer || negotiation?.counter_offer || '0.00';
+
+  const pricePerUnit = `${toPrice(price)} per ${formatUnitToPricePerUnit(
+    negotiation?.measurement_unit
+  )}`;
 
   // const mrStatusProps = transformMarketRequestStatusText(
   //   theme,
@@ -385,9 +395,10 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
             Accept Negotiation
           </Typography>
         }
-        action={() => handleAcceptConfirm()}
+        action={handleAcceptConfirm}
         actionText="Accept"
         hideCancel={true}
+        disableActionText={isAcceptNegotiationPending}
         description={
           <div style={{ marginTop: 20 }}>
             <AcceptNegoDetailContainer>
@@ -395,8 +406,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
                 Seller&apos;s Negotiated Price
               </Typography>
               <Typography color="shade8" variant="label">
-                {toPrice(negotiation?.counter_offer || '')}/
-                {formatUnitToPricePerUnit(negotiation?.measurement_unit || '')}
+                {pricePerUnit}
               </Typography>
             </AcceptNegoDetailContainer>
             <AcceptNegoDetailContainer>
@@ -419,9 +429,13 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
                   fontFamily: 'Basis Grotesque Pro',
                 }}
               >
-                {toPrice(
+                {/* {toPrice(
                   Number(negotiation?.desired_quantity || '0.00') *
                     Number(negotiation?.counter_offer || '0.00')
+                )} */}
+                {toPrice(
+                  Number(negotiation?.desired_quantity || '0.00') *
+                    Number(price)
                 )}
               </Typography>
             </AcceptNegoDetailContainer>
@@ -429,8 +443,8 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
         }
       />
       <ConfirmationModal
-        isOpen={clickDecline}
-        onClickClose={() => handleDeclineClick(false)}
+        isOpen={showDeclineModal}
+        onClickClose={handleDeclineModalCloseBtnClick}
         title={
           <Typography
             variant="title4"
@@ -441,9 +455,10 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
             Decline Confirmation
           </Typography>
         }
-        action={handleDeclineConfirm}
+        action={handleDeclineModalConfirmBtnClick}
         actionText="Confirm"
         cancelText="Cancel"
+        disableActionText={isDeclineNegotiationPending}
         description={
           <div style={{ marginTop: 15 }}>
             <Typography color="shade6" variant="body">

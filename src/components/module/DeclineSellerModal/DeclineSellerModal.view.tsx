@@ -39,12 +39,12 @@ const DeclineSellerModal = (props: DeclineSellerModalProps): JSX.Element => {
 
       <div style={{ marginTop: 10 }} />
 
-      <Typography color="shade7">
+      <Typography style={{ color: '#565A6A' }}>
         Are you sure you want to decline this negotiation
       </Typography>
-      <Typography color="shade7">
-        The negotiation will automatically close and you will not be refunded
-        any negotiation credits
+      <Typography style={{ color: '#565A6A' }}>
+        The negotiation will close and you will no longer able to barter with
+        the buyer.
       </Typography>
 
       <div style={{ marginTop: 20 }} />
@@ -60,6 +60,7 @@ const DeclineSellerModal = (props: DeclineSellerModalProps): JSX.Element => {
           color="primary"
           text={<Typography color="noshade">Confirm</Typography>}
           onClick={props.onConfirmBtnClick}
+          disabled={props.disableConfirmBtn}
         />
       </div>
     </ModalLayout>
