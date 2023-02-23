@@ -43,7 +43,28 @@
   font-family: 'Graphik';
   src: url('res/fonts/Graphik.woff') format('woff'),
     url('res/fonts/Graphik.ttf') format('ttf');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Graphik';
+  src: url('res/fonts/Graphik Medium.woff') format('woff'),
+    url('res/fonts/Graphik Medium.ttf') format('ttf');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Graphik';
+  src: url('res/fonts/Graphik Bold.woff') format('woff'),
+    url('res/fonts/Graphik Bold.ttf') format('ttf');
   font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Graphik';
+  src: url('res/fonts/Graphik Black.woff') format('woff'),
+    url('res/fonts/Graphik Black.ttf') format('ttf');
+  font-weight: 900;
 }
 
 @font-face {
