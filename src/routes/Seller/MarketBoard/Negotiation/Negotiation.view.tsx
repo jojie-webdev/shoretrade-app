@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Alert from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import { Check, Close } from 'components/base/SVG';
@@ -10,6 +9,7 @@ import AcceptSellerModal from 'components/module/AcceptSellerModal';
 import DeclineSellerModal from 'components/module/DeclineSellerModal';
 import NegotiateSellerModal from 'components/module/NegotiateSellerModal';
 import NegotiationSellerModal from 'components/module/NegotiationSellerModal';
+import SellerNegotiationAlert from 'components/module/SellerNegotiationAlert';
 import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
 import { useHistory } from 'react-router-dom';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
@@ -18,13 +18,14 @@ import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { toPrice } from 'utils/String';
 import { useTheme } from 'utils/Theme';
 
-import { NegotiationProps } from './Negotiation.props';
+import { AlertProps, NegotiationProps } from './Negotiation.props';
 import {
   Container,
   CTAContainer,
   DetailsContainer,
   DetailsValueContainer,
   Line,
+  NewNegoTypeWrapper,
   StyledAcceptButton,
   StyledTypography,
 } from './Negotiation.style';
@@ -93,19 +94,122 @@ const NegotiationView = (props: NegotiationProps) => {
     </>
   );
 
-  // const getAlertColorByDisplayStatus = () => {
-  //   switch (negotiation?.display_status) {
-  //     case "New Negotiation":
-  //       return theme.brand.alert;
+  const getAlertProps = (): AlertProps => {
+    switch (negotiation?.display_status?.toLowerCase() || '') {
+      case '':
+        if (negotiation?.status === 'END') {
+          return {
+            title: 'Negotiation Finalised',
+            alertColor: 'success',
+            description: (
+              <Typography variant="body" color="shade6" weight="400">
+                The Negotiation is now Order #0000-XXXX and can be found in your
+                sold tab{' '}
+                <span
+                  style={{
+                    color: theme.brand.primary,
+                    textDecoration: 'underline',
+                  }}
+                  // onClick={() => history.push(SOLD_)}
+                >
+                  here
+                </span>
+                .
+              </Typography>
+            ),
+          };
+        } else {
+          return {
+            title: '',
+            alertColor: 'primary',
+            description: <></>,
+          };
+        }
+      case 'finalised':
+        return {
+          title: 'Negotiation Finalised',
+          alertColor: 'success',
+          description: (
+            <Typography variant="body" color="shade6" weight="400">
+              The Negotiation is now Order #0000-XXXX and can be found in your
+              sold tab{' '}
+              <span
+                style={{
+                  color: theme.brand.primary,
+                  textDecoration: 'underline',
+                }}
+                // onClick={() => history.push(SOLD_)}
+              >
+                here
+              </span>
+              .
+            </Typography>
+          ),
+        };
 
-  //     default: return theme.brand.alert
-  //   }
-  // }
+      case 'new negotiation':
+        return {
+          title: 'New Negotiation',
+          alertColor: 'alert',
+          description: (
+            <Typography variant="body" color="shade6" weight="400">
+              A buyer has sent you a negotiation for{' '}
+              <NewNegoTypeWrapper>{negotiation?.name}</NewNegoTypeWrapper>
+            </Typography>
+          ),
+        };
 
-  // const buildStatusProps = {
-  //   title: negotiation?.display_status,
-  //   alertColor: getAlertColorByDisplayStatus()
-  // }
+      case 'awaiting buyer':
+        return {
+          title: 'Awaiting Buyer',
+          alertColor: 'alert',
+          description: (
+            <Typography variant="body" color="shade6" weight="400">
+              The buyer will respond to your offer soon.
+            </Typography>
+          ),
+        };
+
+      case 'awaiting payment':
+        return {
+          title: 'Negotiation Accepted-Pending Payment',
+          alertColor: 'primary',
+          description: (
+            <Typography variant="body" color="shade6" weight="400">
+              The sale will be finalised once the Buyer processes your payment
+              within 24 hours. You will be notified when this occurs.
+            </Typography>
+          ),
+        };
+
+      // case 'lost':
+      //   return {
+      //     title: 'New Negotiation',
+      //     alertColor: 'noshade',
+      //     description: (
+      //      Buyer has sent you a negotiation for ${productTypeName}`,
+      //   };
+
+      case 'declined':
+        return {
+          title: 'Negotiation Declined',
+          alertColor: 'error',
+          description: (
+            <Typography variant="body" color="shade6" weight="400">
+              The Buyer declined your counter-offer for{' '}
+              <NewNegoTypeWrapper>{negotiation?.name}</NewNegoTypeWrapper>
+            </Typography>
+          ),
+        };
+
+      default:
+        return {
+          title: '',
+          alertColor: 'primary',
+          description: <></>,
+        };
+    }
+  };
 
   return (
     <Container>
@@ -208,30 +312,17 @@ const NegotiationView = (props: NegotiationProps) => {
       </Typography>
 
       <div style={{ marginTop: 24 }} />
-      <Alert
-        content={
-          <div style={{ display: 'flex' }}>
-            <Typography variant="body" color="shade6" weight="400">
-              A Buyer has sent you a negotiation for
-            </Typography>
-            <Typography
-              variant="body"
-              color="primary"
-              weight="400"
-              style={{ marginLeft: 5 }}
-            >
-              {negotiation?.name}
-            </Typography>
-          </div>
-        }
-        header={negotiation?.display_status}
-        variant="info"
-        color="blue"
-        fullWidth
-      />
+      {negotiation && (
+        <SellerNegotiationAlert
+          content={getAlertProps().description}
+          header={getAlertProps().title}
+          variant={getAlertProps().alertColor}
+          status={negotiation?.display_status?.toLowerCase() || ''}
+          fullWidth
+        />
+      )}
 
       {/*         
-
       <Alert
         content={
           <div style={{ display: 'flex' }}>

@@ -1,3 +1,4 @@
+import { Variants } from 'components/module/SellerNegotiationAlert/SellerNegotiationAlert.props';
 import { GetNegotiationByIdRequestResponseItem } from 'types/store/GetNegotiationByIdState';
 
 export interface NegotiationProps {
@@ -14,4 +15,10 @@ export interface NegotiationProps {
   handleDeclineModalConfirmBtnClick: () => void;
   isAcceptNegotiationPending: boolean;
   isDeclineNegotiationPending: boolean;
+}
+
+export interface AlertProps {
+  title: string;
+  alertColor: Variants;
+  description: JSX.Element;
 }

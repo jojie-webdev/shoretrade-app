@@ -354,10 +354,15 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                   Change in Price{' '}
                   {priceDiffPercentage ? (
                     <span className="indicator">
-                      {new Intl.NumberFormat('en-US', {
+                      {negotiationPrice < Number(productDetailsCard6Props.price)
+                        ? '+'
+                        : '-'}
+                      {/* {new Intl.NumberFormat('en-US', {
                         signDisplay: 'exceptZero',
-                      }).format(Number(priceDiffPercentage.toFixed(2)))}
-                      %
+                      }).format(
+                        Number(Math.abs(priceDiffPercentage).toFixed(2))
+                      )} */}
+                      {Number(Math.abs(priceDiffPercentage).toFixed(2))}%
                     </span>
                   ) : (
                     <span className="indicator">0.00%</span>

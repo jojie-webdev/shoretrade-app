@@ -99,14 +99,13 @@ const NegotiationInteractions = (
             </Col>
             <Col style={{ padding: '0 5px' }}>
               <div style={{ display: 'flex' }}>
-                <NegotiationTag text={data.display_status} />
+                <NegotiationTag text={data?.display_status || ''} />
               </div>
             </Col>
             <Col style={{ padding: '0 5px' }}>
               <TrashCanContainer
                 onClick={(e) => {
                   e.stopPropagation();
-                  console.log('TrashcanContainer > clicked');
                 }}
               >
                 <div

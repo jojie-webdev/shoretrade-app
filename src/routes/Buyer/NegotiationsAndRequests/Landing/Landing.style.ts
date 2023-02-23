@@ -39,6 +39,10 @@ export const MarketRequestsContainer = styled.div`
       fill: ${({ theme }) => theme.grey.shade7};
     }
   }
+
+  .search__input {
+    height: 37px !important;
+  }
 `;
 
 export const BadgeText = styled(Typography)<{ empty?: boolean }>`

@@ -61,7 +61,7 @@ const MarketRequestsLandingView = (
     handleTabSelect,
     selectedTab,
     handleSearchChange,
-    // searchKeyword,
+    searchKeyword,
     negotiationCredit,
   } = props;
 
@@ -172,15 +172,15 @@ const MarketRequestsLandingView = (
         onClickClose={() => setItemToDelete({ value: null })}
       />
 
-      <Typography variant="label" style={{ marginBottom: 5 }}>
+      {/* <Typography variant="label" style={{ marginBottom: 5 }}>
         Search
       </Typography>
       <SearchWrapper
-        value={'searchKeyword'}
+        value={searchKeyword}
         onChange={(e) => handleSearchChange(e.target.value)}
         placeholder="Search..."
         resetValue={() => handleSearchChange('')}
-      />
+      /> */}
 
       <SegmentedControls
         options={[TABS.NEGOTIATIONS, TABS.BUYER_REQUEST]}

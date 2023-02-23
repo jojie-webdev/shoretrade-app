@@ -49,7 +49,7 @@ export interface MarketRequestsLandingGeneratedProps {
   handleTabSelect: (selectedTab: TABS) => void;
   selectedTab: string;
   handleSearchChange: (text: string) => void;
-  // searchKeyword: string;
+  searchKeyword: string;
   onClickNegoItem: (
     row: GetAllNegoRequestResponseItem & {
       expiry: any;

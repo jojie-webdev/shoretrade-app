@@ -2,6 +2,7 @@ import React from 'react';
 
 import Badge from 'components/base/Badge';
 // import { useTheme } from 'utils/Theme';
+import { Variants } from 'components/base/Typography/Typography.props';
 
 import { OfferTagProps } from './OfferTag.props';
 import { Container, StatusBadgeText } from './OfferTag.style';
@@ -26,8 +27,12 @@ const OfferTag = (props: OfferTagProps): JSX.Element => {
   //   );
   // };
 
-  const variant = textStyle && 'overlineSmall';
-  const statusBadgeTextProps = variant ?? {};
+  const variant = 'overlineSmall' as Variants;
+  const statusBadgeTextProps = !textStyle
+    ? {
+        variant,
+      }
+    : {};
 
   return (
     <Container>

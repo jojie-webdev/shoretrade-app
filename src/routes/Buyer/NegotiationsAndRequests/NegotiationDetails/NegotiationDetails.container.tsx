@@ -146,7 +146,10 @@ const NegotiationDetails = (): JSX.Element => {
   );
 
   const breadCrumb = [
-    { label: 'All Negotiations', link: BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS },
+    {
+      label: 'All Negotiations',
+      link: `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}?tab=Negotiations`,
+    },
     {
       label: 'Negotiation Details',
     },
@@ -169,21 +172,22 @@ const NegotiationDetails = (): JSX.Element => {
 
   const handlePayNow = () => {
     setShowPaymentMethod(true);
-    const getMarketNegotiationId = () => {
-      if (!selectedOffer?.negotiations) {
-        return '';
-      }
 
-      return selectedOffer?.negotiations[0]?.id || '';
-    };
+    if (negotiation) {
+      // const payload: AcceptOfferItem = {
+      //   marketOfferId: selectedOffer?.id || '',
+      //   marketNegotiationId: negotiation?.id,
+      //   marketRequestId: filteredBuyerRequest?.id || '',
+      // };
 
-    const payload: AcceptOfferItem = {
-      marketOfferId: selectedOffer?.id || '',
-      marketNegotiationId: getMarketNegotiationId(),
-      marketRequestId: filteredBuyerRequest?.id || '',
-    };
+      const payload = {
+        marketNegotiationId: negotiation?.id,
+        marketOfferId: negotiation?.listing_id,
+        marketRequestId: '',
+      };
 
-    dispatch(marketOfferActions.add(payload));
+      dispatch(marketOfferActions.add(payload));
+    }
   };
 
   const handleAcceptClick = (show: boolean) => {

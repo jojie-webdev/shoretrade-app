@@ -6,6 +6,7 @@ import {
   BUYER_ACCOUNT_ROUTES,
   BUYER_MARKET_REQUEST_ROUTES,
   BUYER_NEGOTIATION_ROUTES,
+  BUYER_ROUTES,
 } from 'consts/routes';
 import moment from 'moment';
 import queryString from 'query-string';
@@ -55,6 +56,7 @@ const MarketRequestsLanding = (): JSX.Element => {
   });
   const [waitAll, setWaitAll] = useState(true);
   const [selectedTab, setSelectedTab] = useState(TABS.BUYER_REQUEST);
+  const [searchKeyword, setSearchKeyword] = useState('');
 
   const deleteMarketRequest = useSelector(
     (store: Store) => store.deleteMarketRequest
@@ -100,6 +102,9 @@ const MarketRequestsLanding = (): JSX.Element => {
     }
 
     setSelectedTab(selectedTab);
+    history.push(
+      `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}?tab=${selectedTab}`
+    );
   };
 
   const reverseMarketPlace =
@@ -139,8 +144,6 @@ const MarketRequestsLanding = (): JSX.Element => {
   const canNegotiate =
     defaultCompany?.credit !== '0.00' && (isSubscribedToNegoRequest || false);
 
-  console.log('canNegotiate >>>>>>>>>> ', canNegotiate);
-
   const onClickItem = (row: Result) => {
     if (row.offers && row.offers > 0) {
       history.push(BUYER_MARKET_REQUEST_ROUTES.MARKET_REQUEST_DETAILS(row.id));
@@ -171,7 +174,7 @@ const MarketRequestsLanding = (): JSX.Element => {
   };
 
   const handleSearchChange = (text: string) => {
-    // setSearchKeyword(text);
+    setSearchKeyword(text);
 
     history.push(`?tab=${selectedTab}&searchTerm=${text}`);
   };
@@ -196,6 +199,17 @@ const MarketRequestsLanding = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(getNegotiationCreditActions.request({}));
+    setSelectedTab(
+      negoAndRMQueryParams.tab === TABS.NEGOTIATIONS
+        ? TABS.NEGOTIATIONS
+        : TABS.BUYER_REQUEST
+    );
+
+    if (negoAndRMQueryParams.tab === TABS.NEGOTIATIONS) {
+      dispatch(getAllNegotiationsActions.request({}));
+    } else {
+      dispatch(getAllMarketRequestActions.request({}));
+    }
   }, []);
 
   const generatedProps: MarketRequestsLandingGeneratedProps = {
@@ -225,6 +239,7 @@ const MarketRequestsLanding = (): JSX.Element => {
     handleSearchChange,
     onClickNegoItem,
     negotiationCredit,
+    searchKeyword,
   };
 
   const sfmViewProps = {

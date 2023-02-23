@@ -359,18 +359,27 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
                 </div>
               </CTAContainer>
             )}
-          {/* {selectedOffer?.status === 'PARTIAL' && (
+
+          {negotiation?.status === 'PARTIAL' && (
             <CTAContainer>
-              <div style={{ width: '124px' }}>
+              <div style={{ width: 'fit-content' }}>
                 <StyledAcceptButton
-                  text="Pay Now"
-                  icon={<Check width={10} height={9} />}
+                  text={
+                    <Typography
+                      variant="label"
+                      weight="700"
+                      color="noshade"
+                      style={{ fontFamily: 'Basis Grotesque Pro' }}
+                    >
+                      Proceed To Checkout
+                    </Typography>
+                  }
+                  // icon={<Check width={10} height={9} />}
                   onClick={() => handlePayNow()}
-                  disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
                 />
               </div>
             </CTAContainer>
-          )} */}
+          )}
         </Hidden>
       </FullOfferDetailsContainer>
     </Col>

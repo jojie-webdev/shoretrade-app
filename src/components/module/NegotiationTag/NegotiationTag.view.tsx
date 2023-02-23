@@ -12,7 +12,13 @@ const NegotiationTag = (props: NegotiationTagProps): JSX.Element => {
 
   const getBackgroundColor = () => {
     switch (typeof props.text === 'string' && props.text.toLowerCase()) {
-      case 'finalized':
+      case '':
+        return {
+          textColor: 'success',
+          bgColor: theme.grey.noshade,
+        };
+
+      case 'finalised':
         return {
           textColor: 'success',
           bgColor: theme.grey.noshade,
@@ -42,7 +48,7 @@ const NegotiationTag = (props: NegotiationTagProps): JSX.Element => {
           bgColor: theme.brand.error,
         };
 
-      case 'decline':
+      case 'declined':
         return {
           textColor: 'noshade',
           bgColor: theme.brand.error,
@@ -63,7 +69,7 @@ const NegotiationTag = (props: NegotiationTagProps): JSX.Element => {
         color={getBackgroundColor().textColor as TypographyProps['color']}
         style={{ fontFamily: 'Basis Grotesque Pro' }}
       >
-        {props.text}
+        {props.text || 'Finalised'}
       </Typography>
     </Container>
   );

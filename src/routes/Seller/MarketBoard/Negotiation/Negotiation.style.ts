@@ -76,3 +76,13 @@ export const Line = styled.div`
   background-color: ${({ theme }) => theme.grey.shade6};
   margin: 24px 0;
 `;
+
+export const NewNegoTypeWrapper = styled.span`
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  text-align: left;
+  margin: 0;
+  font-family: 'Graphik';
+  color: ${({ theme }) => theme.brand.primary};
+`;
