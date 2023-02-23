@@ -11,6 +11,7 @@ import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import {
   numberOffersTransform,
   transformMarketRequestStatusText,
+  transformNegotiationStatusText,
 } from 'utils/MarketRequest/marketRequestTag';
 import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
@@ -23,6 +24,13 @@ import {
   NegotiationItemInteraction,
   SubText,
 } from './NegotiationNonMobile.style';
+
+const OfferTagTextStyle = {
+  fontWeight: 600,
+  fontSize: '12px',
+  lineHeight: '16px',
+  letterSpacing: '0.5px',
+};
 
 const NegotiationMobileView = (props: NegotiationNonMobilePrivateProps) => {
   const { item, onClickItem, activeOffersData, setItemToDelete } = props;
@@ -64,9 +72,23 @@ const NegotiationMobileView = (props: NegotiationNonMobilePrivateProps) => {
     //   metric,
     //   requestStatus,
     // } = props;
-    const statusTextProps = transformMarketRequestStatusText(
+    const reworkDisplayStatus = (displayStatus: string) => {
+      let modifiedDisplayStatus = displayStatus;
+
+      if (displayStatus === 'PARTIAL') {
+        modifiedDisplayStatus = 'Payment Required';
+      }
+
+      if (displayStatus === 'END') {
+        modifiedDisplayStatus = 'Declined';
+      }
+
+      return modifiedDisplayStatus;
+    };
+
+    const statusTextProps = transformNegotiationStatusText(
       theme,
-      item.display_status
+      reworkDisplayStatus(item.display_status)
     );
     // const offersTextProps = numberOffersTransform(offers);
 
@@ -123,6 +145,7 @@ const NegotiationMobileView = (props: NegotiationNonMobilePrivateProps) => {
                   badgeColor={statusTextProps.badgeColor || ''}
                   variantColor={statusTextProps.variantColor}
                   color={statusTextProps.tagColor}
+                  textStyle={OfferTagTextStyle}
                 />
               )}
             </Badges>
