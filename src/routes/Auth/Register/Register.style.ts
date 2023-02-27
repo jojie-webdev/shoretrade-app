@@ -666,3 +666,41 @@ export const SFMFreeSubWrapper2 = styled.img`
     display: none;
   }
 `;
+
+export const PaymentOptionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 24px 0;
+`;
+
+export const PaymentOptionSpecific = styled.div`
+  display: flex;
+  margin-top: 24px;
+
+  .radio:nth-of-type(1) {
+    margin-right: 50px;
+  }
+  .radio > p {
+    color: #30347e !important;
+  }
+`;
+
+export const DDAContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  p {
+    line-height: 20px;
+  }
+
+  p:not(:first-child) {
+    margin-top: 8px;
+  }
+
+  p:nth-of-type(3) {
+    text-decoration: underline;
+    :hover {
+      cursor: pointer;
+    }
+  }
+`;

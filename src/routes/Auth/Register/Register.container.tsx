@@ -251,6 +251,9 @@ const Register = (): JSX.Element => {
       cardToken: '',
       //license
       licenses: [],
+
+      // DDA
+      isDDA: false,
     }
   );
 
@@ -322,6 +325,7 @@ const Register = (): JSX.Element => {
           marketSector: details.categoryMarketSector,
           marketBuying: selectedCategoryTypes,
           cardToken: details.cardToken,
+          isDDA: Boolean(details.isDDA),
           subscriptionPreference: {
             plan: details.subscriptionPreference.plan,
             addOns: [...details.subscriptionPreference.addOns],

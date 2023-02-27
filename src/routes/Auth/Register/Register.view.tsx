@@ -7,6 +7,7 @@ import React, {
   useEffect,
 } from 'react';
 
+import axios from 'axios';
 import Alert from 'components/base/Alert';
 import Badge from 'components/base/Badge';
 import Button from 'components/base/Button';
@@ -150,6 +151,9 @@ import {
   SFMBlueLink,
   SFMFreeSubWrapper,
   SFMFreeSubWrapper2,
+  PaymentOptionContainer,
+  PaymentOptionSpecific,
+  DDAContainer,
 } from './Register.style';
 import {
   addressToPlaceData2,
@@ -200,6 +204,8 @@ const StepForm = ({
   states,
   licenseStates,
   plans,
+  paymentMethod,
+  setPaymentMethod,
 }: StepFormProps) => {
   const theme = useTheme();
   const [toggleCountryCode, setToggleCountryCode] = useState(false);
@@ -208,9 +214,10 @@ const StepForm = ({
   const reverseMarketPlaceAlias = isSeller
     ? SELLER_REVERSE_MARKET_FEAT
     : BUYER_REVERSE_MARKET_FEAT;
-  const hasReverseMarketPlace = registrationDetails.subscriptionPreference.addOns.includes(
-    reverseMarketPlaceAlias
-  );
+  const hasReverseMarketPlace =
+    registrationDetails.subscriptionPreference.addOns.includes(
+      reverseMarketPlaceAlias
+    );
   const modifiedStates = COUNTRY_STATES.filter(({ isoCode, countryCode }) => {
     if (registrationDetails.address?.countryCode === NEW_ZEALAND_COUNTRY_CODE) {
       if (DEFAULT_NEW_ZEALAND_PROVINCES_CODE.includes(isoCode)) {
@@ -500,13 +507,14 @@ const StepForm = ({
       }`
   );
 
-  const reverseMarketPlacePrice = registrationDetails.subscriptionPreference.addOns.includes(
-    reverseMarketPlaceAlias
-  )
-    ? isSeller
-      ? 279
-      : 49.99
-    : 0;
+  const reverseMarketPlacePrice =
+    registrationDetails.subscriptionPreference.addOns.includes(
+      reverseMarketPlaceAlias
+    )
+      ? isSeller
+        ? 279
+        : 49.99
+      : 0;
 
   useEffect(() => {
     if (
@@ -985,6 +993,30 @@ const StepForm = ({
     );
   };
 
+  const downloadDDAForm = (e: React.MouseEvent<HTMLParagraphElement>) => {
+    e.preventDefault();
+    axios({
+      method: 'get',
+      url: 'https://shoretrade-prod-assets.s3.ap-southeast-2.amazonaws.com/SFMBlue+DDA+Template.pdf',
+      responseType: 'blob',
+    })
+      .then((res) => {
+        const { data } = res;
+        const href = URL.createObjectURL(data);
+        const link = document.createElement('a');
+        link.href = href;
+        link.setAttribute('download', 'DDA Application Form.pdf');
+        document.body.appendChild(link);
+        link.click();
+
+        document.body.removeChild(link);
+        URL.revokeObjectURL(href);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+
   return (
     <>
       <Formik
@@ -1092,8 +1124,16 @@ const StepForm = ({
                 formikProps.onSubmit(values);
               }
             } else {
-              setIsGeneratingCardToken(true);
-              getCardToken();
+              if (paymentMethod === 'card') {
+                setIsGeneratingCardToken(true);
+                getCardToken();
+              } else {
+                formikProps.onSubmit({
+                  ...values,
+                  cardToken: '',
+                  isDDA: 'true',
+                });
+              }
             }
           } else if (step === 7) {
             if (!isSeller) {
@@ -2127,11 +2167,63 @@ const StepForm = ({
                               </TotalPriceRow>
                             </PaymentPriceRow>
                           </PaymentPriceConatiner>
-                          <PaymentMethod
-                            otherErrors={otherErrors}
-                            setOtherErrors={setOtherErrors}
-                            details={registrationDetails}
-                          />
+                          <PaymentOptionContainer>
+                            <Typography variant="label" color="shade6">
+                              Select payment method for your subscription.
+                            </Typography>
+                            <PaymentOptionSpecific>
+                              <Radio
+                                label="Credit Card"
+                                checked={paymentMethod === 'card'}
+                                onClick={
+                                  setPaymentMethod
+                                    ? () => setPaymentMethod('card')
+                                    : undefined
+                                }
+                              />
+                              <Radio
+                                label="Direct Debit"
+                                checked={paymentMethod === 'dda'}
+                                onClick={
+                                  setPaymentMethod
+                                    ? () => setPaymentMethod('dda')
+                                    : undefined
+                                }
+                              />
+                            </PaymentOptionSpecific>
+                          </PaymentOptionContainer>
+
+                          {paymentMethod === 'card' && (
+                            <PaymentMethod
+                              otherErrors={otherErrors}
+                              setOtherErrors={setOtherErrors}
+                              details={registrationDetails}
+                            />
+                          )}
+                          {paymentMethod === 'dda' && (
+                            <DDAContainer>
+                              <Typography variant="label" weight="600">
+                                Pay via Direct Debit from your nominated bank
+                                account.
+                              </Typography>
+                              <Typography
+                                variant="label"
+                                color="shade6"
+                                weight="300"
+                              >
+                                Download the form below and submit your
+                                application to info@sfmblue.com.au
+                              </Typography>
+                              <Typography
+                                variant="label"
+                                color="primary"
+                                weight="300"
+                                onClick={downloadDDAForm}
+                              >
+                                Download form
+                              </Typography>
+                            </DDAContainer>
+                          )}
                         </>
                       )}
                     </>
@@ -2418,13 +2510,15 @@ const RegisterView = (props: RegisterGeneratedProps) => {
   const reverseMarketPlaceAlias = isSeller
     ? SELLER_REVERSE_MARKET_FEAT
     : BUYER_REVERSE_MARKET_FEAT;
-  const hasReverseMarketPlace = registrationDetails.subscriptionPreference.addOns.includes(
-    reverseMarketPlaceAlias
-  );
+  const hasReverseMarketPlace =
+    registrationDetails.subscriptionPreference.addOns.includes(
+      reverseMarketPlaceAlias
+    );
 
   const renderRef = useRef<HTMLDivElement | null>(null);
 
   const [step, setStep] = useState(0);
+  const [paymentMethod, setPaymentMethod] = useState<'card' | 'dda'>('card');
   // const MAX_STEP = !isSeller ? 7 : hasReverseMarketPlace ? 9 : 8;
   const MAX_STEP = 7;
 
@@ -2528,7 +2622,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
         registrationDetails.address?.administrativeAreaLevel1 ||
         '',
     },
-    validate: validateCard,
+    validate: paymentMethod === 'card' ? validateCard : undefined,
     address: registrationDetails.address,
     updateRegistrationDetails,
     onSubmit: (values: Record<string, string>) => {
@@ -2615,6 +2709,8 @@ const RegisterView = (props: RegisterGeneratedProps) => {
               isSeller ? userDetailsFormikProps : paymentMethodFormikProps
             }
             step={step}
+            paymentMethod={paymentMethod}
+            setPaymentMethod={setPaymentMethod}
             fields={[]}
             summaryHandleStep={summaryHandleStep}
             previousStep={previousStep}

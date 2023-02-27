@@ -159,6 +159,7 @@ function* registerRequest(action: AsyncAction<RegisterMeta, RegisterPayload>) {
         marketSector: data.marketSector,
         marketBuying: data.marketBuying,
         cardToken: data.cardToken,
+        isDDA: data.isDDA,
         subscriptionPreference: {
           plan: data.subscriptionPreference.plan,
           addOns: data.subscriptionPreference.addOns,

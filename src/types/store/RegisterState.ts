@@ -43,6 +43,7 @@ export type RegisterMeta = {
     addOns: string[];
     transactionValue?: string;
   };
+  isDDA?: boolean;
 };
 
 export type RegisterRequestData = {
@@ -91,6 +92,7 @@ export type RegisterRequestData = {
     addOns: string[];
     transactionValue?: string;
   };
+  isDDA?: boolean;
 };
 
 export type RegisterPayload = GenericResponse;

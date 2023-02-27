@@ -66,6 +66,9 @@ export interface RegistrationDetails {
 
   //license
   licenses: License[];
+
+  // DDA
+  isDDA: boolean;
 }
 
 export interface BankDetails {
@@ -131,4 +134,6 @@ export interface StepFormProps extends RegisterGeneratedProps {
   previousStep?: () => void;
   fields: Field[];
   summaryHandleStep: (step: number) => void;
+  paymentMethod?: 'card' | 'dda';
+  setPaymentMethod?: (type: 'card' | 'dda') => void;
 }
