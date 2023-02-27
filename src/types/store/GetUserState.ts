@@ -40,6 +40,7 @@ export type UserCompany = {
       updatedAt: string;
     }
   ];
+  isDDA?: boolean;
 };
 
 export type UserSearchPreferences = {

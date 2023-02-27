@@ -6,7 +6,14 @@ import Alert from 'components/base/Alert';
 import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
-import { Calendar, Mastercard, DollarSign, Plus } from 'components/base/SVG';
+import {
+  Calendar,
+  Mastercard,
+  DollarSign,
+  Plus,
+  University,
+  InfoOutline,
+} from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import CreditCardLogo from 'components/module/CreditCardLogo';
@@ -63,6 +70,7 @@ import {
   PlusIconWrapper,
   PlanTitleWrapper,
   DowngradeStartsIndicator,
+  DDAInfoContainer,
 } from './SubscriptionPlan.style';
 
 export const SubscriptionPlanView = ({
@@ -96,6 +104,7 @@ export const SubscriptionPlanView = ({
   updateSubsPlanPending,
   updateSubsPlanSuccess,
   transactionValueFeePercent,
+  isDDA,
 }: SubscriptionPlanGeneratedProps) => {
   const location = useLocation();
   const theme = useTheme();
@@ -108,13 +117,10 @@ export const SubscriptionPlanView = ({
   const [isMonthly, setIsMonthly] = useState(true);
   const [showProToggleModal, setShowProToggleModal] = useState(false);
   const [showBaseToggleModal, setShowBaseToggleModal] = useState(false);
-  const [showDowngradeToggleModal, setShowDowngradeToggleModal] = useState(
-    false
-  );
-  const [
-    showCancelReverseMarketModal,
-    setShowCancelReverseMarketModal,
-  ] = useState(false);
+  const [showDowngradeToggleModal, setShowDowngradeToggleModal] =
+    useState(false);
+  const [showCancelReverseMarketModal, setShowCancelReverseMarketModal] =
+    useState(false);
   const [
     showReverseMarketPlaceToggleModal,
     setShowReverseMarketPlaceToggleModal,
@@ -376,30 +382,76 @@ export const SubscriptionPlanView = ({
                   Your Payment Method
                 </Typography>
 
-                <div className="card-info">
-                  <div className="card-icon">
-                    <CreditCardLogo type={cardBrand ? cardBrand : 'visa'} />
-                  </div>
-                  <Typography variant="body">
-                    <b>{cardNumberMasked}</b>
-                  </Typography>
-                </div>
+                {isDDA ? (
+                  <>
+                    <DDAInfoContainer>
+                      <University
+                        width={20}
+                        height={21}
+                        fill={theme.brand.primary}
+                      />
+                      <Typography>Direct Debit</Typography>
+                      <div
+                        data-tip
+                        data-for="debitAgreementTip"
+                        className="info-tip-container"
+                      >
+                        <InfoOutline
+                          fill={theme.grey.shade7}
+                          width={14}
+                          height={14}
+                        />
+                      </div>
+                    </DDAInfoContainer>
+                    <ReactTooltip
+                      id="debitAgreementTip"
+                      place="bottom"
+                      effect="solid"
+                      backgroundColor={theme.grey.shade9}
+                    >
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          textAlign: 'center',
+                        }}
+                      >
+                        To view or request to change your
+                        <br />
+                        Direct Debit details,
+                        <br />
+                        contact info@sfmblue.com.au
+                      </div>
+                    </ReactTooltip>
+                  </>
+                ) : (
+                  <>
+                    <div className="card-info">
+                      <div className="card-icon">
+                        <CreditCardLogo type={cardBrand ? cardBrand : 'visa'} />
+                      </div>
+                      <Typography variant="body">
+                        <b>{cardNumberMasked}</b>
+                      </Typography>
+                    </div>
 
-                <Link
-                  className="see-payment-methods"
-                  to={BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD}
-                >
-                  <Typography
-                    variant="label"
-                    color="primary"
-                    weight="400"
-                    style={{ textDecoration: 'underline' }}
-                  >
-                    {isOverdueBadgeVisible
-                      ? 'Pay Outstanding Balance'
-                      : 'See Payment Methods'}
-                  </Typography>
-                </Link>
+                    <Link
+                      className="see-payment-methods"
+                      to={BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD}
+                    >
+                      <Typography
+                        variant="label"
+                        color="primary"
+                        weight="400"
+                        style={{ textDecoration: 'underline' }}
+                      >
+                        {isOverdueBadgeVisible
+                          ? 'Pay Outstanding Balance'
+                          : 'See Payment Methods'}
+                      </Typography>
+                    </Link>
+                  </>
+                )}
               </PaymentMethodSection>
 
               <BillingSection className="section payment-section">
@@ -467,17 +519,22 @@ export const SubscriptionPlanView = ({
                   </div>
                 </div>
                 <BadgesContainer>
-                  {isForRenewal && currentPlanDetails && !flags?.hasDowngraded && (
-                    <Badge badgeColor={theme.product?.error} borderRadius="4px">
-                      <Typography
-                        variant="overline"
-                        color="noshade"
-                        style={{ lineHeight: 'unset' }}
+                  {isForRenewal &&
+                    currentPlanDetails &&
+                    !flags?.hasDowngraded && (
+                      <Badge
+                        badgeColor={theme.product?.error}
+                        borderRadius="4px"
                       >
-                        Cancelling
-                      </Typography>
-                    </Badge>
-                  )}
+                        <Typography
+                          variant="overline"
+                          color="noshade"
+                          style={{ lineHeight: 'unset' }}
+                        >
+                          Cancelling
+                        </Typography>
+                      </Badge>
+                    )}
                   {currentPlanDetails && flags?.hasDowngraded && (
                     <Badge badgeColor={theme.brand.warning} borderRadius="4px">
                       <Typography

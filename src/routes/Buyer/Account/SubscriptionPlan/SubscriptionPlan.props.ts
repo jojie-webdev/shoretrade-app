@@ -53,4 +53,5 @@ export interface SubscriptionPlanGeneratedProps
   updateSubsPlanPending: boolean;
   updateSubsPlanSuccess: boolean;
   transactionValueFeePercent: number;
+  isDDA?: boolean;
 }

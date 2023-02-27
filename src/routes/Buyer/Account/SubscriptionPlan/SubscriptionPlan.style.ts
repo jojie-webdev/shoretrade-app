@@ -301,3 +301,24 @@ export const PlanTitleWrapper = styled.div`
     opacity: 0.4;
   }
 `;
+
+export const DDAInfoContainer = styled.div`
+  display: flex;
+  margin-top: 4px;
+  align-items: center;
+
+  > svg:first-child {
+    margin-right: 8px;
+  }
+
+  > .info-tip-container {
+    > svg {
+      position: relative;
+      top: 2px;
+    }
+  }
+
+  > p {
+    margin-right: 4px;
+  }
+`;

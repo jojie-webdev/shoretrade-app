@@ -180,6 +180,7 @@ export { default as Exclamation } from './Exclamation';
 export { default as ExclamationFilled } from './ExclamationFilled';
 export { default as QuestionFilled } from './QuestionFilled';
 export { default as InfoFilled } from './InfoFilled';
+export { default as InfoOutline } from './InfoOutline';
 export { default as Close } from './Close';
 export { default as Eye } from './Eye';
 export { default as EyeOff } from './EyeOff';

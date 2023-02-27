@@ -27,7 +27,7 @@ const SubscriptionPlan = () => {
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const [hideSubsPlanAlert, setHideSubsPlanAlert] = useState(true);
   const company = user?.companies[0];
-
+  const isDDA = company?.isDDA;
   // SELECTORS
 
   const addresses = useSelector(
@@ -201,12 +201,18 @@ const SubscriptionPlan = () => {
   };
 
   const updateSubscription = (subscriptionId?: string) => {
-    if (company?.id && companyPlan?.nextBillingData.defaultCard) {
+    const canUpgrade =
+      companyPlan?.nextBillingData.defaultCard ||
+      isDDA;
+    if (company?.id && canUpgrade) {
       dispatch(
         updateSubscriptionPlanActions.request({
           companyId: company?.id,
           payment: {
-            existingCard: companyPlan.nextBillingData.defaultCard,
+            existingCard:
+            companyPlan?.nextBillingData.defaultCard ?
+              companyPlan.nextBillingData.defaultCard :
+              '',
           },
           subscriptionPlanId: subscriptionId,
         })
@@ -274,6 +280,7 @@ const SubscriptionPlan = () => {
     updateSubsPlanPending,
     updateSubsPlanSuccess: !!updateSuccess && !hideSubsPlanAlert,
     transactionValueFeePercent,
+    isDDA,
   };
 
   return <SubscriptionPlanView {...params} />;
