@@ -209,7 +209,7 @@ const MarketRequestsLandingView = (
                     My Market Requests
                   </Typography>
                 </Hidden>
-                <Visible xs sm>
+                {/* <Visible xs sm>
                   <Typography
                     variant="title5"
                     weight="700"
@@ -218,7 +218,7 @@ const MarketRequestsLandingView = (
                   >
                     Market Requests
                   </Typography>
-                </Visible>
+                </Visible> */}
               </Col>
               <Col xs="content">
                 <Visible sm md lg xl xxl>

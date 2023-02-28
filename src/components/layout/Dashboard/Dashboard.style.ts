@@ -488,6 +488,7 @@ export const PageTitle = styled(Typography)`
   font-weight: bold;
   font-size: ${pxToRem(32)};
   line-height: 40px;
+  font-family: 'Canela';
 `;
 
 export const HeaderRightContent = styled.div`
