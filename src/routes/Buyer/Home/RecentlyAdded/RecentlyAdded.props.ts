@@ -13,4 +13,7 @@ export interface RecentlyAddedGeneratedProps {
   canNegotiate?: boolean;
   handleNegotiableToggle: (show: boolean) => void;
   showNegotiable: { showNegotiable: boolean };
+  handleShowNegoCreditsModal: () => void;
+  negotiationCredit: string;
+  handleShowNegoModal: (listingId: string) => void;
 }

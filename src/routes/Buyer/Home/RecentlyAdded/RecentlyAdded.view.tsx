@@ -37,6 +37,9 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
     canNegotiate,
     handleNegotiableToggle,
     showNegotiable,
+    handleShowNegoCreditsModal,
+    negotiationCredit,
+    handleShowNegoModal,
   } = props;
 
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -110,6 +113,11 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
                           canNegotiate={canNegotiate}
                           allowNegotiations={rec.allowNegotiations}
                           auctionDate={rec.auctionDate}
+                          handleShowNegoCreditsModal={
+                            handleShowNegoCreditsModal
+                          }
+                          negotiationCredit={negotiationCredit}
+                          handleShowNegoModal={handleShowNegoModal}
                         />
                       </StyledInteraction>
                     ) : (
@@ -143,6 +151,9 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
                         canNegotiate={canNegotiate}
                         allowNegotiations={rec.allowNegotiations}
                         auctionDate={rec.auctionDate}
+                        handleShowNegoCreditsModal={handleShowNegoCreditsModal}
+                        negotiationCredit={negotiationCredit}
+                        handleShowNegoModal={handleShowNegoModal}
                       />
                     )}
                   </Link>

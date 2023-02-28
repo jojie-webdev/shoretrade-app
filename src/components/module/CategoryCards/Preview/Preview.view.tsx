@@ -251,6 +251,9 @@ const Preview = (props: PreviewProps): JSX.Element => {
     hiddenVendor,
     canNegotiate,
     allowNegotiations,
+    handleShowNegoCreditsModal,
+    handleShowNegoModal,
+    negotiationCredit,
   } = props;
   const theme = useTheme();
 
@@ -621,19 +624,83 @@ const Preview = (props: PreviewProps): JSX.Element => {
               {allowedNegotiationByBuyer ? (
                 canNegotiate ? (
                   props.auctionDate ? (
-                    isPreAuctionExpired(props.auctionDate) ? null : (
+                    isPreAuctionExpired(
+                      props.auctionDate
+                    ) ? null : negotiationCredit ? (
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          width: '-webkit-fill-available',
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleShowNegoModal && handleShowNegoModal(props?.id);
+                        }}
+                      >
+                        <NegotiatePriceElem
+                          backgroundColor={theme.brand.primary}
+                          iconFill={theme.grey.noshade}
+                          fontColor="noshade"
+                        />
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          width: '-webkit-fill-available',
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleShowNegoCreditsModal &&
+                            handleShowNegoCreditsModal();
+                        }}
+                      >
+                        <NegotiatePriceElem
+                          backgroundColor={theme.brand.primary}
+                          iconFill={theme.grey.noshade}
+                          fontColor="noshade"
+                        />
+                      </div>
+                    )
+                  ) : negotiationCredit ? (
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        width: '-webkit-fill-available',
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleShowNegoModal && handleShowNegoModal(props?.id);
+                      }}
+                    >
                       <NegotiatePriceElem
                         backgroundColor={theme.brand.primary}
                         iconFill={theme.grey.noshade}
                         fontColor="noshade"
                       />
-                    )
+                    </div>
                   ) : (
-                    <NegotiatePriceElem
-                      backgroundColor={theme.brand.primary}
-                      iconFill={theme.grey.noshade}
-                      fontColor="noshade"
-                    />
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        width: '-webkit-fill-available',
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleShowNegoCreditsModal &&
+                          handleShowNegoCreditsModal();
+                      }}
+                    >
+                      <NegotiatePriceElem
+                        backgroundColor={theme.brand.primary}
+                        iconFill={theme.grey.noshade}
+                        fontColor="noshade"
+                      />
+                    </div>
                   )
                 ) : props.auctionDate ? (
                   isPreAuctionExpired(props.auctionDate) ? null : (

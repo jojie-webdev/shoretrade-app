@@ -1,0 +1,237 @@
+import React from 'react';
+
+// import { useTheme } from 'utils/Theme';
+import Radio from 'components/base/Radio';
+import { MarketBoardOutlined } from 'components/base/SVG';
+import Typography from 'components/base/Typography';
+import ConfirmationModal from 'components/module/ConfirmationModal';
+import { isEmpty } from 'ramda';
+import { toPrice } from 'utils/String';
+
+import Loading from '../Loading';
+import { ProductDetailsNegotiationModalProps } from './ProductDetailsNegotiationModal.props';
+import {
+  Container,
+  GroupedBoxContainer,
+  RadioBtnContainer,
+  StyledTextField,
+} from './ProductDetailsNegotiationModal.style';
+
+const ProductDetailsNegotiationModal = (
+  props: ProductDetailsNegotiationModalProps
+): JSX.Element => {
+  // const theme = useTheme();
+  const {
+    isOpen,
+    onClickClose,
+    action,
+    disableActionText,
+    negotiationPrice,
+    handleNegotiationPriceSetting,
+    unit,
+    negotiationWeight,
+    handleDesiredQuantityChange,
+    groupedBox,
+    handleSelectedBoxesWeight,
+    isLoadingListingBoxes,
+    priceDiffPercentage,
+    selectedBoxesWeight,
+    productDetailsCard6Props,
+    selectedBoxesIndex,
+  } = props;
+
+  return (
+    <Container>
+      <ConfirmationModal
+        isOpen={isOpen}
+        onClickClose={onClickClose}
+        title={
+          <Typography
+            variant="title4"
+            color="shade8"
+            weight="900"
+            style={{ fontFamily: 'Canela' }}
+          >
+            Negotiate
+          </Typography>
+        }
+        action={action}
+        actionIconPosition="before"
+        actionIcon={<MarketBoardOutlined width={20} height={20} />}
+        actionText="NEGOTIATE"
+        disableActionText={disableActionText}
+        hideCancel={true}
+        description={
+          <div style={{ marginTop: 20 }}>
+            <StyledTextField
+              type="number"
+              inputType="decimal"
+              step=".01"
+              label={'Counter Offer'}
+              defaultValue={productDetailsCard6Props.price}
+              value={negotiationPrice}
+              onChangeText={(v) => {
+                let price = v;
+                if (price.indexOf('.') >= 0) {
+                  price =
+                    price.substr(0, price.indexOf('.')) +
+                    price.substr(price.indexOf('.'), 3);
+                }
+                handleNegotiationPriceSetting(parseFloat(price));
+              }}
+              min={1}
+              LeftComponent={
+                <Typography variant="label" color="shade6">
+                  {'$'}
+                </Typography>
+              }
+              placeholder={`per ${unit}`}
+              style={{ marginTop: 10 }}
+            />
+            <StyledTextField
+              value={negotiationWeight}
+              onChangeText={handleDesiredQuantityChange}
+              type="number"
+              inputType="decimal"
+              step=".01"
+              label={'Desired Quantity'}
+              min={1}
+              LeftComponent={
+                <Typography variant="label" color="shade6">
+                  {'kg'}
+                </Typography>
+              }
+              placeholder={`Minimum Order: ${
+                productDetailsCard6Props.minOrder
+              } ${productDetailsCard6Props.unit ?? 'kg'}`}
+              style={{ marginTop: 16 }}
+            />
+            <div style={{ marginTop: 15 }} />
+            {!isEmpty(groupedBox)
+              ? groupedBox.map((p, index) => (
+                  <div key={p.id}>
+                    <GroupedBoxContainer>
+                      <div style={{ padding: '0 0 0 20px' }}>
+                        <Radio
+                          checked={index === selectedBoxesIndex}
+                          onClick={() =>
+                            handleSelectedBoxesWeight(
+                              groupedBox[index].boxes,
+                              index
+                            )
+                          }
+                        />
+                      </div>
+                      <div style={{ width: '100%', paddingTop: 2 }}>
+                        {p.boxes.map((box, index) => (
+                          <div key={box.id}>
+                            <RadioBtnContainer>
+                              <div style={{ display: 'flex' }}>
+                                <div style={{ marginRight: 27 }} />
+                                <Typography variant="caption" color="shade6">
+                                  {box.weight}
+                                  {p.unit} x {box.quantity}
+                                </Typography>
+                              </div>
+                              <Typography variant="caption" color="shade6">
+                                {Number.isInteger(box.weight)
+                                  ? (box.weight * (box.quantity || 0)).toFixed(
+                                      0
+                                    )
+                                  : (box.weight * (box.quantity || 0)).toFixed(
+                                      2
+                                    )}{' '}
+                                {unit}
+                              </Typography>
+                            </RadioBtnContainer>
+                            {p.boxes.length > index + 1 && (
+                              <div style={{ marginTop: 5 }} />
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </GroupedBoxContainer>
+                    {groupedBox.length > index + 1 && (
+                      <div style={{ marginTop: 5 }} />
+                    )}
+                  </div>
+                ))
+              : isLoadingListingBoxes && (
+                  <div className="box-loading">
+                    <Loading />
+                  </div>
+                )}
+            <div style={{ marginTop: 24 }} />
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Typography variant="caption" color="shade6">
+                Seller&apos;s Listed Price
+              </Typography>
+              <Typography variant="label" color="secondary">
+                {toPrice(productDetailsCard6Props.price)}/{unit}
+              </Typography>
+            </div>
+            <div style={{ marginTop: 5 }} />
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex' }}>
+                <Typography variant="caption" color="shade6">
+                  Change in Price{' '}
+                  {priceDiffPercentage ? (
+                    <span className="indicator">
+                      {negotiationPrice < Number(productDetailsCard6Props.price)
+                        ? '+'
+                        : '-'}
+                      {/* {new Intl.NumberFormat('en-US', {
+                        signDisplay: 'exceptZero',
+                      }).format(
+                        Number(Math.abs(priceDiffPercentage).toFixed(2))
+                      )} */}
+                      {Number(Math.abs(priceDiffPercentage).toFixed(2))}%
+                    </span>
+                  ) : (
+                    <span className="indicator">0.00%</span>
+                  )}
+                </Typography>
+              </div>
+              <Typography
+                variant="label"
+                color={priceDiffPercentage > 0 ? 'error' : 'success'}
+              >
+                {toPrice(
+                  Math.abs(
+                    Number(productDetailsCard6Props.price) - negotiationPrice
+                  )
+                )}
+                /{unit}
+              </Typography>
+            </div>
+            <div style={{ marginTop: 5 }} />
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Typography variant="caption" color="shade6">
+                Total Product Value
+              </Typography>
+              <Typography
+                weight="700"
+                color="secondary"
+                style={{ fontFamily: 'Basis Grotesque Pro' }}
+              >
+                {toPrice(
+                  selectedBoxesWeight.reduce(
+                    (acc, cur) =>
+                      acc +
+                      (cur.quantity || 0) *
+                        cur.weight *
+                        (negotiationPrice ||
+                          Number(productDetailsCard6Props.price)),
+                    0
+                  )
+                )}
+              </Typography>
+            </div>
+          </div>
+        }
+      />
+    </Container>
+  );
+};
+
+export default React.memo(ProductDetailsNegotiationModal);

@@ -1,12 +1,16 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getNegotiationCreditActions } from 'store/actions';
 import { Store } from 'types/store/Store';
 
 import FavouritesView from './Favourites.view';
 
 const Favourites = (): JSX.Element => {
   const [searchValue, setSearchValue] = useState('');
+  const [showNegoModal, setShowNegoModal] = useState(false);
+
+  const dispatch = useDispatch();
 
   const addresses = useSelector(
     (state: Store) => state.getAddresses.data?.data.addresses
@@ -41,6 +45,22 @@ const Favourites = (): JSX.Element => {
     setSearchValue('');
   };
 
+  const handleShowNegoCreditsModal = () => {
+    console.log('favourites container');
+  };
+
+  const handleShowNegoModal = (listingId: string) => {
+    setShowNegoModal((prevValue) => !prevValue);
+  };
+
+  const negotiationCredit = useSelector(
+    (store: Store) => store.getNegotiationCredit.data?.data
+  );
+
+  useEffect(() => {
+    dispatch(getNegotiationCreditActions.request({}));
+  }, []);
+
   const generatedProps = {
     results,
     isPendingAccount,
@@ -48,6 +68,9 @@ const Favourites = (): JSX.Element => {
     onResetSearchValue,
     searchValue,
     isLoadingResults,
+    handleShowNegoCreditsModal,
+    negotiationCredit: negotiationCredit?.credit?.toString() || '0',
+    handleShowNegoModal,
   };
 
   return <FavouritesView {...generatedProps} />;

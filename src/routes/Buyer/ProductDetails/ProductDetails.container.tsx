@@ -107,8 +107,7 @@ const ProductDetails = (): JSX.Element => {
       : null;
   }, [getUser]);
 
-  const canNegotiate =
-    defaultCompany?.credit !== '0.00' && (isSubscribedToNegoRequest || false);
+  const canNegotiate = isSubscribedToNegoRequest || false;
 
   // const updateFavoriteSeller = useSelector(
   //   (state: Store) => state.updateFavoriteSeller

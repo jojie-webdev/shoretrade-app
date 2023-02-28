@@ -39,4 +39,7 @@ export interface PreviewProps {
   canNegotiate?: boolean;
   allowNegotiations: boolean;
   auctionDate: string;
+  handleShowNegoCreditsModal: (() => void) | undefined;
+  negotiationCredit: string;
+  handleShowNegoModal: ((listingId: string) => void) | undefined;
 }

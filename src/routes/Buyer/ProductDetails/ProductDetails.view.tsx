@@ -20,7 +20,10 @@ import BoxRadio from 'components/module/BoxRadio';
 import Carousel from 'components/module/Carousel';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import Loading from 'components/module/Loading';
+import NegotiationCreditsModal from 'components/module/NegotiationCreditsModal';
+import { NegotiationCreditsModalProps } from 'components/module/NegotiationCreditsModal/NegotiationCreditsModal.props';
 import ProductDetailsCard6View from 'components/module/ProductDetailsCard6';
+import ProductDetailsNegotiationModal from 'components/module/ProductDetailsNegotiationModal';
 import ProductSellerCard from 'components/module/ProductSellerCard';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { BUYER_ACCOUNT_ROUTES } from 'consts/routes';
@@ -30,7 +33,6 @@ import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router';
 import { GetListingResponseItem } from 'types/store/GetListingState';
-import { toPrice } from 'utils/String';
 import theme from 'utils/Theme';
 
 import { ProductDetailsGeneratedProps } from './ProductDetails.props';
@@ -48,10 +50,7 @@ import {
   TopBarContainer,
   StatusContainer,
   BadgeText,
-  StyledTextField,
-  RadioBtnContainer,
   Container,
-  GroupedBoxContainer,
 } from './ProductDetails.style';
 
 const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
@@ -125,6 +124,12 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
       ? -(Math.abs(priceDiff2) * 100)
       : priceDiff2 * 100;
 
+  const negotiationCreditsProps: NegotiationCreditsModalProps = {
+    showNegoCreditsModal,
+    handleShowNegoCreditsModal,
+    negotiationCredit: negotiationCredit?.credit?.toString() || '0',
+  };
+
   useEffect(() => {
     selectAddress(listingId);
     // onLoad(listingId);
@@ -160,34 +165,28 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     // eslint-disable-next-line
   }, [groupedBox]);
 
+  const productDetailsNegotiationModalProps = {
+    isOpen: showNegoModal,
+    onClickClose: props.productDetailsCard6Props.handleNegoModalShow,
+    action: handleShowConfirmNegoModal,
+    disableActionText: isBeyondCutoff,
+    negotiationPrice,
+    handleNegotiationPriceSetting,
+    unit,
+    negotiationWeight,
+    handleDesiredQuantityChange,
+    groupedBox,
+    handleSelectedBoxesWeight,
+    isLoadingListingBoxes,
+    priceDiffPercentage,
+    selectedBoxesWeight,
+    productDetailsCard6Props,
+    selectedBoxesIndex,
+  };
+
   return (
     <Container>
-      <ConfirmationModal
-        isOpen={showNegoCreditsModal}
-        onClickClose={handleShowNegoCreditsModal}
-        title={
-          <Typography
-            variant="title4"
-            color="shade8"
-            weight="900"
-            style={{ fontFamily: 'Canela' }}
-          >
-            {negotiationCredit?.credit || '0'} Negotiation Credits
-          </Typography>
-        }
-        action={() => history.push(BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN)}
-        cancel={handleShowNegoCreditsModal}
-        actionText="See Plans"
-        cancelText="Close"
-        description={
-          <div style={{ marginTop: 20 }}>
-            <Typography variant="label" color="shade6">
-              Upgrade your subscription plan to Pro to get more negotiation
-              credits.
-            </Typography>
-          </div>
-        }
-      />
+      <NegotiationCreditsModal {...negotiationCreditsProps} />
       <ConfirmationModal
         isOpen={showConfirmNegoModal}
         onClickClose={handleShowConfirmNegoModal}
@@ -219,7 +218,10 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
           </div>
         }
       />
-      <ConfirmationModal
+      <ProductDetailsNegotiationModal
+        {...productDetailsNegotiationModalProps}
+      />
+      {/* <ConfirmationModal
         isOpen={showNegoModal}
         onClickClose={props.productDetailsCard6Props.handleNegoModalShow}
         title={
@@ -357,11 +359,6 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                       {negotiationPrice < Number(productDetailsCard6Props.price)
                         ? '+'
                         : '-'}
-                      {/* {new Intl.NumberFormat('en-US', {
-                        signDisplay: 'exceptZero',
-                      }).format(
-                        Number(Math.abs(priceDiffPercentage).toFixed(2))
-                      )} */}
                       {Number(Math.abs(priceDiffPercentage).toFixed(2))}%
                     </span>
                   ) : (
@@ -406,7 +403,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
             </div>
           </div>
         }
-      />
+      /> */}
       {newCurrentListing !== undefined ? (
         <>
           <DetailsContainer>

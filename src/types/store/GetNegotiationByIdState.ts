@@ -4,6 +4,19 @@ export type GetNegotiationByIdMeta = {
   negotiationRequestId: string;
 };
 
+export type NegotiationItem = {
+  company_id: string;
+  counter_offer: number;
+  created_at: string;
+  desired_quantity: number;
+  id: string;
+  listing_box_id: string;
+  negotiation_request_id: string;
+  seller_id: string;
+  status: string;
+  updated_at: string;
+};
+
 export type GetNegotiationByIdRequestResponseItem = {
   id: string;
   listing_id: string;
@@ -28,18 +41,11 @@ export type GetNegotiationByIdRequestResponseItem = {
   measurement_unit: string;
   unit_kg_conversion: string;
   metric: string;
-  negotiation_offer: {
-    company_id: string;
-    counter_offer: number;
-    created_at: string;
-    desired_quantity: number;
-    id: string;
-    listing_box_id: string;
-    negotiation_request_id: string;
-    seller_id: string;
-    status: string;
-    updated_at: string;
+  history: {
+    negotiation_request: NegotiationItem | null;
+    negotiation_offer: NegotiationItem | null;
   };
+  negotiation_offer: NegotiationItem;
   auction_date: string;
   is_pre_auction: false;
   display_status: string;

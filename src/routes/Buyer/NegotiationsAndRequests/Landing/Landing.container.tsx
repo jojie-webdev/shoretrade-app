@@ -141,8 +141,7 @@ const MarketRequestsLanding = (): JSX.Element => {
       ? companyPlan && !companyPlan.flags?.hasCancelledReversedMarketplace
       : subscriptionType !== null && false;
 
-  const canNegotiate =
-    defaultCompany?.credit !== '0.00' && (isSubscribedToNegoRequest || false);
+  const canNegotiate = isSubscribedToNegoRequest || false;
 
   const onClickItem = (row: Result) => {
     if (row.offers && row.offers > 0) {

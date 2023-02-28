@@ -27,6 +27,7 @@ const CategoriesPreview = (): JSX.Element => {
   const { id: typeIdParsed } = useParams<any>();
 
   const [searchValue, setSearchValue] = useState('');
+  const [showNegoModal, setShowNegoModal] = useState(false);
 
   const addressesData = useSelector(
     (state: Store) => state.getAddresses.data?.data.addresses
@@ -154,6 +155,18 @@ const CategoriesPreview = (): JSX.Element => {
   );
   const [prevTypeId, setPrevTypeId] = useLocalStorage('prev-type-id', '');
 
+  const handleShowNegoCreditsModal = () => {
+    console.log('preview container');
+  };
+
+  const handleShowNegoModal = (listingId: string) => {
+    setShowNegoModal((prevValue) => !prevValue);
+  };
+
+  const negotiationCredit = useSelector(
+    (store: Store) => store.getNegotiationCredit.data?.data
+  );
+
   useEffect(() => {
     setPrevTypeId(typeIdParsed);
     // eslint-disable-next-line
@@ -264,8 +277,10 @@ const CategoriesPreview = (): JSX.Element => {
 
     //filterData,
     // onChangeFilter,
-    canNegotiate:
-      defaultCompany?.credit !== '0.00' && (isSubscribedToNegoRequest || false),
+    canNegotiate: isSubscribedToNegoRequest || false,
+    handleShowNegoCreditsModal,
+    negotiationCredit: negotiationCredit?.credit?.toString() || '0',
+    handleShowNegoModal,
   };
   return <CategoriesPreviewView {...generatedProps} />;
 };

@@ -48,7 +48,10 @@ export function placeDataToUpdateAddressMeta(
 export function recentlyAddedToPreviewProps(
   data: GetBuyerHomepageResponseListingItem,
   isPendingAccount: boolean,
-  canNegotiate?: boolean
+  canNegotiate?: boolean,
+  handleShowNegoCreditsModal?: () => void,
+  negotiationCredit?: string,
+  handleShowNegoModal?: (listingId: string) => void
 ): PreviewProps {
   return {
     id: data.id,
@@ -76,6 +79,9 @@ export function recentlyAddedToPreviewProps(
     canNegotiate,
     allowNegotiations: data.allowNegotiations,
     auctionDate: data.auctionDate,
+    handleShowNegoCreditsModal,
+    negotiationCredit: negotiationCredit || '',
+    handleShowNegoModal,
   };
 }
 
@@ -91,7 +97,10 @@ export function categoriesToCardProps(data: CategoryResults): CardProps {
 export function favouritesToPreviewProps(
   data: GetBuyerHomepageResponseListingItem,
   isPendingAccount: boolean,
-  canNegotiate?: boolean
+  canNegotiate?: boolean,
+  handleShowNegoCreditsModal?: () => void,
+  negotiationCredit?: string,
+  handleShowNegoModal?: (listingId: string) => void
 ): PreviewProps {
   return {
     id: data.id,
@@ -117,6 +126,9 @@ export function favouritesToPreviewProps(
     allowNegotiations: data.allowNegotiations,
     auctionDate: data.auctionDate,
     canNegotiate,
+    handleShowNegoCreditsModal,
+    negotiationCredit: negotiationCredit || '',
+    handleShowNegoModal,
   };
 }
 

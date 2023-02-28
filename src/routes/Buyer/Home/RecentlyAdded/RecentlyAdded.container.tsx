@@ -2,7 +2,11 @@ import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getActivePlan } from 'routes/Buyer/Account/SubscriptionPlan/SubscriptionPlan.transform';
-import { getBuyerHomepageActions, showNegotiableActions } from 'store/actions';
+import {
+  getBuyerHomepageActions,
+  getNegotiationCreditActions,
+  showNegotiableActions,
+} from 'store/actions';
 import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
 import { Store } from 'types/store/Store';
 
@@ -10,6 +14,7 @@ import RecentlyAddedView from './RecentlyAdded.view';
 
 const RecentlyAdded = (): JSX.Element => {
   const [searchValue, setSearchValue] = useState('');
+  const [showNegoModal, setShowNegoModal] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -55,8 +60,7 @@ const RecentlyAdded = (): JSX.Element => {
       ? companyPlan && !companyPlan.flags?.hasCancelledReversedMarketplace
       : subscriptionType !== null && false;
 
-  const canNegotiate =
-    defaultCompany?.credit !== '0.00' && (isSubscribedToNegoRequest || false);
+  const canNegotiate = isSubscribedToNegoRequest || false;
 
   const results = (
     useSelector(
@@ -87,8 +91,21 @@ const RecentlyAdded = (): JSX.Element => {
     dispatch(showNegotiableActions.update({ showNegotiable: show }));
   };
 
+  const handleShowNegoCreditsModal = () => {
+    console.log('recently container');
+  };
+
+  const handleShowNegoModal = (listingId: string) => {
+    setShowNegoModal((prevValue) => !prevValue);
+  };
+
+  const negotiationCredit = useSelector(
+    (store: Store) => store.getNegotiationCredit.data?.data
+  );
+
   useEffect(() => {
     dispatch(getBuyerHomepageActions.request());
+    dispatch(getNegotiationCreditActions.request({}));
   }, [showNegotiable]);
 
   const generatedProps = {
@@ -101,6 +118,9 @@ const RecentlyAdded = (): JSX.Element => {
     canNegotiate,
     handleNegotiableToggle,
     showNegotiable,
+    handleShowNegoCreditsModal,
+    negotiationCredit: negotiationCredit?.credit?.toString() || '0',
+    handleShowNegoModal,
   };
 
   return <RecentlyAddedView {...generatedProps} />;
