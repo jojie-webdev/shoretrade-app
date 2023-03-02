@@ -118,6 +118,7 @@ const HomeView = (props: HomeGeneratedProps) => {
     handleShowNegoModal,
     showNegoModal,
     clickedRecentListing,
+    handleNegoModalToggle,
   } = props;
 
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -178,9 +179,8 @@ const HomeView = (props: HomeGeneratedProps) => {
   const productDetailsNegotiationModalProps: ProductDetailsNegotiationModalProps =
     {
       isOpen: showNegoModal,
-      onClickClose: () => {
-        console.log('productDetailsNegotiationModalProps > onClickClose');
-      }, //props.productDetailsCard6Props.handleNegoModalShow,
+      onClickClose: handleNegoModalToggle,
+      //props.productDetailsCard6Props.handleNegoModalShow,
       action: () => {
         console.log('productDetailsNegotiationModalProps > action');
       }, //handleShowConfirmNegoModal,

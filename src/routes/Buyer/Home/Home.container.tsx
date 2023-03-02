@@ -144,6 +144,10 @@ const Home = (): JSX.Element => {
     // );
   };
 
+  const handleNegoModalToggle = () => {
+    setShowNegoModal((prevValue) => !prevValue);
+  };
+
   useEffect(() => {
     if (company) {
       dispatch(getMarketInterestsActions.request({ companyId: company.id }));
@@ -203,6 +207,7 @@ const Home = (): JSX.Element => {
     handleShowNegoModal,
     showNegoModal,
     clickedRecentListing,
+    handleNegoModalToggle,
   };
 
   return isOld ? (

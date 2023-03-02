@@ -58,8 +58,9 @@ const ProductDetailsNegotiationModal = (
         action={action}
         actionIconPosition="before"
         actionIcon={<MarketBoardOutlined width={20} height={20} />}
-        actionText="NEGOTIATE"
-        disableActionText={disableActionText}
+        actionText="NEGOTIATE (WAITING BE)"
+        // disableActionText={disableActionText}
+        disableActionText={false}
         hideCancel={true}
         description={
           <div style={{ marginTop: 20 }}>

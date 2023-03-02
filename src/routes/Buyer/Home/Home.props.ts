@@ -41,6 +41,7 @@ export interface HomeGeneratedProps {
   handleShowNegoModal: (listingId: string) => void;
   showNegoModal: boolean;
   clickedRecentListing: GetBuyerHomepageResponseListingItem | undefined;
+  handleNegoModalToggle: () => void;
 }
 
 export interface HomeData {
