@@ -272,16 +272,34 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
   };
 
   const getAlertProps = (): AlertProps => {
-    // switch (
-    //   reworkDisplayStatus(negotiation?.display_status?.toLowerCase() || '')
-    // )
-    switch (reworkDisplayStatus('Payment Missed'.toLowerCase())) {
+    switch (
+      reworkDisplayStatus(negotiation?.display_status?.toLowerCase() || '')
+    ) {
+      // switch (reworkDisplayStatus('Finalised'.toLowerCase())) {
+      case 'counter offer':
+        return {
+          title: 'Counter-offer from Seller',
+          alertColor: 'success',
+          description: (
+            <Typography variant="caption" color="shade7" weight="400">
+              Review the negotiation and respond within{' '}
+              <span
+                style={{
+                  color: theme.brand.primary,
+                }}
+              >
+                X
+              </span>{' '}
+              hours to proceed.
+            </Typography>
+          ),
+        };
       case 'end':
         return {
           title: 'Negotiation Declined',
           alertColor: 'error',
           description: (
-            <Typography variant="body" color="shade6" weight="400">
+            <Typography variant="caption" color="shade7" weight="400">
               Your negotiation was declined by the Seller.
             </Typography>
           ),
@@ -292,10 +310,10 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
           alertColor: 'primary',
           description: (
             <>
-              <Typography variant="body" color="shade6" weight="400">
+              <Typography variant="caption" color="shade7" weight="400">
                 Please process the payment within {identifyTimeLimit()} hours.
               </Typography>
-              <Typography variant="body" color="shade6" weight="400">
+              <Typography variant="caption" color="shade7" weight="400">
                 This negotiation will automatically close if payment is not
                 received.
               </Typography>
@@ -308,7 +326,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
           alertColor: 'error',
           description: (
             <>
-              <Typography variant="body" color="shade6" weight="400">
+              <Typography variant="caption" color="shade7" weight="400">
                 The offer has automatically closed due to missed payment.
               </Typography>
             </>
@@ -320,117 +338,51 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
           title: 'Awaiting Seller',
           alertColor: 'alert',
           description: (
-            <Typography variant="body" color="shade6" weight="400">
+            <Typography variant="caption" color="shade7" weight="400">
               Your negotiation is being reviewed by the Seller
             </Typography>
           ),
         };
 
-      case '':
-        if (negotiation?.status === 'END') {
-          return {
-            title: 'Negotiation Finalised',
-            alertColor: 'success',
-            description: (
-              <Typography variant="body" color="shade6" weight="400">
-                The Negotiation is now Order #0000-XXXX and can be found in your
-                sold tab{' '}
-                <span
-                  style={{
-                    color: theme.brand.primary,
-                    textDecoration: 'underline',
-                  }}
-                  // onClick={() => history.push(SOLD_)}
-                >
-                  here
-                </span>
-                .
-              </Typography>
-            ),
-          };
-        } else {
-          return {
-            title: '',
-            alertColor: 'primary',
-            description: <></>,
-          };
-        }
+      // case '':
+      //   if (negotiation?.status === 'END') {
+      //     return {
+      //       title: 'Negotiation Finalised',
+      //       alertColor: 'success',
+      //       description: (
+      //         <Typography variant="caption" color="shade7" weight="400">
+      //           The Negotiation is now Order #0000-XXXX and can be found in your
+      //           sold tab{' '}
+      //           <span
+      //             style={{
+      //               color: theme.brand.primary,
+      //               textDecoration: 'underline',
+      //             }}
+      //             // onClick={() => history.push(SOLD_)}
+      //           >
+      //             here
+      //           </span>
+      //           .
+      //         </Typography>
+      //       ),
+      //     };
+      //   } else {
+      //     return {
+      //       title: '',
+      //       alertColor: 'primary',
+      //       description: <></>,
+      //     };
+      //   }
       case 'finalised':
         return {
           title: 'Negotiation Finalised',
           alertColor: 'success',
           description: (
-            <Typography variant="body" color="shade6" weight="400">
-              The Negotiation is now Order #0000-XXXX and can be found in your
-              sold tab{' '}
-              <span
-                style={{
-                  color: theme.brand.primary,
-                  textDecoration: 'underline',
-                }}
-                // onClick={() => history.push(SOLD_)}
-              >
-                here
-              </span>
-              .
+            <Typography variant="caption" color="shade7" weight="400">
+              The Negotiation is now Order #0000-XXXX
             </Typography>
           ),
         };
-
-      case 'new negotiation':
-        return {
-          title: 'New Negotiation',
-          alertColor: 'alert',
-          description: (
-            <Typography variant="body" color="shade6" weight="400">
-              A buyer has sent you a negotiation for{' '}
-              {/* <NewNegoTypeWrapper>{negotiation?.name}</NewNegoTypeWrapper> */}
-            </Typography>
-          ),
-        };
-
-      case 'awaiting buyer':
-        return {
-          title: 'Awaiting Buyer',
-          alertColor: 'alert',
-          description: (
-            <Typography variant="body" color="shade6" weight="400">
-              The buyer will respond to your offer soon.
-            </Typography>
-          ),
-        };
-
-      case 'awaiting payment':
-        return {
-          title: 'Negotiation Accepted-Pending Payment',
-          alertColor: 'primary',
-          description: (
-            <Typography variant="body" color="shade6" weight="400">
-              The sale will be finalised once the Buyer processes your payment
-              within 24 hours. You will be notified when this occurs.
-            </Typography>
-          ),
-        };
-
-      // case 'lost':
-      //   return {
-      //     title: 'New Negotiation',
-      //     alertColor: 'noshade',
-      //     description: (
-      //      Buyer has sent you a negotiation for ${productTypeName}`,
-      //   };
-
-      // case 'declined':
-      //   return {
-      //     title: 'Negotiation Declined',
-      //     alertColor: 'error',
-      //     description: (
-      //       <Typography variant="body" color="shade6" weight="400">
-      //         The Buyer declined your counter-offer for{' '}
-      //         <NewNegoTypeWrapper>{negotiation?.name}</NewNegoTypeWrapper>
-      //       </Typography>
-      //     ),
-      //   };
 
       default:
         return {
@@ -496,12 +448,12 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
             {renderLabel('PRICE', { marginTop: '24px' })}
             {renderLabelValue(pricePerUnit.toLowerCase())}
 
-            {renderLabel('Delivery Address', { marginTop: '24px' })}
-            {renderLabelValue(
+            {/*{renderLabel('Delivery Address', { marginTop: '24px' })}
+             {renderLabelValue(
               // eslint-disable-next-line react/prop-types
               // getShippingAddress(offerMR.shippingTo as ShippingAddress)
               'negotiation.shippingTo'
-            )}
+            )} */}
           </Col>
         </Row>
         <Hidden xs sm>
@@ -527,11 +479,11 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
                 </div>
               </DefaultCTAContainer>
             )} */}
-
           {negotiation?.status !== 'ACCEPTED' &&
             negotiation?.status !== 'PARTIAL' &&
             negotiation?.status !== 'DECLINED' &&
-            negotiation?.status !== 'LOST' && (
+            negotiation?.status !== 'LOST' &&
+            negotiation?.status !== 'END' && (
               <CTAContainer>
                 <div style={{ display: 'flex' }}>
                   <Button
@@ -545,40 +497,46 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
                     icon={<Close fill={theme.brand.primary} />}
                     style={{ width: '100%', marginRight: 10 }}
                   />
-                  <Button
-                    text={
-                      <Typography color="noshade" style={{ marginRight: 5 }}>
-                        Negotiate
-                      </Typography>
-                    }
-                    icon={<Refresh fill={theme.grey.noshade} />}
-                    onClick={handleNegoBtnClick2}
-                    disabled={negotiation?.display_status !== 'Counter Offer'}
-                    style={{ marginRight: 10, width: '100%' }}
-                  />
+                  {negotiation?.display_status?.toLowerCase() !==
+                    'awaiting seller' && (
+                    <Button
+                      text={
+                        <Typography color="noshade" style={{ marginRight: 5 }}>
+                          Negotiate
+                        </Typography>
+                      }
+                      icon={<Refresh fill={theme.grey.noshade} />}
+                      onClick={handleNegoBtnClick2}
+                      disabled={negotiation?.display_status !== 'Counter Offer'}
+                      style={{ marginRight: 10, width: '100%' }}
+                    />
+                  )}
                 </div>
                 <div style={{ width: '124px' }}>
-                  <StyledAcceptButton
-                    text={
-                      <Typography color="noshade" style={{ marginRight: 5 }}>
-                        Accept
-                      </Typography>
-                    }
-                    icon={<Check width={10} height={9} />}
-                    onClick={() => handleAcceptClick(true)}
-                    disabled={negotiation?.display_status !== 'Counter Offer'}
-                  />
+                  {negotiation?.display_status?.toLowerCase() !==
+                    'awaiting seller' && (
+                    <StyledAcceptButton
+                      text={
+                        <Typography color="noshade" style={{ marginRight: 5 }}>
+                          Accept
+                        </Typography>
+                      }
+                      icon={<Check width={10} height={9} />}
+                      onClick={() => handleAcceptClick(true)}
+                      disabled={negotiation?.display_status !== 'Counter Offer'}
+                    />
+                  )}
                 </div>
               </CTAContainer>
             )}
 
           {negotiation?.status === 'PARTIAL' && (
             <CTAContainer
-            // onClick={() =>
-            //   history.push(
-            //     BUYER_ROUTES.NEGOTIATION_CHECKOUT(negotiation?.id || '')
-            //   )
-            // }
+              onClick={() =>
+                history.push(
+                  BUYER_ROUTES.NEGOTIATION_CHECKOUT(negotiation?.id || '')
+                )
+              }
             >
               <div style={{ width: 'fit-content' }}>
                 <StyledAcceptButton
@@ -590,7 +548,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
                       style={{ fontFamily: 'Basis Grotesque Pro' }}
                       disabled={true}
                     >
-                      Proceed To Checkout (WAITING FOR BE)
+                      Proceed To Checkout
                     </Typography>
                   }
                   // icon={<Check width={10} height={9} />}
