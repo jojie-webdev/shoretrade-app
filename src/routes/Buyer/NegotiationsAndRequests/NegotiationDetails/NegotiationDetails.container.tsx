@@ -4,19 +4,21 @@ import Loading from 'components/module/Loading';
 import { BUYER_ROUTES } from 'consts';
 import { BUYER_MARKET_REQUEST_ROUTES } from 'consts/routes';
 import moment from 'moment';
-import { sortBy } from 'ramda';
+import { isEmpty, sortBy } from 'ramda';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { getActivePlan } from 'routes/Buyer/Account/SubscriptionPlan/SubscriptionPlan.transform';
 import { syncAASBalance } from 'services/aas';
 import {
   acceptNegotiationActions,
+  addCartItemActions,
   createBuyerCounterNegotiationActions,
   declineNegotiationActions,
   deleteMarketRequestActions,
   getActiveOffersActions,
   getAllMarketRequestActions,
   getAllNegotiationsActions,
+  getListingBoxesActions,
   getNegotiationByIdActions,
   marketOfferActions,
 } from 'store/actions';
@@ -63,8 +65,10 @@ const NegotiationDetails = (): JSX.Element => {
   const [clickDecline, setClickDecline] = useState(false);
   const [showBuyerCounterNegoModal, setShowBuyerCounterNegoModal] =
     useState(false);
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 
   const defaultCompany = GetDefaultCompany();
+  const employeeId = defaultCompany?.employeeId || '';
 
   const companyPlan = useSelector(
     (store: Store) => store.getCompanyPlan.data?.data
@@ -136,6 +140,9 @@ const NegotiationDetails = (): JSX.Element => {
   const isDeclineNegotiationPending =
     useSelector((store: Store) => store.declineNegotiation.pending) === true;
 
+  // const getListingBoxes =
+  //   useSelector((state: Store) => state.getListingBoxes.data?.data.boxes) || [];
+
   const filteredBuyerRequests = buyerRequests.data?.data?.marketRequests.filter(
     (mR) => mR.status !== 'DELETED' && mR.status !== 'CLOSED'
   );
@@ -154,6 +161,68 @@ const NegotiationDetails = (): JSX.Element => {
     },
   ];
 
+  const getFinalPrice = () => {
+    let price = negotiation?.price_per_kilo;
+
+    if (negotiation?.counter_offer) {
+      price = negotiation?.counter_offer;
+    }
+
+    if (negotiation?.history?.negotiation_request?.counter_offer?.toString()) {
+      price =
+        negotiation?.history?.negotiation_request?.counter_offer?.toString();
+    }
+
+    if (negotiation?.history?.negotiation_offer?.counter_offer?.toString()) {
+      price =
+        negotiation?.history?.negotiation_offer?.counter_offer?.toString();
+    }
+
+    return price;
+  };
+
+  // const groupedBox =
+  //   negotiation?.listing_id &&
+  //   getListingBoxes.map((boxGroup) => {
+  //     return boxGroup.reduce(
+  //       (
+  //         accum: {
+  //           id: string;
+  //           totalWeight: number;
+  //           quantity: number;
+  //           cost: number;
+  //           boxes: {
+  //             count: number | null;
+  //             id: string;
+  //             quantity: number | null;
+  //             weight: number;
+  //           }[];
+  //           unit: string;
+  //         },
+  //         current
+  //       ) => {
+  //         const totalWeight =
+  //           accum.totalWeight + current.weight * (current?.quantity || 0);
+  //         return {
+  //           id: `${accum.id}${accum.id ? '' : ','}${current.id}`,
+  //           totalWeight,
+  //           cost: Number(getFinalPrice() || '0') * totalWeight,
+  //           quantity: 1,
+  //           boxes: [...accum.boxes, current],
+  //           unit: negotiation?.metric,
+  //         };
+  //       },
+  //       {
+  //         id: '',
+  //         totalWeight: 0,
+  //         cost: 0,
+  //         quantity: 1,
+  //         boxes: [],
+  //         unit: negotiation?.metric,
+  //       }
+  //     );
+  //   });
+
   const handleDeclineClick = (show: boolean) => {
     setShowDeclineModal((prevValue) => !prevValue);
   };
@@ -168,6 +237,26 @@ const NegotiationDetails = (): JSX.Element => {
       );
     }
   };
+
+  // const onAddToCart = () => {
+  //   const currentBox = groupedBox.find((box) => box.id === pressedBoxRadio);
+
+  //   if (currentBox) {
+  //     dispatch(
+  //       addCartItemActions.request({
+  //         employeeId,
+  //         boxes: currentBox.boxes.map((b) => ({
+  //           id: b.id,
+  //           quantity: b.quantity || 0,
+  //         })),
+  //       })
+  //     );
+  //     setPressedBoxRadio('');
+  //     setWeight('');
+  //     // history.push(BUYER_ROUTES.CHECKOUT); // moved to sagas
+  //     setShowSuccessAddBtn(true);
+  //   }
+  // };
 
   const handlePayNow = () => {
     setShowPaymentMethod(true);
@@ -186,6 +275,22 @@ const NegotiationDetails = (): JSX.Element => {
       };
 
       dispatch(marketOfferActions.add(payload));
+    }
+  };
+
+  const handleProceedToCheckoutClick = () => {
+    if (negotiation?.listing_box) {
+      dispatch(
+        addCartItemActions.request({
+          employeeId,
+          boxes: [
+            {
+              id: negotiation?.listing_box?.id,
+              quantity: negotiation?.listing_box?.quantity,
+            },
+          ],
+        })
+      );
     }
   };
 
@@ -254,7 +359,7 @@ const NegotiationDetails = (): JSX.Element => {
 
   const onPayNow = () => {
     dispatch(marketRequestOfferConfirmActions.clear());
-    handlePayNow();
+    // handlePayNow();
   };
 
   const onCloseAcceptSentModal = () => {
@@ -274,6 +379,36 @@ const NegotiationDetails = (): JSX.Element => {
     }
     setNegotiating(false);
   };
+
+  // const getBoxes = () => {
+  //   if (timer) {
+  //     clearTimeout(timer);
+  //     setTimer(null);
+  //   }
+  //   const timerId = setTimeout(() => {
+  //     if (negotiation?.desired_quantity) {
+  //       // request only when weight or id is different
+  //       // if (
+  //       //   !(
+  //       //     negotiationWeight === previousWeightRequest?.weight &&
+  //       //     id === previousWeightRequest?.listingId
+  //       //   ) ||
+  //       //   !(
+  //       //     weight === previousWeightRequest?.weight &&
+  //       //     id === previousWeightRequest?.listingId
+  //       //   )
+  //       // ) {
+  //       dispatch(
+  //         getListingBoxesActions.request({
+  //           listingId: id,
+  //           weight: negotiation?.desired_quantity?.toString() || '0',
+  //         })
+  //       );
+  //       // }
+  //     }
+  //   }, 800);
+  //   setTimer(timerId);
+  // };
 
   useEffect(() => {
     if (defaultCompany) {
@@ -390,6 +525,11 @@ const NegotiationDetails = (): JSX.Element => {
     }
   }, [isDeclineNegotiationPending]);
 
+  // useEffect(() => {
+  //   getBoxes();
+  //   // eslint-disable-next-line
+  // }, [negotiation?.desired_quantity]);
+
   const sortByDate = sortBy((data: { created_at: string }) => data.created_at);
 
   let counterOffer = '';
@@ -502,6 +642,7 @@ const NegotiationDetails = (): JSX.Element => {
     showDeclineModal,
     handleDeclineModalCloseBtnClick,
     isDeclineNegotiationPending,
+    handleProceedToCheckoutClick,
   };
 
   const getPrice = () => {

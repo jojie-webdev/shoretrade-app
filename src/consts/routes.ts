@@ -142,6 +142,8 @@ export const BUYER_ROUTES = {
   ALL_LISTING: `${BUYER_ROOT}/all-listings`,
   NOTIFICATIONS: `${BUYER_ROOT}/notifications`,
   NOTIFICATIONS_SETTINGS: `${BUYER_ROOT}/notifications-settings`,
+  NEGOTIATION_CHECKOUT: (negotiationId = ':negotiationId') =>
+    `${BUYER_ROOT}/negotiation-checkout/${negotiationId}`,
   BARCODE_SCANNER: `${BUYER_ROOT}/barcode-scanner`,
   CRATES_MANAGEMENT: `${BUYER_ROOT}/crates-management`,
   UPGRADE: `${BUYER_ROOT}/upgrade`,

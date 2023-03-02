@@ -51,6 +51,7 @@ import RecentlyAdded from './Home/RecentlyAdded';
 import SellerFavouritesContainer from './Home/SellerFavourites/SellerFavourites.container';
 import SellerLanding from './Home/SellerLanding';
 import Listings from './Listings';
+import NegotiationCheckout from './NegotiationCheckout';
 import Market from './NegotiationsAndRequests/negotiations-and-requests.routes';
 import Notifications from './Notifications';
 import Orders from './Orders';
@@ -160,6 +161,12 @@ const ROUTES: Routes = {
     path: BUYER_ROUTES.NOTIFICATIONS,
     children: <Notifications />,
     title: 'Notifications',
+    hideFromSidebar: true,
+  },
+  NEGOTIATION_CHECKOUT: {
+    path: BUYER_ROUTES.NEGOTIATION_CHECKOUT(),
+    children: <NegotiationCheckout />,
+    title: 'Checkout',
     hideFromSidebar: true,
   },
   CHECKOUT: {

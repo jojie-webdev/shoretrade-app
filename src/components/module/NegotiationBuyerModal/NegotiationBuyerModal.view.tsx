@@ -118,9 +118,7 @@ const NegotiationBuyerModal = (
                 {'$'}
               </Typography>
             }
-            placeholder={`per ${negotiation.measurement_unit
-              .toLowerCase()
-              .toLowerCase()}`}
+            placeholder={`per ${negotiation?.measurement_unit?.toLowerCase()}`}
             style={{ marginTop: 10 }}
           />
         </Inputs>
@@ -148,7 +146,7 @@ const NegotiationBuyerModal = (
               {negotiation?.negotiation_offer?.counter_offer ||
                 negotiation?.counter_offer ||
                 0}
-              /{negotiation?.measurement_unit.toLowerCase()}
+              /{negotiation?.measurement_unit?.toLowerCase()}
             </Typography>
           </div>
 
@@ -186,7 +184,7 @@ const NegotiationBuyerModal = (
                 variant="body"
               >
                 {toPrice(Math.abs(priceDiff))}/
-                {negotiation?.measurement_unit.toLowerCase()}
+                {negotiation?.measurement_unit?.toLowerCase()}
               </Typography>
             ) : (
               <Typography variant="body" color="shade7">
@@ -204,7 +202,7 @@ const NegotiationBuyerModal = (
                 ((buyerNegotiatedPrice ?? 0) ||
                   negotiation?.negotiation_offer?.counter_offer ||
                   Number(negotiation?.counter_offer || '0'))}{' '}
-              {negotiation?.measurement_unit.toLowerCase()} */}
+              {negotiation?.measurement_unit?.toLowerCase()} */}
               {buyerNegotiatedPrice === null || isNaN(buyerNegotiatedPrice)
                 ? ''
                 : negotiation?.desired_quantity *
@@ -212,7 +210,7 @@ const NegotiationBuyerModal = (
                     negotiation?.negotiation_offer?.counter_offer)}{' '}
               {buyerNegotiatedPrice === null || isNaN(buyerNegotiatedPrice)
                 ? ''
-                : negotiation?.measurement_unit.toLowerCase()}
+                : negotiation?.measurement_unit?.toLowerCase()}
             </Typography>
           </div>
 

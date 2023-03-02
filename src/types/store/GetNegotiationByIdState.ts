@@ -45,6 +45,12 @@ export type GetNegotiationByIdRequestResponseItem = {
     negotiation_request: NegotiationItem | null;
     negotiation_offer: NegotiationItem | null;
   };
+  listing_box: {
+    count: number;
+    id: string;
+    quantity: number;
+    weight: number;
+  };
   negotiation_offer: NegotiationItem;
   auction_date: string;
   is_pre_auction: false;

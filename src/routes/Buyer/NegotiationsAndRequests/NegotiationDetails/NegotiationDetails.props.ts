@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 
+import { Variants } from 'components/module/BuyerNegotiationAlert/BuyerNegotiationAlert.props';
 import {
   Negotiations,
   OfferMarketRequest,
@@ -56,4 +57,11 @@ export interface NegotiationDetailsProps {
   showDeclineModal: boolean;
   handleDeclineModalCloseBtnClick: () => void;
   isDeclineNegotiationPending: boolean;
+  handleProceedToCheckoutClick: () => void;
+}
+
+export interface AlertProps {
+  title: string;
+  alertColor: Variants;
+  description: JSX.Element;
 }

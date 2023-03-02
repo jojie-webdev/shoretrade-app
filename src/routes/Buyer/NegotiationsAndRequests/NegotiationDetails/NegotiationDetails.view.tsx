@@ -62,7 +62,7 @@ import {
   DefaultStyledNegotiateButtonContainer,
   DefaultStyledNegotiateButton,
   DefaultStyledAcceptButton,
-  NewNegoTypeWrapper,
+  // NewNegoTypeWrapper,
 } from './NegotiationDetails.style';
 
 const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
@@ -109,6 +109,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
     showDeclineModal,
     handleDeclineModalCloseBtnClick,
     isDeclineNegotiationPending,
+    handleProceedToCheckoutClick,
   } = props;
 
   const history = useHistory();
@@ -383,7 +384,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
           description: (
             <Typography variant="body" color="shade6" weight="400">
               A buyer has sent you a negotiation for{' '}
-              <NewNegoTypeWrapper>{negotiation?.name}</NewNegoTypeWrapper>
+              {/* <NewNegoTypeWrapper>{negotiation?.name}</NewNegoTypeWrapper> */}
             </Typography>
           ),
         };
@@ -479,7 +480,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
           <Col>
             {renderLabel('SPECIFICATION')}
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-              {negotiation?.specifications.map((spec) => (
+              {negotiation?.specifications?.map((spec) => (
                 <div key={spec.id} style={{ marginRight: 8 }}>
                   {renderLabelValue(spec.name)}
                 </div>
@@ -529,7 +530,8 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
 
           {negotiation?.status !== 'ACCEPTED' &&
             negotiation?.status !== 'PARTIAL' &&
-            negotiation?.status !== 'DECLINED' && (
+            negotiation?.status !== 'DECLINED' &&
+            negotiation?.status !== 'LOST' && (
               <CTAContainer>
                 <div style={{ display: 'flex' }}>
                   <Button
@@ -571,7 +573,13 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
             )}
 
           {negotiation?.status === 'PARTIAL' && (
-            <CTAContainer>
+            <CTAContainer
+            // onClick={() =>
+            //   history.push(
+            //     BUYER_ROUTES.NEGOTIATION_CHECKOUT(negotiation?.id || '')
+            //   )
+            // }
+            >
               <div style={{ width: 'fit-content' }}>
                 <StyledAcceptButton
                   text={
@@ -580,12 +588,13 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
                       weight="700"
                       color="noshade"
                       style={{ fontFamily: 'Basis Grotesque Pro' }}
+                      disabled={true}
                     >
-                      Proceed To Checkout
+                      Proceed To Checkout (WAITING FOR BE)
                     </Typography>
                   }
                   // icon={<Check width={10} height={9} />}
-                  onClick={() => handlePayNow()}
+                  // onClick={handleProceedToCheckoutClick}
                 />
               </div>
             </CTAContainer>
@@ -601,25 +610,6 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
 
   return (
     <Container>
-      <p style={{ color: 'black' }}>test</p>
-      <CTAContainer>
-        <div style={{ width: 'fit-content' }}>
-          <StyledAcceptButton
-            text={
-              <Typography
-                variant="label"
-                weight="700"
-                color="noshade"
-                style={{ fontFamily: 'Basis Grotesque Pro' }}
-              >
-                Proceed To Checkout Test
-              </Typography>
-            }
-            // icon={<Check width={10} height={9} />}
-            onClick={() => handlePayNow()}
-          />
-        </div>
-      </CTAContainer>
       <ConfirmationModal
         isOpen={clickAccept}
         onClickClose={() => handleAcceptClick(false)}
@@ -872,7 +862,8 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
 
         {selectedOffer?.status !== 'ACCEPTED' &&
           selectedOffer?.status !== 'PARTIAL' &&
-          selectedOffer?.status !== 'DECLINED' && (
+          selectedOffer?.status !== 'DECLINED' && 
+          negotiation?.status !== 'LOST' && (
             <>
               <Row>
                 <Col>{renderOfferSeenTextContainer()}</Col>
