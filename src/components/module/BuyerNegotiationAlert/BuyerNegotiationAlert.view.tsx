@@ -63,6 +63,14 @@ const BuyerNegotiationAlert = (
   } else if (reworkDisplayStatus(status).toLowerCase() === 'payment missed') {
     Icon = CloseFilled;
     IconFill = theme.brand.error;
+  } else if (reworkDisplayStatus(status).toLowerCase() === 'awaiting seller') {
+    Icon = QuestionFilled;
+    IconFill = theme.brand.alert;
+  } else if (reworkDisplayStatus(status).toLowerCase() === 'finalised') {
+    Icon = CheckFilled;
+    IconFill = theme.brand.success;
+  } else if (reworkDisplayStatus(status).toLowerCase() === 'counter offer') {
+    IconFill = theme.brand.success;
   }
 
   // if (status === '') {
@@ -107,11 +115,7 @@ const BuyerNegotiationAlert = (
           )}
 
           {typeof content === 'string' ? (
-            <Typography
-              variant="label"
-              color={header ? 'shade6' : isBuyer ? 'noshade' : 'shade9'}
-              weight="400"
-            >
+            <Typography variant="caption" color="shade7" weight="400">
               {content}
             </Typography>
           ) : (

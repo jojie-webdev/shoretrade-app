@@ -151,7 +151,7 @@ const NegotiationMobileView = (props: NegotiationNonMobilePrivateProps) => {
             </Badges>
           </Col>
 
-          <Col sm={1} style={{ padding: '0 5px' }}>
+          {/* <Col sm={1} style={{ padding: '0 5px' }}>
             <div className="sub-group">
               <Button
                 iconPosition="before"
@@ -168,7 +168,7 @@ const NegotiationMobileView = (props: NegotiationNonMobilePrivateProps) => {
                 className="delete-button"
               />
             </div>
-          </Col>
+          </Col> */}
         </div>
       </NegotiationItemContainer>
     );
