@@ -66,6 +66,10 @@ const NegotiationDetails = (): JSX.Element => {
   const [showBuyerCounterNegoModal, setShowBuyerCounterNegoModal] =
     useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
+  const [showNegotiationAcceptedModal, setShowNegotiationAcceptedModal] =
+    useState(false);
+  const [showSuccessfulNegoModal, setShowSuccessfulNegoModal] = useState(false);
+  const [showDeclinedNegoModal, setShowDeclinedNegoModal] = useState(false);
 
   const defaultCompany = GetDefaultCompany();
   const employeeId = defaultCompany?.employeeId || '';
@@ -236,6 +240,22 @@ const NegotiationDetails = (): JSX.Element => {
         })
       );
     }
+  };
+
+  const handleNegotiationAcceptedModalToggle = () => {
+    setShowNegotiationAcceptedModal((prevValue) => !prevValue);
+  };
+
+  const handleNegotiationAcceptedModalPayNowClick = () => {
+    setShowNegotiationAcceptedModal((prevValue) => !prevValue);
+  };
+
+  const handleSuccessfulNegoModalToggle = () => {
+    setShowSuccessfulNegoModal((prevValue) => !prevValue);
+  };
+
+  const handleDeclinedNegoModalToggle = () => {
+    setShowDeclinedNegoModal((prevValue) => !prevValue);
   };
 
   // const onAddToCart = () => {
@@ -490,6 +510,14 @@ const NegotiationDetails = (): JSX.Element => {
   useEffect(() => {
     if (!isCreateBuyerCounterNegotiationPending) {
       setShowBuyerCounterNegoModal(false);
+
+      dispatch(
+        getNegotiationByIdActions.request({
+          negotiationRequestId: negoRequestId,
+        })
+      );
+    } else {
+      setShowSuccessfulNegoModal(true);
     }
   }, [isCreateBuyerCounterNegotiationPending]);
 
@@ -502,6 +530,8 @@ const NegotiationDetails = (): JSX.Element => {
           negotiationRequestId: negoRequestId,
         })
       );
+    } else {
+      setShowNegotiationAcceptedModal(true);
     }
   }, [isAcceptNegotiationPending]);
 
@@ -522,6 +552,8 @@ const NegotiationDetails = (): JSX.Element => {
           negotiationRequestId: negoRequestId,
         })
       );
+    } else {
+      setShowDeclinedNegoModal(true);
     }
   }, [isDeclineNegotiationPending]);
 
@@ -643,6 +675,13 @@ const NegotiationDetails = (): JSX.Element => {
     handleDeclineModalCloseBtnClick,
     isDeclineNegotiationPending,
     handleProceedToCheckoutClick,
+    handleNegotiationAcceptedModalToggle,
+    handleNegotiationAcceptedModalPayNowClick,
+    showNegotiationAcceptedModal,
+    handleSuccessfulNegoModalToggle,
+    showSuccessfulNegoModal,
+    handleDeclinedNegoModalToggle,
+    showDeclinedNegoModal,
   };
 
   const getPrice = () => {

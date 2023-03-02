@@ -8,7 +8,7 @@ type ConfirmationModalGeneratedProps = {
   description?: string | React.ReactNode;
   actionIconPosition?: IconPosition;
   actionIcon?: JSX.Element;
-  actionText?: string;
+  actionText?: string | JSX.Element;
   cancelText?: string;
   action: () => void;
   cancel?: () => void;
