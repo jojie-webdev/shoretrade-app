@@ -468,7 +468,8 @@ const NegotiationView = (props: NegotiationProps) => {
 
         {negotiation?.status !== 'ACCEPTED' &&
           negotiation?.status !== 'PARTIAL' &&
-          negotiation?.status !== 'DECLINED' && (
+          negotiation?.status !== 'DECLINED' &&
+          negotiation?.status !== 'END' && (
             <CTAContainer>
               <div style={{ display: 'flex' }}>
                 <Button
