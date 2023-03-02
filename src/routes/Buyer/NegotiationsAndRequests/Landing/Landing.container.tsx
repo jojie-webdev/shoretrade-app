@@ -55,7 +55,7 @@ const MarketRequestsLanding = (): JSX.Element => {
     value: null,
   });
   const [waitAll, setWaitAll] = useState(true);
-  const [selectedTab, setSelectedTab] = useState(TABS.BUYER_REQUEST);
+  const [selectedTab, setSelectedTab] = useState(TABS.MARKET_REQUEST);
   const [searchKeyword, setSearchKeyword] = useState('');
 
   const deleteMarketRequest = useSelector(
@@ -201,7 +201,7 @@ const MarketRequestsLanding = (): JSX.Element => {
     setSelectedTab(
       negoAndRMQueryParams.tab === TABS.NEGOTIATIONS
         ? TABS.NEGOTIATIONS
-        : TABS.BUYER_REQUEST
+        : TABS.MARKET_REQUEST
     );
 
     if (negoAndRMQueryParams.tab === TABS.NEGOTIATIONS) {

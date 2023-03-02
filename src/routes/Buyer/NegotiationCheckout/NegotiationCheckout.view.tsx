@@ -362,18 +362,18 @@ const NegotiationCheckoutView = (props: NegotiationCheckoutGeneratedProps) => {
                     <Button
                       text="Keep Shopping"
                       onClick={() => {
-                        console.log('Keep Shopping clicked');
+                        history.push(BUYER_ROUTES.HOME);
                       }}
                       style={{ marginRight: 8 }}
                       variant="outline"
                     />
 
                     <Button
-                      text="Place Order"
-                      disabled={false}
-                      onClick={() => {
-                        setShowPaymentMethod(true);
-                      }}
+                      text="Place Order (WAITING FOR BE)"
+                      disabled={true}
+                      // onClick={() => {
+                      //   setShowPaymentMethod(true);
+                      // }}
                     />
                   </div>
 
@@ -442,17 +442,17 @@ const NegotiationCheckoutView = (props: NegotiationCheckoutGeneratedProps) => {
                     <Button
                       text="Keep Shopping"
                       onClick={() => {
-                        console.log('Keep Shopping clicked');
+                        history.push(BUYER_ROUTES.HOME);
                       }}
                       variant="outline"
                       style={{ marginRight: 16 }}
                     />
                     <Button
-                      text="Place Order"
-                      disabled={false}
-                      onClick={() => {
-                        setShowPaymentMethod(true);
-                      }}
+                      text="Place Order (WAITING FOR BE"
+                      disabled={true}
+                      // onClick={() => {
+                      //   setShowPaymentMethod(true);
+                      // }}
                     />
                   </div>
                 </Footer>

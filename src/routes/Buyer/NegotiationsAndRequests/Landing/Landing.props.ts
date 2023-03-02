@@ -60,5 +60,5 @@ export interface MarketRequestsLandingGeneratedProps {
 
 export enum TABS {
   NEGOTIATIONS = 'Negotiations',
-  BUYER_REQUEST = 'Buyer Request',
+  MARKET_REQUEST = 'Market Request',
 }

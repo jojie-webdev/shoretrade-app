@@ -78,7 +78,7 @@ const MarketRequestsLandingView = (
 
   const renderMobile = () => (
     <Visible xs>
-      {selectedTab === TABS.BUYER_REQUEST ? (
+      {selectedTab === TABS.MARKET_REQUEST ? (
         marketRequests?.length > 0 ? (
           marketRequests?.map((mr) => (
             <RequestsMobile
@@ -97,7 +97,7 @@ const MarketRequestsLandingView = (
 
   const renderNonMobile = () => (
     <Hidden xs>
-      {selectedTab === TABS.BUYER_REQUEST ? (
+      {selectedTab === TABS.MARKET_REQUEST ? (
         marketRequests?.length > 0 ? (
           marketRequests?.map((mr) => (
             <RequestsNonMobile
@@ -183,20 +183,22 @@ const MarketRequestsLandingView = (
       /> */}
 
       <SegmentedControls
-        options={[TABS.NEGOTIATIONS, TABS.BUYER_REQUEST]}
+        options={[TABS.NEGOTIATIONS, TABS.MARKET_REQUEST]}
         controlButtonColor={theme.brand.secondary}
         inactiveBackgroundColor={theme.grey.shade3}
         selectedOption={selectedTab}
         onClickControl={(value) => {
           handleTabSelect(
-            value === TABS.NEGOTIATIONS ? TABS.NEGOTIATIONS : TABS.BUYER_REQUEST
+            value === TABS.NEGOTIATIONS
+              ? TABS.NEGOTIATIONS
+              : TABS.MARKET_REQUEST
           );
         }}
       />
 
       <div style={{ marginTop: 20 }}>
         <Row nogutter justify="around" align="center" className="header">
-          {selectedTab === TABS.BUYER_REQUEST ? (
+          {selectedTab === TABS.MARKET_REQUEST ? (
             <>
               <Col>
                 <Hidden xs sm>
