@@ -30,6 +30,7 @@ const SegmentedControls = (props: SegmentedControlsProps): JSX.Element => {
         nogutter
         style={{
           backgroundColor: inactiveBackgroundColor || theme.grey.noshade,
+          borderRadius: 12,
         }}
       >
         {options.map((option) => {
