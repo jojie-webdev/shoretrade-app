@@ -38,6 +38,7 @@ const ProductDetailsNegotiationModal = (
     selectedBoxesWeight,
     productDetailsCard6Props,
     selectedBoxesIndex,
+    actionText,
   } = props;
 
   return (
@@ -58,9 +59,8 @@ const ProductDetailsNegotiationModal = (
         action={action}
         actionIconPosition="before"
         actionIcon={<MarketBoardOutlined width={20} height={20} />}
-        actionText="NEGOTIATE (WAITING BE)"
-        // disableActionText={disableActionText}
-        disableActionText={false}
+        actionText={actionText || 'NEGOTIATE'}
+        disableActionText={disableActionText}
         hideCancel={true}
         description={
           <div style={{ marginTop: 20 }}>

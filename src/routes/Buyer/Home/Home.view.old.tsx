@@ -184,7 +184,8 @@ const HomeView = (props: HomeGeneratedProps) => {
       action: () => {
         console.log('productDetailsNegotiationModalProps > action');
       }, //handleShowConfirmNegoModal,
-      disableActionText: isBeyondCutoff,
+      // disableActionText: isBeyondCutoff,
+      disableActionText: true,
       negotiationPrice: 0,
       handleNegotiationPriceSetting: () => {
         console.log(
@@ -209,6 +210,7 @@ const HomeView = (props: HomeGeneratedProps) => {
       selectedBoxesWeight: [],
       productDetailsCard6Props: {} as ProductDetailsCard6Props,
       selectedBoxesIndex: 1,
+      actionText: 'NEGOTIATE (WAITING BE)',
     };
 
   return (

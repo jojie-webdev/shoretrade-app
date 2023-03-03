@@ -24,6 +24,7 @@ export interface ProductDetailsNegotiationModalProps {
   priceDiffPercentage: number;
   selectedBoxesWeight: Box[];
   handleDesiredQuantityChange: (weight: string) => void;
+  actionText?: string;
 }
 
 export interface Box {
