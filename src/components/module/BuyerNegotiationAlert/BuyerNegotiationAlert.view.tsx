@@ -52,8 +52,6 @@ const BuyerNegotiationAlert = (
     return modifiedDisplayStatus;
   };
 
-  console.log('BuyerNegogtiationAlert > status > ', status);
-
   if (reworkDisplayStatus(status).toLowerCase() === 'declined') {
     Icon = CloseFilled;
     IconFill = theme.brand.error;

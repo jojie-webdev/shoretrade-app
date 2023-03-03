@@ -35,7 +35,6 @@ const OfferDetails = (): JSX.Element => {
   const location = useLocation();
   const params = useParams<{ id: string }>();
   const { id } = params;
-  console.log('offerdetails > id > ', id);
   const history = useHistory();
   const dispatch = useDispatch();
   const [offerId, setOfferId] = useState<string>('');

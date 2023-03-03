@@ -161,8 +161,6 @@ const NegotiationBuyerModal = (
             </div>
           )} */}
 
-          {console.log('buyerNegotiatedPrice > ', buyerNegotiatedPrice)}
-
           <div className="computation-item-container">
             <Typography variant="body" color="shade6">
               Change in Price{' '}

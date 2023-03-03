@@ -61,7 +61,6 @@ const Content = (props: NegotiationSellerModalProps) => {
                 price.substr(price.indexOf('.'), 3);
             }
             setNegotiationPrice(parseFloat(price));
-            console.log('onChangeText > price > ', price);
           }}
           min={1}
           LeftComponent={
