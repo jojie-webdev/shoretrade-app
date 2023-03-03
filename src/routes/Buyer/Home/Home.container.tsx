@@ -3,8 +3,14 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { getMarketInterestsActions, orderActions } from 'store/actions';
+import {
+  getMarketInterestsActions,
+  getNegotiationByIdActions,
+  getNegotiationCreditActions,
+  orderActions,
+} from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
+import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
 import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
 import { UserCompany } from 'types/store/GetUserState';
 import { Store } from 'types/store/Store';
@@ -23,9 +29,20 @@ const Home = (): JSX.Element => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const theme = useTheme();
 
+  const [showNegoCreditsModal, setShowNegoCreditsModal] = useState(false);
+  const [showNegoModal, setShowNegoModal] = useState(false);
+  const [clickedRecentListing, setClickedRecentListing] = useState<
+    GetBuyerHomepageResponseListingItem | undefined
+  >();
+  const [closeOnAccept, setCloseOnAccept] = useState(false);
+
   // MARK:- Store
   const buyerHomePageData = useSelector(
     (state: Store) => state.getBuyerHomepage
+  );
+
+  const negotiationCredit = useSelector(
+    (store: Store) => store.getNegotiationCredit.data?.data
   );
 
   const loading =
@@ -34,6 +51,7 @@ const Home = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(orderActions.clear());
+    dispatch(getNegotiationCreditActions.request({}));
   }, []);
 
   // MARK:- Variables
@@ -79,6 +97,9 @@ const Home = (): JSX.Element => {
     : null;
 
   const getUser = useSelector((state: Store) => state.getUser);
+  const negotiationById = useSelector(
+    (state: Store) => state.getNegotiationById.data?.data
+  );
 
   const defaultCompany = useMemo(() => {
     if (!getUser) return null;
@@ -94,8 +115,7 @@ const Home = (): JSX.Element => {
       ? companyPlan && !companyPlan.flags?.hasCancelledReversedMarketplace
       : subscriptionType !== null && false;
 
-  const canNegotiate =
-    defaultCompany?.credit !== '0.00' && (isSubscribedToNegoRequest || false);
+  const canNegotiate = isSubscribedToNegoRequest || false;
 
   // MARK:- State
   const [currentCompany, setCurrentCompany] = useState<
@@ -105,6 +125,28 @@ const Home = (): JSX.Element => {
   const marketSector = useSelector(
     (state: Store) => state.getMarketInterests.data?.data.sectorAlias
   );
+
+  const handleShowNegoCreditsModal = () => {
+    setShowNegoCreditsModal((prevValue) => !prevValue);
+  };
+
+  const handleShowNegoModal = (listingId: string) => {
+    setShowNegoModal((prevValue) => !prevValue);
+
+    const filteredClickedListing = recentListing.find(
+      (eachRecentListing) => eachRecentListing.id === listingId
+    );
+
+    setClickedRecentListing(filteredClickedListing);
+
+    // dispatch(
+    //   getNegotiationByIdActions.request({ negotiationRequestId: listingId })
+    // );
+  };
+
+  const handleNegoModalToggle = () => {
+    setShowNegoModal((prevValue) => !prevValue);
+  };
 
   useEffect(() => {
     if (company) {
@@ -159,6 +201,13 @@ const Home = (): JSX.Element => {
     currentMarketSector,
     isApprovedCompany,
     canNegotiate,
+    negotiationCredit,
+    showNegoCreditsModal,
+    handleShowNegoCreditsModal,
+    handleShowNegoModal,
+    showNegoModal,
+    clickedRecentListing,
+    handleNegoModalToggle,
   };
 
   return isOld ? (

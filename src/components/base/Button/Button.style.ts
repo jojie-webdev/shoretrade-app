@@ -93,13 +93,13 @@ export const ButtonContainer = styled.button<
   }
 
   p:after {
-    content: '${({ text }) => text}';
+    content: '${({ text }) => typeof text === 'string' && text}';
   }
 
   @media ${BREAKPOINTS.sm} {
     p:after {
       content: '${({ shortenedText, text }) =>
-        shortenedText ? shortenedText : text}';
+        shortenedText ? shortenedText : typeof text === 'string' && text}';
     }
   }
 `;

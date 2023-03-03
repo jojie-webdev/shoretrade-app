@@ -15,6 +15,22 @@ export const Container = styled.div`
     flex-direction: row;
   }
 
+  .confirmation_modal__ok_btn {
+    margin-left: 0 !important;
+  }
+
+  .text_field__field_container {
+    border-radius: 8px;
+
+    .text_field__field_container__input {
+      border-radius: 8px;
+    }
+  }
+
+  .modal_container {
+    width: 686px;
+  }
+
   @media ${BREAKPOINTS['sm']} {
     padding-bottom: 16vh;
   }
@@ -56,8 +72,8 @@ export const CompanyInfoCol = styled(Col)`
 `;
 
 export const TotalPriceContainer = styled.div`
-  background: ${({ theme }) => theme.grey.shade1};
-  border: 1px solid ${({ theme }) => theme.grey.shade1};
+  background: ${({ theme }) => theme.grey.noshade};
+  border: 1px solid ${({ theme }) => theme.grey.shade4};
   border-radius: 12px;
   padding: 16px;
   margin-top: 16px;
@@ -133,8 +149,9 @@ export const StyledNumberRating = styled(Typography)`
 
 export const CTAContainer = styled.div`
   display: flex;
+  justify-content: space-between;
   width: 100%;
-  margin-top: 24px;
+  margin-top: 50px;
 `;
 
 export const StyledNegotiateButtonContainer = styled.div`
@@ -155,4 +172,34 @@ export const NoActionsYetBadgesContainer = styled.div`
   @media (max-width: 991px) {
     display: -webkit-inline-box !important;
   }
+`;
+
+export const AcceptNegoDetailContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+`;
+
+export const DefaultCTAContainer = styled.div`
+  display: flex;
+  width: 100%;
+  margin-top: 24px;
+`;
+
+export const DefaultStyledNegotiateButtonContainer = styled.div`
+  width: 148px;
+  margin-right: 10px;
+`;
+
+export const DefaultStyledNegotiateButton = styled(Button)`
+  border-radius: 12px;
+  padding: 15px 28px;
+  width: 100%;
+`;
+
+export const DefaultStyledAcceptButton = styled(Button)`
+  border-radius: 12px;
+  padding: 15px 28px;
+  width: 100%;
+  height: 100%;
 `;

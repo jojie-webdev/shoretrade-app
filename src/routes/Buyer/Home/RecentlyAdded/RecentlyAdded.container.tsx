@@ -1,7 +1,12 @@
-import React, { ChangeEvent, useMemo, useState } from 'react';
+import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getActivePlan } from 'routes/Buyer/Account/SubscriptionPlan/SubscriptionPlan.transform';
+import {
+  getBuyerHomepageActions,
+  getNegotiationCreditActions,
+  showNegotiableActions,
+} from 'store/actions';
 import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
 import { Store } from 'types/store/Store';
 
@@ -9,6 +14,9 @@ import RecentlyAddedView from './RecentlyAdded.view';
 
 const RecentlyAdded = (): JSX.Element => {
   const [searchValue, setSearchValue] = useState('');
+  const [showNegoModal, setShowNegoModal] = useState(false);
+
+  const dispatch = useDispatch();
 
   const addresses = useSelector(
     (state: Store) => state.getAddresses.data?.data.addresses
@@ -21,6 +29,8 @@ const RecentlyAdded = (): JSX.Element => {
   const companyPlan = useSelector(
     (store: Store) => store.getCompanyPlan.data?.data
   );
+
+  const showNegotiable = useSelector((store: Store) => store.showNegotiable);
 
   const currentReverseMarketDetails = getActivePlan(
     companyPlan,
@@ -50,8 +60,7 @@ const RecentlyAdded = (): JSX.Element => {
       ? companyPlan && !companyPlan.flags?.hasCancelledReversedMarketplace
       : subscriptionType !== null && false;
 
-  const canNegotiate =
-    defaultCompany?.credit !== '0.00' && (isSubscribedToNegoRequest || false);
+  const canNegotiate = isSubscribedToNegoRequest || false;
 
   const results = (
     useSelector(
@@ -78,6 +87,27 @@ const RecentlyAdded = (): JSX.Element => {
     setSearchValue('');
   };
 
+  const handleNegotiableToggle = (show: boolean) => {
+    dispatch(showNegotiableActions.update({ showNegotiable: show }));
+  };
+
+  const handleShowNegoCreditsModal = () => {
+    console.log('recently container');
+  };
+
+  const handleShowNegoModal = (listingId: string) => {
+    setShowNegoModal((prevValue) => !prevValue);
+  };
+
+  const negotiationCredit = useSelector(
+    (store: Store) => store.getNegotiationCredit.data?.data
+  );
+
+  useEffect(() => {
+    dispatch(getBuyerHomepageActions.request());
+    dispatch(getNegotiationCreditActions.request({}));
+  }, [showNegotiable]);
+
   const generatedProps = {
     results,
     isPendingAccount,
@@ -86,6 +116,11 @@ const RecentlyAdded = (): JSX.Element => {
     onResetSearchValue,
     searchValue,
     canNegotiate,
+    handleNegotiableToggle,
+    showNegotiable,
+    handleShowNegoCreditsModal,
+    negotiationCredit: negotiationCredit?.credit?.toString() || '0',
+    handleShowNegoModal,
   };
 
   return <RecentlyAddedView {...generatedProps} />;

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import Button from 'components/base/Button';
 // import Checkbox from 'components/base/Checkbox';
+import { MarketBoardOutlined } from 'components/base/SVG';
 import Typography from 'components/base/Typography/Typography.view';
 import MobileFooter from 'components/layout/MobileFooter';
 import MobileModal from 'components/layout/MobileModal';
@@ -15,8 +16,10 @@ import {
   // CheckBoxContainer,
 } from 'components/module/NegotiateBuyerModal/NegotiateBuyerModal.style';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import pathOr from 'ramda/es/pathOr';
 import { Hidden } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
+import { GetNegotiationByIdRequestResponseItem } from 'types/store/GetNegotiationByIdState';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
@@ -33,6 +36,7 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
     setCloseOnAccept,
     isNegotiating,
     onSubmit,
+    // negotiation,
     ...modalProps
   } = props;
   const { unit: measurementUnit, value: weightValue } = weight;
@@ -75,21 +79,38 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
   const latestSellerNego =
     modalLastNegotiationsArray[modalLastNegotiationsArray.length - 1];
 
+  // const negotiationOffer = pathOr(
+  //   {},
+  //   ['negotiation_offer'],
+  //   negotiation
+  // ) as GetNegotiationByIdRequestResponseItem['negotiation_offer'];
+
   return (
     <ModalLayout
       backgroundColor={theme.grey.noshade}
       style={{
-        width: '',
-        maxWidth: 430,
+        width: '100%',
+        maxWidth: 566,
         borderRadius: 12,
         padding: 48,
       }}
       {...modalProps}
     >
       <>
-        <Typography weight="bold" variant="title4" color={textColor} altFont>
-          Negotiate
-        </Typography>
+        {theme.isSFM ? (
+          <Typography
+            variant="title4"
+            color="shade8"
+            weight="900"
+            style={{ fontFamily: 'Canela' }}
+          >
+            Negotiate
+          </Typography>
+        ) : (
+          <Typography weight="bold" variant="title4" color={textColor} altFont>
+            Negotiate
+          </Typography>
+        )}
         <Inputs>
           <StyledTextField
             type="number"
@@ -113,6 +134,7 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
               </Typography>
             }
             placeholder={`per ${unit}`}
+            style={{ marginTop: 10 }}
           />
         </Inputs>
         {/* <CheckBoxContainer>
@@ -132,8 +154,8 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
         </CheckBoxContainer> */}
         <ComputationContainer>
           <div className="computation-item-container">
-            <Typography variant="body" color="shade7">
-              Seller&apos;s Current Offer
+            <Typography variant="body" color="shade6">
+              Seller&apos;s Negotiated Price
             </Typography>
             <Typography variant="body" color="shade7">
               {sortedNegotiations.length === 0
@@ -143,19 +165,19 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
             </Typography>
           </div>
 
-          {sortedNegotiations.length >= 2 && (
+          {/* {sortedNegotiations.length >= 2 && (
             <div className="computation-item-container">
-              <Typography variant="body" color="shade7">
+              <Typography variant="body" color="shade6">
                 Your New Offer
               </Typography>
               <Typography variant="body" color="shade7">
                 {toPrice(negotiationPrice || 0)}/{unit}
               </Typography>
             </div>
-          )}
+          )} */}
 
           <div className="computation-item-container">
-            <Typography variant="body" color="shade7">
+            <Typography variant="body" color="shade6">
               Change in Price{' '}
               <span className="indicator">{`${
                 discountValue > 0 ? '+' : ''
@@ -174,9 +196,19 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
               </Typography>
             )}
           </div>
-          <div className="computation-item-container total-delivery">
-            <Typography variant="body" weight="bold" color={textColor}>
-              Total Value inc. Delivery
+
+          <div className="computation-item-container">
+            <Typography variant="body" color="shade6">
+              Quantity
+            </Typography>
+            <Typography variant="body" color="shade7">
+              {weightValue} {unit}
+            </Typography>
+          </div>
+
+          <div className="computation-item-container">
+            <Typography variant="body" weight="bold" color="shade6">
+              Total Product Value
             </Typography>
             <Typography variant="body" weight="bold" color={textColor}>
               {toPrice(deliveryTotal)}
@@ -187,7 +219,9 @@ const NegotiateBuyerModal = (props: NegotiateBuyerModalProps): JSX.Element => {
           <ButtonContainer>
             <Button
               variant="primary"
-              text="Negotiate"
+              icon={<MarketBoardOutlined width={24} height={24} />}
+              iconPosition="before"
+              text="NEGOTIATE"
               onClick={() => {
                 if (negotiationPrice && negotiationPrice >= 1) {
                   onSubmit(negotiationPrice);

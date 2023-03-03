@@ -26,6 +26,9 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
     onResetSearchValue,
     searchValue,
     isLoadingResults,
+    handleShowNegoCreditsModal,
+    negotiationCredit,
+    handleShowNegoModal,
   } = props;
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -85,6 +88,13 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
                           templateDeliveryDate={fav.templateDeliveryDate}
                           isForSaleRepPhoto={fav.isForSaleRepPhoto}
                           isSFMCrate={fav.packaging?.type === 'SFM'}
+                          allowNegotiations={fav.allowNegotiations}
+                          auctionDate={fav.auctionDate}
+                          handleShowNegoCreditsModal={
+                            handleShowNegoCreditsModal
+                          }
+                          negotiationCredit={negotiationCredit}
+                          handleShowNegoModal={handleShowNegoModal}
                         />
                       </StyledInteraction>
                     ) : (
@@ -114,6 +124,11 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
                         templateDeliveryDate={fav.templateDeliveryDate}
                         isForSaleRepPhoto={fav.isForSaleRepPhoto}
                         isSFMCrate={fav.packaging?.type === 'SFM'}
+                        allowNegotiations={fav.allowNegotiations}
+                        auctionDate={fav.auctionDate}
+                        handleShowNegoCreditsModal={handleShowNegoCreditsModal}
+                        negotiationCredit={negotiationCredit}
+                        handleShowNegoModal={handleShowNegoModal}
                       />
                     )}
                   </Link>

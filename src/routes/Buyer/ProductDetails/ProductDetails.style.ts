@@ -1,8 +1,54 @@
 import Button from 'components/base/Button';
+import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
+
+export const Container = styled.div`
+  .confirmation_modal__ok_btn {
+    margin-left: 0px !important;
+    padding: 14px 24px !important;
+  }
+
+  .confirmation_modal__cancel_btn {
+    margin-left: 0px;
+    padding: 14px 24px !important;
+  }
+
+  .confirmation_modal__ok_btn > p {
+    text-transform: capitalize !important;
+    font-weight: 700;
+  }
+
+  .confirmation_modal__cancel_btn > p {
+    text-transform: capitalize !important;
+    font-weight: 700;
+  }
+
+  .text_field__field_container {
+    height: 40px;
+    border-radius: 8px;
+
+    .text_field__field_container__input {
+      border-radius: 8px;
+    }
+  }
+
+  .radio > span {
+    height: 12px;
+    width: 12px;
+
+    .span {
+      height: 0px;
+      width: 0px;
+    }
+  }
+
+  .indicator {
+    font-weight: bold;
+  }
+`;
 
 export const BannerContainer = styled.div`
   margin-bottom: 8px;
@@ -115,4 +161,19 @@ export const StatusContainer = styled.div`
 
 export const BadgeText = styled(Typography)`
   font-size: 12px;
+`;
+
+export const StyledTextField = styled(TextField)`
+  flex: 1;
+`;
+
+export const RadioBtnContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const GroupedBoxContainer = styled.div`
+  display: flex;
+  border: 1px solid ${({ theme }) => theme.grey.shade5};
+  padding: 5px;
 `;

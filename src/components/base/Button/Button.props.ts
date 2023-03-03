@@ -17,7 +17,7 @@ export type ButtonSizes = 'lg' | 'md' | 'sm';
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;
   color?: keyof Theme['brand'];
-  text?: string;
+  text?: string | JSX.Element;
   textVariant?: TypographyProps['variant'];
   textWeight?: string;
   iconPosition?: IconPosition;

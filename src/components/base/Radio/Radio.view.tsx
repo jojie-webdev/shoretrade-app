@@ -24,8 +24,12 @@ const Radio = ({
         type="radio"
         {...props}
       />
-      <CustomRadio checked={checked} size={size}>
-        {checked && <InnerCircle size={size} />}
+      <CustomRadio
+        className="radio__outer_circle"
+        checked={checked}
+        size={size}
+      >
+        {checked && <InnerCircle className="radio__inner_circle" size={size} />}
       </CustomRadio>
       {label && (
         <Label {...typographyProps} variant="label">

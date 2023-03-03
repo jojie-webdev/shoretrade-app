@@ -1,7 +1,7 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 
-import Case from 'case';
 import Button from 'components/base/Button';
+import SegmentedControls from 'components/base/SegmentedControls';
 import { Crab, TrashCan, ChevronRight } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import Typography from 'components/base/Typography/Typography.view';
@@ -31,267 +31,15 @@ import {
 import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
 
-import { MarketRequestsLandingGeneratedProps } from './Landing.props';
+import { MarketRequestsLandingGeneratedProps, TABS } from './Landing.props';
 import {
   MarketRequestsContainer,
-  MarketRequestItemContainer,
-  MarketRequestItemInteraction,
-  MarketRequestItemMobileContainer,
-  MajorInfo,
-  MinorInfo,
-  SubMinorInfo,
   Badges,
-  SubMinorDetail,
-  SubText,
+  SearchWrapper,
 } from './Landing.style';
-
-export const MarketRequestItemNonMobile = (props: {
-  expiry: string;
-  offers: number;
-  type: string;
-  image: string;
-  inDetail: boolean;
-  activeOffersData: GetActiveOffersRequestResponseItem[];
-  metric: string;
-  paymentRequired: boolean;
-  weight?: { from: number; to: number };
-  measurementUnit?: string;
-  setItemToDelete?: Dispatch<SetStateAction<{ value: null | string }>>;
-  id?: string;
-  requestStatus: string;
-  specs?: string;
-  status: string;
-  size?: { from: number; to: number; options: any; ungraded: boolean };
-}) => {
-  const theme = useTheme();
-  const {
-    id,
-    expiry,
-    offers,
-    type,
-    image,
-    measurementUnit,
-    weight,
-    specs,
-    size,
-    setItemToDelete,
-    metric,
-    requestStatus,
-  } = props;
-  const statusTextProps = transformMarketRequestStatusText(
-    theme,
-    requestStatus
-  );
-  const offersTextProps = numberOffersTransform(offers);
-
-  return (
-    <MarketRequestItemContainer>
-      <div className="thumbnail-container">
-        <img src={parseImageUrl(image)} alt="" />
-      </div>
-      <div className="info-container">
-        <Col style={{ padding: '0 5px' }}>
-          <div className="sub-group">
-            <TypographyView variant="label">{type}</TypographyView>
-            <SubText variant="caption">{specs?.split(',').join(', ')}</SubText>
-          </div>
-        </Col>
-
-        <Col style={{ padding: '0 5px' }}>
-          <div className="sub-group">
-            {buildSize(
-              metric,
-              size?.from?.toString(),
-              size?.to?.toString(),
-              size?.options
-            ) && (
-              <SubText variant="caption">{`Size: ${buildSize(
-                metric,
-                size?.from?.toString(),
-                size?.to?.toString(),
-                size?.options
-              )}`}</SubText>
-            )}
-            <SubText variant="caption">
-              {weight &&
-                `Qty: ${weight.from} ${formatUnitToPricePerUnit(
-                  measurementUnit?.toLocaleLowerCase()
-                )} ~ ${weight.to} ${formatUnitToPricePerUnit(
-                  measurementUnit?.toLocaleLowerCase()
-                )}`}
-            </SubText>
-          </div>
-        </Col>
-
-        <Col sm={2} style={{ padding: '0 5px' }}>
-          <div className="sub-group">
-            <SubText
-              variant="caption"
-              color={expiry === 'Expired' ? 'error' : 'primary'}
-            >
-              {expiry === 'Expired' ? expiry : `${expiry} left`}
-            </SubText>
-          </div>
-        </Col>
-
-        <Col style={{ padding: '0 5px' }}>
-          <Badges>
-            {statusTextProps.text !== '' && (
-              <OfferTag
-                text={statusTextProps.text}
-                badgeColor={statusTextProps.badgeColor || ''}
-                variantColor={statusTextProps.variantColor}
-                color={statusTextProps.tagColor}
-              />
-            )}
-
-            <OfferTag
-              text={offersTextProps.text}
-              badgeColor={offersTextProps.badgeColor || ''}
-              variantColor={offersTextProps.variantColor}
-              color={offersTextProps.tagColor}
-            />
-          </Badges>
-        </Col>
-
-        <Col sm={1} style={{ padding: '0 5px' }}>
-          <div className="sub-group">
-            <Button
-              iconPosition="before"
-              icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
-              onClick={
-                setItemToDelete &&
-                ((e) => {
-                  e.stopPropagation();
-                  setItemToDelete({ value: id || '' });
-                })
-              }
-              variant="primary"
-              size="sm"
-              className="delete-button"
-            />
-          </div>
-        </Col>
-      </div>
-    </MarketRequestItemContainer>
-  );
-};
-
-export const MarketRequestItemMobile = (props: {
-  expiry: string;
-  offers: number;
-  type: string;
-  image: string;
-  inDetail: boolean;
-  metric: string;
-  paymentRequired: boolean;
-  weight?: { from: number; to: number };
-  measurementUnit?: string;
-  specs?: string;
-  size?: { from: number; to: number; options: any; ungraded: boolean };
-  requestStatus: string;
-  status: string;
-}) => {
-  const theme = useTheme();
-  const {
-    expiry,
-    offers,
-    type,
-    image,
-    measurementUnit,
-    weight,
-    specs,
-    size,
-    metric,
-    requestStatus,
-  } = props;
-
-  const statusTextProps = transformMarketRequestStatusText(
-    theme,
-    requestStatus
-  );
-  const offersTextProps = numberOffersTransform(offers);
-
-  const subMinorDetail = (label: string, value: string) => (
-    <>
-      <Typography
-        variant="caption"
-        weight="400"
-        color="shade6"
-        style={{ marginRight: '5px' }}
-      >
-        {label}{' '}
-      </Typography>
-      <Typography variant="caption" weight="700" color="shade9">
-        {value}
-      </Typography>
-    </>
-  );
-
-  return (
-    <MarketRequestItemMobileContainer>
-      <MajorInfo>
-        <div className="thumbnail-container">
-          <img src={parseImageUrl(image)} alt="" />
-        </div>
-
-        <TypographyView variant="label" style={{ lineHeight: '20px' }}>
-          {type}
-        </TypographyView>
-      </MajorInfo>
-
-      <MinorInfo>
-        <Typography variant="caption" weight="400" color="shade6">
-          {specs?.split(',').join(', ')}
-        </Typography>
-
-        <SubMinorInfo>
-          <SubMinorDetail>
-            {subMinorDetail(
-              'Quantity',
-              weight?.from +
-                '-' +
-                weight?.to +
-                ' ' +
-                Case.pascal(formatUnitToPricePerUnit(measurementUnit || ''))
-            )}
-          </SubMinorDetail>
-
-          <SubMinorDetail>{subMinorDetail('Time Left', expiry)}</SubMinorDetail>
-
-          <SubMinorDetail>
-            {subMinorDetail(
-              'Size',
-              buildSize(
-                metric,
-                size?.from?.toString(),
-                size?.to?.toString(),
-                size?.options
-              ) || 'None'
-            )}
-          </SubMinorDetail>
-        </SubMinorInfo>
-
-        <Badges>
-          {statusTextProps.text !== '' && (
-            <OfferTag
-              text={statusTextProps.text}
-              badgeColor={statusTextProps.badgeColor || ''}
-              variantColor={statusTextProps.variantColor}
-              color={statusTextProps.tagColor}
-            />
-          )}
-          <OfferTag
-            text={offersTextProps.text}
-            badgeColor={offersTextProps.badgeColor || ''}
-            variantColor={offersTextProps.variantColor}
-            color={offersTextProps.tagColor}
-          />
-        </Badges>
-      </MinorInfo>
-    </MarketRequestItemMobileContainer>
-  );
-};
+import NegotiationNonMobile from './NegotiationNonMobile';
+import RequestsMobile from './RequestsMobile';
+import RequestsNonMobile from './RequestsNonMobile';
 
 const MarketRequestsLandingView = (
   props: MarketRequestsLandingGeneratedProps
@@ -299,7 +47,9 @@ const MarketRequestsLandingView = (
   const history = useHistory();
   const {
     marketRequests,
+    negotiations,
     onClickItem,
+    onClickNegoItem,
     onDelete,
     itemToDelete,
     setItemToDelete,
@@ -307,7 +57,15 @@ const MarketRequestsLandingView = (
     loading,
     activeOffersData,
     reverseMarketPlace,
+    canNegotiate,
+    handleTabSelect,
+    selectedTab,
+    handleSearchChange,
+    searchKeyword,
+    negotiationCredit,
   } = props;
+
+  const theme = useTheme();
 
   const [isAcceptClicked, setIsAcceptClicked] = useLocalStorage(
     'isTermsAndConAccepted',
@@ -320,61 +78,46 @@ const MarketRequestsLandingView = (
 
   const renderMobile = () => (
     <Visible xs>
-      {marketRequests?.length > 0 ? (
-        marketRequests?.map((mr) => (
-          <MarketRequestItemInteraction
-            key={mr.id}
-            type={mr.offers > 0 ? 'next' : 'none'}
-            onClick={() => onClickItem(mr)}
-            leftComponent={<MarketRequestItemMobile inDetail={false} {...mr} />}
-            rightComponent={
-              <div className="cta">
-                {mr.offers > 0 && (
-                  <div>
-                    <ChevronRight width={8} height={12} />
-                  </div>
-                )}
-                <Button
-                  iconPosition="before"
-                  icon={<TrashCan fill={'#FFF'} width={16} height={16} />}
-                  onClick={
-                    setItemToDelete &&
-                    ((e) => {
-                      e.stopPropagation();
-                      setItemToDelete({ value: mr.id || '' });
-                    })
-                  }
-                  variant="primary"
-                  size="sm"
-                  className="delete-button"
-                />
-              </div>
-            }
-          />
-        ))
-      ) : (
-        <EmptyStateView Svg={Crab} height={240} width={249} fluid />
-      )}
+      {selectedTab === TABS.MARKET_REQUEST ? (
+        marketRequests?.length > 0 ? (
+          marketRequests?.map((mr) => (
+            <RequestsMobile
+              item={mr}
+              onClickItem={onClickItem}
+              activeOffersData={activeOffersData}
+              setItemToDelete={setItemToDelete}
+            />
+          ))
+        ) : (
+          <EmptyStateView Svg={Crab} height={240} width={249} fluid />
+        )
+      ) : null}
     </Visible>
   );
 
   const renderNonMobile = () => (
     <Hidden xs>
-      {marketRequests?.length > 0 ? (
-        marketRequests?.map((mr) => (
-          <MarketRequestItemInteraction
-            key={mr.id}
-            type={mr.offers > 0 ? 'next' : 'none'}
-            onClick={() => onClickItem(mr)}
-            leftComponent={
-              <MarketRequestItemNonMobile
-                activeOffersData={activeOffersData}
-                inDetail={false}
-                setItemToDelete={setItemToDelete}
-                {...mr}
-              />
-            }
-            keepIcon
+      {selectedTab === TABS.MARKET_REQUEST ? (
+        marketRequests?.length > 0 ? (
+          marketRequests?.map((mr) => (
+            <RequestsNonMobile
+              item={mr}
+              onClickItem={onClickItem}
+              activeOffersData={activeOffersData}
+              setItemToDelete={setItemToDelete}
+            />
+          ))
+        ) : (
+          <EmptyStateView Svg={Crab} height={240} width={249} fluid />
+        )
+      ) : negotiations ? (
+        negotiations?.map((nego) => (
+          <NegotiationNonMobile
+            key={nego.listing_id}
+            item={nego}
+            onClickItem={() => onClickNegoItem(nego)}
+            activeOffersData={activeOffersData}
+            setItemToDelete={setItemToDelete}
           />
         ))
       ) : (
@@ -407,45 +150,6 @@ const MarketRequestsLandingView = (
     );
   }
 
-  // const SentRequestDescription = () => {
-  //   return (
-  //     <div>
-  //       <Typography color="shade7" variant="body">
-  //         Your request has been sent to our network of sellers.
-  //       </Typography>
-  //       <br />
-  //       <Typography
-  //         altFont
-  //         color="shade7"
-  //         variant="body"
-  //         weight="bold"
-  //       >
-  //         What happens next?
-  //       </Typography>
-  //       <br />
-  //       <Typography color="shade7" variant="body">
-  //         <ol>
-  //           <li>
-  //             You will receive offers directly from our authorised sellers which
-  //             you can accept or negotiate
-  //           </li>
-  //           <li>
-  //             Process payment within 24 hours for accepted offers to finalise
-  //             the order
-  //           </li>
-  //           <li>
-  //             Your Market Request will automatically close after 7 days or once
-  //             your maximum quantity is fulfilled
-  //           </li>
-  //         </ol>
-  //       </Typography>
-  //       <Typography color="shade7" variant="body">
-  //         You can review your requests and offers in my ‘Market Requests’
-  //       </Typography>
-  //     </div>
-  //   );
-  // };
-
   return (
     <MarketRequestsContainer>
       {/* <ConfirmationModal
@@ -468,59 +172,114 @@ const MarketRequestsLandingView = (
         onClickClose={() => setItemToDelete({ value: null })}
       />
 
-      <Row nogutter justify="around" align="center" className="header">
-        <Col>
-          <Hidden xs sm>
-            <Typography variant="title5" weight="700" color="shade9" altFont>
-              My Market Requests
-            </Typography>
-          </Hidden>
-          <Visible xs sm>
-            <Typography variant="title5" weight="700" color="shade9" altFont>
-              Market Requests
-            </Typography>
-          </Visible>
-        </Col>
-        <Col xs="content">
-          <Visible sm md lg xl xxl>
-            <Button
-              onClick={() =>
-                history.push(BUYER_MARKET_REQUEST_ROUTES.CREATE_MARKET_REQUEST)
-              }
-              text="CREATE REQUEST"
-              variant={props.isPendingAccount ? 'disabled' : 'primary'}
-              size="md"
-              disabled={props.isPendingAccount}
-            />
-          </Visible>
-        </Col>
-      </Row>
-      {renderMobile()}
-      {renderNonMobile()}
-      <MobileFooter>
-        <Button
-          onClick={() =>
-            history.push(BUYER_MARKET_REQUEST_ROUTES.CREATE_MARKET_REQUEST)
-          }
-          text="CREATE REQUEST"
-          variant={props.isPendingAccount ? 'disabled' : 'primary'}
-          takeFullWidth
-          disabled={props.isPendingAccount}
-          icon={
-            <ChevronRight
-              width={15}
-              height={12}
-              fill="white"
-              style={{ paddingBottom: '2px' }}
-            />
-          }
-        />
-      </MobileFooter>
+      {/* <Typography variant="label" style={{ marginBottom: 5 }}>
+        Search
+      </Typography>
+      <SearchWrapper
+        value={searchKeyword}
+        onChange={(e) => handleSearchChange(e.target.value)}
+        placeholder="Search..."
+        resetValue={() => handleSearchChange('')}
+      /> */}
+
+      <SegmentedControls
+        options={[TABS.NEGOTIATIONS, TABS.MARKET_REQUEST]}
+        controlButtonColor={theme.brand.secondary}
+        inactiveBackgroundColor={theme.grey.shade3}
+        selectedOption={selectedTab}
+        onClickControl={(value) => {
+          handleTabSelect(
+            value === TABS.NEGOTIATIONS
+              ? TABS.NEGOTIATIONS
+              : TABS.MARKET_REQUEST
+          );
+        }}
+      />
+
+      <div style={{ marginTop: 20 }}>
+        <Row nogutter justify="around" align="center" className="header">
+          {selectedTab === TABS.MARKET_REQUEST ? (
+            <>
+              <Col>
+                <Hidden xs sm>
+                  <Typography
+                    variant="title5"
+                    weight="700"
+                    color="shade9"
+                    altFont
+                  >
+                    My Market Requests
+                  </Typography>
+                </Hidden>
+                {/* <Visible xs sm>
+                  <Typography
+                    variant="title5"
+                    weight="700"
+                    color="shade9"
+                    altFont
+                  >
+                    Market Requests
+                  </Typography>
+                </Visible> */}
+              </Col>
+              <Col xs="content">
+                <Visible sm md lg xl xxl>
+                  <Button
+                    onClick={() =>
+                      history.push(
+                        BUYER_MARKET_REQUEST_ROUTES.CREATE_MARKET_REQUEST
+                      )
+                    }
+                    text="CREATE REQUEST"
+                    variant={props.isPendingAccount ? 'disabled' : 'primary'}
+                    size="md"
+                    disabled={props.isPendingAccount}
+                  />
+                </Visible>
+              </Col>
+            </>
+          ) : (
+            canNegotiate && (
+              <>
+                <Col></Col>
+                <Col xs="content">
+                  <Visible sm md lg xl xxl>
+                    <Typography color="shade6">
+                      Negotiation Credits: {negotiationCredit?.credit}
+                    </Typography>
+                  </Visible>
+                </Col>
+              </>
+            )
+          )}
+        </Row>
+        {renderMobile()}
+        {renderNonMobile()}
+        <MobileFooter>
+          <Button
+            onClick={() =>
+              history.push(BUYER_MARKET_REQUEST_ROUTES.CREATE_MARKET_REQUEST)
+            }
+            text="CREATE REQUEST"
+            variant={props.isPendingAccount ? 'disabled' : 'primary'}
+            takeFullWidth
+            disabled={props.isPendingAccount}
+            icon={
+              <ChevronRight
+                width={15}
+                height={12}
+                fill="white"
+                style={{ paddingBottom: '2px' }}
+              />
+            }
+          />
+        </MobileFooter>
+      </div>
     </MarketRequestsContainer>
   );
 };
 
-function buildSize(
+export function buildSize(
   metric: string,
   sizeFrom: string | undefined,
   sizeTo: string | undefined,

@@ -18,12 +18,21 @@ const SegmentedControls = (props: SegmentedControlsProps): JSX.Element => {
     tooltips,
     controlButtonColor,
     controlButtonTextColor,
+    inactiveBackgroundColor,
   } = props;
   const Icon: React.FC<SVGProps> = InfoFilled;
   const theme = useTheme();
+
   return (
     <Container>
-      <Row className="row" nogutter>
+      <Row
+        className="row"
+        nogutter
+        style={{
+          backgroundColor: inactiveBackgroundColor || theme.grey.noshade,
+          borderRadius: 12,
+        }}
+      >
         {options.map((option) => {
           const currentTooltip = tooltips?.find((t) => t.option === option);
           const value = currentTooltip ? currentTooltip.value : '';
@@ -31,10 +40,12 @@ const SegmentedControls = (props: SegmentedControlsProps): JSX.Element => {
           return (
             <Col key={option}>
               <ControlButton
+                className="segmented_control__option"
                 active={option === selectedOption}
                 onClick={() => onClickControl(option)}
                 backgroundColor={controlButtonColor}
                 textColor={controlButtonTextColor}
+                inactiveBackgroundColor={inactiveBackgroundColor}
                 type="button"
               >
                 {option}

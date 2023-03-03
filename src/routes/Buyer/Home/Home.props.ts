@@ -1,5 +1,6 @@
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
 import { GetCompanyPlanResponseData } from 'types/store/GetCompanyPlanState';
+import { GetNegotiationCreditRequestResponseItem } from 'types/store/GetNegotiationCreditState';
 
 export type CategoryResults = {
   id: string;
@@ -34,6 +35,13 @@ export interface HomeGeneratedProps {
   currentMarketSector: string;
   isApprovedCompany: boolean;
   canNegotiate?: boolean;
+  negotiationCredit: GetNegotiationCreditRequestResponseItem | undefined;
+  showNegoCreditsModal: boolean;
+  handleShowNegoCreditsModal: () => void;
+  handleShowNegoModal: (listingId: string) => void;
+  showNegoModal: boolean;
+  clickedRecentListing: GetBuyerHomepageResponseListingItem | undefined;
+  handleNegoModalToggle: () => void;
 }
 
 export interface HomeData {

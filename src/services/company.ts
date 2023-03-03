@@ -12,6 +12,7 @@ import { GetBankDetailsMeta } from 'types/store/GetBankDetailsState';
 import { GetBuyerHomepageRequestData } from 'types/store/GetBuyerHomepageState';
 import { GetCoopUsersRequest } from 'types/store/GetCoopUsersState';
 import { GetMarketInterestsMeta } from 'types/store/GetMarketInterestsState';
+import { GetNegotiationCreditMeta } from 'types/store/GetNegotiationCreditState';
 import { GetSellerByIdMeta } from 'types/store/GetSellerByIdState';
 import { GetSellerLicenseMeta } from 'types/store/GetSellerLicenseState';
 import { GetTransactionHistoryMeta } from 'types/store/GetTransactionHistoryState';
@@ -20,7 +21,9 @@ import { UpdateMarketInterestsMeta } from 'types/store/UpdateMarketInterestsStat
 import { UpdateSellerLicenseMeta } from 'types/store/UpdateSellerLicenseState';
 
 const BASE_URL = `${API.URL}/${API.VERSION}`;
+const BASE_URL_V2 = `${API.URL}/${API.VERSION_NEXT}`;
 const COMPANY_URL = `${BASE_URL}/company`;
+const COMPANY_URL_V2 = `${BASE_URL_V2}/company`;
 
 export const getCoopUsers = (data: GetCoopUsersRequest, token: string) => {
   return axios({
@@ -198,12 +201,14 @@ export const getSellerMarketPrice = (
 };
 
 export const getBuyerHomepage = (
-  { addressId }: GetBuyerHomepageRequestData,
+  { addressId, negotiations }: GetBuyerHomepageRequestData,
   token: string
 ) => {
+  const negoQuery = negotiations ? `&negotiations=true` : '';
+
   return axios({
     method: 'get',
-    url: `${COMPANY_URL}/buyer-homepage?address=${addressId}`,
+    url: `${COMPANY_URL}/buyer-homepage?address=${addressId}${negoQuery}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -317,6 +322,19 @@ export const updateSellerLicense = (
       urlBack: data.urlBack,
       stateId: data.stateId,
       fileTypeBack: data.fileTypeBack,
+    },
+  });
+};
+
+export const getCompanyNegotiationCredit = (
+  data: GetNegotiationCreditMeta,
+  token: string
+) => {
+  return axios({
+    method: 'get',
+    url: `${COMPANY_URL_V2}/credits`,
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
   });
 };

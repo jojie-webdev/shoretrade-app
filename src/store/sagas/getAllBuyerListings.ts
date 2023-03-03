@@ -25,6 +25,7 @@ function* getAllBuyerListingsRequest(action: any) {
         limit: action.payload?.limit,
         sortOrder: action.payload?.sortOrder,
         address: action.payload?.address,
+        negotiations: action.payload?.negotiations,
       });
       yield put(getAllBuyerListingsActions.success(data));
     } catch (e) {

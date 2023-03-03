@@ -5,26 +5,34 @@ import Alert from 'components/base/Alert';
 import Badge from 'components/base/Badge';
 import Breadcrumbs from 'components/base/Breadcrumbs/Breadcrumbs.view';
 import Button from 'components/base/Button';
+import { Close, Check } from 'components/base/SVG';
+import Refresh from 'components/base/SVG/Refresh';
 import Typography from 'components/base/Typography/Typography.view';
 import MobileFooter from 'components/layout/MobileFooter';
+import AcceptSellerModal from 'components/module/AcceptSellerModal';
 import ConfirmationModal from 'components/module/ConfirmationModal';
+import DeclineSellerModal from 'components/module/DeclineSellerModal';
 import MobileHeader from 'components/module/MobileHeader';
 import NegotiateSellerModal from 'components/module/NegotiateSellerModal';
 // import PaymentTimeLeft from 'components/module/PaymentTimeLeft';
+import NegotiationSellerModal from 'components/module/NegotiationSellerModal';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { SELLER_MARKET_BOARD_ROUTES, SELLER_ROUTES } from 'consts/routes';
 import moment from 'moment';
 import { groupBy, isEmpty, pathOr, sortBy } from 'ramda';
+import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory, useLocation } from 'react-router-dom';
 import { OfferStatus } from 'types/store/GetActiveOffersState';
 import { Specification } from 'types/store/GetAllMarketRequestState';
+import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
+import { TABS } from '../Landing/Landing.constants';
 import { getShippingAddress } from '../Landing/Landing.transform';
 import MakeOffer from './MakeOffer';
 import { MakeOfferProps } from './MakeOffer/MakeOffer.props';
@@ -39,6 +47,15 @@ import {
   BadgeText,
   // MetricContainer,
   StyledBadge,
+  Contents,
+  Tag,
+  Line,
+  CalculationContainer,
+  NegoCTAContainer,
+  DeclineBtnWrapper,
+  NegoBtnWrapper,
+  LeftBtnsContainer,
+  AcceptBtnWrapper,
 } from './RequestAndNegotiate.style';
 import ReviewOffer from './ReviewOffer';
 import { ReviewOfferProps } from './ReviewOffer/ReviewOffer.props';
@@ -49,6 +66,7 @@ const Step1 = ({
   activeOffer,
   userPending,
   buyerRequestForActiveOfferTab,
+  negotiation,
   ...props
 }: Step1Props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -339,7 +357,7 @@ const Step1 = ({
         </div>
 
         {showButtons && !isMobile && (
-          <div className={'submit-btns'}>
+          <div className={'submit-btns1'}>
             <Button
               onClick={() => setIsOpen(true)}
               className={'submit-btn'}
@@ -387,6 +405,117 @@ const Step1 = ({
           </MobileFooter>
         )}
 
+        {showButtons && !isMobile && (
+          <div className={'submit-btns'}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <Button
+                // onClick={handleDeclineBtnClick}
+                onClick={() => console.log('')}
+                text={
+                  <Typography color="primary" style={{ marginRight: 5 }}>
+                    Decline
+                  </Typography>
+                }
+                variant="outline"
+                icon={<Close fill={theme.brand.primary} />}
+              />
+              <div style={{ marginLeft: 8 }} />
+              <Button
+                text={
+                  <Typography color="noshade" style={{ marginRight: 5 }}>
+                    Negotiate
+                  </Typography>
+                }
+                onClick={() => setIsOpen(true)}
+                icon={<Refresh fill={theme.grey.noshade} />}
+              />
+            </div>
+            <div style={{ marginLeft: 8 }} />
+            <Button
+              text={
+                <Typography color="noshade" style={{ marginRight: 5 }}>
+                  Accept
+                </Typography>
+              }
+              // onClick={handleAcceptBtnClick}
+              onClick={() => console.log('')}
+              variant="primary"
+              icon={<Check width={10} height={9} />}
+            />
+          </div>
+        )}
+
+        {showButtons && isMobile && (
+          <MobileFooter>
+            <div style={{ width: '100%' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Button
+                  // onClick={handleDeclineBtnClick}
+                  onClick={() => console.log('')}
+                  text={
+                    <Typography color="primary" style={{ marginRight: 5 }}>
+                      Decline
+                    </Typography>
+                  }
+                  variant="outline"
+                  icon={<Close fill={theme.brand.primary} />}
+                  takeFullWidth
+                />
+                <div style={{ marginRight: 10 }} />
+                <Button
+                  text={
+                    <Typography color="noshade" style={{ marginRight: 5 }}>
+                      Accept
+                    </Typography>
+                  }
+                  // onClick={handleAcceptBtnClick}
+                  onClick={() => console.log('')}
+                  variant="primary"
+                  icon={<Check width={10} height={9} />}
+                  takeFullWidth
+                />
+              </div>
+              <div style={{ marginTop: 10 }} />
+              <div>
+                <Button
+                  text={
+                    <Typography color="noshade" style={{ marginRight: 5 }}>
+                      Negotiate
+                    </Typography>
+                  }
+                  onClick={() => setIsOpen(true)}
+                  icon={<Refresh fill={theme.grey.noshade} />}
+                  takeFullWidth
+                />
+              </div>
+            </div>
+          </MobileFooter>
+        )}
+
+        <AcceptSellerModal
+          // show={showAcceptModal}
+          // onCloseClick={handleAcceptBtnClick}
+          show={false}
+          onCloseClick={() => console.log('')}
+          isAccepting={props.isNegotiating}
+          onAcceptBtnClick={() => {
+            // handleAcceptBtnClick();
+            props.onNegotiateOffer(activeOffer.id, latestBuyerNego.price, true);
+          }}
+          quantity={
+            (isReview
+              ? buyerRequest.weight?.from || 0
+              : activeOffer.weight || 0) + ` ${unit}`
+          }
+          buyersNegoPrice={`${toPrice(latestBuyerNego.price)}/${unit}`}
+          percentageChangeInPrice={`${
+            discountValue > 0 ? '+' : ''
+          }${discountPercentage}%`}
+          isGoodNego={discountValue >= 0}
+          negoDiff={`${toPrice(Math.abs(discountValue))}/${unit}`}
+          totalValue={toPrice(activeOffer.price * activeOffer.weight)}
+        />
+
         <NegotiateSellerModal
           marketOffer={activeOffer}
           modalLastNegotiationsArray={modalLastNegotiationsArray}
@@ -398,6 +527,27 @@ const Step1 = ({
             setIsOpen(false);
           }}
         />
+
+        {/* <NegotiationSellerModal
+          marketOffer={activeOffer}
+          modalLastNegotiationsArray={modalLastNegotiationsArray}
+          isOpen={false}
+          onClickClose={() => setIsOpen(false)}
+          isNegotiating={props.isNegotiating}
+          onSubmit={(counterOffer) => {
+            props.onNegotiateOffer(activeOffer.id, counterOffer);
+            setIsOpen(false);
+          }}
+        /> */}
+
+        {/* <DeclineSellerModal
+          // show={showDeclineModal}
+          // onCancelBtnClick={handleCancelBtnClick}
+          // onConfirmBtnClick={handleConfirmBtnClick}
+          show={false}
+          onCancelBtnClick={() => console.log('')}
+          onConfirmBtnClick={() => console.log('')}
+        /> */}
       </>
     );
   };
@@ -665,6 +815,280 @@ const Step3 = (props: ReviewOfferProps) => {
   return <ReviewOffer {...props} />;
 };
 
+const Negotiation = (props: {
+  negotiation: GetAllNegoRequestResponseItem & {
+    expiry: any;
+  };
+}) => {
+  const { negotiation } = props;
+  const history = useHistory();
+  const theme = useTheme();
+
+  const statusTextProps = transformMarketRequestStatusText(
+    theme,
+    negotiation.display_status || '',
+    true,
+    [`${negotiation.listing_id}`]
+  );
+
+  const AlertContent = (props: { text: string; description: string }) => {
+    if (props.text === 'Finalised') {
+      return (
+        <span
+          onClick={() => history.replace(SELLER_ROUTES.SOLD)}
+          style={{ cursor: 'pointer' }}
+        >
+          <Typography
+            component={'span'}
+            variant="body"
+            color="shade6"
+            weight="400"
+          >
+            {props.description}
+          </Typography>
+        </span>
+      );
+    }
+    return <>{props.description}</>;
+  };
+
+  return (
+    <>
+      <Typography
+        color="shade6"
+        weight="700"
+        style={{ fontFamily: 'Basis Grotesque Pro', letterSpacing: 1 }}
+      >
+        The customer has detailed the specifications they want for this
+        negotiation
+      </Typography>
+
+      <div style={{ marginTop: 24 }} />
+
+      <Alert
+        content={
+          <AlertContent
+            text={statusTextProps.text}
+            description={statusTextProps.description}
+          />
+        }
+        header={statusTextProps.alertTitle}
+        variant={statusTextProps.variantColor || 'info'}
+        color={statusTextProps.tagColor}
+        fullWidth
+      />
+
+      <Contents>
+        <Typography
+          color="shade6"
+          weight="700"
+          style={{ fontFamily: 'Basis Grotesque Pro', letterSpacing: 2 }}
+        >
+          SPECIFICATION
+        </Typography>
+        <div style={{ marginTop: 8 }} />
+        <div style={{ display: 'flex' }}>
+          {negotiation.specifications.map((spec) => (
+            <Tag key={spec.id}>
+              <Typography
+                color="shade9"
+                weight="700"
+                style={{ fontFamily: 'Basis Grotesque Pro' }}
+              >
+                {spec.name}
+              </Typography>
+            </Tag>
+          ))}
+        </div>
+
+        <div style={{ marginTop: 24 }} />
+        <Typography
+          color="shade6"
+          weight="700"
+          style={{ fontFamily: 'Basis Grotesque Pro', letterSpacing: 2 }}
+        >
+          SIZE
+        </Typography>
+        <div style={{ marginTop: 8 }} />
+        <Tag>
+          <Typography
+            color="shade9"
+            weight="700"
+            style={{ fontFamily: 'Basis Grotesque Pro' }}
+          >
+            {sizeToString(
+              'Grams', //negotiation.metric
+              negotiation.size_from,
+              negotiation.size_to
+            )}
+          </Typography>
+        </Tag>
+
+        <div style={{ marginTop: 24 }} />
+        <Typography
+          color="shade6"
+          weight="700"
+          style={{ fontFamily: 'Basis Grotesque Pro', letterSpacing: 2 }}
+        >
+          QUANTITY
+        </Typography>
+        <div style={{ marginTop: 8 }} />
+        <Tag>
+          <Typography
+            color="shade9"
+            weight="700"
+            style={{ fontFamily: 'Basis Grotesque Pro' }}
+          >
+            {negotiation.desired_quantity} {negotiation.measurement_unit}
+          </Typography>
+        </Tag>
+
+        <div style={{ marginTop: 24 }} />
+        <Line />
+
+        <CalculationContainer>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Typography
+              color="noshade"
+              weight="700"
+              style={{ fontFamily: 'Basis Grotesque Pro' }}
+            >
+              Your Offer
+            </Typography>
+            <Typography
+              color="noshade"
+              weight="700"
+              style={{ fontFamily: 'Basis Grotesque Pro' }}
+            >
+              $??.??/unit
+              {/* ${negotiation.desired_quantity}/
+              {negotiation.measurement_unit.toLowerCase()} */}
+            </Typography>
+          </div>
+
+          <div style={{ marginTop: 12 }} />
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Typography
+              color="noshade"
+              weight="700"
+              style={{ fontFamily: 'Basis Grotesque Pro' }}
+            >
+              Buyer&apos;s Counter Offer
+            </Typography>
+            <Typography
+              color="noshade"
+              weight="700"
+              style={{ fontFamily: 'Basis Grotesque Pro' }}
+            >
+              ${negotiation.counter_offer}/
+              {negotiation.measurement_unit.toLowerCase()}
+            </Typography>
+          </div>
+
+          <div style={{ marginTop: 12 }} />
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Typography
+              color="noshade"
+              weight="700"
+              style={{ fontFamily: 'Basis Grotesque Pro' }}
+            >
+              Change in Price <span>0.5%</span>
+            </Typography>
+            <Typography
+              color="error"
+              weight="700"
+              style={{ fontFamily: 'Basis Grotesque Pro' }}
+            >
+              -$15/kg
+            </Typography>
+          </div>
+
+          <div style={{ marginTop: 12 }} />
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Typography
+              color="noshade"
+              weight="700"
+              style={{ fontFamily: 'Basis Grotesque Pro' }}
+            >
+              Total Value
+            </Typography>
+            <Typography
+              color="noshade"
+              weight="700"
+              style={{ fontFamily: 'Basis Grotesque Pro' }}
+            >
+              $1800.00
+            </Typography>
+          </div>
+        </CalculationContainer>
+
+        <NegoCTAContainer>
+          <LeftBtnsContainer>
+            <DeclineBtnWrapper
+              text={
+                <Typography
+                  color="primary"
+                  weight="700"
+                  style={{
+                    fontFamily: 'Basis Grotesque Pro',
+                    letterSpacing: 1,
+                  }}
+                >
+                  Decline
+                </Typography>
+              }
+              iconPosition="after"
+              icon={
+                <div style={{ marginLeft: 5 }}>
+                  <Close fill={theme.brand.primary} />
+                </div>
+              }
+              variant="outline"
+            />
+            <NegoBtnWrapper
+              text={
+                <Typography
+                  color="noshade"
+                  weight="700"
+                  style={{
+                    fontFamily: 'Basis Grotesque Pro',
+                    letterSpacing: 1,
+                  }}
+                >
+                  Negotiate
+                </Typography>
+              }
+              iconPosition="after"
+              icon={
+                <div style={{ marginLeft: 5, marginBottom: 3 }}>
+                  <Refresh fill={theme.grey.noshade} />
+                </div>
+              }
+            />
+          </LeftBtnsContainer>
+          <AcceptBtnWrapper
+            text={
+              <Typography
+                color="noshade"
+                weight="700"
+                style={{ fontFamily: 'Basis Grotesque Pro', letterSpacing: 1 }}
+              >
+                Accept
+              </Typography>
+            }
+            iconPosition="after"
+            icon={
+              <div style={{ marginLeft: 5, marginBottom: 3 }}>
+                <Check fill={theme.grey.noshade} />
+              </div>
+            }
+          />
+        </NegoCTAContainer>
+      </Contents>
+    </>
+  );
+};
+
 const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
   const history = useHistory();
 
@@ -714,7 +1138,10 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
         <Breadcrumbs
           sections={[
             {
-              label: 'Buyer Requests',
+              label:
+                props.selectedTab === TABS.REVERSE_MARKETPLACE
+                  ? 'Buyer Requests'
+                  : 'All Negotiations',
               onClick: () => {
                 if (!isEmpty(props.offer)) {
                   setIsOpen(true);
@@ -728,7 +1155,12 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
               },
             },
             {
-              label: props.isReview ? 'Review Request' : 'Negotiate',
+              label:
+                props.selectedTab === TABS.REVERSE_MARKETPLACE
+                  ? props.isReview
+                    ? 'Review Request'
+                    : 'Negotiate'
+                  : 'Negotiation Details',
               ...(step >= 2 ? { onClick: () => setStep(1) } : {}),
             },
             ...(step === 2 ? [{ label: 'Make an Offer' }] : []),
@@ -744,15 +1176,28 @@ const RequestAndNegotiateView = (props: RequestAndNegotiateGeneratedProps) => {
 
       {step !== 3 && (
         <MobileHeader>
-          {props.buyerRequest?.type || props.activeOffer?.name || ''}
+          {props.buyerRequest?.type ||
+            props.activeOffer?.name ||
+            props.negotiation.name ||
+            ''}
         </MobileHeader>
       )}
 
-      {step === 1 && (
-        <Step1 setStep={setStep} {...props} userPending={props.userPending} />
+      {props.selectedTab === TABS.REVERSE_MARKETPLACE ? (
+        <>
+          {step === 1 && (
+            <Step1
+              setStep={setStep}
+              {...props}
+              userPending={props.userPending}
+            />
+          )}
+          {step === 2 && <Step2 setStep={setStep} {...props} />}
+          {step === 3 && <Step3 setStep={setStep} {...props} />}
+        </>
+      ) : (
+        props.negotiation && <Negotiation negotiation={props.negotiation} />
       )}
-      {step === 2 && <Step2 setStep={setStep} {...props} />}
-      {step === 3 && <Step3 setStep={setStep} {...props} />}
 
       <ConfirmationModal
         isOpen={isOpen}

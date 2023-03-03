@@ -5,25 +5,33 @@ import Alert from 'components/base/Alert';
 import Badge from 'components/base/Badge';
 import Divider from 'components/base/Divider';
 import FavoriteButtonView from 'components/base/FavoriteButton';
+import Radio from 'components/base/Radio';
 import {
   Expand,
   Location,
   ShoppingTrolley,
   Crate,
   CheckFilled,
+  MarketBoardOutlined,
 } from 'components/base/SVG';
 import TextField from 'components/base/TextField';
 import Typography from 'components/base/Typography';
 import BoxRadio from 'components/module/BoxRadio';
 import Carousel from 'components/module/Carousel';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 import Loading from 'components/module/Loading';
+import NegotiationCreditsModal from 'components/module/NegotiationCreditsModal';
+import { NegotiationCreditsModalProps } from 'components/module/NegotiationCreditsModal/NegotiationCreditsModal.props';
 import ProductDetailsCard6View from 'components/module/ProductDetailsCard6';
+import ProductDetailsNegotiationModal from 'components/module/ProductDetailsNegotiationModal';
 import ProductSellerCard from 'components/module/ProductSellerCard';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { BUYER_ACCOUNT_ROUTES } from 'consts/routes';
 import moment from 'moment';
 import { isEmpty } from 'ramda';
 import { Col } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
+import { useHistory } from 'react-router';
 import { GetListingResponseItem } from 'types/store/GetListingState';
 import theme from 'utils/Theme';
 
@@ -42,6 +50,7 @@ import {
   TopBarContainer,
   StatusContainer,
   BadgeText,
+  Container,
 } from './ProductDetails.style';
 
 const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
@@ -71,13 +80,29 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     addCartItemData,
     showSuccessAddBtn,
     canNegotiate,
+    showNegoModal,
+    handleSelectedBoxesWeight,
+    selectedBoxesWeight,
+    selectedBoxesIndex,
+    handleShowConfirmNegoModal,
+    showConfirmNegoModal,
+    handleConfirmNegoClick,
+    isSendingNegotiation,
+    handleNegotiationPriceSetting,
+    negotiationPrice,
+    handleDesiredQuantityChange,
+    negotiationWeight,
+    negotiationCredit,
+    handleShowNegoCreditsModal,
+    showNegoCreditsModal,
   } = props;
   const { isPreAuction, dateEnds } = productDetailsCard6Props;
 
   const [images, setImages] = useState<string[]>([]);
-  const [newCurrentListing, setNewCurrentListing] = useState<
-    GetListingResponseItem
-  >();
+  const [newCurrentListing, setNewCurrentListing] =
+    useState<GetListingResponseItem>();
+
+  const history = useHistory();
 
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -88,6 +113,22 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
 
   const isBeyondCutoff =
     isPreAuction && dateEnds ? (moment() > cutOffDate ? true : false) : false;
+
+  const priceDiff = negotiationPrice - Number(productDetailsCard6Props.price);
+  const priceDiff2 =
+    priceDiff / Math.abs(Number(productDetailsCard6Props.price));
+  const priceDiffPercentage =
+    negotiationPrice === null
+      ? 0
+      : priceDiff2 < 0
+      ? -(Math.abs(priceDiff2) * 100)
+      : priceDiff2 * 100;
+
+  const negotiationCreditsProps: NegotiationCreditsModalProps = {
+    showNegoCreditsModal,
+    handleShowNegoCreditsModal,
+    negotiationCredit: negotiationCredit?.credit?.toString() || '0',
+  };
 
   useEffect(() => {
     selectAddress(listingId);
@@ -124,8 +165,245 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     // eslint-disable-next-line
   }, [groupedBox]);
 
+  const productDetailsNegotiationModalProps = {
+    isOpen: showNegoModal,
+    onClickClose: props.productDetailsCard6Props.handleNegoModalShow,
+    action: handleShowConfirmNegoModal,
+    disableActionText: isBeyondCutoff,
+    negotiationPrice,
+    handleNegotiationPriceSetting,
+    unit,
+    negotiationWeight,
+    handleDesiredQuantityChange,
+    groupedBox,
+    handleSelectedBoxesWeight,
+    isLoadingListingBoxes,
+    priceDiffPercentage,
+    selectedBoxesWeight,
+    productDetailsCard6Props,
+    selectedBoxesIndex,
+  };
+
   return (
-    <>
+    <Container>
+      <NegotiationCreditsModal {...negotiationCreditsProps} />
+      <ConfirmationModal
+        isOpen={showConfirmNegoModal}
+        onClickClose={handleShowConfirmNegoModal}
+        title={
+          <Typography
+            variant="title4"
+            color="shade8"
+            weight="900"
+            style={{ fontFamily: 'Canela' }}
+          >
+            Confirm Negotiation
+          </Typography>
+        }
+        action={handleConfirmNegoClick}
+        disableActionText={isSendingNegotiation}
+        cancel={handleShowConfirmNegoModal}
+        actionText="Send Negotiation"
+        cancelText="Cancel"
+        description={
+          <div style={{ marginTop: 20 }}>
+            <Typography variant="label" color="shade6">
+              Sending this negotiation will cost 1 Negotiation Credit.
+            </Typography>
+            <div style={{ marginTop: 10 }} />
+            <Typography variant="label" color="shade6">
+              Your current negotiation balance is {negotiationCredit?.credit}{' '}
+              Credit.
+            </Typography>
+          </div>
+        }
+      />
+      <ProductDetailsNegotiationModal
+        {...productDetailsNegotiationModalProps}
+      />
+      {/* <ConfirmationModal
+        isOpen={showNegoModal}
+        onClickClose={props.productDetailsCard6Props.handleNegoModalShow}
+        title={
+          <Typography
+            variant="title4"
+            color="shade8"
+            weight="900"
+            style={{ fontFamily: 'Canela' }}
+          >
+            Negotiate
+          </Typography>
+        }
+        action={() => handleShowConfirmNegoModal()}
+        actionIconPosition="before"
+        actionIcon={<MarketBoardOutlined width={20} height={20} />}
+        actionText="NEGOTIATE"
+        disableActionText={isBeyondCutoff}
+        hideCancel={true}
+        description={
+          <div style={{ marginTop: 20 }}>
+            <StyledTextField
+              type="number"
+              inputType="decimal"
+              step=".01"
+              label={'Counter Offer'}
+              defaultValue={productDetailsCard6Props.price}
+              value={negotiationPrice}
+              onChangeText={(v) => {
+                let price = v;
+                if (price.indexOf('.') >= 0) {
+                  price =
+                    price.substr(0, price.indexOf('.')) +
+                    price.substr(price.indexOf('.'), 3);
+                }
+                handleNegotiationPriceSetting(parseFloat(price));
+              }}
+              min={1}
+              LeftComponent={
+                <Typography variant="label" color="shade6">
+                  {'$'}
+                </Typography>
+              }
+              placeholder={`per ${unit}`}
+              style={{ marginTop: 10 }}
+            />
+            <StyledTextField
+              value={negotiationWeight}
+              onChangeText={handleDesiredQuantityChange}
+              type="number"
+              inputType="decimal"
+              step=".01"
+              label={'Desired Quantity'}
+              min={1}
+              LeftComponent={
+                <Typography variant="label" color="shade6">
+                  {'kg'}
+                </Typography>
+              }
+              placeholder={`Minimum Order: ${
+                productDetailsCard6Props.minOrder
+              } ${productDetailsCard6Props.unit ?? 'kg'}`}
+              style={{ marginTop: 16 }}
+            />
+            <div style={{ marginTop: 15 }} />
+            {!isEmpty(groupedBox)
+              ? groupedBox.map((p, index) => (
+                  <div key={p.id}>
+                    <GroupedBoxContainer>
+                      <div style={{ padding: '0 0 0 20px' }}>
+                        <Radio
+                          checked={index === selectedBoxesIndex}
+                          onClick={() =>
+                            handleSelectedBoxesWeight(
+                              groupedBox[index].boxes,
+                              index
+                            )
+                          }
+                        />
+                      </div>
+                      <div style={{ width: '100%', paddingTop: 2 }}>
+                        {p.boxes.map((box, index) => (
+                          <div key={box.id}>
+                            <RadioBtnContainer>
+                              <div style={{ display: 'flex' }}>
+                                <div style={{ marginRight: 27 }} />
+                                <Typography variant="caption" color="shade6">
+                                  {box.weight}
+                                  {p.unit} x {box.quantity}
+                                </Typography>
+                              </div>
+                              <Typography variant="caption" color="shade6">
+                                {Number.isInteger(box.weight)
+                                  ? (box.weight * (box.quantity || 0)).toFixed(
+                                      0
+                                    )
+                                  : (box.weight * (box.quantity || 0)).toFixed(
+                                      2
+                                    )}{' '}
+                                {unit}
+                              </Typography>
+                            </RadioBtnContainer>
+                            {p.boxes.length > index + 1 && (
+                              <div style={{ marginTop: 5 }} />
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </GroupedBoxContainer>
+                    {groupedBox.length > index + 1 && (
+                      <div style={{ marginTop: 5 }} />
+                    )}
+                  </div>
+                ))
+              : isLoadingListingBoxes && (
+                  <div className="box-loading">
+                    <Loading />
+                  </div>
+                )}
+            <div style={{ marginTop: 24 }} />
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Typography variant="caption" color="shade6">
+                Seller&apos;s Listed Price
+              </Typography>
+              <Typography variant="label" color="secondary">
+                {toPrice(productDetailsCard6Props.price)}/{unit}
+              </Typography>
+            </div>
+            <div style={{ marginTop: 5 }} />
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex' }}>
+                <Typography variant="caption" color="shade6">
+                  Change in Price{' '}
+                  {priceDiffPercentage ? (
+                    <span className="indicator">
+                      {negotiationPrice < Number(productDetailsCard6Props.price)
+                        ? '+'
+                        : '-'}
+                      {Number(Math.abs(priceDiffPercentage).toFixed(2))}%
+                    </span>
+                  ) : (
+                    <span className="indicator">0.00%</span>
+                  )}
+                </Typography>
+              </div>
+              <Typography
+                variant="label"
+                color={priceDiffPercentage > 0 ? 'error' : 'success'}
+              >
+                {toPrice(
+                  Math.abs(
+                    Number(productDetailsCard6Props.price) - negotiationPrice
+                  )
+                )}
+                /{unit}
+              </Typography>
+            </div>
+            <div style={{ marginTop: 5 }} />
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Typography variant="caption" color="shade6">
+                Total Product Value
+              </Typography>
+              <Typography
+                weight="700"
+                color="secondary"
+                style={{ fontFamily: 'Basis Grotesque Pro' }}
+              >
+                {toPrice(
+                  selectedBoxesWeight.reduce(
+                    (acc, cur) =>
+                      acc +
+                      (cur.quantity || 0) *
+                        cur.weight *
+                        (negotiationPrice ||
+                          Number(productDetailsCard6Props.price)),
+                    0
+                  )
+                )}
+              </Typography>
+            </div>
+          </div>
+        }
+      /> */}
       {newCurrentListing !== undefined ? (
         <>
           <DetailsContainer>
@@ -269,6 +547,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                 }
                 isPreAuction={productDetailsCard6Props?.isPreAuction}
                 canNegotiate={canNegotiate}
+                allowNegotiations={productDetailsCard6Props.allowNegotiations}
               />
               {!isPendingAccount && isMobile ? (
                 <ProductSellerCard
@@ -325,23 +604,24 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                         >
                           BEST BOX WEIGHT MATCH
                         </Typography>
-                        {groupedBox.map((p) => (
-                          <BoxRadioContainer key={p.id}>
-                            <BoxRadio
-                              id={p.id}
-                              checked={p.id === pressedBoxRadio}
-                              totalWeight={p.totalWeight}
-                              boxes={p.boxes}
-                              cost={p.cost}
-                              unit={p.unit}
-                              onClick={() =>
-                                setPressedBoxRadio((prevState) =>
-                                  p.id === prevState ? '' : p.id
-                                )
-                              }
-                            />
-                          </BoxRadioContainer>
-                        ))}
+                        {weight &&
+                          groupedBox.map((p) => (
+                            <BoxRadioContainer key={p.id}>
+                              <BoxRadio
+                                id={p.id}
+                                checked={p.id === pressedBoxRadio}
+                                totalWeight={p.totalWeight}
+                                boxes={p.boxes}
+                                cost={p.cost}
+                                unit={p.unit}
+                                onClick={() =>
+                                  setPressedBoxRadio((prevState) =>
+                                    p.id === prevState ? '' : p.id
+                                  )
+                                }
+                              />
+                            </BoxRadioContainer>
+                          ))}
                       </ProductBoxContainer>
                     ) : (
                       isLoadingListingBoxes && (
@@ -393,7 +673,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
       ) : (
         <Loading />
       )}
-    </>
+    </Container>
   );
 };
 

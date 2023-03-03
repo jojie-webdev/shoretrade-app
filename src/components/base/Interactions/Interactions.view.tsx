@@ -85,7 +85,13 @@ const Interactions = (props: InteractionsProps): JSX.Element => {
       return pressed ? <Checkbox checked /> : <Checkbox />;
     }
 
-    return <ChevronRight width={8} height={12} />;
+    return (
+      <ChevronRight
+        width={8}
+        height={12}
+        fill={theme.isSFM ? theme.grey.shade7 : theme.brand.primary}
+      />
+    );
   };
 
   const renderLeftContent = () => (

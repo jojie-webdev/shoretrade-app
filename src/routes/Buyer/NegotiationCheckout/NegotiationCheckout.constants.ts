@@ -1,0 +1,1 @@
+export const TRANSACTION_VALUE_FEE_PERCENTAGE = 2.2;

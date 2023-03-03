@@ -5,4 +5,5 @@ export interface SegmentedControlsProps {
   tooltips?: { option: string; value: string }[];
   controlButtonColor?: string;
   controlButtonTextColor?: string;
+  inactiveBackgroundColor?: string;
 }

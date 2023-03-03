@@ -70,6 +70,10 @@ import {
   UploadBulkState,
 } from 'types/store/UploadBulkState';
 
+import {
+  AcceptNegotiationMeta,
+  AcceptNegotiationPayload,
+} from './AcceptNegotiationState';
 import { AddAddressMeta, AddAddressPayload } from './AddAddressState';
 import { AddCardTokenMeta, AddCardTokenPayload } from './AddCardTokenState';
 import { AddCartItemMeta, AddCartItemPayload } from './AddCartItemState';
@@ -91,11 +95,31 @@ import {
 import { ChargeCardMeta, ChargeCardPayload } from './ChargeCardState';
 import { ConfirmWeightMeta, ConfirmWeightPayload } from './ConfirmWeightState';
 import {
+  CreateBuyerCounterNegotiationMeta,
+  CreateBuyerCounterNegotiationPayload,
+} from './CreateBuyerCounterNegotiationState';
+import {
   CreateCustomListingMeta,
   CreateCustomListingPayload,
 } from './CreateCustomListingState';
 import { CreateListingMeta, CreateListingPayload } from './CreateListingState';
+import {
+  CreateNegotiation_2Meta,
+  CreateNegotiation_2Payload,
+} from './CreateNegotiation_2State';
+import {
+  CreateNegotiationMeta,
+  CreateNegotiationPayload,
+} from './CreateNegotiationState';
+import {
+  CreateSellerCounterOfferMeta,
+  CreateSellerCounterOfferPayload,
+} from './CreateSellerCounterOfferState';
 import { CurrentAddressState } from './CurrentAddressState';
+import {
+  DeclineNegotiationMeta,
+  DeclineNegotiationPayload,
+} from './DeclineNegotiationState';
 import { DeleteCardMeta, DeleteCardPayload } from './DeleteCardState';
 import {
   DeleteLinkedAccountMeta,
@@ -137,6 +161,10 @@ import {
   GetAllListingsMeta,
   GetAllListingsPayload,
 } from './GetAllListingsState';
+import {
+  GetAllNegotiationsMeta,
+  GetAllNegotiationsPayload,
+} from './GetAllNegotiationsState';
 import {
   GetAllSellerOrdersMeta,
   GetAllSellerOrdersPayload,
@@ -212,6 +240,14 @@ import {
   GetMarketRequestBuyerFiltersMeta,
   GetMarketRequestBuyerFiltersPayload,
 } from './GetMarketRequestBuyerFiltersState';
+import {
+  GetNegotiationByIdMeta,
+  GetNegotiationByIdPayload,
+} from './GetNegotiationByIdState';
+import {
+  GetNegotiationCreditMeta,
+  GetNegotiationCreditPayload,
+} from './GetNegotiationCreditState';
 import {
   GetNotificationsSettingsMeta,
   GetNotificationsSettingsPayload,
@@ -306,6 +342,7 @@ import {
   SendOrderRatingMeta,
   SendOrderRatingPayload,
 } from './SendOrderRatingState';
+import { ShowNegotiableState } from './ShowNegotiableState';
 import { SocketState } from './SocketState';
 import { SubscriptionState } from './SubscriptionState';
 import { UpdateAddressMeta, UpdateAddressPayload } from './UpdateAddressState';
@@ -347,6 +384,43 @@ import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
+  showNegotiable: ShowNegotiableState;
+  declineNegotiation: AsyncState<
+    DeclineNegotiationMeta,
+    DeclineNegotiationPayload
+  >;
+  acceptNegotiation: AsyncState<
+    AcceptNegotiationMeta,
+    AcceptNegotiationPayload
+  >;
+  createBuyerCounterNegotiation: AsyncState<
+    CreateBuyerCounterNegotiationMeta,
+    CreateBuyerCounterNegotiationPayload
+  >;
+  createSellerCounterOffer: AsyncState<
+    CreateSellerCounterOfferMeta,
+    CreateSellerCounterOfferPayload
+  >;
+  getNegotiationCredit: AsyncState<
+    GetNegotiationCreditMeta,
+    GetNegotiationCreditPayload
+  >;
+  getNegotiationById: AsyncState<
+    GetNegotiationByIdMeta,
+    GetNegotiationByIdPayload
+  >;
+  createNegotiation_2: AsyncState<
+    CreateNegotiation_2Meta,
+    CreateNegotiation_2Payload
+  >;
+  createNegotiation: AsyncState<
+    CreateNegotiationMeta,
+    CreateNegotiationPayload
+  >;
+  getAllNegotiations: AsyncState<
+    GetAllNegotiationsMeta,
+    GetAllNegotiationsPayload
+  >;
   getOrderInvoiceAdjustments: AsyncState<
     GetOrderInvoiceAdjustmentsMeta,
     GetOrderInvoiceAdjustmentsPayload

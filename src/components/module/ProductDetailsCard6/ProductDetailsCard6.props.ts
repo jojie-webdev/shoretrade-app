@@ -19,4 +19,8 @@ export interface ProductDetailsCard6Props {
   activeSizeUnit?: string;
   isPreAuction?: boolean | undefined;
   canNegotiate?: boolean;
+  auctionDate: string;
+  handleNegoModalShow: () => void;
+  allowNegotiations: boolean;
+  handleShowNegoCreditsModal: () => void;
 }

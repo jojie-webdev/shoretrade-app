@@ -5,3 +5,4 @@ export { editableListingToEditSelectedListing } from './editableListingToEditSel
 export { editableListingToUpdateListing } from './editableListingToUpdateListing';
 export { findProduct } from './findProduct';
 export { historicalListingToEditableListing } from './historicalListingToEditableListing';
+export { isPreAuctionExpired } from './auction';

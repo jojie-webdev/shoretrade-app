@@ -10,7 +10,7 @@ const Tag = (props: TagProps): JSX.Element => {
   const theme = useTheme();
   const { selected, label, disabled, onClickRemove } = props;
   return (
-    <Container {...props}>
+    <Container className="tag" {...props}>
       {onClickRemove && (
         <span style={{ marginRight: 8, marginLeft: 4 }}>
           <Close fill={theme.grey.shade7} />

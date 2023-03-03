@@ -4,6 +4,8 @@ import {
   GetActiveOffersRequestResponseItem,
   Offer,
 } from 'types/store/GetActiveOffersState';
+import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
+import { GetNegotiationCreditRequestResponseItem } from 'types/store/GetNegotiationCreditState';
 
 export type Result = {
   id: string;
@@ -26,6 +28,11 @@ export type Result = {
 
 export interface MarketRequestsLandingGeneratedProps {
   marketRequests: Result[];
+  negotiations:
+    | (GetAllNegoRequestResponseItem & {
+        expiry: any;
+      })[]
+    | undefined;
   currentPath: string;
   onClickItem: (row: any) => void;
   isPendingAccount: boolean;
@@ -38,4 +45,20 @@ export interface MarketRequestsLandingGeneratedProps {
   loading: boolean;
   activeOffersData: GetActiveOffersRequestResponseItem[];
   reverseMarketPlace: boolean;
+  canNegotiate: boolean;
+  handleTabSelect: (selectedTab: TABS) => void;
+  selectedTab: string;
+  handleSearchChange: (text: string) => void;
+  searchKeyword: string;
+  onClickNegoItem: (
+    row: GetAllNegoRequestResponseItem & {
+      expiry: any;
+    }
+  ) => void;
+  negotiationCredit: GetNegotiationCreditRequestResponseItem | undefined;
+}
+
+export enum TABS {
+  NEGOTIATIONS = 'Negotiations',
+  MARKET_REQUEST = 'Market Request',
 }

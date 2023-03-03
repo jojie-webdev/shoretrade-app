@@ -25,6 +25,9 @@ export interface CategoriesPreviewGeneratedProps {
   //   showUngraded?: boolean;
   // }) => void;
   canNegotiate: boolean;
+  handleShowNegoCreditsModal: () => void;
+  negotiationCredit: string;
+  handleShowNegoModal: (listingId: string) => void;
 }
 
 export type FilterData = {

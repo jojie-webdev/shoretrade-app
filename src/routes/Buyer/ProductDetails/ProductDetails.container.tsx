@@ -4,9 +4,13 @@ import { ProductDetailsCard6Props } from 'components/module/ProductDetailsCard6/
 import { BUYER_ROUTES } from 'consts';
 import { ADDITIONAL_INFOS } from 'consts/listingAdditionalInfos';
 import moment from 'moment';
+import pathOr from 'ramda/es/pathOr';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { ProductSellerRatingProps } from 'routes/Buyer/ProductDetails/ProductDetails.props';
+import {
+  Box,
+  ProductSellerRatingProps,
+} from 'routes/Buyer/ProductDetails/ProductDetails.props';
 import {
   getListingActions,
   getListingBoxesActions,
@@ -15,6 +19,8 @@ import {
   updateFavouriteProductActions,
   currentAddressActions,
   addCartItemActions,
+  createNegotiation_2Actions,
+  getNegotiationCreditActions,
 } from 'store/actions';
 import getSellerByIdActions from 'store/actions/getSellerById';
 import { GetAddressOptions, GetDefaultCompany } from 'store/selectors/buyer';
@@ -89,6 +95,9 @@ const ProductDetails = (): JSX.Element => {
       : subscriptionType !== null && false;
 
   const getUser = useSelector((state: Store) => state.getUser);
+  const negotiationCredit = useSelector(
+    (store: Store) => store.getNegotiationCredit.data?.data
+  );
 
   const defaultCompany = useMemo(() => {
     if (!getUser) return null;
@@ -98,8 +107,7 @@ const ProductDetails = (): JSX.Element => {
       : null;
   }, [getUser]);
 
-  const canNegotiate =
-    defaultCompany?.credit !== '0.00' && (isSubscribedToNegoRequest || false);
+  const canNegotiate = isSubscribedToNegoRequest || false;
 
   // const updateFavoriteSeller = useSelector(
   //   (state: Store) => state.updateFavoriteSeller
@@ -111,12 +119,20 @@ const ProductDetails = (): JSX.Element => {
   const currentListing: GetListingResponseItem | undefined = (useSelector(
     (state: Store) => state.getListing.data?.data.listing
   ) || [])[0];
+  console.log('currentListing > ', currentListing);
 
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const [pressedBoxRadio, setPressedBoxRadio] = useState('');
   const [weight, setWeight] = useState('');
+  const [negotiationWeight, setNegotiationWeight] = useState('');
   const [shouldHideResult, setShouldHideResult] = useState(true);
   const [favorite, setFavorite] = useState(currentListing?.isFavourite);
+  const [showNegoModal, setShowNegoModal] = useState(false);
+  const [showConfirmNegoModal, setShowConfirmNegoModal] = useState(false);
+  const [selectedBoxesIndex, setSelectedBoxesIndex] = useState<number>(0);
+  const [selectedBoxesWeight, setSelectedBoxesWeight] = useState<Box[]>([]);
+  const [negotiationPrice, setNegotiationPrice] = useState<number | any>(null);
+  const [showNegoCreditsModal, setShowNegoCreditsModal] = useState(false);
   const unit = formatMeasurementUnit(currentListing?.measurementUnit);
   const remainingWeight = (currentListing?.remaining || 0).toFixed(2);
   const price = Number(currentListing?.price || '0');
@@ -134,6 +150,18 @@ const ProductDetails = (): JSX.Element => {
 
   const isLoadingListingBoxes =
     useSelector((state: Store) => state.getListingBoxes.pending) || false;
+
+  const isSendingNegotiation =
+    useSelector((state: Store) => state.createNegotiation_2.pending) === true;
+
+  const sendingNegotiationStatus = useSelector(
+    (state: Store) => state.createNegotiation_2.data?.status
+  );
+
+  if (sendingNegotiationStatus === 200) {
+    setShowNegoModal(false);
+    setShowConfirmNegoModal(false);
+  }
 
   const previousWeightRequest = useSelector(
     (state: Store) => state.getListingBoxes.request
@@ -247,6 +275,36 @@ const ProductDetails = (): JSX.Element => {
     }
   };
 
+  const handleSelectedBoxesWeight = (boxes: Box[], boxesIndex: number) => {
+    setSelectedBoxesIndex(boxesIndex);
+    setSelectedBoxesWeight(boxes);
+  };
+
+  const handleNegoModalShow = () => {
+    console.log('handleNegoModalShow > ');
+    setShowNegoModal((prevValue) => !prevValue);
+  };
+
+  const handleShowConfirmNegoModal = () => {
+    setShowNegoModal((prevValue) => !prevValue);
+    setShowConfirmNegoModal((prevValue) => !prevValue);
+  };
+
+  const handleNegotiationPriceSetting = (price: number) => {
+    setNegotiationPrice(price);
+  };
+
+  const handleDesiredQuantityChange = (weight: string) => {
+    setSelectedBoxesIndex(0);
+    setSelectedBoxesWeight([]);
+    setNegotiationWeight(weight);
+    setWeight('');
+  };
+
+  const handleShowNegoCreditsModal = () => {
+    setShowNegoCreditsModal((prevValue) => !prevValue);
+  };
+
   const getBoxes = () => {
     if (!shouldHideResult) {
       setShouldHideResult(true);
@@ -257,10 +315,14 @@ const ProductDetails = (): JSX.Element => {
       setTimer(null);
     }
     const timerId = setTimeout(() => {
-      if (weight.length > 0) {
+      if (negotiationWeight.length > 0 || weight.length > 0) {
         setShouldHideResult(false);
         // request only when weight or id is different
         if (
+          !(
+            negotiationWeight === previousWeightRequest?.weight &&
+            id === previousWeightRequest?.listingId
+          ) ||
           !(
             weight === previousWeightRequest?.weight &&
             id === previousWeightRequest?.listingId
@@ -269,7 +331,7 @@ const ProductDetails = (): JSX.Element => {
           dispatch(
             getListingBoxesActions.request({
               listingId: id,
-              weight,
+              weight: negotiationWeight || weight,
             })
           );
         }
@@ -308,10 +370,22 @@ const ProductDetails = (): JSX.Element => {
     }
   };
 
+  const handleConfirmNegoClick = () => {
+    dispatch(
+      createNegotiation_2Actions.request({
+        listingId: currentListing.id,
+        listingBoxId: (selectedBoxesWeight || groupedBox[0].boxes)[0].id,
+        desiredQuantity: negotiationWeight,
+        counterOffer: negotiationPrice,
+      })
+    );
+  };
+
   // MARK:- Effects
   useEffect(() => {
     if (listingId) {
       onLoad(listingId);
+      dispatch(getNegotiationCreditActions.request({}));
     }
     // eslint-disable-next-line
   }, [listingId]);
@@ -328,7 +402,7 @@ const ProductDetails = (): JSX.Element => {
   useEffect(() => {
     getBoxes();
     // eslint-disable-next-line
-  }, [weight]);
+  }, [weight, negotiationWeight]);
 
   useEffect(() => {
     if (currentSeller) {
@@ -342,6 +416,29 @@ const ProductDetails = (): JSX.Element => {
       dispatch(addCartItemActions.clear());
     }
   }, [weight, addCartItemData]);
+
+  useEffect(() => {
+    if (!isSendingNegotiation) {
+      setShowNegoModal(false);
+      setShowConfirmNegoModal(false);
+      dispatch(getNegotiationCreditActions.request({}));
+    }
+  }, [isSendingNegotiation]);
+
+  useEffect(() => {
+    const box = pathOr([] as Box[], ['0', 'boxes'], groupedBox);
+
+    if (box.length > 0) {
+      setSelectedBoxesWeight(box);
+      setSelectedBoxesIndex(0);
+    }
+  }, [getListingBoxesResponse, negotiationWeight]);
+
+  useEffect(() => {
+    if (negotiationCredit?.credit === 0) {
+      setShowNegoCreditsModal(true);
+    }
+  }, [negotiationCredit?.credit]);
 
   // On error, set favorite back to what it originally was
   // useEffect(() => {
@@ -423,6 +520,10 @@ const ProductDetails = (): JSX.Element => {
       : currentListing?.cmSizingOptions,
     activeSizeUnit: currentListing?.activeSizeUnit === 'GM' ? 'g' : 'cm',
     isPreAuction: currentListing?.isPreAuctionSale,
+    auctionDate: currentListing?.auctionDate,
+    handleNegoModalShow,
+    allowNegotiations: currentListing?.allowNegotiations,
+    handleShowNegoCreditsModal,
   };
   const sellerRatingProps: ProductSellerRatingProps = {
     name: currentListing?.coop.name || '',
@@ -472,6 +573,21 @@ const ProductDetails = (): JSX.Element => {
     addCartItemData,
     showSuccessAddBtn,
     canNegotiate,
+    showNegoModal,
+    handleSelectedBoxesWeight,
+    selectedBoxesWeight,
+    selectedBoxesIndex,
+    handleShowConfirmNegoModal,
+    showConfirmNegoModal,
+    handleConfirmNegoClick,
+    isSendingNegotiation,
+    handleNegotiationPriceSetting,
+    negotiationPrice,
+    handleDesiredQuantityChange,
+    negotiationWeight,
+    negotiationCredit,
+    handleShowNegoCreditsModal,
+    showNegoCreditsModal,
   };
   return <ProductDetailsView {...generatedProps} />;
 };

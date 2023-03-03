@@ -5,8 +5,7 @@ import { logoutActions } from 'store/actions';
 import getAccountCompletion from 'store/reducers/getAccountCompletion';
 
 /* PLOP_INJECT_IMPORT */
-import getOrderInvoiceAdjustments from './getOrderInvoiceAdjustments';
-
+import acceptNegotiation from './acceptNegotiation';
 import addAddress from './addAddress';
 import addCardAndPay from './addCardAndPay';
 import addCardToken from './addCardToken';
@@ -20,11 +19,16 @@ import changePassword from './changePassword';
 import chargeCard from './chargeCard';
 import confirmWeight from './confirmWeight';
 import createBulkListing from './createBulkListing';
+import createBuyerCounterNegotiation from './createBuyerCounterNegotiation';
 import createCustomListing from './createCustomListing';
 import createListing from './createListing';
 import createMarketOffer from './createMarketOffer';
 import createMarketRequest from './createMarketRequest';
+import createNegotiation from './createNegotiation';
+import createNegotiation_2 from './createNegotiation_2';
+import createSellerCounterOffer from './createSellerCounterOffer';
 import currentAddress from './currentAddress';
+import declineNegotiation from './declineNegotiation';
 import deleteCard from './deleteCard';
 import deleteLinkedAccount from './deleteLinkedAccount';
 import deleteMarketRequest from './deleteMarketRequest';
@@ -42,6 +46,7 @@ import getAllBuyerOrders from './getAllBuyerOrders';
 import getAllListings from './getAllListings';
 import getAllMarketRequest from './getAllMarketRequest';
 import getAllMarketRequestFilters from './getAllMarketRequestFilters';
+import getAllNegotiations from './getAllNegotiations';
 import getAllSellerOrders from './getAllSellerOrders';
 import getAvailableCrates from './getAvailableCrates';
 import getBankDetails from './getBankDetails';
@@ -70,9 +75,12 @@ import getMarketEstimate from './getMarketEstimate';
 import getMarketInterests from './getMarketInterests';
 import getMarketNotification from './getMarketNotification';
 import getMarketRequestBuyerFilters from './getMarketRequestBuyerFilters';
+import getNegotiationById from './getNegotiationById';
+import getNegotiationCredit from './getNegotiationCredit';
 import getNotifications from './getNotifications';
 import getNotificationsSettings from './getNotificationsSettings';
 import getNSWHolidays from './getNSWHolidays';
+import getOrderInvoiceAdjustments from './getOrderInvoiceAdjustments';
 import getPaymentMethods from './getPaymentMethods';
 import getPaymentMode from './getPaymentMode';
 import getSellerById from './getSellerById';
@@ -117,6 +125,7 @@ import sellerDashboardDate from './sellerDashboardDate';
 import sendDispute from './sendDispute';
 import sendMessage from './sendMessage';
 import sendOrderRating from './sendOrderRating';
+import showNegotiable from './showNegotiable';
 import socket from './socket';
 import subscription from './subscription';
 import updateAddress from './updateAddress';
@@ -140,7 +149,16 @@ const createAppReducer = (routeHistory: History) =>
     Object.fromEntries(
       Object.entries({
         /* PLOP_INJECT_INSTANCE */
-  getOrderInvoiceAdjustments,
+        showNegotiable,
+        declineNegotiation,
+        acceptNegotiation,
+        createBuyerCounterNegotiation,
+        createSellerCounterOffer,
+        getNegotiationCredit,
+        getNegotiationById,
+        createNegotiation_2,
+        getAllNegotiations,
+        getOrderInvoiceAdjustments,
         selectedDeliveryMethod,
         paySubscription,
         upgradeSubscription,

@@ -5,23 +5,40 @@ import LoadingView from 'components/module/Loading';
 import {
   BUYER_ACCOUNT_ROUTES,
   BUYER_MARKET_REQUEST_ROUTES,
+  BUYER_NEGOTIATION_ROUTES,
+  BUYER_ROUTES,
 } from 'consts/routes';
 import moment from 'moment';
+import queryString from 'query-string';
 import { ScreenClassRender } from 'react-grid-system';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
+import { getActivePlan } from 'routes/Buyer/Account/SubscriptionPlan/SubscriptionPlan.transform';
 import {
   deleteMarketRequestActions,
   getAllMarketRequestActions,
+  getAllNegotiationsActions,
+  getNegotiationCreditActions,
 } from 'store/actions';
+import { GetDefaultCompany } from 'store/selectors/buyer';
+import { NegoAndRMQueryParams } from 'types/NegoAndRMQueryParams';
+import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
+import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
 import { Store } from 'types/store/Store';
 import useTimeout from 'utils/Hooks/useTimeout';
 import { useTheme } from 'utils/SFMTheme';
 
 import LandingDefaultView from './Landing.default.view';
-import { MarketRequestsLandingGeneratedProps, Result } from './Landing.props';
+import {
+  MarketRequestsLandingGeneratedProps,
+  Result,
+  TABS,
+} from './Landing.props';
 import LandingSFMView from './Landing.sfm.view';
-import { getMarketRequestLandingData } from './Landing.transform';
+import {
+  getMarketRequestLandingData,
+  getNegoRequestLandingData,
+} from './Landing.transform';
 import MarketRequestsLandingView from './Landing.view';
 
 const MarketRequestsLanding = (): JSX.Element => {
@@ -30,11 +47,16 @@ const MarketRequestsLanding = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
   const theme = useTheme();
+  const negoAndRMQueryParams = queryString.parse(
+    location.search
+  ) as NegoAndRMQueryParams;
 
   const [itemToDelete, setItemToDelete] = useState<{ value: null | string }>({
     value: null,
   });
   const [waitAll, setWaitAll] = useState(true);
+  const [selectedTab, setSelectedTab] = useState(TABS.MARKET_REQUEST);
+  const [searchKeyword, setSearchKeyword] = useState('');
 
   const deleteMarketRequest = useSelector(
     (store: Store) => store.deleteMarketRequest
@@ -68,6 +90,23 @@ const MarketRequestsLanding = (): JSX.Element => {
     (store: Store) => store.getCompanyPlan.pending
   );
 
+  const negotiations = useSelector(
+    (store: Store) => store.getAllNegotiations.data?.data.negotiations
+  );
+
+  const handleTabSelect = (selectedTab: TABS) => {
+    if (selectedTab === TABS.NEGOTIATIONS) {
+      dispatch(getAllNegotiationsActions.request({}));
+    } else {
+      dispatch(getAllMarketRequestActions.request({}));
+    }
+
+    setSelectedTab(selectedTab);
+    history.push(
+      `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}?tab=${selectedTab}`
+    );
+  };
+
   const reverseMarketPlace =
     (activePlans &&
       activePlans?.filter(
@@ -77,10 +116,50 @@ const MarketRequestsLanding = (): JSX.Element => {
       )?.length > 0) ||
     false;
 
+  const defaultCompany = GetDefaultCompany();
+
+  const companyPlan = useSelector(
+    (store: Store) => store.getCompanyPlan.data?.data
+  );
+  const negotiationCredit = useSelector(
+    (store: Store) => store.getNegotiationCredit.data?.data
+  );
+  const currentReverseMarketDetails = getActivePlan(
+    companyPlan,
+    CompanyPlanName.REVERSE_MARKET
+  );
+  const currentPlanDetails = getActivePlan(companyPlan);
+  const subscriptionType = companyPlan?.activePlans
+    ? companyPlan?.activePlans.find((ac) =>
+        [CompanyPlanName.BASE, CompanyPlanName.PRO].includes(ac.plan.name)
+      )?.plan.name || null
+    : null;
+
+  const isSubscribedToNegoRequest =
+    currentReverseMarketDetails ||
+    currentPlanDetails?.plan?.name === CompanyPlanName.PRO
+      ? companyPlan && !companyPlan.flags?.hasCancelledReversedMarketplace
+      : subscriptionType !== null && false;
+
+  const canNegotiate = isSubscribedToNegoRequest || false;
+
   const onClickItem = (row: Result) => {
-    if (row.offers > 0) {
+    if (row.offers && row.offers > 0) {
       history.push(BUYER_MARKET_REQUEST_ROUTES.MARKET_REQUEST_DETAILS(row.id));
     }
+  };
+
+  const onClickNegoItem = (
+    row: GetAllNegoRequestResponseItem & {
+      expiry: any;
+    }
+  ) => {
+    history.push(
+      BUYER_NEGOTIATION_ROUTES.NEGOTIATION_DETAILS(
+        row.listing_id,
+        row.negotiation_request_id
+      )
+    );
   };
 
   const onDelete = (id: string) => {
@@ -93,6 +172,12 @@ const MarketRequestsLanding = (): JSX.Element => {
     }
   };
 
+  const handleSearchChange = (text: string) => {
+    setSearchKeyword(text);
+
+    history.push(`?tab=${selectedTab}&searchTerm=${text}`);
+  };
+
   const handleSeePlansClick = () => {
     history.push(BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN);
   };
@@ -103,11 +188,6 @@ const MarketRequestsLanding = (): JSX.Element => {
   }, 2000);
 
   useEffect(() => {
-    dispatch(getAllMarketRequestActions.request({}));
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
     if (deleteMarketRequest.pending) {
       setItemToDelete({ value: null });
     } else {
@@ -116,6 +196,21 @@ const MarketRequestsLanding = (): JSX.Element => {
     // eslint-disable-next-line
   }, [deleteMarketRequest]);
 
+  useEffect(() => {
+    dispatch(getNegotiationCreditActions.request({}));
+    setSelectedTab(
+      negoAndRMQueryParams.tab === TABS.NEGOTIATIONS
+        ? TABS.NEGOTIATIONS
+        : TABS.MARKET_REQUEST
+    );
+
+    if (negoAndRMQueryParams.tab === TABS.NEGOTIATIONS) {
+      dispatch(getAllNegotiationsActions.request({}));
+    } else {
+      dispatch(getAllMarketRequestActions.request({}));
+    }
+  }, []);
+
   const generatedProps: MarketRequestsLandingGeneratedProps = {
     currentPath: location.pathname,
     marketRequests: getMarketRequestLandingData(
@@ -123,6 +218,11 @@ const MarketRequestsLanding = (): JSX.Element => {
         (mR) => mR.status !== 'DELETED' && mR.status !== 'CLOSED'
       )
     ), // TODO STATE
+    negotiations: getNegoRequestLandingData(
+      negotiations?.filter(
+        (nego) => nego.status !== 'DELETED' && nego.status !== 'CLOSED'
+      )
+    ),
     onClickItem,
     isPendingAccount,
     onDelete,
@@ -132,11 +232,19 @@ const MarketRequestsLanding = (): JSX.Element => {
     loading: loading || false,
     activeOffersData,
     reverseMarketPlace,
+    canNegotiate,
+    handleTabSelect,
+    selectedTab,
+    handleSearchChange,
+    onClickNegoItem,
+    negotiationCredit,
+    searchKeyword,
   };
 
   const sfmViewProps = {
     handleSeePlansClick,
     planPrice: activePlans ? activePlans[0]?.plan?.price : '0.00',
+    canNegotiate,
   };
 
   const defaultViewProps = {

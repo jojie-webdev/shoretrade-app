@@ -2,8 +2,9 @@ import React from 'react';
 
 import Alert from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs';
+import Button from 'components/base/Button';
 import StarRating from 'components/base/StarRating';
-import { PlaceholderProfile } from 'components/base/SVG';
+import { PlaceholderProfile, Close } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import ConfirmationModal from 'components/module/ConfirmationModal';
 import Loading from 'components/module/Loading';
@@ -49,12 +50,18 @@ import {
   Container,
   HeaderContainer,
   AlertsContainer,
+  AcceptNegoDetailContainer,
+  DefaultCTAContainer,
+  DefaultStyledNegotiateButtonContainer,
+  DefaultStyledNegotiateButton,
+  DefaultStyledAcceptButton,
 } from './OfferDetails.style';
 
 const OfferDetailsView = (props: OfferDetailsProps) => {
   const {
     handleStartNegotiate,
-    handleAcceptOffer,
+    handleNegoBtnClick,
+    handleAcceptClick,
     handleConfirmOffer,
     isAccepted,
     thereIsNewOffer,
@@ -82,6 +89,10 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
     isLoadingConfirmOffer,
     isLoadingNegotiate,
     offerMR,
+    canNegotiate,
+    clickAccept,
+    handleDeclineClick,
+    clickDecline,
   } = props;
 
   const history = useHistory();
@@ -91,9 +102,6 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
     <TotalPriceContainer>
       <Typography variant="label" color="shade7" weight="900">
         TOTAL VALUE
-      </Typography>
-      <Typography variant="label" color="shade6">
-        Incl. Delivery
       </Typography>
       <Typography
         variant="title3"
@@ -201,6 +209,10 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
     return <>{props.description}</>;
   };
 
+  const negotiatedPrice =
+    sortedNegotiations.length === 0
+      ? selectedOffer?.price
+      : lastNegotiationsOffers[lastNegotiationsOffers.length - 1]?.price;
   const renderLeftComponent = () => (
     <Col sm={12} md={12} xl={8}>
       {mrStatusProps.text && (
@@ -296,33 +308,72 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
           </CompanyInfoCol>
         </Row>
         <Hidden xs sm>
-          <Row>
-            <Col>{renderTotalPriceContainer()}</Col>
-          </Row>
-
           {selectedOffer?.status !== 'ACCEPTED' &&
             selectedOffer?.status !== 'PARTIAL' &&
             selectedOffer?.status !== 'DECLINED' && (
-              <CTAContainer>
-                <StyledNegotiateButtonContainer>
-                  <StyledNegotiateButton
+              <DefaultCTAContainer>
+                <DefaultStyledNegotiateButtonContainer>
+                  <DefaultStyledNegotiateButton
                     onClick={() => handleStartNegotiate()}
                     variant="outline"
                     text="NEGOTIATE"
                     icon={<Refresh />}
                     disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
                   />
-                </StyledNegotiateButtonContainer>
+                </DefaultStyledNegotiateButtonContainer>
                 <div style={{ width: '124px' }}>
-                  <StyledAcceptButton
+                  <DefaultStyledAcceptButton
                     text="ACCEPT"
                     icon={<Check width={10} height={9} />}
                     onClick={() => handleConfirmOffer()}
                     disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
                   />
                 </div>
-              </CTAContainer>
+              </DefaultCTAContainer>
             )}
+
+          {/* {selectedOffer?.status !== 'ACCEPTED' &&
+            selectedOffer?.status !== 'PARTIAL' &&
+            selectedOffer?.status !== 'DECLINED' && (
+              <CTAContainer>
+                <div style={{ display: 'flex' }}>
+                  <Button
+                    onClick={() => handleDeclineClick(true)}
+                    variant="outline"
+                    text={
+                      <Typography color="primary" style={{ marginRight: 5 }}>
+                        Decline
+                      </Typography>
+                    }
+                    icon={<Close fill={theme.brand.primary} />}
+                    style={{ width: '100%', marginRight: 10 }}
+                  />
+                  <Button
+                    text={
+                      <Typography color="noshade" style={{ marginRight: 5 }}>
+                        Negotiate
+                      </Typography>
+                    }
+                    icon={<Refresh fill={theme.grey.noshade} />}
+                    onClick={() => handleNegoBtnClick(true)}
+                    disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
+                    style={{ marginRight: 10, width: '100%' }}
+                  />
+                </div>
+                <div style={{ width: '124px' }}>
+                  <StyledAcceptButton
+                    text={
+                      <Typography color="noshade" style={{ marginRight: 5 }}>
+                        Accept
+                      </Typography>
+                    }
+                    icon={<Check width={10} height={9} />}
+                    onClick={() => handleAcceptClick(true)}
+                    disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
+                  />
+                </div>
+              </CTAContainer>
+            )} */}
           {selectedOffer?.status === 'PARTIAL' && (
             <CTAContainer>
               <div style={{ width: '124px' }}>
@@ -346,6 +397,90 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
 
   return (
     <Container>
+      <ConfirmationModal
+        isOpen={clickAccept}
+        onClickClose={() => handleAcceptClick(false)}
+        title={
+          <Typography
+            variant="title4"
+            color="shade8"
+            weight="900"
+            style={{ fontFamily: 'Canela' }}
+          >
+            Accept Negotiation
+          </Typography>
+        }
+        action={() => handleConfirmOffer()}
+        actionText="Accept"
+        hideCancel={true}
+        description={
+          <div style={{ marginTop: 20 }}>
+            <AcceptNegoDetailContainer>
+              <Typography color="shade6" variant="label">
+                Seller&apos;s Negotiated Price
+              </Typography>
+              <Typography color="shade6" variant="label">
+                {toPrice(negotiatedPrice)}/
+                {formatUnitToPricePerUnit(selectedOffer.measurementUnit)}
+              </Typography>
+            </AcceptNegoDetailContainer>
+            <AcceptNegoDetailContainer>
+              <Typography color="shade6" variant="label">
+                Quantity
+              </Typography>
+              <Typography color="shade8" variant="label">
+                {quantityValue.toLowerCase()}
+              </Typography>
+            </AcceptNegoDetailContainer>
+            <AcceptNegoDetailContainer>
+              <Typography color="shade6" variant="label">
+                Total Product Value
+              </Typography>
+              <Typography
+                color="shade8"
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: 15,
+                  fontFamily: 'Basis Grotesque Pro',
+                }}
+              >
+                {toPrice(selectedOffer?.weight * negotiatedPrice)}
+              </Typography>
+            </AcceptNegoDetailContainer>
+          </div>
+        }
+      />
+      <ConfirmationModal
+        isOpen={clickDecline}
+        onClickClose={() => handleDeclineClick(false)}
+        title={
+          <Typography
+            variant="title4"
+            color="shade8"
+            weight="900"
+            style={{ fontFamily: 'Canela' }}
+          >
+            Decline Confirmation
+          </Typography>
+        }
+        action={() => {
+          console.log('');
+        }}
+        actionText="Confirm"
+        cancelText="Cancel"
+        description={
+          <div style={{ marginTop: 15 }}>
+            <Typography color="shade6" variant="body">
+              Are you sure you want to decline this negotiation?
+            </Typography>
+            <Typography color="shade6" variant="body" style={{ marginTop: 10 }}>
+              The negotiation will automatically close and you will not be
+              refunded any negotiation credits
+            </Typography>
+          </div>
+        }
+        style={{ maxWidth: 686 }}
+      />
       <ConfirmationModal
         isOpen={props.showOfferSentModal}
         onClickClose={() => props.onConfirmSentOffer()}
@@ -427,53 +562,15 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
         <Hidden xs sm md lg>
           {renderLeftComponent()}
           <Col sm={12} md={12} xl={4}>
-            <MarketRequestDetailPill
-              countAcceptedWeight={countAcceptedWeight}
-              imgUrl={marketRequest?.image || ''}
-              measurementUnit={marketRequest?.measurementUnit || ''}
-              onClickDelete={() => setShowDelete(true)}
-              weight={marketRequest?.weight}
-              expiry={createdAtToExpiry(marketRequest?.createdAt)}
-            />
-            <MarketRequestSummary
-              measurementUnit={marketRequest?.measurementUnit || ''}
-              metric={marketRequest?.metric || ''}
-              sizeOptions={marketRequest?.size.options || []}
-              sizeUngraded={marketRequest?.sizeUngraded || false}
-              sizeFrom={marketRequest?.size.from}
-              sizeTo={marketRequest?.size.to}
-              specs={marketRequest?.specs}
-              weight={marketRequest?.weight}
-            />
+            {renderTotalPriceContainer()}
           </Col>
         </Hidden>
         <Visible xs sm md lg>
           <Col sm={12} md={12} xl={4}>
-            <MarketRequestDetailPill
-              countAcceptedWeight={countAcceptedWeight}
-              imgUrl={marketRequest?.image || ''}
-              measurementUnit={marketRequest?.measurementUnit || ''}
-              onClickDelete={() => setShowDelete(true)}
-              weight={marketRequest?.weight}
-              expiry={createdAtToExpiry(marketRequest?.createdAt)}
-            />
+            {renderTotalPriceContainer()}
           </Col>
           {/* {renderRightComponent()} */}
           {renderLeftComponent()}
-        </Visible>
-        <Visible md lg>
-          <Col>
-            <MarketRequestSummary
-              measurementUnit={marketRequest?.measurementUnit || ''}
-              metric={marketRequest?.metric || ''}
-              sizeOptions={marketRequest?.size.options || []}
-              sizeUngraded={marketRequest?.sizeUngraded || false}
-              sizeFrom={marketRequest?.size.from}
-              sizeTo={marketRequest?.size.to}
-              specs={marketRequest?.specs}
-              weight={marketRequest?.weight}
-            />
-          </Col>
         </Visible>
       </Row>
 
@@ -517,12 +614,65 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
               <StyledAcceptButton
                 text="Pay Now"
                 icon={<Check width={10} height={9} />}
-                onClick={() => handleAcceptOffer()}
+                onClick={() => handlePayNow()}
+                // onClick={() => handleAcceptOffer()}
                 disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
               />
             </div>
           </CTAContainer>
         )}
+
+        {/* {selectedOffer?.status !== 'ACCEPTED' &&
+          selectedOffer?.status !== 'PARTIAL' &&
+          selectedOffer?.status !== 'DECLINED' && (
+            <>
+              <Row>
+                <Col>{renderOfferSeenTextContainer()}</Col>
+              </Row>
+              <Row style={{ marginTop: '40px' }}>
+                <Col style={{ paddingRight: 5, marginTop: 5 }}>
+                  <Button
+                    onClick={() => handleDeclineClick(true)}
+                    variant="outline"
+                    text={
+                      <Typography color="primary" style={{ marginRight: 5 }}>
+                        Decline
+                      </Typography>
+                    }
+                    icon={<Close fill={theme.brand.primary} />}
+                    style={{ width: '100%', padding: '15px 28px' }}
+                  />
+                </Col>
+                <Col style={{ paddingRight: 5, marginTop: 5 }}>
+                  <StyledNegotiateButton
+                    onClick={() => handleNegoBtnClick(true)}
+                    variant="outline"
+                    text={
+                      <Typography color="noshade" style={{ marginRight: 5 }}>
+                        Negotiate
+                      </Typography>
+                    }
+                    icon={<Refresh fill={theme.grey.noshade} />}
+                    disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
+                    style={{ backgroundColor: theme.brand.primary }}
+                  />
+                </Col>
+                <Col style={{ paddingRight: 5, marginTop: 5 }}>
+                  <StyledAcceptButton
+                    text={
+                      <Typography color="noshade" style={{ marginRight: 5 }}>
+                        Accept
+                      </Typography>
+                    }
+                    icon={<Check width={10} height={9} />}
+                    onClick={() => handleAcceptClick(true)}
+                    loading={isLoadingConfirmOffer}
+                    disabled={!thereIsNewOffer && parseFloat(counterOffer) > 0}
+                  />
+                </Col>
+              </Row>
+            </>
+          )} */}
       </Visible>
     </Container>
   );

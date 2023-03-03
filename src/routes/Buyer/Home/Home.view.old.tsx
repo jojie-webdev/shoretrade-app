@@ -13,6 +13,11 @@ import FreeTrialCountdown from 'components/module/FreeTrialCountdown';
 import HomeSectionHeader from 'components/module/HomeSectionHeader';
 import Loading from 'components/module/Loading';
 import MultipleCarousel from 'components/module/MultipleCarousel';
+import NegotiationCreditsModal from 'components/module/NegotiationCreditsModal';
+import { NegotiationCreditsModalProps } from 'components/module/NegotiationCreditsModal/NegotiationCreditsModal.props';
+import { ProductDetailsCard6Props } from 'components/module/ProductDetailsCard6/ProductDetailsCard6.props';
+import ProductDetailsNegotiationModal from 'components/module/ProductDetailsNegotiationModal';
+import { ProductDetailsNegotiationModalProps } from 'components/module/ProductDetailsNegotiationModal/ProductDetailsNegotiationModal.props';
 import SearchAddress from 'components/module/SearchAddress';
 import SellerCard from 'components/module/SellerCard';
 import { SellerCardProps } from 'components/module/SellerCard/SellerCard.props';
@@ -107,6 +112,13 @@ const HomeView = (props: HomeGeneratedProps) => {
     currentMarketSector,
     isApprovedCompany,
     canNegotiate,
+    negotiationCredit,
+    showNegoCreditsModal,
+    handleShowNegoCreditsModal,
+    handleShowNegoModal,
+    showNegoModal,
+    clickedRecentListing,
+    handleNegoModalToggle,
   } = props;
 
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -137,8 +149,76 @@ const HomeView = (props: HomeGeneratedProps) => {
   const freeTrialPeriod = moment(endDate).diff(startDate, 'days');
   const daysLeft = moment(endDate).diff(currentDate, 'days');
 
+  const negotiationCreditsProps: NegotiationCreditsModalProps = {
+    showNegoCreditsModal,
+    handleShowNegoCreditsModal,
+    negotiationCredit: negotiationCredit?.credit?.toString() || '0',
+  };
+
+  // const cutOffDate = moment(productDetailsCard6Props?.dateEnds)
+  //   .subtract(1, 'day')
+  //   .endOf('day')
+  //   .subtract(2, 'hours');
+
+  const dateEnds = clickedRecentListing?.ends
+    ? moment(clickedRecentListing?.ends).toDate()
+    : undefined;
+
+  const cutOffDate = moment(clickedRecentListing?.ends)
+    .subtract(1, 'day')
+    .endOf('day')
+    .subtract(2, 'hours');
+
+  const isBeyondCutoff =
+    clickedRecentListing?.auctionDate && dateEnds
+      ? moment() > cutOffDate
+        ? true
+        : false
+      : false;
+
+  const productDetailsNegotiationModalProps: ProductDetailsNegotiationModalProps =
+    {
+      isOpen: showNegoModal,
+      onClickClose: handleNegoModalToggle,
+      //props.productDetailsCard6Props.handleNegoModalShow,
+      action: () => {
+        console.log('productDetailsNegotiationModalProps > action');
+      }, //handleShowConfirmNegoModal,
+      // disableActionText: isBeyondCutoff,
+      disableActionText: true,
+      negotiationPrice: 0,
+      handleNegotiationPriceSetting: () => {
+        console.log(
+          'productDetailsNegotiationModalProps > handleNegotiationPriceSetting'
+        );
+      },
+      unit: 'kg',
+      negotiationWeight: '1',
+      handleDesiredQuantityChange: () => {
+        console.log(
+          'productDetailsNegotiationModalProps > handleDesiredQuantityChange'
+        );
+      },
+      groupedBox: [],
+      handleSelectedBoxesWeight: () => {
+        console.log(
+          'productDetailsNegotiationModalProps > handleSelectedBoxesWeight'
+        );
+      },
+      isLoadingListingBoxes: false,
+      priceDiffPercentage: 0,
+      selectedBoxesWeight: [],
+      productDetailsCard6Props: {} as ProductDetailsCard6Props,
+      selectedBoxesIndex: 1,
+      actionText: 'NEGOTIATE (WAITING BE)',
+    };
+
   return (
     <ViewContainer>
+      <NegotiationCreditsModal {...negotiationCreditsProps} />
+      <ProductDetailsNegotiationModal
+        {...productDetailsNegotiationModalProps}
+      />
       {!loadingHomePage && freeTrialSubscription && isApprovedCompany && (
         <FreeTrialCountdown
           freeTrialPeriod={freeTrialPeriod}
@@ -209,7 +289,13 @@ const HomeView = (props: HomeGeneratedProps) => {
                     PreviewProps
                   >
                     data={favourites}
-                    transform={favouritesToPreviewProps}
+                    transform={partialRight(favouritesToPreviewProps, [
+                      isPendingAccount,
+                      canNegotiate,
+                      handleShowNegoCreditsModal,
+                      negotiationCredit?.credit?.toString() || '0',
+                      handleShowNegoModal,
+                    ])}
                     Component={PreviewCard}
                     link={BUYER_ROUTES.PRODUCT_DETAIL}
                     emptyText="No Favourite Products"
@@ -259,6 +345,9 @@ const HomeView = (props: HomeGeneratedProps) => {
                   transform={partialRight(recentlyAddedToPreviewProps, [
                     isPendingAccount,
                     canNegotiate,
+                    handleShowNegoCreditsModal,
+                    negotiationCredit?.credit?.toString() || '0',
+                    handleShowNegoModal,
                   ])}
                   Component={PreviewCard}
                   link={BUYER_ROUTES.PRODUCT_DETAIL}

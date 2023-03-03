@@ -1798,7 +1798,13 @@ const StepForm = ({
                               />
                             </PlanTitle>
                             <PlanPrice>
-                              <Typography weight="700" variant="copy">
+                              <Typography
+                                variant="copy"
+                                style={{
+                                  fontWeight: 'bold',
+                                  fontFamily: 'Graphik',
+                                }}
+                              >
                                 AUD ${PLAN_PRICE.BASE.price}
                               </Typography>
                               <Typography
@@ -1884,8 +1890,9 @@ const StepForm = ({
                               <Typography weight="400" variant="label">
                                 Access to the Reverse Marketplace to request
                                 products from Sellers & includes{' '}
-                                <strong>10</strong> Negotiation Credits per
-                                month to negotiate listing prices.
+                                <span style={{ fontWeight: 'bold' }}>10</span>{' '}
+                                Negotiation Credits per month to negotiate
+                                listing prices.
                               </Typography>
                               {/* <div
                                 className="benefits"
@@ -2143,8 +2150,8 @@ const StepForm = ({
                               <Typography variant="label">Total</Typography>
 
                               <TotalPriceRow>
-                                <Typography variant="title5">
-                                  $
+                                <Typography variant="title5" weight="700">
+                                  AUD $
                                   {registrationDetails.subscriptionPreference
                                     .plan === PLAN_NAME.BASE
                                     ? registrationDetails.subscriptionPreference.addOns.includes(
@@ -2162,7 +2169,7 @@ const StepForm = ({
                                   align="right"
                                   weight="300"
                                 >
-                                  /month
+                                  /Month
                                 </Typography>
                               </TotalPriceRow>
                             </PaymentPriceRow>

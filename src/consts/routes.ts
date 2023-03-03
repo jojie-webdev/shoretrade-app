@@ -73,6 +73,7 @@ export const SELLER_MARKET_BOARD_ROUTES = {
   LANDING: `${SELLER_ROUTES.NEGOTIATIONS_AND_REQUESTS}`,
   OFFER: `${SELLER_ROUTES.NEGOTIATIONS_AND_REQUESTS}/offer`,
   NEGOTIATE: `${SELLER_ROUTES.NEGOTIATIONS_AND_REQUESTS}/negotiate`,
+  NEGOTIATION: `${SELLER_ROUTES.NEGOTIATIONS_AND_REQUESTS}/negotiation`,
 };
 
 export const SELLER_MARKET_DATA_ROUTES = {
@@ -141,6 +142,8 @@ export const BUYER_ROUTES = {
   ALL_LISTING: `${BUYER_ROOT}/all-listings`,
   NOTIFICATIONS: `${BUYER_ROOT}/notifications`,
   NOTIFICATIONS_SETTINGS: `${BUYER_ROOT}/notifications-settings`,
+  NEGOTIATION_CHECKOUT: (negotiationId = ':negotiationId') =>
+    `${BUYER_ROOT}/negotiation-checkout/${negotiationId}`,
   BARCODE_SCANNER: `${BUYER_ROOT}/barcode-scanner`,
   CRATES_MANAGEMENT: `${BUYER_ROOT}/crates-management`,
   UPGRADE: `${BUYER_ROOT}/upgrade`,
@@ -150,9 +153,14 @@ export const BUYER_MARKET_REQUEST_ROUTES = {
   LANDING: `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}`,
   MARKET_REQUEST_DETAILS: (id = ':id') =>
     `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}/details/${id}`,
-  CREATE_MARKET_REQUEST: `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}/negotiations-and-requests/create`,
+  CREATE_MARKET_REQUEST: `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}/create`,
   MARKET_REQUEST_DETAILS_OFFER: (id = ':id', offerId = ':offerId') =>
-    `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}/negotiations-and-requests/offer-details/${id}/${offerId}`,
+    `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}/offer-details/${id}/${offerId}`,
+};
+
+export const BUYER_NEGOTIATION_ROUTES = {
+  NEGOTIATION_DETAILS: (id = ':id', negoRequestId = ':negoRequestId') =>
+    `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}/negotiation/${id}/${negoRequestId}`,
 };
 
 export const BUYER_ACCOUNT_ROUTES = {

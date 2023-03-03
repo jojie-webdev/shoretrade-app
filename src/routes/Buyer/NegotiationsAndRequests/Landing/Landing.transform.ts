@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { prop, sortBy } from 'ramda';
 import { Offer } from 'types/store/GetActiveOffersState';
+import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
 import { GetMarketRequestResponseItem } from 'types/store/GetMarketRequestState';
 import { formatRunningDateDifference } from 'utils/MarketRequest';
 
@@ -41,6 +42,46 @@ export const getMarketRequestLandingData = (data: any): Result[] => {
   }));
 
   return marketRequest;
+};
+
+export const getNegoRequestLandingData = (
+  data: GetAllNegoRequestResponseItem[] | undefined
+) => {
+  // if (!data) return [];
+
+  const buildExpiryData = (item: GetAllNegoRequestResponseItem) => {
+    const createdAtPlusDays = moment(item.created_at).add(7, 'd').format();
+
+    const hoursLeft = moment
+      .duration(moment(createdAtPlusDays).diff(moment()))
+      .asHours();
+
+    if (hoursLeft <= 24 && hoursLeft > 0) {
+      return hoursLeft.toFixed() + ' Hours';
+    }
+
+    if (hoursLeft <= 0) {
+      return 'Expired';
+    }
+
+    const expiry = moment(item.created_at).add(7, 'd').isBefore()
+      ? 'Expired'
+      : formatRunningDateDifference(
+          moment(item.created_at).add(7, 'd').format(),
+          'day'
+        );
+
+    return expiry;
+  };
+
+  const negoRequest = data?.map((item: GetAllNegoRequestResponseItem) => ({
+    ...item,
+    expiry: buildExpiryData(item),
+  }));
+
+  return negoRequest as
+    | (GetAllNegoRequestResponseItem & { expiry: any })[]
+    | undefined;
 };
 
 export const hasNewOffer = (offers: Offer[]) => {

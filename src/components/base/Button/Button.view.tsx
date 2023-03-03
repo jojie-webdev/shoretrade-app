@@ -29,10 +29,8 @@ const Button = (props: ButtonProps): JSX.Element => {
     ...buttonProps
   } = props;
 
-  let defaultTextColor:
-    | keyof Theme['brand']
-    | keyof Theme['grey']
-    | undefined = textColor;
+  let defaultTextColor: keyof Theme['brand'] | keyof Theme['grey'] | undefined =
+    textColor;
 
   if (!defaultTextColor) {
     if (variant === 'primary') {
@@ -59,7 +57,7 @@ const Button = (props: ButtonProps): JSX.Element => {
     textWeight = '900';
   }
 
-  const hasText = !!(text && text?.length > 0);
+  const hasText = typeof text === 'string' && !!(text && text?.length > 0);
 
   return (
     <ButtonContainer
@@ -80,7 +78,7 @@ const Button = (props: ButtonProps): JSX.Element => {
         </IconContainer>
       )}
 
-      {text && (
+      {typeof text === 'string' ? (
         <Typography
           noSfmFont
           variant={props.textVariant || textVariant}
@@ -90,6 +88,8 @@ const Button = (props: ButtonProps): JSX.Element => {
         >
           {/* Added in CSS */}
         </Typography>
+      ) : (
+        text
       )}
 
       {loading && (

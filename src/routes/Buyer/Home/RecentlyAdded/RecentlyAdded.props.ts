@@ -11,4 +11,9 @@ export interface RecentlyAddedGeneratedProps {
   onResetSearchValue: () => void;
   searchValue: string;
   canNegotiate?: boolean;
+  handleNegotiableToggle: (show: boolean) => void;
+  showNegotiable: { showNegotiable: boolean };
+  handleShowNegoCreditsModal: () => void;
+  negotiationCredit: string;
+  handleShowNegoModal: (listingId: string) => void;
 }

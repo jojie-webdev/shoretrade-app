@@ -11,4 +11,5 @@ export interface OfferTagProps {
   badgeColor: string;
   variantColor: Variants;
   color?: TypographyProps['color'];
+  textStyle?: TypographyProps['style'];
 }

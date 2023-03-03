@@ -1,17 +1,21 @@
 import { HTMLAttributes } from 'react';
 
+import { IconPosition } from 'components/base/Button/Button.props';
 import { ModalProps } from 'components/layout/Modal/Modal.props';
 
 type ConfirmationModalGeneratedProps = {
-  title?: string;
+  title?: string | JSX.Element;
   description?: string | React.ReactNode;
-  actionText?: string;
+  actionIconPosition?: IconPosition;
+  actionIcon?: JSX.Element;
+  actionText?: string | JSX.Element;
   cancelText?: string;
   action: () => void;
   cancel?: () => void;
   hideCancel?: boolean;
   switchBtns?: boolean;
   switchBtnsEffect?: boolean;
+  disableActionText?: boolean;
 };
 
 export type ConfirmationModalProps = ModalProps &

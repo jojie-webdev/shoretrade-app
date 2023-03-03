@@ -263,6 +263,237 @@ export const transformMarketRequestStatusText = (
   };
 };
 
+export const transformNegotiationStatusText = (
+  theme: Theme,
+  statusText: types | string,
+  isSeller?: boolean,
+  stringTokens?: string[]
+): {
+  variantColor: Variants;
+  tagColor: TypographyProps['color'];
+  text: string;
+  description: string;
+  badgeColor?: string;
+  alertTitle: string;
+} => {
+  if (statusText === 'Negotiation' || statusText === 'In Negotiation') {
+    if (isSeller) {
+      return {
+        text: 'Awaiting Buyer',
+        description: 'Your offer is being reviewed by the Buyer.',
+        tagColor: 'noshade',
+        variantColor: 'alert',
+        badgeColor: theme.brand.warning,
+        alertTitle: 'Awaiting Buyer',
+      };
+    }
+    return {
+      text: 'Awaiting Seller',
+      description: 'Your offer is being reviewed by the Seller.',
+      tagColor: 'alert',
+      variantColor: 'alert',
+      badgeColor: '#fffff4',
+      alertTitle: 'Awaiting Seller',
+    };
+  }
+
+  if (statusText === 'Awaiting Buyer') {
+    if (isSeller) {
+      return {
+        text: 'Awaiting Buyer',
+        description: 'Your offer is being reviewed by the Buyer.',
+        tagColor: 'noshade',
+        variantColor: 'alert',
+        badgeColor: theme.brand.warning,
+        alertTitle: 'Awaiting Buyer',
+      };
+    }
+  }
+
+  if (statusText === 'Awaiting Seller') {
+    if (!isSeller) {
+      return {
+        text: 'Awaiting Seller',
+        description: 'Your offer is being reviewed by the Seller.',
+        tagColor: 'alert',
+        variantColor: 'alert',
+        badgeColor: '#fffff4',
+        alertTitle: 'Awaiting Seller',
+      };
+    }
+  }
+
+  if (statusText === 'Counter Offer') {
+    if (isSeller) {
+      return {
+        text: text.COUNTER_OFFER,
+        description: processStringTokens(
+          descriptions.COUNTER_OFFER,
+          stringTokens || []
+        ),
+        tagColor: 'noshade',
+        variantColor: 'success',
+        badgeColor: theme.brand.success,
+        alertTitle: text.COUNTER_OFFER,
+      };
+    } else {
+      return {
+        text: text.COUNTER_OFFER,
+        description: processStringTokens(
+          descriptions.COUNTER_OFFER,
+          stringTokens || []
+        ),
+        tagColor: 'success',
+        variantColor: 'success',
+        badgeColor: '#EAFFF9',
+        alertTitle: text.COUNTER_OFFER,
+      };
+    }
+  }
+
+  if (statusText === 'New Offer') {
+    return {
+      text: text.NEW_OFFER,
+      description: descriptions.NEW_OFFER,
+      tagColor: 'success',
+      variantColor: 'success',
+      badgeColor: '#EAFFF9',
+      alertTitle: 'New Offer from the Buyer',
+    };
+  }
+
+  if (statusText === 'No Offers') {
+    return {
+      text: text.NO_OFFERS,
+      description: text.NO_OFFERS,
+      tagColor: 'shade6',
+      variantColor: 'info',
+      badgeColor: '#E5E9F5',
+      alertTitle: 'No Offers',
+    };
+  }
+
+  if (
+    (statusText.includes('Offer') || statusText.includes('Offers')) &&
+    !statusText.includes('No')
+  ) {
+    return {
+      text: statusText,
+      description: text.NO_OFFERS,
+      tagColor: 'shade10',
+      variantColor: 'info',
+      badgeColor: '#E5E9F5',
+      alertTitle: 'No Offers',
+    };
+  }
+
+  if (
+    statusText === text.PAYMENT_REQUIRED ||
+    statusText === text.PENDING_PAYMENT
+  ) {
+    if (isSeller) {
+      return {
+        text: text.PENDING_PAYMENT,
+        description:
+          'The Buyer needs to process the payment for the accepted offer. ',
+        tagColor: 'noshade',
+        variantColor: 'warning',
+        badgeColor: theme.brand.warning,
+        alertTitle: text.PENDING_PAYMENT,
+      };
+    }
+
+    return {
+      text: text.PAYMENT_REQUIRED,
+      description: descriptions.PAYMENT_REQUIRED,
+      tagColor: 'warning',
+      badgeColor: '#FFF7F2',
+      variantColor: 'warning',
+      alertTitle: 'Your Payment is Required',
+    };
+  }
+
+  if (statusText === 'Payment Missed' || statusText === text.LOST) {
+    if (isSeller) {
+      return {
+        text: 'Lost',
+        description:
+          'The payment was not processed by the Buyer within the given time frame.We apologise for any inconvenience caused. ',
+        tagColor: 'noshade',
+        variantColor: 'error',
+        badgeColor: theme.brand.error,
+        alertTitle: 'Lost',
+      };
+    }
+    return {
+      text: text.PAYMENT_MISSED,
+      description: descriptions.PAYMENT_MISSED,
+      tagColor: 'error',
+      variantColor: 'error',
+      badgeColor: '#FFF4F6',
+      alertTitle: text.PAYMENT_MISSED,
+    };
+  }
+
+  if (statusText === 'Finalised') {
+    if (isSeller) {
+      return {
+        text: text.FINALISED,
+        description: processStringTokens(
+          descriptions.FINALISED,
+          stringTokens || []
+        ),
+        tagColor: 'noshade',
+        variantColor: 'success',
+        badgeColor: theme.brand.success,
+        alertTitle: text.FINALISED,
+      };
+    } else {
+      return {
+        text: text.FINALISED,
+        description: processStringTokens(
+          descriptions.FINALISED,
+          stringTokens || []
+        ),
+        tagColor: 'success',
+        variantColor: 'success',
+        badgeColor: '#EAFFF9',
+        alertTitle: text.FINALISED,
+      };
+    }
+  }
+
+  if (statusText === 'Declined') {
+    if (isSeller) {
+      return {
+        text: 'Declined',
+        description:
+          'The payment was not processed by the Buyer within the given time frame.We apologise for any inconvenience caused. ',
+        tagColor: 'noshade',
+        variantColor: 'error',
+        badgeColor: theme.brand.error,
+        alertTitle: 'Declined',
+      };
+    }
+    return {
+      text: text.DECLINED,
+      description: descriptions.DECLINED,
+      tagColor: 'error',
+      variantColor: 'error',
+      badgeColor: '#FFF4F6',
+      alertTitle: text.DECLINED,
+    };
+  }
+  return {
+    text: '',
+    description: '',
+    tagColor: 'secondary',
+    variantColor: 'info',
+    badgeColor: theme.brand.secondary,
+    alertTitle: '',
+  };
+};
+
 function processStringTokens(string: string, tokens: string[]) {
   let output = '';
   tokens.forEach((t, i) => {

@@ -5,6 +5,7 @@ export type GetBuyerHomepageMeta = {};
 
 export type GetBuyerHomepageRequestData = {
   addressId: string;
+  negotiations: boolean;
 };
 
 export type GetBuyerHomepageResponseListingItem = {
@@ -60,6 +61,9 @@ export type GetBuyerHomepageResponseListingItem = {
     type: string;
     width: number;
   };
+  allowNegotiations: boolean;
+  auctionDate: string;
+  handleShowNegoCreditsModal: () => void;
 };
 
 export type GetBuyerHomepagePayload = GenericResponse<{

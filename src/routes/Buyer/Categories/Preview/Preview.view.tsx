@@ -42,6 +42,9 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
     //filterData,
     //onChangeFilter,
     canNegotiate,
+    handleShowNegoCreditsModal,
+    negotiationCredit,
+    handleShowNegoModal,
   } = props;
 
   const location = useLocation();
@@ -170,6 +173,11 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                         isForSaleRepPhoto={product.isForSaleRepPhoto}
                         isSFMCrate={product.packaging?.type === 'SFM'}
                         canNegotiate={canNegotiate}
+                        allowNegotiations={product.allowNegotiations}
+                        auctionDate={product.auctionDate}
+                        handleShowNegoCreditsModal={handleShowNegoCreditsModal}
+                        negotiationCredit={negotiationCredit}
+                        handleShowNegoModal={handleShowNegoModal}
                       />
                     </StyledInteraction>
                   ) : (
@@ -201,6 +209,11 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                       isForSaleRepPhoto={product.isForSaleRepPhoto}
                       isSFMCrate={product.packaging?.type === 'SFM'}
                       canNegotiate={canNegotiate}
+                      allowNegotiations={product.allowNegotiations}
+                      auctionDate={product.auctionDate}
+                      handleShowNegoCreditsModal={handleShowNegoCreditsModal}
+                      negotiationCredit={negotiationCredit}
+                      handleShowNegoModal={handleShowNegoModal}
                     />
                   )}
                 </Link>

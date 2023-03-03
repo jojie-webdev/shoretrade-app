@@ -10,4 +10,7 @@ export interface FavouritesGeneratedProps {
   onChangeSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
   onResetSearchValue: () => void;
   searchValue: string;
+  handleShowNegoCreditsModal: () => void;
+  negotiationCredit: string;
+  handleShowNegoModal: (listingId: string) => void;
 }

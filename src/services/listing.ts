@@ -5,6 +5,7 @@ import omit from 'ramda/es/omit';
 import { CreateBulkListingRequestData } from 'types/store/CreateBulkListingState';
 import { CreateCustomListingRequestData } from 'types/store/CreateCustomListingState';
 import { CreateListingRequestData } from 'types/store/CreateListingState';
+import { CreateNegotiation_2Meta } from 'types/store/CreateNegotiation_2State';
 import { EndListingMeta } from 'types/store/EndListingState';
 import { GetAllBuyerListingRequestOption } from 'types/store/GetAllBuyerListingsState';
 import { GetBuyerSearchFilterDataMeta } from 'types/store/GetBuyerSearchFilterDataState';
@@ -23,8 +24,10 @@ import { UpdateListingRequestData } from 'types/store/UpdateListingState';
 import { UploadBulkMeta } from 'types/store/UploadBulkState';
 
 const BASE_URL = `${API.URL}/${API.VERSION}`;
+const BASE_URL_V2 = `${API.URL}/${API.VERSION_NEXT}`;
 const ENDPOINT = 'listing';
 const LISTING_URL = `${BASE_URL}/listing`;
+const LISTING_URL_V2 = `${BASE_URL_V2}/listing`;
 
 export const getAllListings = (token: string) => {
   return axios({
@@ -62,6 +65,9 @@ export const getAllBuyerListings = (
   if (requestOptions?.salesChannel)
     url += `&salesChannel=${requestOptions.salesChannel}`;
   if (requestOptions?.address) url += `&address=${requestOptions.address}`;
+
+  const negoQuery = requestOptions?.negotiations ? `&negotiations=true` : '';
+  url += negoQuery;
 
   return axios({
     method: 'get',
@@ -337,5 +343,21 @@ export const getBuyerSearchFilters = (
     headers: {
       Authorization: `Bearer ${token}`,
     },
+  });
+};
+
+export const createNegotiation = (
+  data: CreateNegotiation_2Meta,
+  token: string
+) => {
+  const modifiedData = omit(['listingId'], data);
+
+  return axios({
+    method: 'post',
+    url: `${LISTING_URL_V2}/${data.listingId}/negotiations`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: modifiedData,
   });
 };

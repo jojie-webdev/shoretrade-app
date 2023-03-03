@@ -14,6 +14,8 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
   const {
     children,
     title,
+    actionIconPosition,
+    actionIcon,
     actionText,
     cancelText,
     action,
@@ -22,6 +24,7 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
     hideCancel,
     switchBtns,
     switchBtnsEffect,
+    disableActionText,
     ...modalProps
   } = props;
 
@@ -30,25 +33,33 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
   const renderTitle = () => (
     <>
       <Hidden xs sm>
-        <Typography
-          variant="title4"
-          color={isSeller ? 'noshade' : 'shade8'}
-          className="title"
-          altFont
-        >
-          {title}
-        </Typography>
+        {typeof title === 'string' ? (
+          <Typography
+            variant="title4"
+            color={isSeller ? 'noshade' : 'shade8'}
+            className="title"
+            altFont
+          >
+            {title}
+          </Typography>
+        ) : (
+          title
+        )}
       </Hidden>
 
       <Visible xs sm>
-        <Typography
-          variant="title5"
-          color={isSeller ? 'noshade' : 'shade8'}
-          className="title"
-          altFont
-        >
-          {title}
-        </Typography>
+        {typeof title === 'string' ? (
+          <Typography
+            variant="title5"
+            color={isSeller ? 'noshade' : 'shade8'}
+            className="title"
+            altFont
+          >
+            {title}
+          </Typography>
+        ) : (
+          title
+        )}
       </Visible>
     </>
   );
@@ -85,7 +96,10 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
                 className="confirmation_modal__ok_btn"
                 style={{ marginLeft: 8, borderRadius: 12 }}
                 variant="primary"
+                iconPosition={actionIconPosition}
+                icon={actionIcon}
                 text={actionText || 'OK'}
+                disabled={disableActionText}
                 onClick={() => {
                   action();
                 }}
@@ -97,7 +111,10 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
                 className="confirmation_modal__ok_btn"
                 style={{ marginRight: 4, borderRadius: 12 }}
                 variant={switchBtnsEffect ? 'outline' : 'primary'}
+                iconPosition={actionIconPosition}
+                icon={actionIcon}
                 text={actionText || 'OK'}
+                disabled={disableActionText}
                 onClick={() => {
                   action();
                 }}

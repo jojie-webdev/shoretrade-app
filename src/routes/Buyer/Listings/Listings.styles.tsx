@@ -44,6 +44,8 @@ export const ActionContainer = styled.div`
     flex-grow: 1;
     order: 2;
   }
+
+  margin-right: 10px;
 `;
 
 export const ChipsWrapper = styled.div`
@@ -207,4 +209,22 @@ export const Tag = styled.div<{
   justify-content: center;
   align-items: center;
   white-space: nowrap;
+`;
+
+export const FilterContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media ${BREAKPOINTS['sm']} {
+    padding: 5px 0px;
+    justify-content: flex-start;
+    align-items: center;
+  }
+`;
+
+export const NegotiableTextWrapper = styled(Typography)`
+  color: #32357a;
+  margin-right: 5px;
+  font-family: 'Basis Grotesque Pro';
 `;

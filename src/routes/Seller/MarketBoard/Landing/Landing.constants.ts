@@ -31,3 +31,8 @@ export const EXPLANATIONS = [
     ],
   },
 ];
+
+export enum TABS {
+  REVERSE_MARKETPLACE = 'Reverse Marketplace',
+  NEGO = 'Negotiations',
+}

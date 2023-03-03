@@ -12,6 +12,7 @@ import {
   Crates2 as CratesIcon,
   Cog,
   QrCodeScan as BarcodeSVG,
+  MarketBoard,
 } from 'components/base/SVG';
 import DashboardLayout from 'components/layout/Dashboard';
 import { SELLER_ACCOUNT_ROUTES, SELLER_ROUTES } from 'consts';
@@ -67,7 +68,7 @@ const ROUTES: Routes = {
     path: SELLER_ROUTES.NEGOTIATIONS_AND_REQUESTS,
     title: 'Negotiations & Requests',
     children: <MarketBoardRoutes />,
-    icon: CatchNetIcon,
+    icon: MarketBoard,
     nested: true,
   },
   // Add Product

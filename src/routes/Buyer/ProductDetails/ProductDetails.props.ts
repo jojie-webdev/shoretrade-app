@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { ProductDetailsCard6Props } from 'components/module/ProductDetailsCard6/ProductDetailsCard6.props';
 import { AddCartItemPayload } from 'types/store/AddCartItemState';
 import { GetListingResponseItem } from 'types/store/GetListingState';
+import { GetNegotiationCreditRequestResponseItem } from 'types/store/GetNegotiationCreditState';
 
 export interface ProductSellerRatingProps {
   name: string;
@@ -26,6 +27,13 @@ interface ProductDetailsCard1Props {
   isFavorite?: boolean;
   onFavorite?: () => void;
   packaging?: string;
+}
+
+export interface Box {
+  count: number | null;
+  id: string;
+  quantity: number | null;
+  weight: number;
 }
 
 export interface ProductDetailsGeneratedProps {
@@ -59,15 +67,25 @@ export interface ProductDetailsGeneratedProps {
     totalWeight: number;
     quantity: number;
     cost: number;
-    boxes: {
-      count: number | null;
-      id: string;
-      quantity: number | null;
-      weight: number;
-    }[];
+    boxes: Box[];
     unit: string;
   }[];
   isPendingAccount: boolean;
   showSuccessAddBtn: boolean;
   canNegotiate?: boolean;
+  showNegoModal: boolean;
+  handleSelectedBoxesWeight: (boxes: Box[], boxesIndex: number) => void;
+  selectedBoxesWeight: Box[];
+  selectedBoxesIndex: number;
+  handleShowConfirmNegoModal: () => void;
+  showConfirmNegoModal: boolean;
+  handleConfirmNegoClick: () => void;
+  isSendingNegotiation: boolean;
+  handleNegotiationPriceSetting: (price: number) => void;
+  negotiationPrice: number;
+  handleDesiredQuantityChange: (weight: string) => void;
+  negotiationWeight: string;
+  negotiationCredit: GetNegotiationCreditRequestResponseItem | undefined;
+  handleShowNegoCreditsModal: () => void;
+  showNegoCreditsModal: boolean;
 }
