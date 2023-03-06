@@ -64,6 +64,10 @@ export type GetBuyerHomepageResponseListingItem = {
   allowNegotiations: boolean;
   auctionDate: string;
   handleShowNegoCreditsModal: () => void;
+  activeSizeUnit: any;
+  isPreAuctionSale: boolean;
+  gmSizingOptions: [];
+  cmSizingOptions: [];
 };
 
 export type GetBuyerHomepagePayload = GenericResponse<{

@@ -255,7 +255,7 @@ const NegotiationDetails = (): JSX.Element => {
   };
 
   const handleDeclinedNegoModalToggle = () => {
-    setShowDeclinedNegoModal((prevValue) => !prevValue);
+    setShowDeclinedNegoModal(false);
   };
 
   // const onAddToCart = () => {

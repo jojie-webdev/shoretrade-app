@@ -22,6 +22,7 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
     description,
     cancel,
     hideCancel,
+    hideAction,
     switchBtns,
     switchBtnsEffect,
     disableActionText,
@@ -68,7 +69,7 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
     <Modal {...modalProps}>
       <Content>
         {renderTitle()}
-        <div className="content-container">
+        <div className={!hideAction ? 'content-container' : ''}>
           {description && (
             <Typography
               variant="body"
@@ -92,33 +93,37 @@ const ConfirmationModal = (props: ConfirmationModalProps): JSX.Element => {
                   onClick={cancel || modalProps.onClickClose}
                 />
               )}
-              <Button
-                className="confirmation_modal__ok_btn"
-                style={{ marginLeft: 8, borderRadius: 12 }}
-                variant="primary"
-                iconPosition={actionIconPosition}
-                icon={actionIcon}
-                text={actionText || 'OK'}
-                disabled={disableActionText}
-                onClick={() => {
-                  action();
-                }}
-              />
+              {!hideAction && (
+                <Button
+                  className="confirmation_modal__ok_btn"
+                  style={{ marginLeft: 8, borderRadius: 12 }}
+                  variant="primary"
+                  iconPosition={actionIconPosition}
+                  icon={actionIcon}
+                  text={actionText || 'OK'}
+                  disabled={disableActionText}
+                  onClick={() => {
+                    action();
+                  }}
+                />
+              )}
             </>
           ) : (
             <>
-              <Button
-                className="confirmation_modal__ok_btn"
-                style={{ marginRight: 4, borderRadius: 12 }}
-                variant={switchBtnsEffect ? 'outline' : 'primary'}
-                iconPosition={actionIconPosition}
-                icon={actionIcon}
-                text={actionText || 'OK'}
-                disabled={disableActionText}
-                onClick={() => {
-                  action();
-                }}
-              />
+              {!hideAction && (
+                <Button
+                  className="confirmation_modal__ok_btn"
+                  style={{ marginRight: 4, borderRadius: 12 }}
+                  variant={switchBtnsEffect ? 'outline' : 'primary'}
+                  iconPosition={actionIconPosition}
+                  icon={actionIcon}
+                  text={actionText || 'OK'}
+                  disabled={disableActionText}
+                  onClick={() => {
+                    action();
+                  }}
+                />
+              )}
               {!hideCancel && (
                 <Button
                   className="confirmation_modal__cancel_btn"

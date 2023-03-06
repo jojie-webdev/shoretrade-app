@@ -25,6 +25,22 @@ export const ViewContainer = styled.div`
   .buying-for {
     padding: 4px 16px 16px 16px;
   }
+
+  .radio > span {
+    height: 12px;
+    width: 12px;
+
+    .span {
+      height: 0px;
+      width: 0px;
+    }
+  }
+
+  #confirmation_modal__container {
+    .modal_container {
+      width: 686px !important;
+    }
+  }
 `;
 
 export const SwiperContainer = styled.div`

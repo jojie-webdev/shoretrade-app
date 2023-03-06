@@ -69,7 +69,7 @@ const ProductDetailsNegotiationModal = (
               inputType="decimal"
               step=".01"
               label={'Counter Offer'}
-              defaultValue={productDetailsCard6Props.price}
+              defaultValue={productDetailsCard6Props.price || negotiationPrice}
               value={negotiationPrice}
               onChangeText={(v) => {
                 let price = v;
@@ -158,9 +158,9 @@ const ProductDetailsNegotiationModal = (
                   </div>
                 ))
               : isLoadingListingBoxes && (
-                  <div className="box-loading">
+                  <span className="box-loading">
                     <Loading />
-                  </div>
+                  </span>
                 )}
             <div style={{ marginTop: 24 }} />
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>

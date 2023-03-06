@@ -13,6 +13,7 @@ type ConfirmationModalGeneratedProps = {
   action: () => void;
   cancel?: () => void;
   hideCancel?: boolean;
+  hideAction?: boolean;
   switchBtns?: boolean;
   switchBtnsEffect?: boolean;
   disableActionText?: boolean;

@@ -2,13 +2,14 @@ import React from 'react';
 
 import Alert from 'components/base/Alert';
 import ProgressBar from 'components/base/ProgressBar';
-import { ChevronRight } from 'components/base/SVG';
+import { CheckFilled, ChevronRight } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import Carousel from 'components/module/Carousel';
 import Card from 'components/module/CategoryCards/Landing';
 import { CardProps } from 'components/module/CategoryCards/Landing/Card.props';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import { PreviewProps } from 'components/module/CategoryCards/Preview/Preview.props';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 import FreeTrialCountdown from 'components/module/FreeTrialCountdown';
 import HomeSectionHeader from 'components/module/HomeSectionHeader';
 import Loading from 'components/module/Loading';
@@ -119,6 +120,21 @@ const HomeView = (props: HomeGeneratedProps) => {
     showNegoModal,
     clickedRecentListing,
     handleNegoModalToggle,
+    negotiationPrice,
+    handleNegotiationPriceSetting,
+    handleNegoModalBtnClick,
+    handleDesiredQuantityChange,
+    handleSelectedBoxesWeight,
+    selectedBoxesWeight,
+    productDetailsCard6Props,
+    negotiationWeight,
+    unit,
+    groupedBox,
+    isLoadingListingBoxes,
+    selectedBoxesIndex,
+    isCreateNegotiationPending,
+    showSuccessfulNegoModal,
+    handleSuccessfulNegoModalToggle,
   } = props;
 
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
@@ -176,45 +192,74 @@ const HomeView = (props: HomeGeneratedProps) => {
         : false
       : false;
 
+  const priceDiff = negotiationPrice - Number(productDetailsCard6Props.price);
+  const priceDiff2 =
+    priceDiff / Math.abs(Number(productDetailsCard6Props.price));
+
+  const priceDiffPercentage =
+    negotiationPrice === null
+      ? 0
+      : priceDiff2 < 0
+      ? -(Math.abs(priceDiff2) * 100)
+      : priceDiff2 * 100;
+
   const productDetailsNegotiationModalProps: ProductDetailsNegotiationModalProps =
     {
       isOpen: showNegoModal,
       onClickClose: handleNegoModalToggle,
-      //props.productDetailsCard6Props.handleNegoModalShow,
-      action: () => {
-        console.log('productDetailsNegotiationModalProps > action');
-      }, //handleShowConfirmNegoModal,
-      // disableActionText: isBeyondCutoff,
-      disableActionText: true,
-      negotiationPrice: 0,
-      handleNegotiationPriceSetting: () => {
-        console.log(
-          'productDetailsNegotiationModalProps > handleNegotiationPriceSetting'
-        );
-      },
-      unit: 'kg',
-      negotiationWeight: '1',
-      handleDesiredQuantityChange: () => {
-        console.log(
-          'productDetailsNegotiationModalProps > handleDesiredQuantityChange'
-        );
-      },
-      groupedBox: [],
-      handleSelectedBoxesWeight: () => {
-        console.log(
-          'productDetailsNegotiationModalProps > handleSelectedBoxesWeight'
-        );
-      },
-      isLoadingListingBoxes: false,
-      priceDiffPercentage: 0,
-      selectedBoxesWeight: [],
-      productDetailsCard6Props: {} as ProductDetailsCard6Props,
-      selectedBoxesIndex: 1,
-      actionText: 'NEGOTIATE (WAITING BE)',
+      action: handleNegoModalBtnClick,
+      disableActionText: isBeyondCutoff,
+      negotiationPrice,
+      handleNegotiationPriceSetting,
+      unit,
+      negotiationWeight,
+      handleDesiredQuantityChange,
+      groupedBox,
+      handleSelectedBoxesWeight,
+      isLoadingListingBoxes,
+      priceDiffPercentage,
+      selectedBoxesWeight,
+      productDetailsCard6Props,
+      selectedBoxesIndex,
+      actionText: 'NEGOTIATE',
     };
 
   return (
     <ViewContainer>
+      <div id="confirmation_modal__container">
+        <ConfirmationModal
+          isOpen={showSuccessfulNegoModal}
+          onClickClose={handleSuccessfulNegoModalToggle}
+          action={handleSuccessfulNegoModalToggle}
+          title={
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <Typography
+                variant="title4"
+                color="shade8"
+                weight="900"
+                style={{ fontFamily: 'Canela' }}
+              >
+                Negotiation Successfully Sent
+              </Typography>
+              <div style={{ marginLeft: 10 }} />
+              <CheckFilled width={30} height={30} fill={theme.brand.success} />
+            </div>
+          }
+          hideCancel={true}
+          hideAction={true}
+          disableActionText={false}
+          description={
+            <Typography color="shade6" variant="label">
+              You will be notified when the Seller responds.
+            </Typography>
+          }
+        />
+      </div>
       <NegotiationCreditsModal {...negotiationCreditsProps} />
       <ProductDetailsNegotiationModal
         {...productDetailsNegotiationModalProps}

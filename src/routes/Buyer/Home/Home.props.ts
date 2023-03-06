@@ -1,6 +1,9 @@
+import { ProductDetailsCard6Props } from 'components/module/ProductDetailsCard6/ProductDetailsCard6.props';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
 import { GetCompanyPlanResponseData } from 'types/store/GetCompanyPlanState';
 import { GetNegotiationCreditRequestResponseItem } from 'types/store/GetNegotiationCreditState';
+
+import { Box } from '../ProductDetails/ProductDetails.props';
 
 export type CategoryResults = {
   id: string;
@@ -42,6 +45,34 @@ export interface HomeGeneratedProps {
   showNegoModal: boolean;
   clickedRecentListing: GetBuyerHomepageResponseListingItem | undefined;
   handleNegoModalToggle: () => void;
+  negotiationPrice: number;
+  handleNegotiationPriceSetting: (negotiationPrice: number) => void;
+  handleNegoModalBtnClick: () => void;
+  handleDesiredQuantityChange: (weight: string) => void;
+  handleSelectedBoxesWeight: (boxes: Box[], boxesIndex: number) => void;
+  selectedBoxesWeight: Box[];
+  productDetailsCard6Props: ProductDetailsCard6Props;
+  negotiationWeight: string;
+  unit: string | undefined;
+  isBeyondCutoff: boolean;
+  groupedBox: {
+    id: string;
+    totalWeight: number;
+    cost: number;
+    quantity: number;
+    boxes: {
+      count: number | null;
+      id: string;
+      quantity: number | null;
+      weight: number;
+    }[];
+    unit: string;
+  }[];
+  isLoadingListingBoxes: boolean;
+  selectedBoxesIndex: number;
+  isCreateNegotiationPending: boolean;
+  showSuccessfulNegoModal: boolean;
+  handleSuccessfulNegoModalToggle: () => void;
 }
 
 export interface HomeData {

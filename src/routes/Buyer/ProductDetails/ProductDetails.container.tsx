@@ -281,7 +281,6 @@ const ProductDetails = (): JSX.Element => {
   };
 
   const handleNegoModalShow = () => {
-    console.log('handleNegoModalShow > ');
     setShowNegoModal((prevValue) => !prevValue);
   };
 

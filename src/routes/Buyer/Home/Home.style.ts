@@ -19,6 +19,10 @@ export const ViewContainer = styled.div`
   .buying-for {
     padding: 4px 16px 16px 16px;
   }
+
+  .modal_container {
+    width: 686px !important;
+  }
 `;
 
 export const Wrapper = styled.div`
