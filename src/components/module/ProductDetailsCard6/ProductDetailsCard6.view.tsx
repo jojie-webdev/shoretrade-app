@@ -46,6 +46,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
     handleNegoModalShow,
     allowNegotiations,
     handleShowNegoCreditsModal,
+    negotiationCredit,
   } = props;
 
   const companyPlan = useSelector(
@@ -88,6 +89,67 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
     );
   };
 
+  const negotiatePriceBtn = () => {
+    if (negotiationCredit <= 0) {
+      return (
+        <div onClick={handleShowNegoCreditsModal}>
+          <NegotiatePriceElem
+            backgroundColor={theme.grey.shade3}
+            iconFill={theme.grey.shade6}
+            fontColor="shade6"
+            clickable
+          />
+        </div>
+      );
+    }
+
+    return allowNegotiations ? (
+      canNegotiate ? (
+        auctionDate ? (
+          isPreAuctionExpired(auctionDate) ? null : (
+            <div onClick={handleNegoModalShow}>
+              <NegotiatePriceElem
+                backgroundColor={theme.brand.primary}
+                iconFill={theme.grey.noshade}
+                fontColor="noshade"
+                clickable
+              />
+            </div>
+          )
+        ) : (
+          <div onClick={handleNegoModalShow}>
+            <NegotiatePriceElem
+              backgroundColor={theme.brand.primary}
+              iconFill={theme.grey.noshade}
+              fontColor="noshade"
+              clickable
+            />
+          </div>
+        )
+      ) : auctionDate ? (
+        isPreAuctionExpired(auctionDate) ? null : (
+          <div onClick={handleShowNegoCreditsModal}>
+            <NegotiatePriceElem
+              backgroundColor={theme.grey.shade3}
+              iconFill={theme.grey.shade6}
+              fontColor="shade6"
+              clickable
+            />
+          </div>
+        )
+      ) : (
+        <div onClick={handleShowNegoCreditsModal}>
+          <NegotiatePriceElem
+            backgroundColor={theme.grey.shade3}
+            iconFill={theme.grey.shade6}
+            fontColor="shade6"
+            clickable
+          />
+        </div>
+      )
+    ) : null;
+  };
+
   return (
     <Container {...props}>
       {SellerCard ? SellerCard : <></>}
@@ -106,51 +168,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
             </Label>
           </div>
         )}
-        {allowNegotiations ? (
-          canNegotiate ? (
-            auctionDate ? (
-              isPreAuctionExpired(auctionDate) ? null : (
-                <div onClick={handleNegoModalShow}>
-                  <NegotiatePriceElem
-                    backgroundColor={theme.brand.primary}
-                    iconFill={theme.grey.noshade}
-                    fontColor="noshade"
-                    clickable
-                  />
-                </div>
-              )
-            ) : (
-              <div onClick={handleNegoModalShow}>
-                <NegotiatePriceElem
-                  backgroundColor={theme.brand.primary}
-                  iconFill={theme.grey.noshade}
-                  fontColor="noshade"
-                  clickable
-                />
-              </div>
-            )
-          ) : auctionDate ? (
-            isPreAuctionExpired(auctionDate) ? null : (
-              <div onClick={handleShowNegoCreditsModal}>
-                <NegotiatePriceElem
-                  backgroundColor={theme.grey.shade3}
-                  iconFill={theme.grey.shade6}
-                  fontColor="shade6"
-                  clickable
-                />
-              </div>
-            )
-          ) : (
-            <div onClick={handleShowNegoCreditsModal}>
-              <NegotiatePriceElem
-                backgroundColor={theme.grey.shade3}
-                iconFill={theme.grey.shade6}
-                fontColor="shade6"
-                clickable
-              />
-            </div>
-          )
-        ) : null}
+        {negotiatePriceBtn()}
       </div>
       {!props.catchRecurrence && (
         <Row>

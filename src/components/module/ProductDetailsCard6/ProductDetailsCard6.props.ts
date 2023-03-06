@@ -23,4 +23,5 @@ export interface ProductDetailsCard6Props {
   handleNegoModalShow: () => void;
   allowNegotiations: boolean;
   handleShowNegoCreditsModal: () => void;
+  negotiationCredit: number;
 }

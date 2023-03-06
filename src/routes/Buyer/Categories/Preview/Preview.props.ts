@@ -26,7 +26,7 @@ export interface CategoriesPreviewGeneratedProps {
   // }) => void;
   canNegotiate: boolean;
   handleShowNegoCreditsModal: () => void;
-  negotiationCredit: string;
+  negotiationCredit: number;
   handleShowNegoModal: (listingId: string) => void;
 }
 

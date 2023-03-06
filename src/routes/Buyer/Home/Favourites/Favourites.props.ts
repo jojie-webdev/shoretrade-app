@@ -11,6 +11,6 @@ export interface FavouritesGeneratedProps {
   onResetSearchValue: () => void;
   searchValue: string;
   handleShowNegoCreditsModal: () => void;
-  negotiationCredit: string;
+  negotiationCredit: number;
   handleShowNegoModal: (listingId: string) => void;
 }

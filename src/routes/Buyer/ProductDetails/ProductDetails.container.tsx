@@ -524,6 +524,7 @@ const ProductDetails = (): JSX.Element => {
     handleNegoModalShow,
     allowNegotiations: currentListing?.allowNegotiations,
     handleShowNegoCreditsModal,
+    negotiationCredit: negotiationCredit?.credit || 0,
   };
   const sellerRatingProps: ProductSellerRatingProps = {
     name: currentListing?.coop.name || '',

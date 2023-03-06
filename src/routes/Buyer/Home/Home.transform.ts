@@ -50,7 +50,7 @@ export function recentlyAddedToPreviewProps(
   isPendingAccount: boolean,
   canNegotiate?: boolean,
   handleShowNegoCreditsModal?: () => void,
-  negotiationCredit?: string,
+  negotiationCredit?: number,
   handleShowNegoModal?: (listingId: string) => void
 ): PreviewProps {
   return {
@@ -80,7 +80,7 @@ export function recentlyAddedToPreviewProps(
     allowNegotiations: data.allowNegotiations,
     auctionDate: data.auctionDate,
     handleShowNegoCreditsModal,
-    negotiationCredit: negotiationCredit || '',
+    negotiationCredit: negotiationCredit || 0,
     handleShowNegoModal,
   };
 }
@@ -99,7 +99,7 @@ export function favouritesToPreviewProps(
   isPendingAccount: boolean,
   canNegotiate?: boolean,
   handleShowNegoCreditsModal?: () => void,
-  negotiationCredit?: string,
+  negotiationCredit?: number,
   handleShowNegoModal?: (listingId: string) => void
 ): PreviewProps {
   return {
@@ -127,7 +127,7 @@ export function favouritesToPreviewProps(
     auctionDate: data.auctionDate,
     canNegotiate,
     handleShowNegoCreditsModal,
-    negotiationCredit: negotiationCredit || '',
+    negotiationCredit: negotiationCredit || 0,
     handleShowNegoModal,
   };
 }

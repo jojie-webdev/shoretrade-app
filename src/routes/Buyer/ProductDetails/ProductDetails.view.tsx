@@ -127,7 +127,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   const negotiationCreditsProps: NegotiationCreditsModalProps = {
     showNegoCreditsModal,
     handleShowNegoCreditsModal,
-    negotiationCredit: negotiationCredit?.credit?.toString() || '0',
+    negotiationCredit: negotiationCredit?.credit || 0,
   };
 
   useEffect(() => {
@@ -548,6 +548,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                 isPreAuction={productDetailsCard6Props?.isPreAuction}
                 canNegotiate={canNegotiate}
                 allowNegotiations={productDetailsCard6Props.allowNegotiations}
+                negotiationCredit={negotiationCreditsProps.negotiationCredit}
               />
               {!isPendingAccount && isMobile ? (
                 <ProductSellerCard

@@ -626,7 +626,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
                   props.auctionDate ? (
                     isPreAuctionExpired(
                       props.auctionDate
-                    ) ? null : negotiationCredit ? (
+                    ) ? null : negotiationCredit > 0 ? (
                       <div
                         style={{
                           display: 'flex',

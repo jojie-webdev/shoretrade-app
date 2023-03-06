@@ -69,7 +69,7 @@ const Favourites = (): JSX.Element => {
     searchValue,
     isLoadingResults,
     handleShowNegoCreditsModal,
-    negotiationCredit: negotiationCredit?.credit?.toString() || '0',
+    negotiationCredit: negotiationCredit?.credit || 0,
     handleShowNegoModal,
   };
 
