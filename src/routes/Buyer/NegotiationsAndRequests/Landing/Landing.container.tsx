@@ -55,7 +55,7 @@ const MarketRequestsLanding = (): JSX.Element => {
     value: null,
   });
   const [waitAll, setWaitAll] = useState(true);
-  const [selectedTab, setSelectedTab] = useState(TABS.MARKET_REQUEST);
+  const [selectedTab, setSelectedTab] = useState(TABS.NEGOTIATIONS);
   const [searchKeyword, setSearchKeyword] = useState('');
 
   const deleteMarketRequest = useSelector(
@@ -199,15 +199,15 @@ const MarketRequestsLanding = (): JSX.Element => {
   useEffect(() => {
     dispatch(getNegotiationCreditActions.request({}));
     setSelectedTab(
-      negoAndRMQueryParams.tab === TABS.NEGOTIATIONS
-        ? TABS.NEGOTIATIONS
-        : TABS.MARKET_REQUEST
+      negoAndRMQueryParams.tab === TABS.MARKET_REQUEST
+        ? TABS.MARKET_REQUEST
+        : TABS.NEGOTIATIONS
     );
 
-    if (negoAndRMQueryParams.tab === TABS.NEGOTIATIONS) {
-      dispatch(getAllNegotiationsActions.request({}));
-    } else {
+    if (negoAndRMQueryParams.tab === TABS.MARKET_REQUEST) {
       dispatch(getAllMarketRequestActions.request({}));
+    } else {
+      dispatch(getAllNegotiationsActions.request({}));
     }
   }, []);
 
