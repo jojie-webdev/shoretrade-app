@@ -174,7 +174,7 @@ const Content = (props: NegotiationSellerModalProps) => {
             <span className="indicator" style={{ color: theme.grey.noshade }}>
               {negotiationPrice === null
                 ? ''
-                : (negotiationPrice || 0) > Number(negotiation?.counter_offer)
+                : (negotiationPrice || 0) < Number(negotiation?.counter_offer)
                 ? '+'
                 : '-'}
               {Math.abs(priceDiffPercentage).toFixed(2)}%

@@ -166,7 +166,7 @@ const NegotiationBuyerModal = (
               Change in Price{' '}
               {buyerNegotiatedPrice === null || isNaN(buyerNegotiatedPrice)
                 ? ''
-                : negotiation?.negotiation_offer.counter_offer >
+                : negotiation?.negotiation_offer.counter_offer <
                   (buyerNegotiatedPrice || 0)
                 ? '+'
                 : '-'}

@@ -483,30 +483,36 @@ const NegotiationView = (props: NegotiationProps) => {
                   icon={<Close fill={theme.brand.primary} />}
                   style={{ width: '100%', marginRight: 10 }}
                 />
-                <Button
-                  text={
-                    <Typography color="noshade" style={{ marginRight: 5 }}>
-                      Negotiate
-                    </Typography>
-                  }
-                  icon={<Refresh fill={theme.grey.noshade} />}
-                  onClick={handleNegotiationCloseBtnClick}
-                  disabled={negotiation?.display_status === 'Awaiting Buyer'}
-                  style={{ marginRight: 10, width: '100%' }}
-                />
+                {negotiation?.display_status?.toLowerCase() !==
+                  'awaiting buyer' && (
+                  <Button
+                    text={
+                      <Typography color="noshade" style={{ marginRight: 5 }}>
+                        Negotiate
+                      </Typography>
+                    }
+                    icon={<Refresh fill={theme.grey.noshade} />}
+                    onClick={handleNegotiationCloseBtnClick}
+                    disabled={negotiation?.display_status === 'Awaiting Buyer'}
+                    style={{ marginRight: 10, width: '100%' }}
+                  />
+                )}
               </div>
               <div style={{ width: '124px' }}>
-                <StyledAcceptButton
-                  text={
-                    <Typography color="noshade" style={{ marginRight: 5 }}>
-                      Accept
-                    </Typography>
-                  }
-                  icon={<Check width={10} height={9} />}
-                  onClick={handleAcceptBtnClick}
-                  // onClick={() => console.log('')}
-                  disabled={negotiation?.display_status === 'Awaiting Buyer'}
-                />
+                {negotiation?.display_status?.toLowerCase() !==
+                  'awaiting buyer' && (
+                  <StyledAcceptButton
+                    text={
+                      <Typography color="noshade" style={{ marginRight: 5 }}>
+                        Accept
+                      </Typography>
+                    }
+                    icon={<Check width={10} height={9} />}
+                    onClick={handleAcceptBtnClick}
+                    // onClick={() => console.log('')}
+                    disabled={negotiation?.display_status === 'Awaiting Buyer'}
+                  />
+                )}
               </div>
             </CTAContainer>
           )}

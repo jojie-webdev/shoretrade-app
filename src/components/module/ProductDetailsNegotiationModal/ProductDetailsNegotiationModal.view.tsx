@@ -178,7 +178,7 @@ const ProductDetailsNegotiationModal = (
                   Change in Price{' '}
                   {priceDiffPercentage ? (
                     <span className="indicator">
-                      {negotiationPrice < Number(productDetailsCard6Props.price)
+                      {negotiationPrice > Number(productDetailsCard6Props.price)
                         ? '+'
                         : '-'}
                       {/* {new Intl.NumberFormat('en-US', {
