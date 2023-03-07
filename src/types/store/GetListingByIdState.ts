@@ -85,6 +85,7 @@ export type GetListingByIdData = {
   is_ike_jime: boolean;
   is_ice_slurry: boolean;
   template_delivery_date: string | null;
+  allowed_negotiations: boolean;
 };
 
 export type GetListingByIdPayload = GenericResponse<GetListingByIdData>;
