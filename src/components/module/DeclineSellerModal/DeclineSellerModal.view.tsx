@@ -42,10 +42,6 @@ const DeclineSellerModal = (props: DeclineSellerModalProps): JSX.Element => {
       <Typography style={{ color: '#565A6A' }}>
         Are you sure you want to decline this negotiation
       </Typography>
-      <Typography style={{ color: '#565A6A' }}>
-        The negotiation will close and you will no longer able to barter with
-        the buyer.
-      </Typography>
 
       <div style={{ marginTop: 20 }} />
 

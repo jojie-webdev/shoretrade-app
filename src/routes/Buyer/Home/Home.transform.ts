@@ -4,6 +4,7 @@ import { SellerCardProps } from 'components/module/SellerCard/SellerCard.props';
 import { PlaceData } from 'types/PlaceData';
 import { GetAddressesResponseItem } from 'types/store/GetAddressesState';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
+import { GetNegotiationCreditRequestResponseItem } from 'types/store/GetNegotiationCreditState';
 import { UpdateAddressMeta } from 'types/store/UpdateAddressState';
 import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
@@ -50,7 +51,7 @@ export function recentlyAddedToPreviewProps(
   isPendingAccount: boolean,
   canNegotiate?: boolean,
   handleShowNegoCreditsModal?: () => void,
-  negotiationCredit?: number,
+  negotiationCredit?: GetNegotiationCreditRequestResponseItem | undefined,
   handleShowNegoModal?: (listingId: string) => void
 ): PreviewProps {
   return {
@@ -80,7 +81,7 @@ export function recentlyAddedToPreviewProps(
     allowNegotiations: data.allowNegotiations,
     auctionDate: data.auctionDate,
     handleShowNegoCreditsModal,
-    negotiationCredit: negotiationCredit || 0,
+    negotiationCredit,
     handleShowNegoModal,
   };
 }
@@ -99,7 +100,7 @@ export function favouritesToPreviewProps(
   isPendingAccount: boolean,
   canNegotiate?: boolean,
   handleShowNegoCreditsModal?: () => void,
-  negotiationCredit?: number,
+  negotiationCredit?: GetNegotiationCreditRequestResponseItem | undefined,
   handleShowNegoModal?: (listingId: string) => void
 ): PreviewProps {
   return {
@@ -127,7 +128,7 @@ export function favouritesToPreviewProps(
     auctionDate: data.auctionDate,
     canNegotiate,
     handleShowNegoCreditsModal,
-    negotiationCredit: negotiationCredit || 0,
+    negotiationCredit,
     handleShowNegoModal,
   };
 }

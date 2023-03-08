@@ -279,7 +279,7 @@ const CategoriesPreview = (): JSX.Element => {
     // onChangeFilter,
     canNegotiate: isSubscribedToNegoRequest || false,
     handleShowNegoCreditsModal,
-    negotiationCredit: negotiationCredit?.credit || 0,
+    negotiationCredit,
     handleShowNegoModal,
   };
   return <CategoriesPreviewView {...generatedProps} />;

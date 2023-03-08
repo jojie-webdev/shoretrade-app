@@ -29,6 +29,7 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
     handleShowNegoCreditsModal,
     negotiationCredit,
     handleShowNegoModal,
+    canNegotiate,
   } = props;
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -95,6 +96,7 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
                           }
                           negotiationCredit={negotiationCredit}
                           handleShowNegoModal={handleShowNegoModal}
+                          canNegotiate={canNegotiate}
                         />
                       </StyledInteraction>
                     ) : (
@@ -129,6 +131,7 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
                         handleShowNegoCreditsModal={handleShowNegoCreditsModal}
                         negotiationCredit={negotiationCredit}
                         handleShowNegoModal={handleShowNegoModal}
+                        canNegotiate={canNegotiate}
                       />
                     )}
                   </Link>

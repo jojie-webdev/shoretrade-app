@@ -1,4 +1,5 @@
 import { SizingOption } from 'types/store/GetListingState';
+import { GetNegotiationCreditRequestResponseItem } from 'types/store/GetNegotiationCreditState';
 
 export interface ProductDetailsCard6Props {
   cBorderWidth?: string;
@@ -23,5 +24,5 @@ export interface ProductDetailsCard6Props {
   handleNegoModalShow: () => void;
   allowNegotiations: boolean;
   handleShowNegoCreditsModal: () => void;
-  negotiationCredit: number;
+  negotiationCredit: GetNegotiationCreditRequestResponseItem | undefined;
 }

@@ -1,7 +1,9 @@
 import React, { useState, ChangeEvent, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { getActivePlan } from 'routes/Buyer/Account/SubscriptionPlan/SubscriptionPlan.transform';
 import { getNegotiationCreditActions } from 'store/actions';
+import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
 import { Store } from 'types/store/Store';
 
 import FavouritesView from './Favourites.view';
@@ -53,6 +55,30 @@ const Favourites = (): JSX.Element => {
     setShowNegoModal((prevValue) => !prevValue);
   };
 
+  const companyPlan = useSelector(
+    (store: Store) => store.getCompanyPlan.data?.data
+  );
+
+  const currentReverseMarketDetails = getActivePlan(
+    companyPlan,
+    CompanyPlanName.REVERSE_MARKET
+  );
+
+  const currentPlanDetails = getActivePlan(companyPlan);
+  const subscriptionType = companyPlan?.activePlans
+    ? companyPlan?.activePlans.find((ac) =>
+        [CompanyPlanName.BASE, CompanyPlanName.PRO].includes(ac.plan.name)
+      )?.plan.name || null
+    : null;
+
+  const isSubscribedToNegoRequest =
+    currentReverseMarketDetails ||
+    currentPlanDetails?.plan?.name === CompanyPlanName.PRO
+      ? companyPlan && !companyPlan.flags?.hasCancelledReversedMarketplace
+      : subscriptionType !== null && false;
+
+  const canNegotiate = isSubscribedToNegoRequest || false;
+
   const negotiationCredit = useSelector(
     (store: Store) => store.getNegotiationCredit.data?.data
   );
@@ -69,8 +95,9 @@ const Favourites = (): JSX.Element => {
     searchValue,
     isLoadingResults,
     handleShowNegoCreditsModal,
-    negotiationCredit: negotiationCredit?.credit || 0,
+    negotiationCredit,
     handleShowNegoModal,
+    canNegotiate,
   };
 
   return <FavouritesView {...generatedProps} />;

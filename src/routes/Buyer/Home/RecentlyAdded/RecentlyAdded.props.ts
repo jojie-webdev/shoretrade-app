@@ -1,6 +1,7 @@
 import { ChangeEvent } from 'react';
 
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
+import { GetNegotiationCreditRequestResponseItem } from 'types/store/GetNegotiationCreditState';
 
 export interface RecentlyAddedGeneratedProps {
   results: GetBuyerHomepageResponseListingItem[];
@@ -14,6 +15,6 @@ export interface RecentlyAddedGeneratedProps {
   handleNegotiableToggle: (show: boolean) => void;
   showNegotiable: { showNegotiable: boolean };
   handleShowNegoCreditsModal: () => void;
-  negotiationCredit: number;
+  negotiationCredit: GetNegotiationCreditRequestResponseItem | undefined;
   handleShowNegoModal: (listingId: string) => void;
 }

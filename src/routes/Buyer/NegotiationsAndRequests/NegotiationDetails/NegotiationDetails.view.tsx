@@ -283,6 +283,25 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
       reworkDisplayStatus(negotiation?.display_status?.toLowerCase() || '')
     ) {
       // switch (reworkDisplayStatus('Finalised'.toLowerCase())) {
+      case 'closed':
+        return {
+          title: 'Counter-offer from Seller',
+          alertColor: 'success',
+          description: (
+            <Typography variant="caption" color="shade7" weight="400">
+              Review the negotiation and respond within{' '}
+              <span
+                style={{
+                  color: theme.brand.primary,
+                }}
+              >
+                X
+              </span>{' '}
+              hours to proceed.
+            </Typography>
+          ),
+        };
+
       case 'counter offer':
         return {
           title: 'Counter-offer from Seller',
@@ -490,7 +509,8 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
             negotiation?.status !== 'PARTIAL' &&
             negotiation?.status !== 'DECLINED' &&
             negotiation?.status !== 'LOST' &&
-            negotiation?.status !== 'END' && (
+            negotiation?.status !== 'END' &&
+            negotiation?.status !== 'CLOSED' && (
               <CTAContainer>
                 <div style={{ display: 'flex' }}>
                   <Button
@@ -638,7 +658,8 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
             <CheckFilled width={30} height={30} fill={theme.brand.success} />
           </div>
         }
-        hideCancel={true}
+        hideCancel
+        hideAction
         disableActionText={isAcceptNegotiationPending}
         description={
           <Typography color="shade6" variant="label">
@@ -649,7 +670,9 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
       <ConfirmationModal
         isOpen={showDeclinedNegoModal}
         onClickClose={handleDeclinedNegoModalToggle}
-        action={() => console.log('')}
+        action={() => {
+          console.log('');
+        }}
         title={
           <div
             style={{
@@ -669,7 +692,8 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
             <CheckFilled width={30} height={30} fill={theme.brand.success} />
           </div>
         }
-        hideCancel={true}
+        hideCancel
+        hideAction
         disableActionText={isAcceptNegotiationPending}
         description={
           <Typography color="shade6" variant="label">

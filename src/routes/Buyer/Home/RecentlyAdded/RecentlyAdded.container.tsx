@@ -119,7 +119,7 @@ const RecentlyAdded = (): JSX.Element => {
     handleNegotiableToggle,
     showNegotiable,
     handleShowNegoCreditsModal,
-    negotiationCredit: negotiationCredit?.credit || 0,
+    negotiationCredit,
     handleShowNegoModal,
   };
 

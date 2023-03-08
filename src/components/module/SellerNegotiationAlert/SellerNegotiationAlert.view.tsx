@@ -45,7 +45,7 @@ const SellerNegotiationAlert = (
   } else if (status === 'awaiting buyer') {
     Icon = QuestionFilled;
     IconFill = theme.brand.alert;
-  } else if (status === 'new negotiation') {
+  } else if (status === 'new negotiation' || status === 'closed') {
     Icon = ExclamationFilled;
     IconFill = theme.brand.alert;
   } else if (status === 'finalised') {

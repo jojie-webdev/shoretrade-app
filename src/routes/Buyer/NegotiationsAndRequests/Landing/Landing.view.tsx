@@ -245,7 +245,10 @@ const MarketRequestsLandingView = (
                 <Col xs="content">
                   <Visible sm md lg xl xxl>
                     <Typography color="shade6">
-                      Negotiation Credits: {negotiationCredit?.credit}
+                      Negotiation Credits:{' '}
+                      {negotiationCredit?.is_unlimited
+                        ? 'unlimited'
+                        : negotiationCredit?.credit}
                     </Typography>
                   </Visible>
                 </Col>

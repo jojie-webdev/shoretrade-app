@@ -1,6 +1,7 @@
 import { ChangeEvent } from 'react';
 
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
+import { GetNegotiationCreditRequestResponseItem } from 'types/store/GetNegotiationCreditState';
 
 export interface FavouritesGeneratedProps {
   results: GetBuyerHomepageResponseListingItem[];
@@ -11,6 +12,7 @@ export interface FavouritesGeneratedProps {
   onResetSearchValue: () => void;
   searchValue: string;
   handleShowNegoCreditsModal: () => void;
-  negotiationCredit: number;
+  negotiationCredit: GetNegotiationCreditRequestResponseItem | undefined;
   handleShowNegoModal: (listingId: string) => void;
+  canNegotiate: boolean;
 }

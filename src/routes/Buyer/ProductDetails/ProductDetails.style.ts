@@ -6,6 +6,21 @@ import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
+  p {
+    .success_nego_modal__rediction {
+      color: ${({ theme }) => theme.brand.primary};
+      font-weight: bold;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+
+  #confirmation_modal__container {
+    .modal_container {
+      width: 686px !important;
+    }
+  }
+
   .confirmation_modal__ok_btn {
     margin-left: 0px !important;
     padding: 14px 24px !important;

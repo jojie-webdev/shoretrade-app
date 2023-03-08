@@ -374,7 +374,7 @@ const Home = (): JSX.Element => {
     },
     allowNegotiations: clickedRecentListing?.allowNegotiations || false,
     handleShowNegoCreditsModal,
-    negotiationCredit: negotiationCredit?.credit || 0,
+    negotiationCredit,
   };
 
   const generatedProps: HomeGeneratedProps = {

@@ -26,7 +26,7 @@ import ProductDetailsCard6View from 'components/module/ProductDetailsCard6';
 import ProductDetailsNegotiationModal from 'components/module/ProductDetailsNegotiationModal';
 import ProductSellerCard from 'components/module/ProductSellerCard';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { BUYER_ACCOUNT_ROUTES } from 'consts/routes';
+import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts/routes';
 import moment from 'moment';
 import { isEmpty } from 'ramda';
 import { Col } from 'react-grid-system';
@@ -95,6 +95,8 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     negotiationCredit,
     handleShowNegoCreditsModal,
     showNegoCreditsModal,
+    showNegoSuccessModal,
+    handleNegoSuccessModalClose,
   } = props;
   const { isPreAuction, dateEnds } = productDetailsCard6Props;
 
@@ -127,7 +129,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
   const negotiationCreditsProps: NegotiationCreditsModalProps = {
     showNegoCreditsModal,
     handleShowNegoCreditsModal,
-    negotiationCredit: negotiationCredit?.credit || 0,
+    negotiationCredit,
   };
 
   useEffect(() => {
@@ -186,6 +188,52 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
 
   return (
     <Container>
+      <div id="confirmation_modal__container">
+        <ConfirmationModal
+          isOpen={showNegoSuccessModal}
+          onClickClose={handleNegoSuccessModalClose}
+          action={() => {
+            console.log('action');
+          }}
+          title={
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <Typography
+                variant="title4"
+                color="shade8"
+                weight="900"
+                style={{ fontFamily: 'Canela' }}
+              >
+                Negotiation Successfully Sent
+              </Typography>
+              <div style={{ marginLeft: 10 }} />
+              <CheckFilled width={30} height={30} fill={theme.brand.success} />
+            </div>
+          }
+          hideCancel={true}
+          hideAction={true}
+          disableActionText={false}
+          description={
+            <Typography color="shade6" variant="label">
+              You will be notified when the Seller responds. View your current
+              negotiations with the{' '}
+              <span
+                className="success_nego_modal__rediction"
+                onClick={() =>
+                  history.push(`${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}`)
+                }
+              >
+                Negotiations &amp; Requests
+              </span>{' '}
+              tab
+            </Typography>
+          }
+        />
+      </div>
       <NegotiationCreditsModal {...negotiationCreditsProps} />
       <ConfirmationModal
         isOpen={showConfirmNegoModal}
@@ -212,7 +260,9 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
             </Typography>
             <div style={{ marginTop: 10 }} />
             <Typography variant="label" color="shade6">
-              Your current negotiation balance is {negotiationCredit?.credit}{' '}
+              Your current negotiation balance is{' '}
+              {(negotiationCredit?.is_unlimited && 'an unlimited') ||
+                negotiationCredit?.credit}{' '}
               Credit.
             </Typography>
           </div>
@@ -548,7 +598,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                 isPreAuction={productDetailsCard6Props?.isPreAuction}
                 canNegotiate={canNegotiate}
                 allowNegotiations={productDetailsCard6Props.allowNegotiations}
-                negotiationCredit={negotiationCreditsProps.negotiationCredit}
+                negotiationCredit={negotiationCredit}
               />
               {!isPendingAccount && isMobile ? (
                 <ProductSellerCard

@@ -1,4 +1,6 @@
-import { CSSProperties, HTMLAttributes } from 'react';
+import { CSSProperties } from 'react';
+
+import { GetNegotiationCreditRequestResponseItem } from 'types/store/GetNegotiationCreditState';
 
 export interface PreviewProps {
   caught?: string;
@@ -40,6 +42,6 @@ export interface PreviewProps {
   allowNegotiations: boolean;
   auctionDate: string;
   handleShowNegoCreditsModal: (() => void) | undefined;
-  negotiationCredit: number;
+  negotiationCredit: GetNegotiationCreditRequestResponseItem | undefined;
   handleShowNegoModal: ((listingId: string) => void) | undefined;
 }

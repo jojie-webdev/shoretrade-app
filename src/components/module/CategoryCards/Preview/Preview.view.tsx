@@ -258,6 +258,8 @@ const Preview = (props: PreviewProps): JSX.Element => {
   const theme = useTheme();
 
   const allowedNegotiationByBuyer = allowNegotiations;
+  const hasCredits =
+    negotiationCredit?.is_unlimited || (negotiationCredit?.credit || 0) > 0;
 
   const NegotiatePriceElem = (props: {
     backgroundColor: string;
@@ -626,7 +628,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
                   props.auctionDate ? (
                     isPreAuctionExpired(
                       props.auctionDate
-                    ) ? null : negotiationCredit > 0 ? (
+                    ) ? null : hasCredits ? (
                       <div
                         style={{
                           display: 'flex',
@@ -664,7 +666,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
                         />
                       </div>
                     )
-                  ) : negotiationCredit ? (
+                  ) : hasCredits ? (
                     <div
                       style={{
                         display: 'flex',

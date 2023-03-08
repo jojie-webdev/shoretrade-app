@@ -15,6 +15,12 @@ export interface NegotiationProps {
   handleDeclineModalConfirmBtnClick: () => void;
   isAcceptNegotiationPending: boolean;
   isDeclineNegotiationPending: boolean;
+  showDeclinedNegoModal: boolean;
+  handleDeclinedNegoModalClose: () => void;
+  showSuccessfulNegoModal: boolean;
+  handleSuccessfulNegoModalClose: () => void;
+  showNegotiationAcceptedModal: boolean;
+  handleNegotiationAcceptedModalClose: () => void;
 }
 
 export interface AlertProps {

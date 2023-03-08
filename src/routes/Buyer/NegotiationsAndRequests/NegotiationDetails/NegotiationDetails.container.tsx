@@ -256,6 +256,7 @@ const NegotiationDetails = (): JSX.Element => {
 
   const handleDeclinedNegoModalToggle = () => {
     setShowDeclinedNegoModal(false);
+    history.push(`${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}`);
   };
 
   // const onAddToCart = () => {

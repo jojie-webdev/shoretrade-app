@@ -3,6 +3,7 @@ import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { FilterModalProps } from 'components/module/FilterModal/FilterModal.props';
 import { FilterDataResponse } from 'types/store/GetBuyerSearchFilterDataState';
 import { GetListingsByTypeResponseListingItem } from 'types/store/GetListingsByTypeState';
+import { GetNegotiationCreditRequestResponseItem } from 'types/store/GetNegotiationCreditState';
 
 export interface CategoriesPreviewGeneratedProps {
   results: GetListingsByTypeResponseListingItem[];
@@ -26,7 +27,7 @@ export interface CategoriesPreviewGeneratedProps {
   // }) => void;
   canNegotiate: boolean;
   handleShowNegoCreditsModal: () => void;
-  negotiationCredit: number;
+  negotiationCredit: GetNegotiationCreditRequestResponseItem | undefined;
   handleShowNegoModal: (listingId: string) => void;
 }
 

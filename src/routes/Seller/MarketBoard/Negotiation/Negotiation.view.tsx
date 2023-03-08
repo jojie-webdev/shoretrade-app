@@ -2,10 +2,11 @@ import React from 'react';
 
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
-import { Check, Close } from 'components/base/SVG';
+import { Check, CheckFilled, Close } from 'components/base/SVG';
 import Refresh from 'components/base/SVG/Refresh';
 import Typography from 'components/base/Typography';
 import AcceptSellerModal from 'components/module/AcceptSellerModal';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 import DeclineSellerModal from 'components/module/DeclineSellerModal';
 import NegotiateSellerModal from 'components/module/NegotiateSellerModal';
 import NegotiationSellerModal from 'components/module/NegotiationSellerModal';
@@ -45,6 +46,12 @@ const NegotiationView = (props: NegotiationProps) => {
     handleDeclineModalConfirmBtnClick,
     isAcceptNegotiationPending,
     isDeclineNegotiationPending,
+    showDeclinedNegoModal,
+    handleDeclinedNegoModalClose,
+    showSuccessfulNegoModal,
+    handleSuccessfulNegoModalClose,
+    showNegotiationAcceptedModal,
+    handleNegotiationAcceptedModalClose,
   } = props;
 
   const history = useHistory();
@@ -143,6 +150,18 @@ const NegotiationView = (props: NegotiationProps) => {
                 here
               </span>
               .
+            </Typography>
+          ),
+        };
+
+      case 'closed':
+        return {
+          title: 'New Negotiation',
+          alertColor: 'alert',
+          description: (
+            <Typography variant="body" color="shade6" weight="400">
+              A buyer has sent you a negotiation for{' '}
+              <NewNegoTypeWrapper>{negotiation?.name}</NewNegoTypeWrapper>
             </Typography>
           ),
         };
@@ -272,12 +291,132 @@ const NegotiationView = (props: NegotiationProps) => {
         onSubmit={handleNegotiationConfirmClick}
       />
 
-      <DeclineSellerModal
-        show={showDeclineModal}
-        onCancelBtnClick={handleDeclineModalCancelBtnClick}
-        onConfirmBtnClick={handleDeclineModalConfirmBtnClick}
-        disableConfirmBtn={isDeclineNegotiationPending}
-      />
+      <div id="decline_seller_modal__container">
+        <DeclineSellerModal
+          show={showDeclineModal}
+          onCancelBtnClick={handleDeclineModalCancelBtnClick}
+          onConfirmBtnClick={handleDeclineModalConfirmBtnClick}
+          disableConfirmBtn={isDeclineNegotiationPending}
+        />
+      </div>
+
+      <div id="negotiation_accepted_modal__container">
+        <ConfirmationModal
+          isOpen={showNegotiationAcceptedModal}
+          onClickClose={handleNegotiationAcceptedModalClose}
+          title={
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <Typography
+                variant="title4"
+                color="noshade"
+                weight="900"
+                style={{ fontFamily: 'Canela' }}
+              >
+                Negotiation Accepted
+              </Typography>
+              <div style={{ marginLeft: 20 }} />
+              <CheckFilled width={30} height={30} fill={theme.brand.success} />
+            </div>
+          }
+          action={() => {
+            console.log('');
+          }}
+          actionText={
+            <Typography
+              color="noshade"
+              weight="700"
+              style={{ fontFamily: 'Basis Grotesque Pro' }}
+            >
+              Pay Now
+            </Typography>
+          }
+          hideCancel
+          hideAction
+          disableActionText={isAcceptNegotiationPending}
+          description={
+            <Typography color="shade6" variant="label">
+              Secure the stock & pay now to complete your order.
+            </Typography>
+          }
+        />
+      </div>
+
+      <div id="negotiation_success_modal__container">
+        <ConfirmationModal
+          isOpen={showSuccessfulNegoModal}
+          onClickClose={handleSuccessfulNegoModalClose}
+          action={() => console.log('')}
+          title={
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <Typography
+                variant="title4"
+                color="noshade"
+                weight="900"
+                style={{ fontFamily: 'Canela' }}
+              >
+                Negotiation Successfully Sent
+              </Typography>
+              <div style={{ marginLeft: 20 }} />
+              <CheckFilled width={30} height={30} fill={theme.brand.success} />
+            </div>
+          }
+          hideCancel
+          hideAction
+          disableActionText={isAcceptNegotiationPending}
+          description={
+            <Typography color="shade6" variant="label">
+              You will be notified when the Buyer responds.
+            </Typography>
+          }
+        />
+      </div>
+
+      <div id="negotiation_declined_modal__container">
+        <ConfirmationModal
+          isOpen={showDeclinedNegoModal}
+          onClickClose={handleDeclinedNegoModalClose}
+          action={() => {
+            console.log('');
+          }}
+          title={
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <Typography
+                variant="title4"
+                color="noshade"
+                weight="900"
+                style={{ fontFamily: 'Canela' }}
+              >
+                Negotiation Declined
+              </Typography>
+              <div style={{ marginLeft: 20 }} />
+              <CheckFilled width={30} height={30} fill={theme.brand.success} />
+            </div>
+          }
+          hideCancel
+          hideAction
+          disableActionText={isAcceptNegotiationPending}
+          description={
+            <Typography color="shade6" variant="label">
+              The negotiation will be removed from your Negotiation tab shortly.
+            </Typography>
+          }
+        />
+      </div>
 
       <Breadcrumbs
         sections={[
@@ -469,7 +608,8 @@ const NegotiationView = (props: NegotiationProps) => {
         {negotiation?.status !== 'ACCEPTED' &&
           negotiation?.status !== 'PARTIAL' &&
           negotiation?.status !== 'DECLINED' &&
-          negotiation?.status !== 'END' && (
+          negotiation?.status !== 'END' &&
+          negotiation?.status !== 'CLOSED' && (
             <CTAContainer>
               <div style={{ display: 'flex' }}>
                 <Button

@@ -90,7 +90,10 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
   };
 
   const negotiatePriceBtn = () => {
-    if (negotiationCredit <= 0) {
+    if (
+      !negotiationCredit?.is_unlimited &&
+      (negotiationCredit?.credit || 0) <= 0
+    ) {
       return (
         <div onClick={handleShowNegoCreditsModal}>
           <NegotiatePriceElem

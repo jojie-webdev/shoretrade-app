@@ -168,7 +168,7 @@ const HomeView = (props: HomeGeneratedProps) => {
   const negotiationCreditsProps: NegotiationCreditsModalProps = {
     showNegoCreditsModal,
     handleShowNegoCreditsModal,
-    negotiationCredit: negotiationCredit?.credit || 0,
+    negotiationCredit,
   };
 
   // const cutOffDate = moment(productDetailsCard6Props?.dateEnds)
@@ -338,7 +338,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                       isPendingAccount,
                       canNegotiate,
                       handleShowNegoCreditsModal,
-                      negotiationCredit?.credit?.toString() || '0',
+                      negotiationCredit,
                       handleShowNegoModal,
                     ])}
                     Component={PreviewCard}
@@ -391,7 +391,7 @@ const HomeView = (props: HomeGeneratedProps) => {
                     isPendingAccount,
                     canNegotiate,
                     handleShowNegoCreditsModal,
-                    negotiationCredit?.credit || 0,
+                    negotiationCredit,
                     handleShowNegoModal,
                   ])}
                   Component={PreviewCard}

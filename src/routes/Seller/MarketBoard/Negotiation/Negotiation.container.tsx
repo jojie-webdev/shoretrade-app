@@ -17,6 +17,10 @@ const Negotiation = (): JSX.Element => {
   const [showAcceptModal, setShowAcceptModal] = useState(false);
   const [showNegotiationModal, setShowNegotiationModal] = useState(false);
   const [showDeclineModal, setShowDeclineModal] = useState(false);
+  const [showDeclinedNegoModal, setShowDeclinedNegoModal] = useState(false);
+  const [showSuccessfulNegoModal, setShowSuccessfulNegoModal] = useState(false);
+  const [showNegotiationAcceptedModal, setShowNegotiationAcceptedModal] =
+    useState(false);
 
   const history = useHistory();
   const location = useLocation();
@@ -35,15 +39,29 @@ const Negotiation = (): JSX.Element => {
     (store: Store) => store.getNegotiationById.data?.data
   );
 
-  const isCreateSellerCounterOfferPending =
-    useSelector((store: Store) => store.createSellerCounterOffer.pending) ===
-    true;
+  const isCreateSellerCounterOfferPending = useSelector(
+    (store: Store) => store.createSellerCounterOffer.pending
+  );
 
-  const isAcceptNegotiationPending =
-    useSelector((store: Store) => store.acceptNegotiation.pending) === true;
+  const isAcceptNegotiationPending = useSelector(
+    (store: Store) => store.acceptNegotiation.pending
+  );
 
-  const isDeclineNegotiationPending =
-    useSelector((store: Store) => store.declineNegotiation.pending) === true;
+  const isDeclineNegotiationPending = useSelector(
+    (store: Store) => store.declineNegotiation.pending
+  );
+
+  const handleDeclinedNegoModalClose = () => {
+    setShowDeclinedNegoModal(false);
+  };
+
+  const handleSuccessfulNegoModalClose = () => {
+    setShowSuccessfulNegoModal(false);
+  };
+
+  const handleNegotiationAcceptedModalClose = () => {
+    setShowNegotiationAcceptedModal(false);
+  };
 
   const handleAcceptModalAcceptBtnClick = () => {
     if (negotiation) {
@@ -104,23 +122,31 @@ const Negotiation = (): JSX.Element => {
   useEffect(() => {
     if (isCreateSellerCounterOfferPending === false) {
       setShowNegotiationModal(false);
+      setShowSuccessfulNegoModal(true);
       dispatch(getNegotiationByIdActions.request({ negotiationRequestId }));
     }
   }, [isCreateSellerCounterOfferPending]);
 
   useEffect(() => {
-    if (!isAcceptNegotiationPending) {
+    if (isAcceptNegotiationPending === false) {
       setShowAcceptModal(false);
+      setShowNegotiationAcceptedModal(true);
       dispatch(getNegotiationByIdActions.request({ negotiationRequestId }));
     }
   }, [isAcceptNegotiationPending]);
 
   useEffect(() => {
-    if (!isDeclineNegotiationPending) {
+    if (isDeclineNegotiationPending === false) {
       setShowDeclineModal(false);
+      setShowDeclinedNegoModal(true);
       dispatch(getNegotiationByIdActions.request({ negotiationRequestId }));
     }
   }, [isDeclineNegotiationPending]);
+
+  useEffect(() => {
+    setShowDeclinedNegoModal(false);
+    setShowSuccessfulNegoModal(false);
+  }, []);
 
   if (!negotiationRequestId) {
     history.replace(SELLER_MARKET_BOARD_ROUTES.LANDING);
@@ -139,8 +165,14 @@ const Negotiation = (): JSX.Element => {
     showDeclineModal,
     handleDeclineModalCancelBtnClick,
     handleDeclineModalConfirmBtnClick,
-    isAcceptNegotiationPending,
-    isDeclineNegotiationPending,
+    isAcceptNegotiationPending: isAcceptNegotiationPending === true,
+    isDeclineNegotiationPending: isDeclineNegotiationPending === true,
+    showDeclinedNegoModal,
+    handleDeclinedNegoModalClose,
+    showSuccessfulNegoModal,
+    handleSuccessfulNegoModalClose,
+    showNegotiationAcceptedModal,
+    handleNegotiationAcceptedModalClose,
   };
 
   return <NegotiationView {...generatedProps} />;

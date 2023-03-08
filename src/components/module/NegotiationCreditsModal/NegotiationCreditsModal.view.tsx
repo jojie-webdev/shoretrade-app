@@ -33,7 +33,9 @@ const NegotiationCreditsModal = (
             weight="900"
             style={{ fontFamily: 'Canela' }}
           >
-            {negotiationCredit} Negotiation Credits
+            {(negotiationCredit?.is_unlimited && 'Unlimited') ||
+              negotiationCredit?.credit}{' '}
+            Negotiation Credits
           </Typography>
         }
         action={() => history.push(BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN)}

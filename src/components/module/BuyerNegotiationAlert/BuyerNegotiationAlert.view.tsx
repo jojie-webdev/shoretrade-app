@@ -67,29 +67,12 @@ const BuyerNegotiationAlert = (
   } else if (reworkDisplayStatus(status).toLowerCase() === 'finalised') {
     Icon = CheckFilled;
     IconFill = theme.brand.success;
-  } else if (reworkDisplayStatus(status).toLowerCase() === 'counter offer') {
+  } else if (
+    reworkDisplayStatus(status).toLowerCase() === 'counter offer' ||
+    reworkDisplayStatus(status).toLowerCase() === 'closed'
+  ) {
     IconFill = theme.brand.success;
   }
-
-  // if (status === '') {
-  //   Icon = CheckFilled;
-  //   IconFill = theme.brand.success;
-  // } else if (status === 'declined') {
-  //   Icon = CloseFilled;
-  //   IconFill = theme.brand.error;
-  // } else if (status === 'awaiting payment') {
-  //   Icon = ExclamationFilled;
-  //   IconFill = theme.brand.primary;
-  // } else if (status === 'awaiting buyer') {
-  //   Icon = QuestionFilled;
-  //   IconFill = theme.brand.alert;
-  // } else if (status === 'new negotiation') {
-  //   Icon = ExclamationFilled;
-  //   IconFill = theme.brand.alert;
-  // } else if (status === 'finalised') {
-  //   Icon = CheckFilled;
-  //   IconFill = theme.brand.success;
-  // }
 
   return (
     <Container

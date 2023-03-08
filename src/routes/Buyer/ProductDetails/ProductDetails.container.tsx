@@ -39,6 +39,7 @@ import ProductDetailsView from './ProductDetails.view';
 const ProductDetails = (): JSX.Element => {
   const dispatch = useDispatch();
   const [showSuccessAddBtn, setShowSuccessAddBtn] = useState(false);
+  const [showNegoSuccessModal, setShowNegoSuccessModal] = useState(false);
 
   const history = useHistory();
   const { id } = useParams<any>();
@@ -119,7 +120,6 @@ const ProductDetails = (): JSX.Element => {
   const currentListing: GetListingResponseItem | undefined = (useSelector(
     (state: Store) => state.getListing.data?.data.listing
   ) || [])[0];
-  console.log('currentListing > ', currentListing);
 
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const [pressedBoxRadio, setPressedBoxRadio] = useState('');
@@ -285,8 +285,8 @@ const ProductDetails = (): JSX.Element => {
   };
 
   const handleShowConfirmNegoModal = () => {
-    setShowNegoModal((prevValue) => !prevValue);
-    setShowConfirmNegoModal((prevValue) => !prevValue);
+    setShowNegoModal(false);
+    setShowConfirmNegoModal(true);
   };
 
   const handleNegotiationPriceSetting = (price: number) => {
@@ -380,6 +380,10 @@ const ProductDetails = (): JSX.Element => {
     );
   };
 
+  const handleNegoSuccessModalClose = () => {
+    setShowNegoSuccessModal(false);
+  };
+
   // MARK:- Effects
   useEffect(() => {
     if (listingId) {
@@ -417,9 +421,10 @@ const ProductDetails = (): JSX.Element => {
   }, [weight, addCartItemData]);
 
   useEffect(() => {
-    if (!isSendingNegotiation) {
+    if (!isSendingNegotiation && negotiationPrice) {
       setShowNegoModal(false);
       setShowConfirmNegoModal(false);
+      setShowNegoSuccessModal(true);
       dispatch(getNegotiationCreditActions.request({}));
     }
   }, [isSendingNegotiation]);
@@ -434,10 +439,12 @@ const ProductDetails = (): JSX.Element => {
   }, [getListingBoxesResponse, negotiationWeight]);
 
   useEffect(() => {
-    if (negotiationCredit?.credit === 0) {
+    if (negotiationCredit?.is_unlimited) {
+      setShowNegoCreditsModal(false);
+    } else if (negotiationCredit?.credit === 0) {
       setShowNegoCreditsModal(true);
     }
-  }, [negotiationCredit?.credit]);
+  }, [negotiationCredit]);
 
   // On error, set favorite back to what it originally was
   // useEffect(() => {
@@ -523,7 +530,7 @@ const ProductDetails = (): JSX.Element => {
     handleNegoModalShow,
     allowNegotiations: currentListing?.allowNegotiations,
     handleShowNegoCreditsModal,
-    negotiationCredit: negotiationCredit?.credit || 0,
+    negotiationCredit,
   };
   const sellerRatingProps: ProductSellerRatingProps = {
     name: currentListing?.coop.name || '',
@@ -588,6 +595,8 @@ const ProductDetails = (): JSX.Element => {
     negotiationCredit,
     handleShowNegoCreditsModal,
     showNegoCreditsModal,
+    showNegoSuccessModal,
+    handleNegoSuccessModalClose,
   };
   return <ProductDetailsView {...generatedProps} />;
 };

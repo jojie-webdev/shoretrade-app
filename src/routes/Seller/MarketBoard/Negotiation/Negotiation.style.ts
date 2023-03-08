@@ -7,6 +7,36 @@ import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
 export const Container = styled.div`
+  #decline_seller_modal__container {
+    .modal_container {
+      width: 641px;
+    }
+  }
+
+  #negotiation_declined_modal__container {
+    .modal_backdrop_color {
+      .modal_container {
+        width: 641px;
+      }
+    }
+  }
+
+  #negotiation_success_modal__container {
+    .modal_backdrop_color {
+      .modal_container {
+        width: 641px;
+      }
+    }
+  }
+
+  #negotiation_accepted_modal__container {
+    .modal_backdrop_color {
+      .modal_container {
+        width: 641px;
+      }
+    }
+  }
+
   @media ${BREAKPOINTS['sm']} {
     padding-bottom: 140px;
   }

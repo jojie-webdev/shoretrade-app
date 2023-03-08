@@ -88,4 +88,6 @@ export interface ProductDetailsGeneratedProps {
   negotiationCredit: GetNegotiationCreditRequestResponseItem | undefined;
   handleShowNegoCreditsModal: () => void;
   showNegoCreditsModal: boolean;
+  showNegoSuccessModal: boolean;
+  handleNegoSuccessModalClose: () => void;
 }
