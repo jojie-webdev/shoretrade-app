@@ -78,6 +78,10 @@ import { AddAddressMeta, AddAddressPayload } from './AddAddressState';
 import { AddCardTokenMeta, AddCardTokenPayload } from './AddCardTokenState';
 import { AddCartItemMeta, AddCartItemPayload } from './AddCartItemState';
 import {
+  AddCartNegotiatedItemMeta,
+  AddCartNegotiatedItemPayload,
+} from './AddCartNegotiatedItemState';
+import {
   AddLinkedAccountMeta,
   AddLinkedAccountPayload,
 } from './AddLinkedAccountState';
@@ -384,6 +388,10 @@ import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
+  addCartNegotiatedItem: AsyncState<
+    AddCartNegotiatedItemMeta,
+    AddCartNegotiatedItemPayload
+  >;
   showNegotiable: ShowNegotiableState;
   declineNegotiation: AsyncState<
     DeclineNegotiationMeta,

@@ -579,7 +579,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
                     </Typography>
                   }
                   // icon={<Check width={10} height={9} />}
-                  // onClick={handleProceedToCheckoutClick}
+                  onClick={handleProceedToCheckoutClick}
                 />
               </div>
             </CTAContainer>

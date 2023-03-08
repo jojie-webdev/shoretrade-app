@@ -5,6 +5,7 @@ import { logoutActions } from 'store/actions';
 import getAccountCompletion from 'store/reducers/getAccountCompletion';
 
 /* PLOP_INJECT_IMPORT */
+import addCartNegotiatedItem from './addCartNegotiatedItem';
 import acceptNegotiation from './acceptNegotiation';
 import addAddress from './addAddress';
 import addCardAndPay from './addCardAndPay';
@@ -149,6 +150,7 @@ const createAppReducer = (routeHistory: History) =>
     Object.fromEntries(
       Object.entries({
         /* PLOP_INJECT_INSTANCE */
+        addCartNegotiatedItem,
         showNegotiable,
         declineNegotiation,
         acceptNegotiation,

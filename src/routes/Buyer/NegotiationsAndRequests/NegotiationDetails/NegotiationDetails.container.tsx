@@ -12,6 +12,7 @@ import { syncAASBalance } from 'services/aas';
 import {
   acceptNegotiationActions,
   addCartItemActions,
+  addCartNegotiatedItemActions,
   createBuyerCounterNegotiationActions,
   declineNegotiationActions,
   deleteMarketRequestActions,
@@ -302,7 +303,8 @@ const NegotiationDetails = (): JSX.Element => {
   const handleProceedToCheckoutClick = () => {
     if (negotiation?.listing_box) {
       dispatch(
-        addCartItemActions.request({
+        addCartNegotiatedItemActions.request({
+          negotiationId: negotiation.id,
           employeeId,
           boxes: [
             {

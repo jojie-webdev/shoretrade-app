@@ -374,8 +374,8 @@ export const transformNegotiationStatusText = (
   }
 
   if (
-    (statusText.includes('Offer') || statusText.includes('Offers')) &&
-    !statusText.includes('No')
+    (statusText?.includes('Offer') || statusText?.includes('Offers')) &&
+    !statusText?.includes('No')
   ) {
     return {
       text: statusText,
