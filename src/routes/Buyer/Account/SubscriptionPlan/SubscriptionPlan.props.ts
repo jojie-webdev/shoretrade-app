@@ -32,6 +32,7 @@ export interface SubscriptionPlanTransformOutputProps {
   currentReverseMarketDetails?: ActivePlan;
   proRataPrice: string;
   latePayment?: boolean;
+  daysUntilOverdue?: number;
   failedPayment?: boolean;
 }
 

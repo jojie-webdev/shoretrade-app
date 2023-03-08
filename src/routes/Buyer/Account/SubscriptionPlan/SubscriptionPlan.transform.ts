@@ -81,6 +81,12 @@ export const companyPlanToProps = (
   );
   const cardBrand = _.snakeCase(defaultPaymentMethod?.brand || '');
 
+  const daysUntilOverdue = moment(
+    currentPlanDetails?.subscription.starts_at || ''
+  )
+    .add(5, 'days')
+    .diff(moment.utc(), 'days');
+
   return {
     annualPrice: annualPlan?.price || '0',
     monthlyPrice: monthlyPlan?.price || '0',
@@ -121,8 +127,9 @@ export const companyPlanToProps = (
       : '$0',
     latePayment:
       currentPlanDetails?.subscription.paid_at === null &&
-      moment(moment()).diff(currentPlanDetails?.subscription.starts_at, 'd') >
+      moment(moment()).diff(currentPlanDetails?.subscription.starts_at, 'd') >=
         2,
+    daysUntilOverdue,
     failedPayment: currentPlanDetails?.subscription.paid_at === null,
   };
 };

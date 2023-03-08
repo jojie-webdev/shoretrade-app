@@ -98,6 +98,7 @@ export const SubscriptionPlanView = ({
   flags,
   proRataPrice,
   latePayment,
+  daysUntilOverdue,
   failedPayment,
   cancellationReversePeriodReverseMarket,
   hasUpdateSubsPlanError,
@@ -297,8 +298,13 @@ export const SubscriptionPlanView = ({
                   <AlertContentContainer>
                     <Typography variant="caption" color="shade7">
                       Your subscription payment is outstanding. Please make a
-                      one-off payment here within 3 days to keep your account
-                      active.
+                      one-off payment here{' '}
+                      {daysUntilOverdue || 0 > 0
+                        ? `within ${daysUntilOverdue} day${
+                            daysUntilOverdue || 0 > 1 ? 's' : ''
+                          }`
+                        : 'now'}{' '}
+                      days to keep your account active.
                     </Typography>
                     <div className="actions">
                       <Button
