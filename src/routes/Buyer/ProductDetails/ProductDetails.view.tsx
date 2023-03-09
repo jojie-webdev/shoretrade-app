@@ -97,6 +97,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     showNegoCreditsModal,
     showNegoSuccessModal,
     handleNegoSuccessModalClose,
+    handleConfirmNegoModalClose,
   } = props;
   const { isPreAuction, dateEnds } = productDetailsCard6Props;
 
@@ -237,7 +238,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
       <NegotiationCreditsModal {...negotiationCreditsProps} />
       <ConfirmationModal
         isOpen={showConfirmNegoModal}
-        onClickClose={handleShowConfirmNegoModal}
+        onClickClose={handleConfirmNegoModalClose}
         title={
           <Typography
             variant="title4"
@@ -250,21 +251,29 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
         }
         action={handleConfirmNegoClick}
         disableActionText={isSendingNegotiation}
-        cancel={handleShowConfirmNegoModal}
+        cancel={handleConfirmNegoModalClose}
         actionText="Send Negotiation"
         cancelText="Cancel"
         description={
           <div style={{ marginTop: 20 }}>
-            <Typography variant="label" color="shade6">
-              Sending this negotiation will cost 1 Negotiation Credit.
-            </Typography>
-            <div style={{ marginTop: 10 }} />
-            <Typography variant="label" color="shade6">
-              Your current negotiation balance is{' '}
-              {(negotiationCredit?.is_unlimited && 'an unlimited') ||
-                negotiationCredit?.credit}{' '}
-              Credit.
-            </Typography>
+            {negotiationCredit?.is_unlimited ? (
+              <Typography variant="label" color="shade6">
+                Are you sure you want to send this negotiation?
+              </Typography>
+            ) : (
+              <>
+                <Typography variant="label" color="shade6">
+                  Sending this negotiation will cost 1 Negotiation Credit.
+                </Typography>
+                <div style={{ marginTop: 10 }} />
+                <Typography variant="label" color="shade6">
+                  Your current negotiation balance is{' '}
+                  {(negotiationCredit?.is_unlimited && 'an unlimited') ||
+                    negotiationCredit?.credit}{' '}
+                  Credit.
+                </Typography>
+              </>
+            )}
           </div>
         }
       />

@@ -90,4 +90,5 @@ export interface ProductDetailsGeneratedProps {
   showNegoCreditsModal: boolean;
   showNegoSuccessModal: boolean;
   handleNegoSuccessModalClose: () => void;
+  handleConfirmNegoModalClose: () => void;
 }

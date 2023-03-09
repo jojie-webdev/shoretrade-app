@@ -247,7 +247,7 @@ const MarketRequestsLandingView = (
                     <Typography color="shade6">
                       Negotiation Credits:{' '}
                       {negotiationCredit?.is_unlimited
-                        ? 'unlimited'
+                        ? 'Unlimited'
                         : negotiationCredit?.credit}
                     </Typography>
                   </Visible>

@@ -284,6 +284,10 @@ const ProductDetails = (): JSX.Element => {
     setShowNegoModal((prevValue) => !prevValue);
   };
 
+  const handleConfirmNegoModalClose = () => {
+    setShowConfirmNegoModal(false);
+  };
+
   const handleShowConfirmNegoModal = () => {
     setShowNegoModal(false);
     setShowConfirmNegoModal(true);
@@ -599,6 +603,7 @@ const ProductDetails = (): JSX.Element => {
     showNegoCreditsModal,
     showNegoSuccessModal,
     handleNegoSuccessModalClose,
+    handleConfirmNegoModalClose,
   };
   return <ProductDetailsView {...generatedProps} />;
 };
