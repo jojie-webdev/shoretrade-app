@@ -271,7 +271,9 @@ const BuyerRoutes = (): JSX.Element => {
       if (companyPlan.activePlans.length < 1 && companyPlan.isApprovedCompany) {
         if (
           location.pathname !== BUYER_ACCOUNT_ROUTES.SUBSCRIPTION_PLAN &&
-          location.pathname !== BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD
+          location.pathname !== BUYER_ACCOUNT_ROUTES.PLAN_PAYMENT_METHOD &&
+          location.pathname !== BUYER_ACCOUNT_ROUTES.LANDING &&
+          location.pathname !== BUYER_ACCOUNT_ROUTES.CREDIT_CARD
         ) {
           setShowRenewModal(true);
         }
