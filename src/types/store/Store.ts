@@ -1,4 +1,8 @@
 /* PLOP_INJECT_IMPORT */
+import {
+  GetCartByEmployeeIdAndNegotiationIdMeta,
+  GetCartByEmployeeIdAndNegotiationIdPayload,
+} from './GetCartByEmployeeIdAndNegotiationIdState';
 
 import { RouterState } from 'connected-react-router';
 import { History } from 'history';
@@ -388,6 +392,7 @@ import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
+  getCartByEmployeeIdAndNegotiationId: AsyncState<GetCartByEmployeeIdAndNegotiationIdMeta, GetCartByEmployeeIdAndNegotiationIdPayload>;
   addCartNegotiatedItem: AsyncState<
     AddCartNegotiatedItemMeta,
     AddCartNegotiatedItemPayload

@@ -374,7 +374,9 @@ const ProductDetails = (): JSX.Element => {
       createNegotiation_2Actions.request({
         listingId: currentListing.id,
         listingBoxId: (selectedBoxesWeight || groupedBox[0].boxes)[0].id,
-        desiredQuantity: negotiationWeight,
+        desiredQuantity: (selectedBoxesWeight || groupedBox[0].boxes)
+          .reduce((prevVal, curVal) => prevVal + curVal.weight, 0)
+          .toString(),
         counterOffer: negotiationPrice,
       })
     );
