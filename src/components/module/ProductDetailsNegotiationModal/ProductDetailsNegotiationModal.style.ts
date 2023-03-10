@@ -11,6 +11,7 @@ export const GroupedBoxContainer = styled.div`
   display: flex;
   border: 1px solid ${({ theme }) => theme.grey.shade5};
   padding: 5px;
+  border-radius: 8px;
 `;
 
 export const RadioBtnContainer = styled.div`

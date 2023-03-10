@@ -51,12 +51,12 @@ export const Container = styled.div`
   }
 
   .radio > span {
-    height: 12px;
-    width: 12px;
+    height: 14px;
+    width: 14px;
 
-    .span {
-      height: 0px;
-      width: 0px;
+    .radio__inner_circle {
+      height: 4px;
+      width: 4px;
     }
   }
 

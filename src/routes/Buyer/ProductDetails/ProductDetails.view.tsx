@@ -172,7 +172,11 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
     isOpen: showNegoModal,
     onClickClose: props.productDetailsCard6Props.handleNegoModalShow,
     action: handleShowConfirmNegoModal,
-    disableActionText: isBeyondCutoff,
+    disableActionText:
+      isBeyondCutoff ||
+      !negotiationPrice ||
+      isNaN(negotiationPrice) ||
+      !negotiationWeight,
     negotiationPrice,
     handleNegotiationPriceSetting,
     unit,

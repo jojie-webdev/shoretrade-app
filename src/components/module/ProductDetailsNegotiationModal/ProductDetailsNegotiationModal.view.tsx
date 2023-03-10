@@ -108,6 +108,15 @@ const ProductDetailsNegotiationModal = (
               style={{ marginTop: 16 }}
             />
             <div style={{ marginTop: 15 }} />
+            {!isEmpty(groupedBox) && (
+              <Typography
+                variant="overline"
+                color="shade6"
+                style={{ marginBottom: 10 }}
+              >
+                BEST BOX WEIGHT MATCH
+              </Typography>
+            )}
             {!isEmpty(groupedBox)
               ? groupedBox.map((p, index) => (
                   <div key={p.id}>
@@ -128,7 +137,7 @@ const ProductDetailsNegotiationModal = (
                           <div key={box.id}>
                             <RadioBtnContainer>
                               <div style={{ display: 'flex' }}>
-                                <div style={{ marginRight: 27 }} />
+                                <div style={{ marginRight: 20 }} />
                                 <Typography variant="caption" color="shade6">
                                   {box.weight}
                                   {p.unit} x {box.quantity}
