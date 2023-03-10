@@ -40,24 +40,55 @@ export const getActivePlan = (
   }
 };
 
+const getNextBillingDate = (
+  nextBillingDate: string | null,
+  failedPayment: boolean,
+  latePayment: boolean
+) => {
+  const unsuccessfulPayment = failedPayment && !latePayment;
+
+  if (unsuccessfulPayment) {
+    return moment()
+      .tz('Australia/Brisbane')
+      .add(1, 'day')
+      .format('DD MMMM YYYY');
+  }
+
+  if (latePayment) {
+    return 'Awaiting Manual Payment';
+  }
+
+  return nextBillingDate;
+};
+
 export const companyPlanToProps = (
   plans: GetSubscriptionPlansResponseData[],
   companyPlan?: GetCompanyPlanResponseData
 ): SubscriptionPlanTransformOutputProps => {
   const annualPlan = plans.find((plan) => plan.alias.includes('YEARLY'));
   const monthlyPlan = plans.find((plan) => !plan.alias.includes('YEARLY'));
+  const currentPlanDetails = getActivePlan(companyPlan);
+
+  const failedPayment = currentPlanDetails?.subscription.paid_at === null;
+  const latePayment =
+    currentPlanDetails?.subscription.paid_at === null &&
+    moment(moment()).diff(currentPlanDetails?.subscription.starts_at, 'd') >= 2;
 
   const nextBillingDate = companyPlan?.nextBillingData?.date
     ? moment.utc(companyPlan.nextBillingData.date).format('DD MMMM YYYY')
     : null;
+
+  const finalNextBillingDate = getNextBillingDate(
+    nextBillingDate,
+    failedPayment,
+    latePayment
+  );
 
   const getPlanDetails = (
     alias: CompanyPlanAlias
   ): GetSubscriptionPlansResponseData | undefined => {
     return plans.find((p) => p.alias === alias);
   };
-
-  const currentPlanDetails = getActivePlan(companyPlan);
 
   const currentReverseMarketDetails = getActivePlan(
     companyPlan,
@@ -90,7 +121,7 @@ export const companyPlanToProps = (
   return {
     annualPrice: annualPlan?.price || '0',
     monthlyPrice: monthlyPlan?.price || '0',
-    nextBillingDate,
+    nextBillingDate: finalNextBillingDate,
     cancellationPeriod: companyPlan?.flags?.hasCancelledPlan
       ? getCancellationPeriod(currentPlanDetails?.subscription.ends_at)
       : '',
@@ -125,11 +156,8 @@ export const companyPlanToProps = (
     proRataPrice: companyPlan?.changePlan
       ? toPrice(proRata(companyPlan.changePlan))
       : '$0',
-    latePayment:
-      currentPlanDetails?.subscription.paid_at === null &&
-      moment(moment()).diff(currentPlanDetails?.subscription.starts_at, 'd') >=
-        2,
+    latePayment,
     daysUntilOverdue,
-    failedPayment: currentPlanDetails?.subscription.paid_at === null,
+    failedPayment,
   };
 };
