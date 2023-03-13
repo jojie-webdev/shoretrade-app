@@ -568,23 +568,25 @@ export const SubscriptionPlanView = ({
                     </Badge>
                   )}
                 </BadgesContainer>
-                <div className="section-footer">
-                  <Link
-                    to={{
-                      pathname: BUYER_ACCOUNT_ROUTES.PAYMENT_HISTORY,
-                      state: redirectState,
-                    }}
-                  >
-                    <Typography
-                      variant="label"
-                      color="primary"
-                      weight="400"
-                      style={{ textDecoration: 'underline' }}
+                {!isDDA ? (
+                  <div className="section-footer">
+                    <Link
+                      to={{
+                        pathname: BUYER_ACCOUNT_ROUTES.PAYMENT_HISTORY,
+                        state: redirectState,
+                      }}
                     >
-                      See Subscription History
-                    </Typography>
-                  </Link>
-                </div>
+                      <Typography
+                        variant="label"
+                        color="primary"
+                        weight="400"
+                        style={{ textDecoration: 'underline' }}
+                      >
+                        See Subscription History
+                      </Typography>
+                    </Link>
+                  </div>
+                ) : null}
               </BillingSection>
             </Col>
           )}
