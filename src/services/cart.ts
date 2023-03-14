@@ -2,6 +2,7 @@ import axios from 'axios';
 import { API } from 'consts';
 import { AddCartItemMeta } from 'types/store/AddCartItemState';
 import { AddCartNegotiatedItemMeta } from 'types/store/AddCartNegotiatedItemState';
+import { GetCartByEmployeeIdAndNegotiationIdMeta } from 'types/store/GetCartByEmployeeIdAndNegotiationIdState';
 import { GetCartMeta } from 'types/store/GetCartState';
 import { RemoveCartItemMeta } from 'types/store/RemoveCartItemState';
 
@@ -16,6 +17,19 @@ export const getCart = (data: GetCartMeta, token: string) => {
   return axios({
     method: 'get',
     url: `${CART_URL}/${data.employeeId}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const getCartByEmployeeIdAndNegoId = (
+  data: GetCartByEmployeeIdAndNegotiationIdMeta,
+  token: string
+) => {
+  return axios({
+    method: 'get',
+    url: `${CART_URL}/${data.employeeId}/negotiation/${data.negoRequestId}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

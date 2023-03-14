@@ -205,9 +205,9 @@ const Checkout = (): JSX.Element => {
     (store: Store) => store.getCompanyPlan.data?.data
   );
 
-  const activeBaseSubscription = (
-    companyPlan?.activePlans || []
-  ).find(({ plan }) => ['BASE', 'PRO'].includes(plan.name.toUpperCase()));
+  const activeBaseSubscription = (companyPlan?.activePlans || []).find(
+    ({ plan }) => ['BASE', 'PRO'].includes(plan.name.toUpperCase())
+  );
 
   let essentials = (companyPlan?.activePlans || []).find(
     ({ plan }) => plan?.alias === 'BASE'
@@ -236,123 +236,121 @@ const Checkout = (): JSX.Element => {
       overrideTransactionValueFeePercent || TRANSACTION_VALUE_FEE_PERCENTAGE;
   }
 
-  const orders = cartItems.map(
-    (cartItem): OrderItem => {
-      const additionalInfos = ADDITIONAL_INFOS.map((info) => {
-        if (cartItem.listing[info.key as keyof GetCartListingDataItem]) {
-          return info.display;
-        } else return '';
-      }).filter((info) => info !== '');
+  const orders = cartItems.map((cartItem): OrderItem => {
+    const additionalInfos = ADDITIONAL_INFOS.map((info) => {
+      if (cartItem.listing[info.key as keyof GetCartListingDataItem]) {
+        return info.display;
+      } else return '';
+    }).filter((info) => info !== '');
 
-      const isGSTIncluded = cartItem.listing.isGSTIncluded;
-      const subTotal = isGSTIncluded
-        ? parsePrice((Number(cartItem.listing.price) * cartItem.weight) / 1.1)
-        : parsePrice(Number(cartItem.listing.price) * cartItem.weight);
+    const isGSTIncluded = cartItem.listing.isGSTIncluded;
+    const subTotal = isGSTIncluded
+      ? parsePrice((Number(cartItem.listing.price) * cartItem.weight) / 1.1)
+      : parsePrice(Number(cartItem.listing.price) * cartItem.weight);
 
-      const transactionFee = subTotal
-        ? Number((subTotal * (transactionValueFeePercent / 100)).toFixed(2))
-        : 0;
+    const transactionFee = subTotal
+      ? Number((subTotal * (transactionValueFeePercent / 100)).toFixed(2))
+      : 0;
 
-      return {
-        cartItemId: cartItem.cartItemId || '',
-        title: 'Order Summary',
-        uri: cartItem.listing.image,
-        name: cartItem.listing.type,
-        // price: Number(
-        //   +cartItem.subTotal * (1 + transactionValueFeePercent / 100)
-        // ).toFixed(2),
-        price: (Number(cartItem.listing.price) * cartItem.weight).toFixed(2),
-        transactionFee: transactionFee,
-        tags: additionalInfos
-          .map((info) => ({
-            label: info,
+    return {
+      cartItemId: cartItem.cartItemId || '',
+      title: 'Order Summary',
+      uri: cartItem.listing.image,
+      name: cartItem.listing.type,
+      // price: Number(
+      //   +cartItem.subTotal * (1 + transactionValueFeePercent / 100)
+      // ).toFixed(2),
+      price: (Number(cartItem.listing.price) * cartItem.weight).toFixed(2),
+      transactionFee: transactionFee,
+      tags: additionalInfos
+        .map((info) => ({
+          label: info,
+          type: 'blue',
+        }))
+        .concat([
+          {
+            label: cartItem.listing.quality || '',
             type: 'blue',
-          }))
-          .concat([
-            {
-              label: cartItem.listing.quality || '',
-              type: 'blue',
-            },
-          ])
-          .concat(
-            cartItem.listing.specifications
-              .split(',')
-              .map((label) => ({ label, type: 'plain' }))
-          )
-          .filter((tag) => tag.label !== ''),
-        weight: cartItem.weight.toFixed(2),
-        unit: cartItem.listing.measurementUnit,
-        size: sizeToString(
-          cartItem.listing.metric,
-          cartItem.listing.sizeFrom,
-          cartItem.listing.sizeTo
-        ),
-        location: cartItem.listing.origin.state,
-        vendor: cartItem.companyName,
-        vendorId: cartItem.companyId,
-        crateFee: cartItem.crateFee,
-        isFreeShipping: cartItem.isFreeShipping,
-        isGSTIncluded: isGSTIncluded,
-        listing: {
-          isPreAuctionSale: cartItem.listing.isPreAuctionSale,
-        },
-        shippingOptions: shippingQuotes
-          ? (
-              shippingQuotes[getOrderListingKey(cartItem)] || {
-                priceResult: [],
-              }
-            ).priceResult.map((data) => {
-              const shipmentMode = shipmentModeToString(
-                data.shipmentMode,
-                data.serviceName
-              );
-              const serviceName = serviceNameToString(
-                data.serviceName,
-                data.locationName,
-                cartItem.companyName
-              );
-              const subAddress = subAddressToString(
-                cartItem.companyName,
+          },
+        ])
+        .concat(
+          cartItem.listing.specifications
+            .split(',')
+            .map((label) => ({ label, type: 'plain' }))
+        )
+        .filter((tag) => tag.label !== ''),
+      weight: cartItem.weight.toFixed(2),
+      unit: cartItem.listing.measurementUnit,
+      size: sizeToString(
+        cartItem.listing.metric,
+        cartItem.listing.sizeFrom,
+        cartItem.listing.sizeTo
+      ),
+      location: cartItem.listing.origin.state,
+      vendor: cartItem.companyName,
+      vendorId: cartItem.companyId,
+      crateFee: cartItem.crateFee,
+      isFreeShipping: cartItem.isFreeShipping,
+      isGSTIncluded: isGSTIncluded,
+      listing: {
+        isPreAuctionSale: cartItem.listing.isPreAuctionSale,
+      },
+      shippingOptions: shippingQuotes
+        ? (
+            shippingQuotes[getOrderListingKey(cartItem)] || {
+              priceResult: [],
+            }
+          ).priceResult.map((data) => {
+            const shipmentMode = shipmentModeToString(
+              data.shipmentMode,
+              data.serviceName
+            );
+            const serviceName = serviceNameToString(
+              data.serviceName,
+              data.locationName,
+              cartItem.companyName
+            );
+            const subAddress = subAddressToString(
+              cartItem.companyName,
+              data.serviceName === CLICK_AND_COLLECT_SERVICE
+                ? data.marketAddress
+                : data.sellerAddress
+            );
+            return {
+              id: data.id,
+              priceId: data.priceId,
+              shipmentMode: data.shipmentMode,
+              carrierName: data.carrierName,
+              name:
                 data.serviceName === CLICK_AND_COLLECT_SERVICE
+                  ? `${serviceName} ${data.locationName}`
+                  : `${shipmentMode} ${serviceName}`,
+              nameId:
+                data.serviceName === CLICK_AND_COLLECT_SERVICE
+                  ? `${serviceName} ${data.locationName} ${data.carrierName}`
+                  : `${shipmentMode} ${serviceName} ${data.carrierName}`,
+              ...(data.serviceName === CLICK_AND_COLLECT_SERVICE
+                ? { secondName: clickAndCollectAddress2 }
+                : {}),
+              price: toPrice(data.grossPrice, false),
+              est: estimatedDeliveryToString(
+                data.minTransitTime,
+                data.maxTransitTime,
+                data.estimatedDate
+              ),
+              imageUrl: data.imageUrl,
+              subAddress:
+                serviceName !== 'Delivery to Door' &&
+                shipmentMode !== 'Air Freight'
+                  ? subAddress || data.subAddress
+                  : shipmentMode === 'Air Freight'
                   ? data.marketAddress
-                  : data.sellerAddress
-              );
-              return {
-                id: data.id,
-                priceId: data.priceId,
-                shipmentMode: data.shipmentMode,
-                carrierName: data.carrierName,
-                name:
-                  data.serviceName === CLICK_AND_COLLECT_SERVICE
-                    ? `${serviceName} ${data.locationName}`
-                    : `${shipmentMode} ${serviceName}`,
-                nameId:
-                  data.serviceName === CLICK_AND_COLLECT_SERVICE
-                    ? `${serviceName} ${data.locationName} ${data.carrierName}`
-                    : `${shipmentMode} ${serviceName} ${data.carrierName}`,
-                ...(data.serviceName === CLICK_AND_COLLECT_SERVICE
-                  ? { secondName: clickAndCollectAddress2 }
-                  : {}),
-                price: toPrice(data.grossPrice, false),
-                est: estimatedDeliveryToString(
-                  data.minTransitTime,
-                  data.maxTransitTime,
-                  data.estimatedDate,
-                ),
-                imageUrl: data.imageUrl,
-                subAddress:
-                  serviceName !== 'Delivery to Door' &&
-                  shipmentMode !== 'Air Freight'
-                    ? subAddress || data.subAddress
-                    : shipmentMode === 'Air Freight'
-                    ? data.marketAddress
-                    : undefined,
-              };
-            })
-          : [],
-      };
-    }
-  );
+                  : undefined,
+            };
+          })
+        : [],
+    };
+  });
 
   const groupOrdersByVendor = groupBy((order: OrderItem) => {
     return getOrderListingKey(order);

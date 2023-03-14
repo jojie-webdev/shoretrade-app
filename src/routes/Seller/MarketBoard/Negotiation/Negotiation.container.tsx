@@ -8,6 +8,7 @@ import {
   createSellerCounterOfferActions,
   acceptNegotiationActions,
   declineNegotiationActions,
+  getListingByIdActions,
 } from 'store/actions';
 import { Store } from 'types/store/Store';
 
@@ -37,6 +38,10 @@ const Negotiation = (): JSX.Element => {
 
   const negotiation = useSelector(
     (store: Store) => store.getNegotiationById.data?.data
+  );
+
+  const listing = useSelector(
+    (store: Store) => store.getListingById.data?.data
   );
 
   const isCreateSellerCounterOfferPending = useSelector(
@@ -143,8 +148,19 @@ const Negotiation = (): JSX.Element => {
   }, [isDeclineNegotiationPending]);
 
   useEffect(() => {
+    if (negotiation?.listing_id) {
+      dispatch(
+        getListingByIdActions.request({
+          listingId: negotiation.listing_id,
+        })
+      );
+    }
+  }, [negotiation?.listing_id]);
+
+  useEffect(() => {
     setShowDeclinedNegoModal(false);
     setShowSuccessfulNegoModal(false);
+    setShowNegotiationAcceptedModal(false);
   }, []);
 
   if (!negotiationRequestId) {
@@ -172,6 +188,7 @@ const Negotiation = (): JSX.Element => {
     handleSuccessfulNegoModalClose,
     showNegotiationAcceptedModal,
     handleNegotiationAcceptedModalClose,
+    listing,
   };
 
   return <NegotiationView {...generatedProps} />;

@@ -52,6 +52,7 @@ const NegotiationView = (props: NegotiationProps) => {
     handleSuccessfulNegoModalClose,
     showNegotiationAcceptedModal,
     handleNegotiationAcceptedModalClose,
+    listing,
   } = props;
 
   const history = useHistory();
@@ -649,7 +650,6 @@ const NegotiationView = (props: NegotiationProps) => {
                     }
                     icon={<Check width={10} height={9} />}
                     onClick={handleAcceptBtnClick}
-                    // onClick={() => console.log('')}
                     disabled={negotiation?.display_status === 'Awaiting Buyer'}
                   />
                 )}

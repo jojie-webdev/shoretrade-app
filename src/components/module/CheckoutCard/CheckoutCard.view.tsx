@@ -20,17 +20,8 @@ import {
 
 const CheckoutCard = (props: CheckoutCardProps): JSX.Element => {
   const theme = useTheme();
-  const {
-    name,
-    uri,
-    vendor,
-    size,
-    unit,
-    weight,
-    price,
-    tags,
-    onRemove,
-  } = props;
+  const { name, uri, vendor, size, unit, weight, price, tags, onRemove } =
+    props;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const Layout = isMobile ? MobileContainer : Container;
 

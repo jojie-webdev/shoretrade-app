@@ -3,6 +3,14 @@ import { Row } from 'react-grid-system';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
+  @media ${BREAKPOINTS['sm']} {
+    padding-bottom: 150px;
+  }
+
+  .order-summary {
+    margin-bottom: 16px;
+  }
+
   .accordion-container {
     margin-bottom: 8px;
     padding-top: 0px;
@@ -35,77 +43,6 @@ export const EmptyContainer = styled.div`
     @media ${BREAKPOINTS['sm']} {
       display: none;
     }
-  }
-`;
-
-export const SVGContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  svg {
-    z-index: 2;
-
-    @media ${BREAKPOINTS['sm']} {
-      width: 240px;
-      height: 240px;
-    }
-
-    @media ${BREAKPOINTS['md']} {
-      width: 240px;
-      height: 240px;
-    }
-  }
-
-  :before {
-    position: absolute;
-    content: '';
-    width: 280px;
-    height: 280px;
-    border-radius: 50%;
-    z-index: 1;
-    background: ${(props) => props.theme.grey.shade3};
-
-    @media ${BREAKPOINTS['sm']} {
-      width: 250px;
-      height: 250px;
-    }
-
-    @media ${BREAKPOINTS['md']} {
-      width: 250px;
-      height: 250px;
-    }
-  }
-`;
-
-export const Footer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  z-index: 999;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  padding: 8px 0;
-  background-color: ${({ theme }) => theme.grey.shade2};
-
-  .btns-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 24px;
-    margin-top: 16px;
-
-    button {
-      width: 50%;
-    }
-  }
-
-  .balances {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 24px 8px 24px;
-    border-bottom: 1px solid ${({ theme }) => theme.grey.shade5};
   }
 `;
 
@@ -202,5 +139,117 @@ export const ShippingRow = styled(Row)`
     border-top: 1px;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+  }
+`;
+
+export const SVGContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    z-index: 2;
+
+    @media ${BREAKPOINTS['sm']} {
+      width: 240px;
+      height: 240px;
+    }
+
+    @media ${BREAKPOINTS['md']} {
+      width: 240px;
+      height: 240px;
+    }
+  }
+
+  :before {
+    position: absolute;
+    content: '';
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    z-index: 1;
+    background: ${(props) => props.theme.grey.shade3};
+
+    @media ${BREAKPOINTS['sm']} {
+      width: 250px;
+      height: 250px;
+    }
+
+    @media ${BREAKPOINTS['md']} {
+      width: 250px;
+      height: 250px;
+    }
+  }
+`;
+
+export const BottomRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  @media ${BREAKPOINTS['genericTablet']} {
+    flex-direction: column-reverse;
+    align-items: flex-end;
+  }
+
+  .btns-container {
+    display: flex;
+    margin-bottom: 10px;
+  }
+
+  .balances {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px;
+    background-color: #ffffff;
+    border: 1px solid ${({ theme }) => theme.grey.shade3};
+    border-radius: 8px;
+    min-width: 357px;
+    margin-bottom: 10px;
+
+    @media ${BREAKPOINTS['genericTablet']} {
+      min-width: 100%;
+      justify-content: flex-end;
+      margin-bottom: 32px;
+    }
+
+    .total-value {
+      @media ${BREAKPOINTS['genericTablet']} {
+        margin: 0 26px;
+      }
+    }
+  }
+`;
+
+export const Footer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  z-index: 999;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 8px 0;
+  background-color: ${({ theme }) => theme.grey.shade2};
+
+  .btns-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 24px;
+    margin-top: 16px;
+
+    button {
+      width: 50%;
+    }
+  }
+
+  .balances {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px 8px 24px;
+    border-bottom: 1px solid ${({ theme }) => theme.grey.shade5};
   }
 `;

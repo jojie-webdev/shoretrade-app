@@ -117,6 +117,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
     showSuccessfulNegoModal,
     handleDeclinedNegoModalToggle,
     showDeclinedNegoModal,
+    isCartPending,
   } = props;
 
   const history = useHistory();
@@ -558,13 +559,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
             )}
 
           {negotiation?.status === 'PARTIAL' && (
-            <CTAContainer
-              onClick={() =>
-                history.push(
-                  BUYER_ROUTES.NEGOTIATION_CHECKOUT(negotiation?.id || '')
-                )
-              }
-            >
+            <CTAContainer>
               <div style={{ width: 'fit-content' }}>
                 <StyledAcceptButton
                   text={
@@ -573,7 +568,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
                       weight="700"
                       color="noshade"
                       style={{ fontFamily: 'Basis Grotesque Pro' }}
-                      disabled={true}
+                      disabled={!(isCartPending === false)}
                     >
                       Proceed To Checkout
                     </Typography>

@@ -1,4 +1,5 @@
 import { Variants } from 'components/module/SellerNegotiationAlert/SellerNegotiationAlert.props';
+import { GetListingByIdData } from 'types/store/GetListingByIdState';
 import { GetNegotiationByIdRequestResponseItem } from 'types/store/GetNegotiationByIdState';
 
 export interface NegotiationProps {
@@ -21,6 +22,7 @@ export interface NegotiationProps {
   handleSuccessfulNegoModalClose: () => void;
   showNegotiationAcceptedModal: boolean;
   handleNegotiationAcceptedModalClose: () => void;
+  listing: GetListingByIdData | undefined;
 }
 
 export interface AlertProps {

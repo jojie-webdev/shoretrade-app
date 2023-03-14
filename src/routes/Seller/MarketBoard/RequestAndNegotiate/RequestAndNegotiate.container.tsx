@@ -76,75 +76,70 @@ const RequestAndNegotiate = (): JSX.Element => {
 
   const isReview = pathname.includes(SELLER_MARKET_BOARD_ROUTES.OFFER);
 
-  const previousWeightRequest = useSelector(
-    (state: Store) => state.getListingBoxes.request
-  );
+  // const previousWeightRequest = useSelector(
+  //   (state: Store) => state.getListingBoxes.request
+  // );
 
-  const getListingBoxesResponse =
-    useSelector((state: Store) => state.getListingBoxes.data?.data.boxes) || [];
-  console.log(
-    'getListingBoxesResponse >>>>>>>>>>>>>> ',
-    getListingBoxesResponse
-  );
-  console.log('previousWeightRequest >>>>>>>>>>>>>> ', previousWeightRequest);
+  // const getListingBoxesResponse =
+  //   useSelector((state: Store) => state.getListingBoxes.data?.data.boxes) || [];
 
-  const currentListing: GetListingResponseItem | undefined = (useSelector(
-    (state: Store) => state.getListing.data?.data.listing
-  ) || [])[0];
+  // const currentListing: GetListingResponseItem | undefined = (useSelector(
+  //   (state: Store) => state.getListing.data?.data.listing
+  // ) || [])[0];
 
-  const price = Number(currentListing?.price || '0');
+  // const price = Number(currentListing?.price || '0');
 
-  const { id } = useParams<any>();
-  const listingId = 'f04aeee8-e816-4afe-9bfe-ab2b34763391'; //'8897ec8f-276d-4657-8a2f-958d39788a7b';
+  // const { id } = useParams<any>();
+  // const listingId = 'f04aeee8-e816-4afe-9bfe-ab2b34763391'; //'8897ec8f-276d-4657-8a2f-958d39788a7b';
 
-  const shouldHideResult = true;
+  // const shouldHideResult = true;
 
-  const groupedBox =
-    previousWeightRequest?.listingId === listingId && !shouldHideResult
-      ? getListingBoxesResponse.map((boxGroup) => {
-          return boxGroup.reduce(
-            (
-              accum: {
-                id: string;
-                totalWeight: number;
-                quantity: number;
-                cost: number;
-                boxes: {
-                  count: number | null;
-                  id: string;
-                  quantity: number | null;
-                  weight: number;
-                }[];
-                unit: string;
-              },
-              current
-            ) => {
-              const totalWeight =
-                accum.totalWeight + current.weight * (current?.quantity || 0);
-              return {
-                id: `${accum.id}${accum.id ? '' : ','}${current.id}`,
-                totalWeight,
-                cost: price * totalWeight,
-                quantity: 1,
-                boxes: [...accum.boxes, current],
-                unit: 'kg',
-              };
-            },
-            {
-              id: '',
-              totalWeight: 0,
-              cost: 0,
-              quantity: 1,
-              boxes: [],
-              unit: 'kg',
-            }
-          );
-        })
-      : [];
+  // const groupedBox =
+  //   previousWeightRequest?.listingId === listingId && !shouldHideResult
+  //     ? getListingBoxesResponse.map((boxGroup) => {
+  //         return boxGroup.reduce(
+  //           (
+  //             accum: {
+  //               id: string;
+  //               totalWeight: number;
+  //               quantity: number;
+  //               cost: number;
+  //               boxes: {
+  //                 count: number | null;
+  //                 id: string;
+  //                 quantity: number | null;
+  //                 weight: number;
+  //               }[];
+  //               unit: string;
+  //             },
+  //             current
+  //           ) => {
+  //             const totalWeight =
+  //               accum.totalWeight + current.weight * (current?.quantity || 0);
+  //             return {
+  //               id: `${accum.id}${accum.id ? '' : ','}${current.id}`,
+  //               totalWeight,
+  //               cost: price * totalWeight,
+  //               quantity: 1,
+  //               boxes: [...accum.boxes, current],
+  //               unit: 'kg',
+  //             };
+  //           },
+  //           {
+  //             id: '',
+  //             totalWeight: 0,
+  //             cost: 0,
+  //             quantity: 1,
+  //             boxes: [],
+  //             unit: 'kg',
+  //           }
+  //         );
+  //       })
+  //     : [];
 
-  const weight = (
-    isReview ? buyerRequest.weight?.from || 0 : activeOffer.weight || 0
-  ).toString();
+  // const weight = (
+  //   isReview ? buyerRequest.weight?.from || 0 : activeOffer.weight || 0
+  // ).toString();
 
   const onNegotiateOffer = (
     marketOfferId: string,
@@ -205,22 +200,22 @@ const RequestAndNegotiate = (): JSX.Element => {
     // setShowDeclineModal((prevValue) => !prevValue);
   };
 
-  useEffect(() => {
-    if (listingId) {
-      dispatch(getListingActions.request({ listingId: listingId }));
-    }
-    // eslint-disable-next-line
-  }, [listingId]);
+  // useEffect(() => {
+  //   if (listingId) {
+  //     dispatch(getListingActions.request({ listingId: listingId }));
+  //   }
+  //   // eslint-disable-next-line
+  // }, [listingId]);
 
-  useEffect(() => {
-    dispatch(
-      getListingBoxesActions.request({
-        listingId,
-        weight: '50',
-      })
-    );
-    // eslint-disable-next-line
-  }, [weight]);
+  // useEffect(() => {
+  //   dispatch(
+  //     getListingBoxesActions.request({
+  //       listingId,
+  //       weight: '50', //TODO: tb removed
+  //     })
+  //   );
+  //   // eslint-disable-next-line
+  // }, [weight]);
 
   useEffect(() => {
     if (offerSentStatus === 200) {

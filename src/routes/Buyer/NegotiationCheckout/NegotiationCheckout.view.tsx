@@ -1,78 +1,83 @@
 import React, { useState } from 'react';
 
-import Accordion from 'components/base/Accordion';
+import Accordion from 'components/base/Accordion/Accordion.view';
 import Button from 'components/base/Button';
-import { Crab, Crate, Fee, ShoppingTrolley } from 'components/base/SVG';
+import { ShoppingTrolley, Crab, Crate, Fee } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
-import CheckoutCard from 'components/module/CheckoutCard';
+import CheckoutCard from 'components/module/CheckoutCard/CheckoutCard.view';
 import Loading from 'components/module/Loading';
 import LoadingOverlay from 'components/module/LoadingOverlay';
 import { XRefreshCreditButton } from 'components/module/RefreshCreditButton';
-import ShippingCard from 'components/module/ShippingCard';
+import ShippingCard from 'components/module/ShippingCard/ShippingCard.view';
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { isEmpty } from 'ramda';
 import { Col, Row } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
+import NegotiationPaymentMethod from 'routes/Buyer/NegotiationCheckout/NegotiationPaymentMethod';
+import { BottomRow } from 'routes/Buyer/NegotiationCheckout/NegotiationPaymentMethod/NegotiationPaymentMethod.style';
 import { getOrderListingKey } from 'utils/getOrderListingKey';
-import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
-// import { useTheme } from 'utils/Theme';
-import { BottomRow } from '../Checkout/PaymentMethod/PaymentMethod.style';
-import { NegotiationCheckoutGeneratedProps } from './NegotiationCheckout.props';
 import {
-  CheckoutCardRow,
+  NegotiationCheckoutGeneratedProps,
+  OrderItem,
+} from './NegotiationCheckout.props';
+import {
   Container,
-  CrateFee,
   EmptyContainer,
-  Footer,
+  CheckoutCardRow,
   ShippingRow,
   SVGContainer,
+  Footer,
+  CrateFee,
   TransactionFee,
 } from './NegotiationCheckout.style';
 
 const Orders = (props: NegotiationCheckoutGeneratedProps) => {
   const {
-    // groupedOrders,
+    groupedOrders,
     selectedShippingId,
     removeItem,
     onDeliveryMethodSelection,
     transactionValueFeePercent,
-    negotiation,
   } = props;
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
-  // const orders = Object.keys(groupedOrders).reduce(
-  //   (
-  //     data: {
-  //       id: string;
-  //       isFreeShipping: boolean;
-  //       listings: OrderItem[];
-  //       totalCrateFee: number;
-  //       totalTransactionFee: number;
-  //     }[],
-  //     vendorId
-  //   ) => [
-  //     ...data,
-  //     {
-  //       id: vendorId,
-  //       isFreeShipping: groupedOrders[vendorId][0].isFreeShipping,
-  //       listings: groupedOrders[vendorId],
-  //       totalCrateFee: groupedOrders[vendorId].reduce(
-  //         (totalFee, listing) => totalFee + Number(listing.crateFee || 0),
-  //         0
-  //       ),
-  //       totalTransactionFee: groupedOrders[vendorId].reduce(
-  //         (totalFee, listing) => totalFee + Number(listing.transactionFee || 0),
-  //         0
-  //       ),
-  //     },
-  //   ],
-  //   []
-  // );
+  const orders = Object.keys(groupedOrders).reduce(
+    (
+      data: {
+        id: string;
+        isFreeShipping: boolean;
+        listings: OrderItem[];
+        totalCrateFee: number;
+        totalTransactionFee: number;
+      }[],
+      vendorId
+    ) => {
+      return [
+        ...data,
+        {
+          id: vendorId,
+          isFreeShipping: groupedOrders[vendorId][0].isFreeShipping,
+          listings: groupedOrders[vendorId],
+          totalCrateFee: groupedOrders[vendorId].reduce(
+            (totalFee, listing) => totalFee + Number(listing.crateFee || 0),
+            0
+          ),
+          totalTransactionFee: groupedOrders[vendorId].reduce(
+            (totalFee, listing) => {
+              return totalFee + Number(listing.transactionFee || 0);
+            },
+            0
+          ),
+        },
+      ];
+    },
+    []
+  );
 
   const excludeShipmentByAir = (shippingOptions: any) => {
     const modifiedShippingOptions = shippingOptions.filter(
@@ -82,87 +87,45 @@ const Orders = (props: NegotiationCheckoutGeneratedProps) => {
     return modifiedShippingOptions;
   };
 
-  // const getShippingOptions = (orderItem: OrderItem) => {
-  //   let shippingOptions = orderItem.shippingOptions.sort((a, b) => {
-  //     if (a.est < b.est) return -1;
-  //     if (a.est > b.est) return 1;
-  //     return 0;
-  //   });
+  const getShippingOptions = (orderItem: OrderItem) => {
+    let shippingOptions = orderItem.shippingOptions.sort((a, b) => {
+      if (a.est < b.est) return -1;
+      if (a.est > b.est) return 1;
+      return 0;
+    });
 
-  //   shippingOptions = shippingOptions.reduce(
-  //     (prevValue: any, curValue: any) => {
-  //       if (
-  //         curValue.shipmentMode === 'DEPOT' ||
-  //         curValue.nameId.toLowerCase().includes('pickup at')
-  //       ) {
-  //         return [curValue, ...prevValue];
-  //       } else {
-  //         return [...prevValue, curValue];
-  //       }
-  //     },
-  //     []
-  //   );
+    shippingOptions = shippingOptions.reduce(
+      (prevValue: any, curValue: any) => {
+        if (
+          curValue.shipmentMode === 'DEPOT' ||
+          curValue.nameId.toLowerCase().includes('pickup at')
+        ) {
+          return [curValue, ...prevValue];
+        } else {
+          return [...prevValue, curValue];
+        }
+      },
+      []
+    );
 
-  //   if (theme.isSFM) {
-  //     shippingOptions = excludeShipmentByAir(shippingOptions);
-  //   }
-
-  //   return shippingOptions;
-  // };
-
-  const getFinalPrice = () => {
-    let price = negotiation?.price_per_kilo;
-
-    if (negotiation?.counter_offer) {
-      price = negotiation?.counter_offer;
+    if (theme.isSFM) {
+      shippingOptions = excludeShipmentByAir(shippingOptions);
     }
 
-    if (negotiation?.history?.negotiation_request?.counter_offer?.toString()) {
-      price =
-        negotiation?.history?.negotiation_request?.counter_offer?.toString();
-    }
-
-    if (negotiation?.history?.negotiation_offer?.counter_offer?.toString()) {
-      price =
-        negotiation?.history?.negotiation_offer?.counter_offer?.toString();
-    }
-
-    return price;
+    return shippingOptions;
   };
 
-  const checkoutCardProps = {
-    uri: negotiation?.thumbnail || '',
-    name: negotiation?.name || '',
-    price: getFinalPrice() || '',
-    weight: negotiation?.desired_quantity?.toString() || '',
-    size:
-      sizeToString(
-        negotiation?.metric || negotiation?.active_size_unit || '',
-        negotiation?.size_from,
-        negotiation?.size_to
-      ) || '',
-    vendor: 'Seller name',
-    unit: negotiation?.metric || '',
-    tags: negotiation?.specifications?.map((spec) => ({
-      label: spec.name,
-      type: 'plain',
-    })),
-    // onRemove: () => {
-    //   console.log('checkoutCardProps > onRemove > clicked');
-    // },
-  };
-
-  return (
-    <div className="accordion-container">
-      <Accordion title={'Seller name'} withBackground isOpen>
+  return orders.map((item, i) => (
+    <div className="accordion-container" key={`orders-${i}`}>
+      <Accordion title={item.listings[0].vendor} withBackground isOpen>
         <div className="accordion-content-container">
           <CheckoutCardRow nogutter>
             <Col
               style={{
-                marginTop: 32,
+                marginTop: i !== 0 ? 32 : 0,
               }}
             >
-              {/* {item.listings.map((listing) => (
+              {item.listings.map((listing) => (
                 <CheckoutCard
                   key={listing.cartItemId}
                   onRemove={() =>
@@ -173,17 +136,7 @@ const Orders = (props: NegotiationCheckoutGeneratedProps) => {
                   }
                   {...listing}
                 />
-              ))} */}
-              <CheckoutCard
-                onRemove={() =>
-                  // removeItem(
-                  //   listing.cartItemId,
-                  //   getOrderListingKey(item.listings[0])
-                  // )
-                  console.log('CheckoutCardRow > onRemove > clicked')
-                }
-                {...checkoutCardProps}
-              />
+              ))}
             </Col>
           </CheckoutCardRow>
 
@@ -204,13 +157,11 @@ const Orders = (props: NegotiationCheckoutGeneratedProps) => {
               <div className="transaction-fee-value">
                 {isMobile ? (
                   <Typography variant="caption" weight="700">
-                    {/* {toPrice(item.totalTransactionFee)} */}
-                    {toPrice('1.00')}
+                    {toPrice(item.totalTransactionFee)}
                   </Typography>
                 ) : (
                   <Typography color="shade8">
-                    {/* {toPrice(item.totalTransactionFee)} */}
-                    {toPrice('1.00')}
+                    {toPrice(item.totalTransactionFee)}
                   </Typography>
                 )}
               </div>
@@ -219,33 +170,31 @@ const Orders = (props: NegotiationCheckoutGeneratedProps) => {
             <></>
           )}
 
-          {/* {!!item.totalCrateFee && item.totalCrateFee > 0 && ( */}
-          <CrateFee>
-            <div className="crate-fee-label">
-              <Crate fill={theme.grey.shade6} />
-              {isMobile ? (
-                <Typography variant="label" weight="700">
-                  Crate Fee and Levies
-                </Typography>
-              ) : (
-                <Typography weight="700">Crate Fee and Levies</Typography>
-              )}
-            </div>
-            <div className="crate-fee-value">
-              {isMobile ? (
-                <Typography variant="caption" weight="700">
-                  {/* {toPrice(item.totalCrateFee)} */}
-                  {toPrice('10.00')}
-                </Typography>
-              ) : (
-                <Typography color="shade8">
-                  {/* {toPrice(item.totalCrateFee)} */}
-                  {toPrice('10.00')}
-                </Typography>
-              )}
-            </div>
-          </CrateFee>
-          {/* )} */}
+          {!!item.totalCrateFee && item.totalCrateFee > 0 && (
+            <CrateFee>
+              <div className="crate-fee-label">
+                <Crate fill={theme.grey.shade6} />
+                {isMobile ? (
+                  <Typography variant="label" weight="700">
+                    Crate Fee and Levies
+                  </Typography>
+                ) : (
+                  <Typography weight="700">Crate Fee and Levies</Typography>
+                )}
+              </div>
+              <div className="crate-fee-value">
+                {isMobile ? (
+                  <Typography variant="caption" weight="700">
+                    {toPrice(item.totalCrateFee)}
+                  </Typography>
+                ) : (
+                  <Typography color="shade8">
+                    {toPrice(item.totalCrateFee)}
+                  </Typography>
+                )}
+              </div>
+            </CrateFee>
+          )}
 
           <ShippingRow nogutter>
             <Col>
@@ -257,19 +206,15 @@ const Orders = (props: NegotiationCheckoutGeneratedProps) => {
                 Shipping
               </Typography>
               <ShippingCard
-                // isFreeShipping={item.isFreeShipping}
-                isFreeShipping
-                // selectedDeliveryMethod={
-                //   selectedShippingId[getOrderListingKey(item.listings[0])]
-                // }
-                selectedDeliveryMethod={''}
-                // options={getShippingOptions(item.listings[0])}
-                options={[]}
+                isFreeShipping={item.isFreeShipping}
+                selectedDeliveryMethod={
+                  selectedShippingId[getOrderListingKey(item.listings[0])]
+                }
+                options={getShippingOptions(item.listings[0])}
                 onPress={(id, o) => {
                   onDeliveryMethodSelection(
                     o,
-                    // getOrderListingKey(item.listings[0])
-                    ''
+                    getOrderListingKey(item.listings[0])
                   );
                 }}
               />
@@ -278,25 +223,24 @@ const Orders = (props: NegotiationCheckoutGeneratedProps) => {
         </div>
       </Accordion>
     </div>
-  );
+  ));
 };
 
 const NegotiationCheckoutView = (props: NegotiationCheckoutGeneratedProps) => {
   const history = useHistory();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const {
-    negotiation,
     balance,
-    // groupedOrders,
+    groupedOrders,
     totalValue,
-    // keepShopping,
-    // placeOrder,
-    // selectedShipping,
-    // loadingShippingQuotes,
-    isNegotiationPending,
+    keepShopping,
+    placeOrder,
+    selectedShipping,
+    loadingShippingQuotes,
+    loadingCart,
     selectedShippingId,
-    // orderError,
-    // transactionValueFeePercent,
+    orderError,
+    transactionValueFeePercent,
   } = props;
   const theme = useTheme();
 
@@ -304,39 +248,39 @@ const NegotiationCheckoutView = (props: NegotiationCheckoutGeneratedProps) => {
 
   const total = toPrice(totalValue, false);
 
-  // const totalCartGroups = Object.keys(groupedOrders).length;
+  const totalCartGroups = Object.keys(groupedOrders).length;
   const totalSelectedShipping = Object.keys(selectedShippingId).reduce(
     (sum, companyId) => sum + (selectedShippingId[companyId] === '' ? 0 : 1),
     0
   );
 
-  // const disablePlaceOrder = totalSelectedShipping < totalCartGroups;
+  const disablePlaceOrder = totalSelectedShipping < totalCartGroups;
 
-  // if (showPaymentMethod) {
-  //   return (
-  //     <PaymentMethod
-  //       totalValue={totalValue}
-  //       orderError={orderError}
-  //       selectedShipping={selectedShipping}
-  //       placeOrder={placeOrder}
-  //       onBack={() => setShowPaymentMethod(false)}
-  //     />
-  //   );
-  // }
+  if (showPaymentMethod) {
+    return (
+      <NegotiationPaymentMethod
+        totalValue={totalValue}
+        orderError={orderError}
+        selectedShipping={selectedShipping}
+        placeOrder={placeOrder}
+        onBack={() => setShowPaymentMethod(false)}
+      />
+    );
+  }
 
   return (
     <Container>
-      {isNegotiationPending ? (
+      {loadingCart ? (
         <Loading />
       ) : (
         <>
-          {isNegotiationPending && (
+          {loadingShippingQuotes && (
             <LoadingOverlay label="Loading Shipping Quotes" />
           )}
-          {isEmpty(negotiation) ? (
+          {isEmpty(groupedOrders) ? (
             <EmptyContainer>
               <Row nogutter className="row">
-                <Typography variant="title4">No Negotiation Yet</Typography>
+                <Typography variant="title4">No Products Yet</Typography>
               </Row>
               <Row nogutter className="row">
                 <Col className="svg-col-spacer" />
@@ -355,25 +299,24 @@ const NegotiationCheckoutView = (props: NegotiationCheckoutGeneratedProps) => {
             </EmptyContainer>
           ) : (
             <>
+              {/*//  @ts-ignore*/}
               <Orders {...props} />
               {!isMobile ? (
                 <BottomRow>
                   <div className="btns-container">
                     <Button
                       text="Keep Shopping"
-                      onClick={() => {
-                        history.push(BUYER_ROUTES.HOME);
-                      }}
+                      onClick={keepShopping}
                       style={{ marginRight: 8 }}
                       variant="outline"
                     />
 
                     <Button
-                      text="Place Order (WAITING FOR BE)"
-                      disabled={true}
-                      // onClick={() => {
-                      //   setShowPaymentMethod(true);
-                      // }}
+                      text="Place Order"
+                      disabled={disablePlaceOrder}
+                      onClick={() => {
+                        setShowPaymentMethod(true);
+                      }}
                     />
                   </div>
 
@@ -441,18 +384,16 @@ const NegotiationCheckoutView = (props: NegotiationCheckoutGeneratedProps) => {
                   <div className="btns-container">
                     <Button
                       text="Keep Shopping"
-                      onClick={() => {
-                        history.push(BUYER_ROUTES.HOME);
-                      }}
+                      onClick={keepShopping}
                       variant="outline"
                       style={{ marginRight: 16 }}
                     />
                     <Button
-                      text="Place Order (WAITING FOR BE"
-                      disabled={true}
-                      // onClick={() => {
-                      //   setShowPaymentMethod(true);
-                      // }}
+                      text="Place Order"
+                      disabled={disablePlaceOrder}
+                      onClick={() => {
+                        setShowPaymentMethod(true);
+                      }}
                     />
                   </div>
                 </Footer>

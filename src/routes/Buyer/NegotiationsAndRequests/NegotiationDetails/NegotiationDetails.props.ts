@@ -65,6 +65,7 @@ export interface NegotiationDetailsProps {
   showSuccessfulNegoModal: boolean;
   handleDeclinedNegoModalToggle: () => void;
   showDeclinedNegoModal: boolean;
+  isCartPending: boolean | null;
 }
 
 export interface AlertProps {

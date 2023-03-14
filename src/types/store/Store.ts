@@ -1,8 +1,4 @@
 /* PLOP_INJECT_IMPORT */
-import {
-  GetCartByEmployeeIdAndNegotiationIdMeta,
-  GetCartByEmployeeIdAndNegotiationIdPayload,
-} from './GetCartByEmployeeIdAndNegotiationIdState';
 
 import { RouterState } from 'connected-react-router';
 import { History } from 'history';
@@ -193,6 +189,10 @@ import {
   GetBuyerSearchFiltersMeta,
   GetBuyerSearchFiltersPayload,
 } from './GetBuyerSearchFiltersState';
+import {
+  GetCartByEmployeeIdAndNegotiationIdMeta,
+  GetCartByEmployeeIdAndNegotiationIdPayload,
+} from './GetCartByEmployeeIdAndNegotiationIdState';
 import { GetCartMeta, GetCartPayload } from './GetCartState';
 import {
   GetCompanyPlanMeta,
@@ -392,7 +392,10 @@ import { VerifyMeta, VerifyPayload } from './VerifyState';
 
 export interface Store {
   /* PLOP_INJECT_INSTANCE */
-  getCartByEmployeeIdAndNegotiationId: AsyncState<GetCartByEmployeeIdAndNegotiationIdMeta, GetCartByEmployeeIdAndNegotiationIdPayload>;
+  getCartByEmployeeIdAndNegotiationId: AsyncState<
+    GetCartByEmployeeIdAndNegotiationIdMeta,
+    GetCartByEmployeeIdAndNegotiationIdPayload
+  >;
   addCartNegotiatedItem: AsyncState<
     AddCartNegotiatedItemMeta,
     AddCartNegotiatedItemPayload

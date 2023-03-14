@@ -22,6 +22,7 @@ import {
   getListingBoxesActions,
   getNegotiationByIdActions,
   marketOfferActions,
+  getCartByEmployeeIdAndNegotiationIdActions,
 } from 'store/actions';
 import marketRequestNegotiateOfferActions from 'store/actions/marketRequestNegotiation';
 import marketRequestOfferConfirmActions from 'store/actions/marketRequestOfferConfirm';
@@ -75,8 +76,17 @@ const NegotiationDetails = (): JSX.Element => {
   const defaultCompany = GetDefaultCompany();
   const employeeId = defaultCompany?.employeeId || '';
 
+  const isAddCartNegotiatedItemPending = useSelector(
+    (store: Store) => store.addCartNegotiatedItem.pending
+  );
   const companyPlan = useSelector(
     (store: Store) => store.getCompanyPlan.data?.data
+  );
+  const cart = useSelector(
+    (store: Store) => store.getCartByEmployeeIdAndNegotiationId.data?.data
+  );
+  const isCartPending = useSelector(
+    (store: Store) => store.getCartByEmployeeIdAndNegotiationId.pending
   );
   const currentReverseMarketDetails = getActivePlan(
     companyPlan,
@@ -301,17 +311,12 @@ const NegotiationDetails = (): JSX.Element => {
   };
 
   const handleProceedToCheckoutClick = () => {
-    if (negotiation?.listing_box) {
+    if (negotiation && negotiation.id && employeeId) {
       dispatch(
         addCartNegotiatedItemActions.request({
           negotiationId: negotiation.id,
           employeeId,
-          boxes: [
-            {
-              id: negotiation?.listing_box?.id,
-              quantity: negotiation?.listing_box?.quantity,
-            },
-          ],
+          boxes: negotiation.listing_boxes,
         })
       );
     }
@@ -434,6 +439,28 @@ const NegotiationDetails = (): JSX.Element => {
   // };
 
   useEffect(() => {
+    if (
+      isAddCartNegotiatedItemPending !== null &&
+      isAddCartNegotiatedItemPending !== undefined &&
+      isAddCartNegotiatedItemPending === false &&
+      negotiation?.id
+    ) {
+      history.push(BUYER_ROUTES.NEGOTIATION_CHECKOUT(negotiation.id || ''));
+    }
+  }, [negotiation, isAddCartNegotiatedItemPending]);
+
+  useEffect(() => {
+    if (employeeId && negoRequestId) {
+      dispatch(
+        getCartByEmployeeIdAndNegotiationIdActions.request({
+          employeeId,
+          negoRequestId,
+        })
+      );
+    }
+  }, [employeeId, negoRequestId]);
+
+  useEffect(() => {
     if (defaultCompany) {
       onRefresh();
     }
@@ -485,6 +512,7 @@ const NegotiationDetails = (): JSX.Element => {
   }, [showPaymentMethod]);
 
   useEffect(() => {
+    setShowNegotiationAcceptedModal(false);
     setShowPaymentMethod(false);
   }, []);
 
@@ -610,6 +638,12 @@ const NegotiationDetails = (): JSX.Element => {
     isAccepted = selectedOffer.status === 'ACCEPTED';
   }
 
+  const price = Number(
+    negotiation?.negotiation_offer?.counter_offer ||
+      negotiation?.counter_offer ||
+      '0'
+  );
+
   const handleNegoModalNegoBtnClick = (buyerNegotiatedPrice: number) => {
     if (negotiation?.id) {
       dispatch(
@@ -685,23 +719,25 @@ const NegotiationDetails = (): JSX.Element => {
     showSuccessfulNegoModal,
     handleDeclinedNegoModalToggle,
     showDeclinedNegoModal,
+    isCartPending,
   };
 
-  const getPrice = () => {
-    if (
-      !selectedOffer?.negotiations ||
-      selectedOffer?.negotiations.length < 1
-    ) {
-      return selectedOffer?.price || 0;
-    }
+  // const getPrice = () => {
+  //   if (
+  //     !selectedOffer?.negotiations ||
+  //     selectedOffer?.negotiations.length < 1
+  //   ) {
+  //     return selectedOffer?.price || 0;
+  //   }
 
-    return selectedOffer?.negotiations[0]?.price || 0;
-  };
+  //   return selectedOffer?.negotiations[0]?.price || 0;
+  // };
 
   if (showPaymentMethod) {
     return (
       <PaymentMethod
-        totalValue={getPrice() * (selectedOffer?.weight || 0)}
+        // totalValue={getPrice() * (selectedOffer?.weight || 0)}
+        totalValue={price}
         orderError={''}
         selectedShipping={{}}
         placeOrder={() => {}} // eslint-disable-line
