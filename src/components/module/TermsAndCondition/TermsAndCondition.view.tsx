@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import AnimationPlayer from 'components/base/AnimationPlayer';
 import Button from 'components/base/Button';
@@ -38,9 +38,14 @@ const TermsAndCondition = (props: TermsAndConditionProps): JSX.Element => {
     cardText2,
     cardText3,
     setIsAcceptClicked,
+    isNegotiations,
   } = props;
 
   const [isAcceptChecked, setIsAcceptChecked] = useState(false);
+
+  useEffect(() => {
+    setIsAcceptChecked(isNegotiations || false);
+  }, [isNegotiations]);
 
   const renderCard = (carNumber: string, description: string, image: any) => (
     <Card appType={appType}>
@@ -88,28 +93,31 @@ const TermsAndCondition = (props: TermsAndConditionProps): JSX.Element => {
     </AnimatedComponentContainer>
   );
 
-  const renderTermsConditions = () => (
-    <div style={{ display: 'flex' }}>
-      <Checkbox
-        onClick={() => setIsAcceptChecked(true)}
-        className="checkbox"
-        checked={isAcceptChecked}
-      />
-      <StyledAcceptTermsAndConditionText
-        weight="700"
-        variant="label"
-        color={appType === 'seller' ? 'noshade' : 'shade9'}
-      >
-        Accept{' '}
-        <span
-          style={{ cursor: 'pointer', textDecoration: 'underline' }}
-          onClick={() => getTermsAndConditions(appType === 'seller')}
+  const renderTermsConditions = (isNegotiations: boolean) =>
+    isNegotiations ? (
+      <></>
+    ) : (
+      <div style={{ display: 'flex' }}>
+        <Checkbox
+          onClick={() => setIsAcceptChecked(true)}
+          className="checkbox"
+          checked={isAcceptChecked}
+        />
+        <StyledAcceptTermsAndConditionText
+          weight="700"
+          variant="label"
+          color={appType === 'seller' ? 'noshade' : 'shade9'}
         >
-          Terms &#38; Conditions
-        </span>
-      </StyledAcceptTermsAndConditionText>
-    </div>
-  );
+          Accept{' '}
+          <span
+            style={{ cursor: 'pointer', textDecoration: 'underline' }}
+            onClick={() => getTermsAndConditions(appType === 'seller')}
+          >
+            Terms &#38; Conditions
+          </span>
+        </StyledAcceptTermsAndConditionText>
+      </div>
+    );
 
   const renderButton = () => (
     <Button
@@ -146,7 +154,7 @@ const TermsAndCondition = (props: TermsAndConditionProps): JSX.Element => {
           {textWeb1}
         </Typography>
         <Typography
-          variant="title5"
+          variant={isNegotiations ? 'title4' : 'title5'}
           weight="700"
           color={
             appType === 'seller'
@@ -155,6 +163,7 @@ const TermsAndCondition = (props: TermsAndConditionProps): JSX.Element => {
               ? 'secondary'
               : 'shade9'
           }
+          style={{ fontFamily: isNegotiations ? 'Canela' : 'Media Sans' }}
           altFont
         >
           {textWeb2}
@@ -295,13 +304,13 @@ const TermsAndCondition = (props: TermsAndConditionProps): JSX.Element => {
       </Row>
 
       <Hidden xs sm>
-        {renderTermsConditions()}
+        {renderTermsConditions(isNegotiations || false)}
         {renderButton()}
       </Hidden>
 
       <Visible xs sm>
         <div style={{ marginTop: '82px' }}>
-          {renderTermsConditions()}
+          {renderTermsConditions(isNegotiations || false)}
           <Button
             style={{
               borderRadius: '12px',

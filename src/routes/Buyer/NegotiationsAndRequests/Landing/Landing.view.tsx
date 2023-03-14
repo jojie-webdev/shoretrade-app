@@ -72,6 +72,11 @@ const MarketRequestsLandingView = (
     false
   );
 
+  const [isAcceptNegoClicked, setIsAcceptNegoClicked] = useLocalStorage(
+    'isNegoTermsAndConAccepted',
+    false
+  );
+
   if (pendingDeleteMarketRequest || loading) {
     return <LoadingView />;
   }
@@ -98,7 +103,27 @@ const MarketRequestsLandingView = (
   const renderNonMobile = () => (
     <Hidden xs>
       {selectedTab === TABS.MARKET_REQUEST ? (
-        marketRequests?.length > 0 ? (
+        reverseMarketPlace && !isAcceptClicked ? (
+          <TermsAndCondition
+            appType="buyer"
+            textWeb1="Can’t find your product?"
+            textWeb2="Create a new Market Request"
+            textMobile1="Market Request"
+            textMobile2="Can’t find your product?"
+            textMobile3="Create a new Market Request"
+            cardText1={
+              'Search for the product you want to request  and detail the specifications, size, and quantity you require. Your Market Request will be displayed to all of the Sellers on ShoreTrade, who can then make you a direct offer.'
+            }
+            cardText2={
+              'Negotiate and Accept Offers from Sellers for up to 7 days or until the maximum quantity requested has been reached.'
+            }
+            cardText3={
+              'Process the payment for accepted offers and get real time delivery updates.'
+            }
+            isAcceptClicked={isAcceptClicked}
+            setIsAcceptClicked={setIsAcceptClicked}
+          />
+        ) : marketRequests?.length > 0 ? (
           marketRequests?.map((mr) => (
             <RequestsNonMobile
               item={mr}
@@ -111,44 +136,41 @@ const MarketRequestsLandingView = (
           <EmptyStateView Svg={Crab} height={240} width={249} fluid />
         )
       ) : negotiations ? (
-        negotiations?.map((nego) => (
-          <NegotiationNonMobile
-            key={nego.listing_id}
-            item={nego}
-            onClickItem={() => onClickNegoItem(nego)}
-            activeOffersData={activeOffersData}
-            setItemToDelete={setItemToDelete}
+        reverseMarketPlace && !isAcceptNegoClicked ? (
+          <TermsAndCondition
+            appType="buyer"
+            textWeb2="Manage your Negotiations"
+            textMobile1="Negotiations"
+            textMobile3="Manage your Negotiations"
+            cardText1={
+              'Look for the orange Negotiate Price tag on listings and send a counter-offer to the seller.'
+            }
+            cardText2={
+              'Use your Negotiation Credits to negotiate back and forth with the Seller until you agree on a price.'
+            }
+            cardText3={
+              'Process the payment for accepted offers within the required timeframe and secure the stock!'
+            }
+            isAcceptClicked={isAcceptNegoClicked}
+            setIsAcceptClicked={setIsAcceptNegoClicked}
+            isNegotiations={true}
           />
-        ))
+        ) : (
+          negotiations?.map((nego) => (
+            <NegotiationNonMobile
+              key={nego.listing_id}
+              item={nego}
+              onClickItem={() => onClickNegoItem(nego)}
+              activeOffersData={activeOffersData}
+              setItemToDelete={setItemToDelete}
+            />
+          ))
+        )
       ) : (
         <EmptyStateView Svg={Crab} height={240} width={249} fluid />
       )}
     </Hidden>
   );
-
-  if (reverseMarketPlace && !isAcceptClicked) {
-    return (
-      <TermsAndCondition
-        appType="buyer"
-        textWeb1="Can’t find your product?"
-        textWeb2="Create a new Market Request"
-        textMobile1="Market Request"
-        textMobile2="Can’t find your product?"
-        textMobile3="Create a new Market Request"
-        cardText1={
-          'Search for the product you want to request  and detail the specifications, size, and quantity you require. Your Market Request will be displayed to all of the Sellers on ShoreTrade, who can then make you a direct offer.'
-        }
-        cardText2={
-          'Negotiate and Accept Offers from Sellers for up to 7 days or until the maximum quantity requested has been reached.'
-        }
-        cardText3={
-          'Process the payment for accepted offers and get real time delivery updates.'
-        }
-        isAcceptClicked={isAcceptClicked}
-        setIsAcceptClicked={setIsAcceptClicked}
-      />
-    );
-  }
 
   return (
     <MarketRequestsContainer>
@@ -198,20 +220,22 @@ const MarketRequestsLandingView = (
 
       <div style={{ marginTop: 20 }}>
         <Row nogutter justify="around" align="center" className="header">
-          {selectedTab === TABS.MARKET_REQUEST ? (
-            <>
-              <Col>
-                <Hidden xs sm>
-                  <Typography
-                    variant="title5"
-                    weight="700"
-                    color="shade9"
-                    altFont
-                  >
-                    My Market Requests
-                  </Typography>
-                </Hidden>
-                {/* <Visible xs sm>
+          {selectedTab === TABS.MARKET_REQUEST
+            ? reverseMarketPlace &&
+              isAcceptClicked && (
+                <>
+                  <Col>
+                    <Hidden xs sm>
+                      <Typography
+                        variant="title5"
+                        weight="700"
+                        color="shade9"
+                        altFont
+                      >
+                        My Market Requests
+                      </Typography>
+                    </Hidden>
+                    {/* <Visible xs sm>
                   <Typography
                     variant="title5"
                     weight="700"
@@ -221,40 +245,42 @@ const MarketRequestsLandingView = (
                     Market Requests
                   </Typography>
                 </Visible> */}
-              </Col>
-              <Col xs="content">
-                <Visible sm md lg xl xxl>
-                  <Button
-                    onClick={() =>
-                      history.push(
-                        BUYER_MARKET_REQUEST_ROUTES.CREATE_MARKET_REQUEST
-                      )
-                    }
-                    text="CREATE REQUEST"
-                    variant={props.isPendingAccount ? 'disabled' : 'primary'}
-                    size="md"
-                    disabled={props.isPendingAccount}
-                  />
-                </Visible>
-              </Col>
-            </>
-          ) : (
-            canNegotiate && (
-              <>
-                <Col></Col>
-                <Col xs="content">
-                  <Visible sm md lg xl xxl>
-                    <Typography color="shade6">
-                      Negotiation Credits:{' '}
-                      {negotiationCredit?.is_unlimited
-                        ? 'Unlimited'
-                        : negotiationCredit?.credit}
-                    </Typography>
-                  </Visible>
-                </Col>
-              </>
-            )
-          )}
+                  </Col>
+                  <Col xs="content">
+                    <Visible sm md lg xl xxl>
+                      <Button
+                        onClick={() =>
+                          history.push(
+                            BUYER_MARKET_REQUEST_ROUTES.CREATE_MARKET_REQUEST
+                          )
+                        }
+                        text="CREATE REQUEST"
+                        variant={
+                          props.isPendingAccount ? 'disabled' : 'primary'
+                        }
+                        size="md"
+                        disabled={props.isPendingAccount}
+                      />
+                    </Visible>
+                  </Col>
+                </>
+              )
+            : canNegotiate &&
+              isAcceptNegoClicked && (
+                <>
+                  <Col></Col>
+                  <Col xs="content">
+                    <Visible sm md lg xl xxl>
+                      <Typography color="shade6">
+                        Negotiation Credits:{' '}
+                        {negotiationCredit?.is_unlimited
+                          ? 'Unlimited'
+                          : negotiationCredit?.credit}
+                      </Typography>
+                    </Visible>
+                  </Col>
+                </>
+              )}
         </Row>
         {renderMobile()}
         {renderNonMobile()}
