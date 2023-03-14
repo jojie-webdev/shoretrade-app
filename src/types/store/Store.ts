@@ -426,10 +426,6 @@ export interface Store {
     CreateNegotiation_2Meta,
     CreateNegotiation_2Payload
   >;
-  createNegotiation: AsyncState<
-    CreateNegotiationMeta,
-    CreateNegotiationPayload
-  >;
   getAllNegotiations: AsyncState<
     GetAllNegotiationsMeta,
     GetAllNegotiationsPayload

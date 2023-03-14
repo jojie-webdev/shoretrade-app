@@ -3,8 +3,8 @@ import { GenericResponse } from 'types/GenericResponse';
 export interface Box {
   count: number | null;
   id: string;
-  quantity: number | null;
-  weight: number;
+  quantity: number | string | null;
+  weight: number | string;
 }
 
 export type CreateNegotiation_2Meta = {

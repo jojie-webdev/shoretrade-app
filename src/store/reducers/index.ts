@@ -26,7 +26,6 @@ import createCustomListing from './createCustomListing';
 import createListing from './createListing';
 import createMarketOffer from './createMarketOffer';
 import createMarketRequest from './createMarketRequest';
-import createNegotiation from './createNegotiation';
 import createNegotiation_2 from './createNegotiation_2';
 import createSellerCounterOffer from './createSellerCounterOffer';
 import currentAddress from './currentAddress';

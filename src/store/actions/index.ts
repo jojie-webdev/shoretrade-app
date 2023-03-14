@@ -9,7 +9,6 @@ export { default as createSellerCounterOfferActions } from './createSellerCounte
 export { default as getNegotiationCreditActions } from './getNegotiationCredit';
 export { default as getNegotiationByIdActions } from './getNegotiationById';
 export { default as createNegotiation_2Actions } from './createNegotiation_2';
-export { default as createNegotiationActions } from './createNegotiation';
 export { default as getAllNegotiationsActions } from './getAllNegotiations';
 export { default as getOrderInvoiceAdjustmentsActions } from './getOrderInvoiceAdjustments';
 export { default as selectedDeliveryMethodActions } from './selectedDeliveryMethod';
