@@ -374,16 +374,13 @@ const ProductDetails = (): JSX.Element => {
   };
 
   const handleConfirmNegoClick = () => {
-    dispatch(
-      createNegotiation_2Actions.request({
-        listingId: currentListing.id,
-        listingBoxId: (selectedBoxesWeight || groupedBox[0].boxes)[0].id,
-        desiredQuantity: (selectedBoxesWeight || groupedBox[0].boxes)
-          .reduce((prevVal, curVal) => prevVal + curVal.weight, 0)
-          .toString(),
-        counterOffer: negotiationPrice,
-      })
-    );
+    const payload = {
+      listingId: currentListing.id,
+      listingBoxes: selectedBoxesWeight,
+      counterOffer: negotiationPrice.toString(),
+    };
+
+    dispatch(createNegotiation_2Actions.request(payload));
   };
 
   const handleNegoSuccessModalClose = () => {
