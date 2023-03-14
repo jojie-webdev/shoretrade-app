@@ -55,6 +55,12 @@ export type GetNegotiationByIdRequestResponseItem = {
   auction_date: string;
   is_pre_auction: false;
   display_status: string;
+  listing_boxes: {
+    id: string;
+    weight: number;
+    quantity: number;
+    count: number;
+  }[];
 };
 
 // TODO: Update response value

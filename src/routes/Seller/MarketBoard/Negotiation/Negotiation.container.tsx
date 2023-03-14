@@ -83,12 +83,11 @@ const Negotiation = (): JSX.Element => {
   };
 
   const handleNegotiationConfirmClick = (counterOffer: number) => {
-    if (negotiationRequestId && negotiation?.listing_box_id) {
+    if (negotiationRequestId && counterOffer) {
       dispatch(
         createSellerCounterOfferActions.request({
           negotiationRequestId,
           counterOffer,
-          listingBoxId: negotiation?.listing_box_id,
         })
       );
     }
