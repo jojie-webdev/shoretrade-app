@@ -4,10 +4,13 @@ import Button from 'components/base/Button';
 import { TrashCan } from 'components/base/SVG';
 import TypographyView from 'components/base/Typography';
 import OfferTag from 'components/module/OfferTag';
+import moment from 'moment';
+import { isEmpty } from 'ramda';
 import { Col, Hidden, Visible } from 'react-grid-system';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
+import { formatRunningDateDifference } from 'utils/MarketRequest';
 import {
   numberOffersTransform,
   transformMarketRequestStatusText,
@@ -72,24 +75,67 @@ const NegotiationMobileView = (props: NegotiationNonMobilePrivateProps) => {
     //   metric,
     //   requestStatus,
     // } = props;
-    const reworkDisplayStatus = (displayStatus: string) => {
-      let modifiedDisplayStatus = displayStatus;
 
-      if (displayStatus === 'PARTIAL') {
-        modifiedDisplayStatus = 'Payment Required';
+    const getTimeLimit = () => {
+      const isFresh = !isEmpty(
+        item.specifications.filter(
+          (spec) => spec.name.toLowerCase() === 'fresh'
+        )
+      );
+
+      const isPreAuction = item.is_pre_auction || !isEmpty(item.auction_date);
+
+      const time =
+        item.negotiation_offer?.updated_at ||
+        item.negotiation_offer?.created_at ||
+        item.created_at;
+
+      //2023-03-13T12:49:10.216Z
+      if (isFresh || isPreAuction) {
+        const expiry = moment(time).add(3, 'h').isBefore()
+          ? 'Expired'
+          : formatRunningDateDifference(
+              moment(time).add(3, 'h').format(),
+              '',
+              false
+            );
+
+        return expiry;
       }
 
-      if (displayStatus === 'END') {
-        modifiedDisplayStatus = 'Declined';
-      }
+      const expiry = moment(time).add(24, 'h').isBefore()
+        ? 'Expired'
+        : formatRunningDateDifference(
+            moment(time).add(24, 'h').format(),
+            '',
+            false
+          );
 
-      return modifiedDisplayStatus;
+      return expiry;
     };
+
+    // const reworkDisplayStatus = (displayStatus: string) => {
+    //   if (displayStatus.toLowerCase() === 'partial') {
+    //     if (getTimeLimit().toLowerCase() === 'expired') {
+    //       return 'Payment Missed';
+    //     }
+
+    //     return 'Payment Required';
+    //   }
+
+    //   if (displayStatus.toLowerCase() === 'end') {
+    //     return 'Declined';
+    //   }
+
+    //   return displayStatus;
+    // };
 
     const statusTextProps = transformNegotiationStatusText(
       theme,
-      reworkDisplayStatus(item.display_status)
+      // reworkDisplayStatus(item?.display_status || '')
+      item?.display_status || ''
     );
+
     // const offersTextProps = numberOffersTransform(offers);
 
     return (

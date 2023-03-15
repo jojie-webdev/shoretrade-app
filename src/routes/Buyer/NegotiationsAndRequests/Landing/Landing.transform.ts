@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { prop, sortBy } from 'ramda';
+import { isEmpty, prop, sortBy } from 'ramda';
 import { Offer } from 'types/store/GetActiveOffersState';
 import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
 import { GetMarketRequestResponseItem } from 'types/store/GetMarketRequestState';
@@ -64,10 +64,16 @@ export const getNegoRequestLandingData = (
       return 'Expired';
     }
 
-    const expiry = moment(item.created_at).add(7, 'd').isBefore()
+    const isFresh = !isEmpty(
+      item.specifications.find((spec) => spec.name.toLowerCase() === 'fresh')
+    );
+
+    const isPreauction = item.is_pre_auction || item.auction_date;
+
+    const expiry = moment(item.created_at).add(2, 'd').isBefore()
       ? 'Expired'
       : formatRunningDateDifference(
-          moment(item.created_at).add(7, 'd').format(),
+          moment(item.created_at).add(2, 'd').format(),
           'day'
         );
 

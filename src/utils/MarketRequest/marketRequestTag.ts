@@ -45,8 +45,7 @@ const descriptions: Record<statuses, string> = {
     'Please process the payment within the remaining time. This offer will automatically close if payment is not received.',
   COUNTER_OFFER:
     'Review the offer details and Negotiate or Accept the offer to proceed.',
-  LOST:
-    'The payment was not processed by the Buyer within the given time frame. We apologise for any inconvenience caused.',
+  LOST: 'The payment was not processed by the Buyer within the given time frame. We apologise for any inconvenience caused.',
 };
 
 type types =

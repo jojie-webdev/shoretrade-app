@@ -202,6 +202,7 @@ const OfferDetailsView = (props: OfferDetailsProps) => {
       return (
         <>
           {props.description}
+          {console.log('PaymentTimeLeft > selectedOffer.expiryDate > ', selectedOffer.expiryDate)}
           <PaymentTimeLeft timeLeft={selectedOffer.expiryDate} />
         </>
       );

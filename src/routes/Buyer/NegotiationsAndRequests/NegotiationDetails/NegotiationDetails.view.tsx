@@ -5,6 +5,8 @@ import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import StarRating from 'components/base/StarRating';
 import { PlaceholderProfile, Close, CheckFilled } from 'components/base/SVG';
+import Check from 'components/base/SVG/Check';
+import Refresh from 'components/base/SVG/Refresh';
 import Typography from 'components/base/Typography';
 import BuyerNegotiationAlert from 'components/module/BuyerNegotiationAlert';
 import ConfirmationModal from 'components/module/ConfirmationModal';
@@ -18,6 +20,7 @@ import { AvatarPlaceholder } from 'components/module/ProductSellerCard/ProductSe
 import { BUYER_ROUTES } from 'consts';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import moment from 'moment';
+import { isEmpty } from 'ramda';
 import pathOr from 'ramda/es/pathOr';
 import { Row, Col, Hidden, Visible } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
@@ -27,15 +30,16 @@ import { ShippingAddress } from 'types/store/GetActiveOffersState';
 import { GetNegotiationByIdRequestResponseItem } from 'types/store/GetNegotiationByIdState';
 import { sizeToString } from 'utils/Listing';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
-import { createdAtToExpiry } from 'utils/MarketRequest';
+import {
+  createdAtToExpiry,
+  formatRunningDateDifference,
+} from 'utils/MarketRequest';
 import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
 import { parseImageUrl } from 'utils/parseImageURL';
 import { toPrice } from 'utils/String';
 import { formatOrderReferenceNumber } from 'utils/String/formatOrderReferenceNumber';
 import theme from 'utils/Theme';
 
-import Check from '../../../../components/base/SVG/Check';
-import Refresh from '../../../../components/base/SVG/Refresh';
 import {
   AlertProps,
   NegotiationDetailsProps,
@@ -123,6 +127,15 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
   const history = useHistory();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
+  const negotiationOffer = pathOr(
+    {},
+    ['negotiation_offer'],
+    negotiation
+  ) as GetNegotiationByIdRequestResponseItem['negotiation_offer'];
+
+  const price =
+    negotiationOffer.counter_offer || negotiation?.counter_offer || '0.00';
+
   const renderTotalPriceContainer = () => (
     <TotalPriceContainer>
       <Typography variant="label" color="shade7" weight="900">
@@ -134,10 +147,6 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
         color="shade9"
         style={{ marginTop: '8px' }}
       >
-        {/* {toPrice(
-          Number(negotiation?.desired_quantity || '0.00') *
-            Number(negotiation?.counter_offer || '0.00')
-        )} */}
         {toPrice(
           Number(negotiation?.desired_quantity || '0.00') * Number(price)
         )}
@@ -213,15 +222,6 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
   //   latestOfferPrice
   // )} / ${formatUnitToPricePerUnit(selectedOffer.measurementUnit)}`;
 
-  const negotiationOffer = pathOr(
-    {},
-    ['negotiation_offer'],
-    negotiation
-  ) as GetNegotiationByIdRequestResponseItem['negotiation_offer'];
-
-  const price =
-    negotiationOffer?.counter_offer || negotiation?.counter_offer || '0.00';
-
   const pricePerUnit = `${toPrice(price)} per ${formatUnitToPricePerUnit(
     negotiation?.measurement_unit
   )}`;
@@ -255,33 +255,80 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
     return <>{props.description}</>;
   };
 
-  const reworkDisplayStatus = (displayStatus: string) => {
-    let modifiedDisplayStatus = displayStatus;
-
-    if (displayStatus === 'PARTIAL') {
-      modifiedDisplayStatus = 'Payment Required';
-    }
-
-    if (displayStatus === 'END') {
-      modifiedDisplayStatus = 'Declined';
-    }
-
-    return modifiedDisplayStatus;
-  };
-
-  const identifyTimeLimit = () => {
-    const isFresh = negotiation.specifications.filter(
-      (spec) => spec.name.toLowerCase() === 'fresh'
+  const getTimeLimit = () => {
+    const isFresh = !isEmpty(
+      negotiation.specifications.filter(
+        (spec) => spec.name.toLowerCase() === 'fresh'
+      )
     );
 
-    const timeLimit = isFresh || negotiation.is_pre_auction ? '3' : '24';
+    const isPreAuction =
+      negotiation.is_pre_auction || !isEmpty(negotiation.auction_date);
 
-    return timeLimit;
+    const time =
+      negotiation.negotiation_offer?.updated_at ||
+      negotiation.negotiation_offer?.created_at ||
+      negotiation.created_at;
+
+    if (isFresh || isPreAuction) {
+      const expiry = moment(time).add(3, 'h').isBefore()
+        ? 'Expired'
+        : formatRunningDateDifference(
+            moment(time).add(3, 'h').format(),
+            '',
+            false
+          );
+
+      return expiry;
+    }
+
+    const expiry = moment(time).add(24, 'h').isBefore()
+      ? 'Expired'
+      : formatRunningDateDifference(
+          moment(time).add(24, 'h').format(),
+          '',
+          false
+        );
+
+    return expiry;
   };
+
+  const modifyTimeLimit = () => {
+    const time = getTimeLimit().toLowerCase();
+    let modifiedTime = '';
+
+    if (time.includes('hours')) {
+      const splits = time.split('hours');
+      modifiedTime = splits[0] + 'hours';
+    } else {
+      const splits = time.split('hour');
+      modifiedTime = splits[0] + 'hour';
+    }
+
+    return modifiedTime;
+  };
+
+  // const reworkDisplayStatus = (displayStatus: string) => {
+  //   if (displayStatus.toLowerCase() === 'partial') {
+  //     console.log('reworkDisplayStatus > getTimeLimit() > ', getTimeLimit());
+  //     if (getTimeLimit().toLowerCase() === 'expired') {
+  //       return 'Payment Missed';
+  //     }
+
+  //     return 'Payment Required';
+  //   }
+
+  //   if (displayStatus.toLowerCase() === 'end') {
+  //     return 'Declined';
+  //   }
+
+  //   return displayStatus;
+  // };
 
   const getAlertProps = (): AlertProps => {
     switch (
-      reworkDisplayStatus(negotiation?.display_status?.toLowerCase() || '')
+      // reworkDisplayStatus(negotiation?.display_status || '').toLowerCase()
+      (negotiation?.display_status || '').toLowerCase()
     ) {
       // switch (reworkDisplayStatus('Finalised'.toLowerCase())) {
       case 'closed':
@@ -294,11 +341,12 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
               <span
                 style={{
                   color: theme.brand.primary,
+                  fontSize: 14,
                 }}
               >
-                X
+                {modifyTimeLimit()}
               </span>{' '}
-              hours to proceed.
+              to proceed.
             </Typography>
           ),
         };
@@ -313,11 +361,12 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
               <span
                 style={{
                   color: theme.brand.primary,
+                  fontSize: 14,
                 }}
               >
-                X
+                {modifyTimeLimit()}
               </span>{' '}
-              hours to proceed.
+              to proceed.
             </Typography>
           ),
         };
@@ -338,7 +387,15 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
           description: (
             <>
               <Typography variant="caption" color="shade7" weight="400">
-                Please process the payment within {identifyTimeLimit()} hours.
+                Please process the payment within{' '}
+                <span
+                  style={{
+                    color: theme.brand.primary,
+                    fontSize: 14,
+                  }}
+                >
+                  {modifyTimeLimit()}
+                </span>
               </Typography>
               <Typography variant="caption" color="shade7" weight="400">
                 This negotiation will automatically close if payment is not
@@ -432,6 +489,9 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
             content={getAlertProps().description}
             header={getAlertProps().title}
             variant={getAlertProps().alertColor}
+            // status={reworkDisplayStatus(
+            //   negotiation?.display_status?.toLowerCase() || ''
+            // )}
             status={negotiation?.display_status?.toLowerCase() || ''}
             fullWidth
           />
@@ -506,79 +566,93 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
                 </div>
               </DefaultCTAContainer>
             )} */}
-          {negotiation?.status !== 'ACCEPTED' &&
-            negotiation?.status !== 'PARTIAL' &&
-            negotiation?.status !== 'DECLINED' &&
-            negotiation?.status !== 'LOST' &&
-            negotiation?.status !== 'END' &&
-            negotiation?.status !== 'CLOSED' && (
+          {getTimeLimit().toUpperCase() === 'EXPIRED'
+            ? null
+            : negotiation?.status !== 'ACCEPTED' &&
+              negotiation?.status !== 'PARTIAL' &&
+              negotiation?.status !== 'DECLINED' &&
+              negotiation?.status !== 'LOST' &&
+              negotiation?.status !== 'END' &&
+              negotiation?.status !== 'CLOSED' &&
+              negotiation?.status !== 'CHECKOUT' && (
+                <CTAContainer>
+                  <div style={{ display: 'flex' }}>
+                    <Button
+                      onClick={() => handleDeclineClick(true)}
+                      variant="outline"
+                      text={
+                        <Typography color="primary" style={{ marginRight: 5 }}>
+                          Decline
+                        </Typography>
+                      }
+                      icon={<Close fill={theme.brand.primary} />}
+                      style={{ width: '100%', marginRight: 10 }}
+                    />
+                    {negotiation?.display_status?.toLowerCase() !==
+                      'awaiting seller' && (
+                      <Button
+                        text={
+                          <Typography
+                            color="noshade"
+                            style={{ marginRight: 5 }}
+                          >
+                            Negotiate
+                          </Typography>
+                        }
+                        icon={<Refresh fill={theme.grey.noshade} />}
+                        onClick={handleNegoBtnClick2}
+                        disabled={
+                          negotiation?.display_status !== 'Counter Offer'
+                        }
+                        style={{ marginRight: 10, width: '100%' }}
+                      />
+                    )}
+                  </div>
+                  <div style={{ width: '124px' }}>
+                    {negotiation?.display_status?.toLowerCase() !==
+                      'awaiting seller' && (
+                      <StyledAcceptButton
+                        text={
+                          <Typography
+                            color="noshade"
+                            style={{ marginRight: 5 }}
+                          >
+                            Accept
+                          </Typography>
+                        }
+                        icon={<Check width={10} height={9} />}
+                        onClick={() => handleAcceptClick(true)}
+                        disabled={
+                          negotiation?.display_status !== 'Counter Offer'
+                        }
+                      />
+                    )}
+                  </div>
+                </CTAContainer>
+              )}
+
+          {negotiation?.status === 'PARTIAL' &&
+            getTimeLimit().toLowerCase() !== 'expired' && (
               <CTAContainer>
-                <div style={{ display: 'flex' }}>
-                  <Button
-                    onClick={() => handleDeclineClick(true)}
-                    variant="outline"
+                <div style={{ width: 'fit-content' }}>
+                  <StyledAcceptButton
                     text={
-                      <Typography color="primary" style={{ marginRight: 5 }}>
-                        Decline
+                      <Typography
+                        variant="label"
+                        weight="700"
+                        color="noshade"
+                        style={{ fontFamily: 'Basis Grotesque Pro' }}
+                        disabled={!(isCartPending === false)}
+                      >
+                        Proceed To Checkout
                       </Typography>
                     }
-                    icon={<Close fill={theme.brand.primary} />}
-                    style={{ width: '100%', marginRight: 10 }}
+                    // icon={<Check width={10} height={9} />}
+                    onClick={handleProceedToCheckoutClick}
                   />
-                  {negotiation?.display_status?.toLowerCase() !==
-                    'awaiting seller' && (
-                    <Button
-                      text={
-                        <Typography color="noshade" style={{ marginRight: 5 }}>
-                          Negotiate
-                        </Typography>
-                      }
-                      icon={<Refresh fill={theme.grey.noshade} />}
-                      onClick={handleNegoBtnClick2}
-                      disabled={negotiation?.display_status !== 'Counter Offer'}
-                      style={{ marginRight: 10, width: '100%' }}
-                    />
-                  )}
-                </div>
-                <div style={{ width: '124px' }}>
-                  {negotiation?.display_status?.toLowerCase() !==
-                    'awaiting seller' && (
-                    <StyledAcceptButton
-                      text={
-                        <Typography color="noshade" style={{ marginRight: 5 }}>
-                          Accept
-                        </Typography>
-                      }
-                      icon={<Check width={10} height={9} />}
-                      onClick={() => handleAcceptClick(true)}
-                      disabled={negotiation?.display_status !== 'Counter Offer'}
-                    />
-                  )}
                 </div>
               </CTAContainer>
             )}
-
-          {negotiation?.status === 'PARTIAL' && (
-            <CTAContainer>
-              <div style={{ width: 'fit-content' }}>
-                <StyledAcceptButton
-                  text={
-                    <Typography
-                      variant="label"
-                      weight="700"
-                      color="noshade"
-                      style={{ fontFamily: 'Basis Grotesque Pro' }}
-                      disabled={!(isCartPending === false)}
-                    >
-                      Proceed To Checkout
-                    </Typography>
-                  }
-                  // icon={<Check width={10} height={9} />}
-                  onClick={handleProceedToCheckoutClick}
-                />
-              </div>
-            </CTAContainer>
-          )}
         </Hidden>
       </FullOfferDetailsContainer>
     </Col>

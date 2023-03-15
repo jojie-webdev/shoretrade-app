@@ -102,9 +102,7 @@ const MarketRequestsLanding = (): JSX.Element => {
     }
 
     setSelectedTab(selectedTab);
-    history.push(
-      `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}?tab=${selectedTab}`
-    );
+    history.push(`${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}`);
   };
 
   const reverseMarketPlace =

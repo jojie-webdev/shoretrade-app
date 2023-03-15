@@ -277,6 +277,7 @@ const RequestAndNegotiate = (): JSX.Element => {
     handleCancelBtnClick,
     handleConfirmBtnClick,
   };
+
   return <RequestAndNegotiateView {...generatedProps} />;
 };
 

@@ -169,7 +169,7 @@ const NegotiationDetails = (): JSX.Element => {
   const breadCrumb = [
     {
       label: 'All Negotiations',
-      link: `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}?tab=Negotiations`,
+      link: `${BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS}`,
     },
     {
       label: 'Negotiation Details',

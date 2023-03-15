@@ -4,6 +4,19 @@ export type GetAllNegotiationsMeta = {
   // TODO: Add request values
 };
 
+export type NegotiationItem = {
+  company_id: string;
+  counter_offer: number;
+  created_at: string;
+  desired_quantity: number;
+  id: string;
+  listing_box_id: string;
+  negotiation_request_id: string;
+  seller_id: string;
+  status: string;
+  updated_at: string;
+};
+
 export type GetAllNegoRequestResponseItem = {
   active_size_unit: string;
   counter_offer: string;
@@ -22,6 +35,9 @@ export type GetAllNegoRequestResponseItem = {
   thumbnail: string;
   measurement_unit: string;
   metric: string;
+  auction_date: string;
+  is_pre_auction: boolean;
+  negotiation_offer: NegotiationItem;
 };
 
 export type GetAllNegotiationsPayload = GenericResponse<{

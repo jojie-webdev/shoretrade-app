@@ -38,38 +38,24 @@ const BuyerNegotiationAlert = (
   let Icon: React.FC<SVGProps> = InfoFilled;
   let IconFill = '';
 
-  const reworkDisplayStatus = (displayStatus: string) => {
-    let modifiedDisplayStatus = displayStatus;
-
-    if (displayStatus.toLowerCase() === 'partial') {
-      modifiedDisplayStatus = 'Payment Required';
-    }
-
-    if (displayStatus.toLowerCase() === 'end') {
-      modifiedDisplayStatus = 'Declined';
-    }
-
-    return modifiedDisplayStatus;
-  };
-
-  if (reworkDisplayStatus(status).toLowerCase() === 'declined') {
+  if (status.toLowerCase() === 'declined') {
     Icon = CloseFilled;
     IconFill = theme.brand.error;
-  } else if (reworkDisplayStatus(status).toLowerCase() === 'payment required') {
+  } else if (status.toLowerCase() === 'payment required') {
     Icon = ExclamationFilled;
     IconFill = theme.brand.primary;
-  } else if (reworkDisplayStatus(status).toLowerCase() === 'payment missed') {
+  } else if (status.toLowerCase() === 'payment missed') {
     Icon = CloseFilled;
     IconFill = theme.brand.error;
-  } else if (reworkDisplayStatus(status).toLowerCase() === 'awaiting seller') {
+  } else if (status.toLowerCase() === 'awaiting seller') {
     Icon = QuestionFilled;
     IconFill = theme.brand.alert;
-  } else if (reworkDisplayStatus(status).toLowerCase() === 'finalised') {
+  } else if (status.toLowerCase() === 'finalised') {
     Icon = CheckFilled;
     IconFill = theme.brand.success;
   } else if (
-    reworkDisplayStatus(status).toLowerCase() === 'counter offer' ||
-    reworkDisplayStatus(status).toLowerCase() === 'closed'
+    status.toLowerCase() === 'counter offer' ||
+    status.toLowerCase() === 'closed'
   ) {
     IconFill = theme.brand.success;
   }
@@ -90,7 +76,7 @@ const BuyerNegotiationAlert = (
 
         <div className="text-container">
           {header && (
-            <TitleWrapper variant="label" weight="500">
+            <TitleWrapper variant="label" weight="700">
               {header}
             </TitleWrapper>
           )}

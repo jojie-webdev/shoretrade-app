@@ -405,7 +405,7 @@ const Step1 = ({
           </MobileFooter>
         )}
 
-        {showButtons && !isMobile && (
+        {/* {showButtons && !isMobile && (
           <div className={'submit-btns'}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <Button
@@ -443,9 +443,9 @@ const Step1 = ({
               icon={<Check width={10} height={9} />}
             />
           </div>
-        )}
+        )} */}
 
-        {showButtons && isMobile && (
+        {/* {showButtons && isMobile && (
           <MobileFooter>
             <div style={{ width: '100%' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -490,7 +490,7 @@ const Step1 = ({
               </div>
             </div>
           </MobileFooter>
-        )}
+        )} */}
 
         <AcceptSellerModal
           // show={showAcceptModal}
