@@ -30,6 +30,7 @@ export type OrderMeta = {
   currentAddress: GetAddressesResponseItem;
   totalPrice: number;
   paymentMode?: string;
+  negotiationRequestId?: string;
 };
 
 export type OrderPayload = GenericResponse;

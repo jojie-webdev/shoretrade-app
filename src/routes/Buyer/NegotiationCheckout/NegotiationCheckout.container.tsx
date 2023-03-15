@@ -258,6 +258,21 @@ const NegotiationCheckout = (): JSX.Element => {
       overrideTransactionValueFeePercent || TRANSACTION_VALUE_FEE_PERCENTAGE;
   }
 
+  const getAgreedTotalPrice = () => {
+    return (
+      (negotiation?.negotiation_offer?.counter_offer ||
+        Number(negotiation?.counter_offer || 0)) *
+      (negotiation?.desired_quantity || 0)
+    );
+  };
+
+  const getAgreedPrice = () => {
+    return (
+      negotiation?.negotiation_offer?.counter_offer ||
+      Number(negotiation?.counter_offer || 0)
+    );
+  };
+
   const orders = cartItems.map((cartItem): OrderItem => {
     const additionalInfos = ADDITIONAL_INFOS.map((info) => {
       if (cartItem.listing[info.key as keyof GetCartListingDataItem]) {
@@ -268,33 +283,23 @@ const NegotiationCheckout = (): JSX.Element => {
     const isGSTIncluded = cartItem.listing.isGSTIncluded;
     const subTotal = isGSTIncluded
       ? parsePrice(
-          (Number(cartItem.listing.price) *
-            (negotiation?.desired_quantity || 0)) /
+          (Number(getAgreedPrice()) * (negotiation?.desired_quantity || 0)) /
             1.1
         )
       : parsePrice(
-          Number(cartItem.listing.price) * (negotiation?.desired_quantity || 0)
+          Number(getAgreedPrice()) * (negotiation?.desired_quantity || 0)
         );
 
     const transactionFee = subTotal
       ? Number((subTotal * (transactionValueFeePercent / 100)).toFixed(2))
       : 0;
 
-    // const negoPrice = () => {
-    //   //negotiation?.history
-    //   negotiation?.history.
-    // }
-
     return {
       cartItemId: cartItem.cartItemId || '',
       title: 'Order Summary',
       uri: cartItem.listing.image,
       name: cartItem.listing.type,
-      price: (
-        (negotiation?.negotiation_offer?.counter_offer ||
-          Number(negotiation?.counter_offer || 0)) *
-        (negotiation?.desired_quantity || 0)
-      ).toFixed(2), //negotiation.desired_quantity * negotiation //
+      price: getAgreedTotalPrice().toFixed(2), //negotiation.desired_quantity * negotiation //
       transactionFee: transactionFee,
       tags: additionalInfos
         .map((info) => ({
@@ -473,9 +478,12 @@ const NegotiationCheckout = (): JSX.Element => {
     if (
       currentAddress &&
       !processingOrder &&
-      isPaymentMethodAvailable(paymentModes, 'ACCT_CRED')
+      isPaymentMethodAvailable(paymentModes, 'ACCT_CRED') &&
+      negotiation?.id
     ) {
       const payload = cartItemsToPayload(cartItems, selectedShipping);
+      payload[0][0].listing.price = getAgreedPrice().toString(); //TODO: tb removed this line, we should use price from getCardByNegotiatoinIdAndEmployeeId
+      // payload[0][0].subTotal = getAgreedPrice() * negotiation.desired_quantity;
 
       dispatch(
         orderActions.request({
@@ -485,6 +493,7 @@ const NegotiationCheckout = (): JSX.Element => {
           currentAddress,
           totalPrice: totalValue,
           paymentMode: 'ACCT_CRED',
+          negotiationRequestId: negotiation.id,
         })
       );
     }

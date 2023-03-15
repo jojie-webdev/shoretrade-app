@@ -51,18 +51,13 @@ export const addCartNegotiatedItem = (
   data: AddCartNegotiatedItemMeta,
   token: string
 ) => {
-  const payload = {
-    boxes: data.boxes,
-    employeeId: data.employeeId,
-  };
-
   return axios({
     method: 'post',
     url: `${CART_NEGOTIATED_ITEM_URL(data.negotiationId)}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    data: payload,
+    data,
   });
 };
 

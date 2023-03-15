@@ -3,8 +3,10 @@ import React, { useEffect, useReducer, useState } from 'react';
 import moment from 'moment';
 import { groupBy, omit } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import {
   addCardAndPayActions,
+  getNegotiationByIdActions,
   getPaymentMethodsActions,
   orderActions,
 } from 'store/actions';
@@ -28,6 +30,7 @@ const NegotiationPaymentMethod = (
 ): JSX.Element => {
   const dispatch = useDispatch();
   const currentCompany = GetDefaultCompany();
+  const params = useParams<{ negotiationId: string }>();
   const companyId = currentCompany?.id || '';
   const paymentModes = useSelector(
     (state: Store) => state.getPaymentMode.data?.data.payment_mode
@@ -53,6 +56,10 @@ const NegotiationPaymentMethod = (
   const addCardAndPayError =
     useSelector((store: Store) => store.addCardAndPay.error) || '';
 
+  const negotiation = useSelector(
+    (state: Store) => state.getNegotiationById.data?.data
+  );
+
   const currentAddress = addresses.find((a) => a.default);
 
   const [cardDetails, setCardDetails] = useReducer(
@@ -77,6 +84,13 @@ const NegotiationPaymentMethod = (
     cartItemId: key,
   }));
 
+  const getAgreedPrice = () => {
+    return (
+      negotiation?.negotiation_offer?.counter_offer ||
+      Number(negotiation?.counter_offer || 0)
+    );
+  };
+
   const onAddCard = (values: CardDetails) => {
     if (
       !pendingAddCard &&
@@ -84,6 +98,8 @@ const NegotiationPaymentMethod = (
       isPaymentMethodAvailable(paymentModes, 'CREDIT_CARD')
     ) {
       const payload = cartItemsToPayload(cartItems, props.selectedShipping);
+      payload[0][0].listing.price = getAgreedPrice().toString();
+      // payload[0][0].subTotal = getAgreedPrice() * negotiation.desired_quantity;
 
       dispatch(
         addCardAndPayActions.request({
@@ -121,6 +137,8 @@ const NegotiationPaymentMethod = (
       isPaymentMethodAvailable(paymentModes, 'CREDIT_CARD')
     ) {
       const payload = cartItemsToPayload(cartItems, props.selectedShipping);
+      payload[0][0].listing.price = getAgreedPrice().toString();
+      // payload[0][0].subTotal = getAgreedPrice() * negotiation.desired_quantity;
 
       dispatch(
         addCardAndPayActions.request({
@@ -137,6 +155,16 @@ const NegotiationPaymentMethod = (
       );
     }
   };
+
+  useEffect(() => {
+    if (params.negotiationId) {
+      dispatch(
+        getNegotiationByIdActions.request({
+          negotiationRequestId: params.negotiationId,
+        })
+      );
+    }
+  }, [params.negotiationId]);
 
   useEffect(() => {
     if (companyId) {
