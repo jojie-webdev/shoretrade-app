@@ -38,6 +38,7 @@ function* addCardAndPayRequest(
             currentAddress: action.meta.currentAddress,
             totalPrice: action.meta.totalPrice,
             paymentMode: action.meta.paymentMode,
+            negotiationRequestId: action.meta.negotiationRequestId,
           },
           state.auth.token
         );
@@ -61,6 +62,7 @@ function* addCardAndPayRequest(
             currentAddress: action.meta.currentAddress,
             totalPrice: action.meta.totalPrice,
             paymentMode: action.meta.paymentMode,
+            negotiationRequestId: action.meta.negotiationRequestId,
             ...(action.meta.default ? { default: true } : {}),
           },
           state.auth.token

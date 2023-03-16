@@ -95,7 +95,8 @@ const NegotiationPaymentMethod = (
     if (
       !pendingAddCard &&
       currentAddress &&
-      isPaymentMethodAvailable(paymentModes, 'CREDIT_CARD')
+      isPaymentMethodAvailable(paymentModes, 'CREDIT_CARD') &&
+      negotiation?.id
     ) {
       const payload = cartItemsToPayload(cartItems, props.selectedShipping);
       payload[0][0].listing.price = getAgreedPrice().toString();
@@ -121,6 +122,7 @@ const NegotiationPaymentMethod = (
           companyId: companyId,
           default: values.isDefault,
           paymentMode: 'CREDIT_CARD',
+          negotiationRequestId: negotiation.id,
         })
       );
     }
@@ -134,7 +136,8 @@ const NegotiationPaymentMethod = (
     if (
       !pendingAddCard &&
       currentAddress &&
-      isPaymentMethodAvailable(paymentModes, 'CREDIT_CARD')
+      isPaymentMethodAvailable(paymentModes, 'CREDIT_CARD') &&
+      negotiation?.id
     ) {
       const payload = cartItemsToPayload(cartItems, props.selectedShipping);
       payload[0][0].listing.price = getAgreedPrice().toString();
@@ -151,6 +154,7 @@ const NegotiationPaymentMethod = (
           existingCard: selectedCard,
           companyId: companyId,
           paymentMode: 'CREDIT_CARD',
+          negotiationRequestId: negotiation.id,
         })
       );
     }
