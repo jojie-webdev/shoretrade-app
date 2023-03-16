@@ -178,6 +178,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                         handleShowNegoCreditsModal={handleShowNegoCreditsModal}
                         negotiationCredit={negotiationCredit}
                         handleShowNegoModal={handleShowNegoModal}
+                        negotiationId={product.negotiationId}
                       />
                     </StyledInteraction>
                   ) : (
@@ -214,6 +215,7 @@ const CategoriesPreviewView = (props: CategoriesPreviewGeneratedProps) => {
                       handleShowNegoCreditsModal={handleShowNegoCreditsModal}
                       negotiationCredit={negotiationCredit}
                       handleShowNegoModal={handleShowNegoModal}
+                      negotiationId={product.negotiationId}
                     />
                   )}
                 </Link>

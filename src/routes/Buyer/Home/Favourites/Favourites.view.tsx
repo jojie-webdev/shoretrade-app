@@ -97,6 +97,7 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
                           negotiationCredit={negotiationCredit}
                           handleShowNegoModal={handleShowNegoModal}
                           canNegotiate={canNegotiate}
+                          negotiationId={fav.negotiation_id}
                         />
                       </StyledInteraction>
                     ) : (
@@ -132,6 +133,7 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
                         negotiationCredit={negotiationCredit}
                         handleShowNegoModal={handleShowNegoModal}
                         canNegotiate={canNegotiate}
+                        negotiationId={fav.negotiation_id}
                       />
                     )}
                   </Link>

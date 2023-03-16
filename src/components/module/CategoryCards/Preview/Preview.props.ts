@@ -44,4 +44,5 @@ export interface PreviewProps {
   handleShowNegoCreditsModal: (() => void) | undefined;
   negotiationCredit: GetNegotiationCreditRequestResponseItem | undefined;
   handleShowNegoModal: ((listingId: string) => void) | undefined;
+  negotiationId: string;
 }

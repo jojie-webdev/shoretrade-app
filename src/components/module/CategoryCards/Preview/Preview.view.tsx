@@ -265,6 +265,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
     backgroundColor: string;
     iconFill: string;
     fontColor: keyof Theme['brand'] | keyof Theme['grey'];
+    text?: string;
   }) => {
     return (
       <NegotiatePriceBtnContainer>
@@ -276,7 +277,7 @@ const Preview = (props: PreviewProps): JSX.Element => {
             color={props.fontColor || 'noshade'}
             style={{ paddingRight: 8, marginTop: 2 }}
           >
-            NEGOTIATE PRICE
+            {props.text || 'NEGOTIATE PRICE'}
           </NegotiatePriceText>
         </NegotiatePriceBtnWrapper>
       </NegotiatePriceBtnContainer>
@@ -629,23 +630,33 @@ const Preview = (props: PreviewProps): JSX.Element => {
                     isPreAuctionExpired(
                       props.auctionDate
                     ) ? null : hasCredits ? (
-                      <div
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'center',
-                          width: '-webkit-fill-available',
-                        }}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleShowNegoModal && handleShowNegoModal(props?.id);
-                        }}
-                      >
+                      props.negotiationId ? (
                         <NegotiatePriceElem
-                          backgroundColor={theme.brand.primary}
-                          iconFill={theme.grey.noshade}
-                          fontColor="noshade"
+                          backgroundColor={theme.grey.shade3}
+                          iconFill={theme.grey.shade6}
+                          fontColor="shade6"
+                          text="IN NEGOTIATION"
                         />
-                      </div>
+                      ) : (
+                        <div
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            width: '-webkit-fill-available',
+                          }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleShowNegoModal &&
+                              handleShowNegoModal(props?.id);
+                          }}
+                        >
+                          <NegotiatePriceElem
+                            backgroundColor={theme.brand.primary}
+                            iconFill={theme.grey.noshade}
+                            fontColor="noshade"
+                          />
+                        </div>
+                      )
                     ) : (
                       <div
                         style={{
@@ -667,23 +678,32 @@ const Preview = (props: PreviewProps): JSX.Element => {
                       </div>
                     )
                   ) : hasCredits ? (
-                    <div
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        width: '-webkit-fill-available',
-                      }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleShowNegoModal && handleShowNegoModal(props?.id);
-                      }}
-                    >
+                    props.negotiationId ? (
                       <NegotiatePriceElem
-                        backgroundColor={theme.brand.primary}
-                        iconFill={theme.grey.noshade}
-                        fontColor="noshade"
+                        backgroundColor={theme.grey.shade3}
+                        iconFill={theme.grey.shade6}
+                        fontColor="shade6"
+                        text="IN NEGOTIATION"
                       />
-                    </div>
+                    ) : (
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          width: '-webkit-fill-available',
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleShowNegoModal && handleShowNegoModal(props?.id);
+                        }}
+                      >
+                        <NegotiatePriceElem
+                          backgroundColor={theme.brand.primary}
+                          iconFill={theme.grey.noshade}
+                          fontColor="noshade"
+                        />
+                      </div>
+                    )
                   ) : (
                     <div
                       style={{
