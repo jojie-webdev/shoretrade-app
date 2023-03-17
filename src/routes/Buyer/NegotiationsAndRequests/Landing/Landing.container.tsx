@@ -25,6 +25,7 @@ import { NegoAndRMQueryParams } from 'types/NegoAndRMQueryParams';
 import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
 import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
 import { Store } from 'types/store/Store';
+import useDebounce from 'utils/Hooks/useDebounce';
 import useTimeout from 'utils/Hooks/useTimeout';
 import { useTheme } from 'utils/SFMTheme';
 
@@ -184,6 +185,16 @@ const MarketRequestsLanding = (): JSX.Element => {
     setWaitAll(false);
     clear();
   }, 2000);
+
+  useDebounce(
+    () => {
+      if (searchKeyword.length > 2 || searchKeyword.length === 0) {
+        dispatch(getAllNegotiationsActions.request({ term: searchKeyword }));
+      }
+    },
+    1000,
+    [searchKeyword]
+  );
 
   useEffect(() => {
     if (deleteMarketRequest.pending) {
