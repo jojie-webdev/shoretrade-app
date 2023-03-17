@@ -47,6 +47,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
     allowNegotiations,
     handleShowNegoCreditsModal,
     negotiationCredit,
+    negotiationId,
   } = props;
 
   const companyPlan = useSelector(
@@ -68,6 +69,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
     iconFill: string;
     fontColor: keyof Theme['grey'] | keyof Theme['brand'];
     clickable?: boolean;
+    text?: string;
   }) => {
     return (
       <NegotiatePriceBtnContainer>
@@ -82,7 +84,7 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
             color={props.fontColor || 'noshade'}
             style={{ paddingRight: 8, marginTop: 2 }}
           >
-            NEGOTIATE PRICE
+            {props?.text || 'NEGOTIATE PRICE'}
           </NegotiatePriceText>
         </NegotiatePriceBtnWrapper>
       </NegotiatePriceBtnContainer>
@@ -109,7 +111,14 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
     return allowNegotiations ? (
       canNegotiate ? (
         auctionDate ? (
-          isPreAuctionExpired(auctionDate) ? null : (
+          isPreAuctionExpired(auctionDate) ? null : negotiationId ? (
+            <NegotiatePriceElem
+              backgroundColor={theme.grey.shade3}
+              iconFill={theme.grey.shade6}
+              fontColor="shade6"
+              text="IN NEGOTIATION"
+            />
+          ) : (
             <div onClick={handleNegoModalShow}>
               <NegotiatePriceElem
                 backgroundColor={theme.brand.primary}
@@ -119,6 +128,13 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
               />
             </div>
           )
+        ) : negotiationId ? (
+          <NegotiatePriceElem
+            backgroundColor={theme.grey.shade3}
+            iconFill={theme.grey.shade6}
+            fontColor="shade6"
+            text="IN NEGOTIATION"
+          />
         ) : (
           <div onClick={handleNegoModalShow}>
             <NegotiatePriceElem

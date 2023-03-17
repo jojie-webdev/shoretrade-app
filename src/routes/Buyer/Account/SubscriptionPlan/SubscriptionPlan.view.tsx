@@ -304,7 +304,7 @@ export const SubscriptionPlanView = ({
                             daysUntilOverdue || 0 > 1 ? 's' : ''
                           }`
                         : 'now'}{' '}
-                      days to keep your account active.
+                      to keep your account active.
                     </Typography>
                     <div className="actions">
                       <Button

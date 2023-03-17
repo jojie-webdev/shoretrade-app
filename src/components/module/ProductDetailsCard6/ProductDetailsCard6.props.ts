@@ -25,4 +25,5 @@ export interface ProductDetailsCard6Props {
   allowNegotiations: boolean;
   handleShowNegoCreditsModal: () => void;
   negotiationCredit: GetNegotiationCreditRequestResponseItem | undefined;
+  negotiationId: string;
 }

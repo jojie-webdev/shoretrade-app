@@ -68,6 +68,7 @@ export type GetBuyerHomepageResponseListingItem = {
   isPreAuctionSale: boolean;
   gmSizingOptions: [];
   cmSizingOptions: [];
+  negotiation_id: string;
 };
 
 export type GetBuyerHomepagePayload = GenericResponse<{

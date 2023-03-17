@@ -83,6 +83,7 @@ export function recentlyAddedToPreviewProps(
     handleShowNegoCreditsModal,
     negotiationCredit,
     handleShowNegoModal,
+    negotiationId: data.negotiation_id,
   };
 }
 
@@ -130,6 +131,7 @@ export function favouritesToPreviewProps(
     handleShowNegoCreditsModal,
     negotiationCredit,
     handleShowNegoModal,
+    negotiationId: data.negotiation_id,
   };
 }
 

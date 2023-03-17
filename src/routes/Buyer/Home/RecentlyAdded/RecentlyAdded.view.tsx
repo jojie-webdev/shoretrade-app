@@ -118,6 +118,7 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
                           }
                           negotiationCredit={negotiationCredit}
                           handleShowNegoModal={handleShowNegoModal}
+                          negotiationId={rec.negotiation_id}
                         />
                       </StyledInteraction>
                     ) : (
@@ -154,6 +155,7 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
                         handleShowNegoCreditsModal={handleShowNegoCreditsModal}
                         negotiationCredit={negotiationCredit}
                         handleShowNegoModal={handleShowNegoModal}
+                        negotiationId={rec.negotiation_id}
                       />
                     )}
                   </Link>

@@ -17,7 +17,7 @@ export const getCompanyPlanStatus = (
     if (isFreeTrial || isPaid) {
       return 'ACTIVE';
     } else {
-      if (paymentDelay < 2) {
+      if (paymentDelay < 1) {
         return 'UNSUCCESSFUL';
       } else if (paymentDelay < 5) {
         return 'LATE';
