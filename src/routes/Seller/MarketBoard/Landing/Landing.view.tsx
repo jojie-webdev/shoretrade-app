@@ -289,11 +289,11 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
         <FilterSearchContainer>
           <Search
             className="search"
-            value={props.searchTerm}
+            value={props.searchNegoTerm}
             onChange={(event: any) =>
-              props.setSearchTerm(event.currentTarget.value)
+              props.handleSearchNegotiations(event.currentTarget.value)
             }
-            resetValue={() => props.setSearchTerm('')}
+            resetValue={() => props.handleSearchNegotiations('')}
             placeholder="Product Name"
             rounded
           />

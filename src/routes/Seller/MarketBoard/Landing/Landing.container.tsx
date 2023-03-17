@@ -30,6 +30,7 @@ import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersS
 import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequestState';
 import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
 import { Store } from 'types/store/Store';
+import useDebounce from 'utils/Hooks/useDebounce';
 import useLocalStorage from 'utils/Hooks/useLocalStorage';
 import useTimeout from 'utils/Hooks/useTimeout';
 import { useTheme } from 'utils/SFMTheme';
@@ -52,7 +53,7 @@ const MarketBoardLanding = (): JSX.Element => {
     GetActiveOffersRequestResponseItem[]
   >([]);
   const [waitAll, setWaitAll] = useState(true);
-  const [activeTab, setActiveTab] = useState(TABS.REVERSE_MARKETPLACE);
+  const [activeTab, setActiveTab] = useState(TABS.NEGO);
 
   const user = useSelector((state: Store) => state.getUser.data?.data.user);
   const userPending =
@@ -132,6 +133,7 @@ const MarketBoardLanding = (): JSX.Element => {
     locationTab as TabOptions
   );
   const [searchTerm, setSearchTerm] = useState('');
+  const [searchNegoTerm, setSearchNegoTerm] = useState('');
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const [initial, setInitial] = useState(true);
 
@@ -165,6 +167,10 @@ const MarketBoardLanding = (): JSX.Element => {
     setActiveTab(selectedTab);
   };
 
+  const handleSearchNegotiations = (keyword: string) => {
+    setSearchNegoTerm(keyword);
+  };
+
   const reverseMarketPlace =
     (activePlans &&
       activePlans?.filter(
@@ -179,6 +185,16 @@ const MarketBoardLanding = (): JSX.Element => {
     clear();
   }, 2000);
 
+  useDebounce(
+    () => {
+      if (searchNegoTerm.length > 2 || searchNegoTerm.length === 0) {
+        dispatch(getAllNegotiationsActions.request({ term: searchNegoTerm }));
+      }
+    },
+    1000,
+    [searchNegoTerm]
+  );
+
   useEffect(() => {
     // if (currentTab === 'Buyer Requests') {
     //   dispatch(getAllMarketRequestActions.request({}));
@@ -186,6 +202,7 @@ const MarketBoardLanding = (): JSX.Element => {
     //   dispatch(getActiveOffersActions.request({}));
     // }
 
+    dispatch(getAllNegotiationsActions.request({}));
     dispatch(getAllMarketRequestActions.request({}));
     dispatch(getActiveOffersActions.request({}));
 
@@ -361,6 +378,8 @@ const MarketBoardLanding = (): JSX.Element => {
     handleTabSelect,
     activeTab,
     onNegotiationClick,
+    handleSearchNegotiations,
+    searchNegoTerm,
   };
 
   const sfmViewProps = {

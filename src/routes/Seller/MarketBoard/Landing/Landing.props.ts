@@ -36,4 +36,6 @@ export interface MarketBoardLandingGeneratedProps {
   handleTabSelect: (selectedTab: TABS) => void;
   activeTab: string;
   onNegotiationClick: (data: GetAllNegoRequestResponseItem) => void;
+  handleSearchNegotiations: (keyword: string) => void;
+  searchNegoTerm: string;
 }

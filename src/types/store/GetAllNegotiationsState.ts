@@ -2,6 +2,7 @@ import { GenericResponse } from 'types/GenericResponse';
 
 export type GetAllNegotiationsMeta = {
   // TODO: Add request values
+  term?: string;
 };
 
 export type NegotiationItem = {

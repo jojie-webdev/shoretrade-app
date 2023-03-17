@@ -15,7 +15,11 @@ function* getAllNegotiationsRequest(
   const state: Store = yield select();
   if (state.auth.token) {
     try {
-      const { data } = yield call(getAllNegotiations, state.auth.token);
+      const { data } = yield call(
+        getAllNegotiations,
+        action.meta,
+        state.auth.token
+      );
       yield put(getAllNegotiationsActions.success(data));
     } catch (e) {
       yield put(getAllNegotiationsActions.failed(e.message));
