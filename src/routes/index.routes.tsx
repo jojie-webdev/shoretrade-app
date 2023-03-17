@@ -9,8 +9,12 @@ import {
   useHistory,
   useLocation,
 } from 'react-router-dom';
-import { getActivePlanActions, getCompanyPlanActions } from 'store/actions';
-import getUserActions from 'store/actions/getUser';
+import {
+  getActivePlanActions,
+  getCompanyPlanActions,
+  logoutActions,
+  getUserActions,
+} from 'store/actions';
 import { Routes } from 'types/Routes';
 import { Store } from 'types/store/Store';
 
@@ -171,6 +175,7 @@ const RoutesComponent = (): JSX.Element => {
   const verifyUserData = useSelector(
     (state: Store) => state.verify.data?.data.user
   );
+  const getUser = useSelector((state: Store) => state.getUser);
 
   useEffect(() => {
     if (verifyUserData) {
@@ -205,6 +210,22 @@ const RoutesComponent = (): JSX.Element => {
     }
     // eslint-disable-next-line
   }, [isAuthenticated, authenticatedUserType]);
+
+  useEffect(() => {
+    const handleWindowFocus = function logout() {
+      if (!getUser.pending && getUser.data) {
+        dispatch(getUserActions.request());
+      }
+    };
+
+    if (!getUser.pending && getUser.error) {
+      dispatch(logoutActions.request());
+    }
+
+    window.addEventListener('focus', handleWindowFocus);
+
+    return () => window.removeEventListener('focus', handleWindowFocus);
+  }, [getUser]);
 
   return (
     <Switch>
