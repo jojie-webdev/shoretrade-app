@@ -319,6 +319,8 @@ const NegotiationDetails = (): JSX.Element => {
           boxes: negotiation.listing_boxes,
         })
       );
+
+      history.push(BUYER_ROUTES.NEGOTIATION_CHECKOUT(negotiation.id || ''));
     }
   };
 
@@ -438,16 +440,16 @@ const NegotiationDetails = (): JSX.Element => {
   //   setTimer(timerId);
   // };
 
-  useEffect(() => {
-    if (
-      isAddCartNegotiatedItemPending !== null &&
-      isAddCartNegotiatedItemPending !== undefined &&
-      isAddCartNegotiatedItemPending === false &&
-      negotiation?.id
-    ) {
-      history.push(BUYER_ROUTES.NEGOTIATION_CHECKOUT(negotiation.id || ''));
-    }
-  }, [negotiation, isAddCartNegotiatedItemPending]);
+  // useEffect(() => {
+  //   if (
+  //     isAddCartNegotiatedItemPending !== null &&
+  //     isAddCartNegotiatedItemPending !== undefined &&
+  //     isAddCartNegotiatedItemPending === false &&
+  //     negotiation?.id
+  //   ) {
+  //     history.push(BUYER_ROUTES.NEGOTIATION_CHECKOUT(negotiation.id || ''));
+  //   }
+  // }, [negotiation, isAddCartNegotiatedItemPending]);
 
   useEffect(() => {
     if (employeeId && negoRequestId) {
