@@ -72,7 +72,7 @@ export const companyPlanToProps = (
   const failedPayment = currentPlanDetails?.subscription.paid_at === null;
   const latePayment =
     currentPlanDetails?.subscription.paid_at === null &&
-    moment(moment()).diff(currentPlanDetails?.subscription.starts_at, 'd') >= 2;
+    moment(moment()).diff(currentPlanDetails?.subscription.starts_at, 'd') >= 1;
 
   const nextBillingDate = companyPlan?.nextBillingData?.date
     ? moment.utc(companyPlan.nextBillingData.date).format('DD MMMM YYYY')
