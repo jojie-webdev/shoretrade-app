@@ -53,6 +53,10 @@ const NegotiationView = (props: NegotiationProps) => {
     showNegotiationAcceptedModal,
     handleNegotiationAcceptedModalClose,
     listing,
+    listingBoxes,
+    acceptNegotiationError,
+    handleRadioClick,
+    selectedGroupedBoxIndex,
   } = props;
 
   const history = useHistory();
@@ -278,6 +282,11 @@ const NegotiationView = (props: NegotiationProps) => {
               )
             : '0.00'
         }
+        listingBoxes={listingBoxes}
+        negoMeasurementUnit={negotiation?.measurement_unit || ''}
+        acceptNegotiationError={acceptNegotiationError}
+        handleRadioClick={handleRadioClick}
+        selectedGroupedBoxIndex={selectedGroupedBoxIndex}
       />
 
       <NegotiationSellerModal

@@ -1,8 +1,15 @@
 import { GenericResponse } from 'types/GenericResponse';
 
+export interface Box {
+  count: number | null;
+  id: string;
+  quantity: number | null;
+  weight: number;
+}
+
 export type AcceptNegotiationMeta = {
   negotiationRequestId: string;
-  listingBoxId: string;
+  listingBoxes: Box[];
 };
 
 // TODO: Update response value

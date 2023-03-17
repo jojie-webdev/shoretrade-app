@@ -6,7 +6,16 @@ export type GetListingBoxesMeta = {
 };
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export type GetListingBoxesResponseItem = {};
+export type GetListingBoxesResponseItem = {
+  token: string;
+  boxes: {
+    count: number | null;
+    id: string;
+    quantity: number | null;
+    weight: number;
+  }[][];
+  shipping: [];
+};
 
 export type GetListingBoxesPayload = GenericResponse<{
   token: string;

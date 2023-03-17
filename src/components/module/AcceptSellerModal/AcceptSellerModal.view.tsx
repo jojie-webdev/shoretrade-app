@@ -2,6 +2,7 @@ import React from 'react';
 
 import Button from 'components/base/Button';
 import Radio from 'components/base/Radio';
+import { Exclamation } from 'components/base/SVG';
 import Typography from 'components/base/Typography';
 import MobileModal from 'components/layout/MobileModal';
 import Modal from 'components/layout/Modal';
@@ -46,72 +47,98 @@ const AcceptSellerModal = (props: AcceptSellerModalProps): JSX.Element => {
 
       <div style={{ marginTop: 25 }} />
       <DetailsContainer>
-        <Typography style={{ color: '#565A6A' }}>Quantity</Typography>
-        <Typography style={{ color: '#565A6A' }}>{props.quantity}</Typography>
+        <Typography weight="700" style={{ color: '#565A6A' }}>
+          Quantity
+        </Typography>
+        <div
+          style={{
+            display: 'flex',
+            marginRight: props.acceptNegotiationError && -17,
+          }}
+        >
+          <Typography weight="700" style={{ color: '#565A6A', marginRight: 3 }}>
+            {props.quantity}
+          </Typography>
+          {props.acceptNegotiationError && (
+            <Exclamation fill={theme.brand.primary} width={40} height={40} />
+          )}
+        </div>
       </DetailsContainer>
-      {/* <div style={{ padding: '10px 0px 10px 10px' }}>
-        <BoxContainer>
-          <div style={{ display: 'flex' }}>
-            <div style={{ marginTop: 1 }}>
-              <Radio size={13} />
-            </div>
 
-            <div>
-              <Typography color="noshade" style={{ marginLeft: 5 }}>
-                5kg x 2
-              </Typography>
-            </div>
+      {props.acceptNegotiationError && (
+        <>
+          <div>
+            {props?.listingBoxes?.boxes?.map((groupedBoxes, index) => (
+              <>
+                <Typography color="primary" weight="700">
+                  Update the box combination for this negotiation
+                </Typography>
+                <BoxContainer>
+                  <div style={{ display: 'flex' }}>
+                    <div style={{ marginTop: 3 }}>
+                      <Radio
+                        size={13}
+                        checked={props.selectedGroupedBoxIndex === index}
+                        onClick={() =>
+                          props.handleRadioClick &&
+                          props.handleRadioClick(index)
+                        }
+                      />
+                    </div>
+
+                    <div>
+                      {groupedBoxes.map((box) => (
+                        <Typography
+                          key={box.id}
+                          color="noshade"
+                          weight="700"
+                          style={{ marginLeft: 5 }}
+                        >
+                          {box.weight}
+                          {props.negoMeasurementUnit.toLowerCase()} x{' '}
+                          {box.quantity}
+                        </Typography>
+                      ))}
+                    </div>
+                  </div>
+                </BoxContainer>
+                <div style={{ marginTop: 10 }} />
+              </>
+            ))}
           </div>
-          <Typography color="noshade">10 kg</Typography>
-        </BoxContainer>
-        <div style={{ marginTop: 10 }} />
-
-        <BoxContainer>
-          <div style={{ display: 'flex' }}>
-            <div style={{ marginTop: 1 }}>
-              <Radio size={13} />
-            </div>
-
-            <div>
-              <Typography color="noshade" style={{ marginLeft: 5 }}>
-                5kg x 2
-              </Typography>
-              <Typography color="noshade" style={{ marginLeft: 5 }}>
-                4kg x 1
-              </Typography>
-            </div>
-          </div>
-          <Typography color="noshade">14 kg</Typography>
-        </BoxContainer>
-      </div> 
-
-      <div style={{ marginTop: 15 }} />*/}
+          <div style={{ marginTop: 15 }} />
+        </>
+      )}
 
       <DetailsContainer>
-        <Typography style={{ color: '#565A6A' }}>
+        <Typography weight="700" style={{ color: '#565A6A' }}>
           Buyer&apos;s Negotiated Price
         </Typography>
-        <Typography style={{ color: '#565A6A' }}>
+        <Typography weight="700" style={{ color: '#565A6A' }}>
           {props.buyersNegoPrice}
         </Typography>
       </DetailsContainer>
       <DetailsContainer>
-        <Typography style={{ color: '#565A6A' }}>
+        <Typography weight="700" style={{ color: '#565A6A' }}>
           Change in value{' '}
           <span className="indicator" style={{ color: theme.grey.noshade }}>
             {props.percentageChangeInPrice}
           </span>
         </Typography>
-        <Typography color={props.isGoodNego ? 'success' : 'error'}>
-          {props.negoDiff}
+        <Typography weight="700" color={props.isGoodNego ? 'success' : 'error'}>
+          {props?.negoDiff?.toLowerCase()}
         </Typography>
       </DetailsContainer>
 
       <div style={{ marginTop: 48 }} />
       <Line />
       <TotalValueContainer>
-        <Typography color="noshade">Total Value</Typography>
-        <Typography color="noshade">{props.totalValue}</Typography>
+        <Typography weight="700" color="noshade">
+          Total Value
+        </Typography>
+        <Typography weight="700" color="noshade">
+          {props.totalValue}
+        </Typography>
       </TotalValueContainer>
 
       <div style={{ marginTop: 7 }} />

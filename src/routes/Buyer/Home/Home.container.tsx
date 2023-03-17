@@ -161,7 +161,7 @@ const Home = (): JSX.Element => {
     useSelector((state: Store) => state.createNegotiation_2.pending) === true;
 
   const handleNegoModalBtnClick = () => {
-    if (clickedRecentListing?.id) {
+    if (clickedRecentListing?.id && negotiationPrice) {
       const payload = {
         listingId: clickedRecentListing.id,
         listingBoxes: selectedBoxesWeight,

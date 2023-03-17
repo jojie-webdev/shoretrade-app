@@ -17,7 +17,6 @@ export const getAllNegotiations = (
   token: string
 ) => {
   const query = queryString.stringify(negotiations);
-  console.log('getAllNegotiations > query > ', query);
 
   return axios({
     method: 'get',

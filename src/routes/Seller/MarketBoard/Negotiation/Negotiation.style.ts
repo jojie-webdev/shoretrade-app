@@ -63,6 +63,16 @@ export const Container = styled.div`
       fill: ${({ theme }) => theme.grey.noshade};
     }
   }
+
+  .radio__outer_circle {
+    height: 15px;
+    width: 15px;
+
+    .radio__inner_circle {
+      height: 7.25px;
+      width: 7.25px;
+    }
+  }
 `;
 
 export const StyledAcceptButton = styled(Button)`

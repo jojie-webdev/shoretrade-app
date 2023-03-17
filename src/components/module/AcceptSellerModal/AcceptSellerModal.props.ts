@@ -1,3 +1,5 @@
+import { GetListingBoxesResponseItem } from 'types/store/GetListingBoxesState';
+
 export interface AcceptSellerModalProps {
   show: boolean;
   onAcceptBtnClick: () => void;
@@ -9,4 +11,9 @@ export interface AcceptSellerModalProps {
   isGoodNego: boolean;
   negoDiff: string;
   totalValue: string;
+  listingBoxes: GetListingBoxesResponseItem;
+  negoMeasurementUnit: string;
+  acceptNegotiationError?: string;
+  handleRadioClick?: (selectedGroupedBoxIndex: number) => void;
+  selectedGroupedBoxIndex?: number;
 }
