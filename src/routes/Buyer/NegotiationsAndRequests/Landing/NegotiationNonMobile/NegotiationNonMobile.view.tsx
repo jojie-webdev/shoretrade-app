@@ -85,12 +85,8 @@ const NegotiationMobileView = (props: NegotiationNonMobilePrivateProps) => {
 
       const isPreAuction = item.is_pre_auction || !isEmpty(item.auction_date);
 
-      const time =
-        item.negotiation_offer?.updated_at ||
-        item.negotiation_offer?.created_at ||
-        item.created_at;
+      const time = item.negotiation_offer?.updated_at || item.created_at;
 
-      //2023-03-13T12:49:10.216Z
       if (isFresh || isPreAuction) {
         const expiry = moment(time).add(3, 'h').isBefore()
           ? 'Expired'
@@ -98,7 +94,7 @@ const NegotiationMobileView = (props: NegotiationNonMobilePrivateProps) => {
               moment(time).add(3, 'h').format(),
               '',
               false
-            );
+            ).toLowerCase();
 
         return expiry;
       }
@@ -109,9 +105,38 @@ const NegotiationMobileView = (props: NegotiationNonMobilePrivateProps) => {
             moment(time).add(24, 'h').format(),
             '',
             false
-          );
+          ).toLowerCase();
 
       return expiry;
+    };
+
+    const modifyTimeLimit = () => {
+      const time = getTimeLimit().toLowerCase();
+      let modifiedTime = '';
+
+      if (item.status === 'CHECKOUT' || item.status === 'LOST') {
+        return '';
+      }
+
+      if (time === 'expired') {
+        return 'Expired';
+      }
+
+      if (time.includes('hours')) {
+        const splits = time.split('hours');
+        modifiedTime = splits[0] + 'hours left';
+      } else if (time.includes('hour')) {
+        const splits = time.split('hour');
+        modifiedTime = splits[0] + 'hour left';
+      } else {
+        modifiedTime = time + ' left';
+
+        if (!time) {
+          modifiedTime = '';
+        }
+      }
+
+      return modifiedTime;
     };
 
     // const reworkDisplayStatus = (displayStatus: string) => {
@@ -176,9 +201,10 @@ const NegotiationMobileView = (props: NegotiationNonMobilePrivateProps) => {
                 variant="caption"
                 color={item.expiry === 'Expired' ? 'error' : 'primary'}
               >
-                {item.expiry === 'Expired'
+                {/* {item.expiry === 'Expired'
                   ? item.expiry
-                  : `${item.expiry} left`}
+                  : `${item.expiry} left`} */}
+                {modifyTimeLimit()}
               </SubText>
             </div>
           </Col>

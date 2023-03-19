@@ -44,7 +44,7 @@ export const formatRunningDateDifference = (
   }
 
   return `${remainingDays > 1 ? day + ' ' : ''}${
-    remainingHours > 1 ? hours + ' ' : ''
+    remainingHours > 0 ? hours + ' ' : ''
   }${remainingMinutes > 1 ? minutes + ' ' : ''}`;
 };
 
