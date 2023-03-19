@@ -12,6 +12,7 @@ import NegotiateSellerModal from 'components/module/NegotiateSellerModal';
 import NegotiationSellerModal from 'components/module/NegotiationSellerModal';
 import SellerNegotiationAlert from 'components/module/SellerNegotiationAlert';
 import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
+import { Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { sizeToString } from 'utils/Listing';
@@ -29,6 +30,13 @@ import {
   NewNegoTypeWrapper,
   StyledAcceptButton,
   StyledTypography,
+  DeclineAndNegoBtnContainer,
+  NegoBtnWrapper,
+  DeclineBtnWrapper,
+  DeclineAndNegoBtnContainerMobile,
+  AcceptBtnCol,
+  AcceptBtnContainer,
+  AcceptBtnContainerMobile,
 } from './Negotiation.style';
 
 const NegotiationView = (props: NegotiationProps) => {
@@ -621,8 +629,37 @@ const NegotiationView = (props: NegotiationProps) => {
           negotiation?.status !== 'END' &&
           negotiation?.status !== 'CLOSED' && (
             <CTAContainer>
-              <div style={{ display: 'flex' }}>
-                <Button
+              <Col style={{ padding: 0, marginTop: 10 }}>
+                <DeclineAndNegoBtnContainer>
+                  <DeclineBtnWrapper
+                    onClick={handleDeclineClick}
+                    variant="outline"
+                    text={
+                      <Typography color="primary" style={{ marginRight: 5 }}>
+                        Decline
+                      </Typography>
+                    }
+                    icon={<Close fill={theme.brand.primary} />}
+                  />
+                  {negotiation?.display_status?.toLowerCase() !==
+                    'awaiting buyer' && (
+                    <NegoBtnWrapper
+                      text={
+                        <Typography color="noshade" style={{ marginRight: 5 }}>
+                          Negotiate
+                        </Typography>
+                      }
+                      icon={<Refresh fill={theme.grey.noshade} />}
+                      onClick={handleNegotiationCloseBtnClick}
+                      disabled={
+                        negotiation?.display_status === 'Awaiting Buyer'
+                      }
+                    />
+                  )}
+                </DeclineAndNegoBtnContainer>
+              </Col>
+              <DeclineAndNegoBtnContainerMobile>
+                <DeclineBtnWrapper
                   onClick={handleDeclineClick}
                   variant="outline"
                   text={
@@ -631,11 +668,10 @@ const NegotiationView = (props: NegotiationProps) => {
                     </Typography>
                   }
                   icon={<Close fill={theme.brand.primary} />}
-                  style={{ width: '100%', marginRight: 10 }}
                 />
                 {negotiation?.display_status?.toLowerCase() !==
                   'awaiting buyer' && (
-                  <Button
+                  <NegoBtnWrapper
                     text={
                       <Typography color="noshade" style={{ marginRight: 5 }}>
                         Negotiate
@@ -644,11 +680,30 @@ const NegotiationView = (props: NegotiationProps) => {
                     icon={<Refresh fill={theme.grey.noshade} />}
                     onClick={handleNegotiationCloseBtnClick}
                     disabled={negotiation?.display_status === 'Awaiting Buyer'}
-                    style={{ marginRight: 10, width: '100%' }}
+                    style={{ marginTop: 10 }}
                   />
                 )}
-              </div>
-              <div style={{ width: '124px' }}>
+              </DeclineAndNegoBtnContainerMobile>
+              <AcceptBtnCol>
+                <AcceptBtnContainer>
+                  {negotiation?.display_status?.toLowerCase() !==
+                    'awaiting buyer' && (
+                    <StyledAcceptButton
+                      text={
+                        <Typography color="noshade" style={{ marginRight: 5 }}>
+                          Accept
+                        </Typography>
+                      }
+                      icon={<Check width={10} height={9} />}
+                      onClick={handleAcceptBtnClick}
+                      disabled={
+                        negotiation?.display_status === 'Awaiting Buyer'
+                      }
+                    />
+                  )}
+                </AcceptBtnContainer>
+              </AcceptBtnCol>
+              <AcceptBtnContainerMobile>
                 {negotiation?.display_status?.toLowerCase() !==
                   'awaiting buyer' && (
                   <StyledAcceptButton
@@ -660,9 +715,10 @@ const NegotiationView = (props: NegotiationProps) => {
                     icon={<Check width={10} height={9} />}
                     onClick={handleAcceptBtnClick}
                     disabled={negotiation?.display_status === 'Awaiting Buyer'}
+                    style={{ marginTop: 10 }}
                   />
                 )}
-              </div>
+              </AcceptBtnContainerMobile>
             </CTAContainer>
           )}
       </DetailsContainer>
