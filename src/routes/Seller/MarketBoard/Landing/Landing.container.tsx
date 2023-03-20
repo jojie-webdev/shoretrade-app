@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
 import SpinnerLogo from 'components/base/SpinnerLogo';
-import TermsAndCondition from 'components/module/TermsAndCondition';
 import {
   SELLER_ACCOUNT_ROUTES,
   SELLER_MARKET_BOARD_ROUTES,
@@ -31,7 +30,6 @@ import { GetAllMarketRequestResponseItem } from 'types/store/GetAllMarketRequest
 import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
 import { Store } from 'types/store/Store';
 import useDebounce from 'utils/Hooks/useDebounce';
-import useLocalStorage from 'utils/Hooks/useLocalStorage';
 import useTimeout from 'utils/Hooks/useTimeout';
 import { useTheme } from 'utils/SFMTheme';
 
@@ -144,11 +142,6 @@ const MarketBoardLanding = (): JSX.Element => {
   const [buyerRequestFilter, setBuyerRequestFilter] = useState<
     { label: string; value: string }[]
   >([]);
-
-  const [isAcceptClicked, setIsAcceptClicked] = useLocalStorage(
-    'isTermsAndConAccepted',
-    false
-  );
   const onChangeCurrentTab = (newTab: TabOptions) => setCurrentTab(newTab);
 
   const activePlans = useSelector(
@@ -395,30 +388,6 @@ const MarketBoardLanding = (): JSX.Element => {
     return <SpinnerLogo style={{ width: '200px', height: '80px' }} />;
   } else {
     // return <LandingSFMView {...sfmViewProps} />;
-
-    if (!isAcceptClicked && reverseMarketPlace) {
-      return (
-        <TermsAndCondition
-          appType="seller"
-          textWeb1=""
-          textWeb2="Browse Buyer Requests"
-          textMobile1="Browse Buyer Requests"
-          textMobile2=""
-          textMobile3=""
-          cardText1={
-            'View the products Buyers have requested and make offers directly to them.'
-          }
-          cardText2={
-            'Negotiate and accept offers before the Buyer Request closes 7 days after creation or once the quantity requested has been filled.'
-          }
-          cardText3={
-            'Organise shipping for all finalised Buyer Requests. Keep in mind that a Buyer Request is not finalised until the Buyer has processed the payment. Turn on your notifications to ensure you stay up to date.'
-          }
-          isAcceptClicked={isAcceptClicked}
-          setIsAcceptClicked={setIsAcceptClicked}
-        />
-      );
-    }
 
     if (theme.isSFM && !reverseMarketPlace) {
       return <LandingSFMView {...sfmViewProps} />;
