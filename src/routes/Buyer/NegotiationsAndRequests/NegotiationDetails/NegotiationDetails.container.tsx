@@ -4,7 +4,7 @@ import Loading from 'components/module/Loading';
 import { BUYER_ROUTES } from 'consts';
 import { BUYER_MARKET_REQUEST_ROUTES } from 'consts/routes';
 import moment from 'moment';
-import { isEmpty, sortBy } from 'ramda';
+import { isEmpty, sortBy, pathOr } from 'ramda';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { getActivePlan } from 'routes/Buyer/Account/SubscriptionPlan/SubscriptionPlan.transform';
@@ -319,6 +319,8 @@ const NegotiationDetails = (): JSX.Element => {
           boxes: negotiation.listing_boxes,
         })
       );
+
+      history.push(BUYER_ROUTES.NEGOTIATION_CHECKOUT(negotiation.id || ''));
     }
   };
 
@@ -339,7 +341,7 @@ const NegotiationDetails = (): JSX.Element => {
       dispatch(
         acceptNegotiationActions.request({
           negotiationRequestId: negotiation?.id,
-          listingBoxId: negotiation?.listing_box_id,
+          listingBoxes: negotiation.listing_boxes,
         })
       );
     }
@@ -438,16 +440,16 @@ const NegotiationDetails = (): JSX.Element => {
   //   setTimer(timerId);
   // };
 
-  useEffect(() => {
-    if (
-      isAddCartNegotiatedItemPending !== null &&
-      isAddCartNegotiatedItemPending !== undefined &&
-      isAddCartNegotiatedItemPending === false &&
-      negotiation?.id
-    ) {
-      history.push(BUYER_ROUTES.NEGOTIATION_CHECKOUT(negotiation.id || ''));
-    }
-  }, [negotiation, isAddCartNegotiatedItemPending]);
+  // useEffect(() => {
+  //   if (
+  //     isAddCartNegotiatedItemPending !== null &&
+  //     isAddCartNegotiatedItemPending !== undefined &&
+  //     isAddCartNegotiatedItemPending === false &&
+  //     negotiation?.id
+  //   ) {
+  //     history.push(BUYER_ROUTES.NEGOTIATION_CHECKOUT(negotiation.id || ''));
+  //   }
+  // }, [negotiation, isAddCartNegotiatedItemPending]);
 
   useEffect(() => {
     if (employeeId && negoRequestId) {

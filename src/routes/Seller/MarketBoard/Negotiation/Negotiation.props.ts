@@ -1,4 +1,5 @@
 import { Variants } from 'components/module/SellerNegotiationAlert/SellerNegotiationAlert.props';
+import { GetListingBoxesResponseItem } from 'types/store/GetListingBoxesState';
 import { GetListingByIdData } from 'types/store/GetListingByIdState';
 import { GetNegotiationByIdRequestResponseItem } from 'types/store/GetNegotiationByIdState';
 
@@ -23,6 +24,10 @@ export interface NegotiationProps {
   showNegotiationAcceptedModal: boolean;
   handleNegotiationAcceptedModalClose: () => void;
   listing: GetListingByIdData | undefined;
+  listingBoxes: GetListingBoxesResponseItem;
+  acceptNegotiationError: string;
+  handleRadioClick: (selectedGroupedBoxIndex: number) => void;
+  selectedGroupedBoxIndex: number;
 }
 
 export interface AlertProps {

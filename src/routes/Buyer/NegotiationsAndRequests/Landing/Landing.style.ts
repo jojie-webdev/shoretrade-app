@@ -43,6 +43,10 @@ export const MarketRequestsContainer = styled.div`
   .search__input {
     height: 37px !important;
   }
+
+  .search_wrapper {
+    margin-bottom: 0;
+  }
 `;
 
 export const BadgeText = styled(Typography)<{ empty?: boolean }>`
@@ -216,5 +220,4 @@ export const SearchWrapper = styled(Search)`
   height: 40px;
   max-width: 350px;
   border-radius: 10px;
-  margin-bottom: 30px;
 `;

@@ -5,7 +5,7 @@ import { TypographyProps } from 'components/base/Typography/Typography.props';
 import { useTheme } from 'utils/Theme';
 
 import { NegotiationTagProps } from './NegotiationTag.props';
-import { Container } from './NegotiationTag.style';
+import { Container, TypoWrapper } from './NegotiationTag.style';
 
 const NegotiationTag = (props: NegotiationTagProps): JSX.Element => {
   const theme = useTheme();
@@ -64,13 +64,12 @@ const NegotiationTag = (props: NegotiationTagProps): JSX.Element => {
 
   return (
     <Container backgroundColor={getBackgroundColor().bgColor}>
-      <Typography
-        weight="700"
+      <TypoWrapper
+        weight="600"
         color={getBackgroundColor().textColor as TypographyProps['color']}
-        style={{ fontFamily: 'Basis Grotesque Pro' }}
       >
         {props.text || 'Finalised'}
-      </Typography>
+      </TypoWrapper>
     </Container>
   );
 };

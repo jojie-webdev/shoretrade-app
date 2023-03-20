@@ -194,16 +194,6 @@ const MarketRequestsLandingView = (
         onClickClose={() => setItemToDelete({ value: null })}
       />
 
-      {/* <Typography variant="label" style={{ marginBottom: 5 }}>
-        Search
-      </Typography>
-      <SearchWrapper
-        value={searchKeyword}
-        onChange={(e) => handleSearchChange(e.target.value)}
-        placeholder="Search..."
-        resetValue={() => handleSearchChange('')}
-      /> */}
-
       <SegmentedControls
         options={[TABS.NEGOTIATIONS, TABS.MARKET_REQUEST]}
         controlButtonColor={theme.brand.secondary}
@@ -268,7 +258,15 @@ const MarketRequestsLandingView = (
             : canNegotiate &&
               isAcceptNegoClicked && (
                 <>
-                  <Col></Col>
+                  <Col>
+                    <SearchWrapper
+                      className="search_wrapper"
+                      value={searchKeyword}
+                      onChange={(e) => handleSearchChange(e.target.value)}
+                      placeholder="Product Name"
+                      resetValue={() => handleSearchChange('')}
+                    />
+                  </Col>
                   <Col xs="content">
                     <Visible sm md lg xl xxl>
                       <Typography color="shade6">

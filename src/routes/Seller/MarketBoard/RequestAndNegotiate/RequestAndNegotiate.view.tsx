@@ -26,6 +26,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { OfferStatus } from 'types/store/GetActiveOffersState';
 import { Specification } from 'types/store/GetAllMarketRequestState';
 import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
+import { GetListingBoxesResponseItem } from 'types/store/GetListingBoxesState';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { transformMarketRequestStatusText } from 'utils/MarketRequest/marketRequestTag';
@@ -514,6 +515,8 @@ const Step1 = ({
           isGoodNego={discountValue >= 0}
           negoDiff={`${toPrice(Math.abs(discountValue))}/${unit}`}
           totalValue={toPrice(activeOffer.price * activeOffer.weight)}
+          listingBoxes={{} as GetListingBoxesResponseItem}
+          negoMeasurementUnit=""
         />
 
         <NegotiateSellerModal

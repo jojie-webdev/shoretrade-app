@@ -9,7 +9,9 @@ import {
   acceptNegotiationActions,
   declineNegotiationActions,
   getListingByIdActions,
+  getListingBoxesActions,
 } from 'store/actions';
+import { GetListingBoxesResponseItem } from 'types/store/GetListingBoxesState';
 import { Store } from 'types/store/Store';
 
 import NegotiationView from './Negotiation.view';
@@ -22,6 +24,7 @@ const Negotiation = (): JSX.Element => {
   const [showSuccessfulNegoModal, setShowSuccessfulNegoModal] = useState(false);
   const [showNegotiationAcceptedModal, setShowNegotiationAcceptedModal] =
     useState(false);
+  const [selectedGroupedBoxIndex, setSelectedGroupedBoxIndex] = useState(0);
 
   const history = useHistory();
   const location = useLocation();
@@ -40,6 +43,10 @@ const Negotiation = (): JSX.Element => {
     (store: Store) => store.getNegotiationById.data?.data
   );
 
+  const listingBoxes =
+    useSelector((store: Store) => store.getListingBoxes.data?.data) ||
+    ({} as GetListingBoxesResponseItem);
+
   const listing = useSelector(
     (store: Store) => store.getListingById.data?.data
   );
@@ -50,6 +57,10 @@ const Negotiation = (): JSX.Element => {
 
   const isAcceptNegotiationPending = useSelector(
     (store: Store) => store.acceptNegotiation.pending
+  );
+
+  const acceptNegotiationError = useSelector(
+    (store: Store) => store.acceptNegotiation.error
   );
 
   const isDeclineNegotiationPending = useSelector(
@@ -73,7 +84,9 @@ const Negotiation = (): JSX.Element => {
       dispatch(
         acceptNegotiationActions.request({
           negotiationRequestId: negotiation?.id,
-          listingBoxId: negotiation?.listing_box_id,
+          listingBoxes: listingBoxes.boxes
+            ? listingBoxes.boxes[selectedGroupedBoxIndex]
+            : negotiation.listing_boxes,
         })
       );
     }
@@ -117,6 +130,21 @@ const Negotiation = (): JSX.Element => {
     }
   };
 
+  const handleRadioClick = (groupedBoxesIndex: number) => {
+    setSelectedGroupedBoxIndex(groupedBoxesIndex);
+  };
+
+  useEffect(() => {
+    if (acceptNegotiationError && listing && negotiation) {
+      dispatch(
+        getListingBoxesActions.request({
+          listingId: listing.listing_id,
+          weight: negotiation.desired_quantity.toString(),
+        })
+      );
+    }
+  }, [negotiation, listing, acceptNegotiationError]);
+
   useEffect(() => {
     if (negotiationRequestId) {
       dispatch(getNegotiationByIdActions.request({ negotiationRequestId }));
@@ -132,12 +160,21 @@ const Negotiation = (): JSX.Element => {
   }, [isCreateSellerCounterOfferPending]);
 
   useEffect(() => {
-    if (isAcceptNegotiationPending === false) {
+    if (
+      !acceptNegotiationError &&
+      negotiationRequestId &&
+      isAcceptNegotiationPending === false
+    ) {
       setShowAcceptModal(false);
       setShowNegotiationAcceptedModal(true);
       dispatch(getNegotiationByIdActions.request({ negotiationRequestId }));
+      dispatch(acceptNegotiationActions.clear());
     }
-  }, [isAcceptNegotiationPending]);
+  }, [
+    acceptNegotiationError,
+    negotiationRequestId,
+    isAcceptNegotiationPending,
+  ]);
 
   useEffect(() => {
     if (isDeclineNegotiationPending === false) {
@@ -189,6 +226,10 @@ const Negotiation = (): JSX.Element => {
     showNegotiationAcceptedModal,
     handleNegotiationAcceptedModalClose,
     listing,
+    listingBoxes,
+    acceptNegotiationError,
+    handleRadioClick,
+    selectedGroupedBoxIndex,
   };
 
   return <NegotiationView {...generatedProps} />;

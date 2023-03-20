@@ -208,7 +208,8 @@ const HomeView = (props: HomeGeneratedProps) => {
       isOpen: showNegoModal,
       onClickClose: handleNegoModalToggle,
       action: handleNegoModalBtnClick,
-      disableActionText: isBeyondCutoff,
+      disableActionText:
+        isBeyondCutoff || !negotiationPrice || !negotiationWeight,
       negotiationPrice,
       handleNegotiationPriceSetting,
       unit,

@@ -3,6 +3,7 @@ import Button from 'components/base/Button';
 import Typography from 'components/base/Typography';
 import TypographyView from 'components/base/Typography/Typography.view';
 import { BREAKPOINTS } from 'consts/breakpoints';
+import { Col, Row } from 'react-grid-system';
 import styled from 'utils/styled';
 import { pxToRem } from 'utils/Theme';
 
@@ -63,6 +64,16 @@ export const Container = styled.div`
       fill: ${({ theme }) => theme.grey.noshade};
     }
   }
+
+  .radio__outer_circle {
+    height: 15px;
+    width: 15px;
+
+    .radio__inner_circle {
+      height: 7.25px;
+      width: 7.25px;
+    }
+  }
 `;
 
 export const StyledAcceptButton = styled(Button)`
@@ -72,11 +83,13 @@ export const StyledAcceptButton = styled(Button)`
   height: 100%;
 `;
 
-export const CTAContainer = styled.div`
+export const CTAContainer = styled(Row)`
   display: flex;
   justify-content: space-between;
   width: 100%;
   margin-top: 56px;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
 `;
 
 export const DetailsContainer = styled.div`
@@ -115,4 +128,76 @@ export const NewNegoTypeWrapper = styled.span`
   margin: 0;
   font-family: 'Graphik';
   color: ${({ theme }) => theme.brand.primary};
+`;
+
+export const DeclineAndNegoBtnContainer = styled.div`
+  display: flex;
+
+  @media (max-width: 600px) {
+    justify-items: space-between;
+  }
+
+  @media (max-width: 467px) {
+    display: none;
+  }
+`;
+
+export const DeclineBtnWrapper = styled(Button)`
+  width: 100%;
+  margin-right: 10px;
+`;
+
+export const NegoBtnWrapper = styled(Button)`
+  width: 100%;
+`;
+
+export const DeclineAndNegoBtnContainerMobile = styled.div`
+  width: 100%;
+
+  @media (min-width: 468px) {
+    display: none;
+  }
+`;
+
+export const AcceptBtnCol = styled(Col)`
+  padding: 0px !important;
+  margin-top: 10px;
+  margin-left: 10px !important;
+
+  @media (max-width: 880px) and (min-width: 835px) {
+    margin-left: 0px !important;
+    width: 100%;
+  }
+
+  @media (max-width: 600px) {
+    margin-left: 0px !important;
+    width: 100%;
+  }
+
+  @media (max-width: 467px) {
+    display: none;
+  }
+`;
+
+export const AcceptBtnContainer = styled.div`
+  width: 124px;
+  margin-left: auto;
+
+  @media (max-width: 880px) and (min-width: 835px) {
+    width: 100%;
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
+  }
+`;
+
+export const AcceptBtnContainerMobile = styled.div`
+  padding: 0px !important;
+  width: 100%;
+  margin-left: auto;
+
+  @media (min-width: 468px) {
+    display: none;
+  }
 `;

@@ -4,7 +4,8 @@ import Interactions from 'components/base/Interactions';
 import { TrashCan } from 'components/base/SVG';
 import Tag from 'components/base/Tag';
 import Typography from 'components/base/Typography';
-import { isNil } from 'ramda';
+import moment from 'moment';
+import { isEmpty, isNil } from 'ramda';
 import { Col } from 'react-grid-system';
 import {
   getExpiry,
@@ -12,6 +13,7 @@ import {
 } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
+import { formatRunningDateDifference } from 'utils/MarketRequest';
 import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
 
@@ -47,6 +49,67 @@ const NegotiationInteractions = (
     );
 
     return size;
+  };
+
+  const getTimeLimit = () => {
+    const isFresh = !isEmpty(
+      data.specifications.filter((spec) => spec.name.toLowerCase() === 'fresh')
+    );
+
+    const isPreAuction = data.is_pre_auction || !isEmpty(data.auction_date);
+
+    const time = data.negotiation_offer?.updated_at || data.created_at;
+
+    if (isFresh || isPreAuction) {
+      const expiry = moment(time).add(3, 'h').isBefore()
+        ? 'Expired'
+        : formatRunningDateDifference(
+            moment(time).add(3, 'h').format(),
+            '',
+            false
+          ).toLowerCase();
+
+      return expiry;
+    }
+
+    const expiry = moment(time).add(24, 'h').isBefore()
+      ? 'Expired'
+      : formatRunningDateDifference(
+          moment(time).add(24, 'h').format(),
+          '',
+          false
+        ).toLowerCase();
+
+    return expiry;
+  };
+
+  const modifyTimeLimit = () => {
+    const time = getTimeLimit().toLowerCase();
+    let modifiedTime = '';
+
+    if (data.status === 'CHECKOUT' || data.status === 'LOST') {
+      return '';
+    }
+
+    if (time === 'expired') {
+      return 'Expired';
+    }
+
+    if (time.includes('hours')) {
+      const splits = time.split('hours');
+      modifiedTime = splits[0] + 'hours left';
+    } else if (time.includes('hour')) {
+      const splits = time.split('hour');
+      modifiedTime = splits[0] + 'hour left';
+    } else {
+      modifiedTime = time + ' left';
+
+      if (!time) {
+        modifiedTime = '';
+      }
+    }
+
+    return modifiedTime;
   };
 
   return (
@@ -94,7 +157,7 @@ const NegotiationInteractions = (
                 variant="caption"
                 color={isRedLabel(data.created_at) ? 'error' : 'shade6'}
               >
-                {getExpiry(data.created_at)}
+                {modifyTimeLimit()}
               </Typography>
             </Col>
             <Col style={{ padding: '0 5px' }}>
