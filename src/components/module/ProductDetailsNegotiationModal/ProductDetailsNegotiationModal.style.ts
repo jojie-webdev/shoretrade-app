@@ -10,8 +10,8 @@ export const StyledTextField = styled(TextField)`
 export const GroupedBoxContainer = styled.div`
   display: flex;
   border: 1px solid ${({ theme }) => theme.grey.shade5};
-  padding: 5px;
-  border-radius: 8px;
+  padding: 15px 10px;
+  border-radius: 4px;
 `;
 
 export const RadioBtnContainer = styled.div`

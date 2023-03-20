@@ -41,6 +41,19 @@ const ProductDetailsNegotiationModal = (
     actionText,
   } = props;
 
+  const getTotalPrice = () => {
+    return toPrice(
+      selectedBoxesWeight.reduce(
+        (acc, cur) =>
+          acc +
+          (cur.quantity || 0) *
+            cur.weight *
+            (negotiationPrice || Number(productDetailsCard6Props.price)),
+        0
+      )
+    );
+  };
+
   return (
     <Container>
       <ConfirmationModal
@@ -121,7 +134,7 @@ const ProductDetailsNegotiationModal = (
               ? groupedBox.map((p, index) => (
                   <div key={p.id}>
                     <GroupedBoxContainer>
-                      <div style={{ padding: '0 0 0 20px' }}>
+                      <div style={{ height: 20 }}>
                         <Radio
                           checked={index === selectedBoxesIndex}
                           onClick={() =>
@@ -138,20 +151,38 @@ const ProductDetailsNegotiationModal = (
                             <RadioBtnContainer>
                               <div style={{ display: 'flex' }}>
                                 <div style={{ marginRight: 20 }} />
-                                <Typography variant="caption" color="shade6">
-                                  {box.weight}
-                                  {p.unit} x {box.quantity}
+                                <div
+                                  style={{ display: 'flex', marginBottom: -5 }}
+                                >
+                                  <Typography variant="caption" color="shade6">
+                                    {box.weight} {p.unit}
+                                  </Typography>
+                                  <div style={{ marginRight: 15 }} />
+                                  <Typography variant="caption" color="shade6">
+                                    x{box.quantity}
+                                  </Typography>
+                                </div>
+                                <div style={{ marginRight: 15 }} />
+                                <Typography
+                                  color="shade6"
+                                  style={{ marginTop: -3 }}
+                                >
+                                  {Number.isInteger(box.weight)
+                                    ? (
+                                        box.weight * (box.quantity || 0)
+                                      ).toFixed(0)
+                                    : (
+                                        box.weight * (box.quantity || 0)
+                                      ).toFixed(2)}{' '}
+                                  {unit}
                                 </Typography>
                               </div>
-                              <Typography variant="caption" color="shade6">
-                                {Number.isInteger(box.weight)
-                                  ? (box.weight * (box.quantity || 0)).toFixed(
-                                      0
-                                    )
-                                  : (box.weight * (box.quantity || 0)).toFixed(
-                                      2
-                                    )}{' '}
-                                {unit}
+                              <Typography
+                                variant="caption"
+                                color="shade8"
+                                style={{ fontWeight: 600 }}
+                              >
+                                {getTotalPrice()}
                               </Typography>
                             </RadioBtnContainer>
                             {p.boxes.length > index + 1 && (
@@ -224,17 +255,7 @@ const ProductDetailsNegotiationModal = (
                 color="secondary"
                 style={{ fontFamily: 'Basis Grotesque Pro' }}
               >
-                {toPrice(
-                  selectedBoxesWeight.reduce(
-                    (acc, cur) =>
-                      acc +
-                      (cur.quantity || 0) *
-                        cur.weight *
-                        (negotiationPrice ||
-                          Number(productDetailsCard6Props.price)),
-                    0
-                  )
-                )}
+                {getTotalPrice()}
               </Typography>
             </div>
           </div>
