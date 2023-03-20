@@ -443,7 +443,9 @@ const AddDetails = ({
           endAndCatchmentDate: isListingExpiryDateValid(
             onRevalidateCatchment()
           ),
-          endAndCatchmentDateForDirectSale: onRevalidateCatchmentForDirectSale(),
+          endAndCatchmentDateForDirectSale: isAquafuture
+            ? []
+            : onRevalidateCatchmentForDirectSale(),
         });
         break;
     }
