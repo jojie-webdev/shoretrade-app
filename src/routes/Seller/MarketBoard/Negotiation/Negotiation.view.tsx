@@ -295,6 +295,8 @@ const NegotiationView = (props: NegotiationProps) => {
         acceptNegotiationError={acceptNegotiationError}
         handleRadioClick={handleRadioClick}
         selectedGroupedBoxIndex={selectedGroupedBoxIndex}
+        negotiation={negotiation}
+        pricePerUnit={pricePerUnit}
       />
 
       <NegotiationSellerModal

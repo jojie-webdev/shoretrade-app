@@ -94,6 +94,8 @@ const Negotiation = (): JSX.Element => {
 
   const handleAcceptBtnClick = () => {
     setShowAcceptModal((prevValue) => !prevValue);
+    dispatch(getListingBoxesActions.clear());
+    dispatch(acceptNegotiationActions.clear());
   };
 
   const handleNegotiationCloseBtnClick = () => {
