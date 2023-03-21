@@ -1,3 +1,4 @@
+import { Typography } from 'components/base/Typography';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
@@ -31,4 +32,10 @@ export const BreakDownCol = styled.div`
 export const Col = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+export const TotalPriceWrapper = styled(Typography)`
+  margin-left: auto;
+  margin-top: 3px;
+  font-weight: 600;
 `;

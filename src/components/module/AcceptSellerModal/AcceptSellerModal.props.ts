@@ -1,4 +1,6 @@
 import { GetListingBoxesResponseItem } from 'types/store/GetListingBoxesState';
+import { GetListingByIdData } from 'types/store/GetListingByIdState';
+import { GetNegotiationByIdRequestResponseItem } from 'types/store/GetNegotiationByIdState';
 
 export interface AcceptSellerModalProps {
   show: boolean;
@@ -16,4 +18,6 @@ export interface AcceptSellerModalProps {
   acceptNegotiationError?: string;
   handleRadioClick?: (selectedGroupedBoxIndex: number) => void;
   selectedGroupedBoxIndex?: number;
+  negotiation?: GetNegotiationByIdRequestResponseItem | undefined;
+  pricePerUnit?: string;
 }

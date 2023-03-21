@@ -68,13 +68,13 @@ const TermsAndCondition = (props: TermsAndConditionProps): JSX.Element => {
 
       <Row style={{ marginTop: '16px' }}>
         <Col>
-          <div style={{ width: '95%' }}>
+          <div style={{ width: '95%', whiteSpace: 'pre-line' }}>
             <Typography
               variant="label"
               color={appType === 'buyer' ? 'shade7' : 'shade4'}
               weight="400"
             >
-              {description}
+              {description.split('<br>').join('\n')}
             </Typography>
           </div>
         </Col>

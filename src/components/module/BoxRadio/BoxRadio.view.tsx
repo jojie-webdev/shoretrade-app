@@ -12,6 +12,7 @@ import {
   Col,
   BreakdownRow,
   BreakDownCol,
+  TotalPriceWrapper,
 } from './BoxRadio.style';
 
 const BoxRadio = (props: BoxRadioProps): JSX.Element => {
@@ -60,13 +61,9 @@ const BoxRadio = (props: BoxRadioProps): JSX.Element => {
         </Col>
 
         {cost !== undefined && (
-          <Typography
-            style={{ marginLeft: 'auto' }}
-            variant="label"
-            color="shade9"
-          >
+          <TotalPriceWrapper variant="label" color="shade9">
             ${cost.toFixed(2)}
-          </Typography>
+          </TotalPriceWrapper>
         )}
       </Row>
     </Container>

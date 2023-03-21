@@ -8,6 +8,7 @@ import MobileModal from 'components/layout/MobileModal';
 import Modal from 'components/layout/Modal';
 import { BREAKPOINTS } from 'consts/breakpoints';
 import { useMediaQuery } from 'react-responsive';
+import { toPrice } from 'utils/String';
 import { useTheme } from 'utils/Theme';
 
 import { AcceptSellerModalProps } from './AcceptSellerModal.props';
@@ -23,6 +24,21 @@ const AcceptSellerModal = (props: AcceptSellerModalProps): JSX.Element => {
   const theme = useTheme();
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const ModalLayout = isMobile ? MobileModal : Modal;
+
+  const totalBoxWeight =
+    props.listingBoxes?.boxes?.length > 0
+      ? props.listingBoxes.boxes[props.selectedGroupedBoxIndex || 0].reduce(
+          (prevValue, currentValue) => prevValue + currentValue.weight,
+          0
+        )
+      : 0;
+
+  const getAgreedTotalPrice = () => {
+    return (
+      (props.negotiation?.negotiation_offer?.counter_offer ||
+        Number(props.negotiation?.counter_offer || 0)) * totalBoxWeight
+    );
+  };
 
   return (
     <ModalLayout
@@ -50,27 +66,35 @@ const AcceptSellerModal = (props: AcceptSellerModalProps): JSX.Element => {
         <Typography weight="700" style={{ color: '#565A6A' }}>
           Quantity
         </Typography>
-        <div
-          style={{
-            display: 'flex',
-            marginRight: props.acceptNegotiationError && -17,
-          }}
-        >
-          <Typography weight="700" style={{ color: '#565A6A', marginRight: 3 }}>
+        <div style={{ display: 'flex' }}>
+          <Typography weight="700" style={{ color: '#565A6A' }}>
             {props.quantity}
           </Typography>
-          {props.acceptNegotiationError && (
-            <Exclamation fill={theme.brand.primary} width={40} height={40} />
-          )}
+          {props.acceptNegotiationError &&
+            (!props.listingBoxes?.boxes ||
+              props.listingBoxes?.boxes?.length <= 0) && (
+              <div style={{ marginRight: -20, marginBottom: -20 }}>
+                <Exclamation
+                  fill={theme.brand.primary}
+                  width={40}
+                  height={40}
+                />
+              </div>
+            )}
         </div>
       </DetailsContainer>
 
-      {props.acceptNegotiationError && (
+      {props.acceptNegotiationError &&
+      props?.listingBoxes?.boxes?.length > 0 ? (
         <>
           <div>
             {props?.listingBoxes?.boxes?.map((groupedBoxes, index) => (
               <>
-                <Typography color="primary" weight="700">
+                <Typography
+                  color="primary"
+                  weight="700"
+                  style={{ fontSize: 14 }}
+                >
                   Update the box combination for this negotiation
                 </Typography>
                 <BoxContainer>
@@ -106,8 +130,22 @@ const AcceptSellerModal = (props: AcceptSellerModalProps): JSX.Element => {
               </>
             ))}
           </div>
-          <div style={{ marginTop: 15 }} />
+          {props?.listingBoxes?.boxes &&
+            props?.listingBoxes?.boxes.length > 0 && (
+              <div style={{ marginTop: 15 }} />
+            )}
         </>
+      ) : (
+        props.acceptNegotiationError && (
+          <Typography
+            color="primary"
+            weight="700"
+            style={{ fontSize: 14, marginBottom: 20 }}
+          >
+            Your listing is out of stock. Add more boxes to continue negotiating
+            or decline the offer.
+          </Typography>
+        )
       )}
 
       <DetailsContainer>
@@ -137,7 +175,11 @@ const AcceptSellerModal = (props: AcceptSellerModalProps): JSX.Element => {
           Total Value
         </Typography>
         <Typography weight="700" color="noshade">
-          {props.totalValue}
+          {props.acceptNegotiationError && totalBoxWeight > 0
+            ? `${toPrice(getAgreedTotalPrice())} (${totalBoxWeight} 
+          ${props.negotiation?.measurement_unit?.toLowerCase()} x 
+          ${props.pricePerUnit})`
+            : props.totalValue}
         </Typography>
       </TotalValueContainer>
 

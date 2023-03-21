@@ -665,7 +665,7 @@ const ProductDetailsView = (props: ProductDetailsGeneratedProps) => {
                         <Typography
                           variant="overline"
                           color="shade6"
-                          style={{ paddingTop: 32 }}
+                          style={{ paddingTop: 32, fontSize: 10 }}
                         >
                           BEST BOX WEIGHT MATCH
                         </Typography>
