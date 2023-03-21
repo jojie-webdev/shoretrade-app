@@ -1,7 +1,19 @@
 import TextField from 'components/base/TextField';
 import styled from 'utils/styled';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  .modal_container {
+    .radio__outer_circle {
+      height: 16px;
+      width: 16px;
+
+      .radio__inner_circle {
+        height: 7.25px;
+        width: 7.25px;
+      }
+    }
+  }
+`;
 
 export const StyledTextField = styled(TextField)`
   flex: 1;

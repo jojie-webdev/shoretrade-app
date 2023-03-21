@@ -66,8 +66,8 @@ export const Container = styled.div`
   }
 
   .radio__outer_circle {
-    height: 15px;
-    width: 15px;
+    height: 16px;
+    width: 16px;
 
     .radio__inner_circle {
       height: 7.25px;

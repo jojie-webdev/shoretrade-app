@@ -1,4 +1,4 @@
-import { Typography } from 'components/base/Typography';
+import Typography from 'components/base/Typography';
 import styled from 'utils/styled';
 
 export const Container = styled.div`
