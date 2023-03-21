@@ -30,3 +30,10 @@ export const RadioBtnContainer = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+
+export const BoxContainer = styled.div`
+  width: 100%;
+  padding-top: 2px;
+  display: flex;
+  justify-content: space-between;
+`;
