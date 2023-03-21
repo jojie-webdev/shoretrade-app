@@ -94,7 +94,6 @@ const Negotiation = (): JSX.Element => {
 
   const handleAcceptBtnClick = () => {
     setShowAcceptModal((prevValue) => !prevValue);
-    dispatch(getListingBoxesActions.clear());
     dispatch(acceptNegotiationActions.clear());
   };
 
@@ -137,7 +136,7 @@ const Negotiation = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if (acceptNegotiationError && listing && negotiation) {
+    if (listing && negotiation) {
       dispatch(
         getListingBoxesActions.request({
           listingId: listing.listing_id,
@@ -145,7 +144,7 @@ const Negotiation = (): JSX.Element => {
         })
       );
     }
-  }, [negotiation, listing, acceptNegotiationError]);
+  }, [listing, acceptNegotiationError]);
 
   useEffect(() => {
     if (negotiationRequestId) {

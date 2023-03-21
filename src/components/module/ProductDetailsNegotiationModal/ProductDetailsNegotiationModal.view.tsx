@@ -15,6 +15,7 @@ import {
   GroupedBoxContainer,
   RadioBtnContainer,
   StyledTextField,
+  BoxContainer,
 } from './ProductDetailsNegotiationModal.style';
 
 const ProductDetailsNegotiationModal = (
@@ -145,52 +146,63 @@ const ProductDetailsNegotiationModal = (
                           }
                         />
                       </div>
-                      <div style={{ width: '100%', paddingTop: 2 }}>
-                        {p.boxes.map((box, index) => (
-                          <div key={box.id}>
-                            <RadioBtnContainer>
-                              <div style={{ display: 'flex' }}>
-                                <div style={{ marginRight: 20 }} />
-                                <div
-                                  style={{ display: 'flex', marginBottom: -5 }}
-                                >
-                                  <Typography variant="caption" color="shade6">
-                                    {box.weight} {p.unit}
-                                  </Typography>
+                      <BoxContainer>
+                        <div>
+                          {p.boxes.map((box, index) => (
+                            <div key={box.id}>
+                              <RadioBtnContainer>
+                                <div style={{ display: 'flex' }}>
+                                  <div style={{ marginRight: 20 }} />
+                                  <div
+                                    style={{
+                                      display: 'flex',
+                                      marginBottom: -5,
+                                    }}
+                                  >
+                                    <Typography
+                                      variant="caption"
+                                      color="shade6"
+                                    >
+                                      {box.weight} {p.unit}
+                                    </Typography>
+                                    <div style={{ marginRight: 15 }} />
+                                    <Typography
+                                      variant="caption"
+                                      color="shade6"
+                                    >
+                                      x{box.quantity}
+                                    </Typography>
+                                  </div>
                                   <div style={{ marginRight: 15 }} />
-                                  <Typography variant="caption" color="shade6">
-                                    x{box.quantity}
+                                  <Typography
+                                    color="shade6"
+                                    style={{ marginTop: -3 }}
+                                  >
+                                    {Number.isInteger(box.weight)
+                                      ? (
+                                          box.weight * (box.quantity || 0)
+                                        ).toFixed(0)
+                                      : (
+                                          box.weight * (box.quantity || 0)
+                                        ).toFixed(2)}{' '}
+                                    {unit}
                                   </Typography>
                                 </div>
-                                <div style={{ marginRight: 15 }} />
-                                <Typography
-                                  color="shade6"
-                                  style={{ marginTop: -3 }}
-                                >
-                                  {Number.isInteger(box.weight)
-                                    ? (
-                                        box.weight * (box.quantity || 0)
-                                      ).toFixed(0)
-                                    : (
-                                        box.weight * (box.quantity || 0)
-                                      ).toFixed(2)}{' '}
-                                  {unit}
-                                </Typography>
-                              </div>
-                              <Typography
-                                variant="caption"
-                                color="shade8"
-                                style={{ fontWeight: 600 }}
-                              >
-                                {getTotalPrice()}
-                              </Typography>
-                            </RadioBtnContainer>
-                            {p.boxes.length > index + 1 && (
-                              <div style={{ marginTop: 5 }} />
-                            )}
-                          </div>
-                        ))}
-                      </div>
+                              </RadioBtnContainer>
+                              {p.boxes.length > index + 1 && (
+                                <div style={{ marginTop: 5 }} />
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                        <Typography
+                          variant="caption"
+                          color="shade8"
+                          style={{ fontWeight: 600, fontSize: 14 }}
+                        >
+                          {getTotalPrice()}
+                        </Typography>
+                      </BoxContainer>
                     </GroupedBoxContainer>
                     {groupedBox.length > index + 1 && (
                       <div style={{ marginTop: 5 }} />

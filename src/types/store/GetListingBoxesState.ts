@@ -9,9 +9,9 @@ export type GetListingBoxesMeta = {
 export type GetListingBoxesResponseItem = {
   token: string;
   boxes: {
-    count: number | null;
+    count: number;
     id: string;
-    quantity: number | null;
+    quantity: number;
     weight: number;
   }[][];
   shipping: [];
@@ -20,9 +20,9 @@ export type GetListingBoxesResponseItem = {
 export type GetListingBoxesPayload = GenericResponse<{
   token: string;
   boxes: {
-    count: number | null;
+    count: number;
     id: string;
-    quantity: number | null;
+    quantity: number;
     weight: number;
   }[][];
   shipping: [];
