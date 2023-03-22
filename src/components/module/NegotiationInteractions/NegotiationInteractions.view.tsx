@@ -1,30 +1,23 @@
 import React from 'react';
 
 import Interactions from 'components/base/Interactions';
-import { TrashCan } from 'components/base/SVG';
-import Tag from 'components/base/Tag';
 import Typography from 'components/base/Typography';
 import moment from 'moment';
 import { isEmpty, isNil } from 'ramda';
 import { Col } from 'react-grid-system';
-import {
-  getExpiry,
-  isRedLabel,
-} from 'routes/Seller/MarketBoard/Landing/Landing.transform';
+import { isRedLabel } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
 import { formatRunningDateDifference } from 'utils/MarketRequest';
 import { parseImageUrl } from 'utils/parseImageURL';
-import { useTheme } from 'utils/Theme';
 
 import NegotiationTag from '../NegotiationTag';
 import { NegotiationInteractionsProps } from './NegotiationInteractions.props';
-import { Container, TrashCanContainer } from './NegotiationInteractions.style';
+import { Container } from './NegotiationInteractions.style';
 
 const NegotiationInteractions = (
   props: NegotiationInteractionsProps
 ): JSX.Element => {
-  const theme = useTheme();
   const { onClick, data } = props;
   const unit = formatMeasurementUnit(data.measurement_unit);
 
@@ -163,7 +156,7 @@ const NegotiationInteractions = (
                 <NegotiationTag text={data?.display_status || ''} />
               </div>
             </Col>
-            <Col style={{ padding: '0 5px' }}>
+            {/* <Col style={{ padding: '0 5px' }}>
               <TrashCanContainer
                 onClick={(e) => {
                   e.stopPropagation();
@@ -179,7 +172,7 @@ const NegotiationInteractions = (
                   <TrashCan fill={theme.grey.shade7} width={16} height={16} />
                 </div>
               </TrashCanContainer>
-            </Col>
+            </Col> */}
           </>
         }
         padding="8px 20px 8px 8px"
