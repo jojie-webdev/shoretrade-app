@@ -55,9 +55,7 @@ const NegotiationInteractions = (
     const isFresh = !isEmpty(
       data.specifications.filter((spec) => spec.name.toLowerCase() === 'fresh')
     );
-
-    const isPreAuction = data.is_pre_auction || !isEmpty(data.auction_date);
-
+    const isPreAuction = data.is_pre_auction;
     const time = data.negotiation_offer?.updated_at || data.created_at;
 
     if (isFresh || isPreAuction) {
