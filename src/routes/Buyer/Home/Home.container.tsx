@@ -333,6 +333,8 @@ const Home = (): JSX.Element => {
     if (!isCreateNegotiationPending && negotiationPrice) {
       setShowSuccessfulNegoModal(true);
       setShowNegoModal(false);
+      setNegotiationPrice('');
+      setNegotiationWeight('');
     }
   }, [isCreateNegotiationPending]);
 
