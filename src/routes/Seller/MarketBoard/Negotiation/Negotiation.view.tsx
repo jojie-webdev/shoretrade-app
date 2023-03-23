@@ -360,7 +360,7 @@ const NegotiationView = (props: NegotiationProps) => {
           disableActionText={isAcceptNegotiationPending}
           description={
             <Typography color="shade6" variant="label">
-              Secure the stock & pay now to complete your order.
+              You will be notified once the buyer processes the payment.
             </Typography>
           }
         />
