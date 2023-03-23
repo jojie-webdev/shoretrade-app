@@ -112,3 +112,11 @@ export const SignupIcon = styled(Help)`
   margin-right: 11px;
   margin-bottom: 2px;
 `;
+
+export const SFMBlueLink = styled.a`
+  color: ${({ theme }) => theme.brand.primary};
+  text-decoration: underline;
+  &:hover {
+    color: ${({ theme }) => theme.brand.primary};
+  }
+`;

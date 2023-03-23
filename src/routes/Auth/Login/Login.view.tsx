@@ -11,6 +11,7 @@ import { useMediaQuery } from 'react-responsive';
 import { useTheme } from 'utils/Theme';
 
 import { LoginGeneratedProps } from './Login.props';
+import { SFMBlueLink } from './Login.style';
 import {
   Content,
   Footer,
@@ -81,6 +82,27 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
           </ForgotPasswordContainer>
         </Touchable>
       </>
+    );
+  };
+
+  const isSFMBlueRedirect = (errorMessage: string) => {
+    return (
+      errorMessage.toLowerCase() ===
+      'Shoretrade not available in your region'.toLowerCase()
+    );
+  };
+  const SFMBlueRedirect = () => {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <Typography color={isSeller ? 'noshade' : 'shade9'} variant="label">
+          Shoretrade not available in your region
+        </Typography>
+        <Typography color={isSeller ? 'noshade' : 'shade7'} variant="caption">
+          Use{' '}
+          <SFMBlueLink href="https://www.sfmblue.com.au">SFMBlue</SFMBlueLink>{' '}
+          to trade for Australia and New Zealand
+        </Typography>
+      </div>
     );
   };
 
@@ -158,8 +180,12 @@ const LoginView = (props: LoginGeneratedProps): JSX.Element => {
         {isError && (
           <Alert
             content={
-              errorMessage ||
-              'Verification Failed! Your email or password were incorrect.'
+              isSFMBlueRedirect(errorMessage) ? (
+                <SFMBlueRedirect />
+              ) : (
+                errorMessage ||
+                'Verification Failed! Your email or password were incorrect.'
+              )
             }
             variant="error"
             fullWidth
