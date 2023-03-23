@@ -40,7 +40,7 @@ const DeclineSellerModal = (props: DeclineSellerModalProps): JSX.Element => {
       <div style={{ marginTop: 10 }} />
 
       <Typography style={{ color: '#565A6A' }}>
-        Are you sure you want to decline this negotiation
+        Are you sure you want to decline this negotiation?
       </Typography>
 
       <div style={{ marginTop: 20 }} />
