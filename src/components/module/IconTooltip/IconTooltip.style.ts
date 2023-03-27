@@ -23,3 +23,8 @@ export const StyledContent = styled(Typography)`
   padding: 8px 21px;
   text-transform: none !important;
 `;
+
+export const StyledContentNegotiation = styled(Typography)`
+  padding: 8px 21px;
+  text-transform: none !important;
+`;
