@@ -97,6 +97,7 @@ export const DetailsContainer = styled.div`
   border-radius: 12px;
   padding: 48px;
   margin-top: 24px;
+  max-width: 641px;
 `;
 
 export const DetailsValueContainer = styled.div`

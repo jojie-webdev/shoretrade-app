@@ -20,11 +20,7 @@ export const Container = styled.div`
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    margin-bottom: 32px;
-
-    @media ${BREAKPOINTS['sm']} {
-      margin-bottom: 16px;
-    }
+    margin-bottom: 16px;
 
     .tabs {
       margin-top: 10px;

@@ -11,7 +11,7 @@ import DeclineSellerModal from 'components/module/DeclineSellerModal';
 import NegotiateSellerModal from 'components/module/NegotiateSellerModal';
 import NegotiationSellerModal from 'components/module/NegotiationSellerModal';
 import SellerNegotiationAlert from 'components/module/SellerNegotiationAlert';
-import { SELLER_MARKET_BOARD_ROUTES } from 'consts/routes';
+import { SELLER_MARKET_BOARD_ROUTES, SELLER_ROUTES } from 'consts/routes';
 import { Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
@@ -151,14 +151,14 @@ const NegotiationView = (props: NegotiationProps) => {
           alertColor: 'success',
           description: (
             <Typography variant="body" color="shade6" weight="400">
-              The Negotiation is now Order #0000-XXXX and can be found in your
-              sold tab{' '}
+              The new order can be found in your sold tab{' '}
               <span
                 style={{
                   color: theme.brand.primary,
                   textDecoration: 'underline',
+                  cursor: 'pointer',
                 }}
-                // onClick={() => history.push(SOLD_)}
+                onClick={() => history.push(SELLER_ROUTES.SOLD)}
               >
                 here
               </span>
@@ -360,7 +360,7 @@ const NegotiationView = (props: NegotiationProps) => {
           disableActionText={isAcceptNegotiationPending}
           description={
             <Typography color="shade6" variant="label">
-              Secure the stock & pay now to complete your order.
+              You will be notified once the buyer processes the payment.
             </Typography>
           }
         />
@@ -481,7 +481,7 @@ const NegotiationView = (props: NegotiationProps) => {
         />
       )}
 
-      {/*         
+      {/*
       <Alert
         content={
           <div style={{ display: 'flex' }}>
@@ -638,7 +638,7 @@ const NegotiationView = (props: NegotiationProps) => {
                     variant="outline"
                     text={
                       <Typography color="primary" style={{ marginRight: 5 }}>
-                        Decline
+                        {!!negotiation?.negotiation_offer ? 'Withdraw' : 'Decline'}
                       </Typography>
                     }
                     icon={<Close fill={theme.brand.primary} />}

@@ -48,30 +48,8 @@ const LandingSFMView = (props: {
           </div>
         </LogoContainer>
         <FirstDescription weight="400" color="shade7">
-          Upgrade your plan to unlock Negotiations & the Reverse Marketplace
+          Manage your Negotiations & Create Product Requests
         </FirstDescription>
-        <MonthlySubsContainer>
-          <Typography
-            color="shade7"
-            variant="caption"
-            style={{ marginRight: 5 }}
-          >
-            $
-          </Typography>
-          <Typography variant="title6" weight="900" style={{ marginRight: 5 }}>
-            {props?.planPrice || '0.00'}
-          </Typography>
-          <Typography className="per" color="shade7" variant="caption">
-            /month
-          </Typography>
-        </MonthlySubsContainer>
-        <Button
-          padding={isMobile ? '10px 16px' : '14px 24px'}
-          textVariant="label"
-          textWeight="400"
-          text="See plans"
-          onClick={() => props.handleSeePlansClick()}
-        />
       </Container1>
 
       <Visible xs>
@@ -131,7 +109,11 @@ const LandingSFMView = (props: {
               </div>
             </DescriptionWrapper>
             <ImageContainer>
-              <SfmBuyerReceiveOffersCards width="100%" height="100%" />
+              <img
+                src={SFMBuyerReceiveOffersCards}
+                alt="sfm-buyer-receive-offer"
+                style={{ width: '100%' }}
+              />
             </ImageContainer>
           </SwiperSlide>
 
@@ -221,7 +203,7 @@ const LandingSFMView = (props: {
               <img
                 src={SFMBuyerSummaryBoard}
                 alt="sfm-buyer-summary-board"
-                style={{ width: 382, height: 312 }}
+                style={{ width: 311, height: 312 }}
               />
             </ImageContainer2>
           </Col>
@@ -230,7 +212,11 @@ const LandingSFMView = (props: {
         <Row style={{ padding: '25px 0' }}>
           <Col xs={12} sm={6}>
             <div style={{ maxWidth: 476, maxHeight: 379 }}>
-              <SfmBuyerReceiveOffersCards width="100%" height="100%" />
+              <img
+                src={SFMBuyerReceiveOffersCards}
+                alt="sfm-buyer-summary-board"
+                style={{ width: '100%' }}
+              />
             </div>
           </Col>
           <Col xs={12} sm={6}>
@@ -245,6 +231,10 @@ const LandingSFMView = (props: {
                 </Title1>
                 <Typography color="shade7" weight="400">
                   {EXPLANATIONS[1].descriptions[0]}
+                </Typography>
+                <div style={{ marginTop: 10 }} />
+                <Typography color="shade7" weight="400">
+                  {EXPLANATIONS[1].descriptions[1]}
                 </Typography>
               </div>
             </DescriptionWrapper>
@@ -303,6 +293,10 @@ const LandingSFMView = (props: {
                 </Title1>
                 <Typography color="shade7" weight="400">
                   {EXPLANATIONS[3].descriptions[0]}
+                </Typography>
+                <div style={{ marginTop: 10 }} />
+                <Typography color="shade7" weight="400">
+                  {EXPLANATIONS[3].descriptions[1]}
                 </Typography>
               </div>
             </DescriptionWrapper>
