@@ -339,7 +339,7 @@ const MarketBoardLanding = (): JSX.Element => {
     negotiations: sortNegotiationByStatus(
       getNegoRequestLandingData(
         negotiations?.filter(
-          (nego) => !['END', 'CLOSED', 'LOST'].includes(nego.status)
+          (nego) => !['CLOSED', 'LOST'].includes(nego.status)
         )
       )
     ),
