@@ -28,12 +28,10 @@ export type GetNegotiationByIdRequestResponseItem = {
   name: string;
   thumbnail: string;
   default_photo: string;
-  specifications: [
-    {
-      id: string;
-      name: string;
-    }
-  ];
+  specifications: {
+    id: string;
+    name: string;
+  }[];
   size_from: string;
   size_to: string;
   active_size_unit: string;
@@ -45,15 +43,10 @@ export type GetNegotiationByIdRequestResponseItem = {
     negotiation_request: NegotiationItem | null;
     negotiation_offer: NegotiationItem | null;
   };
-  listing_box: {
-    count: number;
-    id: string;
-    quantity: number;
-    weight: number;
-  };
   negotiation_offer: NegotiationItem;
   auction_date: string;
-  is_pre_auction: false;
+  is_pre_auction: boolean;
+  is_valid_pre_auction: boolean;
   display_status: string;
   listing_boxes: {
     id: string;

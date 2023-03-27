@@ -15,6 +15,7 @@ import { SELLER_MARKET_BOARD_ROUTES, SELLER_ROUTES } from 'consts/routes';
 import { Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+import { GetNegotiationByIdRequestResponseItem } from 'types/store/GetNegotiationByIdState';
 import { sizeToString } from 'utils/Listing';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { toPrice } from 'utils/String';
@@ -47,6 +48,23 @@ const CLOSED_NEGOTIATION = [
   'CLOSED',
   'LOST',
 ];
+
+const getNegotiationTimeframe = (
+  negotiation: GetNegotiationByIdRequestResponseItem | undefined
+) => {
+  if (!negotiation) return '';
+
+  const freshNegotiation = negotiation.specifications.some(
+    (specification) => specification.name.toLowerCase() === 'fresh'
+  );
+  const preauctionNegotiation = negotiation.is_pre_auction;
+
+  if (freshNegotiation || preauctionNegotiation) {
+    return '3 hours';
+  }
+
+  return '24 hours';
+};
 
 const NegotiationView = (props: NegotiationProps) => {
   const {
@@ -217,8 +235,9 @@ const NegotiationView = (props: NegotiationProps) => {
           alertColor: 'primary',
           description: (
             <Typography variant="body" color="shade6" weight="400">
-              The sale will be finalised once the Buyer processes your payment
-              within 24 hours. You will be notified when this occurs.
+              The sale will be finalised once the Buyer processes the payment
+              within {getNegotiationTimeframe(negotiation)}. You will be
+              notified when this occurs.
             </Typography>
           ),
         };
