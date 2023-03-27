@@ -38,7 +38,7 @@ const BuyerNegotiationAlert = (
   let Icon: React.FC<SVGProps> = InfoFilled;
   let IconFill = '';
 
-  if (status.toLowerCase() === 'declined') {
+  if (['declined', 'lost'].includes(status.toLowerCase())) {
     Icon = CloseFilled;
     IconFill = theme.brand.error;
   } else if (status.toLowerCase() === 'payment required') {

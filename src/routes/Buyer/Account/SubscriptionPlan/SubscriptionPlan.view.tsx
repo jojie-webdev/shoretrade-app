@@ -955,7 +955,7 @@ export const SubscriptionPlanView = ({
                 </Col>
               </Row>
             </PlanContainer>
-            {/* 
+            {/*
             <PlanContainer>
               <Row gutterWidth={20} style={{ width: '100%' }}>
                 <Col md={12}>
@@ -1138,7 +1138,7 @@ export const SubscriptionPlanView = ({
               </Row>
             </PlanContainer>
             */}
-            <PlanContainer>
+            {/*<PlanContainer>
               <IncusionSection>
                 <Typography
                   variant="title6"
@@ -1168,7 +1168,7 @@ export const SubscriptionPlanView = ({
                   </div>
                 )}
               </IncusionSection>
-            </PlanContainer>
+            </PlanContainer> */}
           </Col>
         </Row>
       </SubscriptionContainer>

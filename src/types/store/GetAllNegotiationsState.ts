@@ -5,6 +5,14 @@ export type GetAllNegotiationsMeta = {
   term?: string;
 };
 
+export type NegotiationOfferStatus =
+  | 'COUNTER_OFFER'
+  | 'CLOSED'
+  | 'ACCEPTED'
+  | 'DECLINED'
+  | 'LOST'
+  | 'FINALISED';
+
 export type NegotiationItem = {
   company_id: string;
   counter_offer: number;
@@ -14,9 +22,18 @@ export type NegotiationItem = {
   listing_box_id: string;
   negotiation_request_id: string;
   seller_id: string;
-  status: string;
+  status: NegotiationOfferStatus;
   updated_at: string;
 };
+
+export type NegotiationRequestStatus =
+  | 'OPEN'
+  | 'CLOSED'
+  | 'LOST'
+  | 'END'
+  | 'PARTIAL'
+  | 'COUNTER_OFFER'
+  | 'CHECKOUT';
 
 export type GetAllNegoRequestResponseItem = {
   active_size_unit: string;
@@ -32,7 +49,7 @@ export type GetAllNegoRequestResponseItem = {
   size_from: string;
   size_to: string;
   specifications: { id: string; name: string }[];
-  status: string;
+  status: NegotiationRequestStatus;
   thumbnail: string;
   measurement_unit: string;
   metric: string;

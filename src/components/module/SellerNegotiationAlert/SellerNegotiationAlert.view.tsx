@@ -36,7 +36,7 @@ const SellerNegotiationAlert = (
   if (status === '') {
     Icon = CheckFilled;
     IconFill = theme.brand.success;
-  } else if (status === 'declined') {
+  } else if (['declined', 'lost'].includes(status)) {
     Icon = ExclamationFilled;
     IconFill = theme.brand.error;
   } else if (status === 'awaiting payment') {

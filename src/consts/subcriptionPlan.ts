@@ -398,8 +398,13 @@ export const getBasePlanItems = (transactionValueFeePercentage: string) => [
     subText: 'Credit reset every month',
   },
   {
-    title: `${transactionValueFeePercentage}% (Inc. GST) Transaction Fee on Product Value`,
+    title: `2% + GST Transaction Fee on Product Value`,
     subText: '',
+  },
+  {
+    title: `Reverse Marketplace unlimited access`,
+    subText:
+      'Create Product Requests that are send to all Sellers on the platform. Receive offers and negotiate!',
   },
 ];
 export const PRO_PLAN_ITEMS = [
@@ -410,9 +415,9 @@ export const PRO_PLAN_ITEMS = [
   },
   { title: `No Transaction Fees`, subText: '' },
   {
-    title: 'Access to Buyer Data Reports',
+    title: `Reverse Marketplace unlimited access`,
     subText:
-      'Access to Buyer Data Reports on Product Seasonality and Upcoming Harvests. Valued at $100/month',
+      'Create Product Requests that are send to all Sellers on the platform. Receive offers and negotiate!',
   },
   {
     title: 'Customer Service',

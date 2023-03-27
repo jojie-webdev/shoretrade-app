@@ -57,7 +57,8 @@ type types =
   | 'Finalised'
   | 'Payment Missed'
   | 'Declined'
-  | 'Payment Required';
+  | 'Payment Required'
+  | 'Lost';
 
 export const transformMarketRequestStatusText = (
   theme: Theme,
@@ -192,7 +193,7 @@ export const transformMarketRequestStatusText = (
     };
   }
 
-  if (statusText === 'Payment Missed' || statusText === text.LOST) {
+  if (statusText === 'Payment Missed') {
     if (isSeller) {
       return {
         text: 'Lost',
@@ -211,6 +212,17 @@ export const transformMarketRequestStatusText = (
       variantColor: 'error',
       badgeColor: '#FFF4F6',
       alertTitle: text.PAYMENT_MISSED,
+    };
+  }
+
+  if (statusText === 'Lost') {
+    return {
+      text: 'Lost',
+      description: 'The Seller did not respond to your offer.',
+      tagColor: 'noshade',
+      variantColor: 'error',
+      badgeColor: theme.brand.error,
+      alertTitle: 'Negotiation Lost',
     };
   }
 
@@ -412,7 +424,7 @@ export const transformNegotiationStatusText = (
     };
   }
 
-  if (statusText === 'Payment Missed' || statusText === text.LOST) {
+  if (statusText === 'Payment Missed') {
     if (isSeller) {
       return {
         text: 'Lost',
@@ -431,6 +443,17 @@ export const transformNegotiationStatusText = (
       variantColor: 'error',
       badgeColor: '#FFF4F6',
       alertTitle: text.PAYMENT_MISSED,
+    };
+  }
+
+  if (statusText === 'Lost') {
+    return {
+      text: 'Lapsed',
+      description: 'The Seller did not respond to your offer.',
+      tagColor: 'noshade',
+      variantColor: 'error',
+      badgeColor: theme.brand.error,
+      alertTitle: 'Negotiation Lapsed',
     };
   }
 

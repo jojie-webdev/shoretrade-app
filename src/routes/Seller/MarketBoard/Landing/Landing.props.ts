@@ -8,17 +8,16 @@ import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsSta
 import { TABS } from './Landing.constants';
 
 export type TabOptions = 'Buyer Requests' | 'My Active Offers';
+export type NegotiationWithExpiry = GetAllNegoRequestResponseItem & {
+  expiry: any;
+};
 
 export interface MarketBoardLandingGeneratedProps {
   marketRequests: GetAllMarketRequestResponseItem[];
   sellingRequests: GetAllMarketRequestResponseItem[];
   buyerRequests: GetAllMarketRequestResponseItem[];
   activeOffers: GetActiveOffersRequestResponseItem[];
-  negotiations:
-    | (GetAllNegoRequestResponseItem & {
-        expiry: any;
-      })[]
-    | undefined;
+  negotiations: NegotiationWithExpiry[] | undefined;
   isLoading: boolean;
 
   currentTab: TabOptions;
