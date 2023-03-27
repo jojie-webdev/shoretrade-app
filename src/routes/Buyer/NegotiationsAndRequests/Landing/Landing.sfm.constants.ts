@@ -2,28 +2,29 @@ export const DEFAULT_MONTHLY_SUBSCRIPTION_PRICE = '100.00';
 export const SFM_MONTHLY_SUBSCRIPTION_PRICE = '276.00';
 export const EXPLANATIONS = [
   {
-    heading: 'Request any Product with the Reverse Marketplace',
+    heading: 'Don’t chase supply! Submit a Market Request and let SFMblue work for you',
     descriptions: [
-      'Create a Market Request for any product on the platform and receive offers from Sellers!',
-      'Detail the product specifications, size and quantity and send your request. Your Market Request will remain active for 7 days, so Sellers know to get in quick.',
+      'The market request function is a ground-breaking feature that allows a buyer to request product fit for purpose. Simply outline the product specifications, size, quantity and delivery date and SFMblue sellers will be in touch with their offers. ',
     ],
   },
   {
-    heading: 'Receive Offers & Negotiate',
+    heading: 'Receive Offers and Negotiate with Sellers',
     descriptions: [
-      'Sellers will be notified of your request, and can make offers directly to you. The offer will even be inclusive of shipping costs! You can accept, negotiate or decline any offers you receive',
+      'Sellers will be notified when you submit a request and can make offers directly within SFMblue.',
+      'You’re in complete control and can accept, decline or counter-offer any submitted offer. ',
     ],
   },
   {
-    heading: 'Negotiate the Price of Listings',
+    heading: 'Negotiate the Price on available listings',
     descriptions: [
-      'Locate listings that are negotiable and send offers to Sellers. Negotiate back and forth until either of you accepts.',
+      'Look for the Orange Logo on a product listing. If it’s activated, buyers can submit a negotiation on the sale price. ',
     ],
   },
   {
     heading: 'Get Unlimited Negotiation Credits',
     descriptions: [
-      'Upgrade your plan to Pro and negotiate the price of a listing as many times as you want',
+      'Get the best prices for your business and upgrade your plan to Pro.',
+      'With Pro, you can Negotiate listing prices without running out of credits.',
     ],
   },
 ];
