@@ -337,7 +337,7 @@ const MarketBoardLanding = (): JSX.Element => {
     activeOffers: activeOffersDataCopy,
     negotiations: getNegoRequestLandingData(
       negotiations?.filter(
-        (nego) => nego.status !== 'DELETED' && nego.status !== 'CLOSED'
+        (nego) => !['END', 'CLOSED', 'LOST'].includes(nego.status)
       )
     ),
     isLoading:

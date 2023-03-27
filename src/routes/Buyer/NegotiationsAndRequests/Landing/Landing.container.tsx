@@ -228,9 +228,7 @@ const MarketRequestsLanding = (): JSX.Element => {
       )
     ), // TODO STATE
     negotiations: getNegoRequestLandingData(
-      negotiations?.filter(
-        (nego) => nego.status !== 'DELETED' && nego.status !== 'CLOSED'
-      )
+      negotiations?.filter((nego) => !['END', 'CLOSED'].includes(nego.status))
     ),
     onClickItem,
     isPendingAccount,
