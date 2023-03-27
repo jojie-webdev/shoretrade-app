@@ -193,6 +193,7 @@ export const Subscription = styled.div`
   border-radius: 12px;
   padding: 24px;
   width: 50%;
+  height: 100%;
 
   .subscription-action {
     &:hover {

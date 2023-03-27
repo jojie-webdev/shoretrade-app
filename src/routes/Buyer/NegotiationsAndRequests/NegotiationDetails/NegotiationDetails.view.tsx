@@ -69,6 +69,8 @@ import {
   // NewNegoTypeWrapper,
 } from './NegotiationDetails.style';
 
+const ONGOING_NEGOTIATION = ['OPEN', 'COUNTER_OFFER'];
+
 const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
   const {
     handleStartNegotiate,
@@ -370,7 +372,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
             </Typography>
           ),
         };
-      case 'end':
+      case 'declined':
         return {
           title: 'Negotiation Declined',
           alertColor: 'error',
@@ -464,6 +466,16 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
           description: (
             <Typography variant="caption" color="shade7" weight="400">
               The Negotiation is now Order #0000-XXXX
+            </Typography>
+          ),
+        };
+      case 'lost':
+        return {
+          title: 'Negotiation Lapsed',
+          alertColor: 'error',
+          description: (
+            <Typography variant="caption" color="shade7" weight="400">
+              The Seller did not respond to your offer.
             </Typography>
           ),
         };
@@ -651,6 +663,8 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
   if (isLoadingAcceptOffer || isLoadingOffer || isLoadingNegotiate) {
     return <Loading />;
   }
+
+  const displayCTA = ONGOING_NEGOTIATION.includes(negotiation.status);
 
   return (
     <Container>
@@ -1012,13 +1026,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
 
         {getTimeLimit().toUpperCase() === 'EXPIRED'
           ? null
-          : negotiation?.status !== 'ACCEPTED' &&
-            negotiation?.status !== 'PARTIAL' &&
-            negotiation?.status !== 'DECLINED' &&
-            negotiation?.status !== 'LOST' &&
-            negotiation?.status !== 'END' &&
-            negotiation?.status !== 'CLOSED' &&
-            negotiation?.status !== 'CHECKOUT' && (
+          : displayCTA && (
               <>
                 <Row>
                   <Col>{renderOfferSeenTextContainer()}</Col>
