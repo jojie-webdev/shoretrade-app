@@ -15,6 +15,8 @@ import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsSta
 import { Theme } from 'types/Theme';
 import { formatRunningDateDifference } from 'utils/MarketRequest';
 
+import { NegotiationWithExpiry } from './Landing.props';
+
 export const requestToModalFilter = (
   data?: GetAllMarketRequestFiltersResponseItem
 ): { filters: Filters[]; checkboxFilters: CheckboxFilter[] } => {
@@ -315,7 +317,46 @@ export const getNegoRequestLandingData = (
     expiry: buildExpiryData(item),
   }));
 
-  return negoRequest as
-    | (GetAllNegoRequestResponseItem & { expiry: any })[]
-    | undefined;
+  return negoRequest as NegotiationWithExpiry[] | undefined;
+};
+
+type NegotiationDisplayStatus =
+  | 'New Negotiation'
+  | 'Awaiting Buyer'
+  | 'Awaiting Payment'
+  | 'Lost'
+  | 'Declined';
+
+export const sortNegotiationByStatus = (
+  negotiations: NegotiationWithExpiry[] | undefined
+) => {
+  if (!negotiations) return negotiations;
+
+  const toSort = (status: NegotiationDisplayStatus) => {
+    switch (status) {
+      case 'New Negotiation': {
+        return 1;
+      }
+      case 'Awaiting Buyer': {
+        return 2;
+      }
+      case 'Awaiting Payment': {
+        return 3;
+      }
+      case 'Lost': {
+        return 4;
+      }
+      case 'Declined': {
+        return 5;
+      }
+      default:
+        return 10;
+    }
+  };
+
+  return negotiations.sort(
+    (a, b) =>
+      toSort(a.display_status as NegotiationDisplayStatus) -
+      toSort(b.display_status as NegotiationDisplayStatus)
+  );
 };
