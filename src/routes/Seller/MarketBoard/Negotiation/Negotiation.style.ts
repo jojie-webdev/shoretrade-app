@@ -144,12 +144,20 @@ export const DeclineAndNegoBtnContainer = styled.div`
 `;
 
 export const DeclineBtnWrapper = styled(Button)`
-  width: 100%;
+  width: 118px;
   margin-right: 10px;
+
+  @media (max-width: 547px) {
+    width: 100%;
+  }
 `;
 
 export const NegoBtnWrapper = styled(Button)`
-  width: 100%;
+  width: 133px;
+
+  @media (max-width: 547px) {
+    width: 100%;
+  }
 `;
 
 export const DeclineAndNegoBtnContainerMobile = styled.div`

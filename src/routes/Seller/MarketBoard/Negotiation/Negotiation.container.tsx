@@ -90,6 +90,7 @@ const Negotiation = (): JSX.Element => {
         })
       );
     }
+    dispatch(getListingBoxesActions.clear());
   };
 
   const handleAcceptBtnClick = () => {
@@ -107,6 +108,9 @@ const Negotiation = (): JSX.Element => {
         createSellerCounterOfferActions.request({
           negotiationRequestId,
           counterOffer,
+          listingBoxes: listingBoxes.boxes
+            ? listingBoxes.boxes[selectedGroupedBoxIndex]
+            : negotiation?.listing_boxes || [],
         })
       );
     }
