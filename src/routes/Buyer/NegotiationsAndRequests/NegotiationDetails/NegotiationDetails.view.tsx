@@ -4,12 +4,13 @@ import Alert from 'components/base/Alert';
 import Breadcrumbs from 'components/base/Breadcrumbs';
 import Button from 'components/base/Button';
 import StarRating from 'components/base/StarRating';
-import { PlaceholderProfile, Close, CheckFilled } from 'components/base/SVG';
+import { Close, CheckFilled } from 'components/base/SVG';
 import Check from 'components/base/SVG/Check';
 import Refresh from 'components/base/SVG/Refresh';
 import Typography from 'components/base/Typography';
 import BuyerNegotiationAlert from 'components/module/BuyerNegotiationAlert';
 import ConfirmationModal from 'components/module/ConfirmationModal';
+import IconTooltip from 'components/module/IconTooltip';
 import Loading from 'components/module/Loading';
 import MarketRequestDetailPill from 'components/module/MarketRequestDetailPill';
 import MarketRequestSummary from 'components/module/MarketRequestSummary';
@@ -196,12 +197,29 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
     </Typography>
   );
 
-  const renderLabelValue = (value: string | undefined) => (
+  const renderLabelValue = (value: string | undefined, label = '') => (
     <>
       <DetailsValueContainer>
-        <StyledTypography weight="700" variant="label">
-          {value}
-        </StyledTypography>
+        <div style={{ display: 'flex', position: 'relative' }}>
+          <StyledTypography weight="700" variant="label">
+            {value}
+          </StyledTypography>
+          {label === 'quantity' && negotiation?.initial_listing_boxes && (
+            <div style={{ position: 'absolute', top: -20, left: 35 }}>
+              <IconTooltip
+                variant="negotiationInfo"
+                content={
+                  <p>
+                    The original quantity negotiated has been sold. <br />
+                    Your quantity has been updated to the best box weight match.
+                  </p>
+                }
+                placement="top"
+                iconSize={45}
+              />
+            </div>
+          )}
+        </div>
       </DetailsValueContainer>
     </>
   );
@@ -542,7 +560,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
             {renderLabelValue(sizeValue)}
 
             {renderLabel('QUANTITY', { marginTop: '24px' })}
-            {renderLabelValue(quantityValue.toLowerCase())}
+            {renderLabelValue(quantityValue.toLowerCase(), 'quantity')}
 
             {renderLabel('PRICE', { marginTop: '24px' })}
             {renderLabelValue(pricePerUnit.toLowerCase())}

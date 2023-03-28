@@ -2,7 +2,11 @@ import React, { useState, ChangeEvent, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getActivePlan } from 'routes/Buyer/Account/SubscriptionPlan/SubscriptionPlan.transform';
-import { getNegotiationCreditActions } from 'store/actions';
+import {
+  getBuyerHomepageActions,
+  getNegotiationCreditActions,
+  showNegotiableActions,
+} from 'store/actions';
 import { CompanyPlanName } from 'types/store/GetCompanyPlanState';
 import { Store } from 'types/store/Store';
 
@@ -83,6 +87,17 @@ const Favourites = (): JSX.Element => {
     (store: Store) => store.getNegotiationCredit.data?.data
   );
 
+  const showNegotiable = useSelector((store: Store) => store.showNegotiable);
+
+  useEffect(() => {
+    dispatch(getBuyerHomepageActions.request());
+    dispatch(getNegotiationCreditActions.request({}));
+  }, [showNegotiable]);
+
+  const handleNegotiableToggle = (show: boolean) => {
+    dispatch(showNegotiableActions.update({ showNegotiable: show }));
+  };
+
   useEffect(() => {
     dispatch(getNegotiationCreditActions.request({}));
   }, []);
@@ -98,6 +113,8 @@ const Favourites = (): JSX.Element => {
     negotiationCredit,
     handleShowNegoModal,
     canNegotiate,
+    handleNegotiableToggle,
+    showNegotiable,
   };
 
   return <FavouritesView {...generatedProps} />;

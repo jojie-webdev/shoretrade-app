@@ -5,6 +5,7 @@ import {
   ExclamationFilled,
   InfoFilled,
   QuestionFilled,
+  Exclamation,
 } from 'components/base/SVG';
 import { SVGProps } from 'components/base/SVG/SVG.props';
 import Typography from 'components/base/Typography';
@@ -13,7 +14,11 @@ import { useTheme } from 'utils/Theme';
 import { v1 } from 'uuid';
 
 import { IconTooltipProps } from './IconTooltip.props';
-import { Container, StyledContent } from './IconTooltip.style';
+import {
+  Container,
+  StyledContent,
+  StyledContentNegotiation,
+} from './IconTooltip.style';
 
 const IconTooltip = (props: IconTooltipProps): JSX.Element => {
   const theme = useTheme();
@@ -48,6 +53,9 @@ const IconTooltip = (props: IconTooltipProps): JSX.Element => {
   } else if (variant === 'success') {
     Icon = CheckFilled;
     IconFill = iconFill || theme.brand.success;
+  } else if (variant === 'negotiationInfo') {
+    Icon = Exclamation;
+    IconFill = iconFill || theme.brand.error;
   }
 
   return (
@@ -71,7 +79,11 @@ const IconTooltip = (props: IconTooltipProps): JSX.Element => {
         )}
       </div>
       <ReactTooltip aria-haspopup="true" id={tooltipId}>
-        {typeof content === 'string' ? (
+        {variant === 'negotiationInfo' ? (
+          <StyledContentNegotiation align="center" color="noshade">
+            {content}
+          </StyledContentNegotiation>
+        ) : typeof content === 'string' ? (
           <StyledContent align="center" color="noshade">
             {content}
           </StyledContent>

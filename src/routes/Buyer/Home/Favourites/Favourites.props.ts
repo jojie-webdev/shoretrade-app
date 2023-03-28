@@ -15,4 +15,6 @@ export interface FavouritesGeneratedProps {
   negotiationCredit: GetNegotiationCreditRequestResponseItem | undefined;
   handleShowNegoModal: (listingId: string) => void;
   canNegotiate: boolean;
+  handleNegotiableToggle: (show: boolean) => void;
+  showNegotiable: { showNegotiable: boolean };
 }

@@ -50,7 +50,7 @@ const RecentlyAddedView = (props: RecentlyAddedGeneratedProps) => {
         {isSmallScreen && <MobileHeader>Recently Added</MobileHeader>}
         <FilterAndSearchContainer>
           <FilterContainer>
-            <NegotiableTextWrapper>Negotiable</NegotiableTextWrapper>
+            <NegotiableTextWrapper>Only Negotiable</NegotiableTextWrapper>
             <Toggle
               onClick={() =>
                 handleNegotiableToggle(!showNegotiable.showNegotiable)

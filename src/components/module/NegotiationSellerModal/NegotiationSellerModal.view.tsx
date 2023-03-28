@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Button from 'components/base/Button';
 import Divider from 'components/base/Divider';
 import Radio from 'components/base/Radio';
+import { Exclamation } from 'components/base/SVG';
 import Typography from 'components/base/Typography/Typography.view';
 import MobileFooter from 'components/layout/MobileFooter/MobileFooter.view';
 import MobileModal from 'components/layout/MobileModal';
@@ -16,7 +17,7 @@ import {
   BoxContainer,
 } from 'components/module/NegotiationSellerModal/NegotiationSellerModal.style';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { sortBy } from 'ramda';
+import { equals, filter, sortBy } from 'ramda';
 import { Hidden } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -24,7 +25,7 @@ import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
 const Content = (props: NegotiationSellerModalProps) => {
-  const { negotiation, onSubmit, isNegotiating } = props;
+  const { negotiation, onSubmit, isNegotiating, listing } = props;
   const theme = useTheme();
   const textColor = '#565A6A';
 
@@ -39,6 +40,41 @@ const Content = (props: NegotiationSellerModalProps) => {
       : priceDiff2 < 0
       ? -(Math.abs(priceDiff2) * 100)
       : priceDiff2 * 100;
+
+  const getTotalListingBoxesWeight = () =>
+    props.listingBoxes?.boxes?.length > 0
+      ? props.listingBoxes.boxes[props.selectedGroupedBoxIndex || 0].reduce(
+          (prevValue, currentValue) =>
+            prevValue + currentValue.weight * currentValue.quantity,
+          0
+        )
+      : 0;
+
+  const getFinalPrice = () =>
+    props.negotiation?.negotiation_offer?.counter_offer ||
+    Number(props.negotiation?.counter_offer || 0);
+
+  const isNegotiatedBoxGone = () => {
+    return (
+      filter(equals(props?.negotiation?.listing_boxes || []))(
+        props?.listingBoxes?.boxes || []
+      ).length <= 0
+    );
+  };
+
+  const getAgreedTotalPrice = () => {
+    if (isNegotiatedBoxGone()) {
+      return getFinalPrice() * getTotalListingBoxesWeight();
+    }
+
+    return (
+      (props?.negotiation?.listing_boxes?.reduce(
+        (prevValue, currentValue) =>
+          prevValue + currentValue.weight * currentValue.quantity,
+        0
+      ) ?? 0) * getFinalPrice()
+    );
+  };
 
   return (
     <>
@@ -77,11 +113,87 @@ const Content = (props: NegotiationSellerModalProps) => {
           <Typography variant="body" weight="400" style={{ color: textColor }}>
             Quantity
           </Typography>
-          <Typography variant="body" weight="400" style={{ color: textColor }}>
-            {negotiation?.desired_quantity}{' '}
-            {negotiation?.measurement_unit.toLowerCase()}
-          </Typography>
+          <div style={{ display: 'flex' }}>
+            <Typography weight="700" style={{ color: '#565A6A' }}>
+              {props.quantity}
+            </Typography>
+            {(props?.listingBoxes?.boxes?.length <= 0 ||
+              isNegotiatedBoxGone()) &&
+              !props.isAccepting && (
+                <div style={{ marginRight: -20, marginBottom: -20 }}>
+                  <Exclamation
+                    fill={theme.brand.primary}
+                    width={40}
+                    height={40}
+                  />
+                </div>
+              )}
+          </div>
         </div>
+
+        {props?.listingBoxes?.boxes?.length <= 0 ? (
+          <Typography
+            color="primary"
+            weight="700"
+            style={{ fontSize: 14, marginBottom: 20 }}
+          >
+            Your listing is out of stock. Add more boxes to continue negotiating
+            or decline the offer.
+          </Typography>
+        ) : (
+          isNegotiatedBoxGone() &&
+          !props.isAccepting && (
+            <>
+              <div>
+                <Typography
+                  color="primary"
+                  weight="700"
+                  style={{ fontSize: 14 }}
+                >
+                  Update the box combination for this negotiation
+                </Typography>
+                {props?.listingBoxes?.boxes?.map((groupedBoxes, index) => (
+                  <>
+                    <BoxContainer>
+                      <div style={{ display: 'flex' }}>
+                        <div style={{ marginTop: 3 }}>
+                          <Radio
+                            size={13}
+                            checked={props.selectedGroupedBoxIndex === index}
+                            onClick={() =>
+                              props.handleRadioClick &&
+                              props.handleRadioClick(index)
+                            }
+                          />
+                        </div>
+
+                        <div>
+                          {groupedBoxes.map((box) => (
+                            <Typography
+                              key={box.id}
+                              color="noshade"
+                              weight="700"
+                              style={{ marginLeft: 5 }}
+                            >
+                              {box.weight}
+                              {props.negoMeasurementUnit.toLowerCase()} x{' '}
+                              {box.quantity}
+                            </Typography>
+                          ))}
+                        </div>
+                      </div>
+                    </BoxContainer>
+                    <div style={{ marginTop: 10 }} />
+                  </>
+                ))}
+              </div>
+              {props?.listingBoxes?.boxes &&
+                props?.listingBoxes?.boxes.length > 0 && (
+                  <div style={{ marginTop: 15 }} />
+                )}
+            </>
+          )
+        )}
 
         {/* <div style={{ padding: '10px 0px' }}>
           <BoxContainer>
@@ -149,9 +261,9 @@ const Content = (props: NegotiationSellerModalProps) => {
           </Typography>
           <Typography variant="body" weight="400" color="noshade">
             {negotiation
-              ? `${toPrice(negotiationPrice || 0)}/${
-                  negotiation.measurement_unit
-                }`
+              ? `${toPrice(
+                  negotiationPrice || 0
+                )}/${negotiation.measurement_unit.toLowerCase()}`
               : '0.00'}
           </Typography>
         </div>
@@ -200,11 +312,7 @@ const Content = (props: NegotiationSellerModalProps) => {
             Total Value
           </Typography>
           <Typography variant="body" weight="bold" color="noshade">
-            {negotiationPrice === null
-              ? ''
-              : toPrice(
-                  negotiationPrice * (negotiation?.desired_quantity || 0)
-                )}
+            {toPrice(getAgreedTotalPrice())}
           </Typography>
         </div>
       </ComputationContainer>
@@ -220,6 +328,7 @@ const Content = (props: NegotiationSellerModalProps) => {
               }
             }}
             loading={isNegotiating}
+            disabled={!negotiationPrice}
             style={{ borderRadius: 12, maxWidth: 128 }}
           />
         </ButtonContainer>
@@ -236,6 +345,7 @@ const Content = (props: NegotiationSellerModalProps) => {
           takeFullWidth
           loading={isNegotiating}
           style={{ borderRadius: 12 }}
+          disabled={!negotiationPrice}
         />
       </MobileFooter>
     </>

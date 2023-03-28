@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Octopus } from 'components/base/SVG';
+import Toggle from 'components/base/Toggle';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import { PreviewDetailAlt } from 'components/module/CategoryCards/Preview/Preview.view';
 import EmptyState from 'components/module/EmptyState';
@@ -16,7 +17,13 @@ import { sizeToString } from 'utils/Listing';
 import { toPrice } from 'utils/String/toPrice';
 
 import { FavouritesGeneratedProps } from './Favourites.props';
-import { PreviewContainer, StyledInteraction } from './Favourites.style';
+import {
+  PreviewContainer,
+  StyledInteraction,
+  FilterAndSearchContainer,
+  FilterContainer,
+  NegotiableTextWrapper,
+} from './Favourites.style';
 
 const FavouritesView = (props: FavouritesGeneratedProps) => {
   const {
@@ -29,7 +36,9 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
     handleShowNegoCreditsModal,
     negotiationCredit,
     handleShowNegoModal,
+    handleNegotiableToggle,
     canNegotiate,
+    showNegotiable,
   } = props;
   const isSmallScreen = useMediaQuery({ query: BREAKPOINTS['sm'] });
 
@@ -38,16 +47,28 @@ const FavouritesView = (props: FavouritesGeneratedProps) => {
       <div className="header">
         {isSmallScreen && <MobileHeader>Favourites</MobileHeader>}
 
-        <div className="right-header">
-          <Search
-            className="search"
-            placeholder={`Search for a product or seller`}
-            value={searchValue}
-            onChange={onChangeSearchValue}
-            resetValue={onResetSearchValue}
-            rounded
-          />
-        </div>
+        <FilterAndSearchContainer>
+          <FilterContainer>
+            <NegotiableTextWrapper>Only Negotiable</NegotiableTextWrapper>
+            <Toggle
+              onClick={() =>
+                handleNegotiableToggle(!showNegotiable.showNegotiable)
+              }
+              checked={showNegotiable.showNegotiable}
+            />
+          </FilterContainer>
+
+          <div className="right-header">
+            <Search
+              className="search"
+              placeholder={`Search for a product or seller`}
+              value={searchValue}
+              onChange={onChangeSearchValue}
+              resetValue={onResetSearchValue}
+              rounded
+            />
+          </div>
+        </FilterAndSearchContainer>
       </div>
 
       {isLoadingResults && <Loading />}

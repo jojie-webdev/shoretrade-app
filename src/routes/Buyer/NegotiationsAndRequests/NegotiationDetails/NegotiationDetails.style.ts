@@ -31,6 +31,16 @@ export const Container = styled.div`
     width: 686px;
   }
 
+  .__react_component_tooltip {
+    padding: 0;
+    left: 31.5% !important;
+    border-radius: 8px !important;
+  }
+
+  .__react_component_tooltip::after {
+    left: 5% !important;
+  }
+
   @media ${BREAKPOINTS['sm']} {
     padding-bottom: 16vh;
   }

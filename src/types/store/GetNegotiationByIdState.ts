@@ -54,6 +54,14 @@ export type GetNegotiationByIdRequestResponseItem = {
     quantity: number;
     count: number;
   }[];
+  initial_listing_boxes:
+    | {
+        id: string;
+        weight: number;
+        quantity: number;
+        count: number;
+      }[]
+    | null;
 };
 
 // TODO: Update response value

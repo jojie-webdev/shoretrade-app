@@ -26,18 +26,30 @@ const AcceptSellerModal = (props: AcceptSellerModalProps): JSX.Element => {
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
   const ModalLayout = isMobile ? MobileModal : Modal;
 
-  const totalBoxWeight =
+  const getTotalListingBoxesWeight = () =>
     props.listingBoxes?.boxes?.length > 0
       ? props.listingBoxes.boxes[props.selectedGroupedBoxIndex || 0].reduce(
-          (prevValue, currentValue) => prevValue + currentValue.weight,
+          (prevValue, currentValue) =>
+            prevValue + currentValue.weight * currentValue.quantity,
           0
         )
       : 0;
 
+  const getFinalPrice = () =>
+    props.negotiation?.negotiation_offer?.counter_offer ||
+    Number(props.negotiation?.counter_offer || 0);
+
   const getAgreedTotalPrice = () => {
+    if (isNegotiatedBoxGone()) {
+      return getFinalPrice() * getTotalListingBoxesWeight();
+    }
+
     return (
-      (props.negotiation?.negotiation_offer?.counter_offer ||
-        Number(props.negotiation?.counter_offer || 0)) * totalBoxWeight
+      (props?.negotiation?.listing_boxes?.reduce(
+        (prevValue, currentValue) =>
+          prevValue + currentValue.weight * currentValue.quantity,
+        0
+      ) ?? 0) * getFinalPrice()
     );
   };
 
@@ -79,12 +91,16 @@ const AcceptSellerModal = (props: AcceptSellerModalProps): JSX.Element => {
           <Typography weight="700" style={{ color: '#565A6A' }}>
             {props.quantity}
           </Typography>
-          {(props?.listingBoxes?.boxes?.length <= 0 ||
-            isNegotiatedBoxGone()) && (
-            <div style={{ marginRight: -20, marginBottom: -20 }}>
-              <Exclamation fill={theme.brand.primary} width={40} height={40} />
-            </div>
-          )}
+          {(props?.listingBoxes?.boxes?.length <= 0 || isNegotiatedBoxGone()) &&
+            !props.isAccepting && (
+              <div style={{ marginRight: -20, marginBottom: -20 }}>
+                <Exclamation
+                  fill={theme.brand.primary}
+                  width={40}
+                  height={40}
+                />
+              </div>
+            )}
         </div>
       </DetailsContainer>
       {props?.listingBoxes?.boxes?.length <= 0 ? (
@@ -97,7 +113,8 @@ const AcceptSellerModal = (props: AcceptSellerModalProps): JSX.Element => {
           or decline the offer.
         </Typography>
       ) : (
-        isNegotiatedBoxGone() && (
+        isNegotiatedBoxGone() &&
+        !props.isAccepting && (
           <>
             <div>
               <Typography color="primary" weight="700" style={{ fontSize: 14 }}>

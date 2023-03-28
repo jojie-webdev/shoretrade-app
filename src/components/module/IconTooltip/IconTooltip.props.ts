@@ -14,4 +14,10 @@ export interface IconTooltipProps {
   labelColor?: keyof Theme['brand'] | keyof Theme['grey'];
 }
 
-export type Variants = 'info' | 'alert' | 'warning' | 'error' | 'success';
+export type Variants =
+  | 'info'
+  | 'alert'
+  | 'warning'
+  | 'error'
+  | 'success'
+  | 'negotiationInfo';

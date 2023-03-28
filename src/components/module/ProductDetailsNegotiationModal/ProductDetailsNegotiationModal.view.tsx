@@ -9,13 +9,16 @@ import { isEmpty } from 'ramda';
 import { toPrice } from 'utils/String';
 
 import Loading from '../Loading';
-import { ProductDetailsNegotiationModalProps } from './ProductDetailsNegotiationModal.props';
 import {
+  Box,
+  ProductDetailsNegotiationModalProps,
+} from './ProductDetailsNegotiationModal.props';
+import {
+  BoxContainer,
   Container,
   GroupedBoxContainer,
   RadioBtnContainer,
   StyledTextField,
-  BoxContainer,
 } from './ProductDetailsNegotiationModal.style';
 
 const ProductDetailsNegotiationModal = (
@@ -45,6 +48,19 @@ const ProductDetailsNegotiationModal = (
   const getTotalPrice = () => {
     return toPrice(
       selectedBoxesWeight.reduce(
+        (acc, cur) =>
+          acc +
+          (cur.quantity || 0) *
+            cur.weight *
+            (negotiationPrice || Number(productDetailsCard6Props.price)),
+        0
+      )
+    );
+  };
+
+  const getGroupedBoxesPrice = (boxes: Box[]) => {
+    return toPrice(
+      boxes.reduce(
         (acc, cur) =>
           acc +
           (cur.quantity || 0) *
@@ -200,7 +216,7 @@ const ProductDetailsNegotiationModal = (
                           color="shade8"
                           style={{ fontWeight: 600, fontSize: 14 }}
                         >
-                          {getTotalPrice()}
+                          {getGroupedBoxesPrice(p.boxes)}
                         </Typography>
                       </BoxContainer>
                     </GroupedBoxContainer>

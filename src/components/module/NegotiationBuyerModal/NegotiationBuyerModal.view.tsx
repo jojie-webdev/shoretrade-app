@@ -143,6 +143,7 @@ const NegotiationBuyerModal = (
               Seller&apos;s Negotiated Price
             </Typography>
             <Typography variant="body" color="shade7">
+              {'$'}
               {negotiation?.negotiation_offer?.counter_offer ||
                 negotiation?.counter_offer ||
                 0}

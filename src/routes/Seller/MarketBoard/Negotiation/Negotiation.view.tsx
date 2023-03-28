@@ -259,7 +259,10 @@ const NegotiationView = (props: NegotiationProps) => {
           alertColor: 'error',
           description: (
             <Typography variant="body" color="shade6" weight="400">
-              The Buyer declined your counter-offer for{' '}
+              The Buyer declined{' '}
+              {negotiation?.negotiation_offer
+                ? 'your counter-offer for'
+                : 'the negotiation request for'}{' '}
               <NewNegoTypeWrapper>{negotiation?.name}</NewNegoTypeWrapper>
             </Typography>
           ),
@@ -334,6 +337,7 @@ const NegotiationView = (props: NegotiationProps) => {
       />
 
       <NegotiationSellerModal
+        listing={listing}
         negotiation={negotiation}
         isOpen={showNegotiationModal}
         onClickClose={handleNegotiationCloseBtnClick}
@@ -343,6 +347,14 @@ const NegotiationView = (props: NegotiationProps) => {
         //   setIsOpen(false);
         // }}
         onSubmit={handleNegotiationConfirmClick}
+        handleRadioClick={handleRadioClick}
+        selectedGroupedBoxIndex={selectedGroupedBoxIndex}
+        listingBoxes={listingBoxes}
+        isAccepting={isAcceptNegotiationPending}
+        quantity={`${
+          negotiation?.desired_quantity || 0
+        } ${negotiation?.measurement_unit.toLowerCase()}`}
+        negoMeasurementUnit={negotiation?.measurement_unit || ''}
       />
 
       <div id="decline_seller_modal__container">

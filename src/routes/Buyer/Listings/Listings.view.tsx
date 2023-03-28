@@ -216,7 +216,7 @@ export default function ListingView(props: ListingViewProps) {
         }}
       >
         <FilterContainer>
-          <NegotiableTextWrapper>Negotiable</NegotiableTextWrapper>
+          <NegotiableTextWrapper>Only Negotiable</NegotiableTextWrapper>
           <Toggle
             onClick={handleNegotiableToggle}
             checked={showNegotiable.showNegotiable}
