@@ -1,3 +1,6 @@
+import moment from 'moment';
+import { GetNegotiationByIdRequestResponseItem } from 'types/store/GetNegotiationByIdState';
+
 export const transformGetListingBoxes = (listingBoxes: {
   token: string;
   boxes: {
@@ -21,4 +24,33 @@ export const transformGetListingBoxes = (listingBoxes: {
 
   const modifiedListingBoxes = { ...listingBoxes, boxes: modifiedBoxes };
   return modifiedListingBoxes;
+};
+
+export const getNegotiationTimeframe = (
+  negotiation: GetNegotiationByIdRequestResponseItem | undefined
+) => {
+  if (!negotiation) return '';
+
+  const freshNegotiation = negotiation.specifications.some(
+    (specification) => specification.name.toLowerCase() === 'fresh'
+  );
+  const preauctionNegotiation = negotiation.is_pre_auction;
+  const specialNegotiation = freshNegotiation || preauctionNegotiation;
+
+  const remainingTime = moment.duration({
+    hours: specialNegotiation ? 3 : 24,
+  });
+
+  const now = moment();
+  const endTime = negotiation.negotiation_offer
+    ? moment(negotiation.negotiation_offer.created_at)
+    : moment(negotiation.created_at).add(remainingTime);
+
+  const hoursRemaining = endTime.diff(now, 'hours');
+
+  if (hoursRemaining <= 0) {
+    return 'expired';
+  } else {
+    return `${hoursRemaining} hours`;
+  }
 };
