@@ -81,7 +81,7 @@ import {
   TRANSACTION_VALUES,
   SELLER_REVERSE_MARKET_FEAT,
   BUYER_REVERSE_MARKET_FEAT,
-  EASTER_DATE,
+  NEW_SAAS_END_DATE,
 } from './Register.constants';
 import { RegisterGeneratedProps, StepFormProps } from './Register.props';
 import {
@@ -2784,7 +2784,7 @@ const RegisterView = (props: RegisterGeneratedProps) => {
         <GetStartedWrapper>
           <SignUpHeader>
             {theme.isSFM ? (
-              moment() >= moment(EASTER_DATE).add(1, 'day') ? (
+              moment() >= moment(NEW_SAAS_END_DATE).add(1, 'day') ? (
                 renderHeaderTexts
               ) : (
                 <div>

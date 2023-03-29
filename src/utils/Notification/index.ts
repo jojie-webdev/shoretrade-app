@@ -59,7 +59,14 @@ export function notifURLMapper(
       }
       url = BUYER_ROUTES.ALL_LISTING;
       break;
-    case 'negotiations_and_requests':
+    case 'negotiations':
+      if (appType === 'seller') {
+        url = SELLER_ROUTES.NEGOTIATIONS_AND_REQUESTS;
+        break;
+      }
+      url = BUYER_ROUTES.NEGOTIATIONS_AND_REQUESTS;
+      break;
+    case 'market_board':
       if (appType === 'seller') {
         url = SELLER_ROUTES.NEGOTIATIONS_AND_REQUESTS;
         break;

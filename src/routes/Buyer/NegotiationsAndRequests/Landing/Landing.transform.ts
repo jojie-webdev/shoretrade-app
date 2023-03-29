@@ -151,3 +151,16 @@ export const hasNewOffer = (offers: Offer[]) => {
     return checkLastestNego();
   }
 };
+
+export const excludeLostNegotiation = (nego: GetAllNegoRequestResponseItem) => {
+  if (
+    nego.display_status === 'Declined' ||
+    nego.display_status === 'Payment Missed'
+  ) {
+    if (nego.negotiation_offer) {
+      return !moment(nego.negotiation_offer.updated_at).add(3, 'h').isBefore();
+    }
+    return !moment(nego.updated_at).add(3, 'h').isBefore();
+  }
+  return nego;
+};

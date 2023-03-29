@@ -12,7 +12,8 @@ export type NotificationType =
   | 'cart'
   | 'orders'
   | 'rating_favourite'
-  | 'aquafutures';
+  | 'aquafutures'
+  | 'negotiations';
 
 export type NotifName =
   | 'Credit Added'

@@ -227,7 +227,7 @@ const NegotiationView = (props: NegotiationProps) => {
 
       case 'lost':
         return {
-          title: 'Negotiation Lost',
+          title: 'Negotiation Lapsed',
           alertColor: 'error',
           description: (
             <Typography variant="body" color="shade6" weight="400">
