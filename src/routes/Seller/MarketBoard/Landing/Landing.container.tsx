@@ -17,6 +17,7 @@ import {
   getSize,
   requestToModalFilter,
   sortNegotiationByStatus,
+  excludeExpiredLostNegotiation,
 } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
 import {
   getActiveOffersActions,
@@ -337,9 +338,9 @@ const MarketBoardLanding = (): JSX.Element => {
     buyerRequests: marketRequestsData.others,
     activeOffers: activeOffersDataCopy,
     negotiations: sortNegotiationByStatus(
-      getNegoRequestLandingData(
-        negotiations?.filter(
-          (nego) => !['CLOSED', 'LOST'].includes(nego.status)
+      excludeExpiredLostNegotiation(
+        getNegoRequestLandingData(
+          negotiations?.filter((nego) => nego.status !== 'END')
         )
       )
     ),

@@ -360,3 +360,33 @@ export const sortNegotiationByStatus = (
       toSort(b.display_status as NegotiationDisplayStatus)
   );
 };
+
+export const excludeExpiredLostNegotiation = (
+  negotiations: NegotiationWithExpiry[] | undefined
+) => {
+  if (!negotiations) return negotiations;
+
+  const getRemainingHours = (negotiation: NegotiationWithExpiry) => {
+    const remainingTime = moment.duration({ hours: 3 });
+
+    const now = moment();
+    const endTime = negotiation.negotiation_offer
+      ? moment(negotiation.negotiation_offer.updated_at)
+      : moment(negotiation.updated_at).add(remainingTime);
+
+    const hoursRemaining = endTime.diff(now, 'hours');
+    return hoursRemaining;
+  };
+
+  return negotiations.filter((negotiation) => {
+    const hoursRemaining = getRemainingHours(negotiation);
+    const isExpired = hoursRemaining <= 0;
+    const isExpiredAndLostNegotiation =
+      isExpired && negotiation.status === 'LOST';
+
+    if (isExpiredAndLostNegotiation) {
+      return false;
+    }
+    return true;
+  });
+};
