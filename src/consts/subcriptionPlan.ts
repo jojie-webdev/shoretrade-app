@@ -404,7 +404,7 @@ export const getBasePlanItems = (transactionValueFeePercentage: string) => [
   {
     title: `Reverse Marketplace unlimited access`,
     subText:
-      'Create Product Requests that are send to all Sellers on the platform. Receive offers and negotiate!',
+      'Create Product Requests that are sent to all Sellers on the platform. Receive offers and negotiate!',
   },
 ];
 export const PRO_PLAN_ITEMS = [
@@ -417,7 +417,7 @@ export const PRO_PLAN_ITEMS = [
   {
     title: `Reverse Marketplace unlimited access`,
     subText:
-      'Create Product Requests that are send to all Sellers on the platform. Receive offers and negotiate!',
+      'Create Product Requests that are sent to all Sellers on the platform. Receive offers and negotiate!',
   },
   {
     title: 'Customer Service',
