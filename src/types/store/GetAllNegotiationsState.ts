@@ -39,6 +39,7 @@ export type GetAllNegoRequestResponseItem = {
   active_size_unit: string;
   counter_offer: string;
   created_at: string;
+  updated_at: string;
   default_photo: string;
   desired_quantity: number;
   display_status: string;

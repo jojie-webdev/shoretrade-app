@@ -21,6 +21,7 @@ import {
 } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
 import useLocalStorage from 'utils/Hooks/useLocalStorage';
 import { sizeToString } from 'utils/Listing';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -37,6 +38,7 @@ import {
   Badges,
   SearchWrapper,
 } from './Landing.style';
+import { excludeLostNegotiation } from './Landing.transform';
 import NegotiationNonMobile from './NegotiationNonMobile';
 import RequestsMobile from './RequestsMobile';
 import RequestsNonMobile from './RequestsNonMobile';
@@ -156,15 +158,17 @@ const MarketRequestsLandingView = (
             isNegotiations={true}
           />
         ) : (
-          negotiations?.map((nego) => (
-            <NegotiationNonMobile
-              key={nego.listing_id}
-              item={nego}
-              onClickItem={() => onClickNegoItem(nego)}
-              activeOffersData={activeOffersData}
-              setItemToDelete={setItemToDelete}
-            />
-          ))
+          negotiations
+            ?.filter(excludeLostNegotiation)
+            .map((nego) => (
+              <NegotiationNonMobile
+                key={nego.listing_id}
+                item={nego}
+                onClickItem={() => onClickNegoItem(nego)}
+                activeOffersData={activeOffersData}
+                setItemToDelete={setItemToDelete}
+              />
+            ))
         )
       ) : (
         <EmptyStateView Svg={Crab} height={240} width={249} fluid />
