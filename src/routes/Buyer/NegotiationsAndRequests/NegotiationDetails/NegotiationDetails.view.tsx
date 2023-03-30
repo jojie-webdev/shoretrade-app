@@ -513,7 +513,19 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
   //     : lastNegotiationsOffers[lastNegotiationsOffers.length - 1]?.price;
   const renderLeftComponent = () => (
     <Col sm={12} md={12} xl={8}>
-      {negotiation && (
+      {negotiation &&
+      negotiation?.display_status === 'Payment Missed' &&
+      negotiation?.status !== 'PARTIAL' ? (
+        <AlertsContainer>
+          <BuyerNegotiationAlert
+            content="Negotiation lapses due to inactivity."
+            header="Lost"
+            variant="error"
+            status="lost"
+            fullWidth
+          />
+        </AlertsContainer>
+      ) : (
         <AlertsContainer>
           <BuyerNegotiationAlert
             content={getAlertProps().description}

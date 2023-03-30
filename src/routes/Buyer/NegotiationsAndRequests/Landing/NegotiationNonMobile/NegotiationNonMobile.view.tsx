@@ -210,14 +210,25 @@ const NegotiationMobileView = (props: NegotiationNonMobilePrivateProps) => {
 
           <Col style={{ padding: '0 5px' }}>
             <Badges>
-              {statusTextProps.text !== '' && (
+              {item.display_status === 'Payment Missed' &&
+              item.status !== 'PARTIAL' ? (
                 <OfferTag
-                  text={statusTextProps.text}
-                  badgeColor={statusTextProps.badgeColor || ''}
-                  variantColor={statusTextProps.variantColor}
-                  color={statusTextProps.tagColor}
+                  text="Lost"
+                  badgeColor={theme.brand.error || ''}
+                  variantColor="error"
+                  color="noshade"
                   textStyle={OfferTagTextStyle}
                 />
+              ) : (
+                statusTextProps.text !== '' && (
+                  <OfferTag
+                    text={statusTextProps.text}
+                    badgeColor={statusTextProps.badgeColor || ''}
+                    variantColor={statusTextProps.variantColor}
+                    color={statusTextProps.tagColor}
+                    textStyle={OfferTagTextStyle}
+                  />
+                )
               )}
             </Badges>
           </Col>
