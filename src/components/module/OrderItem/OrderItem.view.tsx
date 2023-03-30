@@ -48,13 +48,17 @@ const OrderItem = (props: OrderItemProps): JSX.Element => {
   const rating = props.data.rating;
   const showCatchment = !props.data.isMarketRequest;
   const isMobile = useMediaQuery({ query: BREAKPOINTS['sm'] });
+  const hasAdjustments =
+    (props?.orderInvoiceAdjustments?.orderAdjustmentsLabel?.length || 0) > 0;
 
   const handleOpenPdf = (adjustmentRef?: string) => {
     window.open(
       `${API.PDF_URL || API.URL}/${API.VERSION}/${
         theme.isSFM ? 'sfm-blue/' : ''
       }order/invoice/${props.data.orderRefNumber}?token=${props.token}${
-        adjustmentRef ? `&adjustmentRef=${adjustmentRef}` : '&showInitial=true'
+        adjustmentRef
+          ? `&adjustmentRef=${adjustmentRef}`
+          : `${hasAdjustments ? '&showInitial=true' : ''}`
       }`,
       '_blank'
     );

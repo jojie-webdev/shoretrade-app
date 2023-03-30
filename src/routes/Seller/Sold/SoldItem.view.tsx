@@ -119,12 +119,17 @@ const SoldItem = (props: {
     }
   };
 
+  const hasAdjustments =
+    (orderInvoiceAdjustments?.orderAdjustmentsLabel?.length || 0) > 0;
+
   const handleOpenPdf = (orderRefNumber: string, adjustmentRef?: string) => {
     window.open(
       `${API.PDF_URL || API.URL}/${API.VERSION}/${
         theme.isSFM ? 'sfm-blue/' : ''
       }order/invoice/${orderRefNumber}?token=${props.token}${
-        adjustmentRef ? `&adjustmentRef=${adjustmentRef}` : '&showInitial=true'
+        adjustmentRef
+          ? `&adjustmentRef=${adjustmentRef}`
+          : `${hasAdjustments ? '&showInitial=true' : ''} `
       }`,
       '_blank'
     );
