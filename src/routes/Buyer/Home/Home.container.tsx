@@ -14,6 +14,7 @@ import {
   getNegotiationCreditActions,
   orderActions,
   getBuyerHomepageActions,
+  showNegotiableActions,
 } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
@@ -80,6 +81,7 @@ const Home = (): JSX.Element => {
   useEffect(() => {
     dispatch(orderActions.clear());
     dispatch(getNegotiationCreditActions.request({}));
+    dispatch(showNegotiableActions.update({ showNegotiable: false }));
   }, []);
 
   useEffect(() => {
