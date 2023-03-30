@@ -211,21 +211,23 @@ const RoutesComponent = (): JSX.Element => {
     // eslint-disable-next-line
   }, [isAuthenticated, authenticatedUserType]);
 
-  // useEffect(() => {
-  //   const handleWindowFocus = function logout() {
-  //     if (!getUser.pending && getUser.data) {
-  //       dispatch(getUserActions.request());
-  //     }
-  //   };
+  useEffect(() => {
+    if (process.env.REACT_APP_ENV !== 'development') {
+      const handleWindowFocus = function logout() {
+        if (!getUser.pending && getUser.data) {
+          dispatch(getUserActions.request());
+        }
+      };
 
-  //   if (!getUser.pending && getUser.error) {
-  //     dispatch(logoutActions.request());
-  //   }
+      if (!getUser.pending && getUser.error) {
+        dispatch(logoutActions.request());
+      }
 
-  //   window.addEventListener('focus', handleWindowFocus);
+      window.addEventListener('focus', handleWindowFocus);
 
-  //   return () => window.removeEventListener('focus', handleWindowFocus);
-  // }, [getUser]);
+      return () => window.removeEventListener('focus', handleWindowFocus);
+    }
+  }, [getUser]);
 
   return (
     <Switch>
