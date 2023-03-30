@@ -117,14 +117,18 @@ const HomeView = (props: HomeGeneratedProps) => {
     showNegoCreditsModal,
     handleShowNegoCreditsModal,
     handleShowNegoModal,
+    showConfirmNegoModal,
+    handleConfirmNegoClick,
+    handleConfirmNegoModalClose,
+    handleShowConfirmNegoModal,
     showNegoModal,
     clickedRecentListing,
     handleNegoModalToggle,
     negotiationPrice,
     handleNegotiationPriceSetting,
-    handleNegoModalBtnClick,
     handleDesiredQuantityChange,
     handleSelectedBoxesWeight,
+    isSendingNegotiation,
     selectedBoxesWeight,
     productDetailsCard6Props,
     negotiationWeight,
@@ -207,7 +211,7 @@ const HomeView = (props: HomeGeneratedProps) => {
     {
       isOpen: showNegoModal,
       onClickClose: handleNegoModalToggle,
-      action: handleNegoModalBtnClick,
+      action: handleShowConfirmNegoModal,
       disableActionText:
         isBeyondCutoff || !negotiationPrice || !negotiationWeight,
       negotiationPrice,
@@ -262,6 +266,47 @@ const HomeView = (props: HomeGeneratedProps) => {
         />
       </div>
       <NegotiationCreditsModal {...negotiationCreditsProps} />
+      <ConfirmationModal
+        isOpen={showConfirmNegoModal}
+        onClickClose={handleConfirmNegoModalClose}
+        title={
+          <Typography
+            variant="title4"
+            color="shade8"
+            weight="900"
+            style={{ fontFamily: 'Canela' }}
+          >
+            Confirm Negotiation
+          </Typography>
+        }
+        action={handleConfirmNegoClick}
+        disableActionText={isSendingNegotiation}
+        cancel={handleConfirmNegoModalClose}
+        actionText="Send Negotiation"
+        cancelText="Cancel"
+        description={
+          <div style={{ marginTop: 20 }}>
+            {negotiationCredit?.is_unlimited ? (
+              <Typography variant="label" color="shade6">
+                Are you sure you want to send this negotiation?
+              </Typography>
+            ) : (
+              <>
+                <Typography variant="label" color="shade6">
+                  Sending this negotiation will cost 1 Negotiation Credit.
+                </Typography>
+                <div style={{ marginTop: 10 }} />
+                <Typography variant="label" color="shade6">
+                  Your current negotiation balance is{' '}
+                  {(negotiationCredit?.is_unlimited && 'an unlimited') ||
+                    negotiationCredit?.credit}{' '}
+                  Credit.
+                </Typography>
+              </>
+            )}
+          </div>
+        }
+      />
       <ProductDetailsNegotiationModal
         {...productDetailsNegotiationModalProps}
       />
