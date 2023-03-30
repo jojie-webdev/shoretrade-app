@@ -47,9 +47,13 @@ export interface HomeGeneratedProps {
   handleNegoModalToggle: () => void;
   negotiationPrice: number;
   handleNegotiationPriceSetting: (negotiationPrice: number) => void;
-  handleNegoModalBtnClick: () => void;
   handleDesiredQuantityChange: (weight: string) => void;
   handleSelectedBoxesWeight: (boxes: Box[], boxesIndex: number) => void;
+  handleShowConfirmNegoModal: () => void;
+  showConfirmNegoModal: boolean;
+  isSendingNegotiation: boolean;
+  handleConfirmNegoClick: () => void;
+  handleConfirmNegoModalClose: () => void;
   selectedBoxesWeight: Box[];
   productDetailsCard6Props: ProductDetailsCard6Props;
   negotiationWeight: string;

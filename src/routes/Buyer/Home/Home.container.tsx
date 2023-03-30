@@ -13,6 +13,7 @@ import {
   getNegotiationByIdActions,
   getNegotiationCreditActions,
   orderActions,
+  getBuyerHomepageActions,
 } from 'store/actions';
 import { GetDefaultCompany } from 'store/selectors/buyer';
 import { GetBuyerHomepageResponseListingItem } from 'types/store/GetBuyerHomepageState';
@@ -49,6 +50,7 @@ const Home = (): JSX.Element => {
   const [weight, setWeight] = useState('');
   const [negotiationWeight, setNegotiationWeight] = useState('');
   const [showSuccessfulNegoModal, setShowSuccessfulNegoModal] = useState(false);
+  const [showConfirmNegoModal, setShowConfirmNegoModal] = useState(false);
 
   const price = Number(clickedRecentListing?.price || '0');
 
@@ -68,6 +70,9 @@ const Home = (): JSX.Element => {
     (store: Store) => store.getNegotiationCredit.data?.data
   );
 
+  const isSendingNegotiation =
+    useSelector((state: Store) => state.createNegotiation_2.pending) === true;
+
   const loading =
     useSelector((state: Store) => state.searchAndCountProductType.pending) ||
     false;
@@ -76,6 +81,16 @@ const Home = (): JSX.Element => {
     dispatch(orderActions.clear());
     dispatch(getNegotiationCreditActions.request({}));
   }, []);
+
+  useEffect(() => {
+    if (!isSendingNegotiation && negotiationPrice) {
+      setShowNegoModal(false);
+      setShowConfirmNegoModal(false);
+      setShowSuccessfulNegoModal(true);
+      dispatch(getBuyerHomepageActions.request());
+      dispatch(getNegotiationCreditActions.request({}));
+    }
+  }, [isSendingNegotiation]);
 
   // MARK:- Variables
   const {
@@ -160,7 +175,7 @@ const Home = (): JSX.Element => {
   const isCreateNegotiationPending =
     useSelector((state: Store) => state.createNegotiation_2.pending) === true;
 
-  const handleNegoModalBtnClick = () => {
+  const handleConfirmNegoClick = () => {
     if (clickedRecentListing?.id && negotiationPrice) {
       const payload = {
         listingId: clickedRecentListing.id,
@@ -226,6 +241,15 @@ const Home = (): JSX.Element => {
   const handleSelectedBoxesWeight = (boxes: Box[], boxesIndex: number) => {
     setSelectedBoxesIndex(boxesIndex);
     setSelectedBoxesWeight(boxes);
+  };
+
+  const handleShowConfirmNegoModal = () => {
+    setShowNegoModal(false);
+    setShowConfirmNegoModal(true);
+  };
+
+  const handleConfirmNegoModalClose = () => {
+    setShowConfirmNegoModal(false);
   };
 
   const cutOffDate = moment(dateEnds)
@@ -331,7 +355,6 @@ const Home = (): JSX.Element => {
 
   useEffect(() => {
     if (!isCreateNegotiationPending && negotiationPrice) {
-      setShowSuccessfulNegoModal(true);
       setShowNegoModal(false);
       setNegotiationPrice('');
       setNegotiationWeight('');
@@ -401,12 +424,16 @@ const Home = (): JSX.Element => {
     showNegoCreditsModal,
     handleShowNegoCreditsModal,
     handleShowNegoModal,
+    handleShowConfirmNegoModal,
+    handleConfirmNegoClick,
+    handleConfirmNegoModalClose,
+    isSendingNegotiation,
+    showConfirmNegoModal,
     showNegoModal,
     clickedRecentListing,
     handleNegoModalToggle,
     negotiationPrice,
     handleNegotiationPriceSetting,
-    handleNegoModalBtnClick,
     handleDesiredQuantityChange,
     handleSelectedBoxesWeight,
     selectedBoxesWeight,
