@@ -62,7 +62,7 @@ const NegotiationTag = (props: NegotiationTagProps): JSX.Element => {
     }
   };
 
-  const negotiationStatusText = props.text === 'Lost' ? 'Lapsed' : 'Finalised';
+  const negotiationStatusText = props.text === 'Lost' ? 'Lapsed' : props.text;
 
   return (
     <Container backgroundColor={getBackgroundColor().bgColor}>
@@ -70,7 +70,7 @@ const NegotiationTag = (props: NegotiationTagProps): JSX.Element => {
         weight="600"
         color={getBackgroundColor().textColor as TypographyProps['color']}
       >
-        {negotiationStatusText}
+        {negotiationStatusText || 'Finalised'}
       </TypoWrapper>
     </Container>
   );
