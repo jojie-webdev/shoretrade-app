@@ -83,8 +83,7 @@ const NegotiationMobileView = (props: NegotiationNonMobilePrivateProps) => {
         )
       );
 
-      const isPreAuction = item.is_pre_auction || !isEmpty(item.auction_date);
-
+      const isPreAuction = item.is_pre_auction;
       const time = item.negotiation_offer?.updated_at || item.created_at;
 
       if (isFresh || isPreAuction) {
