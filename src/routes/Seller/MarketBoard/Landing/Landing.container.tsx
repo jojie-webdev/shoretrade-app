@@ -338,11 +338,7 @@ const MarketBoardLanding = (): JSX.Element => {
     buyerRequests: marketRequestsData.others,
     activeOffers: activeOffersDataCopy,
     negotiations: sortNegotiationByStatus(
-      excludeExpiredLostNegotiation(
-        getNegoRequestLandingData(
-          negotiations?.filter((nego) => nego.status !== 'END')
-        )
-      )
+      excludeExpiredLostNegotiation(getNegoRequestLandingData(negotiations))
     ),
     isLoading:
       buyerRequests.pending ||

@@ -382,7 +382,7 @@ export const excludeExpiredLostNegotiation = (
     const hoursRemaining = getRemainingHours(negotiation);
     const isExpired = hoursRemaining <= 0;
     const isExpiredAndLostNegotiation =
-      isExpired && negotiation.status === 'LOST';
+      isExpired && ['END', 'LOST'].includes(negotiation.status);
 
     if (isExpiredAndLostNegotiation) {
       return false;
