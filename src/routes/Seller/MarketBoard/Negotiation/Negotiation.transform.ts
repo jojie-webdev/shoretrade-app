@@ -43,8 +43,8 @@ export const getNegotiationTimeframe = (
 
   const now = moment();
   const endTime = negotiation.negotiation_offer
-    ? moment(negotiation.negotiation_offer.created_at)
-    : moment(negotiation.created_at).add(remainingTime);
+    ? moment(negotiation.negotiation_offer.updated_at)
+    : moment(negotiation.updated_at).add(remainingTime);
 
   const hoursRemaining = endTime.diff(now, 'hours');
 

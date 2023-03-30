@@ -663,7 +663,7 @@ const NegotiationView = (props: NegotiationProps) => {
                   variant="outline"
                   text={
                     <Typography color="primary" style={{ marginRight: 5 }}>
-                      Decline
+                      {negotiation?.negotiation_offer ? 'Withdraw' : 'Decline'}
                     </Typography>
                   }
                   icon={<Close fill={theme.brand.primary} />}
