@@ -671,9 +671,9 @@ const Preview = (props: PreviewProps): JSX.Element => {
                         }}
                       >
                         <NegotiatePriceElem
-                          backgroundColor={theme.brand.primary}
-                          iconFill={theme.grey.noshade}
-                          fontColor="noshade"
+                          backgroundColor={theme.grey.shade3}
+                          iconFill={theme.grey.shade6}
+                          fontColor="shade6"
                         />
                       </div>
                     )
@@ -718,9 +718,9 @@ const Preview = (props: PreviewProps): JSX.Element => {
                       }}
                     >
                       <NegotiatePriceElem
-                        backgroundColor={theme.brand.primary}
-                        iconFill={theme.grey.noshade}
-                        fontColor="noshade"
+                        backgroundColor={theme.grey.shade3}
+                        iconFill={theme.grey.shade6}
+                        fontColor="shade6"
                       />
                     </div>
                   )
