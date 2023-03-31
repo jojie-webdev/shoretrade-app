@@ -213,7 +213,7 @@ const NegotiationMobileView = (props: NegotiationNonMobilePrivateProps) => {
               {item.display_status === 'Payment Missed' &&
               item.status !== 'PARTIAL' ? (
                 <OfferTag
-                  text="Lost"
+                  text="Lapsed"
                   badgeColor={theme.brand.error || ''}
                   variantColor="error"
                   color="noshade"

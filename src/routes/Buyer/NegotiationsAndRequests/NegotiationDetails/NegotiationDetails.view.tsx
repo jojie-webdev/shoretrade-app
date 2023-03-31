@@ -519,9 +519,9 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
         <AlertsContainer>
           <BuyerNegotiationAlert
             content="Negotiation lapses due to inactivity."
-            header="Lost"
+            header="Lapsed"
             variant="error"
-            status="lost"
+            status="lapsed"
             fullWidth
           />
         </AlertsContainer>
