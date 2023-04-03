@@ -47,6 +47,7 @@ export type GetAllNegoRequestResponseItem = {
   listing_id: string;
   name: string;
   negotiation_request_id: string;
+  parent_negotiation_request_id: string;
   size_from: string;
   size_to: string;
   specifications: { id: string; name: string }[];

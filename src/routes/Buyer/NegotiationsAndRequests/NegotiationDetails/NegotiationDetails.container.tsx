@@ -144,6 +144,10 @@ const NegotiationDetails = (): JSX.Element => {
     (store: Store) => store.getNegotiationById.data?.data
   );
 
+  const negotiations = useSelector(
+    (store: Store) => store.getAllNegotiations.data?.data.negotiations
+  );
+
   const isCreateBuyerCounterNegotiationPending =
     useSelector(
       (store: Store) => store.createBuyerCounterNegotiation.pending
@@ -549,6 +553,7 @@ const NegotiationDetails = (): JSX.Element => {
           negotiationRequestId: negoRequestId,
         })
       );
+      dispatch(getAllNegotiationsActions.request({}));
     } else {
       setShowSuccessfulNegoModal(true);
     }
@@ -665,6 +670,10 @@ const NegotiationDetails = (): JSX.Element => {
     return <Loading />;
   }
 
+  const updatedCounterOffer = negotiations?.find(
+    (nego) => nego.parent_negotiation_request_id === negotiation?.id
+  )?.counter_offer;
+
   const generatedProps: NegotiationDetailsProps = {
     counterOffer,
     handleStartNegotiate,
@@ -722,6 +731,7 @@ const NegotiationDetails = (): JSX.Element => {
     handleDeclinedNegoModalToggle,
     showDeclinedNegoModal,
     isCartPending,
+    updatedCounterOffer,
   };
 
   // const getPrice = () => {

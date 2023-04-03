@@ -125,6 +125,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
     handleDeclinedNegoModalToggle,
     showDeclinedNegoModal,
     isCartPending,
+    updatedCounterOffer,
   } = props;
 
   const history = useHistory();
@@ -136,8 +137,11 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
     negotiation
   ) as GetNegotiationByIdRequestResponseItem['negotiation_offer'];
 
-  const price =
-    negotiationOffer.counter_offer || negotiation?.counter_offer || '0.00';
+  const price = updatedCounterOffer
+    ? updatedCounterOffer
+    : negotiation.display_status === 'Counter Offer'
+    ? negotiationOffer.counter_offer
+    : negotiation?.counter_offer;
 
   const renderTotalPriceContainer = () => (
     <TotalPriceContainer>
