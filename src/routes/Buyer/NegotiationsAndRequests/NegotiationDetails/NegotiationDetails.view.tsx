@@ -200,12 +200,12 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
   const renderLabelValue = (value: string | undefined, label = '') => (
     <>
       <DetailsValueContainer>
-        <div style={{ display: 'flex', position: 'relative' }}>
+        <div style={{ position: 'relative' }}>
           <StyledTypography weight="700" variant="label">
             {value}
           </StyledTypography>
           {label === 'quantity' && negotiation?.initial_listing_boxes && (
-            <div style={{ position: 'absolute', top: -20, left: 35 }}>
+            <div className="icon-tooltip-container">
               <IconTooltip
                 variant="negotiationInfo"
                 content={

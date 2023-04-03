@@ -31,14 +31,32 @@ export const Container = styled.div`
     width: 686px;
   }
 
+  .tooltip-container {
+    position: relative;
+  }
+
   .__react_component_tooltip {
+    position: absolute !important;
     padding: 0;
-    left: 31.5% !important;
+    top: -85px !important;
+    left: -8px !important;
     border-radius: 8px !important;
+    width: 510px !important;
   }
 
   .__react_component_tooltip::after {
     left: 5% !important;
+  }
+
+  .icon-tooltip-container {
+    position: absolute !important;
+    width: 500px;
+    top: -19px;
+    left: 25px;
+  }
+
+  .icon-label-wrapper {
+    margin-left: 5px;
   }
 
   @media ${BREAKPOINTS['sm']} {
