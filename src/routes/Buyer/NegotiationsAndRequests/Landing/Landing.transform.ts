@@ -162,5 +162,5 @@ export const excludeLostNegotiation = (nego: GetAllNegoRequestResponseItem) => {
     }
     return !moment(nego.updated_at).add(3, 'h').isBefore();
   }
-  return nego;
+  return nego.display_status !== 'Finalised';
 };
