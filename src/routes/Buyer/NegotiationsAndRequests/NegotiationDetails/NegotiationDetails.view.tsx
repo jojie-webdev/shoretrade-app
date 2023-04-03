@@ -282,8 +282,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
       )
     );
 
-    const isPreAuction =
-      negotiation.is_pre_auction || !isEmpty(negotiation.auction_date);
+    const isPreAuction = negotiation.is_pre_auction;
 
     const time =
       negotiation.negotiation_offer?.updated_at ||
@@ -317,12 +316,11 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
     const time = getTimeLimit().toLowerCase();
     let modifiedTime = '';
 
-    if (time.includes('hours')) {
-      const splits = time.split('hours');
-      modifiedTime = splits[0] + 'hours';
+    if (time.includes('hour')) {
+      const splits = time.split(' ');
+      modifiedTime = `${splits[0]} ${splits[1]}`;
     } else {
-      const splits = time.split('hour');
-      modifiedTime = splits[0] + 'hour';
+      modifiedTime = time;
     }
 
     return modifiedTime;
