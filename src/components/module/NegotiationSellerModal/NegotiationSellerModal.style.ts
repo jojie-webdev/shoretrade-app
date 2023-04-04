@@ -55,4 +55,5 @@ export const BoxContainer = styled.div`
   display: flex;
   align-items: start;
   justify-content: space-between;
+  margin-top: 10px;
 `;
