@@ -325,6 +325,10 @@ type NegotiationDisplayStatus =
   | 'Awaiting Buyer'
   | 'Awaiting Payment'
   | 'Lost'
+  | 'Payment Required'
+  | 'Counter Offer'
+  | 'Awaiting Seller'
+  | 'Payment Missed'
   | 'Declined';
 
 export const sortNegotiationByStatus = (
@@ -334,15 +338,19 @@ export const sortNegotiationByStatus = (
 
   const toSort = (status: NegotiationDisplayStatus) => {
     switch (status) {
+      case 'Payment Required':
       case 'New Negotiation': {
         return 1;
       }
+      case 'Counter Offer':
       case 'Awaiting Buyer': {
         return 2;
       }
+      case 'Awaiting Seller':
       case 'Awaiting Payment': {
         return 3;
       }
+      case 'Payment Missed':
       case 'Lost': {
         return 4;
       }
