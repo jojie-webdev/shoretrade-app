@@ -29,10 +29,10 @@ const Content = (props: NegotiationSellerModalProps) => {
   const theme = useTheme();
   const textColor = '#565A6A';
 
-  const [negotiationPrice, setNegotiationPrice] = useState<number | null>(null);
+  const [negotiationPrice, setNegotiationPrice] = useState<string | null>(null);
 
   const priceDiff =
-    Number(negotiation?.counter_offer) - (negotiationPrice || 0);
+    Number(negotiation?.counter_offer) - (Number(negotiationPrice) || 0);
   const priceDiff2 = priceDiff / Math.abs(Number(negotiation?.counter_offer));
   const priceDiffPercentage =
     negotiationPrice === null
@@ -91,13 +91,11 @@ const Content = (props: NegotiationSellerModalProps) => {
           step=".01"
           value={negotiationPrice?.toString()}
           onChangeText={(v) => {
-            let price = v;
-            if (price.indexOf('.') >= 0) {
-              price =
-                price.substr(0, price.indexOf('.')) +
-                price.substr(price.indexOf('.'), 3);
+            const regex = new RegExp(/^\d*\.?(\d{1,2})?$/);
+            if (!regex.test(v)) {
+              return;
             }
-            setNegotiationPrice(parseFloat(price));
+            setNegotiationPrice(v);
           }}
           min={1}
           LeftComponent={
@@ -312,7 +310,8 @@ const Content = (props: NegotiationSellerModalProps) => {
             <span className="indicator" style={{ color: theme.grey.noshade }}>
               {negotiationPrice === null
                 ? ''
-                : (negotiationPrice || 0) < Number(negotiation?.counter_offer)
+                : (Number(negotiationPrice) || 0) <
+                  Number(negotiation?.counter_offer)
                 ? '+'
                 : '-'}
               {Math.abs(priceDiffPercentage).toFixed(2)}%
@@ -322,7 +321,7 @@ const Content = (props: NegotiationSellerModalProps) => {
             {negotiationPrice === null
               ? ''
               : `${toPrice(
-                  (negotiationPrice || 0) -
+                  (Number(negotiationPrice) || 0) -
                     Number(negotiation?.counter_offer || '0.00')
                 )}/${
                   negotiation &&
@@ -349,8 +348,8 @@ const Content = (props: NegotiationSellerModalProps) => {
             variant="primary"
             text="Negotiate"
             onClick={() => {
-              if (negotiationPrice && negotiationPrice >= 1) {
-                onSubmit(negotiationPrice);
+              if (Number(negotiationPrice) && Number(negotiationPrice) >= 1) {
+                onSubmit(Number(negotiationPrice));
               }
             }}
             loading={isNegotiating}
@@ -364,8 +363,8 @@ const Content = (props: NegotiationSellerModalProps) => {
           variant="primary"
           text="Negotiate"
           onClick={() => {
-            if (negotiationPrice && negotiationPrice >= 1) {
-              onSubmit(negotiationPrice);
+            if (negotiationPrice && Number(negotiationPrice) >= 1) {
+              onSubmit(Number(negotiationPrice));
             }
           }}
           takeFullWidth
