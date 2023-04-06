@@ -51,7 +51,7 @@ const Content = (props: NegotiationSellerModalProps) => {
       : 0;
 
   const getFinalPrice = () =>
-    negotiationPrice ||
+    Number(negotiationPrice) ||
     props.negotiation?.negotiation_offer?.counter_offer ||
     Number(props.negotiation?.counter_offer || 0);
 
