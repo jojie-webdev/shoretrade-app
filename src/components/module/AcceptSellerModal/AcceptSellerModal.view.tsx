@@ -15,7 +15,6 @@ import { useTheme } from 'utils/Theme';
 import { AcceptSellerModalProps } from './AcceptSellerModal.props';
 import {
   BoxContainer,
-  Container,
   DetailsContainer,
   Line,
   TotalValueContainer,
@@ -120,28 +119,47 @@ const AcceptSellerModal = (props: AcceptSellerModalProps): JSX.Element => {
               <Typography color="primary" weight="700" style={{ fontSize: 14 }}>
                 Update the box combination for this negotiation
               </Typography>
-              {props?.listingBoxes?.boxes?.map((groupedBoxes, index) => (
-                <>
-                  <BoxContainer>
-                    <div style={{ display: 'flex' }}>
-                      <div style={{ marginTop: 3 }}>
-                        <Radio
-                          size={13}
-                          checked={props.selectedGroupedBoxIndex === index}
-                          onClick={() =>
-                            props.handleRadioClick &&
-                            props.handleRadioClick(index)
-                          }
-                        />
-                      </div>
+              {props?.listingBoxes?.boxes?.map((groupedBoxes, index) => {
+                const totalWeight = groupedBoxes.reduce(
+                  (acc, box) => box.weight * box.quantity + acc,
+                  0
+                );
+                return (
+                  <BoxContainer key={index}>
+                    <div style={{ marginTop: '3px' }}>
+                      <Radio
+                        size={13}
+                        checked={props.selectedGroupedBoxIndex === index}
+                        onClick={() =>
+                          props.handleRadioClick &&
+                          props.handleRadioClick(index)
+                        }
+                      />
+                    </div>
 
-                      <div>
-                        {groupedBoxes.map((box) => (
+                    <div
+                      style={{
+                        display: 'flex',
+                        flex: '1',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'start',
+                        }}
+                      >
+                        {groupedBoxes.map((box, index) => (
                           <Typography
                             key={box.id}
                             color="noshade"
                             weight="700"
-                            style={{ marginLeft: 5 }}
+                            style={{
+                              marginLeft: index > 0 ? '0.75rem' : '5px',
+                            }}
                           >
                             {box.weight}
                             {props.negoMeasurementUnit.toLowerCase()} x{' '}
@@ -149,11 +167,17 @@ const AcceptSellerModal = (props: AcceptSellerModalProps): JSX.Element => {
                           </Typography>
                         ))}
                       </div>
+                      <Typography
+                        color="noshade"
+                        weight="700"
+                        style={{ marginLeft: 5 }}
+                      >
+                        {`${totalWeight}${props.negoMeasurementUnit.toLowerCase()}`}
+                      </Typography>
                     </div>
                   </BoxContainer>
-                  <div style={{ marginTop: 10 }} />
-                </>
-              ))}
+                );
+              })}
             </div>
             {props?.listingBoxes?.boxes &&
               props?.listingBoxes?.boxes.length > 0 && (

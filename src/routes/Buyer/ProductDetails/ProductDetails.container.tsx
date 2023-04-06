@@ -429,6 +429,7 @@ const ProductDetails = (): JSX.Element => {
       setShowConfirmNegoModal(false);
       setShowNegoSuccessModal(true);
       dispatch(getNegotiationCreditActions.request({}));
+      dispatch(getListingActions.request({ listingId: listingId }));
     }
   }, [isSendingNegotiation]);
 

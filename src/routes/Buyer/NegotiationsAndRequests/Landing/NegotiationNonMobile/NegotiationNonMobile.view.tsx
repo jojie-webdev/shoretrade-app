@@ -83,8 +83,7 @@ const NegotiationMobileView = (props: NegotiationNonMobilePrivateProps) => {
         )
       );
 
-      const isPreAuction = item.is_pre_auction || !isEmpty(item.auction_date);
-
+      const isPreAuction = item.is_pre_auction;
       const time = item.negotiation_offer?.updated_at || item.created_at;
 
       if (isFresh || isPreAuction) {
@@ -211,14 +210,25 @@ const NegotiationMobileView = (props: NegotiationNonMobilePrivateProps) => {
 
           <Col style={{ padding: '0 5px' }}>
             <Badges>
-              {statusTextProps.text !== '' && (
+              {item.display_status === 'Payment Missed' &&
+              item.status !== 'PARTIAL' ? (
                 <OfferTag
-                  text={statusTextProps.text}
-                  badgeColor={statusTextProps.badgeColor || ''}
-                  variantColor={statusTextProps.variantColor}
-                  color={statusTextProps.tagColor}
+                  text="Lapsed"
+                  badgeColor={theme.brand.error || ''}
+                  variantColor="error"
+                  color="noshade"
                   textStyle={OfferTagTextStyle}
                 />
+              ) : (
+                statusTextProps.text !== '' && (
+                  <OfferTag
+                    text={statusTextProps.text}
+                    badgeColor={statusTextProps.badgeColor || ''}
+                    variantColor={statusTextProps.variantColor}
+                    color={statusTextProps.tagColor}
+                    textStyle={OfferTagTextStyle}
+                  />
+                )
               )}
             </Badges>
           </Col>

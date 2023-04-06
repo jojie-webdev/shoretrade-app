@@ -186,6 +186,10 @@ const Negotiation = (): JSX.Element => {
       setShowDeclineModal(false);
       setShowDeclinedNegoModal(true);
       dispatch(getNegotiationByIdActions.request({ negotiationRequestId }));
+
+      setTimeout(() => {
+        history.push(SELLER_MARKET_BOARD_ROUTES.LANDING);
+      }, 1500);
     }
   }, [isDeclineNegotiationPending]);
 

@@ -125,6 +125,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
     handleDeclinedNegoModalToggle,
     showDeclinedNegoModal,
     isCartPending,
+    updatedCounterOffer,
   } = props;
 
   const history = useHistory();
@@ -136,8 +137,11 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
     negotiation
   ) as GetNegotiationByIdRequestResponseItem['negotiation_offer'];
 
-  const price =
-    negotiationOffer.counter_offer || negotiation?.counter_offer || '0.00';
+  const price = updatedCounterOffer
+    ? updatedCounterOffer
+    : negotiation.display_status === 'Counter Offer'
+    ? negotiationOffer.counter_offer
+    : negotiation?.counter_offer;
 
   const renderTotalPriceContainer = () => (
     <TotalPriceContainer>
@@ -200,12 +204,12 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
   const renderLabelValue = (value: string | undefined, label = '') => (
     <>
       <DetailsValueContainer>
-        <div style={{ display: 'flex', position: 'relative' }}>
+        <div style={{ position: 'relative' }}>
           <StyledTypography weight="700" variant="label">
             {value}
           </StyledTypography>
           {label === 'quantity' && negotiation?.initial_listing_boxes && (
-            <div style={{ position: 'absolute', top: -20, left: 35 }}>
+            <div className="icon-tooltip-container">
               <IconTooltip
                 variant="negotiationInfo"
                 content={
@@ -282,8 +286,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
       )
     );
 
-    const isPreAuction =
-      negotiation.is_pre_auction || !isEmpty(negotiation.auction_date);
+    const isPreAuction = negotiation.is_pre_auction;
 
     const time =
       negotiation.negotiation_offer?.updated_at ||
@@ -317,12 +320,11 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
     const time = getTimeLimit().toLowerCase();
     let modifiedTime = '';
 
-    if (time.includes('hours')) {
-      const splits = time.split('hours');
-      modifiedTime = splits[0] + 'hours';
+    if (time.includes('hour')) {
+      const splits = time.split(' ');
+      modifiedTime = `${splits[0]} ${splits[1]}`;
     } else {
-      const splits = time.split('hour');
-      modifiedTime = splits[0] + 'hour';
+      modifiedTime = time;
     }
 
     return modifiedTime;
@@ -513,7 +515,19 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
   //     : lastNegotiationsOffers[lastNegotiationsOffers.length - 1]?.price;
   const renderLeftComponent = () => (
     <Col sm={12} md={12} xl={8}>
-      {negotiation && (
+      {negotiation &&
+      negotiation?.display_status === 'Payment Missed' &&
+      negotiation?.status !== 'PARTIAL' ? (
+        <AlertsContainer>
+          <BuyerNegotiationAlert
+            content="Negotiation lapses due to inactivity."
+            header="Lapsed"
+            variant="error"
+            status="lapsed"
+            fullWidth
+          />
+        </AlertsContainer>
+      ) : (
         <AlertsContainer>
           <BuyerNegotiationAlert
             content={getAlertProps().description}
@@ -612,7 +626,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
                     variant="outline"
                     text={
                       <Typography color="primary" style={{ marginRight: 5 }}>
-                        Decline
+                        Withdraw
                       </Typography>
                     }
                     icon={<Close fill={theme.brand.primary} />}

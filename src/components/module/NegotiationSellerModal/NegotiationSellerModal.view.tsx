@@ -17,7 +17,7 @@ import {
   BoxContainer,
 } from 'components/module/NegotiationSellerModal/NegotiationSellerModal.style';
 import { BREAKPOINTS } from 'consts/breakpoints';
-import { equals, filter, sortBy } from 'ramda';
+import { equals, filter } from 'ramda';
 import { Hidden } from 'react-grid-system';
 import { useMediaQuery } from 'react-responsive';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -25,14 +25,14 @@ import { toPrice } from 'utils/String/toPrice';
 import { useTheme } from 'utils/Theme';
 
 const Content = (props: NegotiationSellerModalProps) => {
-  const { negotiation, onSubmit, isNegotiating, listing } = props;
+  const { negotiation, onSubmit, isNegotiating } = props;
   const theme = useTheme();
   const textColor = '#565A6A';
 
-  const [negotiationPrice, setNegotiationPrice] = useState<number | null>(null);
+  const [negotiationPrice, setNegotiationPrice] = useState<string | null>(null);
 
   const priceDiff =
-    Number(negotiation?.counter_offer) - (negotiationPrice || 0);
+    Number(negotiation?.counter_offer) - (Number(negotiationPrice) || 0);
   const priceDiff2 = priceDiff / Math.abs(Number(negotiation?.counter_offer));
   const priceDiffPercentage =
     negotiationPrice === null
@@ -51,6 +51,7 @@ const Content = (props: NegotiationSellerModalProps) => {
       : 0;
 
   const getFinalPrice = () =>
+    Number(negotiationPrice) ||
     props.negotiation?.negotiation_offer?.counter_offer ||
     Number(props.negotiation?.counter_offer || 0);
 
@@ -90,13 +91,11 @@ const Content = (props: NegotiationSellerModalProps) => {
           step=".01"
           value={negotiationPrice?.toString()}
           onChangeText={(v) => {
-            let price = v;
-            if (price.indexOf('.') >= 0) {
-              price =
-                price.substr(0, price.indexOf('.')) +
-                price.substr(price.indexOf('.'), 3);
+            const regex = new RegExp(/^\d*\.?(\d{1,2})?$/);
+            if (!regex.test(v)) {
+              return;
             }
-            setNegotiationPrice(parseFloat(price));
+            setNegotiationPrice(v);
           }}
           min={1}
           LeftComponent={
@@ -104,7 +103,7 @@ const Content = (props: NegotiationSellerModalProps) => {
               {'$'}
             </Typography>
           }
-          // placeholder={`per ${unit}`}
+          disabled={props.listingBoxes?.boxes?.length === 0}
         />
       </Inputs>
 
@@ -152,28 +151,47 @@ const Content = (props: NegotiationSellerModalProps) => {
                 >
                   Update the box combination for this negotiation
                 </Typography>
-                {props?.listingBoxes?.boxes?.map((groupedBoxes, index) => (
-                  <>
-                    <BoxContainer>
-                      <div style={{ display: 'flex' }}>
-                        <div style={{ marginTop: 3 }}>
-                          <Radio
-                            size={13}
-                            checked={props.selectedGroupedBoxIndex === index}
-                            onClick={() =>
-                              props.handleRadioClick &&
-                              props.handleRadioClick(index)
-                            }
-                          />
-                        </div>
+                {props?.listingBoxes?.boxes?.map((groupedBoxes, index) => {
+                  const totalWeight = groupedBoxes.reduce(
+                    (acc, box) => box.weight * box.quantity + acc,
+                    0
+                  );
+                  return (
+                    <BoxContainer key={index}>
+                      <div style={{ marginTop: 3 }}>
+                        <Radio
+                          size={13}
+                          checked={props.selectedGroupedBoxIndex === index}
+                          onClick={() =>
+                            props.handleRadioClick &&
+                            props.handleRadioClick(index)
+                          }
+                        />
+                      </div>
 
-                        <div>
-                          {groupedBoxes.map((box) => (
+                      <div
+                        style={{
+                          display: 'flex',
+                          flex: '1',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'start',
+                          }}
+                        >
+                          {groupedBoxes.map((box, index) => (
                             <Typography
                               key={box.id}
                               color="noshade"
                               weight="700"
-                              style={{ marginLeft: 5 }}
+                              style={{
+                                marginLeft: index > 0 ? '0.75rem' : '5px',
+                              }}
                             >
                               {box.weight}
                               {props.negoMeasurementUnit.toLowerCase()} x{' '}
@@ -181,11 +199,17 @@ const Content = (props: NegotiationSellerModalProps) => {
                             </Typography>
                           ))}
                         </div>
+                        <Typography
+                          color="noshade"
+                          weight="700"
+                          style={{ marginLeft: 5 }}
+                        >
+                          {`${totalWeight}${props.negoMeasurementUnit.toLowerCase()}`}
+                        </Typography>
                       </div>
                     </BoxContainer>
-                    <div style={{ marginTop: 10 }} />
-                  </>
-                ))}
+                  );
+                })}
               </div>
               {props?.listingBoxes?.boxes &&
                 props?.listingBoxes?.boxes.length > 0 && (
@@ -268,7 +292,7 @@ const Content = (props: NegotiationSellerModalProps) => {
           </Typography>
         </div>
 
-        {/* 
+        {/*
         {latestCounterOffer && sortedNegotiations.length <= 3 && (
           <div className="computation-item-container">
             <Typography variant="body" style={{ color: textColor }}>
@@ -286,7 +310,8 @@ const Content = (props: NegotiationSellerModalProps) => {
             <span className="indicator" style={{ color: theme.grey.noshade }}>
               {negotiationPrice === null
                 ? ''
-                : (negotiationPrice || 0) < Number(negotiation?.counter_offer)
+                : (Number(negotiationPrice) || 0) <
+                  Number(negotiation?.counter_offer)
                 ? '+'
                 : '-'}
               {Math.abs(priceDiffPercentage).toFixed(2)}%
@@ -296,7 +321,7 @@ const Content = (props: NegotiationSellerModalProps) => {
             {negotiationPrice === null
               ? ''
               : `${toPrice(
-                  (negotiationPrice || 0) -
+                  (Number(negotiationPrice) || 0) -
                     Number(negotiation?.counter_offer || '0.00')
                 )}/${
                   negotiation &&
@@ -323,8 +348,8 @@ const Content = (props: NegotiationSellerModalProps) => {
             variant="primary"
             text="Negotiate"
             onClick={() => {
-              if (negotiationPrice && negotiationPrice >= 1) {
-                onSubmit(negotiationPrice);
+              if (Number(negotiationPrice) && Number(negotiationPrice) >= 1) {
+                onSubmit(Number(negotiationPrice));
               }
             }}
             loading={isNegotiating}
@@ -338,14 +363,14 @@ const Content = (props: NegotiationSellerModalProps) => {
           variant="primary"
           text="Negotiate"
           onClick={() => {
-            if (negotiationPrice && negotiationPrice >= 1) {
-              onSubmit(negotiationPrice);
+            if (negotiationPrice && Number(negotiationPrice) >= 1) {
+              onSubmit(Number(negotiationPrice));
             }
           }}
           takeFullWidth
           loading={isNegotiating}
           style={{ borderRadius: 12 }}
-          disabled={!negotiationPrice}
+          disabled={!negotiationPrice || isNegotiatedBoxGone()}
         />
       </MobileFooter>
     </>

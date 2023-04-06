@@ -32,6 +32,7 @@ import {
 import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
 
+import { sortNegotiationByStatus } from '../../../Seller/MarketBoard/Landing/Landing.transform';
 import { MarketRequestsLandingGeneratedProps, TABS } from './Landing.props';
 import {
   MarketRequestsContainer,
@@ -158,7 +159,7 @@ const MarketRequestsLandingView = (
             isNegotiations={true}
           />
         ) : (
-          negotiations
+          sortNegotiationByStatus(negotiations)
             ?.filter(excludeLostNegotiation)
             .map((nego) => (
               <NegotiationNonMobile
@@ -274,7 +275,7 @@ const MarketRequestsLandingView = (
                   <Col xs="content">
                     <Visible sm md lg xl xxl>
                       <Typography color="shade6">
-                        Negotiation Credits:{' '}
+                        Remaining Negotiation Credits:{' '}
                         {negotiationCredit?.is_unlimited
                           ? 'Unlimited'
                           : negotiationCredit?.credit}

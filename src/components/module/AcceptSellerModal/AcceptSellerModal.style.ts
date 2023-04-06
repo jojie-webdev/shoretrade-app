@@ -23,5 +23,6 @@ export const TotalValueContainer = styled.div`
 export const BoxContainer = styled.div`
   display: flex;
   align-items: start;
-  justify-content: space-between;
+  justify-content: start;
+  margin-top: 10px;
 `;

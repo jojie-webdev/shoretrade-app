@@ -17,6 +17,13 @@ export type NegotiationItem = {
   updated_at: string;
 };
 
+export type NegotiationListingBox = {
+  id: string;
+  weight: number;
+  quantity: number;
+  count: number | null;
+};
+
 export type GetNegotiationByIdRequestResponseItem = {
   id: string;
   listing_id: string;
@@ -48,20 +55,9 @@ export type GetNegotiationByIdRequestResponseItem = {
   is_pre_auction: boolean;
   is_valid_pre_auction: boolean;
   display_status: string;
-  listing_boxes: {
-    id: string;
-    weight: number;
-    quantity: number;
-    count: number;
-  }[];
-  initial_listing_boxes:
-    | {
-        id: string;
-        weight: number;
-        quantity: number;
-        count: number;
-      }[]
-    | null;
+  listing_boxes: NegotiationListingBox[];
+  initial_listing_boxes: NegotiationListingBox[] | null;
+  updated_at: string;
 };
 
 // TODO: Update response value
