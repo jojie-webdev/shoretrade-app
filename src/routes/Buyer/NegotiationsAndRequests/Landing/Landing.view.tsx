@@ -20,6 +20,7 @@ import {
   ScreenClassRender,
 } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
+import { NegotiationWithExpiry } from 'routes/Seller/MarketBoard/Landing/Landing.props';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
 import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
 import useLocalStorage from 'utils/Hooks/useLocalStorage';
@@ -33,13 +34,18 @@ import { parseImageUrl } from 'utils/parseImageURL';
 import { useTheme } from 'utils/Theme';
 
 import { sortNegotiationByStatus } from '../../../Seller/MarketBoard/Landing/Landing.transform';
-import { MarketRequestsLandingGeneratedProps, TABS } from './Landing.props';
+import {
+  MarketRequestsLandingGeneratedProps,
+  Result as MarketRequest,
+  TABS,
+} from './Landing.props';
 import {
   MarketRequestsContainer,
   Badges,
   SearchWrapper,
 } from './Landing.style';
 import { excludeLostNegotiation } from './Landing.transform';
+import NegotiationMobileContainer from './NegotiationMobile';
 import NegotiationNonMobile from './NegotiationNonMobile';
 import RequestsMobile from './RequestsMobile';
 import RequestsNonMobile from './RequestsNonMobile';
@@ -84,24 +90,46 @@ const MarketRequestsLandingView = (
     return <LoadingView />;
   }
 
-  const renderMobile = () => (
-    <Visible xs>
-      {selectedTab === TABS.MARKET_REQUEST ? (
-        marketRequests?.length > 0 ? (
-          marketRequests?.map((mr) => (
-            <RequestsMobile
-              item={mr}
-              onClickItem={onClickItem}
-              activeOffersData={activeOffersData}
-              setItemToDelete={setItemToDelete}
-            />
-          ))
-        ) : (
-          <EmptyStateView Svg={Crab} height={240} width={249} fluid />
-        )
-      ) : null}
-    </Visible>
-  );
+  const renderMobile = () => {
+    const viewMarketRequestOrEmpty = (requests: MarketRequest[]) => {
+      if (requests.length === 0) {
+        return <EmptyStateView Svg={Crab} height={240} width={249} fluid />;
+      }
+
+      return requests.map((mr) => (
+        <RequestsMobile
+          key={mr.id}
+          item={mr}
+          onClickItem={onClickItem}
+          activeOffersData={activeOffersData}
+          setItemToDelete={setItemToDelete}
+        />
+      ));
+    };
+
+    const viewNegotiationsOrEmpty = (
+      negotiationCollection: NegotiationWithExpiry[] | undefined
+    ) => {
+      if (!negotiationCollection || negotiationCollection.length === 0) {
+        return <EmptyStateView Svg={Crab} height={240} width={249} fluid />;
+      }
+
+      return (
+        <NegotiationMobileContainer
+          negotiations={negotiationCollection}
+          redirectToNegotiation={onClickNegoItem}
+        />
+      );
+    };
+
+    return (
+      <Visible xs>
+        {selectedTab === TABS.MARKET_REQUEST
+          ? viewMarketRequestOrEmpty(marketRequests)
+          : viewNegotiationsOrEmpty(negotiations)}
+      </Visible>
+    );
+  };
 
   const renderNonMobile = () => (
     <Hidden xs>
