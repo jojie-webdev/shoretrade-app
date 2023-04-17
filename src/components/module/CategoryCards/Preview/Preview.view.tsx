@@ -627,9 +627,10 @@ const Preview = (props: PreviewProps): JSX.Element => {
               {allowedNegotiationByBuyer ? (
                 canNegotiate ? (
                   props.auctionDate ? (
-                    isPreAuctionExpired(
-                      props.auctionDate
-                    ) ? null : hasCredits ? (
+                    // isPreAuctionExpired(
+                    //   props.auctionDate
+                    // ) ? null :
+                    hasCredits ? (
                       props.negotiationId ? (
                         <NegotiatePriceElem
                           backgroundColor={theme.grey.shade3}
@@ -725,13 +726,18 @@ const Preview = (props: PreviewProps): JSX.Element => {
                     </div>
                   )
                 ) : props.auctionDate ? (
-                  isPreAuctionExpired(props.auctionDate) ? null : (
-                    <NegotiatePriceElem
-                      backgroundColor={theme.grey.shade3}
-                      iconFill={theme.grey.shade6}
-                      fontColor="shade6"
-                    />
-                  )
+                  // isPreAuctionExpired(props.auctionDate) ? null : (
+                  //   <NegotiatePriceElem
+                  //     backgroundColor={theme.grey.shade3}
+                  //     iconFill={theme.grey.shade6}
+                  //     fontColor="shade6"
+                  //   />
+                  // )
+                  <NegotiatePriceElem
+                    backgroundColor={theme.grey.shade3}
+                    iconFill={theme.grey.shade6}
+                    fontColor="shade6"
+                  />
                 ) : (
                   <NegotiatePriceElem
                     backgroundColor={theme.grey.shade3}
