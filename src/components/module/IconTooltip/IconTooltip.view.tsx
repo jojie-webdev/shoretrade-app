@@ -32,6 +32,7 @@ const IconTooltip = (props: IconTooltipProps): JSX.Element => {
     label,
     labelColor,
     margin,
+    isClickable,
   } = props;
   let Icon: React.FC<SVGProps> = InfoFilled;
   let IconFill = '';
@@ -78,7 +79,7 @@ const IconTooltip = (props: IconTooltipProps): JSX.Element => {
           </Typography>
         )}
       </div>
-      <ReactTooltip aria-haspopup="true" id={tooltipId}>
+      <ReactTooltip aria-haspopup="true" id={tooltipId} clickable={isClickable}>
         {variant === 'negotiationInfo' ? (
           <StyledContentNegotiation align="center" color="noshade">
             {content}
