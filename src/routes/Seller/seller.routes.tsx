@@ -161,6 +161,7 @@ const SellerRoutes = (): JSX.Element => {
   const isCreatListingSuccess = creatingListingStatus.data?.status === 200;
 
   const subscription = useSelector((store: Store) => store.subscription);
+  const editableListing = useSelector((state: Store) => state.editableListing);
   const isAccountDeactivated = subscription.isAccountDeactivated;
 
   const getThemeOverride = (): {
@@ -209,10 +210,10 @@ const SellerRoutes = (): JSX.Element => {
           pageTitle: 'Bulk Spreadsheet Upload',
         };
       }
-
+      const isExisting = (editableListing?.currentListingId || '').length > 0;
       return {
         shouldIncludePadding: false,
-        pageTitle: 'Add a Listing',
+        pageTitle: isExisting ? 'Edit a Listing' : 'Add a Listing',
       };
     }
 
