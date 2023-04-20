@@ -20,6 +20,11 @@ const NegotiationInteractions = (
 ): JSX.Element => {
   const { onClick, data } = props;
   const unit = formatMeasurementUnit(data.measurement_unit);
+  const lapsedNegotiation =
+    props.data.status === 'LOST' && !props.data.approved_at;
+  const negotiationDisplayStatus = lapsedNegotiation
+    ? 'Lapsed'
+    : props.data.display_status;
 
   // const buildSizeValue = () => {
   //   const sizeValue =

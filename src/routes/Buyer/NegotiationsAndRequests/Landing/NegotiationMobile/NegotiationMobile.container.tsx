@@ -109,25 +109,14 @@ const NegotiationLeftComponent = (
         </SubMinorInfo>
 
         <Badges>
-          {negotiation.display_status === 'Payment Missed' &&
-          negotiation.status !== 'PARTIAL' ? (
+          {statusTextProps.text !== '' && (
             <OfferTagView
-              text="Lapsed"
-              badgeColor={negotiation.theme.brand.error || ''}
-              variantColor="error"
-              color="noshade"
+              text={statusTextProps.text}
+              badgeColor={statusTextProps.badgeColor || ''}
+              variantColor={statusTextProps.variantColor}
+              color={statusTextProps.tagColor}
               textStyle={OfferTagTextStyle}
             />
-          ) : (
-            statusTextProps.text !== '' && (
-              <OfferTagView
-                text={statusTextProps.text}
-                badgeColor={statusTextProps.badgeColor || ''}
-                variantColor={statusTextProps.variantColor}
-                color={statusTextProps.tagColor}
-                textStyle={OfferTagTextStyle}
-              />
-            )
           )}
         </Badges>
       </MinorInfo>

@@ -15,6 +15,7 @@ import { SELLER_MARKET_BOARD_ROUTES, SELLER_ROUTES } from 'consts/routes';
 import { Col } from 'react-grid-system';
 import { useHistory } from 'react-router-dom';
 import { GetActiveOffersRequestResponseItem } from 'types/store/GetActiveOffersState';
+import { GetNegotiationByIdRequestResponseItem } from 'types/store/GetNegotiationByIdState';
 import { sizeToString } from 'utils/Listing';
 import { formatUnitToPricePerUnit } from 'utils/Listing/formatMeasurementUnit';
 import { toPrice } from 'utils/String';
@@ -47,6 +48,7 @@ const CLOSED_NEGOTIATION = [
   'END',
   'CLOSED',
   'LOST',
+  'PAYMENT_MISSED',
 ];
 
 const NegotiationView = (props: NegotiationProps) => {
@@ -124,10 +126,12 @@ const NegotiationView = (props: NegotiationProps) => {
     </>
   );
 
-  const getAlertProps = (): AlertProps => {
-    switch (negotiation?.display_status?.toLowerCase() || '') {
+  const getAlertProps = (
+    model: GetNegotiationByIdRequestResponseItem | undefined
+  ): AlertProps => {
+    switch (model?.display_status?.toLowerCase() || '') {
       case '':
-        if (negotiation?.status === 'END') {
+        if (model?.status === 'END') {
           return {
             title: 'Negotiation Finalised',
             alertColor: 'success',
@@ -225,16 +229,30 @@ const NegotiationView = (props: NegotiationProps) => {
           ),
         };
 
-      case 'lost':
+      case 'lost': {
+        const paymentMissedNegotiation = model?.status === 'PAYMENT_MISSED';
+        if (paymentMissedNegotiation) {
+          return {
+            title: 'Negotiation Lost',
+            alertColor: 'error',
+            description: (
+              <Typography variant="body" color="shade6" weight="400">
+                Buyer did not process the payment within the timeframe.
+              </Typography>
+            ),
+          };
+        }
+
         return {
           title: 'Negotiation Lapsed',
           alertColor: 'error',
           description: (
             <Typography variant="body" color="shade6" weight="400">
-              Buyer did not process the payment within the timeframe.
+              This negotiation has lapsed due to inactivity.
             </Typography>
           ),
         };
+      }
 
       case 'declined':
         return {
@@ -262,6 +280,7 @@ const NegotiationView = (props: NegotiationProps) => {
 
   const displayCTA =
     !!negotiation && !CLOSED_NEGOTIATION.includes(negotiation.status);
+  const alertProps = getAlertProps(negotiation);
 
   return (
     <Container>
@@ -502,9 +521,9 @@ const NegotiationView = (props: NegotiationProps) => {
       <div style={{ marginTop: 24 }} />
       {negotiation && (
         <SellerNegotiationAlert
-          content={getAlertProps().description}
-          header={getAlertProps().title}
-          variant={getAlertProps().alertColor}
+          content={alertProps.description}
+          header={alertProps.title}
+          variant={alertProps.alertColor}
           status={negotiation?.display_status?.toLowerCase() || ''}
           fullWidth
         />

@@ -515,32 +515,18 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
   //     : lastNegotiationsOffers[lastNegotiationsOffers.length - 1]?.price;
   const renderLeftComponent = () => (
     <Col sm={12} md={12} xl={8}>
-      {negotiation &&
-      negotiation?.display_status === 'Payment Missed' &&
-      negotiation?.status !== 'PARTIAL' ? (
-        <AlertsContainer>
-          <BuyerNegotiationAlert
-            content="Negotiation lapses due to inactivity."
-            header="Lapsed"
-            variant="error"
-            status="lapsed"
-            fullWidth
-          />
-        </AlertsContainer>
-      ) : (
-        <AlertsContainer>
-          <BuyerNegotiationAlert
-            content={getAlertProps().description}
-            header={getAlertProps().title}
-            variant={getAlertProps().alertColor}
-            // status={reworkDisplayStatus(
-            //   negotiation?.display_status?.toLowerCase() || ''
-            // )}
-            status={negotiation?.display_status?.toLowerCase() || ''}
-            fullWidth
-          />
-        </AlertsContainer>
-      )}
+      <AlertsContainer>
+        <BuyerNegotiationAlert
+          content={getAlertProps().description}
+          header={getAlertProps().title}
+          variant={getAlertProps().alertColor}
+          // status={reworkDisplayStatus(
+          //   negotiation?.display_status?.toLowerCase() || ''
+          // )}
+          status={negotiation?.display_status?.toLowerCase() || ''}
+          fullWidth
+        />
+      </AlertsContainer>
       {/* {mrStatusProps.text && (
         <AlertsContainer>
           <Alert
