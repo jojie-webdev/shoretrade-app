@@ -155,7 +155,8 @@ export const hasNewOffer = (offers: Offer[]) => {
 export const excludeLostNegotiation = (nego: GetAllNegoRequestResponseItem) => {
   if (
     nego.display_status === 'Declined' ||
-    nego.display_status === 'Payment Missed'
+    nego.display_status === 'Payment Missed' ||
+    nego.display_status === 'Lost'
   ) {
     if (nego.negotiation_offer) {
       return !moment(nego.negotiation_offer.updated_at).add(3, 'h').isBefore();
