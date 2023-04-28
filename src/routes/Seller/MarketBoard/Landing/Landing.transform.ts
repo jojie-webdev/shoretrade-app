@@ -390,7 +390,7 @@ export const excludeExpiredLostNegotiation = (
     const hoursRemaining = getRemainingHours(negotiation);
     const isExpired = hoursRemaining <= 0;
     const isExpiredAndLostNegotiation =
-      isExpired && ['END', 'LOST', 'PAYMENT_MISSED'].includes(negotiation.status);
+      isExpired && ['END', 'LOST', 'PAYMENT_MISSED', 'CHECKOUT'].includes(negotiation.status);
 
     if (isExpiredAndLostNegotiation) {
       return false;
