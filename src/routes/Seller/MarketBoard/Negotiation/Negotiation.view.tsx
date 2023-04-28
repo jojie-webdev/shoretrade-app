@@ -49,6 +49,7 @@ const CLOSED_NEGOTIATION = [
   'CLOSED',
   'LOST',
   'PAYMENT_MISSED',
+  'CHECKOUT',
 ];
 
 const NegotiationView = (props: NegotiationProps) => {
