@@ -98,9 +98,7 @@ const NegotiationBuyerModal = (
         )}
         <Inputs>
           <StyledTextField
-            type="number"
-            inputType="decimal"
-            step=".01"
+            type="text"
             label={'Counter Offer'}
             value={buyerNegotiatedPrice?.toString()}
             onChangeText={(v) => {
