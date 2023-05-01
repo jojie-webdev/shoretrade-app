@@ -95,20 +95,16 @@ const ProductDetailsNegotiationModal = (
         description={
           <div style={{ marginTop: 20 }}>
             <StyledTextField
-              type="number"
-              inputType="decimal"
-              step=".01"
+              type="text"
               label={'Counter Offer'}
               defaultValue={productDetailsCard6Props.price || negotiationPrice}
               value={negotiationPrice}
               onChangeText={(v) => {
-                let price = v;
-                if (price.indexOf('.') >= 0) {
-                  price =
-                    price.substr(0, price.indexOf('.')) +
-                    price.substr(price.indexOf('.'), 3);
+                const regex = new RegExp(/^\d*\.?(\d{1,2})?$/);
+                if (!regex.test(v)) {
+                  return;
                 }
-                handleNegotiationPriceSetting(parseFloat(price));
+                handleNegotiationPriceSetting(v);
               }}
               min={1}
               LeftComponent={
