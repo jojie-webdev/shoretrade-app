@@ -81,7 +81,7 @@ export interface ProductDetailsGeneratedProps {
   showConfirmNegoModal: boolean;
   handleConfirmNegoClick: () => void;
   isSendingNegotiation: boolean;
-  handleNegotiationPriceSetting: (price: number) => void;
+  handleNegotiationPriceSetting: (price: string) => void;
   negotiationPrice: number;
   handleDesiredQuantityChange: (weight: string) => void;
   negotiationWeight: string;

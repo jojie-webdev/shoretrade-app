@@ -293,7 +293,7 @@ const ProductDetails = (): JSX.Element => {
     setShowConfirmNegoModal(true);
   };
 
-  const handleNegotiationPriceSetting = (price: number) => {
+  const handleNegotiationPriceSetting = (price: string) => {
     setNegotiationPrice(price);
   };
 

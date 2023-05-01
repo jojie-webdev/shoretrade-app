@@ -8,7 +8,7 @@ export interface ProductDetailsNegotiationModalProps {
   isLoadingListingBoxes: boolean;
   productDetailsCard6Props: ProductDetailsCard6Props;
   negotiationPrice: number;
-  handleNegotiationPriceSetting: (price: number) => void;
+  handleNegotiationPriceSetting: (price: string) => void;
   unit?: string;
   negotiationWeight: string;
   groupedBox: {
