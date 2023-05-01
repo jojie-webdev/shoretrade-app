@@ -36,7 +36,7 @@ const NegotiationBuyerModal = (
   } = props;
 
   const [buyerNegotiatedPrice, setBuyerNegotiatedPrice] = useState<
-    number | null
+    string | null
   >(null);
 
   const theme = useTheme();
@@ -45,7 +45,7 @@ const NegotiationBuyerModal = (
   const ModalLayout = isSmallScreen ? MobileModal : Modal;
 
   const priceDiff =
-    (buyerNegotiatedPrice || 0) -
+    (Number(buyerNegotiatedPrice) || 0) -
     Number(
       negotiation?.negotiation_offer?.counter_offer ||
         negotiation?.counter_offer ||
@@ -104,13 +104,11 @@ const NegotiationBuyerModal = (
             label={'Counter Offer'}
             value={buyerNegotiatedPrice?.toString()}
             onChangeText={(v) => {
-              let price = v;
-              if (price.indexOf('.') >= 0) {
-                price =
-                  price.substr(0, price.indexOf('.')) +
-                  price.substr(price.indexOf('.'), 3);
+              const regex = new RegExp(/^\d*\.?(\d{1,2})?$/);
+              if (!regex.test(v)) {
+                return;
               }
-              setBuyerNegotiatedPrice(parseFloat(price));
+              setBuyerNegotiatedPrice(v);
             }}
             min={1}
             LeftComponent={
@@ -165,17 +163,20 @@ const NegotiationBuyerModal = (
           <div className="computation-item-container">
             <Typography variant="body" color="shade6">
               Change in Price{' '}
-              {buyerNegotiatedPrice === null || isNaN(buyerNegotiatedPrice)
+              {buyerNegotiatedPrice === null ||
+              isNaN(Number(buyerNegotiatedPrice))
                 ? ''
                 : negotiation?.negotiation_offer.counter_offer <
-                  (buyerNegotiatedPrice || 0)
+                  (Number(buyerNegotiatedPrice) || 0)
                 ? '+'
                 : '-'}
-              {buyerNegotiatedPrice === null || isNaN(buyerNegotiatedPrice)
+              {buyerNegotiatedPrice === null ||
+              isNaN(Number(buyerNegotiatedPrice))
                 ? ''
                 : `${Math.abs(priceDiffPercentage).toFixed(2)}%`}
             </Typography>
-            {buyerNegotiatedPrice === null || isNaN(buyerNegotiatedPrice) ? (
+            {buyerNegotiatedPrice === null ||
+            isNaN(Number(buyerNegotiatedPrice)) ? (
               ''
             ) : priceDiff !== 0 ? (
               <Typography
@@ -202,12 +203,14 @@ const NegotiationBuyerModal = (
                   negotiation?.negotiation_offer?.counter_offer ||
                   Number(negotiation?.counter_offer || '0'))}{' '}
               {negotiation?.measurement_unit?.toLowerCase()} */}
-              {buyerNegotiatedPrice === null || isNaN(buyerNegotiatedPrice)
+              {buyerNegotiatedPrice === null ||
+              isNaN(Number(buyerNegotiatedPrice))
                 ? ''
                 : negotiation?.desired_quantity *
-                  ((buyerNegotiatedPrice ?? 0) ||
+                  ((Number(buyerNegotiatedPrice) ?? 0) ||
                     negotiation?.negotiation_offer?.counter_offer)}{' '}
-              {buyerNegotiatedPrice === null || isNaN(buyerNegotiatedPrice)
+              {buyerNegotiatedPrice === null ||
+              isNaN(Number(buyerNegotiatedPrice))
                 ? ''
                 : negotiation?.measurement_unit?.toLowerCase()}
             </Typography>
@@ -223,10 +226,11 @@ const NegotiationBuyerModal = (
               color="shade9"
               style={{ fontFamily: 'Basis Grotesque Pro' }}
             >
-              {buyerNegotiatedPrice === null || isNaN(buyerNegotiatedPrice)
+              {buyerNegotiatedPrice === null ||
+              isNaN(Number(buyerNegotiatedPrice))
                 ? ''
                 : toPrice(
-                    (buyerNegotiatedPrice ||
+                    (Number(buyerNegotiatedPrice) ||
                       negotiation?.negotiation_offer.counter_offer ||
                       Number(negotiation?.counter_offer || '0')) *
                       negotiation?.desired_quantity
@@ -243,7 +247,7 @@ const NegotiationBuyerModal = (
               text="NEGOTIATE"
               onClick={() => {
                 if (buyerNegotiatedPrice) {
-                  onSubmitClick(buyerNegotiatedPrice);
+                  onSubmitClick(Number(buyerNegotiatedPrice));
                 }
               }}
               takeFullWidth={isSmallScreen}
@@ -258,7 +262,7 @@ const NegotiationBuyerModal = (
             text="Negotiate"
             onClick={() => {
               if (buyerNegotiatedPrice) {
-                onSubmitClick(buyerNegotiatedPrice);
+                onSubmitClick(Number(buyerNegotiatedPrice));
               }
             }}
             takeFullWidth={isSmallScreen}

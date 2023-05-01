@@ -289,9 +289,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
     const isPreAuction = negotiation.is_pre_auction;
 
     const time =
-      negotiation.negotiation_offer?.updated_at ||
-      negotiation.negotiation_offer?.created_at ||
-      negotiation.created_at;
+      negotiation.negotiation_offer?.updated_at ?? negotiation.updated_at;
 
     if (isFresh || isPreAuction) {
       const expiry = moment(time).add(3, 'h').isBefore()
@@ -509,25 +507,66 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
     }
   };
 
+  const expiredTimeLimit = getTimeLimit().toUpperCase() === 'EXPIRED';
+
   // const negotiatedPrice =
   //   sortedNegotiations.length === 0
   //     ? selectedOffer?.price
   //     : lastNegotiationsOffers[lastNegotiationsOffers.length - 1]?.price;
-  const renderLeftComponent = () => (
-    <Col sm={12} md={12} xl={8}>
-      {negotiation &&
-      negotiation?.display_status === 'Payment Missed' &&
-      negotiation?.status !== 'PARTIAL' ? (
-        <AlertsContainer>
-          <BuyerNegotiationAlert
-            content="Negotiation lapses due to inactivity."
-            header="Lapsed"
-            variant="error"
-            status="lapsed"
-            fullWidth
-          />
-        </AlertsContainer>
-      ) : (
+  const renderLeftComponent = (
+    expiredNegotiation: boolean,
+    shouldDisplayCTA: boolean
+  ) => {
+    const displayCTA =
+      expiredNegotiation || !shouldDisplayCTA ? null : (
+        <CTAContainer>
+          <div style={{ display: 'flex' }}>
+            <Button
+              onClick={() => handleDeclineClick(true)}
+              variant="outline"
+              text={
+                <Typography color="primary" style={{ marginRight: 5 }}>
+                  Withdraw
+                </Typography>
+              }
+              icon={<Close fill={theme.brand.primary} />}
+              style={{ width: '100%', marginRight: 10 }}
+            />
+            {negotiation?.display_status?.toLowerCase() !==
+              'awaiting seller' && (
+              <Button
+                text={
+                  <Typography color="noshade" style={{ marginRight: 5 }}>
+                    Negotiate
+                  </Typography>
+                }
+                icon={<Refresh fill={theme.grey.noshade} />}
+                onClick={handleNegoBtnClick2}
+                disabled={negotiation?.display_status !== 'Counter Offer'}
+                style={{ marginRight: 10, width: '100%' }}
+              />
+            )}
+          </div>
+          <div style={{ width: '124px' }}>
+            {negotiation?.display_status?.toLowerCase() !==
+              'awaiting seller' && (
+              <StyledAcceptButton
+                text={
+                  <Typography color="noshade" style={{ marginRight: 5 }}>
+                    Accept
+                  </Typography>
+                }
+                icon={<Check width={10} height={9} />}
+                onClick={() => handleAcceptClick(true)}
+                disabled={negotiation?.display_status !== 'Counter Offer'}
+              />
+            )}
+          </div>
+        </CTAContainer>
+      );
+
+    return (
+      <Col sm={12} md={12} xl={8}>
         <AlertsContainer>
           <BuyerNegotiationAlert
             content={getAlertProps().description}
@@ -540,8 +579,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
             fullWidth
           />
         </AlertsContainer>
-      )}
-      {/* {mrStatusProps.text && (
+        {/* {mrStatusProps.text && (
         <AlertsContainer>
           <Alert
             content={
@@ -558,37 +596,37 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
         </AlertsContainer>
       )} */}
 
-      <FullOfferDetailsContainer>
-        <Row>
-          <Col>
-            {renderLabel('SPECIFICATION')}
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-              {negotiation?.specifications?.map((spec) => (
-                <div key={spec.id} style={{ marginRight: 8 }}>
-                  {renderLabelValue(spec.name)}
-                </div>
-              ))}
-            </div>
+        <FullOfferDetailsContainer>
+          <Row>
+            <Col>
+              {renderLabel('SPECIFICATION')}
+              <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                {negotiation?.specifications?.map((spec) => (
+                  <div key={spec.id} style={{ marginRight: 8 }}>
+                    {renderLabelValue(spec.name)}
+                  </div>
+                ))}
+              </div>
 
-            {renderLabel('SIZE', { marginTop: '24px' })}
-            {renderLabelValue(sizeValue)}
+              {renderLabel('SIZE', { marginTop: '24px' })}
+              {renderLabelValue(sizeValue)}
 
-            {renderLabel('QUANTITY', { marginTop: '24px' })}
-            {renderLabelValue(quantityValue.toLowerCase(), 'quantity')}
+              {renderLabel('QUANTITY', { marginTop: '24px' })}
+              {renderLabelValue(quantityValue.toLowerCase(), 'quantity')}
 
-            {renderLabel('PRICE', { marginTop: '24px' })}
-            {renderLabelValue(pricePerUnit.toLowerCase())}
+              {renderLabel('PRICE', { marginTop: '24px' })}
+              {renderLabelValue(pricePerUnit.toLowerCase())}
 
-            {/*{renderLabel('Delivery Address', { marginTop: '24px' })}
+              {/*{renderLabel('Delivery Address', { marginTop: '24px' })}
              {renderLabelValue(
               // eslint-disable-next-line react/prop-types
               // getShippingAddress(offerMR.shippingTo as ShippingAddress)
               'negotiation.shippingTo'
             )} */}
-          </Col>
-        </Row>
-        {/* <Hidden xs sm> */}
-        {/* {negotiation?.status !== 'ACCEPTED' &&
+            </Col>
+          </Row>
+          {/* <Hidden xs sm> */}
+          {/* {negotiation?.status !== 'ACCEPTED' &&
             negotiation?.status !== 'PARTIAL' && (
               <DefaultCTAContainer>
                 <DefaultStyledNegotiateButtonContainer>
@@ -610,87 +648,35 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
                 </div>
               </DefaultCTAContainer>
             )} */}
-        {getTimeLimit().toUpperCase() === 'EXPIRED'
-          ? null
-          : negotiation?.status !== 'ACCEPTED' &&
-            negotiation?.status !== 'PARTIAL' &&
-            negotiation?.status !== 'DECLINED' &&
-            negotiation?.status !== 'LOST' &&
-            negotiation?.status !== 'END' &&
-            negotiation?.status !== 'CLOSED' &&
-            negotiation?.status !== 'CHECKOUT' && (
+          {displayCTA}
+
+          {negotiation?.status === 'PARTIAL' &&
+            getTimeLimit().toLowerCase() !== 'expired' && (
               <CTAContainer>
-                <div style={{ display: 'flex' }}>
-                  <Button
-                    onClick={() => handleDeclineClick(true)}
-                    variant="outline"
+                <div style={{ width: 'fit-content' }}>
+                  <StyledAcceptButton
                     text={
-                      <Typography color="primary" style={{ marginRight: 5 }}>
-                        Withdraw
+                      <Typography
+                        variant="label"
+                        weight="700"
+                        color="noshade"
+                        style={{ fontFamily: 'Basis Grotesque Pro' }}
+                        disabled={!(isCartPending === false)}
+                      >
+                        Proceed To Checkout
                       </Typography>
                     }
-                    icon={<Close fill={theme.brand.primary} />}
-                    style={{ width: '100%', marginRight: 10 }}
+                    // icon={<Check width={10} height={9} />}
+                    onClick={handleProceedToCheckoutClick}
                   />
-                  {negotiation?.display_status?.toLowerCase() !==
-                    'awaiting seller' && (
-                    <Button
-                      text={
-                        <Typography color="noshade" style={{ marginRight: 5 }}>
-                          Negotiate
-                        </Typography>
-                      }
-                      icon={<Refresh fill={theme.grey.noshade} />}
-                      onClick={handleNegoBtnClick2}
-                      disabled={negotiation?.display_status !== 'Counter Offer'}
-                      style={{ marginRight: 10, width: '100%' }}
-                    />
-                  )}
-                </div>
-                <div style={{ width: '124px' }}>
-                  {negotiation?.display_status?.toLowerCase() !==
-                    'awaiting seller' && (
-                    <StyledAcceptButton
-                      text={
-                        <Typography color="noshade" style={{ marginRight: 5 }}>
-                          Accept
-                        </Typography>
-                      }
-                      icon={<Check width={10} height={9} />}
-                      onClick={() => handleAcceptClick(true)}
-                      disabled={negotiation?.display_status !== 'Counter Offer'}
-                    />
-                  )}
                 </div>
               </CTAContainer>
             )}
-
-        {negotiation?.status === 'PARTIAL' &&
-          getTimeLimit().toLowerCase() !== 'expired' && (
-            <CTAContainer>
-              <div style={{ width: 'fit-content' }}>
-                <StyledAcceptButton
-                  text={
-                    <Typography
-                      variant="label"
-                      weight="700"
-                      color="noshade"
-                      style={{ fontFamily: 'Basis Grotesque Pro' }}
-                      disabled={!(isCartPending === false)}
-                    >
-                      Proceed To Checkout
-                    </Typography>
-                  }
-                  // icon={<Check width={10} height={9} />}
-                  onClick={handleProceedToCheckoutClick}
-                />
-              </div>
-            </CTAContainer>
-          )}
-        {/* </Hidden> */}
-      </FullOfferDetailsContainer>
-    </Col>
-  );
+          {/* </Hidden> */}
+        </FullOfferDetailsContainer>
+      </Col>
+    );
+  };
 
   if (isLoadingAcceptOffer || isLoadingOffer || isLoadingNegotiate) {
     return <Loading />;
@@ -994,7 +980,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
       </Row>
       <Row gutterWidth={30}>
         <Hidden xs sm md lg>
-          {renderLeftComponent()}
+          {renderLeftComponent(expiredTimeLimit, displayCTA)}
           <Col sm={12} md={12} xl={4}>
             {renderTotalPriceContainer()}
           </Col>
@@ -1004,7 +990,7 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
             {renderTotalPriceContainer()}
           </Col>
           {/* {renderRightComponent()} */}
-          {renderLeftComponent()}
+          {renderLeftComponent(expiredTimeLimit, displayCTA)}
         </Visible>
       </Row>
 
@@ -1055,74 +1041,6 @@ const NegotiationDetailsView = (props: NegotiationDetailsProps) => {
             </div>
           </CTAContainer>
         )} */}
-
-        {getTimeLimit().toUpperCase() === 'EXPIRED'
-          ? null
-          : displayCTA && (
-              <>
-                <Row>
-                  <Col>{renderOfferSeenTextContainer()}</Col>
-                </Row>
-                <Row style={{ marginTop: '40px' }}>
-                  <Col style={{ paddingRight: 5, marginTop: 5 }}>
-                    <Button
-                      onClick={() => handleDeclineClick(true)}
-                      variant="outline"
-                      text={
-                        <Typography color="primary" style={{ marginRight: 5 }}>
-                          Decline
-                        </Typography>
-                      }
-                      icon={<Close fill={theme.brand.primary} />}
-                      style={{ width: '100%', padding: '15px 28px' }}
-                    />
-                  </Col>
-                  {negotiation?.display_status?.toLowerCase() !==
-                    'awaiting seller' && (
-                    <Col style={{ paddingRight: 5, marginTop: 5 }}>
-                      <StyledNegotiateButton
-                        onClick={handleNegoBtnClick2}
-                        variant="outline"
-                        text={
-                          <Typography
-                            color="noshade"
-                            style={{ marginRight: 5 }}
-                          >
-                            Negotiate
-                          </Typography>
-                        }
-                        icon={<Refresh fill={theme.grey.noshade} />}
-                        disabled={
-                          negotiation?.display_status !== 'Counter Offer'
-                        }
-                        style={{ backgroundColor: theme.brand.primary }}
-                      />
-                    </Col>
-                  )}
-                  {negotiation?.display_status?.toLowerCase() !==
-                    'awaiting seller' && (
-                    <Col style={{ paddingRight: 5, marginTop: 5 }}>
-                      <StyledAcceptButton
-                        text={
-                          <Typography
-                            color="noshade"
-                            style={{ marginRight: 5 }}
-                          >
-                            Accept
-                          </Typography>
-                        }
-                        icon={<Check width={10} height={9} />}
-                        onClick={() => handleAcceptClick(true)}
-                        loading={isLoadingConfirmOffer}
-                        disabled={
-                          negotiation?.display_status !== 'Counter Offer'
-                        }
-                      />
-                    </Col>
-                  )}
-                </Row>
-              </>
-            )}
       </Visible>
     </Container>
   );

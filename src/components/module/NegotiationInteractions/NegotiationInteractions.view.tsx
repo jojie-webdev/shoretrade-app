@@ -4,7 +4,7 @@ import Interactions from 'components/base/Interactions';
 import Typography from 'components/base/Typography';
 import moment from 'moment';
 import { isEmpty, isNil } from 'ramda';
-import { Col } from 'react-grid-system';
+import { Col, Row } from 'react-grid-system';
 import { isRedLabel } from 'routes/Seller/MarketBoard/Landing/Landing.transform';
 import { sizeToString } from 'utils/Listing';
 import { formatMeasurementUnit } from 'utils/Listing/formatMeasurementUnit';
@@ -20,6 +20,11 @@ const NegotiationInteractions = (
 ): JSX.Element => {
   const { onClick, data } = props;
   const unit = formatMeasurementUnit(data.measurement_unit);
+  const lapsedNegotiation =
+    props.data.status === 'LOST' && !props.data.approved_at;
+  const negotiationDisplayStatus = lapsedNegotiation
+    ? 'Lapsed'
+    : props.data.display_status;
 
   // const buildSizeValue = () => {
   //   const sizeValue =
@@ -77,7 +82,7 @@ const NegotiationInteractions = (
   const modifyTimeLimit = () => {
     const time = getTimeLimit().toLowerCase();
     let modifiedTime = '';
-
+    const reminder = props.isMobile ? '' : ' left';
     if (data.status === 'CHECKOUT' || data.status === 'LOST') {
       return '';
     }
@@ -88,12 +93,12 @@ const NegotiationInteractions = (
 
     if (time.includes('hours')) {
       const splits = time.split('hours');
-      modifiedTime = splits[0] + 'hours left';
+      modifiedTime = splits[0] + `hours ${reminder}`;
     } else if (time.includes('hour')) {
       const splits = time.split('hour');
-      modifiedTime = splits[0] + 'hour left';
+      modifiedTime = splits[0] + `hours ${reminder}`;
     } else {
-      modifiedTime = time + ' left';
+      modifiedTime = time + reminder;
 
       if (!time) {
         modifiedTime = '';
@@ -103,77 +108,164 @@ const NegotiationInteractions = (
     return modifiedTime;
   };
 
+  const renderMobileData = () => {
+    return (
+      <Col sm={4}>
+        <Row
+          style={{
+            padding: '5px',
+            margin: 0,
+            alignItems: 'center',
+          }}
+        >
+          <img
+            src={parseImageUrl(data?.thumbnail || data?.default_photo)}
+            alt="default photo or thumbnail"
+          />
+          <Typography
+            variant="caption"
+            color="noshade"
+            style={{ fontSize: 15 }}
+          >
+            {data?.name}
+          </Typography>
+        </Row>
+        <Row
+          style={{
+            padding: '5px',
+            margin: 0,
+            alignItems: 'center',
+          }}
+        >
+          <Typography variant="caption" color="shade6" style={{ marginTop: 4 }}>
+            {!isNil(data?.specifications) &&
+              Array.isArray(data?.specifications) &&
+              data?.specifications.map((s) => s.name).join(', ')}
+          </Typography>
+        </Row>
+        <Row
+          style={{
+            padding: '5px',
+            margin: 0,
+            alignItems: 'center',
+          }}
+        >
+          <Typography variant="caption" color="shade6">
+            Quantity{' '}
+            <span
+              style={{
+                color: '#fff',
+                marginRight: 10,
+              }}
+            >{`${data?.desired_quantity} ${unit}`}</span>
+          </Typography>
+          <Typography
+            variant="caption"
+            color={isRedLabel(data?.created_at) ? 'error' : 'shade6'}
+          >
+            Time Left{' '}
+            <span
+              style={{
+                color: '#fff',
+                marginRight: 10,
+              }}
+            >
+              {modifyTimeLimit()}
+            </span>
+          </Typography>
+        </Row>
+        <Row
+          style={{
+            padding: '5px',
+            margin: 0,
+            alignItems: 'center',
+          }}
+        >
+          <Typography variant="caption" color="shade6">
+            Size{' '}
+            <span
+              style={{
+                color: '#fff',
+                marginRight: 10,
+              }}
+            >
+              {buildSizeValue()}
+            </span>
+          </Typography>
+        </Row>
+        <Row
+          style={{
+            padding: '5px',
+            margin: 0,
+            alignItems: 'center',
+          }}
+        >
+          <div style={{ display: 'flex' }}>
+            <NegotiationTag text={data?.display_status || ''} />
+          </div>
+        </Row>
+      </Col>
+    );
+  };
+
   return (
     <Container>
       <Interactions
         onClick={() => onClick()}
         leftComponent={
-          <>
-            <img
-              src={parseImageUrl(data.thumbnail || data.default_photo)}
-              alt="default photo or thumbnail"
-            />
-            <Col style={{ padding: '0 5px' }}>
-              <Typography
-                variant="caption"
-                color="noshade"
-                style={{ fontSize: 15 }}
-              >
-                {data.name}
-              </Typography>
-              <Typography
-                variant="caption"
-                color="shade6"
-                style={{ marginTop: 4 }}
-              >
-                {!isNil(data.specifications) &&
-                  Array.isArray(data.specifications) &&
-                  data.specifications.map((s) => s.name).join(', ')}
-              </Typography>
-            </Col>
-            <Col style={{ padding: '0 5px' }}>
-              <Typography variant="caption" color="shade6">
-                Size: {buildSizeValue()}
-              </Typography>
-              <Typography
-                variant="caption"
-                color="shade6"
-                style={{ marginTop: 4 }}
-              >
-                Qty: {`${data.desired_quantity}${unit}`}
-              </Typography>
-            </Col>
-            <Col style={{ padding: '0 5px' }}>
-              <Typography
-                variant="caption"
-                color={isRedLabel(data.created_at) ? 'error' : 'shade6'}
-              >
-                {modifyTimeLimit()}
-              </Typography>
-            </Col>
-            <Col style={{ padding: '0 5px' }}>
-              <div style={{ display: 'flex' }}>
-                <NegotiationTag text={data?.display_status || ''} />
-              </div>
-            </Col>
-            {/* <Col style={{ padding: '0 5px' }}>
-              <TrashCanContainer
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-              >
-                <div
-                  style={{
-                    backgroundColor: theme.grey.shade8,
-                    padding: '5px 8px',
-                    borderRadius: 8,
-                  }}
+          props.isMobile ? (
+            renderMobileData()
+          ) : (
+            <>
+              <img
+                src={parseImageUrl(data.thumbnail || data.default_photo)}
+                alt="default photo or thumbnail"
+              />
+              <Col style={{ padding: '0 5px' }}>
+                <Typography
+                  variant="caption"
+                  color="noshade"
+                  style={{ fontSize: 15 }}
                 >
-                  <TrashCan fill={theme.grey.shade7} width={16} height={16} />
+                  {data.name}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  color="shade6"
+                  style={{ marginTop: 4 }}
+                >
+                  {!isNil(data.specifications) &&
+                    Array.isArray(data.specifications) &&
+                    data.specifications.map((s) => s.name).join(', ')}
+                </Typography>
+              </Col>
+              <Col style={{ padding: '0 5px' }}>
+                <Typography variant="caption" color="shade6">
+                  Size: {buildSizeValue()}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  color="shade6"
+                  style={{ marginTop: 4 }}
+                >
+                  Qty: {`${data.desired_quantity}${unit}`}
+                </Typography>
+              </Col>
+              <Col style={{ padding: '0 5px' }}>
+                <Typography
+                  variant="caption"
+                  color={isRedLabel(data.created_at) ? 'error' : 'shade6'}
+                >
+                  {modifyTimeLimit()}
+                </Typography>
+              </Col>
+              <Col style={{ padding: '0 5px' }}>
+                <div style={{ display: 'flex' }}>
+                  <NegotiationTag text={data?.display_status || ''} />
                 </div>
-              </TrashCanContainer>
-            </Col> */}
-          </>
+              </Col>
+            </>
+          )
         }
         padding="8px 20px 8px 8px"
       />

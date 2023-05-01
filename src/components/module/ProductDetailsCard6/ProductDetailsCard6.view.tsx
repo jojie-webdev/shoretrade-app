@@ -111,7 +111,8 @@ const ProductDetailsCard6View = (props: ProductDetailsCard6Props) => {
     return allowNegotiations ? (
       canNegotiate ? (
         auctionDate ? (
-          isPreAuctionExpired(auctionDate) ? null : negotiationId ? (
+          // isPreAuctionExpired(auctionDate) ? null : negotiationId ? (
+          negotiationId ? (
             <NegotiatePriceElem
               backgroundColor={theme.grey.shade3}
               iconFill={theme.grey.shade6}

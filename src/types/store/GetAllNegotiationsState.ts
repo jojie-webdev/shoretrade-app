@@ -58,6 +58,7 @@ export type GetAllNegoRequestResponseItem = {
   auction_date: string;
   is_pre_auction: boolean;
   negotiation_offer: NegotiationItem;
+  approved_at: string | null;
 };
 
 export type GetAllNegotiationsPayload = GenericResponse<{

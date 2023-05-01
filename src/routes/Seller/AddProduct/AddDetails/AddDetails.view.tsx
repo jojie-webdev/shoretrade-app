@@ -14,7 +14,7 @@ import Typography from 'components/base/Typography';
 import MobileFooter from 'components/layout/MobileFooter';
 import DatePickerDropdown from 'components/module/DatePickerDropdown';
 import DateRangePicker from 'components/module/DateRangePicker';
-// import IconTooltip from 'components/module/IconTooltip';
+import IconTooltip from 'components/module/IconTooltip';
 import LocationSearch from 'components/module/LocationSearch';
 import OfferTag from 'components/module/OfferTag';
 import { ToolTip } from 'components/module/RefreshCreditButton/RefreshCreditButton.style';
@@ -34,7 +34,6 @@ import {
   formatUnitToPricePerUnit,
 } from 'utils/Listing/formatMeasurementUnit';
 // import { toPrice } from 'utils/String/toPrice';
-
 import theme from 'utils/SFMTheme';
 
 import { TOOLTIP_MESSAGES } from './AddDetails.constants';
@@ -48,6 +47,7 @@ import {
   GstBadge,
   LabelAndIconWrapper,
   AllowNegoContainer,
+  AllowNegoCheckBoxContainer,
 } from './AddDetails.style';
 import { combineDateTime } from './AddDetails.transform';
 import {
@@ -406,7 +406,8 @@ const AddDetails = ({
           auctionDate,
           origin,
           isAuctionDateValid: isAuctionDateValid(auctionDate),
-          endAndCatchmentDateForPreAuction: onRevalidateCatchmentForPreAuction(),
+          endAndCatchmentDateForPreAuction:
+            onRevalidateCatchmentForPreAuction(),
         });
         break;
       case isAuctionSale:
@@ -858,11 +859,42 @@ const AddDetails = ({
         </Row>
       )}
       <AllowNegoContainer>
-        <Checkbox
-          onClick={() => setAllowNegotiations((prevValue) => !prevValue)}
-          checked={allowNegotiations}
-          label="Allow Negotiations"
-        />
+        <AllowNegoCheckBoxContainer>
+          <Checkbox
+            onClick={() => setAllowNegotiations((prevValue) => !prevValue)}
+            checked={allowNegotiations}
+            label="Allow Negotiation"
+            typographyProps={{
+              color: 'shade9',
+              variant: 'label',
+            }}
+          />
+          <IconTooltip
+            variant="warning"
+            content={
+              <>
+                <p>
+                  Allow buyers to negotiate the price of your listing to gain
+                  more more sales.
+                  <br />
+                  <a
+                    href="https://staging.sfmblue.com/buyer/help-and-support/category/negotiations"
+                    style={{
+                      textDecoration: 'underline',
+                      cursor: 'pointer',
+                      color: theme.grey.noshade,
+                    }}
+                  >
+                    Learn more here.
+                  </a>
+                </p>
+              </>
+            }
+            placement="top"
+            margin={8}
+            isClickable={true}
+          />
+        </AllowNegoCheckBoxContainer>
       </AllowNegoContainer>
       {isAuctionSale && (
         <Row className="textfield-row">

@@ -126,3 +126,50 @@ export const AllowNegoContainer = styled.div`
   padding: 5px 10px 10px 0px;
   align-items: center;
 `;
+
+export const AllowNegoCheckBoxContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fee2d3;
+  padding: 5px 16px;
+  border: 2px solid #ffa26b;
+  border-radius: 12px;
+  position: relative;
+  p {
+    font-weight: 600;
+  }
+  .tooltip-container {
+    padding-left: 18px;
+    position: relative;
+  }
+
+  .__react_component_tooltip {
+    position: absolute !important;
+    padding: 10px !important;
+    top: -55px !important;
+    left: 8px !important;
+    border-radius: 8px !important;
+    width: 478px !important;
+  }
+
+  .__react_component_tooltip::after {
+    left: 5% !important;
+  }
+
+  .icon-tooltip-container {
+    position: absolute !important;
+    width: 500px;
+    top: -19px;
+    left: 25px;
+  }
+
+  .icon-label-wrapper {
+    margin-left: 5px;
+  }
+  .tooltip-content-container {
+    p {
+      margin: 0px !important;
+    }
+  }
+`;

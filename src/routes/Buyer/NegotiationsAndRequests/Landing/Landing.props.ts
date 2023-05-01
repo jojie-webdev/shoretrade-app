@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from 'react';
+import { NegotiationWithExpiry } from 'routes/Seller/MarketBoard/Landing/Landing.props';
 
 import {
   GetActiveOffersRequestResponseItem,
-  Offer,
 } from 'types/store/GetActiveOffersState';
 import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsState';
 import { GetNegotiationCreditRequestResponseItem } from 'types/store/GetNegotiationCreditState';
@@ -29,9 +29,7 @@ export type Result = {
 export interface MarketRequestsLandingGeneratedProps {
   marketRequests: Result[];
   negotiations:
-    | (GetAllNegoRequestResponseItem & {
-        expiry: any;
-      })[]
+    | NegotiationWithExpiry[]
     | undefined;
   currentPath: string;
   onClickItem: (row: any) => void;

@@ -157,7 +157,7 @@ const Home = (): JSX.Element => {
       ? companyPlan && !companyPlan.flags?.hasCancelledReversedMarketplace
       : subscriptionType !== null && false;
 
-  const canNegotiate = isSubscribedToNegoRequest || false;
+  const canNegotiate = isSubscribedToNegoRequest ?? false;
 
   const unit = formatMeasurementUnit(clickedRecentListing?.measurementUnit);
 

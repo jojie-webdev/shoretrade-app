@@ -3,4 +3,5 @@ import { GetAllNegoRequestResponseItem } from 'types/store/GetAllNegotiationsSta
 export interface NegotiationInteractionsProps {
   onClick: () => void;
   data: GetAllNegoRequestResponseItem;
+  isMobile: boolean;
 }

@@ -271,7 +271,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
         />
       )}
 
-      {isMobile && <MobileHeader>Reverse Marketplace</MobileHeader>}
+      {isMobile && <MobileHeader>Negotiations & Request</MobileHeader>}
 
       <div className="tabs-row">
         <SegmentedControls
@@ -540,6 +540,7 @@ const MarketBoardLandingView = (props: MarketBoardLandingGeneratedProps) => {
                 key={data.listing_id}
                 onClick={() => props.onNegotiationClick(data)}
                 data={data}
+                isMobile={isMobile}
               />
             ))
           ) : (

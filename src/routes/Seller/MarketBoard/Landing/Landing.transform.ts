@@ -379,7 +379,7 @@ export const excludeExpiredLostNegotiation = (
 
     const now = moment();
     const endTime = negotiation.negotiation_offer
-      ? moment(negotiation.negotiation_offer.updated_at)
+      ? moment(negotiation.negotiation_offer.updated_at).add(remainingTime)
       : moment(negotiation.updated_at).add(remainingTime);
 
     const hoursRemaining = endTime.diff(now, 'hours');
@@ -390,7 +390,7 @@ export const excludeExpiredLostNegotiation = (
     const hoursRemaining = getRemainingHours(negotiation);
     const isExpired = hoursRemaining <= 0;
     const isExpiredAndLostNegotiation =
-      isExpired && ['END', 'LOST'].includes(negotiation.status);
+      isExpired && ['END', 'LOST', 'PAYMENT_MISSED', 'CHECKOUT'].includes(negotiation.status);
 
     if (isExpiredAndLostNegotiation) {
       return false;

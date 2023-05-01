@@ -311,7 +311,11 @@ const AddProductView = (props: AddProductGeneratedProps) => {
             style={{ marginBottom: 16 }}
           />
         )}
-        {isMobile && <MobileHeader>Add a Listing</MobileHeader>}
+        {isMobile && (
+          <MobileHeader>
+            {isExisting ? 'Edit a Listing' : 'Add a Listing'}
+          </MobileHeader>
+        )}
         {currentPage > 1.5 && (
           <Typography variant="overline" color="shade6">
             Step {currentPage - 1} - 8

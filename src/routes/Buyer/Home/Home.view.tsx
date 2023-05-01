@@ -9,10 +9,13 @@ import Card from 'components/module/CategoryCards/Landing';
 import { CardProps } from 'components/module/CategoryCards/Landing/Card.props';
 import PreviewCard from 'components/module/CategoryCards/Preview';
 import { PreviewProps } from 'components/module/CategoryCards/Preview/Preview.props';
+import ConfirmationModal from 'components/module/ConfirmationModal';
 import HomeSectionHeader from 'components/module/HomeSectionHeader';
 import HomeSellerCard from 'components/module/HomeSellerCard';
 import Loading from 'components/module/Loading';
 import MultipleCarousel from 'components/module/MultipleCarousel';
+import ProductDetailsNegotiationModal from 'components/module/ProductDetailsNegotiationModal';
+import { ProductDetailsNegotiationModalProps } from 'components/module/ProductDetailsNegotiationModal/ProductDetailsNegotiationModal.props';
 import SearchAddress from 'components/module/SearchAddress';
 import { SellerCardProps } from 'components/module/SellerCard/SellerCard.props';
 import { BUYER_ACCOUNT_ROUTES, BUYER_ROUTES } from 'consts';
@@ -110,6 +113,27 @@ const HomeView = (props: HomeGeneratedProps) => {
     loadingHomePage,
     isPendingAccount,
     canNegotiate,
+    handleShowNegoCreditsModal,
+    negotiationCredit,
+    handleShowNegoModal,
+    showNegoModal,
+    handleNegoModalToggle,
+    negotiationPrice,
+    handleNegotiationPriceSetting,
+    unit,
+    negotiationWeight,
+    handleDesiredQuantityChange,
+    groupedBox,
+    handleSelectedBoxesWeight,
+    isLoadingListingBoxes,
+    selectedBoxesWeight,
+    productDetailsCard6Props,
+    selectedBoxesIndex,
+    handleShowConfirmNegoModal,
+    showConfirmNegoModal,
+    handleConfirmNegoClick,
+    handleConfirmNegoModalClose,
+    isSendingNegotiation,
   } = props;
 
   const theme = useTheme();
@@ -174,6 +198,37 @@ const HomeView = (props: HomeGeneratedProps) => {
       </DetailsContainer>
     </>
   );
+
+  const priceDiff = negotiationPrice - Number(productDetailsCard6Props.price);
+  const priceDiff2 =
+    priceDiff / Math.abs(Number(productDetailsCard6Props.price));
+  const priceDiffPercentage =
+    negotiationPrice === null
+      ? 0
+      : priceDiff2 < 0
+      ? -(Math.abs(priceDiff2) * 100)
+      : priceDiff2 * 100;
+
+  const productDetailsNegotiationModalProps: ProductDetailsNegotiationModalProps =
+    {
+      isOpen: showNegoModal,
+      onClickClose: handleNegoModalToggle,
+      action: handleShowConfirmNegoModal,
+      disableActionText: !negotiationPrice || !negotiationWeight,
+      negotiationPrice,
+      handleNegotiationPriceSetting,
+      unit,
+      negotiationWeight,
+      handleDesiredQuantityChange,
+      groupedBox,
+      handleSelectedBoxesWeight,
+      isLoadingListingBoxes,
+      priceDiffPercentage,
+      selectedBoxesWeight,
+      productDetailsCard6Props,
+      selectedBoxesIndex,
+      actionText: 'NEGOTIATE',
+    };
 
   return (
     <>
@@ -361,6 +416,50 @@ const HomeView = (props: HomeGeneratedProps) => {
             </Row>
           </Wrapper>
 
+          <ConfirmationModal
+            isOpen={showConfirmNegoModal}
+            onClickClose={handleConfirmNegoModalClose}
+            title={
+              <Typography
+                variant="title4"
+                color="shade8"
+                weight="900"
+                style={{ fontFamily: 'Canela' }}
+              >
+                Confirm Negotiation
+              </Typography>
+            }
+            action={handleConfirmNegoClick}
+            disableActionText={isSendingNegotiation}
+            cancel={handleConfirmNegoModalClose}
+            actionText="Send Negotiation"
+            cancelText="Cancel"
+            description={
+              <div style={{ marginTop: 20 }}>
+                {negotiationCredit?.is_unlimited ? (
+                  <Typography variant="label" color="shade6">
+                    Are you sure you want to send this negotiation?
+                  </Typography>
+                ) : (
+                  <>
+                    <Typography variant="label" color="shade6">
+                      Sending this negotiation will cost 1 Negotiation Credit.
+                    </Typography>
+                    <div style={{ marginTop: 10 }} />
+                    <Typography variant="label" color="shade6">
+                      Your current negotiation balance is{' '}
+                      {(negotiationCredit?.is_unlimited && 'an unlimited') ||
+                        negotiationCredit?.credit}{' '}
+                      Credit.
+                    </Typography>
+                  </>
+                )}
+              </div>
+            }
+          />
+          <ProductDetailsNegotiationModal
+            {...productDetailsNegotiationModalProps}
+          />
           <Wrapper>
             <ViewCol>
               <HomeSectionHeader
@@ -377,6 +476,10 @@ const HomeView = (props: HomeGeneratedProps) => {
                   data={recentlyAdded}
                   transform={partialRight(recentlyAddedToPreviewProps, [
                     isPendingAccount,
+                    canNegotiate,
+                    handleShowNegoCreditsModal,
+                    negotiationCredit,
+                    handleShowNegoModal,
                   ])}
                   Component={PreviewCard}
                   link={BUYER_ROUTES.PRODUCT_DETAIL}
